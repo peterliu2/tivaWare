@@ -93,6 +93,21 @@ uint32_t g_ui32HMACSizeInBytes;
 
 //*****************************************************************************
 //
+// The error routine that is called if the driver library encounters an error.
+//
+//*****************************************************************************
+#ifdef DEBUG
+void
+__error__(char *pcFilename, uint32_t ui32Line)
+{
+}
+#endif
+
+
+
+
+//*****************************************************************************
+//
 // This function implements the "reset" command.  It resets the CCM0 Module and
 // enables the clock.
 //

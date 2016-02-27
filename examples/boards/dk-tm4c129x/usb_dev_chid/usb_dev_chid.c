@@ -81,6 +81,20 @@ volatile uint32_t g_ui32SysTickCount;
 
 //*****************************************************************************
 //
+// The error routine that is called if the driver library encounters an error.
+//
+//*****************************************************************************
+#ifdef DEBUG
+void
+__error__(char *pcFilename, uint32_t ui32Line)
+{
+}
+#endif
+
+
+
+//*****************************************************************************
+//
 // This is the interrupt handler for the SysTick interrupt.
 //
 //*****************************************************************************
