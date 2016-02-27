@@ -1,0 +1,20 @@
+# Object files
+*.o
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+
+# Executables
+*.bin
+
+# Debug files
+*.d
+*.axf
+
+# vim temp files
+*.swp
