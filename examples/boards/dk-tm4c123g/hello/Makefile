@@ -87,3 +87,27 @@ CFLAGSgcc=-DTARGET_IS_TM4C123_RB1
 ifneq (${MAKECMDGOALS},clean)
 -include ${wildcard ${COMPILER}/*.d} __dummy__
 endif
+
+#
+# flash .bin to uC flash
+#
+flash_bin: ${COMPILER}/hello.bin
+	@echo  "\033[1m flash '$<' into uC \033[0m"
+	@lm4flash $<
+
+
+#
+# The rule to rebuild the project and debug it with Nemiver.
+#
+debug_nemiver debug_cgdb: clean
+debug_nemiver debug_cgdb: CFLAGS+=-g -O0 -D DEBUG
+debug_nemiver debug_cgdb: ${COMPILER}
+debug_nemiver debug_cgdb: ${COMPILER}/hello.axf
+debug_nemiver:
+	${ROOT}/debug_nemiver.sh ${shell pwd}/${COMPILER}/hello.axf ek-tm4c123gxl.cfg
+
+#
+# The rule to rebuild the project and debug it with cgdb.
+#
+debug_cgdb:
+	${ROOT}/debug_cgdb.sh ${shell pwd}/${COMPILER}/hello.axf ek-tm4c123gxl.cfg
