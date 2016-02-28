@@ -18,3 +18,9 @@
 
 # vim temp files
 *.swp
+
+# cscope files
+cscope*
+
+#taglist files
+tags
