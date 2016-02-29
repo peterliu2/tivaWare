@@ -12,6 +12,9 @@
 # Executables
 *.bin
 
+# map files
+*.map
+
 # Debug files
 *.d
 *.axf
