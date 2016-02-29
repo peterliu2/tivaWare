@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -62,25 +62,25 @@
 #define AES_O_KEY1_0            0x00000038  // AES Key 1_0
 #define AES_O_KEY1_1            0x0000003C  // AES Key 1_1
 #define AES_O_IV_IN_0           0x00000040  // AES Initialization Vector Input
-                                            // 0
+// 0
 #define AES_O_IV_IN_1           0x00000044  // AES Initialization Vector Input
-                                            // 1
+// 1
 #define AES_O_IV_IN_2           0x00000048  // AES Initialization Vector Input
-                                            // 2
+// 2
 #define AES_O_IV_IN_3           0x0000004C  // AES Initialization Vector Input
-                                            // 3
+// 3
 #define AES_O_CTRL              0x00000050  // AES Control
 #define AES_O_C_LENGTH_0        0x00000054  // AES Crypto Data Length 0
 #define AES_O_C_LENGTH_1        0x00000058  // AES Crypto Data Length 1
 #define AES_O_AUTH_LENGTH       0x0000005C  // AES Authentication Data Length
 #define AES_O_DATA_IN_0         0x00000060  // AES Data RW Plaintext/Ciphertext
-                                            // 0
+// 0
 #define AES_O_DATA_IN_1         0x00000064  // AES Data RW Plaintext/Ciphertext
-                                            // 1
+// 1
 #define AES_O_DATA_IN_2         0x00000068  // AES Data RW Plaintext/Ciphertext
-                                            // 2
+// 2
 #define AES_O_DATA_IN_3         0x0000006C  // AES Data RW Plaintext/Ciphertext
-                                            // 3
+// 3
 #define AES_O_TAG_OUT_0         0x00000070  // AES Hash Tag Out 0
 #define AES_O_TAG_OUT_1         0x00000074  // AES Hash Tag Out 1
 #define AES_O_TAG_OUT_2         0x00000078  // AES Hash Tag Out 2
@@ -273,31 +273,31 @@
 #define AES_CTRL_GCM_M          0x00030000  // AES-GCM Mode Enable
 #define AES_CTRL_GCM_NOP        0x00000000  // No operation
 #define AES_CTRL_GCM_HLY0ZERO   0x00010000  // GHASH with H loaded and
-                                            // Y0-encrypted forced to zero
+// Y0-encrypted forced to zero
 #define AES_CTRL_GCM_HLY0CALC   0x00020000  // GHASH with H loaded and
-                                            // Y0-encrypted calculated
-                                            // internally
+// Y0-encrypted calculated
+// internally
 #define AES_CTRL_GCM_HY0CALC    0x00030000  // Autonomous GHASH (both H and
-                                            // Y0-encrypted calculated
-                                            // internally)
+// Y0-encrypted calculated
+// internally)
 #define AES_CTRL_CBCMAC         0x00008000  // AES-CBC MAC Enable
 #define AES_CTRL_F9             0x00004000  // AES f9 Mode Enable
 #define AES_CTRL_F8             0x00002000  // AES f8 Mode Enable
 #define AES_CTRL_XTS_M          0x00001800  // AES-XTS Operation Enabled
 #define AES_CTRL_XTS_NOP        0x00000000  // No operation
 #define AES_CTRL_XTS_TWEAKJL    0x00000800  // Previous/intermediate tweak
-                                            // value and j loaded (value is
-                                            // loaded via IV, j is loaded via
-                                            // the AAD length register)
+// value and j loaded (value is
+// loaded via IV, j is loaded via
+// the AAD length register)
 #define AES_CTRL_XTS_K2IJL      0x00001000  // Key2, n and j are loaded (n is
-                                            // loaded via IV, j is loaded via
-                                            // the AAD length register)
+// loaded via IV, j is loaded via
+// the AAD length register)
 #define AES_CTRL_XTS_K2ILJ0     0x00001800  // Key2 and n are loaded; j=0 (n is
-                                            // loaded via IV)
+// loaded via IV)
 #define AES_CTRL_CFB            0x00000400  // Full block AES cipher feedback
-                                            // mode (CFB128) Enable
+// mode (CFB128) Enable
 #define AES_CTRL_ICM            0x00000200  // AES Integer Counter Mode (ICM)
-                                            // Enable
+// Enable
 #define AES_CTRL_CTR_WIDTH_M    0x00000180  // AES-CTR Mode Counter Width
 #define AES_CTRL_CTR_WIDTH_32   0x00000000  // Counter is 32 bits
 #define AES_CTRL_CTR_WIDTH_64   0x00000080  // Counter is 64 bits
@@ -348,7 +348,7 @@
 //
 //*****************************************************************************
 #define AES_DATA_IN_0_DATA_M    0xFFFFFFFF  // Secure Data RW
-                                            // Plaintext/Ciphertext
+// Plaintext/Ciphertext
 #define AES_DATA_IN_0_DATA_S    0
 
 //*****************************************************************************
@@ -358,7 +358,7 @@
 //
 //*****************************************************************************
 #define AES_DATA_IN_1_DATA_M    0xFFFFFFFF  // Secure Data RW
-                                            // Plaintext/Ciphertext
+// Plaintext/Ciphertext
 #define AES_DATA_IN_1_DATA_S    0
 
 //*****************************************************************************
@@ -368,7 +368,7 @@
 //
 //*****************************************************************************
 #define AES_DATA_IN_2_DATA_M    0xFFFFFFFF  // Secure Data RW
-                                            // Plaintext/Ciphertext
+// Plaintext/Ciphertext
 #define AES_DATA_IN_2_DATA_S    0
 
 //*****************************************************************************
@@ -378,7 +378,7 @@
 //
 //*****************************************************************************
 #define AES_DATA_IN_3_DATA_M    0xFFFFFFFF  // Secure Data RW
-                                            // Plaintext/Ciphertext
+// Plaintext/Ciphertext
 #define AES_DATA_IN_3_DATA_S    0
 
 //*****************************************************************************
@@ -435,7 +435,7 @@
 #define AES_SYSCONFIG_KEYENC    0x00000800  // Key Encoding
 #define AES_SYSCONFIG_MAP_CONTEXT_OUT_ON_DATA_OUT                             \
                                 0x00000200  // Map Context Out on Data Out
-                                            // Enable
+// Enable
 #define AES_SYSCONFIG_DMA_REQ_CONTEXT_OUT_EN                                  \
                                 0x00000100  // DMA Request Context Out Enable
 #define AES_SYSCONFIG_DMA_REQ_CONTEXT_IN_EN                                   \
@@ -497,9 +497,9 @@
 #define AES_DMAIM_DOUT          0x00000008  // Data Out DMA Done Interrupt Mask
 #define AES_DMAIM_DIN           0x00000004  // Data In DMA Done Interrupt Mask
 #define AES_DMAIM_COUT          0x00000002  // Context Out DMA Done Interrupt
-                                            // Mask
+// Mask
 #define AES_DMAIM_CIN           0x00000001  // Context In DMA Done Interrupt
-                                            // Mask
+// Mask
 
 //*****************************************************************************
 //
@@ -507,13 +507,13 @@
 //
 //*****************************************************************************
 #define AES_DMARIS_DOUT         0x00000008  // Data Out DMA Done Raw Interrupt
-                                            // Status
+// Status
 #define AES_DMARIS_DIN          0x00000004  // Data In DMA Done Raw Interrupt
-                                            // Status
+// Status
 #define AES_DMARIS_COUT         0x00000002  // Context Out DMA Done Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define AES_DMARIS_CIN          0x00000001  // Context In DMA Done Raw
-                                            // Interrupt Status
+// Interrupt Status
 
 //*****************************************************************************
 //
@@ -521,13 +521,13 @@
 //
 //*****************************************************************************
 #define AES_DMAMIS_DOUT         0x00000008  // Data Out DMA Done Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define AES_DMAMIS_DIN          0x00000004  // Data In DMA Done Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define AES_DMAMIS_COUT         0x00000002  // Context Out DMA Done Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define AES_DMAMIS_CIN          0x00000001  // Context In DMA Done Raw
-                                            // Interrupt Status
+// Interrupt Status
 
 //*****************************************************************************
 //
@@ -535,11 +535,11 @@
 //
 //*****************************************************************************
 #define AES_DMAIC_DOUT          0x00000008  // Data Out DMA Done Interrupt
-                                            // Clear
+// Clear
 #define AES_DMAIC_DIN           0x00000004  // Data In DMA Done Interrupt Clear
 #define AES_DMAIC_COUT          0x00000002  // Context Out DMA Done Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define AES_DMAIC_CIN           0x00000001  // Context In DMA Done Raw
-                                            // Interrupt Status
+// Interrupt Status
 
 #endif // __HW_AES_H__

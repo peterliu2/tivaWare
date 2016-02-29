@@ -35,23 +35,27 @@
 #  include <FL/Fl_Shared_Image.H>
 
 
-class Fluid_Image {
-  const char *name_;
-  int refcount;
-  Fl_Shared_Image *img;
+class Fluid_Image
+{
+    const char *name_;
+    int refcount;
+    Fl_Shared_Image *img;
 protected:
-  Fluid_Image(const char *name); // no public constructor
-  ~Fluid_Image(); // no public destructor
+    Fluid_Image(const char *name); // no public constructor
+    ~Fluid_Image(); // no public destructor
 public:
-  int written;
-  static Fluid_Image* find(const char *);
-  void decrement(); // reference counting & automatic free
-  void increment();
-  void image(Fl_Widget *); // set the image of this widget
-  void deimage(Fl_Widget *); // set the deimage of this widget
-  void write_static();
-  void write_code(const char *var, int inactive = 0);
-  const char *name() const {return name_;}
+    int written;
+    static Fluid_Image* find(const char *);
+    void decrement(); // reference counting & automatic free
+    void increment();
+    void image(Fl_Widget *); // set the image of this widget
+    void deimage(Fl_Widget *); // set the deimage of this widget
+    void write_static();
+    void write_code(const char *var, int inactive = 0);
+    const char *name() const
+    {
+        return name_;
+    }
 };
 
 // pop up file chooser and return a legal image selected by user,

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C123GXL Firmware Package.
 //
 //*****************************************************************************
@@ -69,8 +69,7 @@ CapSenseSystickRC(const tSensor *psSensor, uint32_t *pui32Counts)
     // Run an RC based capacitance measurement routine on each element in the
     // sensor array.
     //
-    for(ui8Index = 0; ui8Index < (psSensor->ui8NumElements); ui8Index++)
-    {
+    for(ui8Index = 0; ui8Index < (psSensor->ui8NumElements); ui8Index++) {
         //
         // Reset Systick to zero (probably not necessary for most cases, but we
         // want to make sure that Systick doesn't roll over.)
@@ -146,8 +145,7 @@ CapSenseElementSystickRC(uint32_t ui32GPIOPort, uint32_t ui32GPIOPin,
     //
     // Loop until we have the requisite number of samples.
     //
-    for(ui32Index = 0; ui32Index < ui32NumSamples; ui32Index++)
-    {
+    for(ui32Index = 0; ui32Index < ui32NumSamples; ui32Index++) {
         //
         // Drive to VDD.
         //
@@ -161,8 +159,7 @@ CapSenseElementSystickRC(uint32_t ui32GPIOPort, uint32_t ui32GPIOPin,
         //
         // Wait until the capacitor drains away to ground
         //
-        while(HWREG(ui32GPIODataReg))
-        {
+        while(HWREG(ui32GPIODataReg)) {
         }
 
         //

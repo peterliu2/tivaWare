@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2005-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Utility Library.
 //
 //*****************************************************************************
@@ -60,8 +60,7 @@ isqrt(uint32_t ui32Value)
     //
     // Loop over the sixteen bits in the root.
     //
-    for(ui32Idx = 0; ui32Idx < 16; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < 16; ui32Idx++) {
         //
         // Shift the root up by a bit to make room for the new bit that is
         // about to be computed.
@@ -82,8 +81,7 @@ isqrt(uint32_t ui32Value)
         //
         // See if the root is greater than the remainder.
         //
-        if(ui32Root <= ui32Rem)
-        {
+        if(ui32Root <= ui32Rem) {
             //
             // Subtract the test root from the remainder.
             //
@@ -93,9 +91,7 @@ isqrt(uint32_t ui32Value)
             // Increment the root, setting the second LSB.
             //
             ui32Root++;
-        }
-        else
-        {
+        } else {
             //
             // The root is greater than the remainder, so the new bit of the
             // root is actually zero.

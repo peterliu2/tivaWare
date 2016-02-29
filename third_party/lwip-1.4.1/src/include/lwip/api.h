@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2001-2004 Swedish Institute of Computer Science.
- * All rights reserved. 
- * 
- * Redistribution and use in source and binary forms, with or without modification, 
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
@@ -11,21 +11,21 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  * 3. The name of the author may not be used to endorse or promote products
- *    derived from this software without specific prior written permission. 
+ *    derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED 
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT 
- * SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT 
- * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING 
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
+ * SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
+ * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
  * OF SUCH DAMAGE.
  *
  * This file is part of the lwIP TCP/IP stack.
- * 
+ *
  * Author: Adam Dunkels <adam@sics.se>
  *
  */
@@ -81,41 +81,41 @@ extern "C" {
 
 /** Protocol family and type of the netconn */
 enum netconn_type {
-  NETCONN_INVALID    = 0,
-  /* NETCONN_TCP Group */
-  NETCONN_TCP        = 0x10,
-  /* NETCONN_UDP Group */
-  NETCONN_UDP        = 0x20,
-  NETCONN_UDPLITE    = 0x21,
-  NETCONN_UDPNOCHKSUM= 0x22,
-  /* NETCONN_RAW Group */
-  NETCONN_RAW        = 0x40
+    NETCONN_INVALID    = 0,
+    /* NETCONN_TCP Group */
+    NETCONN_TCP        = 0x10,
+    /* NETCONN_UDP Group */
+    NETCONN_UDP        = 0x20,
+    NETCONN_UDPLITE    = 0x21,
+    NETCONN_UDPNOCHKSUM= 0x22,
+    /* NETCONN_RAW Group */
+    NETCONN_RAW        = 0x40
 };
 
 /** Current state of the netconn. Non-TCP netconns are always
  * in state NETCONN_NONE! */
 enum netconn_state {
-  NETCONN_NONE,
-  NETCONN_WRITE,
-  NETCONN_LISTEN,
-  NETCONN_CONNECT,
-  NETCONN_CLOSE
+    NETCONN_NONE,
+    NETCONN_WRITE,
+    NETCONN_LISTEN,
+    NETCONN_CONNECT,
+    NETCONN_CLOSE
 };
 
 /** Use to inform the callback function about changes */
 enum netconn_evt {
-  NETCONN_EVT_RCVPLUS,
-  NETCONN_EVT_RCVMINUS,
-  NETCONN_EVT_SENDPLUS,
-  NETCONN_EVT_SENDMINUS,
-  NETCONN_EVT_ERROR
+    NETCONN_EVT_RCVPLUS,
+    NETCONN_EVT_RCVMINUS,
+    NETCONN_EVT_SENDPLUS,
+    NETCONN_EVT_SENDMINUS,
+    NETCONN_EVT_ERROR
 };
 
 #if LWIP_IGMP
 /** Used for netconn_join_leave_group() */
 enum netconn_igmp {
-  NETCONN_JOIN,
-  NETCONN_LEAVE
+    NETCONN_JOIN,
+    NETCONN_LEAVE
 };
 #endif /* LWIP_IGMP */
 
@@ -132,65 +132,65 @@ typedef void (* netconn_callback)(struct netconn *, enum netconn_evt, u16_t len)
 
 /** A netconn descriptor */
 struct netconn {
-  /** type of the netconn (TCP, UDP or RAW) */
-  enum netconn_type type;
-  /** current state of the netconn */
-  enum netconn_state state;
-  /** the lwIP internal protocol control block */
-  union {
-    struct ip_pcb  *ip;
-    struct tcp_pcb *tcp;
-    struct udp_pcb *udp;
-    struct raw_pcb *raw;
-  } pcb;
-  /** the last error this netconn had */
-  err_t last_err;
-  /** sem that is used to synchroneously execute functions in the core context */
-  sys_sem_t op_completed;
-  /** mbox where received packets are stored until they are fetched
-      by the netconn application thread (can grow quite big) */
-  sys_mbox_t recvmbox;
+    /** type of the netconn (TCP, UDP or RAW) */
+    enum netconn_type type;
+    /** current state of the netconn */
+    enum netconn_state state;
+    /** the lwIP internal protocol control block */
+    union {
+        struct ip_pcb  *ip;
+        struct tcp_pcb *tcp;
+        struct udp_pcb *udp;
+        struct raw_pcb *raw;
+    } pcb;
+    /** the last error this netconn had */
+    err_t last_err;
+    /** sem that is used to synchroneously execute functions in the core context */
+    sys_sem_t op_completed;
+    /** mbox where received packets are stored until they are fetched
+        by the netconn application thread (can grow quite big) */
+    sys_mbox_t recvmbox;
 #if LWIP_TCP
-  /** mbox where new connections are stored until processed
-      by the application thread */
-  sys_mbox_t acceptmbox;
+    /** mbox where new connections are stored until processed
+        by the application thread */
+    sys_mbox_t acceptmbox;
 #endif /* LWIP_TCP */
-  /** only used for socket layer */
+    /** only used for socket layer */
 #if LWIP_SOCKET
-  int socket;
+    int socket;
 #endif /* LWIP_SOCKET */
 #if LWIP_SO_SNDTIMEO
-  /** timeout to wait for sending data (which means enqueueing data for sending
-      in internal buffers) */
-  s32_t send_timeout;
+    /** timeout to wait for sending data (which means enqueueing data for sending
+        in internal buffers) */
+    s32_t send_timeout;
 #endif /* LWIP_SO_RCVTIMEO */
 #if LWIP_SO_RCVTIMEO
-  /** timeout to wait for new data to be received
-      (or connections to arrive for listening netconns) */
-  int recv_timeout;
+    /** timeout to wait for new data to be received
+        (or connections to arrive for listening netconns) */
+    int recv_timeout;
 #endif /* LWIP_SO_RCVTIMEO */
 #if LWIP_SO_RCVBUF
-  /** maximum amount of bytes queued in recvmbox
-      not used for TCP: adjust TCP_WND instead! */
-  int recv_bufsize;
-  /** number of bytes currently in recvmbox to be received,
-      tested against recv_bufsize to limit bytes on recvmbox
-      for UDP and RAW, used for FIONREAD */
-  s16_t recv_avail;
+    /** maximum amount of bytes queued in recvmbox
+        not used for TCP: adjust TCP_WND instead! */
+    int recv_bufsize;
+    /** number of bytes currently in recvmbox to be received,
+        tested against recv_bufsize to limit bytes on recvmbox
+        for UDP and RAW, used for FIONREAD */
+    s16_t recv_avail;
 #endif /* LWIP_SO_RCVBUF */
-  /** flags holding more netconn-internal state, see NETCONN_FLAG_* defines */
-  u8_t flags;
+    /** flags holding more netconn-internal state, see NETCONN_FLAG_* defines */
+    u8_t flags;
 #if LWIP_TCP
-  /** TCP: when data passed to netconn_write doesn't fit into the send buffer,
-      this temporarily stores how much is already sent. */
-  size_t write_offset;
-  /** TCP: when data passed to netconn_write doesn't fit into the send buffer,
-      this temporarily stores the message.
-      Also used during connect and close. */
-  struct api_msg_msg *current_msg;
+    /** TCP: when data passed to netconn_write doesn't fit into the send buffer,
+        this temporarily stores how much is already sent. */
+    size_t write_offset;
+    /** TCP: when data passed to netconn_write doesn't fit into the send buffer,
+        this temporarily stores the message.
+        Also used during connect and close. */
+    struct api_msg_msg *current_msg;
 #endif /* LWIP_TCP */
-  /** A callback function that is informed about events for this netconn */
-  netconn_callback callback;
+    /** A callback function that is informed about events for this netconn */
+    netconn_callback callback;
 };
 
 /** Register an Network connection event */
@@ -213,7 +213,7 @@ struct netconn {
 #define netconn_new_with_callback(t, c) netconn_new_with_proto_and_callback(t, 0, c)
 struct
 netconn *netconn_new_with_proto_and_callback(enum netconn_type t, u8_t proto,
-                                             netconn_callback callback);
+        netconn_callback callback);
 err_t   netconn_delete(struct netconn *conn);
 /** Get the type of a netconn (as enum netconn_type). */
 #define netconn_type(conn) (conn->type)

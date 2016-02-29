@@ -5,23 +5,23 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -33,7 +33,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -169,8 +169,7 @@ PrintCANMessageInfo(tCANMsgObject *psCANMsg, uint32_t ui32MsgObj)
     // Check to see if there is an indication that some messages were
     // lost.
     //
-    if(psCANMsg->ui32Flags & MSG_OBJ_DATA_LOST)
-    {
+    if(psCANMsg->ui32Flags & MSG_OBJ_DATA_LOST) {
         UARTprintf("CAN message loss detected on message object %d\n",
                    ui32MsgObj);
     }
@@ -180,8 +179,7 @@ PrintCANMessageInfo(tCANMsgObject *psCANMsg, uint32_t ui32MsgObj)
     //
     UARTprintf("Msg Obj=%u ID=0x%05X len=%u data=0x", ui32MsgObj,
                psCANMsg->ui32MsgID, psCANMsg->ui32MsgLen);
-    for(uIdx = 0; uIdx < psCANMsg->ui32MsgLen; uIdx++)
-    {
+    for(uIdx = 0; uIdx < psCANMsg->ui32MsgLen; uIdx++) {
         UARTprintf("%02X ", psCANMsg->pui8MsgData[uIdx]);
     }
     UARTprintf("\n");
@@ -207,8 +205,7 @@ CANIntHandler(void)
     //
     // If the cause is a controller status interrupt, then get the status
     //
-    if(ui32Status == CAN_INT_INTID_STATUS)
-    {
+    if(ui32Status == CAN_INT_INTID_STATUS) {
         //
         // Read the controller status.  This will return a field of status
         // error bits that can indicate various errors.  Error processing
@@ -227,8 +224,7 @@ CANIntHandler(void)
     //
     // Check if the cause is message object 1.
     //
-    else if(ui32Status == 1)
-    {
+    else if(ui32Status == 1) {
         //
         // Getting to this point means that the RX interrupt occurred on
         // message object 1, and the message reception is complete.  Clear the
@@ -258,8 +254,7 @@ CANIntHandler(void)
     //
     // Check if the cause is message object 2.
     //
-    else if(ui32Status == 2)
-    {
+    else if(ui32Status == 2) {
         CANIntClear(CAN0_BASE, 2);
         g_ui32MsgCount++;
         g_bRXFlag2 = 1;
@@ -269,8 +264,7 @@ CANIntHandler(void)
     //
     // Check if the cause is message object 3.
     //
-    else if(ui32Status == 3)
-    {
+    else if(ui32Status == 3) {
         CANIntClear(CAN0_BASE, 3);
         g_ui32MsgCount++;
         g_bRXFlag3 = 1;
@@ -281,8 +275,7 @@ CANIntHandler(void)
     // Otherwise, something unexpected caused the interrupt.  This should
     // never happen.
     //
-    else
-    {
+    else {
         //
         // Spurious interrupt handling can go here.
         //
@@ -317,7 +310,7 @@ main(void)
     ui32SysClock = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
                                        SYSCTL_OSC_MAIN |
                                        SYSCTL_USE_OSC)
-                                       25000000);
+                                      25000000);
 #else
     SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN |
                    SYSCTL_XTAL_16MHZ);
@@ -373,13 +366,13 @@ main(void)
     // over the CAN bus timing by using the function CANBitTimingSet() instead
     // of this one, if needed.
     // In this example, the CAN bus is set to 500 kHz.  In the function below,
-    // the call to SysCtlClockGet() or ui32SysClock is used to determine the 
-    // clock rate that is used for clocking the CAN peripheral.  This can be 
-    // replaced with a  fixed value if you know the value of the system clock, 
-    // saving the extra function call.  For some parts, the CAN peripheral is 
-    // clocked by a fixed 8 MHz regardless of the system clock in which case 
-    // the call to SysCtlClockGet() or ui32SysClock should be replaced with 
-    // 8000000.  Consult the data sheet for more information about CAN 
+    // the call to SysCtlClockGet() or ui32SysClock is used to determine the
+    // clock rate that is used for clocking the CAN peripheral.  This can be
+    // replaced with a  fixed value if you know the value of the system clock,
+    // saving the extra function call.  For some parts, the CAN peripheral is
+    // clocked by a fixed 8 MHz regardless of the system clock in which case
+    // the call to SysCtlClockGet() or ui32SysClock should be replaced with
+    // 8000000.  Consult the data sheet for more information about CAN
     // peripheral clocking.
     //
 #if defined(TARGET_IS_TM4C129_RA0) ||                                         \
@@ -458,15 +451,13 @@ main(void)
     // of CAN FIFO mode which will allow messages to be buffered before they
     // are processed.
     //
-    for(;;)
-    {
+    for(;;) {
         //
         // If the flag for message object 1 is set, that means that the RX
         // interrupt occurred and there is a message ready to be read from
         // this CAN message object.
         //
-        if(g_bRXFlag1)
-        {
+        if(g_bRXFlag1) {
             //
             // Reuse the same message object that was used earlier to configure
             // the CAN for receiving messages.  A buffer for storing the
@@ -502,8 +493,7 @@ main(void)
         // Check for message received on message object 2.  If so then
         // read message and print information.
         //
-        if(g_bRXFlag2)
-        {
+        if(g_bRXFlag2) {
             sCANMessage.pui8MsgData = pui8MsgData;
             CANMessageGet(CAN0_BASE, 2, &sCANMessage, 0);
             g_bRXFlag2 = 0;
@@ -514,8 +504,7 @@ main(void)
         // Check for message received on message object 3.  If so then
         // read message and print information.
         //
-        if(g_bRXFlag3)
-        {
+        if(g_bRXFlag3) {
             sCANMessage.pui8MsgData = pui8MsgData;
             CANMessageGet(CAN0_BASE, 3, &sCANMessage, 0);
             g_bRXFlag3 = 0;

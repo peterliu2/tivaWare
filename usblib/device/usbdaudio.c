@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2009-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -80,12 +80,11 @@
 // changed at runtime based on the client's requirements.
 //
 //*****************************************************************************
-static uint8_t g_pui8AudioDeviceDescriptor[] =
-{
+static uint8_t g_pui8AudioDeviceDescriptor[] = {
     18,                     // Size of this structure.
     USB_DTYPE_DEVICE,       // Type of this structure.
     USBShort(0x110),        // USB version 1.1 (if we say 2.0, hosts assume
-                            // high-speed - see USB 2.0 spec 9.2.6.6)
+    // high-speed - see USB 2.0 spec 9.2.6.6)
     0,                      // USB Device Class (spec 5.1.1)
     0,                      // USB Device Sub-class (spec 5.1.1)
     0,                      // USB Device protocol (spec 5.1.1)
@@ -113,8 +112,7 @@ static uint8_t g_pui8AudioDeviceDescriptor[] =
 // be able to patch some values in it based on client requirements.
 //
 //*****************************************************************************
-static uint8_t g_pui8AudioDescriptor[] =
-{
+static uint8_t g_pui8AudioDescriptor[] = {
     //
     // Configuration descriptor header.
     //
@@ -122,10 +120,10 @@ static uint8_t g_pui8AudioDescriptor[] =
     USB_DTYPE_CONFIGURATION,    // Type of this descriptor.
     USBShort(32),               // The total size of this full structure.
     2,                          // The number of interfaces in this
-                                // configuration.
+    // configuration.
     1,                          // The unique value for this configuration.
     0,                          // The string identifier that describes this
-                                // configuration.
+    // configuration.
     USB_CONF_ATTR_BUS_PWR,      // Bus Powered, Self Powered, remote wake up.
     250,                        // The maximum power in 2mA increments.
 };
@@ -136,8 +134,7 @@ static uint8_t g_pui8AudioDescriptor[] =
 // composite devices.
 //
 //*****************************************************************************
-uint8_t g_pui8IADAudioDescriptor[AUDIODESCRIPTOR_SIZE] =
-{
+uint8_t g_pui8IADAudioDescriptor[AUDIODESCRIPTOR_SIZE] = {
 
     8,                          // Size of the interface descriptor.
     USB_DTYPE_INTERFACE_ASC,    // Interface Association Type.
@@ -149,8 +146,7 @@ uint8_t g_pui8IADAudioDescriptor[AUDIODESCRIPTOR_SIZE] =
     0                           // The string index for this association.
 };
 
-const tConfigSection g_sIADAudioConfigSection =
-{
+const tConfigSection g_sIADAudioConfigSection = {
     sizeof(g_pui8IADAudioDescriptor),
     g_pui8IADAudioDescriptor
 };
@@ -161,8 +157,7 @@ const tConfigSection g_sIADAudioConfigSection =
 // don't need to modify anything in it at runtime.
 //
 //*****************************************************************************
-const uint8_t g_pui8AudioControlInterface[CONTROLINTERFACE_SIZE] =
-{
+const uint8_t g_pui8AudioControlInterface[CONTROLINTERFACE_SIZE] = {
     //
     // Vendor-specific Interface Descriptor.
     //
@@ -171,11 +166,11 @@ const uint8_t g_pui8AudioControlInterface[CONTROLINTERFACE_SIZE] =
     AUDIO_INTERFACE_CONTROL,    // The index for this interface.
     0,                          // The alternate setting for this interface.
     0,                          // The number of endpoints used by this
-                                // interface.
+    // interface.
     USB_CLASS_AUDIO,            // The interface class
     USB_ASC_AUDIO_CONTROL,      // The interface sub-class.
     0,                          // The interface protocol for the sub-class
-                                // specified above.
+    // specified above.
     0,                          // The string index for this interface.
 
     //
@@ -185,13 +180,13 @@ const uint8_t g_pui8AudioControlInterface[CONTROLINTERFACE_SIZE] =
     USB_DTYPE_CS_INTERFACE,     // Interface descriptor is class specific.
     USB_ACDSTYPE_HEADER,        // Descriptor sub-type is HEADER.
     USBShort(0x0100),           // Audio Device Class Specification Release
-                                // Number in Binary-Coded Decimal.
-                                // Total number of bytes in
-                                // g_pui8AudioControlInterface
+    // Number in Binary-Coded Decimal.
+    // Total number of bytes in
+    // g_pui8AudioControlInterface
     USBShort((9 + 9 + 12 + 13 + 9)),
     1,                          // Number of streaming interfaces.
     1,                          // Index of the first and only streaming
-                                // interface.
+    // interface.
 
     //
     // Audio Input Terminal Descriptor.
@@ -200,14 +195,14 @@ const uint8_t g_pui8AudioControlInterface[CONTROLINTERFACE_SIZE] =
     USB_DTYPE_CS_INTERFACE,     // Interface descriptor is class specific.
     USB_ACDSTYPE_IN_TERMINAL,   // Descriptor sub-type is INPUT_TERMINAL.
     AUDIO_IN_TERMINAL_ID,       // Terminal ID for this interface.
-                                // USB streaming interface.
+    // USB streaming interface.
     USBShort(USB_TTYPE_STREAMING),
     0,                          // ID of the Output Terminal to which this
-                                // Input Terminal is associated.
+    // Input Terminal is associated.
     2,                          // Number of logical output channels in the
-                                // Terminal's output audio channel cluster.
+    // Terminal's output audio channel cluster.
     USBShort((USB_CHANNEL_L |   // Describes the spatial location of the
-             USB_CHANNEL_R)),   // logical channels.
+    USB_CHANNEL_R)),   // logical channels.
     0,                          // Channel Name string index.
     0,                          // Terminal Name string index.
 
@@ -219,14 +214,14 @@ const uint8_t g_pui8AudioControlInterface[CONTROLINTERFACE_SIZE] =
     USB_ACDSTYPE_FEATURE_UNIT,  // Descriptor sub-type is FEATURE_UNIT.
     AUDIO_CONTROL_ID,           // Unit ID for this interface.
     AUDIO_IN_TERMINAL_ID,       // ID of the Unit or Terminal to which this
-                                // Feature Unit is connected.
+    // Feature Unit is connected.
     2,                          // Size in bytes of an element of the
-                                // bmaControls() array that follows.
-                                // Master Mute control.
+    // bmaControls() array that follows.
+    // Master Mute control.
     USBShort(USB_ACONTROL_MUTE),
-                                // Left channel volume control.
+    // Left channel volume control.
     USBShort(USB_ACONTROL_VOLUME),
-                                // Right channel volume control.
+    // Right channel volume control.
     USBShort(USB_ACONTROL_VOLUME),
     0,                          // Feature unit string index.
 
@@ -237,12 +232,12 @@ const uint8_t g_pui8AudioControlInterface[CONTROLINTERFACE_SIZE] =
     USB_DTYPE_CS_INTERFACE,     // Interface descriptor is class specific.
     USB_ACDSTYPE_OUT_TERMINAL,  // Descriptor sub-type is INPUT_TERMINAL.
     AUDIO_OUT_TERMINAL_ID,      // Terminal ID for this interface.
-                                // Output type is a generic speaker.
+    // Output type is a generic speaker.
     USBShort(USB_ATTYPE_SPEAKER),
     AUDIO_IN_TERMINAL_ID,       // ID of the input terminal to which this
-                                // output terminal is connected.
+    // output terminal is connected.
     AUDIO_CONTROL_ID,           // ID of the feature unit that this output
-                                // terminal is connected to.
+    // terminal is connected to.
     0,                          // Output terminal string index.
 
 };
@@ -255,8 +250,7 @@ const uint8_t g_pui8AudioControlInterface[CONTROLINTERFACE_SIZE] =
 // is used when the audio device is active.
 //
 //*****************************************************************************
-const uint8_t g_pui8AudioStreamInterface[STREAMINTERFACE_SIZE] =
-{
+const uint8_t g_pui8AudioStreamInterface[STREAMINTERFACE_SIZE] = {
     //
     // Vendor-specific Interface Descriptor.
     //
@@ -265,7 +259,7 @@ const uint8_t g_pui8AudioStreamInterface[STREAMINTERFACE_SIZE] =
     AUDIO_INTERFACE_OUTPUT,     // The index for this interface.
     0,                          // The alternate setting for this interface.
     0,                          // The number of endpoints used by this
-                                // interface.
+    // interface.
     USB_CLASS_AUDIO,            // The interface class
     USB_ASC_AUDIO_STREAMING,    // The interface sub-class.
     0,                          // Unused must be 0.
@@ -279,7 +273,7 @@ const uint8_t g_pui8AudioStreamInterface[STREAMINTERFACE_SIZE] =
     1,                          // The index for this interface.
     1,                          // The alternate setting for this interface.
     1,                          // The number of endpoints used by this
-                                // interface.
+    // interface.
     USB_CLASS_AUDIO,            // The interface class
     USB_ASC_AUDIO_STREAMING,    // The interface sub-class.
     0,                          // Unused must be 0.
@@ -292,7 +286,7 @@ const uint8_t g_pui8AudioStreamInterface[STREAMINTERFACE_SIZE] =
     USB_DTYPE_CS_INTERFACE,     // Interface descriptor is class specific.
     USB_ASDSTYPE_GENERAL,       // General information.
     AUDIO_IN_TERMINAL_ID,       // ID of the terminal to which this streaming
-                                // interface is connected.
+    // interface is connected.
     1,                          // One frame delay.
     USBShort(USB_ADF_PCM),      //
 
@@ -314,8 +308,8 @@ const uint8_t g_pui8AudioStreamInterface[STREAMINTERFACE_SIZE] =
     //
     9,                              // The size of the endpoint descriptor.
     USB_DTYPE_ENDPOINT,             // Descriptor type is an endpoint.
-                                    // OUT endpoint with address
-                                    // ISOC_OUT_ENDPOINT.
+    // OUT endpoint with address
+    // ISOC_OUT_ENDPOINT.
     USB_EP_DESC_OUT | USBEPToIndex(ISOC_OUT_ENDPOINT),
     USB_EP_ATTR_ISOC |              // Endpoint is an adaptive isochronous data
     USB_EP_ATTR_ISOC_ADAPT |        //  endpoint.
@@ -330,7 +324,7 @@ const uint8_t g_pui8AudioStreamInterface[STREAMINTERFACE_SIZE] =
     //
     7,                              // The size of the descriptor.
     USB_ACSDT_ENDPOINT,             // Audio Class Specific Endpoint
-                                    // Descriptor.
+    // Descriptor.
     USB_ASDSTYPE_GENERAL,           // This is a general descriptor.
     USB_EP_ATTR_ACG_SAMPLING,       // Sampling frequency is supported.
     USB_EP_LOCKDELAY_UNDEF,         // Undefined lock delay units.
@@ -345,20 +339,17 @@ const uint8_t g_pui8AudioStreamInterface[STREAMINTERFACE_SIZE] =
 // interface.
 //
 //*****************************************************************************
-const tConfigSection g_sAudioConfigSection =
-{
+const tConfigSection g_sAudioConfigSection = {
     sizeof(g_pui8AudioDescriptor),
     g_pui8AudioDescriptor
 };
 
-const tConfigSection g_sAudioStreamInterfaceSection =
-{
+const tConfigSection g_sAudioStreamInterfaceSection = {
     sizeof(g_pui8AudioStreamInterface),
     g_pui8AudioStreamInterface
 };
 
-const tConfigSection g_sAudioControlInterfaceSection =
-{
+const tConfigSection g_sAudioControlInterfaceSection = {
     sizeof(g_pui8AudioControlInterface),
     g_pui8AudioControlInterface
 };
@@ -369,8 +360,7 @@ const tConfigSection g_sAudioControlInterfaceSection =
 // single, complete audio device configuration descriptor.
 //
 //*****************************************************************************
-const tConfigSection *g_psAudioSections[] =
-{
+const tConfigSection *g_psAudioSections[] = {
     &g_sAudioConfigSection,
     &g_sIADAudioConfigSection,
     &g_sAudioControlInterfaceSection,
@@ -387,8 +377,7 @@ const tConfigSection *g_psAudioSections[] =
 // together to generate the configuration descriptor.
 //
 //*****************************************************************************
-const tConfigHeader g_sAudioConfigHeader =
-{
+const tConfigHeader g_sAudioConfigHeader = {
     NUM_AUDIO_SECTIONS,
     g_psAudioSections
 };
@@ -398,8 +387,7 @@ const tConfigHeader g_sAudioConfigHeader =
 // Configuration Descriptor.
 //
 //*****************************************************************************
-const tConfigHeader * const g_ppAudioConfigDescriptors[] =
-{
+const tConfigHeader * const g_ppAudioConfigDescriptors[] = {
     &g_sAudioConfigHeader
 };
 
@@ -423,8 +411,7 @@ static void HandleDevice(void *pvAudioDevice, uint32_t ui32Request,
 // The device information structure for the USB Audio device.
 //
 //*****************************************************************************
-static const tCustomHandlers g_sAudioHandlers =
-{
+static const tCustomHandlers g_sAudioHandlers = {
     //
     // GetDescriptor
     //
@@ -514,29 +501,24 @@ DataReceived(void *pvAudioDevice, uint32_t ui32Info)
     // If there is an update pending and the request was to set a current
     // value then check which value was set.
     //
-    if(psInst->ui16Update && (psInst->ui8Request == USB_AC_SET_CUR))
-    {
+    if(psInst->ui16Update && (psInst->ui8Request == USB_AC_SET_CUR)) {
         //
         // Only handling interface requests.
         //
         if((psInst->ui16RequestType & USB_RTYPE_RECIPIENT_M) ==
-           USB_RTYPE_INTERFACE)
-        {
-            if(psInst->ui16Update == VOLUME_CONTROL)
-            {
+                USB_RTYPE_INTERFACE) {
+            if(psInst->ui16Update == VOLUME_CONTROL) {
                 //
                 // Inform the callback of the new volume.
                 //
                 psAudioDevice->pfnCallback(0, USBD_AUDIO_EVENT_VOLUME,
-                                      psInst->i16Volume, 0);
-            }
-            else if(psAudioDevice->sPrivateData.ui16Update == MUTE_CONTROL)
-            {
+                                           psInst->i16Volume, 0);
+            } else if(psAudioDevice->sPrivateData.ui16Update == MUTE_CONTROL) {
                 //
                 // Inform the callback of the new data.
                 //
                 psAudioDevice->pfnCallback(0, USBD_AUDIO_EVENT_MUTE,
-                                      psInst->ui8Mute, 0);
+                                           psInst->ui8Mute, 0);
             }
         }
         psInst->ui16Update = 0;
@@ -577,8 +559,7 @@ HandleEndpoints(void *pvAudioDevice, uint32_t ui32Status)
     //
     // See if there is a receive interrupt pending.
     //
-    if(ui32Status & (0x10000 << USBEPToIndex(psInst->ui8OUTEndpoint)))
-    {
+    if(ui32Status & (0x10000 << USBEPToIndex(psInst->ui8OUTEndpoint))) {
         //
         // Get the amount of data available in the FIFO.
         //
@@ -596,11 +577,9 @@ HandleEndpoints(void *pvAudioDevice, uint32_t ui32Status)
         //
         USBLibDMATransfer(psInst->psDMAInstance, psInst->ui8OUTDMA,
                           psInst->sBuffer.pvData, ui32Size);
-    }
-    else if((USBLibDMAChannelStatus(psInst->psDMAInstance,
-                                    psInst->ui8OUTDMA) ==
-            USBLIBSTATUS_DMA_COMPLETE))
-    {
+    } else if((USBLibDMAChannelStatus(psInst->psDMAInstance,
+                                      psInst->ui8OUTDMA) ==
+               USBLIBSTATUS_DMA_COMPLETE)) {
         USBEndpointDMADisable(USB0_BASE,
                               psInst->ui8OUTEndpoint, USB_EP_DEV_OUT);
 
@@ -647,22 +626,17 @@ HandleDevice(void *pvAudioDevice, uint32_t ui32Request, void *pvRequestData)
     //
     pui8Data = (uint8_t *)pvRequestData;
 
-    switch(ui32Request)
-    {
+    switch(ui32Request) {
         //
         // This was an interface change event.
         //
-        case USB_EVENT_COMP_IFACE_CHANGE:
-        {
+        case USB_EVENT_COMP_IFACE_CHANGE: {
             //
             // Save the change to the appropriate interface number.
             //
-            if(pui8Data[0] == AUDIO_INTERFACE_CONTROL)
-            {
+            if(pui8Data[0] == AUDIO_INTERFACE_CONTROL) {
                 psInst->ui8InterfaceControl = pui8Data[1];
-            }
-            else if(pui8Data[0] == AUDIO_INTERFACE_OUTPUT)
-            {
+            } else if(pui8Data[0] == AUDIO_INTERFACE_OUTPUT) {
                 psInst->ui8InterfaceAudio = pui8Data[1];
             }
             break;
@@ -671,13 +645,11 @@ HandleDevice(void *pvAudioDevice, uint32_t ui32Request, void *pvRequestData)
         //
         // This was an endpoint change event.
         //
-        case USB_EVENT_COMP_EP_CHANGE:
-        {
+        case USB_EVENT_COMP_EP_CHANGE: {
             //
             // Determine if this is an IN or OUT endpoint that has changed.
             //
-            if((pui8Data[0] & USB_EP_DESC_IN) == 0)
-            {
+            if((pui8Data[0] & USB_EP_DESC_IN) == 0) {
                 //
                 // Extract the new endpoint number without the DIR bit.
                 //
@@ -687,8 +659,7 @@ HandleDevice(void *pvAudioDevice, uint32_t ui32Request, void *pvRequestData)
                 // If the DMA channel has already been allocated then clear
                 // that channel and prepare to possibly use a new one.
                 //
-                if(psInst->ui8OUTDMA != 0)
-                {
+                if(psInst->ui8OUTDMA != 0) {
                     USBLibDMAChannelRelease(psInst->psDMAInstance,
                                             psInst->ui8OUTDMA);
                 }
@@ -723,8 +694,7 @@ HandleDevice(void *pvAudioDevice, uint32_t ui32Request, void *pvRequestData)
         // Handle class specific reconfiguring of the configuration descriptor
         // once the composite class has built the full descriptor.
         //
-        case USB_EVENT_COMP_CONFIG:
-        {
+        case USB_EVENT_COMP_CONFIG: {
             //
             // This sets the bFirstInterface of the Interface Association
             // descriptor to the first interface which is the control
@@ -734,10 +704,8 @@ HandleDevice(void *pvAudioDevice, uint32_t ui32Request, void *pvRequestData)
 
             break;
         }
-        case USB_EVENT_LPM_RESUME:
-        {
-            if(psAudioDevice->pfnCallback)
-            {
+        case USB_EVENT_LPM_RESUME: {
+            if(psAudioDevice->pfnCallback) {
                 //
                 // Pass the LPM resume event to the client.
                 //
@@ -746,10 +714,8 @@ HandleDevice(void *pvAudioDevice, uint32_t ui32Request, void *pvRequestData)
             }
             break;
         }
-        case USB_EVENT_LPM_SLEEP:
-        {
-            if(psAudioDevice->pfnCallback)
-            {
+        case USB_EVENT_LPM_SLEEP: {
+            if(psAudioDevice->pfnCallback) {
                 //
                 // Pass the LPM sleep event to the client.
                 //
@@ -758,10 +724,8 @@ HandleDevice(void *pvAudioDevice, uint32_t ui32Request, void *pvRequestData)
             }
             break;
         }
-        case USB_EVENT_LPM_ERROR:
-        {
-            if(psAudioDevice->pfnCallback)
-            {
+        case USB_EVENT_LPM_ERROR: {
+            if(psAudioDevice->pfnCallback) {
                 //
                 // Pass the LPM error event to the client.
                 //
@@ -770,8 +734,7 @@ HandleDevice(void *pvAudioDevice, uint32_t ui32Request, void *pvRequestData)
             }
             break;
         }
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -826,23 +789,18 @@ InterfaceChange(void *pvAudioDevice, uint8_t ui8Interface,
     //
     // Check which interface to change into.
     //
-    if(ui8AlternateSetting == 0)
-    {
+    if(ui8AlternateSetting == 0) {
         //
         // Alternate setting 0 is an inactive state.
         //
-        if(psAudioDevice->pfnCallback)
-        {
+        if(psAudioDevice->pfnCallback) {
             psAudioDevice->pfnCallback(0, USBD_AUDIO_EVENT_IDLE, 0, 0);
         }
-    }
-    else
-    {
+    } else {
         //
         // Alternate setting 1 is the active state.
         //
-        if(psAudioDevice->pfnCallback)
-        {
+        if(psAudioDevice->pfnCallback) {
             psAudioDevice->pfnCallback(0, USBD_AUDIO_EVENT_ACTIVE, 0, 0);
         }
     }
@@ -870,8 +828,7 @@ ConfigChangeHandler(void *pvAudioDevice, uint32_t ui32Value)
     // If we have a control callback, let the client know we are open for
     // business.
     //
-    if(psAudioDevice->pfnCallback)
-    {
+    if(psAudioDevice->pfnCallback) {
         //
         // Pass the connected event to the client.
         //
@@ -1019,8 +976,7 @@ USBDAudioCompositeInit(uint32_t ui32Index, tUSBDAudioDevice *psAudioDevice,
     // Initialize the composite entry that is used by the composite device
     // class.
     //
-    if(psCompEntry != 0)
-    {
+    if(psCompEntry != 0) {
         psCompEntry->psDevInfo = &psInst->sDevInfo;
         psCompEntry->pvInstance = (void *)psAudioDevice;
     }
@@ -1077,9 +1033,9 @@ USBDAudioCompositeInit(uint32_t ui32Index, tUSBDAudioDevice *psAudioDevice,
     // structure.
     //
     psInst->sDevInfo.ppui8StringDescriptors =
-                                    psAudioDevice->ppui8StringDescriptors;
+        psAudioDevice->ppui8StringDescriptors;
     psInst->sDevInfo.ui32NumStringDescriptors =
-                                    psAudioDevice->ui32NumStringDescriptors;
+        psAudioDevice->ui32NumStringDescriptors;
 
     //
     // Get the DMA instance pointer.
@@ -1180,20 +1136,16 @@ HandleRequests(void *pvAudioDevice, tUSBRequest *psUSBRequest)
     // Check if this is an endpoint request to the audio streaming endpoint.
     //
     if((ui32Recipient == USB_RTYPE_ENDPOINT) &&
-       (psUSBRequest->wIndex == USBEPToIndex(psInst->ui8OUTEndpoint)))
-    {
+            (psUSBRequest->wIndex == USBEPToIndex(psInst->ui8OUTEndpoint))) {
         //
         // Determine the type of request.
         //
-        switch(psInst->ui8Request)
-        {
-            case USB_AC_SET_CUR:
-            {
+        switch(psInst->ui8Request) {
+            case USB_AC_SET_CUR: {
                 //
                 // Handle retrieving the sample rate.
                 //
-                if(psUSBRequest->wValue == SAMPLING_FREQ_CONTROL)
-                {
+                if(psUSBRequest->wValue == SAMPLING_FREQ_CONTROL) {
                     //
                     // Retrieve the requested sample rate.
                     //
@@ -1208,13 +1160,11 @@ HandleRequests(void *pvAudioDevice, tUSBRequest *psUSBRequest)
                 }
                 break;
             }
-            case USB_AC_GET_CUR:
-            {
+            case USB_AC_GET_CUR: {
                 //
                 // Handle retrieving the sample rate.
                 //
-                if(psUSBRequest->wValue == SAMPLING_FREQ_CONTROL)
-                {
+                if(psUSBRequest->wValue == SAMPLING_FREQ_CONTROL) {
                     //
                     // Send back the current sample rate.
                     //
@@ -1224,8 +1174,7 @@ HandleRequests(void *pvAudioDevice, tUSBRequest *psUSBRequest)
                 }
                 break;
             }
-            default:
-            {
+            default: {
                 //
                 // Stall on unknown commands.
                 //
@@ -1233,14 +1182,11 @@ HandleRequests(void *pvAudioDevice, tUSBRequest *psUSBRequest)
                 break;
             }
         }
-    }
-    else if(ui32Recipient == USB_RTYPE_INTERFACE)
-    {
+    } else if(ui32Recipient == USB_RTYPE_INTERFACE) {
         //
         // Make sure the request was for the control interface.
         //
-        if((uint8_t)psUSBRequest->wIndex != psInst->ui8InterfaceControl)
-        {
+        if((uint8_t)psUSBRequest->wIndex != psInst->ui8InterfaceControl) {
             return;
         }
 
@@ -1253,26 +1199,20 @@ HandleRequests(void *pvAudioDevice, tUSBRequest *psUSBRequest)
         // Handle an audio control request to the feature control unit.
         //
         if((AUDIO_CONTROL_ID << 8) ==
-           (psUSBRequest->wIndex & USB_CS_CONTROL_M))
-        {
+                (psUSBRequest->wIndex & USB_CS_CONTROL_M)) {
             //
             // Determine the type of request.
             //
-            switch(psInst->ui8Request)
-            {
-                case USB_AC_GET_MAX:
-                {
-                    if(ui32Control == VOLUME_CONTROL)
-                    {
+            switch(psInst->ui8Request) {
+                case USB_AC_GET_MAX: {
+                    if(ui32Control == VOLUME_CONTROL) {
                         //
                         // Return the maximum volume setting.
                         //
                         USBDCDSendDataEP0(0,
                                           (uint8_t *)&psInst->i16VolumeMax,
                                           2);
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Stall on unknown commands.
                         //
@@ -1280,19 +1220,15 @@ HandleRequests(void *pvAudioDevice, tUSBRequest *psUSBRequest)
                     }
                     break;
                 }
-                case USB_AC_GET_MIN:
-                {
-                    if(ui32Control == VOLUME_CONTROL)
-                    {
+                case USB_AC_GET_MIN: {
+                    if(ui32Control == VOLUME_CONTROL) {
                         //
                         // Return the minimum volume setting.
                         //
                         USBDCDSendDataEP0(0,
                                           (uint8_t *)&psInst->i16VolumeMin,
                                           2);
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Stall on unknown commands.
                         //
@@ -1300,19 +1236,15 @@ HandleRequests(void *pvAudioDevice, tUSBRequest *psUSBRequest)
                     }
                     break;
                 }
-                case USB_AC_GET_RES:
-                {
-                    if(ui32Control == VOLUME_CONTROL)
-                    {
+                case USB_AC_GET_RES: {
+                    if(ui32Control == VOLUME_CONTROL) {
                         //
                         // Return the volume step setting.
                         //
                         USBDCDSendDataEP0(0,
                                           (uint8_t *)&psInst->i16VolumeStep,
                                           2);
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Stall on unknown commands.
                         //
@@ -1320,27 +1252,21 @@ HandleRequests(void *pvAudioDevice, tUSBRequest *psUSBRequest)
                     }
                     break;
                 }
-                case USB_AC_GET_CUR:
-                {
-                    if(ui32Control == VOLUME_CONTROL)
-                    {
+                case USB_AC_GET_CUR: {
+                    if(ui32Control == VOLUME_CONTROL) {
                         //
                         // Send back the current volume level.
                         //
                         USBDCDSendDataEP0(0,
                                           (uint8_t *)&psInst->i16Volume,
                                           2);
-                    }
-                    else if(ui32Control == MUTE_CONTROL)
-                    {
+                    } else if(ui32Control == MUTE_CONTROL) {
                         //
                         // Send back the current mute value.
                         //
                         USBDCDSendDataEP0(0,
                                           (uint8_t *)&psInst->ui8Mute, 1);
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Stall on unknown commands.
                         //
@@ -1348,10 +1274,8 @@ HandleRequests(void *pvAudioDevice, tUSBRequest *psUSBRequest)
                     }
                     break;
                 }
-                case USB_AC_SET_CUR:
-                {
-                    if(ui32Control == VOLUME_CONTROL)
-                    {
+                case USB_AC_SET_CUR: {
+                    if(ui32Control == VOLUME_CONTROL) {
                         //
                         // Read the new volume level.
                         //
@@ -1363,9 +1287,7 @@ HandleRequests(void *pvAudioDevice, tUSBRequest *psUSBRequest)
                         // Save what we are updating.
                         //
                         psInst->ui16Update = VOLUME_CONTROL;
-                    }
-                    else if(ui32Control == MUTE_CONTROL)
-                    {
+                    } else if(ui32Control == MUTE_CONTROL) {
                         //
                         // Read the new mute setting.
                         //
@@ -1377,9 +1299,7 @@ HandleRequests(void *pvAudioDevice, tUSBRequest *psUSBRequest)
                         // Save what we are updating.
                         //
                         psInst->ui16Update = MUTE_CONTROL;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Stall on unknown commands.
                         //
@@ -1387,23 +1307,19 @@ HandleRequests(void *pvAudioDevice, tUSBRequest *psUSBRequest)
                     }
                     break;
                 }
-                case USB_AC_SET_RES:
-                {
-                    if(ui32Control == VOLUME_CONTROL)
-                    {
+                case USB_AC_SET_RES: {
+                    if(ui32Control == VOLUME_CONTROL) {
                         //
                         // Read the new volume step setting.
                         //
                         USBDCDRequestDataEP0(0,
-                            (uint8_t *)&psInst->i16VolumeStep, 2);
+                                             (uint8_t *)&psInst->i16VolumeStep, 2);
 
                         //
                         // Save what we are updating.
                         //
                         psInst->ui16Update = VOLUME_CONTROL;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Stall on unknown commands.
                         //
@@ -1411,8 +1327,7 @@ HandleRequests(void *pvAudioDevice, tUSBRequest *psUSBRequest)
                     }
                     break;
                 }
-                default:
-                {
+                default: {
                     //
                     // Stall on unknown commands.
                     //
@@ -1426,8 +1341,7 @@ HandleRequests(void *pvAudioDevice, tUSBRequest *psUSBRequest)
     //
     // Stall on all unknown commands.
     //
-    if(ui32Stall)
-    {
+    if(ui32Stall) {
         USBDCDStallEP0(0);
     }
 }

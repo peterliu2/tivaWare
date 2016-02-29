@@ -201,12 +201,9 @@ ComparatorValueGet(unsigned long ulBase, unsigned long ulComp)
     // Return the appropriate value based on the comparator's present output
     // value.
     //
-    if(HWREG(ulBase + (ulComp * 0x20) + COMP_O_ACSTAT0) & COMP_ACSTAT_OVAL)
-    {
+    if(HWREG(ulBase + (ulComp * 0x20) + COMP_O_ACSTAT0) & COMP_ACSTAT_OVAL) {
         return(true);
-    }
-    else
-    {
+    } else {
         return(false);
     }
 }
@@ -397,12 +394,9 @@ ComparatorIntStatus(unsigned long ulBase, unsigned long ulComp,
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return(((HWREG(ulBase + COMP_O_MIS) >> ulComp) & 1) ? true : false);
-    }
-    else
-    {
+    } else {
         return(((HWREG(ulBase + COMP_O_RIS) >> ulComp) & 1) ? true : false);
     }
 }

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2009-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -124,8 +124,7 @@ uint32_t g_ui32ImageSize;
 // The structure used to define a block of memory.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint8_t *pui8Start;
     uint32_t ui32Length;
 }
@@ -175,8 +174,7 @@ uint8_t g_ui8LastCommand;
 // USBD_DFU_REQUEST_GETSTATUS.
 //
 //*****************************************************************************
-tDFUGetStatusResponse g_sDFUStatus =
-{
+tDFUGetStatusResponse g_sDFUStatus = {
     0, { 5, 0, 0 }, (uint8_t)STATE_IDLE, 0
 };
 
@@ -185,8 +183,7 @@ tDFUGetStatusResponse g_sDFUStatus =
 // The structure sent in response to a valid USBD_DFU_REQUEST_TIVA.
 //
 //*****************************************************************************
-tDFUQueryTIVAProtocol g_sDFUProtocol =
-{
+tDFUQueryTIVAProtocol g_sDFUProtocol = {
     DFU_PROTOCOL_USBLIB_MARKER,
     DFU_PROTOCOL_USBLIB_VERSION_1
 };
@@ -271,8 +268,7 @@ bool g_bAddressSet = false;
 // The languages supported by this device.
 //
 //*****************************************************************************
-const uint8_t g_pui8LangDescriptor[] =
-{
+const uint8_t g_pui8LangDescriptor[] = {
     4,
     USB_DTYPE_STRING,
     USBShort(USB_LANG_EN_US)
@@ -292,8 +288,7 @@ extern void HandleRequestManifestSync(tUSBRequest *psUSBRequest);
 extern void HandleRequestUploadIdle(tUSBRequest *psUSBRequest);
 extern void HandleRequestError(tUSBRequest *psUSBRequest);
 
-tHandleRequests g_pfnRequestHandlers[] =
-{
+tHandleRequests g_pfnRequestHandlers[] = {
     0,                          // STATE_APP_IDLE
     0,                          // STATE_APP_DETACH
     HandleRequestIdle,          // STATE_IDLE
@@ -312,8 +307,7 @@ tHandleRequests g_pfnRequestHandlers[] =
 // The manufacturer string.
 //
 //*****************************************************************************
-const uint8_t g_pui8ManufacturerString[] =
-{
+const uint8_t g_pui8ManufacturerString[] = {
     (17 + 1) * 2,
     USB_DTYPE_STRING,
     'T', 0, 'e', 0, 'x', 0, 'a', 0, 's', 0, ' ', 0, 'I', 0, 'n', 0,
@@ -326,8 +320,7 @@ const uint8_t g_pui8ManufacturerString[] =
 // The product string.
 //
 //*****************************************************************************
-const uint8_t g_pui8ProductString[] =
-{
+const uint8_t g_pui8ProductString[] = {
     (23 + 1) * 2,
     USB_DTYPE_STRING,
     'D', 0, 'e', 0, 'v', 0, 'i', 0, 'c', 0, 'e', 0, ' ', 0, 'F', 0, 'i', 0,
@@ -340,8 +333,7 @@ const uint8_t g_pui8ProductString[] =
 // The serial number string.
 //
 //*****************************************************************************
-const uint8_t g_pui8SerialNumberString[] =
-{
+const uint8_t g_pui8SerialNumberString[] = {
     (3 + 1) * 2,
     USB_DTYPE_STRING,
     '0', 0, '.', 0, '1', 0
@@ -352,8 +344,7 @@ const uint8_t g_pui8SerialNumberString[] =
 // The descriptor string table.
 //
 //*****************************************************************************
-const uint8_t *const g_ppui8StringDescriptors[] =
-{
+const uint8_t *const g_ppui8StringDescriptors[] = {
     g_pui8LangDescriptor,
     g_pui8ManufacturerString,
     g_pui8ProductString,
@@ -365,12 +356,11 @@ const uint8_t *const g_ppui8StringDescriptors[] =
 // DFU Device Descriptor.
 //
 //*****************************************************************************
-const uint8_t g_pui8DFUDeviceDescriptor[] =
-{
+const uint8_t g_pui8DFUDeviceDescriptor[] = {
     18,                         // Size of this structure.
     USB_DTYPE_DEVICE,           // Type of this structure.
     USBShort(0x110),            // USB version 1.1 (if we say 2.0, hosts assume
-                                // high-speed - see USB 2.0 spec 9.2.6.6)
+    // high-speed - see USB 2.0 spec 9.2.6.6)
     USB_CLASS_VEND_SPECIFIC,    // USB Device Class
     0,                          // USB Device Sub-class
     0,                          // USB Device protocol
@@ -389,8 +379,7 @@ const uint8_t g_pui8DFUDeviceDescriptor[] =
 // DFU device configuration descriptor.
 //
 //*****************************************************************************
-const uint8_t g_pui8DFUConfigDescriptor[] =
-{
+const uint8_t g_pui8DFUConfigDescriptor[] = {
     //
     // Configuration descriptor header.
     //
@@ -398,10 +387,10 @@ const uint8_t g_pui8DFUConfigDescriptor[] =
     USB_DTYPE_CONFIGURATION,    // Type of this descriptor.
     USBShort(27),               // The total size of this full structure.
     1,                          // The number of interfaces in this
-                                // configuration.
+    // configuration.
     1,                          // The unique value for this configuration.
     0,                          // The string identifier that describes this
-                                // configuration.
+    // configuration.
 #if USB_BUS_POWERED
     USB_CONF_ATTR_BUS_PWR,      // Bus Powered
 #else
@@ -428,8 +417,8 @@ const uint8_t g_pui8DFUConfigDescriptor[] =
     9,                          // Length of this descriptor.
     0x21,                       // DFU Functional descriptor type
     (DFU_ATTR_CAN_DOWNLOAD |    // DFU attributes.
-     DFU_ATTR_CAN_UPLOAD |
-     DFU_ATTR_MANIFEST_TOLERANT),
+    DFU_ATTR_CAN_UPLOAD |
+    DFU_ATTR_MANIFEST_TOLERANT),
     USBShort(0xFFFF),           // Detach timeout (set to maximum).
     USBShort(DFU_TRANSFER_SIZE),// Transfer size 1KB.
     USBShort(0x0110)            // DFU Version 1.1
@@ -460,24 +449,21 @@ USB0DeviceIntHandler(void)
     //
     // Received a reset from the host.
     //
-    if(ui32GenStatus & USB_IS_RESET)
-    {
+    if(ui32GenStatus & USB_IS_RESET) {
         USBDeviceEnumResetHandler();
     }
 
     //
     // USB device was disconnected.
     //
-    if(ui32GenStatus & USB_IS_DISCON)
-    {
+    if(ui32GenStatus & USB_IS_DISCON) {
         HandleDisconnect();
     }
 
     //
     // Handle end point 0 interrupts.
     //
-    if(ui32TxStatus & USB_TXIE_EP0)
-    {
+    if(ui32TxStatus & USB_TXIE_EP0) {
         USBDeviceEnumHandler();
     }
 }
@@ -562,8 +548,7 @@ SendUploadData(uint16_t ui16Length, bool bAppendHeader)
     // of sending a long packet prematurely and ending the upload before it is
     // complete.
     //
-    if(bAppendHeader)
-    {
+    if(bAppendHeader) {
         tDFUDownloadProgHeader *psHdr;
         uint8_t *pui8From;
         uint8_t *pui8To;
@@ -591,8 +576,7 @@ SendUploadData(uint16_t ui16Length, bool bAppendHeader)
         pui8From = g_sNextUpload.pui8Start;
         pui8To = (uint8_t *)(psHdr + 1);
         for(ui32Loop = (ui16ToSend - sizeof(tDFUDownloadProgHeader)); ui32Loop;
-            ui32Loop--)
-        {
+                ui32Loop--) {
             *pui8To++ = *pui8From++;
         }
 
@@ -607,9 +591,7 @@ SendUploadData(uint16_t ui16Length, bool bAppendHeader)
         g_sNextUpload.pui8Start += ui16ToSend - sizeof(tDFUDownloadProgHeader);
         g_sNextUpload.ui32Length -=
             ui16ToSend - sizeof(tDFUDownloadProgHeader);
-    }
-    else
-    {
+    } else {
         //
         // We are not sending a header so send the requested upload data back
         // to the host directly from its original position.
@@ -685,16 +667,14 @@ HandleRequests(tUSBRequest *psUSBRequest)
     // a 4 byte structure providing a marker and the protocol version
     // number.
     //
-    if(psUSBRequest->bRequest == USBD_DFU_REQUEST_TIVA)
-    {
+    if(psUSBRequest->bRequest == USBD_DFU_REQUEST_TIVA) {
         //
         // Check that the request parameters are all as expected.  We are
         // using the wValue value merely as a way of making it less likely
         // that we respond to another vendor's device-specific request.
         //
         if((psUSBRequest->wLength == sizeof(tDFUQueryTIVAProtocol)) &&
-           (psUSBRequest->wValue == REQUEST_TIVA_VALUE))
-        {
+                (psUSBRequest->wValue == REQUEST_TIVA_VALUE)) {
             //
             // Acknowledge the original request.
             //
@@ -705,9 +685,7 @@ HandleRequests(tUSBRequest *psUSBRequest)
             //
             USBBLSendDataEP0((uint8_t *)&g_sDFUProtocol,
                              sizeof(tDFUQueryTIVAProtocol));
-        }
-        else
-        {
+        } else {
             //
             // The request parameters were not as expected so we assume
             // that this is not our request and stall the endpoint to
@@ -724,16 +702,13 @@ HandleRequests(tUSBRequest *psUSBRequest)
     // state.  If no handler is configured, we stall the endpoint since this
     // implies that requests can't be handled in this state.
     //
-    if(g_pfnRequestHandlers[g_eDFUState])
-    {
+    if(g_pfnRequestHandlers[g_eDFUState]) {
         //
         // Dispatch the request to the relevant handler depending upon the
         // current state.
         //
         (g_pfnRequestHandlers[g_eDFUState])(psUSBRequest);
-    }
-    else
-    {
+    } else {
         USBBLStallEP0();
     }
 }
@@ -746,21 +721,16 @@ HandleRequests(tUSBRequest *psUSBRequest)
 void
 HandleRequestIdle(tUSBRequest *psUSBRequest)
 {
-    switch(psUSBRequest->bRequest)
-    {
+    switch(psUSBRequest->bRequest) {
         //
         // This is a download request.  We need to request the transaction
         // payload unless this is a zero length request in which case we mark
         // the error by stalling the endpoint.
         //
-        case USBD_DFU_REQUEST_DNLOAD:
-        {
-            if(psUSBRequest->wLength)
-            {
+        case USBD_DFU_REQUEST_DNLOAD: {
+            if(psUSBRequest->wLength) {
                 USBBLRequestDataEP0(g_pui8DFUBuffer, psUSBRequest->wLength);
-            }
-            else
-            {
+            } else {
                 USBBLStallEP0();
                 return;
             }
@@ -772,16 +742,14 @@ HandleRequestIdle(tUSBRequest *psUSBRequest)
         // corresponding to the current upload pointer as held in
         // g_sNextUpload.
         //
-        case USBD_DFU_REQUEST_UPLOAD:
-        {
+        case USBD_DFU_REQUEST_UPLOAD: {
             //
             // If we have any upload data to send, send it.  Make sure we append
             // a header if required.
             //
             if(SendUploadData(psUSBRequest->wLength,
                               g_bSuppressUploadHeader ? false :
-                              !g_bUploadBinary))
-            {
+                              !g_bUploadBinary)) {
                 //
                 // We sent a full (max packet size) frame to the host so
                 // transition to UPLOAD_IDLE state since we expect another
@@ -801,8 +769,7 @@ HandleRequestIdle(tUSBRequest *psUSBRequest)
         //
         // Return the current device status structure.
         //
-        case USBD_DFU_REQUEST_GETSTATUS:
-        {
+        case USBD_DFU_REQUEST_GETSTATUS: {
             SendDFUStatus();
             return;
         }
@@ -810,8 +777,7 @@ HandleRequestIdle(tUSBRequest *psUSBRequest)
         //
         // Return the current device state.
         //
-        case USBD_DFU_REQUEST_GETSTATE:
-        {
+        case USBD_DFU_REQUEST_GETSTATE: {
             SendDFUState();
             return;
         }
@@ -820,8 +786,7 @@ HandleRequestIdle(tUSBRequest *psUSBRequest)
         // Ignore the ABORT request.  This returns us to IDLE state but we're
         // there already.
         //
-        case USBD_DFU_REQUEST_ABORT:
-        {
+        case USBD_DFU_REQUEST_ABORT: {
             break;
         }
 
@@ -831,8 +796,7 @@ HandleRequestIdle(tUSBRequest *psUSBRequest)
         //
         case USBD_DFU_REQUEST_CLRSTATUS:
         case USBD_DFU_REQUEST_DETACH:
-        default:
-        {
+        default: {
             USBBLStallEP0();
             return;
         }
@@ -861,22 +825,19 @@ HandleRequestDnloadSync(tUSBRequest *psUSBRequest)
     // directly from this state back to STATE_IDLE once the last operation has
     // completed since we need to be able to accept a new command.
     //
-    switch(psUSBRequest->bRequest)
-    {
+    switch(psUSBRequest->bRequest) {
         //
         // The host is requesting the current device status.  Return this and
         // revert to STATE_IDLE.
         //
-        case USBD_DFU_REQUEST_GETSTATUS:
-        {
+        case USBD_DFU_REQUEST_GETSTATUS: {
             //
             // Are we finished processing whatever the last flash-operation
             // was?  Note that we don't support DNLOAD_BUSY state in this
             // implementation, we merely continue to report DNLOAD_SYNC state
             // until we are finished with the command.
             //
-            if(!g_ui32CommandFlags)
-            {
+            if(!g_ui32CommandFlags) {
                 //
                 // If we are in the middle of a programming operation,
                 // transition back to DNLOAD_IDLE state to wait for the
@@ -901,20 +862,16 @@ HandleRequestDnloadSync(tUSBRequest *psUSBRequest)
         //
         // The host is requesting the current device state.
         //
-        case USBD_DFU_REQUEST_GETSTATE:
-        {
+        case USBD_DFU_REQUEST_GETSTATE: {
             //
             // Are we currently in DNLOAD_SYNC state?
             //
-            if(g_eDFUState == STATE_DNLOAD_SYNC)
-            {
+            if(g_eDFUState == STATE_DNLOAD_SYNC) {
                 //
                 // Yes - send back the state.
                 //
                 SendDFUState();
-            }
-            else
-            {
+            } else {
                 //
                 // In STATE_BUSY, we can't respond to any requests so stall
                 // the endpoint.
@@ -933,8 +890,7 @@ HandleRequestDnloadSync(tUSBRequest *psUSBRequest)
         // Any other request is ignored and causes us to stall the control
         // endpoint and remain in STATE_ERROR.
         //
-        default:
-        {
+        default: {
             USBBLStallEP0();
             return;
         }
@@ -949,57 +905,48 @@ HandleRequestDnloadSync(tUSBRequest *psUSBRequest)
 void
 HandleRequestDnloadIdle(tUSBRequest *psUSBRequest)
 {
-    switch(psUSBRequest->bRequest)
-    {
+    switch(psUSBRequest->bRequest) {
         //
         // This is a download request.  We need to request the transaction
         // payload unless this is a zero length request in which case we mark
         // the error by stalling the endpoint.
         //
-        case USBD_DFU_REQUEST_DNLOAD:
-        {
+        case USBD_DFU_REQUEST_DNLOAD: {
             //
             // Are we being passed data to program?
             //
-            if(psUSBRequest->wLength)
-            {
+            if(psUSBRequest->wLength) {
                 //
                 // Yes - request the data.
                 //
                 USBBLRequestDataEP0(g_pui8DFUBuffer, psUSBRequest->wLength);
-            }
-            else
-            {
+            } else {
                 //
                 // No - this is the signal that a download operation is
                 // complete.  Do we agree?
                 //
-                if(g_sNextDownload.ui32Length)
-                {
+                if(g_sNextDownload.ui32Length) {
                     //
                     // We think there should still be some data to be received
                     // so mark this as an error.
                     //
                     g_eDFUState = STATE_ERROR;
                     g_eDFUStatus = STATUS_ERR_NOTDONE;
-                }
-                else
-                {
+                } else {
                     //
                     // We agree that the download has completed.  Enter state
                     // STATE_MANIFEST_SYNC.
                     //
                     g_eDFUState = STATE_MANIFEST_SYNC;
                 }
-             }
+            }
             break;
         }
 
         //
         // Return the current device status structure.
         //
-        case USBD_DFU_REQUEST_GETSTATUS:
-        {
+        case USBD_DFU_REQUEST_GETSTATUS: {
             SendDFUStatus();
             return;
         }
@@ -1007,8 +954,7 @@ HandleRequestDnloadIdle(tUSBRequest *psUSBRequest)
         //
         // Return the current device state.
         //
-        case USBD_DFU_REQUEST_GETSTATE:
-        {
+        case USBD_DFU_REQUEST_GETSTATE: {
             SendDFUState();
             return;
         }
@@ -1018,8 +964,7 @@ HandleRequestDnloadIdle(tUSBRequest *psUSBRequest)
         // return the the idle state regardless of the state of the previous
         // programming operation.
         //
-        case USBD_DFU_REQUEST_ABORT:
-        {
+        case USBD_DFU_REQUEST_ABORT: {
             //
             // Default to downloading the main code image.
             //
@@ -1038,8 +983,7 @@ HandleRequestDnloadIdle(tUSBRequest *psUSBRequest)
         case USBD_DFU_REQUEST_CLRSTATUS:
         case USBD_DFU_REQUEST_DETACH:
         case USBD_DFU_REQUEST_UPLOAD:
-        default:
-        {
+        default: {
             USBBLStallEP0();
             return;
         }
@@ -1064,14 +1008,12 @@ HandleRequestManifestSync(tUSBRequest *psUSBRequest)
     // waiting for a USBD_DFU_REQUEST_GETSTATUS which will trigger a return
     // to STATE_IDLE.
     //
-    switch(psUSBRequest->bRequest)
-    {
+    switch(psUSBRequest->bRequest) {
         //
         // The host is requesting the current device status.  Return this and
         // revert to STATE_IDLE.
         //
-        case USBD_DFU_REQUEST_GETSTATUS:
-        {
+        case USBD_DFU_REQUEST_GETSTATUS: {
             g_eDFUState = STATE_IDLE;
             SendDFUStatus();
             break;
@@ -1080,8 +1022,7 @@ HandleRequestManifestSync(tUSBRequest *psUSBRequest)
         //
         // The host is requesting the current device state.
         //
-        case USBD_DFU_REQUEST_GETSTATE:
-        {
+        case USBD_DFU_REQUEST_GETSTATE: {
             SendDFUState();
             break;
         }
@@ -1090,8 +1031,7 @@ HandleRequestManifestSync(tUSBRequest *psUSBRequest)
         // Any other request is ignored and causes us to stall the control
         // endpoint and remain in STATE_MANIFEST_SYNC.
         //
-        default:
-        {
+        default: {
             USBBLStallEP0();
             break;
         }
@@ -1110,19 +1050,16 @@ HandleRequestUploadIdle(tUSBRequest *psUSBRequest)
     // In this state, we have already received the first upload request.  What
     // are we being asked to do now?
     //
-    switch(psUSBRequest->bRequest)
-    {
+    switch(psUSBRequest->bRequest) {
         //
         // The host is requesting more upload data.
         //
-        case USBD_DFU_REQUEST_UPLOAD:
-        {
+        case USBD_DFU_REQUEST_UPLOAD: {
             //
             // See if there is any more data to transfer and, if there is,
             // send it back to the host.
             //
-            if(!SendUploadData(psUSBRequest->wLength, false))
-            {
+            if(!SendUploadData(psUSBRequest->wLength, false)) {
                 //
                 // We sent less than a full packet of data so the transfer is
                 // complete.  Revert to idle state and ensure that we reset
@@ -1140,8 +1077,7 @@ HandleRequestUploadIdle(tUSBRequest *psUSBRequest)
         //
         // The host is requesting the current device status.
         //
-        case USBD_DFU_REQUEST_GETSTATUS:
-        {
+        case USBD_DFU_REQUEST_GETSTATUS: {
             SendDFUStatus();
             break;
         }
@@ -1149,8 +1085,7 @@ HandleRequestUploadIdle(tUSBRequest *psUSBRequest)
         //
         // The host is requesting the current device state.
         //
-        case USBD_DFU_REQUEST_GETSTATE:
-        {
+        case USBD_DFU_REQUEST_GETSTATE: {
             SendDFUState();
             break;
         }
@@ -1158,8 +1093,7 @@ HandleRequestUploadIdle(tUSBRequest *psUSBRequest)
         //
         // The host is requesting that we abort the current upload.
         //
-        case USBD_DFU_REQUEST_ABORT:
-        {
+        case USBD_DFU_REQUEST_ABORT: {
             //
             // Default to sending the main application image for the next
             // upload.
@@ -1176,8 +1110,7 @@ HandleRequestUploadIdle(tUSBRequest *psUSBRequest)
         // Any other request is ignored and causes us to stall the control
         // endpoint and remain in STATE_ERROR.
         //
-        default:
-        {
+        default: {
             USBBLStallEP0();
             break;
         }
@@ -1196,13 +1129,11 @@ HandleRequestError(tUSBRequest *psUSBRequest)
     // In this state, we respond to state and status requests and also to
     // USBD_DFU_REQUEST_CLRSTATUS which clears the previous error condition.
     //
-    switch(psUSBRequest->bRequest)
-    {
+    switch(psUSBRequest->bRequest) {
         //
         // The host is requesting the current device status.
         //
-        case USBD_DFU_REQUEST_GETSTATUS:
-        {
+        case USBD_DFU_REQUEST_GETSTATUS: {
             SendDFUStatus();
             break;
         }
@@ -1210,8 +1141,7 @@ HandleRequestError(tUSBRequest *psUSBRequest)
         //
         // The host is requesting the current device state.
         //
-        case USBD_DFU_REQUEST_GETSTATE:
-        {
+        case USBD_DFU_REQUEST_GETSTATE: {
             SendDFUState();
             break;
         }
@@ -1220,8 +1150,7 @@ HandleRequestError(tUSBRequest *psUSBRequest)
         // The host is asking us to clear our previous error condition and
         // revert to idle state in preparation to receive new commands.
         //
-        case USBD_DFU_REQUEST_CLRSTATUS:
-        {
+        case USBD_DFU_REQUEST_CLRSTATUS: {
             g_eDFUState = STATE_IDLE;
             g_eDFUStatus = STATUS_OK;
             USBDevEndpoint0DataAck(false);
@@ -1232,8 +1161,7 @@ HandleRequestError(tUSBRequest *psUSBRequest)
         // Any other request is ignored and causes us to stall the control
         // endpoint and remain in STATE_ERROR.
         //
-        default:
-        {
+        default: {
             USBBLStallEP0();
             break;
         }
@@ -1301,13 +1229,13 @@ FlashRangeCheck(uint32_t ui32Start, uint32_t ui32Length)
 {
 #ifdef ENABLE_BL_UPDATE
     if((ui32Length <=
-        (g_sDFUDeviceInfo.ui32FlashTop - g_sDFUDeviceInfo.ui32AppStartAddr)) &&
-       ((ui32Start + ui32Length) <= g_sDFUDeviceInfo.ui32FlashTop))
+            (g_sDFUDeviceInfo.ui32FlashTop - g_sDFUDeviceInfo.ui32AppStartAddr)) &&
+            ((ui32Start + ui32Length) <= g_sDFUDeviceInfo.ui32FlashTop))
 #else
     if((ui32Start >= g_sDFUDeviceInfo.ui32AppStartAddr) &&
-       (ui32Length <=
-        (g_sDFUDeviceInfo.ui32FlashTop - g_sDFUDeviceInfo.ui32AppStartAddr)) &&
-       ((ui32Start + ui32Length) <= g_sDFUDeviceInfo.ui32FlashTop))
+            (ui32Length <=
+             (g_sDFUDeviceInfo.ui32FlashTop - g_sDFUDeviceInfo.ui32AppStartAddr)) &&
+            ((ui32Start + ui32Length) <= g_sDFUDeviceInfo.ui32FlashTop))
 #endif
     {
         //
@@ -1315,9 +1243,7 @@ FlashRangeCheck(uint32_t ui32Start, uint32_t ui32Length)
         // this device.
         //
         return(true);
-    }
-    else
-    {
+    } else {
         //
         // We were passed an address that is out of range so set the
         // appropriate status code.
@@ -1349,8 +1275,7 @@ ProcessDFUDnloadCommand(tDFUDownloadHeader *psCmd, uint32_t ui32Size)
     //
     // Make sure we got enough data to contain a valid command header.
     //
-    if(ui32Size < sizeof(tDFUDownloadHeader))
-    {
+    if(ui32Size < sizeof(tDFUDownloadHeader)) {
         return(false);
     }
 
@@ -1363,13 +1288,11 @@ ProcessDFUDnloadCommand(tDFUDownloadHeader *psCmd, uint32_t ui32Size)
     //
     // Which command have we been passed?
     //
-    switch(psCmd->ui8Command)
-    {
+    switch(psCmd->ui8Command) {
         //
         // We are being asked to start a programming operation.
         //
-        case DFU_CMD_PROG:
-        {
+        case DFU_CMD_PROG: {
             tDFUDownloadProgHeader *psHdr;
 
             //
@@ -1381,8 +1304,7 @@ ProcessDFUDnloadCommand(tDFUDownloadHeader *psCmd, uint32_t ui32Size)
             // Is the passed address range valid?
             //
             if(BL_FLASH_AD_CHECK_FN_HOOK(psHdr->ui16StartAddr * 1024,
-                                         psHdr->ui32Length))
-            {
+                                         psHdr->ui32Length)) {
                 //
                 // Yes - remember the range passed so that we will write the
                 // passed data to the correct place.
@@ -1442,9 +1364,7 @@ ProcessDFUDnloadCommand(tDFUDownloadHeader *psCmd, uint32_t ui32Size)
                 // Tell the main thread to write the data we just received it.
                 //
                 HWREGBITW(&g_ui32CommandFlags, CMD_FLAG_WRITE) = 1;
-            }
-            else
-            {
+            } else {
                 //
                 // The flash range was invalid so switch to error state.
                 //
@@ -1457,8 +1377,7 @@ ProcessDFUDnloadCommand(tDFUDownloadHeader *psCmd, uint32_t ui32Size)
         // We are being passed the position and size of a block of flash to
         // return in a following upload operation.
         //
-        case DFU_CMD_READ:
-        {
+        case DFU_CMD_READ: {
             tDFUDownloadReadCheckHeader *psHdr;
 
             //
@@ -1469,8 +1388,7 @@ ProcessDFUDnloadCommand(tDFUDownloadHeader *psCmd, uint32_t ui32Size)
             //
             // Is the passed address range valid?
             //
-            if(FlashRangeCheck(psHdr->ui16StartAddr * 1024, psHdr->ui32Length))
-            {
+            if(FlashRangeCheck(psHdr->ui16StartAddr * 1024, psHdr->ui32Length)) {
                 //
                 // Yes - remember the range passed so that we will return
                 // this block of flash on the next upload request.
@@ -1478,9 +1396,7 @@ ProcessDFUDnloadCommand(tDFUDownloadHeader *psCmd, uint32_t ui32Size)
                 g_sNextUpload.pui8Start =
                     (uint8_t *)(psHdr->ui16StartAddr * 1024);
                 g_sNextUpload.ui32Length = psHdr->ui32Length;
-            }
-            else
-            {
+            } else {
                 //
                 // The flash range was invalid so switch to error state.
                 //
@@ -1493,8 +1409,7 @@ ProcessDFUDnloadCommand(tDFUDownloadHeader *psCmd, uint32_t ui32Size)
         // We are being passed the position and size of a block of flash which
         // we will check to ensure that it is erased.
         //
-        case DFU_CMD_CHECK:
-        {
+        case DFU_CMD_CHECK: {
             tDFUDownloadReadCheckHeader *psHdr;
             uint32_t *pui32Check;
             uint32_t ui32Loop;
@@ -1508,8 +1423,7 @@ ProcessDFUDnloadCommand(tDFUDownloadHeader *psCmd, uint32_t ui32Size)
             // Make sure the range we have been passed is within the area of
             // flash that we are allowed to look at.
             //
-            if(FlashRangeCheck(psHdr->ui16StartAddr * 1024, psHdr->ui32Length))
-            {
+            if(FlashRangeCheck(psHdr->ui16StartAddr * 1024, psHdr->ui32Length)) {
                 //
                 // The range is valid so perform the check here.
                 //
@@ -1520,10 +1434,8 @@ ProcessDFUDnloadCommand(tDFUDownloadHeader *psCmd, uint32_t ui32Size)
                 // not, set the error status and return.
                 //
                 for(ui32Loop = 0; ui32Loop < (psHdr->ui32Length / 4);
-                    ui32Loop++)
-                {
-                    if(*pui32Check != 0xFFFFFFFF)
-                    {
+                        ui32Loop++) {
+                    if(*pui32Check != 0xFFFFFFFF) {
                         g_eDFUStatus = STATUS_ERR_CHECK_ERASED;
                         return(false);
                     }
@@ -1535,9 +1447,7 @@ ProcessDFUDnloadCommand(tDFUDownloadHeader *psCmd, uint32_t ui32Size)
                 // indicate this.
                 //
                 g_eDFUStatus = STATUS_OK;
-            }
-            else
-            {
+            } else {
                 //
                 // The flash range was invalid so switch to error state.
                 //
@@ -1549,8 +1459,7 @@ ProcessDFUDnloadCommand(tDFUDownloadHeader *psCmd, uint32_t ui32Size)
         //
         // We are being asked to erase a block of flash.
         //
-        case DFU_CMD_ERASE:
-        {
+        case DFU_CMD_ERASE: {
             tDFUDownloadEraseHeader *psHdr;
 
             //
@@ -1564,20 +1473,17 @@ ProcessDFUDnloadCommand(tDFUDownloadHeader *psCmd, uint32_t ui32Size)
             //
             if(FlashRangeCheck((uint32_t)psHdr->ui16StartAddr * 1024,
                                ((uint32_t)psHdr->ui16NumBlocks *
-                                DFU_REPORTED_PAGE_SIZE )))
-            {
+                                DFU_REPORTED_PAGE_SIZE ))) {
                 //
                 // The range is valid so tell the main loop to erase the
                 // block.
                 //
                 g_sErase.pui8Start = (uint8_t *)
-                    ((uint32_t)psHdr->ui16StartAddr * 1024);
+                                     ((uint32_t)psHdr->ui16StartAddr * 1024);
                 g_sErase.ui32Length = ((uint32_t)psHdr->ui16NumBlocks *
                                        DFU_REPORTED_PAGE_SIZE);
                 HWREGBITW(&g_ui32CommandFlags, CMD_FLAG_ERASE) = 1;
-            }
-            else
-            {
+            } else {
                 //
                 // The flash range was invalid so switch to error state.
                 //
@@ -1590,8 +1496,7 @@ ProcessDFUDnloadCommand(tDFUDownloadHeader *psCmd, uint32_t ui32Size)
         // We are being asked to send back device information on the next
         // upload request.
         //
-        case DFU_CMD_INFO:
-        {
+        case DFU_CMD_INFO: {
             //
             // Register that we need to send the device info structure on the
             // next upload request.
@@ -1610,8 +1515,7 @@ ProcessDFUDnloadCommand(tDFUDownloadHeader *psCmd, uint32_t ui32Size)
         //
         // We are being asked to set the format of uploaded images.
         //
-        case DFU_CMD_BIN:
-        {
+        case DFU_CMD_BIN: {
             tDFUDownloadBinHeader *psHdr;
 
             //
@@ -1630,8 +1534,7 @@ ProcessDFUDnloadCommand(tDFUDownloadHeader *psCmd, uint32_t ui32Size)
         // We are being asked to prepare to reset the board and, as a result,
         // run the main application image.
         //
-        case DFU_CMD_RESET:
-        {
+        case DFU_CMD_RESET: {
             //
             // Tell the main thread that it's time to go bye-bye...
             //
@@ -1644,8 +1547,7 @@ ProcessDFUDnloadCommand(tDFUDownloadHeader *psCmd, uint32_t ui32Size)
         // We have been passed an unrecognized command identifier so report an
         // error.
         //
-        default:
-        {
+        default: {
             g_eDFUStatus = STATUS_ERR_VENDOR;
             return(false);
         }
@@ -1667,8 +1569,7 @@ HandleEP0Data(uint32_t ui32Size)
 {
     bool bRetcode;
 
-    if(g_eDFUState == STATE_IDLE)
-    {
+    if(g_eDFUState == STATE_IDLE) {
         //
         // This must be a new DFU download command header so parse it and
         // determine what to do next.
@@ -1680,8 +1581,7 @@ HandleEP0Data(uint32_t ui32Size)
         //
         // Did we receive a recognized and valid command?
         //
-        if(!bRetcode)
-        {
+        if(!bRetcode) {
             //
             // No - set the error state.  The status is set within the
             // ProcessDFUDnloadCommand() function.
@@ -1689,9 +1589,7 @@ HandleEP0Data(uint32_t ui32Size)
             g_eDFUState = STATE_ERROR;
             return;
         }
-    }
-    else
-    {
+    } else {
         //
         // If we are not in STATE_IDLE, this must be a block of data for an
         // ongoing download so signal the main thread to write it to flash.
@@ -1728,16 +1626,14 @@ HandleReset(void)
     // Are we currently in the middle of a download operation?
     //
     if((g_eDFUState != STATE_DNLOAD_IDLE) &&
-       (g_eDFUState != STATE_DNLOAD_SYNC) && (g_eDFUState != STATE_IDLE))
-    {
+            (g_eDFUState != STATE_DNLOAD_SYNC) && (g_eDFUState != STATE_IDLE)) {
         //
         // No - tell the main thread that it should reboot the system assuming
         // that we are already configured.  If we don't check that we are
         // already configured, this will cause a reset during initial
         // enumeration and that wouldn't be very helpful.
         //
-        if(g_bAddressSet)
-        {
+        if(g_bAddressSet) {
             HWREGBITW(&g_ui32CommandFlags, CMD_FLAG_RESET) = 1;
         }
     }
@@ -1806,10 +1702,8 @@ UpdaterUSB(void)
     // Loop forever waiting for the USB interrupt handlers to tell us to do
     // something.
     //
-    while(1)
-    {
-        while(g_ui32CommandFlags == 0)
-        {
+    while(1) {
+        while(g_ui32CommandFlags == 0) {
             //
             // Wait for something to do.
             //
@@ -1818,8 +1712,7 @@ UpdaterUSB(void)
         //
         // Are we being asked to perform a system reset?
         //
-        if(HWREGBITW(&g_ui32CommandFlags, CMD_FLAG_RESET))
-        {
+        if(HWREGBITW(&g_ui32CommandFlags, CMD_FLAG_RESET)) {
             //
             // Time to go bye-bye...  This will cause the microcontroller
             // to reset; no further code will be executed.
@@ -1830,25 +1723,22 @@ UpdaterUSB(void)
             // The microcontroller should have reset, so this should never be
             // reached.  Just in case, loop forever.
             //
-            while(1)
-            {
+            while(1) {
             }
         }
 
         //
         // Are we being asked to erase a range of blocks in flash?
         //
-        if(HWREGBITW(&g_ui32CommandFlags, CMD_FLAG_ERASE))
-        {
+        if(HWREGBITW(&g_ui32CommandFlags, CMD_FLAG_ERASE)) {
             //
             // Loop through the pages in the block of flash we have been asked
             // to erase and clear each one.
             //
             ui32Temp = g_sErase.ui32Length;
             for(ui32Idx = (uint32_t)g_sErase.pui8Start;
-                ui32Idx < (uint32_t)(g_sErase.pui8Start + ui32Temp);
-                ui32Idx += FLASH_PAGE_SIZE)
-            {
+                    ui32Idx < (uint32_t)(g_sErase.pui8Start + ui32Temp);
+                    ui32Idx += FLASH_PAGE_SIZE) {
                 EraseFlashBlock(ui32Idx);
             }
 
@@ -1861,8 +1751,7 @@ UpdaterUSB(void)
         //
         // Are we being asked to program a block of flash?
         //
-        if(HWREGBITW(&g_ui32CommandFlags, CMD_FLAG_WRITE))
-        {
+        if(HWREGBITW(&g_ui32CommandFlags, CMD_FLAG_WRITE)) {
             //
             // Decrypt the data if required.
             //
@@ -1890,22 +1779,18 @@ UpdaterUSB(void)
             // Are we writing data at the start of a new flash block?  If so,
             // we need to erase the content of the block first.
             //
-            if((ui32Start & (FLASH_PAGE_SIZE - 1)) == 0)
-            {
+            if((ui32Start & (FLASH_PAGE_SIZE - 1)) == 0) {
                 //
                 // We are writing to the start of a block so erase it.
                 //
                 EraseFlashBlock(ui32Start & ~(FLASH_PAGE_SIZE - 1));
-            }
-            else
-            {
+            } else {
                 //
                 // Will this block of data straddle two flash blocks?  If so,
                 // we need to erase the following block.
                 //
                 if((ui32Start & ~(FLASH_PAGE_SIZE - 1)) !=
-                   (ui32End & ~(FLASH_PAGE_SIZE - 1)))
-                {
+                        (ui32End & ~(FLASH_PAGE_SIZE - 1))) {
                     EraseFlashBlock(ui32End & ~(FLASH_PAGE_SIZE - 1));
                 }
             }
@@ -1941,8 +1826,7 @@ UpdaterUSB(void)
             // has been provided, call it too.
             //
 #ifdef BL_END_FN_HOOK
-            if(g_sNextDownload.ui32Length == 0)
-            {
+            if(g_sNextDownload.ui32Length == 0) {
                 BL_END_FN_HOOK();
             }
 #endif
@@ -2048,7 +1932,7 @@ SetUSBMux(void)
     // Write the pin to the appropriate level to select USB device mode.
     //
     HWREG(USB_MUX_PORT + (GPIO_O_DATA + ((1 << USB_MUX_PIN) << 2))) =
-          (USB_MUX_DEVICE ? (1 << USB_MUX_PIN) : 0);
+        (USB_MUX_DEVICE ? (1 << USB_MUX_PIN) : 0);
 }
 #endif
 
@@ -2076,14 +1960,11 @@ ConfigureUSB(void)
     // and clock the processor from it. Check for whether the Oscillator range
     // has to be set and wait states need to be updated
     //
-    if(CRYSTAL_FREQ >= 10000000)
-    {
+    if(CRYSTAL_FREQ >= 10000000) {
         HWREG(SYSCTL_MOSCCTL) |= (SYSCTL_MOSCCTL_OSCRNG);
         HWREG(SYSCTL_MOSCCTL) &= ~(SYSCTL_MOSCCTL_PWRDN |
                                    SYSCTL_MOSCCTL_NOXTAL);
-    }
-    else
-    {
+    } else {
         HWREG(SYSCTL_MOSCCTL) &= ~(SYSCTL_MOSCCTL_PWRDN |
                                    SYSCTL_MOSCCTL_NOXTAL);
     }
@@ -2093,8 +1974,7 @@ ConfigureUSB(void)
     //
     Delay(524288);
 
-    if(CRYSTAL_FREQ > 16000000)
-    {
+    if(CRYSTAL_FREQ > 16000000) {
         HWREG(SYSCTL_MEMTIM0)  = (SYSCTL_MEMTIM0_FBCHT_1_5 |
                                   (1 << SYSCTL_MEMTIM0_FWS_S) |
                                   SYSCTL_MEMTIM0_EBCHT_1_5 |
@@ -2103,9 +1983,7 @@ ConfigureUSB(void)
         HWREG(SYSCTL_RSCLKCFG) = (SYSCTL_RSCLKCFG_MEMTIMU |
                                   SYSCTL_RSCLKCFG_PLLSRC_MOSC |
                                   SYSCTL_RSCLKCFG_OSCSRC_MOSC);
-    }
-    else
-    {
+    } else {
         HWREG(SYSCTL_RSCLKCFG) = (SYSCTL_RSCLKCFG_PLLSRC_MOSC |
                                   SYSCTL_RSCLKCFG_OSCSRC_MOSC);
     }
@@ -2121,8 +1999,7 @@ ConfigureUSB(void)
     //
     // Wait for the PLL to Lock
     //
-    while((HWREG(SYSCTL_PLLSTAT) & SYSCTL_PLLSTAT_LOCK) != SYSCTL_PLLSTAT_LOCK)
-    {
+    while((HWREG(SYSCTL_PLLSTAT) & SYSCTL_PLLSTAT_LOCK) != SYSCTL_PLLSTAT_LOCK) {
     }
 
     //
@@ -2171,7 +2048,7 @@ ConfigureUSB(void)
     // sysdiv to 8.  This yields a system clock of 25MHz.
     //
     HWREG(SYSCTL_RCC) = ((HWREG(SYSCTL_RCC) & ~(SYSCTL_RCC_BYPASS |
-                         SYSCTL_RCC_SYSDIV_M)) |
+                          SYSCTL_RCC_SYSDIV_M)) |
                          ((7 - 1) << SYSCTL_RCC_SYSDIV_S) |
                          SYSCTL_RCC_USESYSDIV);
 #endif
@@ -2215,14 +2092,11 @@ AppUpdaterUSB(void)
     // and clock the processor from it. Check for whether the Oscillator range
     // has to be set and wait states need to be updated
     //
-    if(CRYSTAL_FREQ >= 10000000)
-    {
+    if(CRYSTAL_FREQ >= 10000000) {
         HWREG(SYSCTL_MOSCCTL) |= (SYSCTL_MOSCCTL_OSCRNG);
         HWREG(SYSCTL_MOSCCTL) &= ~(SYSCTL_MOSCCTL_PWRDN |
                                    SYSCTL_MOSCCTL_NOXTAL);
-    }
-    else
-    {
+    } else {
         HWREG(SYSCTL_MOSCCTL) &= ~(SYSCTL_MOSCCTL_PWRDN |
                                    SYSCTL_MOSCCTL_NOXTAL);
     }
@@ -2232,19 +2106,16 @@ AppUpdaterUSB(void)
     //
     Delay(524288);
 
-    if(CRYSTAL_FREQ > 16000000)
-    {
+    if(CRYSTAL_FREQ > 16000000) {
         HWREG(SYSCTL_MEMTIM0)  = (SYSCTL_MEMTIM0_FBCHT_1_5 |
                                   (1 << SYSCTL_MEMTIM0_FWS_S) |
-                                  SYSCTL_MEMTIM0_EBCHT_1_5 | 
+                                  SYSCTL_MEMTIM0_EBCHT_1_5 |
                                   (1 << SYSCTL_MEMTIM0_EWS_S) |
                                   SYSCTL_MEMTIM0_MB1);
         HWREG(SYSCTL_RSCLKCFG) = (SYSCTL_RSCLKCFG_MEMTIMU |
                                   SYSCTL_RSCLKCFG_PLLSRC_MOSC |
                                   SYSCTL_RSCLKCFG_OSCSRC_MOSC);
-    }
-    else
-    {
+    } else {
         HWREG(SYSCTL_RSCLKCFG) = (SYSCTL_RSCLKCFG_PLLSRC_MOSC |
                                   SYSCTL_RSCLKCFG_OSCSRC_MOSC);
     }
@@ -2260,8 +2131,7 @@ AppUpdaterUSB(void)
     //
     // Wait for the PLL to Lock
     //
-    while((HWREG(SYSCTL_PLLSTAT) & SYSCTL_PLLSTAT_LOCK) != SYSCTL_PLLSTAT_LOCK)
-    {
+    while((HWREG(SYSCTL_PLLSTAT) & SYSCTL_PLLSTAT_LOCK) != SYSCTL_PLLSTAT_LOCK) {
     }
 
     //
@@ -2310,7 +2180,7 @@ AppUpdaterUSB(void)
     // sysdiv to 7.  This yields a system clock of 28MHz.
     //
     HWREG(SYSCTL_RCC) = ((HWREG(SYSCTL_RCC) & ~(SYSCTL_RCC_BYPASS |
-                         SYSCTL_RCC_SYSDIV_M)) |
+                          SYSCTL_RCC_SYSDIV_M)) |
                          ((7 - 1) << SYSCTL_RCC_SYSDIV_S) |
                          SYSCTL_RCC_USESYSDIV);
 #endif

@@ -1,23 +1,23 @@
- //*****************************************************************************
+//*****************************************************************************
 //
 // usb_dev_chid.c - Main routines for the composite keyboard mouse example.
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -116,20 +116,13 @@ USBEventHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgParam,
     //
     // Infor the UI code of the state change.
     //
-    if(ui32Event == USB_EVENT_CONNECTED)
-    {
+    if(ui32Event == USB_EVENT_CONNECTED) {
         UIMode(UI_CONNECTED);
-    }
-    else if(ui32Event == USB_EVENT_DISCONNECTED)
-    {
+    } else if(ui32Event == USB_EVENT_DISCONNECTED) {
         UIMode(UI_NOT_CONNECTED);
-    }
-    else if(ui32Event == USB_EVENT_SUSPEND)
-    {
+    } else if(ui32Event == USB_EVENT_SUSPEND) {
         UIMode(UI_SUSPENDED);
-    }
-    else if(ui32Event == USB_EVENT_RESUME)
-    {
+    } else if(ui32Event == USB_EVENT_RESUME) {
         UIMode(UI_CONNECTED);
     }
     return(0);
@@ -213,8 +206,7 @@ main(void)
     //
     UIInit();
 
-    while(1)
-    {
+    while(1) {
         //
         // Run the main loop for the user interface.
         //

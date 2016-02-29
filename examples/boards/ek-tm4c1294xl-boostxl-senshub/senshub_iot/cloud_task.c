@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -207,10 +207,8 @@ uftostr(char * pcStr, uint32_t ui32Size, uint32_t ui32Precision, float fValue)
     //
     // Account for negative values.
     //
-    if(fValue < 0.0f)
-    {
-        if(ui32Size > 1)
-        {
+    if(fValue < 0.0f) {
+        if(ui32Size > 1) {
             pcStr[0] = '-';
             ui32SpaceUsed = 1;
         }
@@ -226,8 +224,7 @@ uftostr(char * pcStr, uint32_t ui32Size, uint32_t ui32Precision, float fValue)
     // Perform the conversion.
     //
     while((ui32PrecisionCounter <= ui32Precision) &&
-          (ui32SpaceUsed < ui32Size))
-    {
+            (ui32SpaceUsed < ui32Size)) {
         //
         // Convert the new integer part.
         //
@@ -256,10 +253,9 @@ uftostr(char * pcStr, uint32_t ui32Size, uint32_t ui32Precision, float fValue)
         // after the integer in the string. Also makes sure that there is room
         // for the decimal point.
         //
-        if((ui32PrecisionCounter == 0) && (ui32SpaceUsed < ui32Size))
-        {
-             pcStr[ui32SpaceUsed] = '.';
-             ui32SpaceUsed++;
+        if((ui32PrecisionCounter == 0) && (ui32SpaceUsed < ui32Size)) {
+            pcStr[ui32SpaceUsed] = '.';
+            ui32SpaceUsed++;
         }
 
         //
@@ -272,8 +268,7 @@ uftostr(char * pcStr, uint32_t ui32Size, uint32_t ui32Precision, float fValue)
     //
     // Check if we quit because we ran out of buffer space.
     //
-    if(ui32SpaceUsed >= ui32Size)
-    {
+    if(ui32SpaceUsed >= ui32Size) {
         //
         // Since we decremented size at the beginning we should still have room
         // for the null char.
@@ -319,8 +314,7 @@ CloudBoardDataDecodeExositeHTTP(char *pcBuf, uint32_t ui32BufSize)
     //
     pcAliasNext = pcBuf;
 
-    for(ui32Index = 0; ui32Index < 5; ui32Index++)
-    {
+    for(ui32Index = 0; ui32Index < 5; ui32Index++) {
         //
         // Update the current alias pointer to be equal to the prior "next"
         // pointer.
@@ -335,8 +329,7 @@ CloudBoardDataDecodeExositeHTTP(char *pcBuf, uint32_t ui32BufSize)
         //
         // make sure the "=" was found in the string.
         //
-        if(pcValue != NULL)
-        {
+        if(pcValue != NULL) {
             //
             // convert the string to an unsigned long and capture a pointer to
             // the next alias. The Alias buffer must be one bigger than the
@@ -349,9 +342,7 @@ CloudBoardDataDecodeExositeHTTP(char *pcBuf, uint32_t ui32BufSize)
             // Increment the Alias pointer to bypass the '&' character.
             //
             pcAliasNext += 1;
-        }
-        else
-        {
+        } else {
             //
             // if pcValue is set to NULL we could not find a unsigned long
             // number in the string so break out of the for loop and return.
@@ -359,8 +350,7 @@ CloudBoardDataDecodeExositeHTTP(char *pcBuf, uint32_t ui32BufSize)
             break;
         }
 
-        if(ustrncmp(pcAlias,"ledd4=",6) == 0)
-        {
+        if(ustrncmp(pcAlias,"ledd4=",6) == 0) {
             //
             // LEDD4 currently controlled by Ethernet hardware, no local
             // action taken for this variable.
@@ -369,8 +359,7 @@ CloudBoardDataDecodeExositeHTTP(char *pcBuf, uint32_t ui32BufSize)
             continue;
         }
 
-        if(ustrncmp(pcAlias, "ledd3=", 6) == 0)
-        {
+        if(ustrncmp(pcAlias, "ledd3=", 6) == 0) {
             //
             // LEDD3 currently controlled by Ethernet hardware, no local
             // action taken for this variable.
@@ -379,8 +368,7 @@ CloudBoardDataDecodeExositeHTTP(char *pcBuf, uint32_t ui32BufSize)
             continue;
         }
 
-        if(ustrncmp(pcAlias, "ledd2=", 6) == 0)
-        {
+        if(ustrncmp(pcAlias, "ledd2=", 6) == 0) {
             //
             // write the new value to LED bank.
             //
@@ -393,8 +381,7 @@ CloudBoardDataDecodeExositeHTTP(char *pcBuf, uint32_t ui32BufSize)
             continue;
         }
 
-        if(ustrncmp(pcAlias, "ledd1=", 6) == 0)
-        {
+        if(ustrncmp(pcAlias, "ledd1=", 6) == 0) {
             //
             // write the new value to LED bank.
             //
@@ -407,8 +394,7 @@ CloudBoardDataDecodeExositeHTTP(char *pcBuf, uint32_t ui32BufSize)
             continue;
         }
 
-        if(ustrncmp(pcAlias, "connlpds=", 9) == 0)
-        {
+        if(ustrncmp(pcAlias, "connlpds=", 9) == 0) {
             //
             // connlpds not yet implemented.  It is a sum total of all
             // Connected LaunchPads currently connected to the server.
@@ -483,8 +469,7 @@ CloudTaskStatsEncodeJSON(char* pcBuf, uint32_t ui32BufSize)
     //
     // Loop for adding elements to the array from the task state struct.
     //
-    for(ui32Index = 0; ui32Index < *pui32NumTasks; ui32Index++)
-    {
+    for(ui32Index = 0; ui32Index < *pui32NumTasks; ui32Index++) {
         //
         // Convert percent usage to a string.
         //
@@ -494,34 +479,31 @@ CloudTaskStatsEncodeJSON(char* pcBuf, uint32_t ui32BufSize)
         // Merge the strings into a JSON formated string.
         //
         ui32SpaceUsed += usnprintf(pcBuf + ui32SpaceUsed,
-                               ui32BufSize - ui32SpaceUsed,
-                               "{\"xTaskStatusType\":{\"Task Name\":\"%s\","
-                               "\"State\":%d,\"Current Priority\":%d,"
-                               "\"Base Priority\":%d,"
-                               "\"Task Ticks\":%d,\"%% Usage\":%s,"
-                               "\"Stack Max\":%d}}",
-                               pxTaskStatus[ui32Index].pcTaskName,
-                               pxTaskStatus[ui32Index].eCurrentState,
-                               pxTaskStatus[ui32Index].uxCurrentPriority,
-                               pxTaskStatus[ui32Index].uxBasePriority,
-                               pxTaskStatus[ui32Index].ulRunTimeCounter,
-                               pcUsageBuf,
-                               pxTaskStatus[ui32Index].usStackHighWaterMark);
+                                   ui32BufSize - ui32SpaceUsed,
+                                   "{\"xTaskStatusType\":{\"Task Name\":\"%s\","
+                                   "\"State\":%d,\"Current Priority\":%d,"
+                                   "\"Base Priority\":%d,"
+                                   "\"Task Ticks\":%d,\"%% Usage\":%s,"
+                                   "\"Stack Max\":%d}}",
+                                   pxTaskStatus[ui32Index].pcTaskName,
+                                   pxTaskStatus[ui32Index].eCurrentState,
+                                   pxTaskStatus[ui32Index].uxCurrentPriority,
+                                   pxTaskStatus[ui32Index].uxBasePriority,
+                                   pxTaskStatus[ui32Index].ulRunTimeCounter,
+                                   pcUsageBuf,
+                                   pxTaskStatus[ui32Index].usStackHighWaterMark);
 
         //
         // Check if this is not the last item written to the JSON array.
         //
-        if(ui32Index != (*pui32NumTasks - 1))
-        {
+        if(ui32Index != (*pui32NumTasks - 1)) {
             //
             // Add a comma between elements of the JSON array. No comma after
             // the last element.
             //
             ui32SpaceUsed += usnprintf(pcBuf + ui32SpaceUsed,
                                        ui32BufSize - ui32SpaceUsed, ",");
-        }
-        else
-        {
+        } else {
             //
             // Add the close array designator to the last item in the array.
             //
@@ -566,8 +548,7 @@ CloudTaskStatsUpdate(void)
     //
     // Calculate the CPU usage as a percent of total run time for each task.
     //
-    for(ui32Index = 0; ui32Index < *pui32NumTasks; ui32Index++)
-    {
+    for(ui32Index = 0; ui32Index < *pui32NumTasks; ui32Index++) {
         pfUsage[ui32Index] = ((float) pxTaskStatus[ui32Index].ulRunTimeCounter)
                              / ((float) *pulTotalRunTime);
         pfUsage[ui32Index] *= 100.0f;
@@ -609,15 +590,13 @@ CloudTaskStatsPrint(void)
     //
     UARTprintf("\nTask\t\tState\tCurPrio\tBasePrio\tTicks\t%%Usage\tStack\n");
 
-    for(ui32Index = 0; ui32Index < *pui32NumTasks; ui32Index++)
-    {
+    for(ui32Index = 0; ui32Index < *pui32NumTasks; ui32Index++) {
 
         uftostr(pcUsageBuf, 12, 1, pfUsage[ui32Index]);
 
         UARTprintf("%s", pxTaskStatus[ui32Index].pcTaskName);
 
-        if(ustrlen((char *)pxTaskStatus[ui32Index].pcTaskName) < 10)
-        {
+        if(ustrlen((char *)pxTaskStatus[ui32Index].pcTaskName) < 10) {
             UARTprintf("\t");
         }
         UARTprintf("\t%5d\t%5d\t%5d\t   %10d\t",
@@ -717,19 +696,15 @@ void CloudProxySet(char * pcProxy)
     char * pcPort;
     uint16_t ui16ProxyPort;
 
-    if(ustrncmp(pcProxy, "off", 3) == 0)
-    {
+    if(ustrncmp(pcProxy, "off", 3) == 0) {
         EthClientProxySet(NULL, 0);
-    }
-    else
-    {
+    } else {
         //
         // Find the location of the " " which delimits server from port.
         //
         pcPort = ustrstr(pcProxy, " ");
 
-        if(pcPort)
-        {
+        if(pcPort) {
             //
             // Insert the null character to terminate the server part of the
             // string. Then increment pcPort to point to the port number
@@ -786,8 +761,7 @@ bool CloudSyncExosite(void)
     //
     // Check that the receive was successful and data is in the buffer.
     //
-    if(ui32ReceiveLength > 0)
-    {
+    if(ui32ReceiveLength > 0) {
         //
         // Take the CloudData semaphore so the decode function can safely write
         // the values received from the cloud.
@@ -834,7 +808,7 @@ bool CloudSyncExosite(void)
     ui32SpaceUsed += usnprintf(pcBuf + ui32SpaceUsed, 1024 - ui32SpaceUsed,
                                "&bmp180_json=");
     ui32SpaceUsed += BMP180DataEncodeJSON(pcBuf + ui32SpaceUsed,
-                                         1024 - ui32SpaceUsed);
+                                          1024 - ui32SpaceUsed);
 
     //
     // For the Board Data variables they are directly in HTTP Exosite format
@@ -844,7 +818,7 @@ bool CloudSyncExosite(void)
     ui32SpaceUsed += usnprintf(pcBuf + ui32SpaceUsed, 1024 - ui32SpaceUsed,
                                "&");
     ui32SpaceUsed += CloudBoardDataEncodeExositeHTTP(pcBuf + ui32SpaceUsed,
-                                                     1024 - ui32SpaceUsed);
+                     1024 - ui32SpaceUsed);
 
     //
     // Cloud data copied to local buffer.  Give back the semaphore.
@@ -870,7 +844,7 @@ bool CloudSyncExosite(void)
     //
     ui32SpaceUsed = usnprintf(pcBuf, 2048, "taskstats_json=");
     ui32SpaceUsed += CloudTaskStatsEncodeJSON(pcBuf + ui32SpaceUsed,
-                                              2048 - ui32SpaceUsed);
+                     2048 - ui32SpaceUsed);
 
     //
     // Cloud data copied to local buffer.  Give back the semaphore.
@@ -912,10 +886,8 @@ CloudProvisionExosite(void)
     // Try to activate with Exosite a few times. If we succeed move on with the
     // new CIK. Otherwise, fail.
     //
-    for(ui32Idx = 0; ui32Idx < 3; ui32Idx++)
-    {
-        if(Exosite_Activate())
-        {
+    for(ui32Idx = 0; ui32Idx < 3; ui32Idx++) {
+        if(Exosite_Activate()) {
             //
             // If exosite gives us a CIK, send feedback to the user.
             //
@@ -923,30 +895,25 @@ CloudProvisionExosite(void)
             UARTprintf("CIK acquired!\n");
             xSemaphoreGive(g_xUARTSemaphore);
 
-            if(Exosite_GetCIK(g_pcExositeCIK))
-            {
-              xSemaphoreTake(g_xUARTSemaphore, portMAX_DELAY);
-              UARTprintf("CIK: %s\n", g_pcExositeCIK);
-              xSemaphoreGive(g_xUARTSemaphore);
-            }
-            else
-            {
-              //
-              // This shouldn't ever happen, but print an error message in
-              // case it does.
-              //
-              xSemaphoreTake(g_xUARTSemaphore, portMAX_DELAY);
-              UARTprintf("ERROR reading new CIK from EEPROM.\n");
-              xSemaphoreGive(g_xUARTSemaphore);
+            if(Exosite_GetCIK(g_pcExositeCIK)) {
+                xSemaphoreTake(g_xUARTSemaphore, portMAX_DELAY);
+                UARTprintf("CIK: %s\n", g_pcExositeCIK);
+                xSemaphoreGive(g_xUARTSemaphore);
+            } else {
+                //
+                // This shouldn't ever happen, but print an error message in
+                // case it does.
+                //
+                xSemaphoreTake(g_xUARTSemaphore, portMAX_DELAY);
+                UARTprintf("ERROR reading new CIK from EEPROM.\n");
+                xSemaphoreGive(g_xUARTSemaphore);
             }
 
             //
             // Return "true" indicating that we found a valid CIK.
             //
             return true;
-        }
-        else
-        {
+        } else {
             //
             xSemaphoreTake(g_xUARTSemaphore, portMAX_DELAY);
             UARTprintf("Attempt %d of %d to acquire CIK failed!\n",
@@ -997,8 +964,7 @@ CloudStartExosite(void)
     //
     // Check the EEPROM for a valid CIK first.
     //
-    if(Exosite_GetCIK(g_pcExositeCIK))
-    {
+    if(Exosite_GetCIK(g_pcExositeCIK)) {
         //
         // EEPROM CIK Found.
         //
@@ -1011,13 +977,11 @@ CloudStartExosite(void)
         // Try several times to get a successful synchronization with the
         // Exosite server.
         //
-        for(ui32Index = 0; ui32Index < 5; ui32Index++)
-        {
+        for(ui32Index = 0; ui32Index < 5; ui32Index++) {
             //
             // Do sync now to see if the CIK is still valid.
             //
-            if(CloudSyncExosite())
-            {
+            if(CloudSyncExosite()) {
                 //
                 // Let user know we succeeeded and set Online state variable.
                 xSemaphoreTake(g_xUARTSemaphore, portMAX_DELAY);
@@ -1032,8 +996,7 @@ CloudStartExosite(void)
         //
         // Check to see if we hit the maximum number of retry attempts.
         //
-        if(ui32Index == 5)
-        {
+        if(ui32Index == 5) {
             //
             // Let user know that initial sync failed.
             //
@@ -1044,15 +1007,12 @@ CloudStartExosite(void)
             //
             // Now try to get a new CIK from Exosite.
             //
-            if(CloudProvisionExosite())
-            {
+            if(CloudProvisionExosite()) {
                 //
                 // Success.
                 //
                 g_bOnline = true;
-            }
-            else
-            {
+            } else {
                 //
                 // If both cases above fail, alert the user, but continue on
                 // with the application.
@@ -1060,9 +1020,7 @@ CloudStartExosite(void)
                 g_bOnline = false;
             }
         }
-    }
-    else
-    {
+    } else {
         //
         // EEPROM CIK NOT Found.
         //
@@ -1073,15 +1031,12 @@ CloudStartExosite(void)
         //
         // Attempt to get a new CIK from the server.
         //
-        if(CloudProvisionExosite())
-        {
+        if(CloudProvisionExosite()) {
             //
             // Success.
             //
             g_bOnline = true;
-        }
-        else
-        {
+        } else {
             //
             // If both cases above fail, alert the user, but continue on
             // with the application.
@@ -1136,12 +1091,9 @@ void SwitchTimerCallback(xTimerHandle xTimer)
     // If either button has been pressed, record that status to the
     // corresponding global variable.
     //
-    if(BUTTON_PRESSED(USR_SW1, ui8Buttons, ui8ButtonsChanged))
-    {
+    if(BUTTON_PRESSED(USR_SW1, ui8Buttons, ui8ButtonsChanged)) {
         g_sCloudBoardData.ui32SwitchPressCount[0] += 1;
-    }
-    else if(BUTTON_PRESSED(USR_SW2, ui8Buttons, ui8ButtonsChanged))
-    {
+    } else if(BUTTON_PRESSED(USR_SW2, ui8Buttons, ui8ButtonsChanged)) {
         g_sCloudBoardData.ui32SwitchPressCount[1] += 1;
     }
 
@@ -1179,16 +1131,14 @@ CloudTask(void *pvParameters)
     //
     // Loop for a few seconds while polling to see if we have a IP address yet.
     //
-    for(ui32Timeout = 0; ui32Timeout < 20; ui32Timeout++)
-    {
+    for(ui32Timeout = 0; ui32Timeout < 20; ui32Timeout++) {
         //
         // Get the initial IP Address (likely all 'ff');
         //
         ui32IPAddrCurrent = lwIPLocalIPAddrGet();
         ui32IPAddrOld = ui32IPAddrCurrent;
 
-        if((ui32IPAddrCurrent != 0xFFFFFFFF) && (ui32IPAddrCurrent != 0))
-        {
+        if((ui32IPAddrCurrent != 0xFFFFFFFF) && (ui32IPAddrCurrent != 0)) {
 
             //
             // Now that we have a presumably valid IP print it for the user
@@ -1224,8 +1174,7 @@ CloudTask(void *pvParameters)
     //
     // Check if we successfully connected to the cloud
     //
-    if(g_bOnline)
-    {
+    if(g_bOnline) {
         //
         // Print the status update message.
         //
@@ -1240,8 +1189,7 @@ CloudTask(void *pvParameters)
     //
     xTimerStart(g_xCloudTimerHandle, portMAX_DELAY);
 
-    while(1)
-    {
+    while(1) {
         //
         // Block forever until a message is put into the queue.
         //
@@ -1252,10 +1200,8 @@ CloudTask(void *pvParameters)
         // The first part of the queue message is the type of message, switch
         // on the type of message and perform actions accordingly.
         //
-        switch(sCloudRequest.ui32Request)
-        {
-            case CLOUD_REQUEST_SYNC:
-            {
+        switch(sCloudRequest.ui32Request) {
+            case CLOUD_REQUEST_SYNC: {
                 //
                 // Update the FreeRTOS task statistics.
                 //
@@ -1271,8 +1217,7 @@ CloudTask(void *pvParameters)
                 break;
             }
 
-            case CLOUD_REQUEST_ACTIVATE:
-            {
+            case CLOUD_REQUEST_ACTIVATE: {
                 //
                 // Call the provision function which attempts to acquire a new
                 // CIK.
@@ -1281,8 +1226,7 @@ CloudTask(void *pvParameters)
                 break;
             }
 
-            case CLOUD_REQUEST_START:
-            {
+            case CLOUD_REQUEST_START: {
                 //
                 // Call the start function which will connect and sync. Will
                 // also acquire a new CIK if needed.
@@ -1291,8 +1235,7 @@ CloudTask(void *pvParameters)
                 break;
             }
 
-            case CLOUD_REQUEST_PROXY_SET:
-            {
+            case CLOUD_REQUEST_PROXY_SET: {
                 //
                 // Set or clear the proxy address. As directed by user command
                 // line.
@@ -1301,8 +1244,7 @@ CloudTask(void *pvParameters)
                 break;
             }
 
-            default:
-            {
+            default: {
                 //
                 // Any other request type is not supported, alter the user.
                 //
@@ -1322,8 +1264,7 @@ CloudTask(void *pvParameters)
         //
         // if the IP address changed then print that too.
         //
-        if(ui32IPAddrCurrent != ui32IPAddrOld)
-        {
+        if(ui32IPAddrCurrent != ui32IPAddrOld) {
             xSemaphoreTake(g_xUARTSemaphore, portMAX_DELAY);
             UARTprintf("IP: %d.%d.%d.%d\n", pui8IPAddr[0], pui8IPAddr[1],
                        pui8IPAddr[2], pui8IPAddr[3]);
@@ -1364,8 +1305,7 @@ uint32_t CloudTaskInit(void)
     // Get the MAC address from the user registers.
     //
     ROM_FlashUserGet(&ui32User0, &ui32User1);
-    if((ui32User0 == 0xffffffff) || (ui32User1 == 0xffffffff))
-    {
+    if((ui32User0 == 0xffffffff) || (ui32User1 == 0xffffffff)) {
         //
         // Tell the user why we failed.
         //
@@ -1375,9 +1315,7 @@ uint32_t CloudTaskInit(void)
         // Return Error since we cannot go online without a MAC address.
         //
         return(1);
-    }
-    else
-    {
+    } else {
         //
         // Convert the 24/24 split MAC address from NV ram into a 32/16 split MAC
         // address needed to program the hardware registers, then program the MAC
@@ -1398,8 +1336,7 @@ uint32_t CloudTaskInit(void)
         //
         // Extract each pair of characters and print them to the UART.
         //
-        for(ui8Idx = 0; ui8Idx < 5; ui8Idx++)
-        {
+        for(ui8Idx = 0; ui8Idx < 5; ui8Idx++) {
             UARTprintf("%02x:", pui8MAC[ui8Idx]);
         }
 
@@ -1458,8 +1395,7 @@ uint32_t CloudTaskInit(void)
     //
     if(xTaskCreate(CloudTask, (const portCHAR *)"Cloud",
                    CLOUD_TASK_STACK_SIZE, NULL, tskIDLE_PRIORITY +
-                   PRIORITY_CLOUD_TASK, g_xCloudTaskHandle) != pdTRUE)
-    {
+                   PRIORITY_CLOUD_TASK, g_xCloudTaskHandle) != pdTRUE) {
         //
         // Task creation failed.
         //
@@ -1467,8 +1403,7 @@ uint32_t CloudTaskInit(void)
     }
 
     if((g_xCloudTimerHandle != NULL) && (g_xCloudTaskRequestQueue != NULL) &&
-       (g_xSwitchesTimerHandle != NULL))
-    {
+            (g_xSwitchesTimerHandle != NULL)) {
         //
         // Success.
         //

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -41,8 +41,7 @@ extern "C"
 // The states a hub port can be in during device connection.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     //
     // The port has no device connected.
     //
@@ -107,8 +106,7 @@ tHubPortState;
 // out other information that the device class needs to complete enumeration.
 //
 //*****************************************************************************
-struct tUSBHostDevice
-{
+struct tUSBHostDevice {
     //
     // The current device address for this device.
     //
@@ -173,7 +171,7 @@ struct tUSBHostDevice
 //
 //*****************************************************************************
 extern uint32_t USBHCDHubDeviceConnected(uint32_t ui32Index, uint8_t ui8Hub,
-                                         uint8_t ui8Port, uint32_t ui32Speed);
+        uint8_t ui8Port, uint32_t ui32Speed);
 extern void USBHCDHubDeviceDisconnected(uint32_t ui32Index,
                                         uint32_t ui32DevIndex);
 

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -80,8 +80,7 @@
 // of the most recent wake.
 //
 //*****************************************************************************
-static char *g_ppcWakeSource[] =
-{
+static char *g_ppcWakeSource[] = {
     "RTC TIMEOUT",
     "RESET",
     "WAKE PIN",
@@ -94,8 +93,7 @@ static char *g_ppcWakeSource[] =
 // Lookup table to convert numerical value of a month into text.
 //
 //*****************************************************************************
-static char *g_ppcMonth[12] =
-{
+static char *g_ppcMonth[12] = {
     "Jan",
     "Feb",
     "Mar",
@@ -248,49 +246,49 @@ Canvas(g_sMainScreen, WIDGET_ROOT, 0, &g_sInfoStr3,
 RectangularButton(g_sDateNextBtn, &g_sDateScreen, 0, 0,
                   &g_sKentec320x240x16_SSD2119, 240, 190, 60, 30,
                   (PB_STYLE_TEXT | PB_STYLE_FILL | PB_STYLE_OUTLINE |
-                  PB_STYLE_TEXT_OPAQUE), ClrDarkBlue, ClrBlue, 0, ClrWhite,
+                   PB_STYLE_TEXT_OPAQUE), ClrDarkBlue, ClrBlue, 0, ClrWhite,
                   g_psFontCm16, "NEXT", 0, 0, 0, 0, OnDateNextBtnPress);
 CircularButton(g_sYearDwnBtn, &g_sDateScreen, &g_sDateNextBtn, 0,
                &g_sKentec320x240x16_SSD2119, 260, 90, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
                ClrDarkBlue, ClrBlue, 0, ClrWhite, g_psFontCm20, "+", 0, 0, 100,
                10, OnYearDwnBtnPress);
 CircularButton(g_sYearUpBtn, &g_sDateScreen, &g_sYearDwnBtn, 0,
                &g_sKentec320x240x16_SSD2119, 260, 153, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
                ClrDarkBlue, ClrBlue, 0, ClrWhite, g_psFontCm20, "-", 0, 0, 100,
                10, OnYearUpBtnPress);
 Canvas(g_sYearText, &g_sDateScreen, &g_sYearUpBtn, 0,
        &g_sKentec320x240x16_SSD2119, 230, 110, 60, 25, (CANVAS_STYLE_OUTLINE |
-       CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
+               CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
        g_psFontCm16, g_pcYearBuf, 0, 0);
 CircularButton(g_sDayDwnBtn, &g_sDateScreen, &g_sYearText, 0,
                &g_sKentec320x240x16_SSD2119, 160, 90, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
                ClrDarkBlue, ClrBlue, 0, ClrWhite, g_psFontCm20, "+", 0, 0, 100,
                10, OnDayDwnBtnPress);
 CircularButton(g_sDayUpBtn, &g_sDateScreen, &g_sDayDwnBtn, 0,
                &g_sKentec320x240x16_SSD2119, 160, 153, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
                ClrDarkBlue, ClrBlue, 0, ClrWhite, g_psFontCm20, "-", 0, 0, 100,
                10, OnDayUpBtnPress);
 Canvas(g_sDayText, &g_sDateScreen, &g_sDayUpBtn, 0,
        &g_sKentec320x240x16_SSD2119, 130, 110, 60, 25, (CANVAS_STYLE_OUTLINE |
-       CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
+               CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
        g_psFontCm16, g_pcDayBuf, 0, 0);
 CircularButton(g_sMonDwnBtn, &g_sDateScreen, &g_sDayText, 0,
                &g_sKentec320x240x16_SSD2119, 60, 90, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
                ClrDarkBlue, ClrBlue, 0, ClrWhite, g_psFontCm20, "+", 0, 0, 100,
                20, OnMonDwnBtnPress);
 CircularButton(g_sMonUpBtn, &g_sDateScreen, &g_sMonDwnBtn, 0,
                &g_sKentec320x240x16_SSD2119, 60, 153, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
                ClrDarkBlue, ClrBlue, 0, ClrWhite, g_psFontCm20, "-", 0, 0, 100,
                20, OnMonUpBtnPress);
 Canvas(g_sMonText, &g_sDateScreen, &g_sMonUpBtn, 0,
        &g_sKentec320x240x16_SSD2119, 30, 110, 60, 25, (CANVAS_STYLE_OUTLINE |
-       CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
+               CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
        g_psFontCm16, g_pcMonBuf, 0, 0);
 Canvas(g_sDateScreen, WIDGET_ROOT, 0, &g_sMonText,
        &g_sKentec320x240x16_SSD2119, 9, 25, (310 - 9), (230 - 25),
@@ -304,47 +302,47 @@ Canvas(g_sDateScreen, WIDGET_ROOT, 0, &g_sMonText,
 RectangularButton(g_sTimeDoneBtn, &g_sTimeScreen, 0, 0,
                   &g_sKentec320x240x16_SSD2119, 240, 190, 60, 30,
                   (PB_STYLE_TEXT | PB_STYLE_FILL | PB_STYLE_OUTLINE |
-                  PB_STYLE_TEXT_OPAQUE), ClrDarkBlue, ClrBlue, 0, ClrWhite,
+                   PB_STYLE_TEXT_OPAQUE), ClrDarkBlue, ClrBlue, 0, ClrWhite,
                   g_psFontCm16, "DONE", 0, 0, 0, 0, OnTimeDoneBtnPress);
 CircularButton(g_sAMPMDwnBtn, &g_sTimeScreen, &g_sTimeDoneBtn, 0,
                &g_sKentec320x240x16_SSD2119, 260, 90, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE), ClrDarkBlue, ClrBlue, 0,
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE), ClrDarkBlue, ClrBlue, 0,
                ClrWhite, g_psFontCm20, "+", 0, 0, 0, 0, OnAMPMBtnPress);
 CircularButton(g_sAMPMUpBtn, &g_sTimeScreen, &g_sAMPMDwnBtn, 0,
                &g_sKentec320x240x16_SSD2119, 260, 153, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE), ClrDarkBlue, ClrBlue, 0,
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE), ClrDarkBlue, ClrBlue, 0,
                ClrWhite, g_psFontCm20, "-", 0, 0, 0, 0, OnAMPMBtnPress);
 Canvas(g_sAMPMText, &g_sTimeScreen, &g_sAMPMUpBtn, 0,
        &g_sKentec320x240x16_SSD2119, 230, 110, 60, 25, (CANVAS_STYLE_OUTLINE |
-       CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
+               CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
        g_psFontCm16, g_pcAMPMBuf, 0, 0);
 CircularButton(g_sMinDwnBtn, &g_sTimeScreen, &g_sAMPMText, 0,
                &g_sKentec320x240x16_SSD2119, 160, 90, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
                ClrDarkBlue, ClrBlue, 0, ClrWhite, g_psFontCm20, "+", 0, 0, 100,
                10, OnMinDwnBtnPress);
 CircularButton(g_sMinUpBtn, &g_sTimeScreen, &g_sMinDwnBtn, 0,
                &g_sKentec320x240x16_SSD2119, 160, 153, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
                ClrDarkBlue, ClrBlue, 0, ClrWhite, g_psFontCm20, "-", 0, 0, 100,
                10, OnMinUpBtnPress);
 Canvas(g_sMinText, &g_sTimeScreen, &g_sMinUpBtn, 0,
        &g_sKentec320x240x16_SSD2119, 130, 110, 60, 25, (CANVAS_STYLE_OUTLINE |
-       CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
+               CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
        g_psFontCm16, g_pcMinBuf, 0, 0);
 CircularButton(g_sHourDwnBtn, &g_sTimeScreen, &g_sMinText, 0,
                &g_sKentec320x240x16_SSD2119, 60, 90, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
                ClrDarkBlue, ClrBlue, 0, ClrWhite, g_psFontCm20, "+", 0, 0, 100,
                20, OnHourDwnBtnPress);
 CircularButton(g_sHourUpBtn, &g_sTimeScreen, &g_sHourDwnBtn, 0,
                &g_sKentec320x240x16_SSD2119, 60, 153, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
                ClrDarkBlue, ClrBlue, 0, ClrWhite, g_psFontCm20, "-", 0, 0, 100,
                20, OnHourUpBtnPress);
 Canvas(g_sHourText, &g_sTimeScreen, &g_sHourUpBtn, 0,
        &g_sKentec320x240x16_SSD2119, 30, 110, 60, 25, (CANVAS_STYLE_OUTLINE |
-       CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
+               CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
        g_psFontCm16, g_pcHourBuf, 0, 0);
 Canvas(g_sTimeScreen, WIDGET_ROOT, 0, &g_sHourText,
        &g_sKentec320x240x16_SSD2119, 9, 25, (310 - 9), (230 - 25),
@@ -382,12 +380,11 @@ DateTimeGet(struct tm *sTime, char *pcAMPM)
     // Is valid data read?
     //
     if(((sTime->tm_sec < 0) || (sTime->tm_sec > 59)) ||
-       ((sTime->tm_min < 0) || (sTime->tm_min > 59)) ||
-       ((sTime->tm_hour < 0) || (sTime->tm_hour > 23)) ||
-       ((sTime->tm_mday < 1) || (sTime->tm_mday > 31)) ||
-       ((sTime->tm_mon < 0) || (sTime->tm_mon > 11)) ||
-       ((sTime->tm_year < 100) || (sTime->tm_year > 199)))
-    {
+            ((sTime->tm_min < 0) || (sTime->tm_min > 59)) ||
+            ((sTime->tm_hour < 0) || (sTime->tm_hour > 23)) ||
+            ((sTime->tm_mday < 1) || (sTime->tm_mday > 31)) ||
+            ((sTime->tm_mon < 0) || (sTime->tm_mon > 11)) ||
+            ((sTime->tm_year < 100) || (sTime->tm_year > 199))) {
         //
         // No - Let the application know the same by returning relevant
         // message.
@@ -403,17 +400,12 @@ DateTimeGet(struct tm *sTime, char *pcAMPM)
     //
     // Convert 24-hour format into 12-hour format with AM/PM indication.
     //
-    if(sTime->tm_hour == 0)
-    {
+    if(sTime->tm_hour == 0) {
         sTime->tm_hour = 12;
         strcpy(pcAMPM, "AM");
-    }
-    else if(sTime->tm_hour == 12)
-    {
+    } else if(sTime->tm_hour == 12) {
         strcpy(pcAMPM, "PM");
-    }
-    else if(sTime->tm_hour > 12)
-    {
+    } else if(sTime->tm_hour > 12) {
         sTime->tm_hour -= 12;
         strcpy(pcAMPM, "PM");
     }
@@ -444,8 +436,7 @@ DateTimeDisplayGet(char *pcBuf, uint32_t ui32BufSize)
     //
     // Get the latest date and time and check the validity.
     //
-    if(DateTimeGet(&sTime, pcAMPM) == false)
-    {
+    if(DateTimeGet(&sTime, pcAMPM) == false) {
         //
         // Invalid - Force set the date and time to default values and return
         // false to indicate no information to display.
@@ -458,8 +449,7 @@ DateTimeDisplayGet(char *pcBuf, uint32_t ui32BufSize)
     // If date and time is valid, check if seconds have updated from previous
     // visit.
     //
-    if(ui32SecondsPrev == sTime.tm_sec)
-    {
+    if(ui32SecondsPrev == sTime.tm_sec) {
         //
         // No - Return false to indicate no information to display.
         //
@@ -502,8 +492,7 @@ DateTimeUpdateGet(char *pcMon, char *pcDay, char *pcYear, char *pcHour,
     //
     // Get the latest date and time and check the validity.
     //
-    if(DateTimeGet(&sTime, pcAMPM) == false)
-    {
+    if(DateTimeGet(&sTime, pcAMPM) == false) {
         //
         // Invalid - Return here with false as no information to update.  So
         // use default values.
@@ -566,17 +555,12 @@ DateTimeSet(void)
     //
     // Convert 12-hour format into 24-hour format.
     //
-    if(strcmp(g_pcAMPMBuf, "PM") == 0)
-    {
-        if(sTime.tm_hour < 12)
-        {
+    if(strcmp(g_pcAMPMBuf, "PM") == 0) {
+        if(sTime.tm_hour < 12) {
             sTime.tm_hour += 12;
         }
-    }
-    else
-    {
-        if(sTime.tm_hour > 11)
-        {
+    } else {
+        if(sTime.tm_hour > 11) {
             sTime.tm_hour -= 12;
         }
     }
@@ -599,30 +583,24 @@ GetDaysInMonth(uint32_t ui32Year, uint32_t ui32Mon)
     //
     // Return the number of days based on the month.
     //
-    if(ui32Mon == 1)
-    {
+    if(ui32Mon == 1) {
         //
         // For February return the number of days based on the year being a
         // leap year or not.
         //
-        if((ui32Year % 4) == 0)
-        {
+        if((ui32Year % 4) == 0) {
             //
             // If leap year return 29.
             //
             return 29;
-        }
-        else
-        {
+        } else {
             //
             // If not leap year return 28.
             //
             return 28;
         }
-    }
-    else if((ui32Mon == 3) || (ui32Mon == 5) || (ui32Mon == 8) ||
-            (ui32Mon == 10))
-    {
+    } else if((ui32Mon == 3) || (ui32Mon == 5) || (ui32Mon == 8) ||
+              (ui32Mon == 10)) {
         //
         // For April, June, September and November return 30.
         //
@@ -657,8 +635,7 @@ GetCalendarMatchValue(struct tm* sTime)
     // Check if seconds is out of bounds.  If so subtract seconds by 60 and
     // increment minutes.
     //
-    if(sTime->tm_sec > 59)
-    {
+    if(sTime->tm_sec > 59) {
         sTime->tm_sec -= 60;
         sTime->tm_min++;
     }
@@ -667,8 +644,7 @@ GetCalendarMatchValue(struct tm* sTime)
     // Check if minutes is out of bounds.  If so subtract minutes by 60 and
     // increment hours.
     //
-    if(sTime->tm_min > 59)
-    {
+    if(sTime->tm_min > 59) {
         sTime->tm_min -= 60;
         sTime->tm_hour++;
     }
@@ -677,8 +653,7 @@ GetCalendarMatchValue(struct tm* sTime)
     // Check if hours is out of bounds.  If so subtract minutes by 24 and
     // increment days.
     //
-    if(sTime->tm_hour > 23)
-    {
+    if(sTime->tm_hour > 23) {
         sTime->tm_hour -= 24;
         sTime->tm_mday++;
     }
@@ -694,8 +669,7 @@ GetCalendarMatchValue(struct tm* sTime)
     // subtract days by the number of days in the current month and increment
     // months.
     //
-    if(sTime->tm_mday > ui32MonthDays)
-    {
+    if(sTime->tm_mday > ui32MonthDays) {
         sTime->tm_mday -= ui32MonthDays;
         sTime->tm_mon++;
     }
@@ -704,8 +678,7 @@ GetCalendarMatchValue(struct tm* sTime)
     // Check if months is out of bounds.  If so subtract months by 11 and
     // increment years.
     //
-    if(sTime->tm_mon > 11)
-    {
+    if(sTime->tm_mon > 11) {
         sTime->tm_mon -= 11;
         sTime->tm_year++;
     }
@@ -713,8 +686,7 @@ GetCalendarMatchValue(struct tm* sTime)
     //
     // Check if years is out of bounds.  If so subtract years by 100.
     //
-    if(sTime->tm_year > 99)
-    {
+    if(sTime->tm_year > 99) {
         sTime->tm_year -= 100;
     }
 }
@@ -1112,12 +1084,9 @@ OnAMPMBtnPress(tWidget *psWidget)
     // User wants to change AM to PM or vice versa.  Change to "PM" if "AM" and
     // vice versa.
     //
-    if(strcmp(g_pcAMPMBuf, "AM") == 0)
-    {
+    if(strcmp(g_pcAMPMBuf, "AM") == 0) {
         strcpy(g_pcAMPMBuf, "PM");
-    }
-    else
-    {
+    } else {
         strcpy(g_pcAMPMBuf, "AM");
     }
 
@@ -1236,8 +1205,7 @@ main(void)
     // Check to see if Hibernation module is already active, which could mean
     // that the processor is waking from a hibernation.
     //
-    if(HibernateIsActive())
-    {
+    if(HibernateIsActive()) {
         //
         // Read the status bits to see what caused the wake.  Clear the wake
         // source so that the device can be put into hibernation again.
@@ -1255,8 +1223,7 @@ main(void)
         //
         // Wake was due to RTC match.
         //
-        if(ui32Status & HIBERNATE_INT_RTC_MATCH_0)
-        {
+        if(ui32Status & HIBERNATE_INT_RTC_MATCH_0) {
             ui32Len = usnprintf(&g_pcWakeBuf[ui32Len],
                                 sizeof(g_pcWakeBuf) - ui32Len, "%s",
                                 g_ppcWakeSource[0]);
@@ -1265,8 +1232,7 @@ main(void)
         //
         // Wake was due to Reset button.
         //
-        else if(ui32Status & HIBERNATE_INT_RESET_WAKE)
-        {
+        else if(ui32Status & HIBERNATE_INT_RESET_WAKE) {
             ui32Len = usnprintf(&g_pcWakeBuf[ui32Len],
                                 sizeof(g_pcWakeBuf) - ui32Len, "%s",
                                 g_ppcWakeSource[1]);
@@ -1275,8 +1241,7 @@ main(void)
         //
         // Wake was due to the External Wake pin.
         //
-        else if(ui32Status & HIBERNATE_INT_PIN_WAKE)
-        {
+        else if(ui32Status & HIBERNATE_INT_PIN_WAKE) {
             ui32Len = usnprintf(&g_pcWakeBuf[ui32Len],
                                 sizeof(g_pcWakeBuf) - ui32Len, "%s",
                                 g_ppcWakeSource[2]);
@@ -1285,8 +1250,7 @@ main(void)
         //
         // Wake was due to GPIO wake.
         //
-        else if(ui32Status & HIBERNATE_INT_GPIO_WAKE)
-        {
+        else if(ui32Status & HIBERNATE_INT_GPIO_WAKE) {
             ui32Len = usnprintf(&g_pcWakeBuf[ui32Len],
                                 sizeof(g_pcWakeBuf) - ui32Len, "%s",
                                 g_ppcWakeSource[3]);
@@ -1298,8 +1262,7 @@ main(void)
         // hibernation count.
         //
         if(ui32Status & (HIBERNATE_INT_PIN_WAKE | HIBERNATE_INT_RTC_MATCH_0 |
-                         HIBERNATE_INT_GPIO_WAKE | HIBERNATE_INT_RESET_WAKE))
-        {
+                         HIBERNATE_INT_GPIO_WAKE | HIBERNATE_INT_RESET_WAKE)) {
             HibernateDataGet(&ui32HibernateCount, 1);
         }
     }
@@ -1314,8 +1277,7 @@ main(void)
     // reset.
     //
     if(!(ui32Status & (HIBERNATE_INT_PIN_WAKE | HIBERNATE_INT_RTC_MATCH_0 |
-                       HIBERNATE_INT_GPIO_WAKE | HIBERNATE_INT_RESET_WAKE)))
-    {
+                       HIBERNATE_INT_GPIO_WAKE | HIBERNATE_INT_RESET_WAKE))) {
         //
         // Configure the module clock source.
         //
@@ -1404,8 +1366,7 @@ main(void)
     //
     // Loop forever.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Process any messages for/from the widgets.
         //
@@ -1415,8 +1376,7 @@ main(void)
         // Check if date and time has to be written to the calendar logic of
         // hibernate module.
         //
-        if(g_bSetDate == true)
-        {
+        if(g_bSetDate == true) {
             //
             // Yes - Clear the flag to avoid unwanted writes to the calendar
             // logic.
@@ -1438,8 +1398,7 @@ main(void)
         // Check if main screen is active and update the required buffers and
         // redraw the required widgets.
         //
-        if(g_bMainScreen)
-        {
+        if(g_bMainScreen) {
             //
             // Update the buffer that displays date and time on the main
             // screen.
@@ -1450,8 +1409,7 @@ main(void)
             //
             // Is a new value of date and time available to be displayed?
             //
-            if(bUpdate == true)
-            {
+            if(bUpdate == true) {
                 //
                 // Yes - Redraw the widget.
                 //
@@ -1462,8 +1420,7 @@ main(void)
         //
         // Check if user wants to enter hibernation.
         //
-        if(g_bHibernate == true)
-        {
+        if(g_bHibernate == true) {
             //
             // Yes - Clear the flag.
             //
@@ -1548,8 +1505,7 @@ main(void)
             // processor.
             //
             g_bHibernate = false;
-            while(g_bHibernate != true)
-            {
+            while(g_bHibernate != true) {
             }
 
             //
@@ -1560,8 +1516,7 @@ main(void)
             //
             // Wait here.
             //
-            while(1)
-            {
+            while(1) {
             }
         }
     }

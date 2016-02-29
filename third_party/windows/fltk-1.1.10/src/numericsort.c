@@ -57,53 +57,72 @@
  *                   a case-insensitive comparison...
  */
 
-static int numericsort(struct dirent **A, struct dirent **B, int cs) {
-  const char* a = (*A)->d_name;
-  const char* b = (*B)->d_name;
-  int ret = 0;
-  for (;;) {
-    if (isdigit(*a & 255) && isdigit(*b & 255)) {
-      int diff,magdiff;
-      while (*a == '0') a++;
-      while (*b == '0') b++;
-      while (isdigit(*a & 255) && *a == *b) {a++; b++;}
-      diff = (isdigit(*a & 255) && isdigit(*b & 255)) ? *a - *b : 0;
-      magdiff = 0;
-      while (isdigit(*a & 255)) {magdiff++; a++;}
-      while (isdigit(*b & 255)) {magdiff--; b++;}
-      if (magdiff) {ret = magdiff; break;} /* compare # of significant digits*/
-      if (diff) {ret = diff; break;}	/* compare first non-zero digit */
-    } else {
-      if (cs) {
-      	/* compare case-sensitive */
-	if ((ret = *a-*b)) break;
-      } else {
-	/* compare case-insensitve */
-	if ((ret = tolower(*a & 255)-tolower(*b & 255))) break;
-      }
+static int numericsort(struct dirent **A, struct dirent **B, int cs)
+{
+    const char* a = (*A)->d_name;
+    const char* b = (*B)->d_name;
+    int ret = 0;
+    for (;;) {
+        if (isdigit(*a & 255) && isdigit(*b & 255)) {
+            int diff,magdiff;
+            while (*a == '0') a++;
+            while (*b == '0') b++;
+            while (isdigit(*a & 255) && *a == *b) {
+                a++;
+                b++;
+            }
+            diff = (isdigit(*a & 255) && isdigit(*b & 255)) ? *a - *b : 0;
+            magdiff = 0;
+            while (isdigit(*a & 255)) {
+                magdiff++;
+                a++;
+            }
+            while (isdigit(*b & 255)) {
+                magdiff--;
+                b++;
+            }
+            if (magdiff) {
+                ret = magdiff;    /* compare # of significant digits*/
+                break;
+            }
+            if (diff) {
+                ret = diff;    /* compare first non-zero digit */
+                break;
+            }
+        } else {
+            if (cs) {
+                /* compare case-sensitive */
+                if ((ret = *a-*b)) break;
+            } else {
+                /* compare case-insensitve */
+                if ((ret = tolower(*a & 255)-tolower(*b & 255))) break;
+            }
 
-      if (!*a) break;
-      a++; b++;
+            if (!*a) break;
+            a++;
+            b++;
+        }
     }
-  }
-  if (!ret) return 0;
-  else return (ret < 0) ? -1 : 1;
+    if (!ret) return 0;
+    else return (ret < 0) ? -1 : 1;
 }
 
 /*
  * 'fl_casenumericsort()' - Compare directory entries with case-sensitivity.
  */
 
-int fl_casenumericsort(struct dirent **A, struct dirent **B) {
-  return numericsort(A, B, 0);
+int fl_casenumericsort(struct dirent **A, struct dirent **B)
+{
+    return numericsort(A, B, 0);
 }
 
 /*
  * 'fl_numericsort()' - Compare directory entries with case-sensitivity.
  */
 
-int fl_numericsort(struct dirent **A, struct dirent **B) {
-  return numericsort(A, B, 1);
+int fl_numericsort(struct dirent **A, struct dirent **B)
+{
+    return numericsort(A, B, 1);
 }
 
 /*

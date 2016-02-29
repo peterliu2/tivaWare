@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -42,19 +42,18 @@
 // the host in response to a USBD_DFU_REQUEST_GETSTATE request.
 //
 //*****************************************************************************
-typedef enum
-{
-   eDFUStateAppIdle = 0,
-   eDFUStateAppDetach,
-   eDFUStateIdle,
-   eDFUStateDnloadSync,
-   eDFUStateDnBusy,
-   eDFUStateDnloadIdle,
-   eDFUStateManifestSync,
-   eDFUStateManifest,
-   eDFUStateManifestWaitReset,
-   eDFUStateUploadIdle,
-   eDFUStateError
+typedef enum {
+    eDFUStateAppIdle = 0,
+    eDFUStateAppDetach,
+    eDFUStateIdle,
+    eDFUStateDnloadSync,
+    eDFUStateDnBusy,
+    eDFUStateDnloadIdle,
+    eDFUStateManifestSync,
+    eDFUStateManifest,
+    eDFUStateManifestWaitReset,
+    eDFUStateUploadIdle,
+    eDFUStateError
 }
 tDFUState;
 
@@ -64,24 +63,23 @@ tDFUState;
 // the host in response to a USBD_DFU_REQUEST_GETSTATUS request.
 //
 //*****************************************************************************
-typedef enum
-{
-   eDFUStatusOk = 0,
-   eDFUStatusErrTarget,
-   eDFUStatusErrFile,
-   eDFUStatusErrWrite,
-   eDFUStatusErrErase,
-   eDFUStatusErrCheckErased,
-   eDFUStatusErrProg,
-   eDFUStatusErrVerify,
-   eDFUStatusErrAddress,
-   eDFUStatusErrNotDone,
-   eDFUStatusErrFirmware,
-   eDFUStatusErrVendor,
-   eDFUStatusErrUSBR,
-   eDFUStatusErrPOR,
-   eDFUStatusErrUnknown,
-   eDFUStatusErrStalledPkt
+typedef enum {
+    eDFUStatusOk = 0,
+    eDFUStatusErrTarget,
+    eDFUStatusErrFile,
+    eDFUStatusErrWrite,
+    eDFUStatusErrErase,
+    eDFUStatusErrCheckErased,
+    eDFUStatusErrProg,
+    eDFUStatusErrVerify,
+    eDFUStatusErrAddress,
+    eDFUStatusErrNotDone,
+    eDFUStatusErrFirmware,
+    eDFUStatusErrVendor,
+    eDFUStatusErrUSBR,
+    eDFUStatusErrPOR,
+    eDFUStatusErrUnknown,
+    eDFUStatusErrStalledPkt
 }
 tDFUStatus;
 
@@ -172,8 +170,7 @@ tDFUStatus;
 // received while the DFU device is in idle state.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // The protocol marker(DFU_PROTOCOL_TIVA_MARKER)
     //
@@ -191,8 +188,7 @@ PACKED tDFUQueryTivaProtocol;
 // Structure sent to the host in response to USBD_DFU_REQUEST_GETSTATUS.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint8_t bStatus;
     uint8_t bwPollTimeout[3];
     uint8_t bState;
@@ -229,8 +225,7 @@ PACKED tDFUGetStatusResponse;
 // Generic download command header.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // Command identifier.
     //
@@ -269,8 +264,7 @@ PACKED tDFUDownloadHeader;
 // change in the future.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // DFU_CMD_PROG
     //
@@ -319,8 +313,7 @@ PACKED tDFUDownloadProgHeader;
 // truncated before the check is performed.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // DFU_CMD_READ or DFU_CMD_CHECK
     //
@@ -353,8 +346,7 @@ PACKED tDFUDownloadReadCheckHeader;
 // size of the device may be determined using the DFU_CMD_INFO command.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // DFU_CMD_ERASE
     //
@@ -391,8 +383,7 @@ PACKED tDFUDownloadEraseHeader;
 // USBD_DFU_REQUEST_UPLOAD request.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // DFU_CMD_INFO
     //
@@ -426,8 +417,7 @@ PACKED tDFUDownloadInfoHeader;
 // as DFU_CMD_INFO.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // DFU_CMD_BIN
     //
@@ -461,8 +451,7 @@ PACKED tDFUDownloadBinHeader;
 //! USBD_DFU_REQUEST_UPLOAD request following a DFU_CMD_INFO command.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The size of a flash block in bytes.
     //

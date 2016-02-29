@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -55,8 +55,7 @@
 // be able to patch some values in it based on client requirements.
 //
 //*****************************************************************************
-uint8_t g_pui8MouseDescriptor[] =
-{
+uint8_t g_pui8MouseDescriptor[] = {
     //
     // Configuration descriptor header.
     //
@@ -64,10 +63,10 @@ uint8_t g_pui8MouseDescriptor[] =
     USB_DTYPE_CONFIGURATION,    // Type of this descriptor.
     USBShort(34),               // The total size of this full structure.
     1,                          // The number of interfaces in this
-                                // configuration.
+    // configuration.
     1,                          // The unique value for this configuration.
     5,                          // The string identifier that describes this
-                                // configuration.
+    // configuration.
     USB_CONF_ATTR_SELF_PWR,     // Bus Powered, Self Powered, remote wake up.
     250,                        // The maximum power in 2mA increments.
 };
@@ -78,8 +77,7 @@ uint8_t g_pui8MouseDescriptor[] =
 // don't need to modify anything in it at runtime.
 //
 //*****************************************************************************
-uint8_t g_pui8HIDInterface[HIDINTERFACE_SIZE] =
-{
+uint8_t g_pui8HIDInterface[HIDINTERFACE_SIZE] = {
     //
     // HID Device Class Interface Descriptor.
     //
@@ -88,16 +86,15 @@ uint8_t g_pui8HIDInterface[HIDINTERFACE_SIZE] =
     0,                          // The index for this interface.
     0,                          // The alternate setting for this interface.
     1,                          // The number of endpoints used by this
-                                // interface.
+    // interface.
     USB_CLASS_HID,              // The interface class
     USB_HID_SCLASS_BOOT,        // The interface sub-class.
     USB_HID_PROTOCOL_MOUSE,     // The interface protocol for the sub-class
-                                // specified above.
+    // specified above.
     4,                          // The string index for this interface.
 };
 
-const uint8_t g_pui8HIDInEndpoint[HIDINENDPOINT_SIZE] =
-{
+const uint8_t g_pui8HIDInEndpoint[HIDINENDPOINT_SIZE] = {
     //
     // Interrupt IN endpoint descriptor
     //
@@ -106,7 +103,7 @@ const uint8_t g_pui8HIDInEndpoint[HIDINENDPOINT_SIZE] =
     USB_EP_DESC_IN | USBEPToIndex(USB_EP_1),
     USB_EP_ATTR_INT,            // Endpoint is an interrupt endpoint.
     USBShort(USBFIFOSizeToBytes(USB_FIFO_SZ_64)),
-                                // The maximum packet size.
+    // The maximum packet size.
     16,                         // The polling interval for this endpoint.
 };
 
@@ -115,57 +112,56 @@ const uint8_t g_pui8HIDInEndpoint[HIDINENDPOINT_SIZE] =
 // The report descriptor for the mouse class device.
 //
 //*****************************************************************************
-static const uint8_t g_pui8MouseReportDescriptor[] =
-{
+static const uint8_t g_pui8MouseReportDescriptor[] = {
     UsagePage(USB_HID_GENERIC_DESKTOP),
     Usage(USB_HID_MOUSE),
     Collection(USB_HID_APPLICATION),
-        Usage(USB_HID_POINTER),
-        Collection(USB_HID_PHYSICAL),
+    Usage(USB_HID_POINTER),
+    Collection(USB_HID_PHYSICAL),
 
-            //
-            // The buttons.
-            //
-            UsagePage(USB_HID_BUTTONS),
-            UsageMinimum(1),
-            UsageMaximum(3),
-            LogicalMinimum(0),
-            LogicalMaximum(1),
+    //
+    // The buttons.
+    //
+    UsagePage(USB_HID_BUTTONS),
+    UsageMinimum(1),
+    UsageMaximum(3),
+    LogicalMinimum(0),
+    LogicalMaximum(1),
 
-            //
-            // 3 - 1 bit values for the buttons.
-            //
-            ReportSize(1),
-            ReportCount(3),
-            Input(USB_HID_INPUT_DATA | USB_HID_INPUT_VARIABLE |
-                  USB_HID_INPUT_ABS),
+    //
+    // 3 - 1 bit values for the buttons.
+    //
+    ReportSize(1),
+    ReportCount(3),
+    Input(USB_HID_INPUT_DATA | USB_HID_INPUT_VARIABLE |
+    USB_HID_INPUT_ABS),
 
-            //
-            // 1 - 5 bit unused constant value to fill the 8 bits.
-            //
-            ReportSize(5),
-            ReportCount(1),
-            Input(USB_HID_INPUT_CONSTANT | USB_HID_INPUT_ARRAY |
-                  USB_HID_INPUT_ABS),
+    //
+    // 1 - 5 bit unused constant value to fill the 8 bits.
+    //
+    ReportSize(5),
+    ReportCount(1),
+    Input(USB_HID_INPUT_CONSTANT | USB_HID_INPUT_ARRAY |
+    USB_HID_INPUT_ABS),
 
-            //
-            // The X and Y axis.
-            //
-            UsagePage(USB_HID_GENERIC_DESKTOP),
-            Usage(USB_HID_X),
-            Usage(USB_HID_Y),
-            LogicalMinimum(-127),
-            LogicalMaximum(127),
+    //
+    // The X and Y axis.
+    //
+    UsagePage(USB_HID_GENERIC_DESKTOP),
+    Usage(USB_HID_X),
+    Usage(USB_HID_Y),
+    LogicalMinimum(-127),
+    LogicalMaximum(127),
 
-            //
-            // 2 - 8 bit Values for x and y.
-            //
-            ReportSize(8),
-            ReportCount(2),
-            Input(USB_HID_INPUT_DATA | USB_HID_INPUT_VARIABLE |
-                  USB_HID_INPUT_RELATIVE),
+    //
+    // 2 - 8 bit Values for x and y.
+    //
+    ReportSize(8),
+    ReportCount(2),
+    Input(USB_HID_INPUT_DATA | USB_HID_INPUT_VARIABLE |
+    USB_HID_INPUT_RELATIVE),
 
-        EndCollection,
+    EndCollection,
     EndCollection,
 };
 
@@ -174,8 +170,7 @@ static const uint8_t g_pui8MouseReportDescriptor[] =
 // The HID descriptor for the mouse device.
 //
 //*****************************************************************************
-static const tHIDDescriptor g_sMouseHIDDescriptor =
-{
+static const tHIDDescriptor g_sMouseHIDDescriptor = {
     9,                              // bLength
     USB_HID_DTYPE_HID,              // bDescriptorType
     0x111,                          // bcdHID (version 1.11 compliant)
@@ -185,7 +180,7 @@ static const tHIDDescriptor g_sMouseHIDDescriptor =
         {
             USB_HID_DTYPE_REPORT,   // Report descriptor
             sizeof(g_pui8MouseReportDescriptor)
-                                    // Size of report descriptor
+            // Size of report descriptor
         }
     }
 };
@@ -203,20 +198,17 @@ static const tHIDDescriptor g_sMouseHIDDescriptor =
 // 5.  The optional interrupt OUT endpoint descriptor (FLASH).
 //
 //*****************************************************************************
-const tConfigSection g_sHIDConfigSection =
-{
+const tConfigSection g_sHIDConfigSection = {
     sizeof(g_pui8MouseDescriptor),
     g_pui8MouseDescriptor
 };
 
-const tConfigSection g_sHIDInterfaceSection =
-{
+const tConfigSection g_sHIDInterfaceSection = {
     sizeof(g_pui8HIDInterface),
     g_pui8HIDInterface
 };
 
-const tConfigSection g_sHIDInEndpointSection =
-{
+const tConfigSection g_sHIDInEndpointSection = {
     sizeof(g_pui8HIDInEndpoint),
     g_pui8HIDInEndpoint
 };
@@ -226,10 +218,9 @@ const tConfigSection g_sHIDInEndpointSection =
 // Place holder for the user's HID descriptor block.
 //
 //*****************************************************************************
-tConfigSection g_sHIDDescriptorSection =
-{
-   sizeof(g_sMouseHIDDescriptor),
-   (const uint8_t *)&g_sMouseHIDDescriptor
+tConfigSection g_sHIDDescriptorSection = {
+    sizeof(g_sMouseHIDDescriptor),
+    (const uint8_t *)&g_sMouseHIDDescriptor
 };
 
 //*****************************************************************************
@@ -238,8 +229,7 @@ tConfigSection g_sHIDDescriptorSection =
 // single, complete HID configuration descriptor.
 //
 //*****************************************************************************
-const tConfigSection *g_psHIDSections[] =
-{
+const tConfigSection *g_psHIDSections[] = {
     &g_sHIDConfigSection,
     &g_sHIDInterfaceSection,
     &g_sHIDDescriptorSection,
@@ -258,8 +248,7 @@ const tConfigSection *g_psHIDSections[] =
 // client supplied initialization parameters.
 //
 //*****************************************************************************
-tConfigHeader g_sHIDConfigHeader =
-{
+tConfigHeader g_sHIDConfigHeader = {
     NUM_HID_SECTIONS,
     g_psHIDSections
 };
@@ -269,8 +258,7 @@ tConfigHeader g_sHIDConfigHeader =
 // Configuration Descriptor.
 //
 //*****************************************************************************
-const tConfigHeader * const g_ppsHIDConfigDescriptors[] =
-{
+const tConfigHeader * const g_ppsHIDConfigDescriptors[] = {
     &g_sHIDConfigHeader
 };
 
@@ -280,8 +268,7 @@ const tConfigHeader * const g_ppsHIDConfigDescriptors[] =
 // report descriptor.
 //
 //*****************************************************************************
-static const uint8_t * const g_pui8MouseClassDescriptors[] =
-{
+static const uint8_t * const g_pui8MouseClassDescriptors[] = {
     g_pui8MouseReportDescriptor
 };
 
@@ -343,13 +330,11 @@ HIDMouseRxHandler(void *pvMouseDevice, uint32_t ui32Event,
     //
     // Which event were we sent?
     //
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // The host has connected to us and configured the device.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             psInst->ui8USBConfigured = true;
 
             //
@@ -364,8 +349,7 @@ HIDMouseRxHandler(void *pvMouseDevice, uint32_t ui32Event,
         //
         // The host has disconnected from us.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             psInst->ui8USBConfigured = false;
 
             //
@@ -382,8 +366,7 @@ HIDMouseRxHandler(void *pvMouseDevice, uint32_t ui32Event,
         // is asking for the latest version to transmit.
         //
         case USBD_HID_EVENT_IDLE_TIMEOUT:
-        case USBD_HID_EVENT_GET_REPORT:
-        {
+        case USBD_HID_EVENT_GET_REPORT: {
             //
             // We only support a single input report so we don't need to check
             // the ui32MsgValue parameter in this case.  Set the report pointer
@@ -397,8 +380,7 @@ HIDMouseRxHandler(void *pvMouseDevice, uint32_t ui32Event,
         // The device class driver has completed sending a report to the
         // host in response to a Get_Report request.
         //
-        case USBD_HID_EVENT_REPORT_SENT:
-        {
+        case USBD_HID_EVENT_REPORT_SENT: {
             //
             // We have nothing to do here.
             //
@@ -410,8 +392,7 @@ HIDMouseRxHandler(void *pvMouseDevice, uint32_t ui32Event,
         // mouse device has no output reports so we return a NULL pointer and
         // zero length to cause this request to be stalled.
         //
-        case USBD_HID_EVENT_GET_REPORT_BUFFER:
-        {
+        case USBD_HID_EVENT_GET_REPORT_BUFFER: {
             //
             // We are being asked for a report that does not exist for
             // this device.  Return 0 to indicate that we are not providing
@@ -424,8 +405,7 @@ HIDMouseRxHandler(void *pvMouseDevice, uint32_t ui32Event,
         // The host is asking us to set either boot or report protocol (not
         // that it makes any difference to this particular mouse).
         //
-        case USBD_HID_EVENT_SET_PROTOCOL:
-        {
+        case USBD_HID_EVENT_SET_PROTOCOL: {
             psInst->ui8Protocol = ui32MsgData;
             break;
         }
@@ -434,8 +414,7 @@ HIDMouseRxHandler(void *pvMouseDevice, uint32_t ui32Event,
         // The host is asking us to tell it which protocol we are currently
         // using, boot or request.
         //
-        case USBD_HID_EVENT_GET_PROTOCOL:
-        {
+        case USBD_HID_EVENT_GET_PROTOCOL: {
             return(psInst->ui8Protocol);
         }
 
@@ -447,8 +426,7 @@ HIDMouseRxHandler(void *pvMouseDevice, uint32_t ui32Event,
         case USB_EVENT_RESUME:
         case USB_EVENT_LPM_RESUME:
         case USB_EVENT_LPM_SLEEP:
-        case USB_EVENT_LPM_ERROR:
-        {
+        case USB_EVENT_LPM_ERROR: {
             return(psMouseDevice->pfnCallback(psMouseDevice->pvCBData,
                                               ui32Event, ui32MsgData,
                                               pvMsgData));
@@ -457,8 +435,7 @@ HIDMouseRxHandler(void *pvMouseDevice, uint32_t ui32Event,
         //
         // We ignore all other events.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -504,14 +481,12 @@ HIDMouseTxHandler(void *pvMouseDevice, uint32_t ui32Event,
     //
     // Which event were we sent?
     //
-    switch (ui32Event)
-    {
+    switch (ui32Event) {
         //
         // A report transmitted via the interrupt IN endpoint was acknowledged
         // by the host.
         //
-        case USB_EVENT_TX_COMPLETE:
-        {
+        case USB_EVENT_TX_COMPLETE: {
             //
             // Our last transmission is complete.
             //
@@ -531,8 +506,7 @@ HIDMouseTxHandler(void *pvMouseDevice, uint32_t ui32Event,
         // We ignore all other events related to transmission of reports via
         // the interrupt IN endpoint.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -603,8 +577,7 @@ USBDHIDMouseInit(uint32_t ui32Index, tUSBDHIDMouseDevice *psMouseDevice)
     // If we initialized the HID layer successfully, pass our device pointer
     // back as the return code, otherwise return NULL to indicate an error.
     //
-    if(pvRetcode)
-    {
+    if(pvRetcode) {
         //
         // Initialize the lower layer HID driver and pass it the various
         // structures and descriptors necessary to declare that we are a
@@ -613,9 +586,7 @@ USBDHIDMouseInit(uint32_t ui32Index, tUSBDHIDMouseDevice *psMouseDevice)
         pvRetcode = USBDHIDInit(ui32Index, psHIDDevice);
 
         return((void *)psMouseDevice);
-    }
-    else
-    {
+    } else {
         return((void *)0);
     }
 }
@@ -699,9 +670,9 @@ USBDHIDMouseCompositeInit(uint32_t ui32Index,
     psHIDDevice->psHIDDescriptor = &g_sMouseHIDDescriptor;
     psHIDDevice->ppui8ClassDescriptors = g_pui8MouseClassDescriptors;
     psHIDDevice->ppui8StringDescriptors =
-                                    psMouseDevice->ppui8StringDescriptors;
+        psMouseDevice->ppui8StringDescriptors;
     psHIDDevice->ui32NumStringDescriptors =
-                                    psMouseDevice->ui32NumStringDescriptors;
+        psMouseDevice->ui32NumStringDescriptors;
     psHIDDevice->ppsConfigDescriptor = g_ppsHIDConfigDescriptors;
 
     //
@@ -871,16 +842,14 @@ USBDHIDMouseStateChange(void *pvMouseDevice, int8_t i8DeltaX, int8_t i8DeltaY,
     // If we are not configured, return an error here before trying to send
     // anything.
     //
-    if(!psInst->ui8USBConfigured)
-    {
+    if(!psInst->ui8USBConfigured) {
         return(MOUSE_ERR_NOT_CONFIGURED);
     }
 
     //
     // Only send a report if the transmitter is currently free.
     //
-    if(USBDHIDTxPacketAvailable((void *)psHIDDevice))
-    {
+    if(USBDHIDTxPacketAvailable((void *)psHIDDevice)) {
         //
         // Send the report to the host.
         //
@@ -892,20 +861,15 @@ USBDHIDMouseStateChange(void *pvMouseDevice, int8_t i8DeltaX, int8_t i8DeltaY,
         //
         // Did we schedule a packet for transmission correctly?
         //
-        if(!ui32Count)
-        {
+        if(!ui32Count) {
             //
             // No - report the error to the caller.
             //
             ui32Retcode = MOUSE_ERR_TX_ERROR;
-        }
-        else
-        {
+        } else {
             ui32Retcode = MOUSE_SUCCESS;
         }
-    }
-    else
-    {
+    } else {
         ui32Retcode = MOUSE_ERR_TX_ERROR;
     }
     //

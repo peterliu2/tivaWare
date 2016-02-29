@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2006-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -205,14 +205,11 @@ ConfigureDevice(void)
     // and clock the processor from it. Check for whether the Oscillator range
     // has to be set and wait states need to be updated
     //
-    if(CRYSTAL_FREQ >= 10000000)
-    {
+    if(CRYSTAL_FREQ >= 10000000) {
         HWREG(SYSCTL_MOSCCTL) |= (SYSCTL_MOSCCTL_OSCRNG);
         HWREG(SYSCTL_MOSCCTL) &= ~(SYSCTL_MOSCCTL_PWRDN |
                                    SYSCTL_MOSCCTL_NOXTAL);
-    }
-    else
-    {
+    } else {
         HWREG(SYSCTL_MOSCCTL) &= ~(SYSCTL_MOSCCTL_PWRDN |
                                    SYSCTL_MOSCCTL_NOXTAL);
     }
@@ -222,8 +219,7 @@ ConfigureDevice(void)
     //
     Delay(524288);
 
-    if(CRYSTAL_FREQ > 16000000)
-    {
+    if(CRYSTAL_FREQ > 16000000) {
         HWREG(SYSCTL_MEMTIM0)  = (SYSCTL_MEMTIM0_FBCHT_1_5 |
                                   (1 << SYSCTL_MEMTIM0_FWS_S) |
                                   SYSCTL_MEMTIM0_EBCHT_1_5 |
@@ -231,9 +227,7 @@ ConfigureDevice(void)
                                   SYSCTL_MEMTIM0_MB1);
         HWREG(SYSCTL_RSCLKCFG) = (SYSCTL_RSCLKCFG_MEMTIMU |
                                   SYSCTL_RSCLKCFG_OSCSRC_MOSC);
-    }
-    else
-    {
+    } else {
         HWREG(SYSCTL_RSCLKCFG) = (SYSCTL_RSCLKCFG_OSCSRC_MOSC);
     }
 #else
@@ -342,8 +336,7 @@ ConfigureDevice(void)
     // Keep attempting to sync until we are successful.
     //
 #ifdef UART_AUTOBAUD
-    while(UARTAutoBaud(&ui32ProcRatio) < 0)
-    {
+    while(UARTAutoBaud(&ui32ProcRatio) < 0) {
     }
 #else
     ui32ProcRatio = UART_BAUD_RATIO(UART_FIXED_BAUDRATE);
@@ -422,14 +415,12 @@ Updater(void)
     //
     // Read any data from the serial port in use.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Receive a packet from the port in use.
         //
         ui32Size = sizeof(g_pui32DataBuffer) - 3;
-        if(ReceivePacket(g_pui8DataBuffer, &ui32Size) != 0)
-        {
+        if(ReceivePacket(g_pui8DataBuffer, &ui32Size) != 0) {
             continue;
         }
 
@@ -437,13 +428,11 @@ Updater(void)
         // The first byte of the data buffer has the command and determines
         // the format of the rest of the bytes.
         //
-        switch(g_pui8DataBuffer[0])
-        {
+        switch(g_pui8DataBuffer[0]) {
             //
             // This was a simple ping command.
             //
-            case COMMAND_PING:
-            {
+            case COMMAND_PING: {
                 //
                 // This command always sets the status to COMMAND_RET_SUCCESS.
                 //
@@ -463,8 +452,7 @@ Updater(void)
             //
             // This command indicates the start of a download sequence.
             //
-            case COMMAND_DOWNLOAD:
-            {
+            case COMMAND_DOWNLOAD: {
                 //
                 // Until determined otherwise, the command status is success.
                 //
@@ -474,13 +462,11 @@ Updater(void)
                 // A simple do/while(0) control loop to make error exits
                 // easier.
                 //
-                do
-                {
+                do {
                     //
                     // See if a full packet was received.
                     //
-                    if(ui32Size != 9)
-                    {
+                    if(ui32Size != 9) {
                         //
                         // Indicate that an invalid command was received.
                         //
@@ -514,8 +500,7 @@ Updater(void)
                     // Check for a valid starting address and image size.
                     //
                     if(!BL_FLASH_AD_CHECK_FN_HOOK(g_ui32TransferAddress,
-                                                  g_ui32TransferSize))
-                    {
+                                                  g_ui32TransferSize)) {
                         //
                         // Set the code to an error to indicate that the last
                         // command failed.  This informs the updater program
@@ -538,8 +523,7 @@ Updater(void)
                     ui32FlashSize = BL_FLASH_SIZE_FN_HOOK();
 #ifdef FLASH_RSVD_SPACE
                     if((ui32FlashSize - FLASH_RSVD_SPACE) !=
-                       g_ui32TransferAddress)
-                    {
+                            g_ui32TransferAddress) {
                         ui32FlashSize -= FLASH_RSVD_SPACE;
                     }
 #endif
@@ -557,8 +541,7 @@ Updater(void)
                     // image.
                     //
                     for(ui32Temp = g_ui32TransferAddress;
-                        ui32Temp < ui32FlashSize; ui32Temp += FLASH_PAGE_SIZE)
-                    {
+                            ui32Temp < ui32FlashSize; ui32Temp += FLASH_PAGE_SIZE) {
                         //
                         // Erase this block.
                         //
@@ -568,18 +551,15 @@ Updater(void)
                     //
                     // Return an error if an access violation occurred.
                     //
-                    if(BL_FLASH_ERROR_FN_HOOK())
-                    {
+                    if(BL_FLASH_ERROR_FN_HOOK()) {
                         g_ui8Status = COMMAND_RET_FLASH_FAIL;
                     }
-                }
-                while(0);
+                } while(0);
 
                 //
                 // See if the command was successful.
                 //
-                if(g_ui8Status != COMMAND_RET_SUCCESS)
-                {
+                if(g_ui8Status != COMMAND_RET_SUCCESS) {
                     //
                     // Setting g_ui32TransferSize to zero makes
                     // COMMAND_SEND_DATA fail to accept any data.
@@ -599,8 +579,7 @@ Updater(void)
                 // now if everything is OK.
                 //
 #ifdef BL_START_FN_HOOK
-                if(g_ui32TransferSize)
-                {
+                if(g_ui32TransferSize) {
                     BL_START_FN_HOOK();
                 }
 #endif
@@ -615,8 +594,7 @@ Updater(void)
             // This command indicates that control should be transferred to
             // the specified address.
             //
-            case COMMAND_RUN:
-            {
+            case COMMAND_RUN: {
                 //
                 // Acknowledge that this command was received correctly.  This
                 // does not indicate success, just that the command was
@@ -627,8 +605,7 @@ Updater(void)
                 //
                 // See if a full packet was received.
                 //
-                if(ui32Size != 5)
-                {
+                if(ui32Size != 5) {
                     //
                     // Indicate that an invalid command was received.
                     //
@@ -654,8 +631,7 @@ Updater(void)
                 //
                 // Test if the transfer address is valid for this device.
                 //
-                if(g_ui32TransferAddress >= ui32FlashSize)
-                {
+                if(g_ui32TransferAddress >= ui32FlashSize) {
                     //
                     // Indicate that an invalid address was specified.
                     //
@@ -710,8 +686,7 @@ Updater(void)
                 // The microcontroller should have reset, so this should
                 // never be reached.  Just in case, loop forever.
                 //
-                while(1)
-                {
+                while(1) {
                 }
             }
 
@@ -719,8 +694,7 @@ Updater(void)
             // This command just returns the status of the last command that
             // was sent.
             //
-            case COMMAND_GET_STATUS:
-            {
+            case COMMAND_GET_STATUS: {
                 //
                 // Acknowledge that this command was received correctly.  This
                 // does not indicate success, just that the command was
@@ -743,8 +717,7 @@ Updater(void)
             // This command is sent to transfer data to the device following
             // a download command.
             //
-            case COMMAND_SEND_DATA:
-            {
+            case COMMAND_SEND_DATA: {
                 //
                 // Until determined otherwise, the command status is success.
                 //
@@ -754,8 +727,7 @@ Updater(void)
                 // If this is overwriting the boot loader then the application
                 // has already been erased so now erase the boot loader.
                 //
-                if(g_ui32TransferAddress == 0)
-                {
+                if(g_ui32TransferAddress == 0) {
                     //
                     // Clear the flash access interrupt.
                     //
@@ -765,8 +737,7 @@ Updater(void)
                     // Erase the boot loader.
                     //
                     for(ui32Temp = 0; ui32Temp < APP_START_ADDRESS;
-                        ui32Temp += FLASH_PAGE_SIZE)
-                    {
+                            ui32Temp += FLASH_PAGE_SIZE) {
                         //
                         // Erase this block.
                         //
@@ -776,8 +747,7 @@ Updater(void)
                     //
                     // Return an error if an access violation occurred.
                     //
-                    if(BL_FLASH_ERROR_FN_HOOK())
-                    {
+                    if(BL_FLASH_ERROR_FN_HOOK()) {
                         //
                         // Setting g_ui32TransferSize to zero makes
                         // COMMAND_SEND_DATA fail to accept any more data.
@@ -799,8 +769,7 @@ Updater(void)
                 //
                 // Check if there are any more bytes to receive.
                 //
-                if(g_ui32TransferSize >= ui32Size)
-                {
+                if(g_ui32TransferSize >= ui32Size) {
                     //
                     // If we have been provided with a decryption hook function
                     // call it here.
@@ -819,15 +788,12 @@ Updater(void)
                     //
                     // Return an error if an access violation occurred.
                     //
-                    if(BL_FLASH_ERROR_FN_HOOK())
-                    {
+                    if(BL_FLASH_ERROR_FN_HOOK()) {
                         //
                         // Indicate that the flash programming failed.
                         //
                         g_ui8Status = COMMAND_RET_FLASH_FAIL;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Now update the address to program.
                         //
@@ -850,11 +816,10 @@ Updater(void)
                         // image to determine whether or not we report an error
                         // back to the host.
                         //
-                        if(g_ui32TransferSize == 0)
-                        {
+                        if(g_ui32TransferSize == 0) {
                             InitCRC32Table();
                             ui32Retcode = CheckImageCRC32(
-                                    (uint32_t *)g_ui32ImageAddress);
+                                              (uint32_t *)g_ui32ImageAddress);
 
                             //
                             // Was the CRC good?  We consider the CRC good if
@@ -866,7 +831,7 @@ Updater(void)
                             if(ui32Retcode == CHECK_CRC_OK)
 #else
                             if((ui32Retcode == CHECK_CRC_OK) ||
-                               (ui32Retcode == CHECK_CRC_NO_LENGTH))
+                                    (ui32Retcode == CHECK_CRC_NO_LENGTH))
 #endif
                             {
                                 //
@@ -874,9 +839,7 @@ Updater(void)
                                 // value.
                                 //
                                 g_ui8Status = COMMAND_RET_SUCCESS;
-                            }
-                            else
-                            {
+                            } else {
                                 //
                                 // The calculated CRC didn't match the expected
                                 // value or the image didn't contain an embedded
@@ -887,9 +850,7 @@ Updater(void)
                         }
 #endif
                     }
-                }
-                else
-                {
+                } else {
                     //
                     // This indicates that too much data is being sent to the
                     // device.
@@ -909,8 +870,7 @@ Updater(void)
                 // reached the end, call it now.
                 //
 #ifdef BL_END_FN_HOOK
-                if(g_ui32TransferSize == 0)
-                {
+                if(g_ui32TransferSize == 0) {
                     BL_END_FN_HOOK();
                 }
 #endif
@@ -924,8 +884,7 @@ Updater(void)
             //
             // This command is used to reset the device.
             //
-            case COMMAND_RESET:
-            {
+            case COMMAND_RESET: {
                 //
                 // Send out a one-byte ACK to ensure the byte goes back to the
                 // host before we reset everything.
@@ -948,8 +907,7 @@ Updater(void)
                 // The microcontroller should have reset, so this should never
                 // be reached.  Just in case, loop forever.
                 //
-                while(1)
-                {
+                while(1) {
                 }
             }
 
@@ -957,8 +915,7 @@ Updater(void)
             // Just acknowledge the command and set the error to indicate that
             // a bad command was sent.
             //
-            default:
-            {
+            default: {
                 //
                 // Acknowledge that this command was received correctly.  This
                 // does not indicate success, just that the command was

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C129EXL Firmware Package.
 //
 //*****************************************************************************
@@ -83,8 +83,7 @@
 // USB HID usage code.
 //
 //*****************************************************************************
-static const int8_t g_ppi8KeyUsageCodes[][2] =
-{
+static const int8_t g_ppi8KeyUsageCodes[][2] = {
     { 0, HID_KEYB_USAGE_SPACE },                       //   0x20
     { HID_KEYB_LEFT_SHIFT, HID_KEYB_USAGE_1 },         // ! 0x21
     { HID_KEYB_LEFT_SHIFT, HID_KEYB_USAGE_FQUOTE },    // " 0x22
@@ -280,13 +279,11 @@ uint32_t
 KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
                 void *pvMsgData)
 {
-    switch (ui32Event)
-    {
+    switch (ui32Event) {
         //
         // The host has connected to us and configured the device.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             g_bConnected = true;
             g_bSuspended = false;
             break;
@@ -295,8 +292,7 @@ KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // The host has disconnected from us.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             g_bConnected = false;
             break;
         }
@@ -306,8 +302,7 @@ KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         // of a report. It is used here purely as a way of determining whether
         // the host is still talking to us or not.
         //
-        case USB_EVENT_TX_COMPLETE:
-        {
+        case USB_EVENT_TX_COMPLETE: {
             //
             // Enter the idle state since we finished sending something.
             //
@@ -318,8 +313,7 @@ KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // This event indicates that the host has suspended the USB bus.
         //
-        case USB_EVENT_SUSPEND:
-        {
+        case USB_EVENT_SUSPEND: {
             g_bSuspended = true;
             break;
         }
@@ -327,8 +321,7 @@ KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // This event signals that the host has resumed signalling on the bus.
         //
-        case USB_EVENT_RESUME:
-        {
+        case USB_EVENT_RESUME: {
             g_bSuspended = false;
             break;
         }
@@ -338,8 +331,7 @@ KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         // Feature report and that the report is now in the buffer we provided
         // on the previous USBD_HID_EVENT_GET_REPORT_BUFFER callback.
         //
-        case USBD_HID_KEYB_EVENT_SET_LEDS:
-        {
+        case USBD_HID_KEYB_EVENT_SET_LEDS: {
             //
             // Set the LED to match the current state of the caps lock LED.
             //
@@ -353,8 +345,7 @@ KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // We ignore all other events.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -387,13 +378,11 @@ WaitForSendIdle(uint_fast32_t ui32TimeoutTicks)
     ui32Start = g_ui32SysTickCount;
     ui32Elapsed = 0;
 
-    while(ui32Elapsed < ui32TimeoutTicks)
-    {
+    while(ui32Elapsed < ui32TimeoutTicks) {
         //
         // Is the keyboard is idle, return immediately.
         //
-        if(g_eKeyboardState == STATE_IDLE)
-        {
+        if(g_eKeyboardState == STATE_IDLE) {
             return(true);
         }
 
@@ -403,7 +392,7 @@ WaitForSendIdle(uint_fast32_t ui32TimeoutTicks)
         //
         ui32Now = g_ui32SysTickCount;
         ui32Elapsed = ((ui32Start < ui32Now) ? (ui32Now - ui32Start) :
-                     (((uint32_t)0xFFFFFFFF - ui32Start) + ui32Now + 1));
+                       (((uint32_t)0xFFFFFFFF - ui32Start) + ui32Now + 1));
     }
 
     //
@@ -426,8 +415,7 @@ SendString(char *pcStr)
     //
     // Loop while there are more characters in the string.
     //
-    while(*pcStr)
-    {
+    while(*pcStr) {
         //
         // Get the next character from the string.
         //
@@ -436,8 +424,7 @@ SendString(char *pcStr)
         //
         // Skip this character if it is a non-printable character.
         //
-        if((ui32Char < ' ') || (ui32Char > '~'))
-        {
+        if((ui32Char < ' ') || (ui32Char > '~')) {
             continue;
         }
 
@@ -454,16 +441,14 @@ SendString(char *pcStr)
         if(USBDHIDKeyboardKeyStateChange((void *)&g_sKeyboardDevice,
                                          g_ppi8KeyUsageCodes[ui32Char][0],
                                          g_ppi8KeyUsageCodes[ui32Char][1],
-                                         true) != KEYB_SUCCESS)
-        {
+                                         true) != KEYB_SUCCESS) {
             return;
         }
 
         //
         // Wait until the key press message has been sent.
         //
-        if(!WaitForSendIdle(MAX_SEND_DELAY))
-        {
+        if(!WaitForSendIdle(MAX_SEND_DELAY)) {
             g_bConnected = 0;
             return;
         }
@@ -474,16 +459,14 @@ SendString(char *pcStr)
         g_eKeyboardState = STATE_SENDING;
         if(USBDHIDKeyboardKeyStateChange((void *)&g_sKeyboardDevice,
                                          0, g_ppi8KeyUsageCodes[ui32Char][1],
-                                         false) != KEYB_SUCCESS)
-        {
+                                         false) != KEYB_SUCCESS) {
             return;
         }
 
         //
         // Wait until the key release message has been sent.
         //
-        if(!WaitForSendIdle(MAX_SEND_DELAY))
-        {
+        if(!WaitForSendIdle(MAX_SEND_DELAY)) {
             g_bConnected = 0;
             return;
         }
@@ -580,8 +563,7 @@ main(void)
     // then drop into the main keyboard handling section.  If the host
     // disconnects, we return to the top and wait for a new connection.
     //
-    while(1)
-    {
+    while(1) {
         uint8_t ui8Buttons;
         uint8_t ui8ButtonsChanged;
 
@@ -593,8 +575,7 @@ main(void)
         //
         // Wait here until USB device is connected to a host.
         //
-        while(!g_bConnected)
-        {
+        while(!g_bConnected) {
         }
 
         //
@@ -617,8 +598,7 @@ main(void)
         // Keep transferring characters from the UART to the USB host for as
         // long as we are connected to the host.
         //
-        while(g_bConnected)
-        {
+        while(g_bConnected) {
             //
             // Remember the current time.
             //
@@ -627,18 +607,14 @@ main(void)
             //
             // Has the suspend state changed since last time we checked?
             //
-            if(bLastSuspend != g_bSuspended)
-            {
+            if(bLastSuspend != g_bSuspended) {
                 //
                 // Yes - the state changed. Print state to terminal.
                 //
                 bLastSuspend = g_bSuspended;
-                if(bLastSuspend)
-                {
+                if(bLastSuspend) {
                     UARTprintf("\nBus Suspended ... \n");
-                }
-                else
-                {
+                } else {
                     UARTprintf("\nHost Connected ... \n");
                 }
             }
@@ -648,19 +624,15 @@ main(void)
             //
             ui8Buttons = ButtonsPoll(&ui8ButtonsChanged, 0);
             if(BUTTON_PRESSED(LEFT_BUTTON | RIGHT_BUTTON, ui8Buttons,
-                ui8ButtonsChanged))
-            {
+                              ui8ButtonsChanged)) {
                 //
                 // If the bus is suspended then resume it.  Otherwise, type
                 // some "random" characters.
                 //
-                if(g_bSuspended)
-                {
+                if(g_bSuspended) {
                     USBDHIDKeyboardRemoteWakeupRequest(
-                                                   (void *)&g_sKeyboardDevice);
-                }
-                else
-                {
+                        (void *)&g_sKeyboardDevice);
+                } else {
                     SendString("Make the Switch to TI Microcontrollers!");
                 }
             }
@@ -669,8 +641,7 @@ main(void)
             // Wait for at least 1 system tick to have gone by before we poll
             // the buttons again.
             //
-            while(g_ui32SysTickCount == ui32LastTickCount)
-            {
+            while(g_ui32SysTickCount == ui32LastTickCount) {
             }
         }
     }

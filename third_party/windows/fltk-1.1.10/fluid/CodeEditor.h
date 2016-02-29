@@ -41,44 +41,52 @@
 #  include <FL/Fl_Text_Editor.H>
 
 
-class CodeEditor : public Fl_Text_Editor {
-  static Fl_Text_Display::Style_Table_Entry styletable[];
-  static const char * const code_keywords[];
-  static const char * const code_types[];
+class CodeEditor : public Fl_Text_Editor
+{
+    static Fl_Text_Display::Style_Table_Entry styletable[];
+    static const char * const code_keywords[];
+    static const char * const code_types[];
 
 
-  // 'compare_keywords()' - Compare two keywords...
-  static int compare_keywords(const void *a, const void *b);
+    // 'compare_keywords()' - Compare two keywords...
+    static int compare_keywords(const void *a, const void *b);
 
-  // 'style_parse()' - Parse text and produce style data.
-  static void style_parse(const char *text, char *style, int length);
+    // 'style_parse()' - Parse text and produce style data.
+    static void style_parse(const char *text, char *style, int length);
 
-  // 'style_unfinished_cb()' - Update unfinished styles.
-  static void style_unfinished_cb(int, void*);
+    // 'style_unfinished_cb()' - Update unfinished styles.
+    static void style_unfinished_cb(int, void*);
 
-  // 'style_update()' - Update the style buffer...
-  static void style_update(int pos, int nInserted, int nDeleted,
-                           int /*nRestyled*/, const char * /*deletedText*/,
-                           void *cbArg);
+    // 'style_update()' - Update the style buffer...
+    static void style_update(int pos, int nInserted, int nDeleted,
+                             int /*nRestyled*/, const char * /*deletedText*/,
+                             void *cbArg);
 
-  static int auto_indent(int, CodeEditor* e);
+    static int auto_indent(int, CodeEditor* e);
 
-  public:
+public:
 
-  CodeEditor(int X, int Y, int W, int H, const char *L=0);
-  ~CodeEditor();
-  int top_line() { return get_absolute_top_line_number(); }
+    CodeEditor(int X, int Y, int W, int H, const char *L=0);
+    ~CodeEditor();
+    int top_line()
+    {
+        return get_absolute_top_line_number();
+    }
 };
 
-class CodeViewer : public CodeEditor {
+class CodeViewer : public CodeEditor
+{
 
-  public:
+public:
 
-  CodeViewer(int X, int Y, int W, int H, const char *L=0);
-  
-  protected:
+    CodeViewer(int X, int Y, int W, int H, const char *L=0);
 
-  int handle(int ev) { return Fl_Text_Display::handle(ev); }
+protected:
+
+    int handle(int ev)
+    {
+        return Fl_Text_Display::handle(ev);
+    }
 };
 
 #endif // !CodeEditor_h

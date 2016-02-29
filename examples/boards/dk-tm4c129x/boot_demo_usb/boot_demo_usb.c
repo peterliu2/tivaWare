@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -81,7 +81,7 @@
 //! is part of the Tiva Windows USB Examples package (SW-USB-win-xxxx.msi)
 //! Assuming this package is installed in the default location, the
 //! <tt>dfuprog</tt> executable can be found in the
-//! <tt>C:/Program Files/Texas Instruments/Tiva/usb_examples</tt> or 
+//! <tt>C:/Program Files/Texas Instruments/Tiva/usb_examples</tt> or
 //! <tt>C:/Program Files (x86)/Texas Instruments/Tiva/usb_examples</tt>
 //! directory.
 //!
@@ -96,7 +96,7 @@
 //! If you see two devices, it is strongly recommended that you disconnect
 //! ICDI debug port from the PC, and power the board either with a 5V external
 //! power brick or any usb wall charger which is not plugged in your pc.
-//! This way, your PC is connected to the board only through USB OTG port. 
+//! This way, your PC is connected to the board only through USB OTG port.
 //! The reason for this is that the ICDI chip on the board is DFU-capable
 //! device as well as TM4C129X, if not careful, the firmware on the ICDI
 //! chip could be accidently erased which can not restored easily. As a
@@ -104,14 +104,14 @@
 //!
 //! If IDCI debug port is disconnected from your PC, you should see only one
 //! device from above command, and its index should be 0, and should be named
-//! as ``Mouse with Device Firmware Upgrade''. 
+//! as ``Mouse with Device Firmware Upgrade''.
 //! If for any reason that you cannot provide the power to the board without
 //! connecting ICDI debug port to your PC, the above command should show two
 //! devices, the second device is probably named as
 //! ``In-Circuit Debug interface'', and we need to be careful not to update
 //! the firmware on that device. So please take careful note of the index for
 //! the device ``Mouse with Device Firmware Upgrade'', it could be 0 or 1, we
-//! will need this index number for the following command. 
+//! will need this index number for the following command.
 //! Entering the following command will switch this device into DFU mode and
 //! leave it ready to receive a new firmware image:
 //!
@@ -146,8 +146,7 @@
 // release messages for the given button.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     const char *pcLabel;
     uint16_t ui16X;
     uint16_t ui16Width;
@@ -169,8 +168,7 @@ tMouseButtonArea;
 // Definitions of the positions and labels for each of the three mouse buttons.
 //
 //*****************************************************************************
-static tMouseButtonArea g_sMouseButtons[NUM_MOUSE_BUTTONS] =
-{
+static tMouseButtonArea g_sMouseButtons[NUM_MOUSE_BUTTONS] = {
     { "Button 1", 8,   101, MOUSE_REPORT_BUTTON_1 },
     { "Button 2", 109, 102, MOUSE_REPORT_BUTTON_2 },
     { "Button 3", 211, 101, MOUSE_REPORT_BUTTON_3 }
@@ -292,14 +290,12 @@ MouseTouchHandler(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
 {
     uint32_t ui32Loop;
 
-    switch(ui32Message)
-    {
+    switch(ui32Message) {
         //
         // The touchscreen has been pressed.  Remember where we are so that
         // we can determine how far the pointer moves later.
         //
-        case WIDGET_MSG_PTR_DOWN:
-        {
+        case WIDGET_MSG_PTR_DOWN: {
             //
             // Save the location of the pointer down event.
             //
@@ -314,18 +310,15 @@ MouseTouchHandler(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
             // button has been pressed.
             //
             if(i32Y >=
-               (GrContextDpyHeightGet(&g_sContext) - BUTTON_HEIGHT - 8))
-            {
+                    (GrContextDpyHeightGet(&g_sContext) - BUTTON_HEIGHT - 8)) {
                 //
                 // Run through the list of buttons to determine which one was
                 // pressed.
                 //
-                for(ui32Loop = 0; ui32Loop < NUM_MOUSE_BUTTONS; ui32Loop++)
-                {
+                for(ui32Loop = 0; ui32Loop < NUM_MOUSE_BUTTONS; ui32Loop++) {
                     if((i32X >= g_sMouseButtons[ui32Loop].ui16X) &&
-                       (i32X < (g_sMouseButtons[ui32Loop].ui16X +
-                        g_sMouseButtons[ui32Loop].ui16Width)))
-                    {
+                            (i32X < (g_sMouseButtons[ui32Loop].ui16X +
+                                     g_sMouseButtons[ui32Loop].ui16Width))) {
                         g_ui8Buttons |=
                             g_sMouseButtons[ui32Loop].ui8ReportFlag;
                         break;
@@ -338,8 +331,7 @@ MouseTouchHandler(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
         //
         // The touchscreen is no longer being pressed.
         //
-        case WIDGET_MSG_PTR_UP:
-        {
+        case WIDGET_MSG_PTR_UP: {
             g_bScreenPressed = false;
 
             //
@@ -352,8 +344,7 @@ MouseTouchHandler(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
         //
         // The user is dragging his/her finger/stylus over the touchscreen.
         //
-        case WIDGET_MSG_PTR_MOVE:
-        {
+        case WIDGET_MSG_PTR_MOVE: {
             g_i32ScreenX = i32X;
             g_i32ScreenY = i32Y;
             break;
@@ -386,8 +377,7 @@ uint32_t
 DFUDetachCallback(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
                   void *pvMsgData)
 {
-    if(ui32Event == USBD_DFU_EVENT_DETACH)
-    {
+    if(ui32Event == USBD_DFU_EVENT_DETACH) {
         //
         // Set the flag that the main loop uses to determine when it is time
         // to transfer control back to the boot loader.  Note that we
@@ -421,13 +411,11 @@ uint32_t
 MouseHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
              void *pvMsgData)
 {
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // The USB host has connected to and configured the device.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             g_eMouseState = MOUSE_STATE_IDLE;
             g_bConnected = true;
             break;
@@ -436,8 +424,7 @@ MouseHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // The USB host has disconnected from the device.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             g_bConnected = false;
             g_eMouseState = MOUSE_STATE_UNCONFIGURED;
             break;
@@ -446,8 +433,7 @@ MouseHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // A report was sent to the host. We are not free to send another.
         //
-        case USB_EVENT_TX_COMPLETE:
-        {
+        case USB_EVENT_TX_COMPLETE: {
             g_eMouseState = MOUSE_STATE_IDLE;
             break;
         }
@@ -485,13 +471,11 @@ UpdateDisplay(uint8_t ui8Buttons, bool bRedraw)
     //
     // Loop through each of the mouse buttons, drawing each in turn.
     //
-    for(ui32Loop = 0; ui32Loop < NUM_MOUSE_BUTTONS; ui32Loop++)
-    {
+    for(ui32Loop = 0; ui32Loop < NUM_MOUSE_BUTTONS; ui32Loop++) {
         //
         // Draw the outline if we are redrawing the whole button area.
         //
-        if(bRedraw)
-        {
+        if(bRedraw) {
             GrContextForegroundSet(&g_sContext, ClrWhite);
 
             sRectOutline.i16XMin = g_sMouseButtons[ui32Loop].ui16X;
@@ -506,9 +490,8 @@ UpdateDisplay(uint8_t ui8Buttons, bool bRedraw)
         // drawing the buttons unconditionally?
         //
         if(((g_ui8Buttons & g_sMouseButtons[ui32Loop].ui8ReportFlag) !=
-           (ui8LastButtons & g_sMouseButtons[ui32Loop].ui8ReportFlag)) ||
-           bRedraw)
-        {
+                (ui8LastButtons & g_sMouseButtons[ui32Loop].ui8ReportFlag)) ||
+                bRedraw) {
             //
             // Set the appropriate button color depending upon whether the
             // button is pressed or not.
@@ -562,8 +545,7 @@ TouchHandler(void)
     // we determine how far they have dragged their finger/stylus and use this
     // to calculate mouse position changes to send to the host.
     //
-    if(g_bScreenPressed || (ui8Buttons != g_ui8Buttons))
-    {
+    if(g_bScreenPressed || (ui8Buttons != g_ui8Buttons)) {
         //
         // Calculate how far we moved since the last time we checked.  This
         // rather odd layout prevents a compiler warning about undefined order
@@ -583,8 +565,7 @@ TouchHandler(void)
         //
         // Was there any movement or change in button state?
         //
-        if(i32DeltaX || i32DeltaY || (ui8Buttons != g_ui8Buttons))
-        {
+        if(i32DeltaX || i32DeltaY || (ui8Buttons != g_ui8Buttons)) {
             //
             // Yes - send a report back to the host after clipping the deltas
             // to the maximum we can support.
@@ -706,8 +687,7 @@ main(void)
     //
     // Drop into the main loop.
     //
-    while(!g_bUpdateSignalled)
-    {
+    while(!g_bUpdateSignalled) {
         //
         // Tell the user what we are doing.
         //
@@ -718,8 +698,7 @@ main(void)
         //
         // Wait for USB configuration to complete.
         //
-        while(!g_bConnected)
-        {
+        while(!g_bConnected) {
         }
 
         //
@@ -732,13 +711,11 @@ main(void)
         // Now keep processing the mouse as long as the host is connected and
         // we've not been told to prepare for a firmware upgrade.
         //
-        while(g_bConnected && !g_bUpdateSignalled)
-        {
+        while(g_bConnected && !g_bUpdateSignalled) {
             //
             // If it is time to check the touchscreen state then do so.
             //
-            if(g_ui32Commands & TOUCH_TICK_EVENT)
-            {
+            if(g_ui32Commands & TOUCH_TICK_EVENT) {
                 g_ui32Commands &= ~TOUCH_TICK_EVENT;
                 TouchHandler();
             }
@@ -815,7 +792,6 @@ main(void)
     //
     // Should never get here, but just in case.
     //
-    while(1)
-    {
+    while(1) {
     }
 }

@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2005-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -103,20 +103,15 @@ _ADCIntNumberGet(uint32_t ui32Base, uint32_t ui32SequenceNum)
     //
     // Determine the interrupt to register based on the sequence number.
     //
-    if(CLASS_IS_TM4C123)
-    {
+    if(CLASS_IS_TM4C123) {
         ui8Int = ((ui32Base == ADC0_BASE) ?
                   (INT_ADC0SS0_TM4C123 + ui32SequenceNum) :
                   (INT_ADC1SS0_TM4C123 + ui32SequenceNum));
-    }
-    else if(CLASS_IS_TM4C129)
-    {
+    } else if(CLASS_IS_TM4C129) {
         ui8Int = ((ui32Base == ADC0_BASE) ?
                   (INT_ADC0SS0_TM4C129 + ui32SequenceNum) :
                   (INT_ADC1SS0_TM4C129 + ui32SequenceNum));
-    }
-    else
-    {
+    } else {
         ui8Int = 0;
     }
 
@@ -310,12 +305,9 @@ ADCIntStatus(uint32_t ui32Base, uint32_t ui32SequenceNum, bool bMasked)
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         ui32Temp = HWREG(ui32Base + ADC_O_ISC) & (0x10001 << ui32SequenceNum);
-    }
-    else
-    {
+    } else {
         ui32Temp = (HWREG(ui32Base + ADC_O_RIS) &
                     (0x10000 | (1 << ui32SequenceNum)));
 
@@ -323,8 +315,7 @@ ADCIntStatus(uint32_t ui32Base, uint32_t ui32SequenceNum, bool bMasked)
         // If the digital comparator status bit is set, reflect it to the
         // appropriate sequence bit.
         //
-        if(ui32Temp & 0x10000)
-        {
+        if(ui32Temp & 0x10000) {
             ui32Temp |= 0xF0000;
             ui32Temp &= ~(0x10000 << ui32SequenceNum);
         }
@@ -655,13 +646,12 @@ ADCSequenceStepConfigure(uint32_t ui32Base, uint32_t ui32SequenceNum,
     //
     HWREG(ui32Base + ADC_SSTSH) = ((HWREG(ui32Base + ADC_SSTSH) &
                                     ~(0x0000000f << ui32Step)) |
-                                (((ui32Config & 0xf00000) >> 20) << ui32Step));
+                                   (((ui32Config & 0xf00000) >> 20) << ui32Step));
 
     //
     // Enable digital comparator if specified in the ui32Config bit-fields.
     //
-    if(ui32Config & 0x000F0000)
-    {
+    if(ui32Config & 0x000F0000) {
         //
         // Program the comparator for the specified step.
         //
@@ -679,8 +669,7 @@ ADCSequenceStepConfigure(uint32_t ui32Base, uint32_t ui32SequenceNum,
     //
     // Disable digital comparator if not specified.
     //
-    else
-    {
+    else {
         HWREG(ui32Base + ADC_SSOP) &= ~(1 << ui32Step);
     }
 }
@@ -842,8 +831,7 @@ ADCSequenceDataGet(uint32_t ui32Base, uint32_t ui32SequenceNum,
     //
     ui32Count = 0;
     while(!(HWREG(ui32Base + ADC_SSFSTAT) & ADC_SSFSTAT0_EMPTY) &&
-          (ui32Count < 8))
-    {
+            (ui32Count < 8)) {
         //
         // Read the FIFO and copy it to the destination.
         //
@@ -937,8 +925,7 @@ ADCSoftwareOversampleConfigure(uint32_t ui32Base, uint32_t ui32SequenceNum,
     // Convert the oversampling factor to a shift factor.
     //
     for(ui32Value = 0, ui32Factor >>= 1; ui32Factor;
-        ui32Value++, ui32Factor >>= 1)
-    {
+            ui32Value++, ui32Factor >>= 1) {
     }
 
     //
@@ -992,8 +979,7 @@ ADCSoftwareOversampleStepConfigure(uint32_t ui32Base, uint32_t ui32SequenceNum,
     // oversampled sequence.
     //
     for(ui32SequenceNum = 1 << g_pui8OversampleFactor[ui32SequenceNum];
-        ui32SequenceNum; ui32SequenceNum--)
-    {
+            ui32SequenceNum; ui32SequenceNum--) {
         //
         // Set the analog mux value for this step.
         //
@@ -1016,8 +1002,7 @@ ADCSoftwareOversampleStepConfigure(uint32_t ui32Base, uint32_t ui32SequenceNum,
                                         ~(0x0000000f << ui32Step)) |
                                        (((ui32Config & 0xf0) >> 4) <<
                                         ui32Step));
-        if(ui32SequenceNum != 1)
-        {
+        if(ui32SequenceNum != 1) {
             HWREG(ui32Base + ADC_SSCTL) &= ~((ADC_SSCTL0_IE0 |
                                               ADC_SSCTL0_END0) << ui32Step);
         }
@@ -1072,15 +1057,13 @@ ADCSoftwareOversampleDataGet(uint32_t ui32Base, uint32_t ui32SequenceNum,
     //
     // Read the samples from the FIFO until it is empty.
     //
-    while(ui32Count--)
-    {
+    while(ui32Count--) {
         //
         // Compute the sum of the samples.
         //
         ui32Accum = 0;
         for(ui32Idx = 1 << g_pui8OversampleFactor[ui32SequenceNum]; ui32Idx;
-            ui32Idx--)
-        {
+                ui32Idx--) {
             //
             // Read the FIFO and add it to the accumulator.
             //
@@ -1137,8 +1120,7 @@ ADCHardwareOversampleConfigure(uint32_t ui32Base, uint32_t ui32Factor)
     // Convert the oversampling factor to a shift factor.
     //
     for(ui32Value = 0, ui32Factor >>= 1; ui32Factor;
-        ui32Value++, ui32Factor >>= 1)
-    {
+            ui32Value++, ui32Factor >>= 1) {
     }
 
     //
@@ -1270,7 +1252,7 @@ ADCComparatorRegionSet(uint32_t ui32Base, uint32_t ui32Comp,
     // Save the new region settings.
     //
     HWREG(ui32Base + ADC_O_DCCMP0 + (ui32Comp * 4)) = ((ui32HighRef << 16) |
-                                                       ui32LowRef);
+            ui32LowRef);
 }
 
 //*****************************************************************************
@@ -1306,12 +1288,10 @@ ADCComparatorReset(uint32_t ui32Base, uint32_t ui32Comp, bool bTrigger,
     // comparator conditions.
     //
     ui32Temp = 0;
-    if(bTrigger)
-    {
+    if(bTrigger) {
         ui32Temp |= (1 << (16 + ui32Comp));
     }
-    if(bInterrupt)
-    {
+    if(bInterrupt) {
         ui32Temp |= (1 << ui32Comp);
     }
 
@@ -1548,12 +1528,9 @@ ADCIntStatusEx(uint32_t ui32Base, bool bMasked)
     // Return either the masked interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         ui32Temp = HWREG(ui32Base + ADC_O_ISC);
-    }
-    else
-    {
+    } else {
         //
         // Read the Raw interrupt status to see if a digital comparator
         // interrupt is active.
@@ -1568,8 +1545,7 @@ ADCIntStatusEx(uint32_t ui32Base, bool bMasked)
         // This is exactly how the hardware works so the return code is
         // modified to match this behavior.
         //
-        if(ui32Temp & ADC_RIS_INRDC)
-        {
+        if(ui32Temp & ADC_RIS_INRDC) {
             ui32Temp |= (ADC_INT_DCON_SS3 | ADC_INT_DCON_SS2 |
                          ADC_INT_DCON_SS1 | ADC_INT_DCON_SS0);
         }
@@ -1622,7 +1598,7 @@ ADCIntClearEx(uint32_t ui32Base, uint32_t ui32IntFlags)
 //!
 //! The ADC reference is set as specified by \e ui32Ref.  It must be one of
 //! \b ADC_REF_INT, or \b ADC_REF_EXT_3V for internal or external reference
-//! If \b ADC_REF_INT is chosen, then an internal 3V reference is used and 
+//! If \b ADC_REF_INT is chosen, then an internal 3V reference is used and
 //! no external reference is needed.  If \b ADC_REF_EXT_3V is chosen, then
 //! a 3V reference must be supplied to the AVREF pin.
 //!
@@ -1990,10 +1966,9 @@ ADCClockConfigGet(uint32_t ui32Base, uint32_t *pui32ClockDiv)
     //
     // If the clock divider was requested provide the current value.
     //
-    if(pui32ClockDiv)
-    {
+    if(pui32ClockDiv) {
         *pui32ClockDiv =
-                    ((ui32Config & ADC_CC_CLKDIV_M) >> ADC_CC_CLKDIV_S) + 1;
+            ((ui32Config & ADC_CC_CLKDIV_M) >> ADC_CC_CLKDIV_S) + 1;
     }
 
     //

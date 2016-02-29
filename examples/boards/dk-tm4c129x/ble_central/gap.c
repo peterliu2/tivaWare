@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -148,21 +148,20 @@ GAPDiscoveryReq(uint8_t ui8Mode, bool bActiveScan, bool bWhiteList)
 //*****************************************************************************
 void
 GAPEstLinkReq(bool bHighDutyCycle, bool bWhiteList,
-                   uint8_t ui8AddrType, uint8_t *pui8DevAddr)
+              uint8_t ui8AddrType, uint8_t *pui8DevAddr)
 {
     uint8_t ui8Idx;
 
     g_ui8TXLen = 0;
     g_pui8TXBuf[g_ui8TXLen++] = HCI_CMD_PACKET;
     g_pui8TXBuf[g_ui8TXLen++] = HCI_VE_GAP_DEVICE_EST_LINK_REQ_OPCODE & 0xFF;
-    g_pui8TXBuf[g_ui8TXLen++] = 
+    g_pui8TXBuf[g_ui8TXLen++] =
         (HCI_VE_GAP_DEVICE_EST_LINK_REQ_OPCODE >> 8) & 0xFF;
     g_pui8TXBuf[g_ui8TXLen++] = 9;
     g_pui8TXBuf[g_ui8TXLen++] = bHighDutyCycle;
     g_pui8TXBuf[g_ui8TXLen++] = bWhiteList;
     g_pui8TXBuf[g_ui8TXLen++] = ui8AddrType;
-    for(ui8Idx = 0; ui8Idx < HCI_BDADDR_LEN; ui8Idx++)
-    {
+    for(ui8Idx = 0; ui8Idx < HCI_BDADDR_LEN; ui8Idx++) {
         g_pui8TXBuf[g_ui8TXLen++] = pui8DevAddr[ui8Idx];
     }
 
@@ -182,7 +181,7 @@ GAPTerLinkReq(uint16_t ui16ConnHandle, uint8_t ui8Reason)
     g_ui8TXLen = 0;
     g_pui8TXBuf[g_ui8TXLen++] = HCI_CMD_PACKET;
     g_pui8TXBuf[g_ui8TXLen++] = HCI_VE_GAP_DEVICE_TER_LINK_REQ_OPCODE & 0xFF;
-    g_pui8TXBuf[g_ui8TXLen++] = 
+    g_pui8TXBuf[g_ui8TXLen++] =
         (HCI_VE_GAP_DEVICE_TER_LINK_REQ_OPCODE >> 8) & 0xFF;
     g_pui8TXBuf[g_ui8TXLen++] = 3;
     g_pui8TXBuf[g_ui8TXLen++] = ui16ConnHandle & 0xFF;
@@ -220,7 +219,7 @@ GAPAuthenticate(uint16_t ui16ConnHandle)
     g_pui8TXBuf[g_ui8TXLen++] = 0x00; // Pair.enable
     g_pui8TXBuf[g_ui8TXLen++] = 0x03; // Pair.ioCaps
     g_pui8TXBuf[g_ui8TXLen++] = 0x00; // Pair.oobDFlag
-                                       
+
     g_pui8TXBuf[g_ui8TXLen++] = 0x01; // Pair.authReq
     g_pui8TXBuf[g_ui8TXLen++] = 0x10; // MaxEKeySize
     g_pui8TXBuf[g_ui8TXLen++] = 0x3F; // KeyDist
@@ -276,14 +275,12 @@ GAPBond(uint16_t ui16ConnHandle, tLTKData *psSavedKey)
     g_pui8TXBuf[g_ui8TXLen++] = ui16ConnHandle & 0xFF;
     g_pui8TXBuf[g_ui8TXLen++] = (ui16ConnHandle >> 8) & 0xFF;
     g_pui8TXBuf[g_ui8TXLen++] = psSavedKey->bAuth;
-    for(ui8Loop = 0; ui8Loop < psSavedKey->ui8LTKSize; ui8Loop++)
-    {
+    for(ui8Loop = 0; ui8Loop < psSavedKey->ui8LTKSize; ui8Loop++) {
         g_pui8TXBuf[g_ui8TXLen++] = psSavedKey->pui8LTK[ui8Loop];
     }
     g_pui8TXBuf[g_ui8TXLen++] = psSavedKey->pui8DIV[0];
     g_pui8TXBuf[g_ui8TXLen++] = psSavedKey->pui8DIV[1];
-    for(ui8Loop = 0; ui8Loop < 8; ui8Loop++)
-    {
+    for(ui8Loop = 0; ui8Loop < 8; ui8Loop++) {
         g_pui8TXBuf[g_ui8TXLen++] = psSavedKey->pui8Rand[ui8Loop];
     }
     g_pui8TXBuf[g_ui8TXLen++] = psSavedKey->ui8LTKSize;
@@ -315,7 +312,7 @@ GAPReadCharValue(uint16_t ui16ConnHandle, uint16_t ui16Handle)
     DumpBuffer((uint8_t*)g_pui8TXBuf, g_ui8TXLen, true);
     UARTSend((const uint8_t*)g_pui8TXBuf, g_ui8TXLen);
     return;
-    
+
 }
 
 //*****************************************************************************
@@ -325,7 +322,7 @@ GAPReadCharValue(uint16_t ui16ConnHandle, uint16_t ui16Handle)
 //*****************************************************************************
 void
 GAPWriteCharValue(uint16_t ui16ConnHandle, uint16_t ui16Handle,
-                       uint8_t *pui8Buf, uint8_t ui8Len)
+                  uint8_t *pui8Buf, uint8_t ui8Len)
 {
     uint8_t ui8Loop;
 
@@ -339,8 +336,7 @@ GAPWriteCharValue(uint16_t ui16ConnHandle, uint16_t ui16Handle,
     g_pui8TXBuf[g_ui8TXLen++] = ui16ConnHandle & 0xFF;
     g_pui8TXBuf[g_ui8TXLen++] = ui16Handle & 0xFF;
     g_pui8TXBuf[g_ui8TXLen++] = (ui16Handle >> 8) & 0xFF;
-    for(ui8Loop = 0; ui8Loop < ui8Len; ui8Loop++)
-    {
+    for(ui8Loop = 0; ui8Loop < ui8Len; ui8Loop++) {
         g_pui8TXBuf[g_ui8TXLen++] = pui8Buf[ui8Loop];
     }
 

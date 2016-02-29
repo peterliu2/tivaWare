@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Graphics Library.
 //
 //*****************************************************************************
@@ -72,7 +72,7 @@
 //*****************************************************************************
 static void
 GrOffScreen1BPPPixelDraw(void *pvDisplayData, int32_t i32X, int32_t i32Y,
-                           uint32_t ui32Value)
+                         uint32_t ui32Value)
 {
     uint8_t *pui8Data;
     int32_t i32BytesPerRow;
@@ -144,10 +144,10 @@ GrOffScreen1BPPPixelDraw(void *pvDisplayData, int32_t i32X, int32_t i32Y,
 //*****************************************************************************
 static void
 GrOffScreen1BPPPixelDrawMultiple(void *pvDisplayData, int32_t i32X,
-                                   int32_t i32Y, int32_t i32X0,
-                                   int32_t i32Count, int32_t i32BPP,
-                                   const uint8_t *pui8Data,
-                                   const uint8_t *pui8Palette)
+                                 int32_t i32Y, int32_t i32X0,
+                                 int32_t i32Count, int32_t i32BPP,
+                                 const uint8_t *pui8Data,
+                                 const uint8_t *pui8Palette)
 {
     uint8_t *pui8Ptr;
     uint32_t ui32Byte;
@@ -186,18 +186,15 @@ GrOffScreen1BPPPixelDrawMultiple(void *pvDisplayData, int32_t i32X,
     // Determine how to interpret the pixel data based on the number of bits
     // per pixel.
     //
-    switch(i32BPP & 0xFF)
-    {
+    switch(i32BPP & 0xFF) {
         //
         // The pixel data is in 1 bit per pixel format.
         //
-        case 1:
-        {
+        case 1: {
             //
             // Loop while there are more pixels to draw.
             //
-            while(i32Count)
-            {
+            while(i32Count) {
                 //
                 // Get the next byte of image data.
                 //
@@ -206,17 +203,15 @@ GrOffScreen1BPPPixelDrawMultiple(void *pvDisplayData, int32_t i32X,
                 //
                 // Loop through the pixels in this byte of image data.
                 //
-                for(; (i32X0 < 8) && i32Count; i32X0++, i32Count--)
-                {
+                for(; (i32X0 < 8) && i32Count; i32X0++, i32Count--) {
                     //
                     // Draw this pixel in the appropriate color.
                     //
                     *pui8Ptr = ((*pui8Ptr & ~(1 << i32X)) |
-                               ((((uint32_t *)pui8Palette)[(ui32Byte >>
-                                                                (7 - i32X0)) &
-                                                               1]) << i32X));
-                    if(i32X-- == 0)
-                    {
+                                ((((uint32_t *)pui8Palette)[(ui32Byte >>
+                                                            (7 - i32X0)) &
+                                                            1]) << i32X));
+                    if(i32X-- == 0) {
                         i32X = 7;
                         pui8Ptr++;
                     }
@@ -237,8 +232,7 @@ GrOffScreen1BPPPixelDrawMultiple(void *pvDisplayData, int32_t i32X,
         //
         // The pixel data is in 4 bit per pixel format.
         //
-        case 4:
-        {
+        case 4: {
             //
             // Loop while there are more pixels to draw.  "Duff's device" is
             // used to jump into the middle of the loop if the first nibble of
@@ -248,11 +242,9 @@ GrOffScreen1BPPPixelDrawMultiple(void *pvDisplayData, int32_t i32X,
             // http://en.wikipedia.org/wiki/Duff's_device for detailed
             // information about Duff's device.
             //
-            switch(i32X0 & 1)
-            {
+            switch(i32X0 & 1) {
                 case 0:
-                    while(i32Count)
-                    {
+                    while(i32Count) {
                         //
                         // Get the upper nibble of the next byte of pixel data
                         // and extract the corresponding entry from the
@@ -267,9 +259,8 @@ GrOffScreen1BPPPixelDrawMultiple(void *pvDisplayData, int32_t i32X,
                         // screen.
                         //
                         *pui8Ptr = ((*pui8Ptr & ~(1 << i32X)) |
-                                   (DPYCOLORTRANSLATE(ui32Byte) << i32X));
-                        if(i32X-- == 0)
-                        {
+                                    (DPYCOLORTRANSLATE(ui32Byte) << i32X));
+                        if(i32X-- == 0) {
                             i32X = 7;
                             pui8Ptr++;
                         }
@@ -282,9 +273,8 @@ GrOffScreen1BPPPixelDrawMultiple(void *pvDisplayData, int32_t i32X,
                         //
                         // See if there is another pixel to draw.
                         //
-                        if(i32Count)
-                        {
-                case 1:
+                        if(i32Count) {
+                        case 1:
                             //
                             // Get the lower nibble of the next byte of pixel
                             // data and extract the corresponding entry from
@@ -292,16 +282,15 @@ GrOffScreen1BPPPixelDrawMultiple(void *pvDisplayData, int32_t i32X,
                             //
                             ui32Byte = (*pui8Data++ & 15) * 3;
                             ui32Byte = (*(uint32_t *)(pui8Palette + ui32Byte) &
-                                      0x00ffffff);
+                                        0x00ffffff);
 
                             //
                             // Translate this palette entry and write it to the
                             // screen.
                             //
                             *pui8Ptr = ((*pui8Ptr & ~(1 << i32X)) |
-                                       (DPYCOLORTRANSLATE(ui32Byte) << i32X));
-                            if(i32X-- == 0)
-                            {
+                                        (DPYCOLORTRANSLATE(ui32Byte) << i32X));
+                            if(i32X-- == 0) {
                                 i32X = 7;
                                 pui8Ptr++;
                             }
@@ -323,13 +312,11 @@ GrOffScreen1BPPPixelDrawMultiple(void *pvDisplayData, int32_t i32X,
         //
         // The pixel data is in 8 bit per pixel format.
         //
-        case 8:
-        {
+        case 8: {
             //
             // Loop while there are more pixels to draw.
             //
-            while(i32Count--)
-            {
+            while(i32Count--) {
                 //
                 // Get the next byte of pixel data and extract the
                 // corresponding entry from the palette.
@@ -341,9 +328,8 @@ GrOffScreen1BPPPixelDrawMultiple(void *pvDisplayData, int32_t i32X,
                 // Translate this palette entry and write it to the screen.
                 //
                 *pui8Ptr = ((*pui8Ptr & ~(1 << i32X)) |
-                           (DPYCOLORTRANSLATE(ui32Byte) << i32X));
-                if(i32X-- == 0)
-                {
+                            (DPYCOLORTRANSLATE(ui32Byte) << i32X));
+                if(i32X-- == 0) {
                     i32X = 7;
                     pui8Ptr++;
                 }
@@ -408,8 +394,7 @@ GrOffScreen1BPPLineDrawH(void *pvDisplayData, int32_t i32X1, int32_t i32X2,
     // be used later to write multiple pixels into memory (as opposed to one at
     // a time).
     //
-    if(ui32Value)
-    {
+    if(ui32Value) {
         ui32Value = 0xffffffff;
     }
 
@@ -417,16 +402,14 @@ GrOffScreen1BPPLineDrawH(void *pvDisplayData, int32_t i32X1, int32_t i32X2,
     // See if the current buffer byte contains pixels that should be left
     // unmodified.
     //
-    if(i32X1 & 7)
-    {
+    if(i32X1 & 7) {
         //
         // Compute the mask to access only the appropriate pixels within this
         // byte.  The line may start and stop within this byte, so the mask may
         // need to be shortened to account for this situation.
         //
         i32Mask = 8 - (i32X1 & 7);
-        if(i32Mask > (i32X2 - i32X1 + 1))
-        {
+        if(i32Mask > (i32X2 - i32X1 + 1)) {
             i32Mask = i32X2 - i32X1 + 1;
         }
         i32Mask = ((1 << i32Mask) - 1) << (8 - (i32X1 & 7) - i32Mask);
@@ -443,8 +426,7 @@ GrOffScreen1BPPLineDrawH(void *pvDisplayData, int32_t i32X1, int32_t i32X2,
     // See if the buffer pointer is not half-word aligned and there are at
     // least eight pixels left to draw.
     //
-    if(((uint32_t)pui8Data & 1) && ((i32X2 - i32X1) > 6))
-    {
+    if(((uint32_t)pui8Data & 1) && ((i32X2 - i32X1) > 6)) {
         //
         // Draw eight pixels to half-word align the buffer pointer.
         //
@@ -456,8 +438,7 @@ GrOffScreen1BPPLineDrawH(void *pvDisplayData, int32_t i32X1, int32_t i32X2,
     // See if the buffer pointer is not word aligned and there are at least
     // sixteen pixels left to draw.
     //
-    if(((uint32_t)pui8Data & 2) && ((i32X2 - i32X1) > 14))
-    {
+    if(((uint32_t)pui8Data & 2) && ((i32X2 - i32X1) > 14)) {
         //
         // Draw sixteen pixels to word align the buffer pointer.
         //
@@ -469,8 +450,7 @@ GrOffScreen1BPPLineDrawH(void *pvDisplayData, int32_t i32X1, int32_t i32X2,
     //
     // Loop while there are at least thirty two pixels left to draw.
     //
-    while((i32X1 + 31) <= i32X2)
-    {
+    while((i32X1 + 31) <= i32X2) {
         //
         // Draw thirty two pixels.
         //
@@ -482,8 +462,7 @@ GrOffScreen1BPPLineDrawH(void *pvDisplayData, int32_t i32X1, int32_t i32X2,
     //
     // See if there are at least sixteen pixels left to draw.
     //
-    if((i32X1 + 15) <= i32X2)
-    {
+    if((i32X1 + 15) <= i32X2) {
         //
         // Draw sixteen pixels, leaving the buffer pointer half-word aligned.
         //
@@ -495,8 +474,7 @@ GrOffScreen1BPPLineDrawH(void *pvDisplayData, int32_t i32X1, int32_t i32X2,
     //
     // See if there are at least eight pixels left to draw.
     //
-    if((i32X1 + 7) <= i32X2)
-    {
+    if((i32X1 + 7) <= i32X2) {
         //
         // Draw eight pixels, leaving the buffer pointer byte aligned.
         //
@@ -507,8 +485,7 @@ GrOffScreen1BPPLineDrawH(void *pvDisplayData, int32_t i32X1, int32_t i32X2,
     //
     // See if there are any pixels left to draw.
     //
-    if(i32X1 <= i32X2)
-    {
+    if(i32X1 <= i32X2) {
         //
         // Draw the remaining pixels.
         //
@@ -578,8 +555,7 @@ GrOffScreen1BPPLineDrawV(void *pvDisplayData, int32_t i32X, int32_t i32Y1,
     //
     // Loop over the rows of the line.
     //
-    for(; i32Y1 <= i32Y2; i32Y1++)
-    {
+    for(; i32Y1 <= i32Y2; i32Y1++) {
         //
         // Draw this pixel of the line.
         //
@@ -640,8 +616,7 @@ GrOffScreen1BPPRectFill(void *pvDisplayData, const tRectangle *pRect,
     // be used later to write multiple pixels into memory (as opposed to one at
     // a time).
     //
-    if(ui32Value)
-    {
+    if(ui32Value) {
         ui32Value = 0xffffffff;
     }
 
@@ -654,8 +629,7 @@ GrOffScreen1BPPRectFill(void *pvDisplayData, const tRectangle *pRect,
     // See if the current buffer byte contains pixel columns that should be
     // left unmodified.
     //
-    if(i32X & 7)
-    {
+    if(i32X & 7) {
         //
         // Compute the mask to access only the appropriate pixels within this
         // byte column.  The rectangle may start and stop within this byte
@@ -663,8 +637,7 @@ GrOffScreen1BPPRectFill(void *pvDisplayData, const tRectangle *pRect,
         // situation.
         //
         i32Mask = 8 - (i32X & 7);
-        if(i32Mask > (pRect->i16XMax - i32X + 1))
-        {
+        if(i32Mask > (pRect->i16XMax - i32X + 1)) {
             i32Mask = pRect->i16XMax - i32X + 1;
         }
         i32Mask = ((1 << i32Mask) - 1) << (8 - (i32X & 7) - i32Mask);
@@ -673,9 +646,8 @@ GrOffScreen1BPPRectFill(void *pvDisplayData, const tRectangle *pRect,
         // Draw the appropriate pixels within this column.
         //
         for(i32Y = pRect->i16YMin, pui8Column = pui8Data;
-            i32Y <= pRect->i16YMax;
-            i32Y++, pui8Column += i32BytesPerRow)
-        {
+                i32Y <= pRect->i16YMax;
+                i32Y++, pui8Column += i32BytesPerRow) {
             *pui8Column = (*pui8Column & ~i32Mask) | (ui32Value & i32Mask);
         }
         pui8Data++;
@@ -686,15 +658,13 @@ GrOffScreen1BPPRectFill(void *pvDisplayData, const tRectangle *pRect,
     // See if the buffer pointer is not half-word aligned and there are at
     // least eight pixel columns left to draw.
     //
-    if(((uint32_t)pui8Data & 1) && ((pRect->i16XMax - i32X) > 6))
-    {
+    if(((uint32_t)pui8Data & 1) && ((pRect->i16XMax - i32X) > 6)) {
         //
         // Draw eight pixel columns to half-word align the buffer pointer.
         //
         for(i32Y = pRect->i16YMin, pui8Column = pui8Data;
-            i32Y <= pRect->i16YMax;
-            i32Y++, pui8Column += i32BytesPerRow)
-        {
+                i32Y <= pRect->i16YMax;
+                i32Y++, pui8Column += i32BytesPerRow) {
             *pui8Column = ui32Value & 0xff;
         }
         pui8Data++;
@@ -705,15 +675,13 @@ GrOffScreen1BPPRectFill(void *pvDisplayData, const tRectangle *pRect,
     // See if the buffer pointer is not word aligned and there are at least
     // sixteen pixel columns left to draw.
     //
-    if(((uint32_t)pui8Data & 2) && ((pRect->i16XMax - i32X) > 14))
-    {
+    if(((uint32_t)pui8Data & 2) && ((pRect->i16XMax - i32X) > 14)) {
         //
         // Draw sixteen pixel columns to word align the buffer pointer.
         //
         for(i32Y = pRect->i16YMin, pui8Column = pui8Data;
-            i32Y <= pRect->i16YMax;
-            i32Y++, pui8Column += i32BytesPerRow)
-        {
+                i32Y <= pRect->i16YMax;
+                i32Y++, pui8Column += i32BytesPerRow) {
             *(uint16_t *)pui8Column = ui32Value & 0xffff;
         }
         pui8Data += 2;
@@ -723,15 +691,13 @@ GrOffScreen1BPPRectFill(void *pvDisplayData, const tRectangle *pRect,
     //
     // Loop while there are at least thirty two pixel columnss left to draw.
     //
-    while((i32X + 31) <= pRect->i16XMax)
-    {
+    while((i32X + 31) <= pRect->i16XMax) {
         //
         // Draw thirty two pixel columnss.
         //
         for(i32Y = pRect->i16YMin, pui8Column = pui8Data;
-            i32Y <= pRect->i16YMax;
-            i32Y++, pui8Column += i32BytesPerRow)
-        {
+                i32Y <= pRect->i16YMax;
+                i32Y++, pui8Column += i32BytesPerRow) {
             *(uint32_t *)pui8Column = ui32Value;
         }
         pui8Data += 4;
@@ -741,17 +707,15 @@ GrOffScreen1BPPRectFill(void *pvDisplayData, const tRectangle *pRect,
     //
     // See if there are at least sixteen pixel columnss left to draw.
     //
-    if((i32X + 15) <= pRect->i16XMax)
-    {
+    if((i32X + 15) <= pRect->i16XMax) {
         //
         // Draw sixteen pixel columns, leaving the buffer pointer half-word
         // aligned.
         //
         ui32Value &= 0xffff;
         for(i32Y = pRect->i16YMin, pui8Column = pui8Data;
-            i32Y <= pRect->i16YMax;
-            i32Y++, pui8Column += i32BytesPerRow)
-        {
+                i32Y <= pRect->i16YMax;
+                i32Y++, pui8Column += i32BytesPerRow) {
             *(uint16_t *)pui8Column = ui32Value;
         }
         pui8Data += 2;
@@ -761,16 +725,14 @@ GrOffScreen1BPPRectFill(void *pvDisplayData, const tRectangle *pRect,
     //
     // See if there are at least eight pixel columns left to draw.
     //
-    if((i32X + 7) <= pRect->i16XMax)
-    {
+    if((i32X + 7) <= pRect->i16XMax) {
         //
         // Draw eight pixel columns, leaving the buffer pointer byte aligned.
         //
         ui32Value &= 0xff;
         for(i32Y = pRect->i16YMin, pui8Column = pui8Data;
-            i32Y <= pRect->i16YMax;
-            i32Y++, pui8Column += i32BytesPerRow)
-        {
+                i32Y <= pRect->i16YMax;
+                i32Y++, pui8Column += i32BytesPerRow) {
             *pui8Column = ui32Value;
         }
         pui8Data++;
@@ -780,16 +742,14 @@ GrOffScreen1BPPRectFill(void *pvDisplayData, const tRectangle *pRect,
     //
     // See if there are any pixel columns left to draw.
     //
-    if(i32X <= pRect->i16XMax)
-    {
+    if(i32X <= pRect->i16XMax) {
         //
         // Draw the remaining pixel columns.
         //
         i32Mask = 0xff >> (pRect->i16XMax - i32X + 1);
         ui32Value &= ~i32Mask;
         for(i32Y = pRect->i16YMin; i32Y <= pRect->i16YMax;
-            i32Y++, pui8Data += i32BytesPerRow)
-        {
+                i32Y++, pui8Data += i32BytesPerRow) {
             *pui8Data = (*pui8Data & i32Mask) | ui32Value;
         }
     }

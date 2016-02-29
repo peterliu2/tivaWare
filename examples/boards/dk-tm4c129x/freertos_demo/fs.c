@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2009-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -86,8 +86,7 @@ fs_open(const char *name)
     // Allocate memory for the file system structure.
     //
     psFile = mem_malloc(sizeof(struct fs_file));
-    if(NULL == psFile)
-    {
+    if(NULL == psFile) {
         return(NULL);
     }
 
@@ -99,14 +98,12 @@ fs_open(const char *name)
     //
     // Begin processing the linked list, looking for the requested file name.
     //
-    while(NULL != psTree)
-    {
+    while(NULL != psTree) {
         //
         // Compare the requested file "name" to the file name in the
         // current node.
         //
-        if(strncmp(name, (char *)psTree->name, psTree->len) == 0)
-        {
+        if(strncmp(name, (char *)psTree->name, psTree->len) == 0) {
             //
             // Fill in the data pointer and length values from the
             // linked list node.
@@ -143,8 +140,7 @@ fs_open(const char *name)
     // If we didn't find the file, ptTee will be NULL.  Make sure we
     // return a NULL pointer if this happens.
     //
-    if(NULL == psTree)
-    {
+    if(NULL == psTree) {
         mem_free(psFile);
         psFile = NULL;
     }
@@ -166,8 +162,7 @@ fs_close(struct fs_file *file)
     //
     // If a Fat file was opened, free its object.
     //
-    if(file->pextension)
-    {
+    if(file->pextension) {
         mem_free(file->pextension);
     }
 
@@ -192,8 +187,7 @@ fs_read(struct fs_file *file, char *buffer, int count)
     //
     // Check to see if more data is available.
     //
-    if(file->len == file->index)
-    {
+    if(file->len == file->index) {
         //
         // There is no remaining data.  Return a -1 for EOF indication.
         //
@@ -205,8 +199,7 @@ fs_read(struct fs_file *file, char *buffer, int count)
     // parameter or the available data in the file system buffer.
     //
     iAvailable = file->len - file->index;
-    if(iAvailable > count)
-    {
+    if(iAvailable > count) {
         iAvailable = count;
     }
 

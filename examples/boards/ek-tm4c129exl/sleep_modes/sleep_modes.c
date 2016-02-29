@@ -155,8 +155,7 @@ ConfigureUART(void)
 void
 PowerLEDsSet(void)
 {
-    switch (g_ui32SleepMode)
-    {
+    switch (g_ui32SleepMode) {
         case 0:
 
             //
@@ -165,7 +164,7 @@ PowerLEDsSet(void)
             ROM_GPIOPinWrite(RUN_GPIO_BASE, RUN_GPIO_PIN, RUN_GPIO_PIN);
             ROM_GPIOPinWrite(SLEEP_GPIO_BASE, SLEEP_GPIO_PIN, SLEEP_GPIO_PIN);
             ROM_GPIOPinWrite(DSLEEP_GPIO_BASE, DSLEEP_GPIO_PIN,
-                    DSLEEP_GPIO_PIN);
+                             DSLEEP_GPIO_PIN);
 
             break;
 
@@ -177,7 +176,7 @@ PowerLEDsSet(void)
             ROM_GPIOPinWrite(RUN_GPIO_BASE, RUN_GPIO_PIN, ~RUN_GPIO_PIN);
             ROM_GPIOPinWrite(SLEEP_GPIO_BASE, SLEEP_GPIO_PIN, SLEEP_GPIO_PIN);
             ROM_GPIOPinWrite(DSLEEP_GPIO_BASE, DSLEEP_GPIO_PIN,
-                    DSLEEP_GPIO_PIN);
+                             DSLEEP_GPIO_PIN);
 
             break;
 
@@ -189,7 +188,7 @@ PowerLEDsSet(void)
             ROM_GPIOPinWrite(RUN_GPIO_BASE, RUN_GPIO_PIN, ~RUN_GPIO_PIN);
             ROM_GPIOPinWrite(SLEEP_GPIO_BASE, SLEEP_GPIO_PIN, ~SLEEP_GPIO_PIN);
             ROM_GPIOPinWrite(DSLEEP_GPIO_BASE, DSLEEP_GPIO_PIN,
-                    DSLEEP_GPIO_PIN);
+                             DSLEEP_GPIO_PIN);
 
             break;
 
@@ -221,8 +220,7 @@ ButtonIntHandler(void)
     //
     g_ui32SleepMode = (g_ui32SleepMode + 1) % 3;
 
-    switch (g_ui32SleepMode)
-    {
+    switch (g_ui32SleepMode) {
         //
         // Enter Run Mode.
         //
@@ -252,9 +250,9 @@ ButtonIntHandler(void)
             SysCtlDelay(10000);
             break;
 
-            //
-            // Enter Sleep Mode.
-            //
+        //
+        // Enter Sleep Mode.
+        //
         case 1:
 
             //
@@ -267,29 +265,29 @@ ButtonIntHandler(void)
             SysCtlDelay(10000);
 
             //
-            // Switch clock to PIOSC and power down the MOSC before going into 
+            // Switch clock to PIOSC and power down the MOSC before going into
             // Sleep.
             //
             g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_OSC_INT |
-                                                      SYSCTL_USE_OSC |
-                                                      SYSCTL_MAIN_OSC_DIS), 
-                                                      16000000);
+                                                    SYSCTL_USE_OSC |
+                                                    SYSCTL_MAIN_OSC_DIS),
+                                                    16000000);
 
             break;
 
-            //
-            // Enter Deep-Sleep Mode.
-            //
+        //
+        // Enter Deep-Sleep Mode.
+        //
         case 2:
 
             //
             // Switch back to the MOSC + PLL.
             //
             g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                                      SYSCTL_OSC_MAIN |
-                                                      SYSCTL_USE_PLL |
-                                                      SYSCTL_CFG_VCO_320), 
-                                                      16000000);
+                                                    SYSCTL_OSC_MAIN |
+                                                    SYSCTL_USE_PLL |
+                                                    SYSCTL_CFG_VCO_320),
+                                                    16000000);
 
             //
             // Disable the timer.
@@ -345,8 +343,8 @@ Timer0IntHandler(void)
     // Toggle the LED.
     //
     ROM_GPIOPinWrite(TOGGLE_GPIO_BASE, TOGGLE_GPIO_PIN,
-            (ROM_GPIOPinRead(TOGGLE_GPIO_BASE, TOGGLE_GPIO_PIN) ^
-             TOGGLE_GPIO_PIN));
+                     (ROM_GPIOPinRead(TOGGLE_GPIO_BASE, TOGGLE_GPIO_PIN) ^
+                      TOGGLE_GPIO_PIN));
 }
 
 //*****************************************************************************
@@ -362,9 +360,9 @@ main(void)
     // Set the clocking to run from the MOSC with the PLL at 16MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                              SYSCTL_OSC_MAIN |
-                                              SYSCTL_USE_PLL |
-                                              SYSCTL_CFG_VCO_320), 16000000);
+                                            SYSCTL_OSC_MAIN |
+                                            SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_320), 16000000);
 
 
     //
@@ -373,7 +371,7 @@ main(void)
     // internal 30kHz osc.
     //
     ROM_SysCtlDeepSleepClockConfigSet(1, (SYSCTL_DSLP_OSC_INT30 |
-                SYSCTL_DSLP_PIOSC_PD | SYSCTL_DSLP_MOSC_PD));
+                                          SYSCTL_DSLP_PIOSC_PD | SYSCTL_DSLP_MOSC_PD));
 
     //
     // Initialize the UART and write the banner.
@@ -405,7 +403,7 @@ main(void)
     // Set pad config.
     //
     MAP_GPIOPadConfigSet(GPIO_PORTJ_BASE, GPIO_PIN_0,
-                          GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
+                         GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
 
     //
     // Set direction.
@@ -539,21 +537,17 @@ main(void)
     //
     // Loop forever.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Handle going into the different sleep modes outside of
         // interrupt context.
         //
-        if (g_ui32SleepMode == 1)
-        {
+        if (g_ui32SleepMode == 1) {
             //
             // Go into Sleep Mode.
             //
             ROM_SysCtlSleep();
-        }
-        else if (g_ui32SleepMode == 2)
-        {
+        } else if (g_ui32SleepMode == 2) {
             //
             // Go into Deep-Sleep Mode.
             //

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2014-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -128,13 +128,11 @@ RTI_ReadItemEx(uint8_t ui8ProfileID, uint8_t ui8ItemID, uint8_t ui8Length,
 
     //
     // Send the data. If successful copy the item read to the caller's buffer.
-    if(NPI_SendSynchData(&sMsg))
-    {
+    if(NPI_SendSynchData(&sMsg)) {
         //
         // Copy the read item bytes to the caller's buffer.
         //
-        for(ui32Index = 0; ui32Index < (sMsg.ui8Length - 1)  ; ui32Index++)
-        {
+        for(ui32Index = 0; ui32Index < (sMsg.ui8Length - 1)  ; ui32Index++) {
             pui8Value[ui32Index] = sMsg.pui8Data[ui32Index + 1];
         }
 
@@ -209,16 +207,14 @@ RTI_WriteItemEx(uint_fast8_t ui8ProfileID, uint_fast8_t ui8ItemID,
     //
     // Copy payload data.
     //
-    for(ui8Index = 0; ui8Index < ui8Length; ui8Index++)
-    {
+    for(ui8Index = 0; ui8Index < ui8Length; ui8Index++) {
         sMsg.pui8Data[ui8Index+3] = pui8Value[ui8Index];
     }
 
     //
     // Send the message and interpret the return message.
     //
-    if(NPI_SendSynchData(&sMsg))
-    {
+    if(NPI_SendSynchData(&sMsg)) {
         //
         // Return Success.
         //
@@ -490,8 +486,7 @@ RTI_SendDataReq(uint8_t ui8DestIndex, uint8_t ui8ProfileID,
     //
     // Populate the payload section of the message.
     //
-    for(ui32Index = 0; ui32Index < ui8Length; ui32Index++)
-    {
+    for(ui32Index = 0; ui32Index < ui8Length; ui32Index++) {
         sMsg.pui8Data[ui32Index + 6] = pui8Data[ui32Index];
     }
 

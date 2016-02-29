@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2014-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -56,21 +56,18 @@ ISO14443RATS(unsigned char ucFSDI, unsigned char ucCID, unsigned char *pucATS)
     TRF7960Transceive(pucRATS, sizeof(pucRATS), 0, pucResponse, &uiRxSize, NULL,
                       TRF7960_TRANSCEIVE_CRC);
 
-    if(uiRxSize >= 3)
-    {
+    if(uiRxSize >= 3) {
         //
         // Valid ATS received, return it as an char buffer. Was transmitted LSByte first.
-    	// pucResponse[0] is the length of the transmitted ATS, including TL byte, NOT including
-    	// two CRC bytes
+        // pucResponse[0] is the length of the transmitted ATS, including TL byte, NOT including
+        // two CRC bytes
         //
-		for(i = 0; i < pucResponse[0]; i++)
-			pucATS[i] = pucResponse[i];
+        for(i = 0; i < pucResponse[0]; i++)
+            pucATS[i] = pucResponse[i];
 
         return(uiRxSize);
-    }
-    else
-    {
-    	return(0);
+    } else {
+        return(0);
     }
 }
 
@@ -102,18 +99,17 @@ ISO14443PPS(unsigned char ucCID, unsigned char ucDRI, unsigned char ucDSI)
     TRF7960Transceive(pucPPS, sizeof(pucPPS), 0, pucResponse, &uiRxSize, NULL,
                       TRF7960_TRANSCEIVE_CRC);
 
-	//
-	// check if receive the first byte of the response is PPSS
-	//
-	if(pucResponse[0] == pucPPS[0])
-		return(1);
-	else
-	{
-		//
-		// Not valid response
-		//
-		return(0);
-	}
+    //
+    // check if receive the first byte of the response is PPSS
+    //
+    if(pucResponse[0] == pucPPS[0])
+        return(1);
+    else {
+        //
+        // Not valid response
+        //
+        return(0);
+    }
 }
 
 //*****************************************************************************
@@ -146,19 +142,16 @@ ISO14443DESELECT(unsigned char ucCID)
     TRF7960Transceive(pucDESELECT, sizeof(pucDESELECT), 0, pucResponse, &uiRxSize, NULL,
                       TRF7960_TRANSCEIVE_CRC);
 
-	//
-	// check if receive the first byte of the response is DESELECT
-	// check if the second byte contains the same CID
-	//
-	if(pucResponse[0] == pucDESELECT[0])
-	{
-		return(1);
-	}
-	else
-	{
-		//
-		// Not valid response
-		//
-		return(0);
-	}
+    //
+    // check if receive the first byte of the response is DESELECT
+    // check if the second byte contains the same CID
+    //
+    if(pucResponse[0] == pucDESELECT[0]) {
+        return(1);
+    } else {
+        //
+        // Not valid response
+        //
+        return(0);
+    }
 }

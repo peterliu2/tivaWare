@@ -5,23 +5,23 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -33,7 +33,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -77,7 +77,7 @@ extern "C"
 //
 //*****************************************************************************
 #ifndef htonl
-    #define htonl(a)                    \
+#define htonl(a)                    \
         ((((a) >> 24) & 0x000000ff) |   \
          (((a) >>  8) & 0x0000ff00) |   \
          (((a) <<  8) & 0x00ff0000) |   \
@@ -85,7 +85,7 @@ extern "C"
 #endif
 
 #ifndef ntohl
-    #define ntohl(a)    htonl((a))
+#define ntohl(a)    htonl((a))
 #endif
 
 //*****************************************************************************
@@ -95,13 +95,13 @@ extern "C"
 //
 //*****************************************************************************
 #ifndef htons
-    #define htons(a)                \
+#define htons(a)                \
         ((((a) >> 8) & 0x00ff) |    \
          (((a) << 8) & 0xff00))
 #endif
 
 #ifndef ntohs
-    #define ntohs(a)    htons((a))
+#define ntohs(a)    htons((a))
 #endif
 
 //*****************************************************************************
@@ -117,8 +117,7 @@ typedef struct tEMACDMADescriptor tEMACDMADescriptor;
 //! word of the Ethernet DMA descriptor.
 //
 //*****************************************************************************
-typedef union
-{
+typedef union {
     //
     //! When DMA descriptors are used in chained mode, this field is used to
     //! provide a link to the next descriptor.
@@ -139,8 +138,7 @@ tEMACDES3;
 //! A structure defining a single Ethernet DMA buffer descriptor.
 //
 //*****************************************************************************
-struct tEMACDMADescriptor
-{
+struct tEMACDMADescriptor {
     //
     //! The first DMA descriptor word contains various control and status bits
     //! depending upon whether the descriptor is in the transmit or receive
@@ -824,8 +822,7 @@ struct tEMACDMADescriptor
 //! frames which will cause the MAC to wake up from sleep mode.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! A byte mask for each filter defining which bytes from a sequence of
     //! 31 (bit 31 must be clear in each mask) are used to filter incoming
@@ -963,7 +960,7 @@ extern void EMACIntUnregister(uint32_t ui32Base);
 extern void EMACPHYWrite(uint32_t ui32Base, uint8_t ui8PhyAddr,
                          uint8_t ui8RegAddr, uint16_t ui16Data);
 extern void EMACPHYExtendedWrite(uint32_t ui32Base, uint8_t ui8PhyAddr,
-                                  uint16_t ui16RegAddr, uint16_t ui16Data);
+                                 uint16_t ui16RegAddr, uint16_t ui16Data);
 extern uint16_t EMACPHYRead(uint32_t ui32Base,  uint8_t ui8PhyAddr,
                             uint8_t ui8RegAddr);
 extern uint16_t EMACPHYExtendedRead(uint32_t ui32Base, uint8_t ui8PhyAddr,
@@ -982,16 +979,16 @@ extern void EMACTimestampSysTimeSet(uint32_t ui32Base, uint32_t ui32Seconds,
 extern void EMACTimestampSysTimeGet(uint32_t ui32Base, uint32_t *pui32Seconds,
                                     uint32_t *pui32SubSeconds);
 extern void EMACTimestampSysTimeUpdate(uint32_t ui32Base, uint32_t ui32Seconds,
-                                         uint32_t ui32SubSeconds, bool bInc);
+                                       uint32_t ui32SubSeconds, bool bInc);
 extern void EMACTimestampTargetSet(uint32_t ui32Base, uint32_t ui32Seconds,
                                    uint32_t ui32Nanoseconds);
 extern void EMACTimestampTargetIntEnable(uint32_t ui32Base);
 extern void EMACTimestampTargetIntDisable(uint32_t ui32Base);
 extern uint32_t EMACTimestampIntStatus(uint32_t ui32Base);
 extern void EMACTimestampPPSSimpleModeSet(uint32_t ui32Base,
-                                          uint32_t ui32FreqConfig);
+        uint32_t ui32FreqConfig);
 extern void EMACTimestampPPSCommandModeSet(uint32_t ui32Base,
-                                           uint32_t ui32Config);
+        uint32_t ui32Config);
 extern void EMACTimestampPPSCommand(uint32_t ui32Base, uint8_t ui8Cmd);
 extern void EMACTimestampPPSPeriodSet(uint32_t ui32Base, uint32_t ui32Period,
                                       uint32_t ui32Width);
@@ -1005,11 +1002,11 @@ extern uint32_t EMACVLANHashFilterBitCalculate(uint16_t ui16Tag);
 extern void EMACVLANHashFilterSet(uint32_t ui32Base, uint32_t ui32Hash);
 extern uint32_t EMACVLANHashFilterGet(uint32_t ui32Base);
 extern void EMACRemoteWakeUpFrameFilterSet(uint32_t ui32Base,
-                                       const tEMACWakeUpFrameFilter *pFilter);
+        const tEMACWakeUpFrameFilter *pFilter);
 extern void EMACRemoteWakeUpFrameFilterGet(uint32_t ui32Base,
-                                             tEMACWakeUpFrameFilter *pFilter);
+        tEMACWakeUpFrameFilter *pFilter);
 extern void EMACPowerManagementControlSet(uint32_t ui32Base,
-                                          uint32_t ui32Flags);
+        uint32_t ui32Flags);
 extern uint32_t EMACPowerManagementControlGet(uint32_t ui32Base);
 extern uint32_t EMACPowerManagementStatusGet(uint32_t ui32Base);
 

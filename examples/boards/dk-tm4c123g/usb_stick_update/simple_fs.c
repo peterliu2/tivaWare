@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C123G Firmware Package.
 //
 //*****************************************************************************
@@ -95,8 +95,7 @@
 // The FAT16 boot sector extension
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint8_t ui8DriveNumber;
     uint8_t ui8Reserved;
     uint8_t ui8ExtSig;
@@ -113,8 +112,7 @@ PACKED tBootExt16;
 // The FAT32 boot sector extension
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint32_t ui32SectorsPerFAT;
     uint16_t ui16Flags;
     uint16_t ui16Version;
@@ -138,8 +136,7 @@ PACKED tBootExt32;
 // The FAT16/32 boot sector main section
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint8_t ui8Jump[3];
     uint8_t i8OEMName[8];
     uint16_t ui16BytesPerSector;
@@ -154,8 +151,7 @@ typedef struct
     uint16_t ui16NumberHeads;
     uint32_t ui32HiddenSectors;
     uint32_t ui32TotalSectorsBig;
-    union
-    {
+    union {
         tBootExt16 sExt16;
         tBootExt32 sExt32;
     }
@@ -168,8 +164,7 @@ PACKED tBootSector;
 // The partition table
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint8_t ui8Status;
     uint8_t ui8CHSFirst[3];
     uint8_t ui8Type;
@@ -184,8 +179,7 @@ PACKED tPartitionTable;
 // The master boot record (MBR)
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint8_t ui8CodeArea[440];
     uint8_t ui8DiskSignature[4];
     uint8_t ui8Nulls[2];
@@ -199,8 +193,7 @@ PACKED tMasterBootRecord;
 // The structure for a single directory entry
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     char    pcFileName[11];
     uint8_t ui8Attr;
     uint8_t ui8Reserved;
@@ -228,8 +221,7 @@ PACKED tDirEntry;
 // This structure holds information about the layout of the file system
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint32_t ui32FirstSector;
     uint32_t ui32NumBlocks;
     uint16_t ui16SectorsPerCluster;
@@ -293,8 +285,7 @@ SimpleFsInit(uint8_t *pui8SectorBuf)
     //
     // Get the MBR
     //
-    if(SimpleFsReadMediaSector(0, pui8SectorBuf))
-    {
+    if(SimpleFsReadMediaSector(0, pui8SectorBuf)) {
         return(1);
     }
 
@@ -302,8 +293,7 @@ SimpleFsInit(uint8_t *pui8SectorBuf)
     // Verify MBR signature - bare minimum validation of MBR.
     //
     pMBR = (tMasterBootRecord *)pui8SectorBuf;
-    if(pMBR->ui16Sig != 0xAA55)
-    {
+    if(pMBR->ui16Sig != 0xAA55) {
         return(1);
     }
 
@@ -312,8 +302,7 @@ SimpleFsInit(uint8_t *pui8SectorBuf)
     //
     pBoot = (tBootSector *)pui8SectorBuf;
     if((strncmp(pBoot->ext.sExt16.pcFsType, "FAT", 3) != 0) &&
-       (strncmp(pBoot->ext.sExt32.pcFsType, "FAT32", 5) != 0))
-    {
+            (strncmp(pBoot->ext.sExt32.pcFsType, "FAT32", 5) != 0)) {
         //
         // Get the first partition table
         //
@@ -332,23 +321,17 @@ SimpleFsInit(uint8_t *pui8SectorBuf)
         //
         // Read the boot sector from the partition
         //
-        if(SimpleFsReadMediaSector(sPartInfo.ui32FirstSector, pui8SectorBuf))
-        {
+        if(SimpleFsReadMediaSector(sPartInfo.ui32FirstSector, pui8SectorBuf)) {
             return(1);
         }
-    }
-    else
-    {
+    } else {
         //
         // Extract the number of sectors from the boot sector.
         //
         sPartInfo.ui32FirstSector = 0;
-        if(pBoot->ui16TotalSectorsSmall == 0)
-        {
+        if(pBoot->ui16TotalSectorsSmall == 0) {
             sPartInfo.ui32NumBlocks = pBoot->ui32TotalSectorsBig;
-        }
-        else
-        {
+        } else {
             sPartInfo.ui32NumBlocks = pBoot->ui16TotalSectorsSmall;
         }
     }
@@ -356,16 +339,14 @@ SimpleFsInit(uint8_t *pui8SectorBuf)
     //
     // Get pointer to the boot sector
     //
-    if(pBoot->ext.sExt16.ui16Sig != 0xAA55)
-    {
+    if(pBoot->ext.sExt16.ui16Sig != 0xAA55) {
         return(1);
     }
 
     //
     // Verify the sector size is 512.  We can't deal with anything else
     //
-    if(pBoot->ui16BytesPerSector != 512)
-    {
+    if(pBoot->ui16BytesPerSector != 512) {
         return(1);
     }
 
@@ -379,34 +360,26 @@ SimpleFsInit(uint8_t *pui8SectorBuf)
     // Decide if we are dealing with FAT16 or FAT32.
     // If number of root entries is 0, that suggests FAT32
     //
-    if(sPartInfo.ui16MaxRootEntries == 0)
-    {
+    if(sPartInfo.ui16MaxRootEntries == 0) {
         //
         // Confirm FAT 32 signature in the expected place
         //
-        if(!strncmp(pBoot->ext.sExt32.pcFsType, "FAT32   ", 8))
-        {
+        if(!strncmp(pBoot->ext.sExt32.pcFsType, "FAT32   ", 8)) {
             sPartInfo.ui32Type = 32;
-        }
-        else
-        {
+        } else {
             return(1);
         }
     }
     //
     // Root entries is non-zero, suggests FAT16
     //
-    else
-    {
+    else {
         //
         // Confirm FAT16 signature
         //
-        if(!strncmp(pBoot->ext.sExt16.pcFsType, "FAT16   ", 8))
-        {
+        if(!strncmp(pBoot->ext.sExt16.pcFsType, "FAT16   ", 8)) {
             sPartInfo.ui32Type = 16;
-        }
-        else
-        {
+        } else {
             return(1);
         }
     }
@@ -415,17 +388,17 @@ SimpleFsInit(uint8_t *pui8SectorBuf)
     // Find the beginning of the FAT, in absolute sectors
     //
     sPartInfo.ui32FirstFATSector = sPartInfo.ui32FirstSector +
-                                 pBoot->ui16ReservedSectors;
+                                   pBoot->ui16ReservedSectors;
 
     //
     // Find the end of the FAT in absolute sectors.  FAT16 and 32
     // are handled differently.
     //
     sPartInfo.ui32SectorsPerFAT = (sPartInfo.ui32Type == 16) ?
-                                pBoot->ui16SectorsPerFAT :
-                                pBoot->ext.sExt32.ui32SectorsPerFAT;
+                                  pBoot->ui16SectorsPerFAT :
+                                  pBoot->ext.sExt32.ui32SectorsPerFAT;
     sPartInfo.ui32LastFATSector = sPartInfo.ui32FirstFATSector +
-                                sPartInfo.ui32SectorsPerFAT - 1;
+                                  sPartInfo.ui32SectorsPerFAT - 1;
 
     //
     // Find the start of the root directory and the data area.
@@ -433,19 +406,16 @@ SimpleFsInit(uint8_t *pui8SectorBuf)
     // For FAT32, the root will be stored as the starting cluster of the root
     // The data area start is the absolute first sector of the data area.
     //
-    if(sPartInfo.ui32Type == 16)
-    {
+    if(sPartInfo.ui32Type == 16) {
         sPartInfo.ui32StartRootDir = sPartInfo.ui32FirstFATSector +
-                                   (sPartInfo.ui32SectorsPerFAT *
-                                    pBoot->ui8NumFATs);
+                                     (sPartInfo.ui32SectorsPerFAT *
+                                      pBoot->ui8NumFATs);
         sPartInfo.ui32FirstDataSector = sPartInfo.ui32StartRootDir +
-                                      (sPartInfo.ui16MaxRootEntries / 16);
-    }
-    else
-    {
+                                        (sPartInfo.ui16MaxRootEntries / 16);
+    } else {
         sPartInfo.ui32StartRootDir = pBoot->ext.sExt32.ui32RootCluster;
         sPartInfo.ui32FirstDataSector = sPartInfo.ui32FirstFATSector +
-                            (sPartInfo.ui32SectorsPerFAT * pBoot->ui8NumFATs);
+                                        (sPartInfo.ui32SectorsPerFAT * pBoot->ui8NumFATs);
     }
 
     //
@@ -500,8 +470,7 @@ SimpleFsGetNextCluster(uint_fast32_t ui32ThisCluster)
     // Make sure cluster input number is reasonable.  If not then return
     // 0 indicating error.
     //
-    if((ui32ThisCluster < 2) || (ui32ThisCluster > ui32MaxCluster))
-    {
+    if((ui32ThisCluster < 2) || (ui32ThisCluster > ui32MaxCluster)) {
         return(0);
     }
 
@@ -517,14 +486,12 @@ SimpleFsGetNextCluster(uint_fast32_t ui32ThisCluster)
     //
     // Check to see if the FAT sector we need is already cached
     //
-    if(ui32FATSector != ui32CachedFATSector)
-    {
+    if(ui32FATSector != ui32CachedFATSector) {
         //
         // FAT sector we need is not cached, so read it in
         //
         if(SimpleFsReadMediaSector(sPartInfo.ui32FirstFATSector + ui32FATSector,
-                                 ui8FATCache) != 0)
-        {
+                                   ui8FATCache) != 0) {
             //
             // There was an error so mark cache as unavailable and return
             // an error.
@@ -545,19 +512,14 @@ SimpleFsGetNextCluster(uint_fast32_t ui32ThisCluster)
     // bit values depending on whether it is FAT16 or 32
     // If the cluster value means last cluster, then return 0
     //
-    if(sPartInfo.ui32Type == 16)
-    {
+    if(sPartInfo.ui32Type == 16) {
         ui32NextCluster = ((uint16_t *)ui8FATCache)[ui32ClusterIdx];
-        if(ui32NextCluster >= 0xFFF8)
-        {
+        if(ui32NextCluster >= 0xFFF8) {
             return(0);
         }
-    }
-    else
-    {
+    } else {
         ui32NextCluster = ((uint32_t *)ui8FATCache)[ui32ClusterIdx];
-        if(ui32NextCluster >= 0x0FFFFFF8)
-        {
+        if(ui32NextCluster >= 0x0FFFFFF8) {
             return(0);
         }
     }
@@ -566,12 +528,9 @@ SimpleFsGetNextCluster(uint_fast32_t ui32ThisCluster)
     // Check new cluster value to make sure it is reasonable.  If not then
     // return 0 to indicate an error.
     //
-    if((ui32NextCluster >= 2) && (ui32NextCluster <= ui32MaxCluster))
-    {
+    if((ui32NextCluster >= 2) && (ui32NextCluster <= ui32MaxCluster)) {
         return(ui32NextCluster);
-    }
-    else
-    {
+    } else {
         return(0);
     }
 }
@@ -621,8 +580,7 @@ SimpleFsGetNextFileSector(uint_fast32_t ui32StartCluster)
     // If user specified starting cluster, then init the working cluster
     // and sector values
     //
-    if(ui32StartCluster)
-    {
+    if(ui32StartCluster) {
         ui32WorkingCluster = ui32StartCluster;
         ui32WorkingSector = 0;
         return(0);
@@ -631,8 +589,7 @@ SimpleFsGetNextFileSector(uint_fast32_t ui32StartCluster)
     //
     // Otherwise, make sure there is a valid working cluster already
     //
-    else if(ui32WorkingCluster == 0)
-    {
+    else if(ui32WorkingCluster == 0) {
         return(0);
     }
 
@@ -640,8 +597,7 @@ SimpleFsGetNextFileSector(uint_fast32_t ui32StartCluster)
     // If the current working sector is the same as sectors per cluster,
     // then that means that the next cluster needs to be loaded.
     //
-    if(ui32WorkingSector == sPartInfo.ui16SectorsPerCluster)
-    {
+    if(ui32WorkingSector == sPartInfo.ui16SectorsPerCluster) {
         //
         // Get the next cluster in the chain for this file.
         //
@@ -650,8 +606,7 @@ SimpleFsGetNextFileSector(uint_fast32_t ui32StartCluster)
         //
         // If the next cluster is valid, then reset the working sector
         //
-        if(ui32WorkingCluster)
-        {
+        if(ui32WorkingCluster) {
             ui32WorkingSector = 0;
         }
 
@@ -660,8 +615,7 @@ SimpleFsGetNextFileSector(uint_fast32_t ui32StartCluster)
         // Clear the working cluster and return an indication that no new
         // sector data was loaded.
         //
-        else
-        {
+        else {
             ui32WorkingCluster = 0;
             return(0);
         }
@@ -682,13 +636,10 @@ SimpleFsGetNextFileSector(uint_fast32_t ui32StartCluster)
     // Attempt to read the next sector from the cluster.  If not successful,
     // then clear the working cluster and return a non-success indication.
     //
-    if(SimpleFsReadMediaSector(ui32ReadSector, g_pui8SectorBuf) != 0)
-    {
+    if(SimpleFsReadMediaSector(ui32ReadSector, g_pui8SectorBuf) != 0) {
         ui32WorkingCluster = 0;
         return(0);
-    }
-    else
-    {
+    } else {
         //
         // Read was successful.  Increment to the next sector of the cluster
         // and return a success indication.
@@ -744,37 +695,30 @@ SimpleFsOpen(char *pcName83)
     //
     // For FAT32, root dir is like a file, so init a file read of the root dir
     //
-    if(sPartInfo.ui32Type == 32)
-    {
+    if(sPartInfo.ui32Type == 32) {
         SimpleFsGetNextFileSector(ui32DirSector);
     }
 
     //
     // Search the root directory entry for the firmware file
     //
-    while(1)
-    {
+    while(1) {
         //
         // Read in a directory block.
         //
-        if(sPartInfo.ui32Type == 16)
-        {
+        if(sPartInfo.ui32Type == 16) {
             //
             // For FAT16, read in a sector of the root directory
             //
-            if(SimpleFsReadMediaSector(ui32DirSector, g_pui8SectorBuf))
-            {
+            if(SimpleFsReadMediaSector(ui32DirSector, g_pui8SectorBuf)) {
                 return(0);
             }
-        }
-        else
-        {
+        } else {
             //
             // For FAT32, the root directory is treated like a file.
             // The root directory sector will be loaded into the sector buf
             //
-            if(SimpleFsGetNextFileSector(0) == 0)
-            {
+            if(SimpleFsGetNextFileSector(0) == 0) {
                 return(0);
             }
         }
@@ -788,21 +732,18 @@ SimpleFsOpen(char *pcName83)
         //
         // Iterate through all the directory entries in this sector
         //
-        while((uint8_t *)pDirEntry < &g_pui8SectorBuf[512])
-        {
+        while((uint8_t *)pDirEntry < &g_pui8SectorBuf[512]) {
             //
             // If the 8.3 filename of this entry matches the firmware
             // file name, then we have a match, so return a pointer to
             // this entry.
             //
-            if(!strncmp(pDirEntry->pcFileName, pcName83, 11))
-            {
+            if(!strncmp(pDirEntry->pcFileName, pcName83, 11)) {
                 //
                 // Compute the starting cluster of the file
                 //
                 ui32FirstCluster = pDirEntry->ui16Cluster;
-                if(sPartInfo.ui32Type == 32)
-                {
+                if(sPartInfo.ui32Type == 32) {
                     //
                     // For FAT32, add in the upper word of the
                     // starting cluster number
@@ -827,28 +768,22 @@ SimpleFsOpen(char *pcName83)
         // Need to get the next sector in the directory.  Handled
         // differently depending on if this is FAT16 or 32
         //
-        if(sPartInfo.ui32Type == 16)
-        {
+        if(sPartInfo.ui32Type == 16) {
             //
             // FAT16: advance sectors as int32_t as there are more possible
             // entries.
             //
             sPartInfo.ui16MaxRootEntries -= 512 / 32;
-            if(sPartInfo.ui16MaxRootEntries)
-            {
+            if(sPartInfo.ui16MaxRootEntries) {
                 ui32DirSector++;
-            }
-            else
-            {
+            } else {
                 //
                 // Ran out of directory entries and didn't find the file,
                 // so return a null.
                 //
                 return(0);
             }
-        }
-        else
-        {
+        } else {
             //
             // FAT32: there is nothing to compute here.  The next root
             // dir sector will be fetched at the top of the loop

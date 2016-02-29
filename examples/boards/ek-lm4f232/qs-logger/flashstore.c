@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-LM4F232 Firmware Package.
 //
 //*****************************************************************************
@@ -115,14 +115,12 @@ FlashStoreSave(void)
     //
     // Search all of flash area checking every stored record.
     //
-    while(ui32Addr < FLASH_STORE_END_ADDR)
-    {
+    while(ui32Addr < FLASH_STORE_END_ADDR) {
         //
         // If a record signature is found, check for oldest record, then
         // increment to the next record
         //
-        if((HWREG(ui32Addr) & 0xFFFFFF00) == 0x53554100)
-        {
+        if((HWREG(ui32Addr) & 0xFFFFFF00) == 0x53554100) {
             //
             // Get a pointer to the data record (account for flash header word)
             //
@@ -132,8 +130,7 @@ FlashStoreSave(void)
             // If the seconds in this record are older than any found so far
             // then save the seconds value, and the address of this record
             //
-            if(psRecord->ui32Seconds < ui32OldestSeconds)
-            {
+            if(psRecord->ui32Seconds < ui32OldestSeconds) {
                 ui32OldestSeconds = psRecord->ui32Seconds;
                 ui32OldestRecord = ui32Addr;
             }
@@ -142,9 +139,7 @@ FlashStoreSave(void)
             // Advance the address to the next record.
             //
             ui32Addr += HWREG(ui32Addr) & 0xFF;
-        }
-        else
-        {
+        } else {
             //
             // A record was not found so just advance to the next location in
             // flash
@@ -156,8 +151,7 @@ FlashStoreSave(void)
     //
     // If no "oldest" seconds was found, then there is no valid data stored
     //
-    if(ui32OldestSeconds == 0xFFFFFFFF)
-    {
+    if(ui32OldestSeconds == 0xFFFFFFFF) {
         SetStatusText("SAVE", "NO RECORDS", "FOUND", "PRESS <");
         return(1);
     }
@@ -166,8 +160,7 @@ FlashStoreSave(void)
     // Open the output file on the USB stick.  It will return NULL if there
     // was any problem.
     //
-    if(!USBStickOpenLogFile(0))
-    {
+    if(!USBStickOpenLogFile(0)) {
         SetStatusText("SAVE", 0, "USB ERROR", "PRESS <");
         return(1);
     }
@@ -185,14 +178,12 @@ FlashStoreSave(void)
     // have read all the records.
     //
     ui32Addr = ui32OldestRecord;
-    while(HWREG(ui32Addr) != 0xFFFFFFFF)
-    {
+    while(HWREG(ui32Addr) != 0xFFFFFFFF) {
         //
         // If a record signature is found (which it should be), extract the
         // record data and send it to USB stick.
         //
-        if((HWREG(ui32Addr) & 0xFFFFFF00) == 0x53554100)
-        {
+        if((HWREG(ui32Addr) & 0xFFFFFF00) == 0x53554100) {
             //
             // Get byte count for this record
             //
@@ -207,8 +198,7 @@ FlashStoreSave(void)
             //
             // Adjust for memory wrap
             //
-            if(ui32Addr >= FLASH_STORE_END_ADDR)
-            {
+            if(ui32Addr >= FLASH_STORE_END_ADDR) {
                 ui32Addr = FLASH_STORE_START_ADDR;
             }
 
@@ -217,8 +207,7 @@ FlashStoreSave(void)
             // storage area, then perform a partial copy first.
             //
             ui32PartialCount = 0;
-            if((ui32Addr + ui32Count) >= FLASH_STORE_END_ADDR)
-            {
+            if((ui32Addr + ui32Count) >= FLASH_STORE_END_ADDR) {
                 //
                 // Find how many bytes are left on this page
                 //
@@ -252,9 +241,7 @@ FlashStoreSave(void)
             // USB stick.
             //
             USBStickWriteRecord((tLogRecord *)g_pui32RecordBuf);
-        }
-        else
-        {
+        } else {
             //
             // This should not happen, but it means we ended up in a non-blank
             // location that is not the start of a record.  In this case just
@@ -264,8 +251,7 @@ FlashStoreSave(void)
             // Increment to next word in flash, adjust for memory wrap.
             //
             ui32Addr += 4;
-            if(ui32Addr >= FLASH_STORE_END_ADDR)
-            {
+            if(ui32Addr >= FLASH_STORE_END_ADDR) {
                 ui32Addr = FLASH_STORE_START_ADDR;
             }
         }
@@ -308,8 +294,7 @@ FlashStoreOpenLogFile(uint32_t ui32StartAddr)
     // the search below.
     //
     if((ui32StartAddr >= FLASH_STORE_START_ADDR) &&
-       (ui32StartAddr < FLASH_STORE_END_ADDR))
-    {
+            (ui32StartAddr < FLASH_STORE_END_ADDR)) {
         g_ui32StoreAddr = ui32StartAddr;
         return(0);
     }
@@ -322,17 +307,13 @@ FlashStoreOpenLogFile(uint32_t ui32StartAddr)
     //
     // Search until a blank is found or the end of flash storage area
     //
-    while((HWREG(ui32Addr) != 0xFFFFFFFF) && (ui32Addr < FLASH_STORE_END_ADDR))
-    {
+    while((HWREG(ui32Addr) != 0xFFFFFFFF) && (ui32Addr < FLASH_STORE_END_ADDR)) {
         //
         // If a record signature is found, then increment to the next record
         //
-        if((HWREG(ui32Addr) & 0xFFFFFF00) == 0x53554100)
-        {
+        if((HWREG(ui32Addr) & 0xFFFFFF00) == 0x53554100) {
             ui32Addr += HWREG(ui32Addr) & 0xFF;
-        }
-        else
-        {
+        } else {
             //
             // Just advance to the next location in flash
             //
@@ -344,8 +325,7 @@ FlashStoreOpenLogFile(uint32_t ui32StartAddr)
     // If we are at the end of flash that means no blank area was found.
     // So reset to the beginning and erase the first page.
     //
-    if(ui32Addr >= FLASH_STORE_END_ADDR)
-    {
+    if(ui32Addr >= FLASH_STORE_END_ADDR) {
         ui32Addr = FLASH_STORE_START_ADDR;
         FlashErase(ui32Addr);
     }
@@ -393,8 +373,7 @@ FlashStoreWriteRecord(tLogRecord *psRecord)
     // Check the arguments
     //
     ASSERT(psRecord);
-    if(!psRecord)
-    {
+    if(!psRecord) {
         return(1);
     }
 
@@ -403,10 +382,8 @@ FlashStoreWriteRecord(tLogRecord *psRecord)
     //
     ui32Idx = psRecord->ui16ItemMask;
     ui32ItemCount = 0;
-    while(ui32Idx)
-    {
-        if(ui32Idx & 1)
-        {
+    while(ui32Idx) {
+        if(ui32Idx & 1) {
             ui32ItemCount++;
         }
         ui32Idx >>= 1;
@@ -442,8 +419,7 @@ FlashStoreWriteRecord(tLogRecord *psRecord)
     //
     // Check to see if the record is going to cross a page boundary.
     //
-    if(((g_ui32StoreAddr & 0x3FF) + ui32ItemCount) > 0x3FF)
-    {
+    if(((g_ui32StoreAddr & 0x3FF) + ui32ItemCount) > 0x3FF) {
         //
         // Find number of bytes remaining on this page
         //
@@ -472,16 +448,14 @@ FlashStoreWriteRecord(tLogRecord *psRecord)
         //
         // Check to see if the new page is past the end of store and adjust
         //
-        if(g_ui32StoreAddr  >= FLASH_STORE_END_ADDR)
-        {
+        if(g_ui32StoreAddr  >= FLASH_STORE_END_ADDR) {
             g_ui32StoreAddr = FLASH_STORE_START_ADDR;
         }
 
         //
         // If new page is not blank, then erase it
         //
-        if(HWREG(g_ui32StoreAddr) != 0xFFFFFFFF)
-        {
+        if(HWREG(g_ui32StoreAddr) != 0xFFFFFFFF) {
             FlashErase(g_ui32StoreAddr);
         }
     }
@@ -533,8 +507,7 @@ FlashStoreErase(void)
     // Loop through entire storage area and erase each page.
     //
     for(ui32Addr = FLASH_STORE_START_ADDR; ui32Addr < FLASH_STORE_END_ADDR;
-        ui32Addr += 0x400)
-    {
+            ui32Addr += 0x400) {
         FlashErase(ui32Addr);
     }
 
@@ -562,10 +535,8 @@ IsBlockFree(uint32_t ui32BaseAddr)
     //
     // Loop through every address in this block and test if it is blank.
     //
-    for(ui32Addr = 0; ui32Addr < 0x400; ui32Addr += 4)
-    {
-        if(HWREG(ui32BaseAddr + ui32Addr) != 0xFFFFFFFF)
-        {
+    for(ui32Addr = 0; ui32Addr < 0x400; ui32Addr += 4) {
+        if(HWREG(ui32BaseAddr + ui32Addr) != 0xFFFFFFFF) {
             //
             // Found a non-blank location, so return indication that block
             // is not free.
@@ -604,14 +575,10 @@ FlashStoreReport(void)
     // are free and non-free.
     //
     for(ui32Addr = FLASH_STORE_START_ADDR; ui32Addr < FLASH_STORE_END_ADDR;
-        ui32Addr += 0x400)
-    {
-        if(IsBlockFree(ui32Addr))
-        {
+            ui32Addr += 0x400) {
+        if(IsBlockFree(ui32Addr)) {
             ui32FreeBlocks++;
-        }
-        else
-        {
+        } else {
             ui32UsedBlocks++;
         }
     }

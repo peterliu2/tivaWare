@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -92,8 +92,7 @@ GPIOJTAGTestCallback(uint32_t ui32Message, int32_t i32X,  int32_t i32Y)
     // Determine what to do now.  The only message we act upon here is PTR_UP
     // which indicates that someone has just ended a touch on the screen.
     //
-    if(ui32Message == WIDGET_MSG_PTR_UP)
-    {
+    if(ui32Message == WIDGET_MSG_PTR_UP) {
 
         //
         // Toggle the pin mode.
@@ -103,8 +102,7 @@ GPIOJTAGTestCallback(uint32_t ui32Message, int32_t i32X,  int32_t i32Y)
         //
         // See if the pins should be in JTAG or GPIO mode.
         //
-        if(g_ui32Mode == 0)
-        {
+        if(g_ui32Mode == 0) {
             //
             // Change PC0-3 into hardware (i.e. JTAG) pins.  First open the
             // lock and select the bits we want to modify in the GPIO commit
@@ -127,9 +125,7 @@ GPIOJTAGTestCallback(uint32_t ui32Message, int32_t i32X,  int32_t i32Y)
             HWREG(GPIO_PORTC_BASE + GPIO_O_LOCK) = GPIO_LOCK_KEY;
             HWREG(GPIO_PORTC_BASE + GPIO_O_CR) = 0x00;
             HWREG(GPIO_PORTC_BASE + GPIO_O_LOCK) = 0;
-        }
-        else
-        {
+        } else {
             //
             // Change PC0-3 into GPIO inputs. First open the lock and select
             // the bits we want to modify in the GPIO commit register.
@@ -237,13 +233,11 @@ main(void)
     // PC0-3; the handling of changing the JTAG pins to and from GPIO mode is
     // done in GPIO Interrupt Handler.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Wait until the pin mode changes.
         //
-        while(g_ui32Mode == ui32Mode)
-        {
+        while(g_ui32Mode == ui32Mode) {
         }
 
         //

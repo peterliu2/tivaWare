@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Utility Library.
 //
 //******************************************************************************
@@ -120,8 +120,7 @@ WavOpen(const char *pcFileName, tWavFile *psWavData)
     //
     // Open the file as read only.
     //
-    if(f_open(&psWavData->i16File, pcFileName, FA_READ) != FR_OK)
-    {
+    if(f_open(&psWavData->i16File, pcFileName, FA_READ) != FR_OK) {
         return(-1);
     }
 
@@ -133,33 +132,29 @@ WavOpen(const char *pcFileName, tWavFile *psWavData)
     //
     // Read the first 12 bytes.
     //
-    if(f_read(&psWavData->i16File, pucBuffer, 12, (UINT *)&ui32Count) != FR_OK)
-    {
+    if(f_read(&psWavData->i16File, pucBuffer, 12, (UINT *)&ui32Count) != FR_OK) {
         return(-1);
     }
 
     //
     // Look for RIFF tag.
     //
-    if((pui32Buffer[0] != RIFF_CHUNK_ID_RIFF) || 
-       (pui32Buffer[2] != RIFF_TAG_WAVE))
-    {
+    if((pui32Buffer[0] != RIFF_CHUNK_ID_RIFF) ||
+            (pui32Buffer[2] != RIFF_TAG_WAVE)) {
         return(-1);
     }
 
     //
     // Read the next chunk header.
     //
-    if(f_read(&psWavData->i16File, pucBuffer, 8, (UINT *)&ui32Count) != FR_OK)
-    {
+    if(f_read(&psWavData->i16File, pucBuffer, 8, (UINT *)&ui32Count) != FR_OK) {
         return(-1);
     }
 
     //
     // Now look for the RIFF ID format tag.
     //
-    if(pui32Buffer[0] != RIFF_CHUNK_ID_FMT)
-    {
+    if(pui32Buffer[0] != RIFF_CHUNK_ID_FMT) {
         return(-1);
     }
 
@@ -168,17 +163,15 @@ WavOpen(const char *pcFileName, tWavFile *psWavData)
     //
     ui32ChunkSize = pui32Buffer[1];
 
-    if(ui32ChunkSize > 16)
-    {
+    if(ui32ChunkSize > 16) {
         return(-1);
     }
 
     //
     // Read the next chunk header.
     //
-    if(f_read(&psWavData->i16File, pucBuffer, ui32ChunkSize, 
-              (UINT *)&ui32Count) != FR_OK)
-    {
+    if(f_read(&psWavData->i16File, pucBuffer, ui32ChunkSize,
+              (UINT *)&ui32Count) != FR_OK) {
         return(-1);
     }
 
@@ -195,24 +188,21 @@ WavOpen(const char *pcFileName, tWavFile *psWavData)
     //
     // Only mono and stereo supported.
     //
-    if(psWavData->sWavHeader.ui16NumChannels > 2)
-    {
+    if(psWavData->sWavHeader.ui16NumChannels > 2) {
         return(-1);
     }
 
     //
     // Read the next chunk header.
     //
-    if(f_read(&psWavData->i16File, pucBuffer, 8, (UINT *)&ui32Count) != FR_OK)
-    {
+    if(f_read(&psWavData->i16File, pucBuffer, 8, (UINT *)&ui32Count) != FR_OK) {
         return(-1);
     }
 
     //
     // Now make sure that the file has a data chunk.
     //
-    if(pui32Buffer[0] != RIFF_CHUNK_ID_DATA)
-    {
+    if(pui32Buffer[0] != RIFF_CHUNK_ID_DATA) {
         return(-1);
     }
 
@@ -241,8 +231,7 @@ WavOpen(const char *pcFileName, tWavFile *psWavData)
 void
 WavClose(tWavFile *psWavData)
 {
-    if(psWavData->ui32Flags & WAV_FLAG_FILEOPEN)
-    {
+    if(psWavData->ui32Flags & WAV_FLAG_FILEOPEN) {
         //
         // Close out the file.
         //
@@ -281,9 +270,8 @@ WavRead(tWavFile *psWavData, unsigned char *pucBuffer, uint32_t ui32Size)
     //
     // Read in another buffer from the file.
     //
-    if(f_read(&psWavData->i16File, pucBuffer, ui32Size, 
-              (UINT *)&ui32Count) != FR_OK)
-    {
+    if(f_read(&psWavData->i16File, pucBuffer, ui32Size,
+              (UINT *)&ui32Count) != FR_OK) {
         return(0);
     }
 

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2014-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -50,7 +50,7 @@ NfcTagType4BSetupRegisters(void)
     // TODO:check why have to set as this?
     //
     TRF79x0WriteRegister(TRF79X0_MODULATOR_CONTROL_REG,
-    					TRF79X0_MOD_CTRL_MOD_OOK_100);
+                         TRF79X0_MOD_CTRL_MOD_OOK_100);
 
     //
     // Set the ISO format to NFC Card Emulation, Type B
@@ -61,7 +61,7 @@ NfcTagType4BSetupRegisters(void)
     // Set the regulator voltage to be automatic.
     //
     TRF79x0WriteRegister(TRF79X0_REGULATOR_CONTROL_REG,
-    					TRF79X0_REGULATOR_CTRL_VRS_2_8V);
+                         TRF79X0_REGULATOR_CTRL_VRS_2_8V);
 
     //
     // RX Special Settings for ISO14443B
@@ -72,7 +72,7 @@ NfcTagType4BSetupRegisters(void)
     // Set the Target Detection Level to Max; use SDD
     //
 //    TRF79x0WriteRegister(TRF79X0_NFC_TARGET_LEVEL_REG, 0x27);
-        TRF79x0WriteRegister(TRF79X0_NFC_TARGET_LEVEL_REG, 0x07);
+    TRF79x0WriteRegister(TRF79X0_NFC_TARGET_LEVEL_REG, 0x07);
 
     //
     // Set the NFCID to be sent during SDD
@@ -104,23 +104,23 @@ NfcTagType4BSetupRegisters(void)
 void
 NfcTagType4ASetupRegisters(void)
 {
-	unsigned char Data[11] = "\x08\x12\x34\x56";
+    unsigned char Data[11] = "\x08\x12\x34\x56";
 
-	//Examples of start byte of Type A UID Values and MFGs seen by Nexus S.
+    //Examples of start byte of Type A UID Values and MFGs seen by Nexus S.
     //These are just a few found by using the TagInfo app
-	//0x01, 0x05, 0x07, 0x09, 0x19 = Infineon
-	//0x02, 0x03, 0x04, 0x06, 0x0A = NXP
-	//0x08 = Unknown, considered to be for random ID
-	//0x1C, 0xC2, 0x3E, 0x80 = NXP
+    //0x01, 0x05, 0x07, 0x09, 0x19 = Infineon
+    //0x02, 0x03, 0x04, 0x06, 0x0A = NXP
+    //0x08 = Unknown, considered to be for random ID
+    //0x1C, 0xC2, 0x3E, 0x80 = NXP
 
-	TRF79x0DirectCommand(TRF79X0_SOFT_INIT_CMD);
+    TRF79x0DirectCommand(TRF79X0_SOFT_INIT_CMD);
     TRF79x0DirectCommand(TRF79X0_IDLE_CMD);
 
     //
     // TODO:check why have to set as this?
     //
     TRF79x0WriteRegister(TRF79X0_MODULATOR_CONTROL_REG,
-    					TRF79X0_MOD_CTRL_MOD_OOK_100);
+                         TRF79X0_MOD_CTRL_MOD_OOK_100);
 
     //
     // Set the ISO format to NFC Card Emulation, Type A
@@ -131,7 +131,7 @@ NfcTagType4ASetupRegisters(void)
     // Set the regulator voltage to be automatic.
     //
     TRF79x0WriteRegister(TRF79X0_REGULATOR_CONTROL_REG,
-    					TRF79X0_REGULATOR_CTRL_AUTO_REG);
+                         TRF79X0_REGULATOR_CTRL_AUTO_REG);
 
     //
     // RX Special Settings for ISO14443A
@@ -194,8 +194,8 @@ NfcTagType4ASetupRegisters(void)
 //*****************************************************************************
 int
 ISO14443BATQB(unsigned char *pucPUPI,unsigned char ucAFI, unsigned char ucBitRate,
-			  unsigned char ucMaxFrameSize, unsigned char ucProtocolType,
-			  unsigned char ucFWI, unsigned char ucADC, unsigned char ucFO)
+              unsigned char ucMaxFrameSize, unsigned char ucProtocolType,
+              unsigned char ucFWI, unsigned char ucADC, unsigned char ucFO)
 {
     unsigned char pucATQB[12];
 
@@ -226,12 +226,12 @@ ISO14443BATQB(unsigned char *pucPUPI,unsigned char ucAFI, unsigned char ucBitRat
     //
     // Transmit w/o receive
     //
-	TRF79x0Transceive(pucATQB, sizeof(pucATQB), 0, 0, 0, 0, TRF79X0_TRANSCEIVE_TX_CRC);
+    TRF79x0Transceive(pucATQB, sizeof(pucATQB), 0, 0, 0, 0, TRF79X0_TRANSCEIVE_TX_CRC);
 
-	//
-	// Return true
-	//
-	return(1);
+    //
+    // Return true
+    //
+    return(1);
 }
 
 //*****************************************************************************

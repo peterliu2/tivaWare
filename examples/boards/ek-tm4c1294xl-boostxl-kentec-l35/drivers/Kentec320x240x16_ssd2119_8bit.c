@@ -8,20 +8,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -466,21 +466,21 @@ InitGPIOLCDInterface(uint32_t ui32ClockMS)
 
     GPIOPinTypeGPIOOutput(LCD_DATAH_BASE_D, LCD_DATAH_PIN_5);
     GPIOPinTypeGPIOOutput(LCD_DATAH_BASE_Q, LCD_DATAH_PIN_4 |
-            LCD_DATAH_PIN_7 | LCD_DATAH_PIN_6);
+                          LCD_DATAH_PIN_7 | LCD_DATAH_PIN_6);
     GPIOPinTypeGPIOOutput(LCD_DATAH_BASE_K, LCD_DATAH_PIN_3);
     GPIOPinTypeGPIOOutput(LCD_DATAH_BASE_M, LCD_DATAH_PIN_2);
     GPIOPinTypeGPIOOutput(LCD_DATAH_BASE_P, LCD_DATAH_PIN_1 | LCD_DATAH_PIN_0);
 
     GPIOPadConfigSet(LCD_DATAH_BASE_D, LCD_DATAH_PIN_5, GPIO_STRENGTH_12MA,
-            GPIO_PIN_TYPE_STD);
+                     GPIO_PIN_TYPE_STD);
     GPIOPadConfigSet(LCD_DATAH_BASE_Q, LCD_DATAH_PIN_7 | LCD_DATAH_PIN_6 |
-            LCD_DATAH_PIN_4, GPIO_STRENGTH_12MA, GPIO_PIN_TYPE_STD);
+                     LCD_DATAH_PIN_4, GPIO_STRENGTH_12MA, GPIO_PIN_TYPE_STD);
     GPIOPadConfigSet(LCD_DATAH_BASE_K, LCD_DATAH_PIN_3, GPIO_STRENGTH_12MA,
-            GPIO_PIN_TYPE_STD);
+                     GPIO_PIN_TYPE_STD);
     GPIOPadConfigSet(LCD_DATAH_BASE_M, LCD_DATAH_PIN_2, GPIO_STRENGTH_12MA,
-            GPIO_PIN_TYPE_STD);
+                     GPIO_PIN_TYPE_STD);
     GPIOPadConfigSet(LCD_DATAH_BASE_P, LCD_DATAH_PIN_1 | LCD_DATAH_PIN_0,
-            GPIO_STRENGTH_12MA, GPIO_PIN_TYPE_STD);
+                     GPIO_STRENGTH_12MA, GPIO_PIN_TYPE_STD);
 
     GPIOPinTypeGPIOOutput(LCD_DC_BASE, LCD_DC_PIN);
     GPIOPinTypeGPIOOutput(LCD_RD_BASE, LCD_RD_PIN);
@@ -494,7 +494,7 @@ InitGPIOLCDInterface(uint32_t ui32ClockMS)
     GPIOPinWrite(LCD_CS_BASE, LCD_CS_PIN, LCD_CS_PIN);
     GPIOPinWrite(LCD_DATAH_BASE_D, LCD_DATAH_PIN_5,  0x00);
     GPIOPinWrite(LCD_DATAH_BASE_Q, LCD_DATAH_PIN_7 | LCD_DATAH_PIN_6 |
-            LCD_DATAH_PIN_4,  0x00);
+                 LCD_DATAH_PIN_4,  0x00);
     GPIOPinWrite(LCD_DATAH_BASE_K, LCD_DATAH_PIN_3,  0x00);
     GPIOPinWrite(LCD_DATAH_BASE_M, LCD_DATAH_PIN_2,  0x00);
     GPIOPinWrite(LCD_DATAH_BASE_P, LCD_DATAH_PIN_1 | LCD_DATAH_PIN_0, 0x00);
@@ -678,8 +678,7 @@ Kentec320x240x16_SSD2119Init(uint32_t ui32SysClockSpeed)
     // Clear the contents of the display buffer.
     //
     WriteCommand(SSD2119_RAM_DATA_REG);
-    for(ui32Count = 0; ui32Count < (320 * 240); ui32Count++)
-    {
+    for(ui32Count = 0; ui32Count < (320 * 240); ui32Count++) {
         WriteData(0x0000);
     }
 }
@@ -702,8 +701,8 @@ Kentec320x240x16_SSD2119Init(uint32_t ui32SysClockSpeed)
 //*****************************************************************************
 static void
 Kentec320x240x16_SSD2119PixelDraw(void *pvDisplayData, int32_t i32X,
-        int32_t i32Y,
-        uint32_t ui32Value)
+                                  int32_t i32Y,
+                                  uint32_t ui32Value)
 {
     //
     // Set the X address of the display cursor.
@@ -787,78 +786,96 @@ Kentec320x240x16_SSD2119PixelDrawMultiple(void *pvDisplayData, int32_t i32X,
     // Determine how to interpret the pixel data based on the number of bits
     // per pixel.
     //
-    switch(i32BPP & 0xFF)
-    {
+    switch(i32BPP & 0xFF) {
         //
         // The pixel data is in 1 bit per pixel format.
         //
-        case 1:
-            {
+        case 1: {
+            //
+            // Loop while there are more pixels to draw.
+            //
+            while(i32Count) {
                 //
-                // Loop while there are more pixels to draw.
+                // Get the next byte of image data.
                 //
-                while(i32Count)
-                {
-                    //
-                    // Get the next byte of image data.
-                    //
-                    ui32Byte = *pui8Data++;
+                ui32Byte = *pui8Data++;
 
+                //
+                // Loop through the pixels in this byte of image data.
+                //
+                for(; (i32X0 < 8) && i32Count; i32X0++, i32Count--) {
                     //
-                    // Loop through the pixels in this byte of image data.
+                    // Draw this pixel in the appropriate color.
                     //
-                    for(; (i32X0 < 8) && i32Count; i32X0++, i32Count--)
-                    {
-                        //
-                        // Draw this pixel in the appropriate color.
-                        //
-                        WriteData(((uint32_t *)pui8Palette)[(ui32Byte >>
-                                    (7 - i32X0)) & 1]);
-                    }
-
-                    //
-                    // Start at the beginning of the next byte of image data.
-                    //
-                    i32X0 = 0;
+                    WriteData(((uint32_t *)pui8Palette)[(ui32Byte >>
+                                                         (7 - i32X0)) & 1]);
                 }
 
                 //
-                // The image data has been drawn.
+                // Start at the beginning of the next byte of image data.
                 //
-                break;
+                i32X0 = 0;
             }
 
             //
-            // The pixel data is in 4 bit per pixel format.
+            // The image data has been drawn.
             //
-        case 4:
-            {
-                //
-                // Loop while there are more pixels to draw.  "Duff's device"
-                // is used to jump into the middle of the loop if the first
-                // nibble of the pixel data should not be used.  Duff's device
-                // makes use of the fact that a case statement is legal
-                // anywhere within a sub-block of a switch statement.  See
-                // http://en.wikipedia.org/wiki/Duff's_device for detailed
-                // information about Duff's device.
-                //
-                switch(i32X0 & 1)
-                {
-                    case 0:
-                        while(i32Count)
-                        {
-                            //
-                            // Get the upper nibble of the next byte of pixel
-                            // data and extract the corresponding entry from
-                            // the palette.
-                            //
-                            ui32Byte = (*pui8Data >> 4) * 3;
-                            ui32Byte = (*(uint32_t *)(pui8Palette + ui32Byte) &
+            break;
+        }
+
+        //
+        // The pixel data is in 4 bit per pixel format.
+        //
+        case 4: {
+            //
+            // Loop while there are more pixels to draw.  "Duff's device"
+            // is used to jump into the middle of the loop if the first
+            // nibble of the pixel data should not be used.  Duff's device
+            // makes use of the fact that a case statement is legal
+            // anywhere within a sub-block of a switch statement.  See
+            // http://en.wikipedia.org/wiki/Duff's_device for detailed
+            // information about Duff's device.
+            //
+            switch(i32X0 & 1) {
+                case 0:
+                    while(i32Count) {
+                        //
+                        // Get the upper nibble of the next byte of pixel
+                        // data and extract the corresponding entry from
+                        // the palette.
+                        //
+                        ui32Byte = (*pui8Data >> 4) * 3;
+                        ui32Byte = (*(uint32_t *)(pui8Palette + ui32Byte) &
                                     0x00ffffff);
 
+                        //
+                        // Translate this palette entry and write it to the
+                        // screen.
+                        //
+                        WriteData(DPYCOLORTRANSLATE(ui32Byte));
+
+                        //
+                        // Decrement the count of pixels to draw.
+                        //
+                        i32Count--;
+
+                        //
+                        // See if there is another pixel to draw.
+                        //
+                        if(i32Count) {
+                        case 1:
                             //
-                            // Translate this palette entry and write it to the
-                            // screen.
+                            // Get the lower nibble of the next byte of
+                            // pixel data and extract the corresponding
+                            // entry from the palette.
+                            //
+                            ui32Byte = (*pui8Data++ & 15) * 3;
+                            ui32Byte = (*(uint32_t *)(pui8Palette +
+                                                      ui32Byte) & 0x00ffffff);
+
+                            //
+                            // Translate this palette entry and write
+                            // it to the screen.
                             //
                             WriteData(DPYCOLORTRANSLATE(ui32Byte));
 
@@ -866,100 +883,70 @@ Kentec320x240x16_SSD2119PixelDrawMultiple(void *pvDisplayData, int32_t i32X,
                             // Decrement the count of pixels to draw.
                             //
                             i32Count--;
-
-                            //
-                            // See if there is another pixel to draw.
-                            //
-                            if(i32Count)
-                            {
-                                case 1:
-                                    //
-                                    // Get the lower nibble of the next byte of
-                                    // pixel data and extract the corresponding
-                                    // entry from the palette.
-                                    //
-                                    ui32Byte = (*pui8Data++ & 15) * 3;
-                                    ui32Byte = (*(uint32_t *)(pui8Palette +
-                                            ui32Byte) & 0x00ffffff);
-
-                                    //
-                                    // Translate this palette entry and write
-                                    // it to the screen.
-                                    //
-                                    WriteData(DPYCOLORTRANSLATE(ui32Byte));
-
-                                    //
-                                    // Decrement the count of pixels to draw.
-                                    //
-                                    i32Count--;
-                            }
                         }
-                }
-
-                //
-                // The image data has been drawn.
-                //
-                break;
+                    }
             }
 
             //
-            // The pixel data is in 8 bit per pixel format.
+            // The image data has been drawn.
             //
-        case 8:
-            {
-                //
-                // Loop while there are more pixels to draw.
-                //
-                while(i32Count--)
-                {
-                    //
-                    // Get the next byte of pixel data and extract the
-                    // corresponding entry from the palette.
-                    //
-                    ui32Byte = *pui8Data++ * 3;
-                    ui32Byte = *(uint32_t *)(pui8Palette + ui32Byte) &
-                        0x00ffffff;
+            break;
+        }
 
-                    //
-                    // Translate this palette entry and write it to the screen.
-                    //
-                    WriteData(DPYCOLORTRANSLATE(ui32Byte));
-                }
+        //
+        // The pixel data is in 8 bit per pixel format.
+        //
+        case 8: {
+            //
+            // Loop while there are more pixels to draw.
+            //
+            while(i32Count--) {
+                //
+                // Get the next byte of pixel data and extract the
+                // corresponding entry from the palette.
+                //
+                ui32Byte = *pui8Data++ * 3;
+                ui32Byte = *(uint32_t *)(pui8Palette + ui32Byte) &
+                           0x00ffffff;
 
                 //
-                // The image data has been drawn.
+                // Translate this palette entry and write it to the screen.
                 //
-                break;
+                WriteData(DPYCOLORTRANSLATE(ui32Byte));
             }
 
             //
-            // We are being passed data in the display's native format.  Merely
-            // write it directly to the display.  This is a special case which
-            // is not used by the graphics library but which is helpful to
-            // applications which may want to handle, for example, JPEG images.
+            // The image data has been drawn.
             //
-        case 16:
-            {
-                uint16_t ui16Byte;
+            break;
+        }
+
+        //
+        // We are being passed data in the display's native format.  Merely
+        // write it directly to the display.  This is a special case which
+        // is not used by the graphics library but which is helpful to
+        // applications which may want to handle, for example, JPEG images.
+        //
+        case 16: {
+            uint16_t ui16Byte;
+
+            //
+            // Loop while there are more pixels to draw.
+            //
+            while(i32Count--) {
+                //
+                // Get the next byte of pixel data and extract the
+                // corresponding entry from the palette.
+                //
+                ui16Byte = *((uint16_t *)pui8Data);
+                pui8Data += 2;
 
                 //
-                // Loop while there are more pixels to draw.
+                // Translate this palette entry and write it to the screen.
                 //
-                while(i32Count--)
-                {
-                    //
-                    // Get the next byte of pixel data and extract the
-                    // corresponding entry from the palette.
-                    //
-                    ui16Byte = *((uint16_t *)pui8Data);
-                    pui8Data += 2;
-
-                    //
-                    // Translate this palette entry and write it to the screen.
-                    //
-                    WriteData(ui16Byte);
-                }
+                WriteData(ui16Byte);
             }
+        }
     }
 }
 
@@ -982,8 +969,8 @@ Kentec320x240x16_SSD2119PixelDrawMultiple(void *pvDisplayData, int32_t i32X,
 //*****************************************************************************
 static void
 Kentec320x240x16_SSD2119LineDrawH(void *pvDisplayData, int32_t i32X1,
-        int32_t i32X2, int32_t i32Y,
-        uint32_t ui32Value)
+                                  int32_t i32X2, int32_t i32Y,
+                                  uint32_t ui32Value)
 {
     //
     // Set the cursor increment to left to right, followed by top to bottom.
@@ -1011,8 +998,7 @@ Kentec320x240x16_SSD2119LineDrawH(void *pvDisplayData, int32_t i32X1,
     //
     // Loop through the pixels of this horizontal line.
     //
-    while(i32X1++ <= i32X2)
-    {
+    while(i32X1++ <= i32X2) {
         //
         // Write the pixel value.
         //
@@ -1039,8 +1025,8 @@ Kentec320x240x16_SSD2119LineDrawH(void *pvDisplayData, int32_t i32X1,
 //*****************************************************************************
 static void
 Kentec320x240x16_SSD2119LineDrawV(void *pvDisplayData, int32_t i32X,
-        int32_t i32Y1,
-        int32_t i32Y2, uint32_t ui32Value)
+                                  int32_t i32Y1,
+                                  int32_t i32Y2, uint32_t ui32Value)
 {
     //
     // Set the cursor increment to top to bottom, followed by left to right.
@@ -1068,8 +1054,7 @@ Kentec320x240x16_SSD2119LineDrawV(void *pvDisplayData, int32_t i32X,
     //
     // Loop through the pixels of this vertical line.
     //
-    while(i32Y1++ <= i32Y2)
-    {
+    while(i32Y1++ <= i32Y2) {
         //
         // Write the pixel value.
         //
@@ -1096,7 +1081,7 @@ Kentec320x240x16_SSD2119LineDrawV(void *pvDisplayData, int32_t i32X,
 //*****************************************************************************
 static void
 Kentec320x240x16_SSD2119RectFill(void *pvDisplayData, const tRectangle *pRect,
-        uint32_t ui32Value)
+                                 uint32_t ui32Value)
 {
     int32_t i32Count;
 
@@ -1129,10 +1114,10 @@ Kentec320x240x16_SSD2119RectFill(void *pvDisplayData, const tRectangle *pRect,
     WriteCommand(SSD2119_V_RAM_POS_REG);
 #if (defined LANDSCAPE_FLIP) || (defined PORTRAIT)
     WriteData(MAPPED_Y(pRect->i16XMin, pRect->i16YMin) |
-            (MAPPED_Y(pRect->i16XMax, pRect->i16YMax) << 8));
+              (MAPPED_Y(pRect->i16XMax, pRect->i16YMax) << 8));
 #else
     WriteData(MAPPED_Y(pRect->i16XMax, pRect->i16YMax) |
-            (MAPPED_Y(pRect->i16XMin, pRect->i16YMin) << 8));
+              (MAPPED_Y(pRect->i16XMin, pRect->i16YMin) << 8));
 #endif
 
     //
@@ -1154,9 +1139,8 @@ Kentec320x240x16_SSD2119RectFill(void *pvDisplayData, const tRectangle *pRect,
     // Loop through the pixels of this filled rectangle.
     //
     for(i32Count = ((pRect->i16XMax - pRect->i16XMin + 1) *
-                (pRect->i16YMax - pRect->i16YMin + 1));
-            i32Count >= 0; i32Count--)
-    {
+                    (pRect->i16YMax - pRect->i16YMin + 1));
+            i32Count >= 0; i32Count--) {
         //
         // Write the pixel value.
         //
@@ -1197,7 +1181,7 @@ Kentec320x240x16_SSD2119RectFill(void *pvDisplayData, const tRectangle *pRect,
 //*****************************************************************************
 static uint32_t
 Kentec320x240x16_SSD2119ColorTranslate(void *pvDisplayData,
-        uint32_t ui32Value)
+                                       uint32_t ui32Value)
 {
     //
     // Translate from a 24-bit RGB color to a 5-6-5 RGB color.
@@ -1234,8 +1218,7 @@ Kentec320x240x16_SSD2119Flush(void *pvDisplayData)
 //! K350QVG-V2-F TFT panel with an SSD2119 controller.
 //
 //*****************************************************************************
-const tDisplay g_sKentec320x240x16_SSD2119 =
-{
+const tDisplay g_sKentec320x240x16_SSD2119 = {
     sizeof(tDisplay),
     0,
 #if defined(PORTRAIT) || defined(PORTRAIT_FLIP)

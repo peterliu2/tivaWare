@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-LM4F232 Firmware Package.
 //
 //*****************************************************************************
@@ -126,8 +126,7 @@ DECLARE_EVENT_DRIVER(g_sUSBEventDriver, 0, 0, USBHCDEvents);
 // In this case, only the Mouse class is loaded.
 //
 //*****************************************************************************
-static tUSBHostClassDriver const * const g_ppHostClassDrivers[] =
-{
+static tUSBHostClassDriver const * const g_ppHostClassDrivers[] = {
     &g_sUSBHIDClassDriver,
     &g_sUSBEventDriver
 };
@@ -169,8 +168,7 @@ tUSBMode g_eCurrentUSBMode;
 // This enumerated type is used to hold the states of the mouse.
 //
 //*****************************************************************************
-enum
-{
+enum {
     //
     // No device is present.
     //
@@ -237,7 +235,7 @@ USBHCDEvents(void *pvData)
     //
     sRect.i16XMin = 0;
     sRect.i16YMin = GrContextDpyHeightGet(&g_sContext) -
-                  DISPLAY_BANNER_HEIGHT - 1;
+                    DISPLAY_BANNER_HEIGHT - 1;
     sRect.i16XMax = GrContextDpyWidthGet(&g_sContext) - 1;
     sRect.i16YMax = sRect.i16YMin + DISPLAY_BANNER_HEIGHT;
 
@@ -260,20 +258,17 @@ USBHCDEvents(void *pvData)
     //
     pEventInfo = (tEventInfo *)pvData;
 
-    switch(pEventInfo->ui32Event)
-    {
+    switch(pEventInfo->ui32Event) {
         //
         // New mouse detected.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             //
             // See if this is a HID Mouse.
             //
             if((USBHCDDevClass(pEventInfo->ui32Instance, 0) == USB_CLASS_HID) &&
-               (USBHCDDevProtocol(pEventInfo->ui32Instance, 0) ==
-                USB_HID_PROTOCOL_MOUSE))
-            {
+                    (USBHCDDevProtocol(pEventInfo->ui32Instance, 0) ==
+                     USB_HID_PROTOCOL_MOUSE)) {
                 //
                 // Indicate that the mouse has been detected.
                 //
@@ -302,8 +297,7 @@ USBHCDEvents(void *pvData)
         //
         // Unsupported device detected.
         //
-        case USB_EVENT_UNKNOWN_CONNECTED:
-        {
+        case USB_EVENT_UNKNOWN_CONNECTED: {
             GrStringDrawCentered(&g_sContext, "Unknown Device", -1,
                                  GrContextDpyWidthGet(&g_sContext) / 2,
                                  sRect.i16YMin + 5, 0);
@@ -317,8 +311,7 @@ USBHCDEvents(void *pvData)
         //
         // Device has been unplugged.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             //
             // Indicate that the device has been disconnected.
             //
@@ -350,8 +343,7 @@ USBHCDEvents(void *pvData)
         //
         // Power Fault has occurred.
         //
-        case USB_EVENT_POWER_FAULT:
-        {
+        case USB_EVENT_POWER_FAULT: {
             //
             // Indicate that there has been a power fault.
             //
@@ -375,8 +367,7 @@ USBHCDEvents(void *pvData)
             break;
         }
 
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -411,12 +402,9 @@ GetTickms(void)
     ui32RetVal = g_ui32SysTickCount;
     ui32Saved = ui32RetVal;
 
-    if(ui32Saved > g_ui32LastTick)
-    {
+    if(ui32Saved > g_ui32LastTick) {
         ui32RetVal = ui32Saved - g_ui32LastTick;
-    }
-    else
-    {
+    } else {
         ui32RetVal = g_ui32LastTick - ui32Saved;
     }
 
@@ -485,13 +473,11 @@ MouseCallback(tUSBHMouse *psMsInstance, uint32_t ui32Event,
     //
     i32DoUpdate = 1;
 
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // Mouse button press detected.
         //
-        case USBH_EVENT_HID_MS_PRESS:
-        {
+        case USBH_EVENT_HID_MS_PRESS: {
             //
             // Save the new button that was pressed.
             //
@@ -503,8 +489,7 @@ MouseCallback(tUSBHMouse *psMsInstance, uint32_t ui32Event,
         //
         // Mouse button release detected.
         //
-        case USBH_EVENT_HID_MS_REL:
-        {
+        case USBH_EVENT_HID_MS_REL: {
             //
             // Remove the button from the pressed state.
             //
@@ -516,8 +501,7 @@ MouseCallback(tUSBHMouse *psMsInstance, uint32_t ui32Event,
         //
         // Mouse X movement detected.
         //
-        case USBH_EVENT_HID_MS_X:
-        {
+        case USBH_EVENT_HID_MS_X: {
             //
             // Update the cursor X position.
             //
@@ -526,13 +510,11 @@ MouseCallback(tUSBHMouse *psMsInstance, uint32_t ui32Event,
             //
             // Cap the value to not cause an overflow.
             //
-            if(g_i32CursorX > 9999)
-            {
+            if(g_i32CursorX > 9999) {
                 g_i32CursorX = 9999;
             }
 
-            if(g_i32CursorX < -9999)
-            {
+            if(g_i32CursorX < -9999) {
                 g_i32CursorX = -9999;
             }
 
@@ -542,8 +524,7 @@ MouseCallback(tUSBHMouse *psMsInstance, uint32_t ui32Event,
         //
         // Mouse Y movement detected.
         //
-        case USBH_EVENT_HID_MS_Y:
-        {
+        case USBH_EVENT_HID_MS_Y: {
             //
             // Update the cursor Y position.
             //
@@ -552,20 +533,17 @@ MouseCallback(tUSBHMouse *psMsInstance, uint32_t ui32Event,
             //
             // Cap the value to not cause an overflow.
             //
-            if(g_i32CursorY > 9999)
-            {
+            if(g_i32CursorY > 9999) {
                 g_i32CursorY = 9999;
             }
 
-            if(g_i32CursorY < -9999)
-            {
+            if(g_i32CursorY < -9999) {
                 g_i32CursorY = -9999;
             }
 
             break;
         }
-        default:
-        {
+        default: {
             //
             // No reason to update.
             //
@@ -579,19 +557,18 @@ MouseCallback(tUSBHMouse *psMsInstance, uint32_t ui32Event,
     // Display the current mouse position and button state if there was an
     // update.
     //
-    if(i32DoUpdate)
-    {
+    if(i32DoUpdate) {
         GrStringDrawCentered(&g_sContext, "Position:", -1,
-                                 GrContextDpyWidthGet(&g_sContext) / 2, 16, 0);
+                             GrContextDpyWidthGet(&g_sContext) / 2, 16, 0);
         usprintf(pcBuffer, "   %d,%d   ", g_i32CursorX, g_i32CursorY);
         GrStringDrawCentered(&g_sContext, pcBuffer, -1,
-                                 GrContextDpyWidthGet(&g_sContext) / 2, 26, 1);
+                             GrContextDpyWidthGet(&g_sContext) / 2, 26, 1);
         GrStringDrawCentered(&g_sContext, "Buttons:", -1,
-                                 GrContextDpyWidthGet(&g_sContext) / 2, 36, 0);
+                             GrContextDpyWidthGet(&g_sContext) / 2, 36, 0);
         usprintf(pcBuffer, "%d%d%d", g_ui32Buttons & 1, (g_ui32Buttons & 2) >> 1,
                  (g_ui32Buttons & 4) >> 2);
         GrStringDrawCentered(&g_sContext, pcBuffer, -1,
-                                 GrContextDpyWidthGet(&g_sContext) / 2, 46, 1);
+                             GrContextDpyWidthGet(&g_sContext) / 2, 46, 1);
     }
 }
 
@@ -647,20 +624,20 @@ main(void)
     // Display default information about the mouse
     //
     GrStringDrawCentered(&g_sContext, "Position:", -1,
-                             GrContextDpyWidthGet(&g_sContext) / 2, 16, 0);
+                         GrContextDpyWidthGet(&g_sContext) / 2, 16, 0);
     GrStringDrawCentered(&g_sContext, "-,-", -1,
-                             GrContextDpyWidthGet(&g_sContext) / 2, 26, 1);
+                         GrContextDpyWidthGet(&g_sContext) / 2, 26, 1);
     GrStringDrawCentered(&g_sContext, "Buttons:", -1,
-                             GrContextDpyWidthGet(&g_sContext) / 2, 36, 0);
+                         GrContextDpyWidthGet(&g_sContext) / 2, 36, 0);
     GrStringDrawCentered(&g_sContext, "---", -1,
-                             GrContextDpyWidthGet(&g_sContext) / 2, 46, 1);
+                         GrContextDpyWidthGet(&g_sContext) / 2, 46, 1);
 
     //
     // Fill the bottom rows of the screen with blue to create the status area.
     //
     sRect.i16XMin = 0;
     sRect.i16YMin = GrContextDpyHeightGet(&g_sContext) -
-                  DISPLAY_BANNER_HEIGHT - 1;
+                    DISPLAY_BANNER_HEIGHT - 1;
     sRect.i16XMax = GrContextDpyWidthGet(&g_sContext) - 1;
     sRect.i16YMax = sRect.i16YMin + DISPLAY_BANNER_HEIGHT;
 
@@ -749,21 +726,18 @@ main(void)
     //
     // The main loop for the application.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Tell the OTG state machine how much time has passed in
         // milliseconds since the last call.
         //
         USBOTGMain(GetTickms());
 
-        switch(g_eUSBState)
-        {
+        switch(g_eUSBState) {
             //
             // This state is entered when the mouse is first detected.
             //
-            case STATE_MOUSE_INIT:
-            {
+            case STATE_MOUSE_INIT: {
                 //
                 // Initialize the newly connected mouse.
                 //
@@ -777,8 +751,7 @@ main(void)
                 break;
             }
 
-            case STATE_MOUSE_CONNECTED:
-            {
+            case STATE_MOUSE_CONNECTED: {
                 //
                 // Nothing is currently done in the main loop when the mouse
                 // is connected.
@@ -786,16 +759,14 @@ main(void)
                 break;
             }
 
-            case STATE_NO_DEVICE:
-            {
+            case STATE_NO_DEVICE: {
                 //
                 // The mouse is not connected so nothing needs to be done here.
                 //
                 break;
             }
 
-            default:
-            {
+            default: {
                 break;
             }
         }

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -86,8 +86,7 @@ io_set_timer(unsigned long ulSpeedPercent)
     // If the speed is non-zero, we reset the timeout.  If it is zero, we
     // just leave the timer disabled.
     //
-    if(ulSpeedPercent)
-    {
+    if(ulSpeedPercent) {
         //
         // Set Timeout
         //
@@ -175,12 +174,9 @@ io_get_ledstate(char * pcBuf, int iBufLen)
     //
     // Get the state of the LED
     //
-    if(ROM_GPIOPinRead(LED_PORT_BASE, LED_PIN))
-    {
+    if(ROM_GPIOPinRead(LED_PORT_BASE, LED_PIN)) {
         usnprintf(pcBuf, iBufLen, "ON");
-    }
-    else
-    {
+    } else {
         usnprintf(pcBuf, iBufLen, "OFF");
     }
 
@@ -197,12 +193,9 @@ io_is_led_on(void)
     //
     // Get the state of the LED
     //
-    if(ROM_GPIOPinRead(LED_PORT_BASE, LED_PIN))
-    {
+    if(ROM_GPIOPinRead(LED_PORT_BASE, LED_PIN)) {
         return(true);
-    }
-    else
-    {
+    } else {
         return(0);
     }
 }
@@ -222,8 +215,7 @@ io_set_animation_speed_string(char *pcBuf)
     // Parse the passed parameter as a decimal number.
     //
     ulSpeed = 0;
-    while((*pcBuf >= '0') && (*pcBuf <= '9'))
-    {
+    while((*pcBuf >= '0') && (*pcBuf <= '9')) {
         ulSpeed *= 10;
         ulSpeed += (*pcBuf - '0');
         pcBuf++;
@@ -232,8 +224,7 @@ io_set_animation_speed_string(char *pcBuf)
     //
     // If the number is valid, set the new speed.
     //
-    if(ulSpeed <= 100)
-    {
+    if(ulSpeed <= 100) {
         g_ulAnimSpeed = ulSpeed;
         io_set_timer(g_ulAnimSpeed);
     }
@@ -250,8 +241,7 @@ io_set_animation_speed(unsigned long ulSpeed)
     //
     // If the number is valid, set the new speed.
     //
-    if(ulSpeed <= 100)
-    {
+    if(ulSpeed <= 100) {
         g_ulAnimSpeed = ulSpeed;
         io_set_timer(g_ulAnimSpeed);
     }

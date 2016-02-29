@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2007-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -124,15 +124,12 @@ _USBIndexWrite(uint32_t ui32Base, uint32_t ui32Endpoint,
     //
     // Determine the size of the register value.
     //
-    if(ui32Size == 1)
-    {
+    if(ui32Size == 1) {
         //
         // Set the value.
         //
         HWREGB(ui32Base + ui32IndexedReg) = ui32Value;
-    }
-    else
-    {
+    } else {
         //
         // Set the value.
         //
@@ -189,15 +186,12 @@ _USBIndexRead(uint32_t ui32Base, uint32_t ui32Endpoint,
     //
     // Determine the size of the register value.
     //
-    if(ui32Size == 1)
-    {
+    if(ui32Size == 1) {
         //
         // Get the value.
         //
         ui32Value = HWREGB(ui32Base + ui32IndexedReg);
-    }
-    else
-    {
+    } else {
         //
         // Get the value.
         //
@@ -272,12 +266,9 @@ USBHostReset(uint32_t ui32Base, bool bStart)
     //
     // Send a reset signal to the bus.
     //
-    if(bStart)
-    {
+    if(bStart) {
         HWREGB(ui32Base + USB_O_POWER) |= USB_POWER_RESET;
-    }
-    else
-    {
+    } else {
         HWREGB(ui32Base + USB_O_POWER) &= ~USB_POWER_RESET;
     }
 }
@@ -323,15 +314,12 @@ USBHighSpeed(uint32_t ui32Base, bool bEnable)
     //
     ASSERT(ui32Base == USB0_BASE);
 
-    if(bEnable)
-    {
+    if(bEnable) {
         //
         // Enable high speed mode negotiations in hosts or device mode.
         //
         HWREGB(ui32Base + USB_O_POWER) |= USB_POWER_HSENAB;
-    }
-    else
-    {
+    } else {
         //
         // Enable high speed mode negotiations in hosts or device mode.
         //
@@ -376,12 +364,9 @@ USBHostResume(uint32_t ui32Base, bool bStart)
     //
     // Send a resume signal to the bus.
     //
-    if(bStart)
-    {
+    if(bStart) {
         HWREGB(ui32Base + USB_O_POWER) |= USB_POWER_RESUME;
-    }
-    else
-    {
+    } else {
         HWREGB(ui32Base + USB_O_POWER) &= ~USB_POWER_RESUME;
     }
 }
@@ -420,24 +405,21 @@ USBHostSpeedGet(uint32_t ui32Base)
     //
     // If the Full Speed device bit is set, then this is a full speed device.
     //
-    if(HWREGB(ui32Base + USB_O_POWER) & USB_POWER_HSMODE)
-    {
+    if(HWREGB(ui32Base + USB_O_POWER) & USB_POWER_HSMODE) {
         return(USB_HIGH_SPEED);
     }
 
     //
     // If the Full Speed device bit is set, then this is a full speed device.
     //
-    if(HWREGB(ui32Base + USB_O_DEVCTL) & USB_DEVCTL_FSDEV)
-    {
+    if(HWREGB(ui32Base + USB_O_DEVCTL) & USB_DEVCTL_FSDEV) {
         return(USB_FULL_SPEED);
     }
 
     //
     // If the Low Speed device bit is set, then this is a low speed device.
     //
-    if(HWREGB(ui32Base + USB_O_DEVCTL) & USB_DEVCTL_LSDEV)
-    {
+    if(HWREGB(ui32Base + USB_O_DEVCTL) & USB_DEVCTL_LSDEV) {
         return(USB_LOW_SPEED);
     }
 
@@ -482,8 +464,7 @@ USBDevSpeedGet(uint32_t ui32Base)
     //
     // If the Full Speed device bit is set, then this is a full speed device.
     //
-    if(HWREGB(ui32Base + USB_O_POWER) & USB_POWER_HSMODE)
-    {
+    if(HWREGB(ui32Base + USB_O_POWER) & USB_POWER_HSMODE) {
         return(USB_HIGH_SPEED);
     }
 
@@ -519,24 +500,21 @@ USBIntDisableControl(uint32_t ui32Base, uint32_t ui32Flags)
     // If any general interrupts were disabled then write the general interrupt
     // settings out to the hardware.
     //
-    if(ui32Flags & USB_INTCTRL_STATUS)
-    {
+    if(ui32Flags & USB_INTCTRL_STATUS) {
         HWREGB(ui32Base + USB_O_IE) &= ~(ui32Flags & USB_INTCTRL_STATUS);
     }
 
     //
     // Disable the power fault interrupt.
     //
-    if(ui32Flags & USB_INTCTRL_POWER_FAULT)
-    {
+    if(ui32Flags & USB_INTCTRL_POWER_FAULT) {
         HWREG(ui32Base + USB_O_EPCIM) = 0;
     }
 
     //
     // Disable the ID pin detect interrupt.
     //
-    if(ui32Flags & USB_INTCTRL_MODE_DETECT)
-    {
+    if(ui32Flags & USB_INTCTRL_MODE_DETECT) {
         HWREG(USB0_BASE + USB_O_IDVIM) = 0;
     }
 }
@@ -570,24 +548,21 @@ USBIntEnableControl(uint32_t ui32Base, uint32_t ui32Flags)
     // If any general interrupts were enabled, then write the general
     // interrupt settings out to the hardware.
     //
-    if(ui32Flags & USB_INTCTRL_STATUS)
-    {
+    if(ui32Flags & USB_INTCTRL_STATUS) {
         HWREGB(ui32Base + USB_O_IE) |= ui32Flags;
     }
 
     //
     // Enable the power fault interrupt.
     //
-    if(ui32Flags & USB_INTCTRL_POWER_FAULT)
-    {
+    if(ui32Flags & USB_INTCTRL_POWER_FAULT) {
         HWREG(ui32Base + USB_O_EPCIM) = USB_EPCIM_PF;
     }
 
     //
     // Enable the ID pin detect interrupt.
     //
-    if(ui32Flags & USB_INTCTRL_MODE_DETECT)
-    {
+    if(ui32Flags & USB_INTCTRL_MODE_DETECT) {
         HWREG(USB0_BASE + USB_O_IDVIM) = USB_IDVIM_ID;
     }
 }
@@ -651,8 +626,7 @@ USBIntStatusControl(uint32_t ui32Base)
     //
     // Add the power fault status.
     //
-    if(HWREG(ui32Base + USB_O_EPCISC) & USB_EPCISC_PF)
-    {
+    if(HWREG(ui32Base + USB_O_EPCISC) & USB_EPCISC_PF) {
         //
         // Indicate a power fault was detected.
         //
@@ -664,8 +638,7 @@ USBIntStatusControl(uint32_t ui32Base)
         HWREGB(ui32Base + USB_O_EPCISC) |= USB_EPCISC_PF;
     }
 
-    if(HWREG(USB0_BASE + USB_O_IDVISC) & USB_IDVRIS_ID)
-    {
+    if(HWREG(USB0_BASE + USB_O_IDVISC) & USB_IDVRIS_ID) {
         //
         // Indicate an id detection.
         //
@@ -820,16 +793,11 @@ _USBIntNumberGet(uint32_t ui32Base)
 {
     uint32_t ui32Int;
 
-    if(CLASS_IS_TM4C123)
-    {
+    if(CLASS_IS_TM4C123) {
         ui32Int = INT_USB0_TM4C123;
-    }
-    else if(CLASS_IS_TM4C129)
-    {
+    } else if(CLASS_IS_TM4C129) {
         ui32Int = INT_USB0_TM4C129;
-    }
-    else
-    {
+    } else {
         ui32Int = 0;
     }
     return(ui32Int);
@@ -1056,12 +1024,9 @@ USBHostEndpointStatusClear(uint32_t ui32Base, uint32_t ui32Endpoint,
     //
     // Clear the specified flags for the endpoint.
     //
-    if(ui32Endpoint == USB_EP_0)
-    {
+    if(ui32Endpoint == USB_EP_0) {
         HWREGB(ui32Base + USB_O_CSRL0) &= ~ui32Flags;
-    }
-    else
-    {
+    } else {
         HWREGB(ui32Base + USB_O_TXCSRL1 + EP_OFFSET(ui32Endpoint)) &=
             ~ui32Flags;
         HWREGB(ui32Base + USB_O_RXCSRL1 + EP_OFFSET(ui32Endpoint)) &=
@@ -1103,34 +1068,28 @@ USBDevEndpointStatusClear(uint32_t ui32Base, uint32_t ui32Endpoint,
     // If this is endpoint 0, then the bits have different meaning and map
     // into the TX memory location.
     //
-    if(ui32Endpoint == USB_EP_0)
-    {
+    if(ui32Endpoint == USB_EP_0) {
         //
         // Set the Serviced RxPktRdy bit to clear the RxPktRdy.
         //
-        if(ui32Flags & USB_DEV_EP0_OUT_PKTRDY)
-        {
+        if(ui32Flags & USB_DEV_EP0_OUT_PKTRDY) {
             HWREGB(ui32Base + USB_O_CSRL0) |= USB_CSRL0_RXRDYC;
         }
 
         //
         // Set the serviced Setup End bit to clear the SetupEnd status.
         //
-        if(ui32Flags & USB_DEV_EP0_SETUP_END)
-        {
+        if(ui32Flags & USB_DEV_EP0_SETUP_END) {
             HWREGB(ui32Base + USB_O_CSRL0) |= USB_CSRL0_SETENDC;
         }
 
         //
         // Clear the Sent Stall status flag.
         //
-        if(ui32Flags & USB_DEV_EP0_SENT_STALL)
-        {
+        if(ui32Flags & USB_DEV_EP0_SENT_STALL) {
             HWREGB(ui32Base + USB_O_CSRL0) &= ~(USB_DEV_EP0_SENT_STALL);
         }
-    }
-    else
-    {
+    } else {
         //
         // Clear out any TX flags that were passed in.  Only
         // USB_DEV_TX_SENT_STALL and USB_DEV_TX_UNDERRUN must be cleared.
@@ -1193,21 +1152,15 @@ USBHostEndpointDataToggle(uint32_t ui32Base, uint32_t ui32Endpoint,
     //
     // See if the data toggle must be set to DATA1.
     //
-    if(bDataToggle)
-    {
+    if(bDataToggle) {
         //
         // Select the data toggle bit based on the endpoint.
         //
-        if(ui32Endpoint == USB_EP_0)
-        {
+        if(ui32Endpoint == USB_EP_0) {
             ui32DataToggle = USB_CSRH0_DT;
-        }
-        else if(ui32Flags == USB_EP_HOST_IN)
-        {
+        } else if(ui32Flags == USB_EP_HOST_IN) {
             ui32DataToggle = USB_RXCSRH1_DT;
-        }
-        else
-        {
+        } else {
             ui32DataToggle = USB_TXCSRH1_DT;
         }
     }
@@ -1215,8 +1168,7 @@ USBHostEndpointDataToggle(uint32_t ui32Base, uint32_t ui32Endpoint,
     //
     // Set the data toggle based on the endpoint.
     //
-    if(ui32Endpoint == USB_EP_0)
-    {
+    if(ui32Endpoint == USB_EP_0) {
         //
         // Set the write enable and the bit value for endpoint zero.
         //
@@ -1224,9 +1176,7 @@ USBHostEndpointDataToggle(uint32_t ui32Base, uint32_t ui32Endpoint,
             ((HWREGB(ui32Base + USB_O_CSRH0) &
               ~(USB_CSRH0_DTWE | USB_CSRH0_DT)) |
              (ui32DataToggle | USB_CSRH0_DTWE));
-    }
-    else if(ui32Flags == USB_EP_HOST_IN)
-    {
+    } else if(ui32Flags == USB_EP_HOST_IN) {
         //
         // Set the Write enable and the bit value for an IN endpoint.
         //
@@ -1234,9 +1184,7 @@ USBHostEndpointDataToggle(uint32_t ui32Base, uint32_t ui32Endpoint,
             ((HWREGB(ui32Base + USB_O_RXCSRH1 + EP_OFFSET(ui32Endpoint)) &
               ~(USB_RXCSRH1_DTWE | USB_RXCSRH1_DT)) |
              (ui32DataToggle | USB_RXCSRH1_DTWE));
-    }
-    else
-    {
+    } else {
         //
         // Set the Write enable and the bit value for an OUT endpoint.
         //
@@ -1281,13 +1229,10 @@ USBEndpointDataToggleClear(uint32_t ui32Base, uint32_t ui32Endpoint,
     //
     // See if the transmit or receive data toggle must be cleared.
     //
-    if(ui32Flags & (USB_EP_HOST_OUT | USB_EP_DEV_IN))
-    {
+    if(ui32Flags & (USB_EP_HOST_OUT | USB_EP_DEV_IN)) {
         HWREGB(ui32Base + USB_O_TXCSRL1 + EP_OFFSET(ui32Endpoint)) |=
             USB_TXCSRL1_CLRDT;
-    }
-    else
-    {
+    } else {
         HWREGB(ui32Base + USB_O_RXCSRL1 + EP_OFFSET(ui32Endpoint)) |=
             USB_RXCSRL1_CLRDT;
     }
@@ -1337,12 +1282,9 @@ USBHostEndpointPing(uint32_t ui32Base, uint32_t ui32Endpoint, bool bEnable)
     //
     // Handle the endpoint 0 case separately.
     //
-    if(bEnable)
-    {
+    if(bEnable) {
         HWREGB(USB0_BASE + USB_O_CSRH0) &= ~USB_CSRH0_DISPING;
-    }
-    else
-    {
+    } else {
         HWREGB(USB0_BASE + USB_O_CSRH0) |= USB_CSRH0_DISPING;
     }
 }
@@ -1383,23 +1325,18 @@ USBDevEndpointStall(uint32_t ui32Base, uint32_t ui32Endpoint,
     //
     // Determine how to stall this endpoint.
     //
-    if(ui32Endpoint == USB_EP_0)
-    {
+    if(ui32Endpoint == USB_EP_0) {
         //
         // Perform a stall on endpoint zero.
         //
         HWREGB(ui32Base + USB_O_CSRL0) |= USB_CSRL0_STALL | USB_CSRL0_RXRDYC;
-    }
-    else if(ui32Flags == USB_EP_DEV_IN)
-    {
+    } else if(ui32Flags == USB_EP_DEV_IN) {
         //
         // Perform a stall on an IN endpoint.
         //
         HWREGB(ui32Base + USB_O_TXCSRL1 + EP_OFFSET(ui32Endpoint)) |=
             USB_TXCSRL1_STALL;
-    }
-    else
-    {
+    } else {
         //
         // Perform a stall on an OUT endpoint.
         //
@@ -1445,15 +1382,12 @@ USBDevEndpointStallClear(uint32_t ui32Base, uint32_t ui32Endpoint,
     //
     // Determine how to clear the stall on this endpoint.
     //
-    if(ui32Endpoint == USB_EP_0)
-    {
+    if(ui32Endpoint == USB_EP_0) {
         //
         // Clear the stall on endpoint zero.
         //
         HWREGB(ui32Base + USB_O_CSRL0) &= ~USB_CSRL0_STALLED;
-    }
-    else if(ui32Flags == USB_EP_DEV_IN)
-    {
+    } else if(ui32Flags == USB_EP_DEV_IN) {
         //
         // Clear the stall on an IN endpoint.
         //
@@ -1465,9 +1399,7 @@ USBDevEndpointStallClear(uint32_t ui32Base, uint32_t ui32Endpoint,
         //
         HWREGB(ui32Base + USB_O_TXCSRL1 + EP_OFFSET(ui32Endpoint)) |=
             USB_TXCSRL1_CLRDT;
-    }
-    else
-    {
+    } else {
         //
         // Clear the stall on an OUT endpoint.
         //
@@ -1698,8 +1630,7 @@ USBHostEndpointConfig(uint32_t ui32Base, uint32_t ui32Endpoint,
     // Endpoint zero is configured differently than the other endpoints, so see
     // if this is endpoint zero.
     //
-    if(ui32Endpoint == USB_EP_0)
-    {
+    if(ui32Endpoint == USB_EP_0) {
         //
         // Set the NAK timeout.
         //
@@ -1711,21 +1642,14 @@ USBHostEndpointConfig(uint32_t ui32Base, uint32_t ui32Endpoint,
         //
         // Set the speed of this endpoint.
         //
-        if(ui32Flags & USB_EP_SPEED_HIGH)
-        {
+        if(ui32Flags & USB_EP_SPEED_HIGH) {
             HWREGB(ui32Base + USB_O_TYPE0) = USB_TYPE0_SPEED_HIGH;
-        }
-        else if(ui32Flags & USB_EP_SPEED_FULL)
-        {
+        } else if(ui32Flags & USB_EP_SPEED_FULL) {
             HWREGB(ui32Base + USB_O_TYPE0) = USB_TYPE0_SPEED_FULL;
-        }
-        else
-        {
+        } else {
             HWREGB(ui32Base + USB_O_TYPE0) = USB_TYPE0_SPEED_LOW;
         }
-    }
-    else
-    {
+    } else {
         //
         // Start with the target endpoint.
         //
@@ -1734,29 +1658,22 @@ USBHostEndpointConfig(uint32_t ui32Base, uint32_t ui32Endpoint,
         //
         // Set the speed for the device using this endpoint.
         //
-        if(ui32Flags & USB_EP_SPEED_HIGH)
-        {
+        if(ui32Flags & USB_EP_SPEED_HIGH) {
             ui32Register |= USB_TXTYPE1_SPEED_HIGH;
-        }
-        else if(ui32Flags & USB_EP_SPEED_FULL)
-        {
+        } else if(ui32Flags & USB_EP_SPEED_FULL) {
             ui32Register |= USB_TXTYPE1_SPEED_FULL;
-        }
-        else
-        {
+        } else {
             ui32Register |= USB_TXTYPE1_SPEED_LOW;
         }
 
         //
         // Set the protocol for the device using this endpoint.
         //
-        switch(ui32Flags & USB_EP_MODE_MASK)
-        {
+        switch(ui32Flags & USB_EP_MODE_MASK) {
             //
             // The bulk protocol is being used.
             //
-            case USB_EP_MODE_BULK:
-            {
+            case USB_EP_MODE_BULK: {
                 ui32Register |= USB_TXTYPE1_PROTO_BULK;
                 break;
             }
@@ -1764,8 +1681,7 @@ USBHostEndpointConfig(uint32_t ui32Base, uint32_t ui32Endpoint,
             //
             // The isochronous protocol is being used.
             //
-            case USB_EP_MODE_ISOC:
-            {
+            case USB_EP_MODE_ISOC: {
                 ui32Register |= USB_TXTYPE1_PROTO_ISOC;
                 break;
             }
@@ -1773,8 +1689,7 @@ USBHostEndpointConfig(uint32_t ui32Base, uint32_t ui32Endpoint,
             //
             // The interrupt protocol is being used.
             //
-            case USB_EP_MODE_INT:
-            {
+            case USB_EP_MODE_INT: {
                 ui32Register |= USB_TXTYPE1_PROTO_INT;
                 break;
             }
@@ -1782,8 +1697,7 @@ USBHostEndpointConfig(uint32_t ui32Base, uint32_t ui32Endpoint,
             //
             // The control protocol is being used.
             //
-            case USB_EP_MODE_CTRL:
-            {
+            case USB_EP_MODE_CTRL: {
                 ui32Register |= USB_TXTYPE1_PROTO_CTRL;
                 break;
             }
@@ -1792,8 +1706,7 @@ USBHostEndpointConfig(uint32_t ui32Base, uint32_t ui32Endpoint,
         //
         // See if the transmit or receive endpoint is being configured.
         //
-        if(ui32Flags & USB_EP_HOST_OUT)
-        {
+        if(ui32Flags & USB_EP_HOST_OUT) {
             //
             // Set the transfer type information.
             //
@@ -1821,20 +1734,16 @@ USBHostEndpointConfig(uint32_t ui32Base, uint32_t ui32Endpoint,
             // Allow auto setting of TxPktRdy when max packet size has been
             // loaded into the FIFO.
             //
-            if(ui32Flags & USB_EP_AUTO_SET)
-            {
+            if(ui32Flags & USB_EP_AUTO_SET) {
                 ui32Register |= USB_TXCSRH1_AUTOSET;
             }
 
             //
             // Configure the DMA Mode.
             //
-            if(ui32Flags & USB_EP_DMA_MODE_1)
-            {
+            if(ui32Flags & USB_EP_DMA_MODE_1) {
                 ui32Register |= USB_TXCSRH1_DMAEN | USB_TXCSRH1_DMAMOD;
-            }
-            else if(ui32Flags & USB_EP_DMA_MODE_0)
-            {
+            } else if(ui32Flags & USB_EP_DMA_MODE_0) {
                 ui32Register |= USB_TXCSRH1_DMAEN;
             }
 
@@ -1843,9 +1752,7 @@ USBHostEndpointConfig(uint32_t ui32Base, uint32_t ui32Endpoint,
             //
             HWREGB(ui32Base + EP_OFFSET(ui32Endpoint) + USB_O_TXCSRH1) =
                 (uint8_t)ui32Register;
-        }
-        else
-        {
+        } else {
             //
             // Set the transfer type information.
             //
@@ -1873,28 +1780,23 @@ USBHostEndpointConfig(uint32_t ui32Base, uint32_t ui32Endpoint,
             // Allow auto clearing of RxPktRdy when packet of size max packet
             // has been unloaded from the FIFO.
             //
-            if(ui32Flags & USB_EP_AUTO_CLEAR)
-            {
+            if(ui32Flags & USB_EP_AUTO_CLEAR) {
                 ui32Register |= USB_RXCSRH1_AUTOCL;
             }
 
             //
             // Allow auto generation of DMA requests.
             //
-            if(ui32Flags & USB_EP_AUTO_REQUEST)
-            {
+            if(ui32Flags & USB_EP_AUTO_REQUEST) {
                 ui32Register |= USB_RXCSRH1_AUTORQ;
             }
 
             //
             // Configure the DMA Mode.
             //
-            if(ui32Flags & USB_EP_DMA_MODE_1)
-            {
+            if(ui32Flags & USB_EP_DMA_MODE_1) {
                 ui32Register |= USB_RXCSRH1_DMAEN | USB_RXCSRH1_DMAMOD;
-            }
-            else if(ui32Flags & USB_EP_DMA_MODE_0)
-            {
+            } else if(ui32Flags & USB_EP_DMA_MODE_0) {
                 ui32Register |= USB_RXCSRH1_DMAEN;
             }
 
@@ -1956,28 +1858,20 @@ USBHostEndpointSpeed(uint32_t ui32Base, uint32_t ui32Endpoint,
     //
     // Create the register speed value.
     //
-    if(ui32Flags & USB_EP_SPEED_HIGH)
-    {
+    if(ui32Flags & USB_EP_SPEED_HIGH) {
         ui32Speed = USB_TYPE0_SPEED_HIGH;
-    }
-    else if(ui32Flags & USB_EP_SPEED_FULL)
-    {
+    } else if(ui32Flags & USB_EP_SPEED_FULL) {
         ui32Speed = USB_TYPE0_SPEED_FULL;
-    }
-    else
-    {
+    } else {
         ui32Speed = USB_TYPE0_SPEED_LOW;
     }
 
     //
     // Endpoint 0 is handled differently as it is bi-directional.
     //
-    if(ui32Endpoint == USB_EP_0)
-    {
+    if(ui32Endpoint == USB_EP_0) {
         HWREGB(ui32Base + USB_O_TYPE0) = ui32Speed;
-    }
-    else if(ui32Flags & USB_EP_HOST_OUT)
-    {
+    } else if(ui32Flags & USB_EP_HOST_OUT) {
         //
         // Clear the current speed and set the new speed.
         //
@@ -1986,9 +1880,7 @@ USBHostEndpointSpeed(uint32_t ui32Base, uint32_t ui32Endpoint,
         ui32Reg |= ui32Speed;
 
         HWREGH(ui32Base + EP_OFFSET(ui32Endpoint) + USB_O_TXTYPE1) |= ui32Reg;
-    }
-    else
-    {
+    } else {
         //
         // Clear the current speed and set the new speed.
         //
@@ -2068,8 +1960,7 @@ USBDevEndpointConfigSet(uint32_t ui32Base, uint32_t ui32Endpoint,
     //
     // Determine if a transmit or receive endpoint is being configured.
     //
-    if(ui32Flags & USB_EP_DEV_IN)
-    {
+    if(ui32Flags & USB_EP_DEV_IN) {
         //
         // Set the maximum packet size.
         //
@@ -2085,28 +1976,23 @@ USBDevEndpointConfigSet(uint32_t ui32Base, uint32_t ui32Endpoint,
         // Allow auto setting of TxPktRdy when max packet size has been loaded
         // into the FIFO.
         //
-        if(ui32Flags & USB_EP_AUTO_SET)
-        {
+        if(ui32Flags & USB_EP_AUTO_SET) {
             ui32Register |= USB_TXCSRH1_AUTOSET;
         }
 
         //
         // Configure the DMA mode.
         //
-        if(ui32Flags & USB_EP_DMA_MODE_1)
-        {
+        if(ui32Flags & USB_EP_DMA_MODE_1) {
             ui32Register |= USB_TXCSRH1_DMAEN | USB_TXCSRH1_DMAMOD;
-        }
-        else if(ui32Flags & USB_EP_DMA_MODE_0)
-        {
+        } else if(ui32Flags & USB_EP_DMA_MODE_0) {
             ui32Register |= USB_TXCSRH1_DMAEN;
         }
 
         //
         // Enable isochronous mode if requested.
         //
-        if((ui32Flags & USB_EP_MODE_MASK) == USB_EP_MODE_ISOC)
-        {
+        if((ui32Flags & USB_EP_MODE_MASK) == USB_EP_MODE_ISOC) {
             ui32Register |= USB_TXCSRH1_ISO;
         }
 
@@ -2121,9 +2007,7 @@ USBDevEndpointConfigSet(uint32_t ui32Base, uint32_t ui32Endpoint,
         //
         HWREGB(ui32Base + EP_OFFSET(ui32Endpoint) + USB_O_TXCSRL1) =
             USB_TXCSRL1_CLRDT;
-    }
-    else
-    {
+    } else {
         //
         // Set the MaxPacketSize.
         //
@@ -2139,20 +2023,16 @@ USBDevEndpointConfigSet(uint32_t ui32Base, uint32_t ui32Endpoint,
         // Allow auto clearing of RxPktRdy when packet of size max packet
         // has been unloaded from the FIFO.
         //
-        if(ui32Flags & USB_EP_AUTO_CLEAR)
-        {
+        if(ui32Flags & USB_EP_AUTO_CLEAR) {
             ui32Register = USB_RXCSRH1_AUTOCL;
         }
 
         //
         // Configure the DMA mode.
         //
-        if(ui32Flags & USB_EP_DMA_MODE_1)
-        {
+        if(ui32Flags & USB_EP_DMA_MODE_1) {
             ui32Register |= USB_RXCSRH1_DMAEN | USB_RXCSRH1_DMAMOD;
-        }
-        else if(ui32Flags & USB_EP_DMA_MODE_0)
-        {
+        } else if(ui32Flags & USB_EP_DMA_MODE_0) {
             ui32Register |= USB_RXCSRH1_DMAEN;
         }
 
@@ -2160,16 +2040,14 @@ USBDevEndpointConfigSet(uint32_t ui32Base, uint32_t ui32Endpoint,
         // If requested, disable NYET responses for high-speed bulk and
         // interrupt endpoints.
         //
-        if(ui32Flags & USB_EP_DIS_NYET)
-        {
+        if(ui32Flags & USB_EP_DIS_NYET) {
             ui32Register |= USB_RXCSRH1_DISNYET;
         }
 
         //
         // Enable isochronous mode if requested.
         //
-        if((ui32Flags & USB_EP_MODE_MASK) == USB_EP_MODE_ISOC)
-        {
+        if((ui32Flags & USB_EP_MODE_MASK) == USB_EP_MODE_ISOC) {
             ui32Register |= USB_RXCSRH1_ISO;
         }
 
@@ -2229,8 +2107,7 @@ USBDevEndpointConfigGet(uint32_t ui32Base, uint32_t ui32Endpoint,
     //
     // Determine if a transmit or receive endpoint is being queried.
     //
-    if(*pui32Flags & USB_EP_DEV_IN)
-    {
+    if(*pui32Flags & USB_EP_DEV_IN) {
         //
         // Clear the flags other than the direction bit.
         //
@@ -2253,22 +2130,17 @@ USBDevEndpointConfigGet(uint32_t ui32Base, uint32_t ui32Endpoint,
         // Are we allowing auto setting of TxPktRdy when max packet size has
         // been loaded into the FIFO?
         //
-        if(ui32Register & USB_TXCSRH1_AUTOSET)
-        {
+        if(ui32Register & USB_TXCSRH1_AUTOSET) {
             *pui32Flags |= USB_EP_AUTO_SET;
         }
 
         //
         // Get the DMA mode.
         //
-        if(ui32Register & USB_TXCSRH1_DMAEN)
-        {
-            if(ui32Register & USB_TXCSRH1_DMAMOD)
-            {
+        if(ui32Register & USB_TXCSRH1_DMAEN) {
+            if(ui32Register & USB_TXCSRH1_DMAMOD) {
                 *pui32Flags |= USB_EP_DMA_MODE_1;
-            }
-            else
-            {
+            } else {
                 *pui32Flags |= USB_EP_DMA_MODE_0;
             }
         }
@@ -2276,12 +2148,9 @@ USBDevEndpointConfigGet(uint32_t ui32Base, uint32_t ui32Endpoint,
         //
         // Are we in isochronous mode?
         //
-        if(ui32Register & USB_TXCSRH1_ISO)
-        {
+        if(ui32Register & USB_TXCSRH1_ISO) {
             *pui32Flags |= USB_EP_MODE_ISOC;
-        }
-        else
-        {
+        } else {
             //
             // The hardware doesn't differentiate between bulk, interrupt
             // and control mode for the endpoint so we just set something
@@ -2293,9 +2162,7 @@ USBDevEndpointConfigGet(uint32_t ui32Base, uint32_t ui32Endpoint,
             //
             *pui32Flags |= USB_EP_MODE_BULK;
         }
-    }
-    else
-    {
+    } else {
         //
         // Clear the flags other than the direction bit.
         //
@@ -2318,22 +2185,17 @@ USBDevEndpointConfigGet(uint32_t ui32Base, uint32_t ui32Endpoint,
         // Are we allowing auto clearing of RxPktRdy when packet of size max
         // packet has been unloaded from the FIFO?
         //
-        if(ui32Register & USB_RXCSRH1_AUTOCL)
-        {
+        if(ui32Register & USB_RXCSRH1_AUTOCL) {
             *pui32Flags |= USB_EP_AUTO_CLEAR;
         }
 
         //
         // Get the DMA mode.
         //
-        if(ui32Register & USB_RXCSRH1_DMAEN)
-        {
-            if(ui32Register & USB_RXCSRH1_DMAMOD)
-            {
+        if(ui32Register & USB_RXCSRH1_DMAEN) {
+            if(ui32Register & USB_RXCSRH1_DMAMOD) {
                 *pui32Flags |= USB_EP_DMA_MODE_1;
-            }
-            else
-            {
+            } else {
                 *pui32Flags |= USB_EP_DMA_MODE_0;
             }
         }
@@ -2341,12 +2203,9 @@ USBDevEndpointConfigGet(uint32_t ui32Base, uint32_t ui32Endpoint,
         //
         // Are we in isochronous mode?
         //
-        if(ui32Register & USB_RXCSRH1_ISO)
-        {
+        if(ui32Register & USB_RXCSRH1_ISO) {
             *pui32Flags |= USB_EP_MODE_ISOC;
-        }
-        else
-        {
+        } else {
             //
             // The hardware doesn't differentiate between bulk, interrupt
             // and control mode for the endpoint so we just set something
@@ -2407,8 +2266,7 @@ USBFIFOConfigSet(uint32_t ui32Base, uint32_t ui32Endpoint,
     //
     // See if the transmit or receive FIFO is being configured.
     //
-    if(ui32Flags & (USB_EP_HOST_OUT | USB_EP_DEV_IN))
-    {
+    if(ui32Flags & (USB_EP_HOST_OUT | USB_EP_DEV_IN)) {
         //
         // Set the transmit FIFO location and size for this endpoint.
         //
@@ -2416,9 +2274,7 @@ USBFIFOConfigSet(uint32_t ui32Base, uint32_t ui32Endpoint,
                        ui32FIFOSize, 1);
         _USBIndexWrite(ui32Base, ui32Endpoint >> 4, USB_O_TXFIFOADD,
                        ui32FIFOAddress >> 3, 2);
-    }
-    else
-    {
+    } else {
         //
         // Set the receive FIFO location and size for this endpoint.
         //
@@ -2470,8 +2326,7 @@ USBFIFOConfigGet(uint32_t ui32Base, uint32_t ui32Endpoint,
     //
     // See if the transmit or receive FIFO is being configured.
     //
-    if(ui32Flags & (USB_EP_HOST_OUT | USB_EP_DEV_IN))
-    {
+    if(ui32Flags & (USB_EP_HOST_OUT | USB_EP_DEV_IN)) {
         //
         // Get the transmit FIFO location and size for this endpoint.
         //
@@ -2480,9 +2335,7 @@ USBFIFOConfigGet(uint32_t ui32Base, uint32_t ui32Endpoint,
                                            2)) << 3;
         *pui32FIFOSize = _USBIndexRead(ui32Base, ui32Endpoint >> 4,
                                        (uint32_t)USB_O_TXFIFOSZ, 1);
-    }
-    else
-    {
+    } else {
         //
         // Get the receive FIFO location and size for this endpoint.
         //
@@ -2577,8 +2430,7 @@ USBEndpointDMAConfigSet(uint32_t ui32Base, uint32_t ui32Endpoint,
 {
     uint32_t ui32NewConfig;
 
-    if(ui32Config & USB_EP_HOST_OUT)
-    {
+    if(ui32Config & USB_EP_HOST_OUT) {
         //
         // Clear mode and DMA enable.
         //
@@ -2586,36 +2438,29 @@ USBEndpointDMAConfigSet(uint32_t ui32Base, uint32_t ui32Endpoint,
             (HWREGB(ui32Base + EP_OFFSET(ui32Endpoint) + USB_O_TXCSRH1) &
              ~(USB_TXCSRH1_DMAMOD | USB_TXCSRH1_AUTOSET));
 
-        if(ui32Config & USB_EP_DMA_MODE_1)
-        {
+        if(ui32Config & USB_EP_DMA_MODE_1) {
             ui32NewConfig |= USB_TXCSRH1_DMAMOD;
         }
 
-        if(ui32Config & USB_EP_AUTO_SET)
-        {
+        if(ui32Config & USB_EP_AUTO_SET) {
             ui32NewConfig |= USB_TXCSRH1_AUTOSET;
         }
 
         HWREGB(ui32Base + EP_OFFSET(ui32Endpoint) + USB_O_TXCSRH1) =
             ui32NewConfig;
-    }
-    else
-    {
+    } else {
         ui32NewConfig =
             (HWREGB(ui32Base + EP_OFFSET(ui32Endpoint) + USB_O_RXCSRH1) &
              ~(USB_RXCSRH1_AUTORQ | USB_RXCSRH1_AUTOCL | USB_RXCSRH1_DMAMOD));
 
-        if(ui32Config & USB_EP_DMA_MODE_1)
-        {
+        if(ui32Config & USB_EP_DMA_MODE_1) {
             ui32NewConfig |= USB_RXCSRH1_DMAMOD;
         }
 
-        if(ui32Config & USB_EP_AUTO_CLEAR)
-        {
+        if(ui32Config & USB_EP_AUTO_CLEAR) {
             ui32NewConfig |= USB_RXCSRH1_AUTOCL;
         }
-        if(ui32Config & USB_EP_AUTO_REQUEST)
-        {
+        if(ui32Config & USB_EP_AUTO_REQUEST) {
             ui32NewConfig |= USB_RXCSRH1_AUTORQ;
         }
         HWREGB(ui32Base + EP_OFFSET(ui32Endpoint) + USB_O_RXCSRH1) =
@@ -2651,16 +2496,13 @@ USBEndpointDMAEnable(uint32_t ui32Base, uint32_t ui32Endpoint,
     //
     // See if the transmit DMA is being enabled.
     //
-    if(ui32Flags & USB_EP_DEV_IN)
-    {
+    if(ui32Flags & USB_EP_DEV_IN) {
         //
         // Enable DMA on the transmit endpoint.
         //
         HWREGB(ui32Base + EP_OFFSET(ui32Endpoint) + USB_O_TXCSRH1) |=
             USB_TXCSRH1_DMAEN;
-    }
-    else
-    {
+    } else {
         //
         // Enable DMA on the receive endpoint.
         //
@@ -2692,16 +2534,13 @@ USBEndpointDMADisable(uint32_t ui32Base, uint32_t ui32Endpoint,
     // If this was a request to disable DMA on the IN portion of the endpoint
     // then handle it.
     //
-    if(ui32Flags & USB_EP_DEV_IN)
-    {
+    if(ui32Flags & USB_EP_DEV_IN) {
         //
         // Just disable DMA leave the mode setting.
         //
         HWREGB(ui32Base + EP_OFFSET(ui32Endpoint) + USB_O_TXCSRH1) &=
             ~USB_TXCSRH1_DMAEN;
-    }
-    else
-    {
+    } else {
         //
         // Just disable DMA leave the mode setting.
         //
@@ -2745,20 +2584,16 @@ USBEndpointDataAvail(uint32_t ui32Base, uint32_t ui32Endpoint)
     // Get the address of the receive status register to use, based on the
     // endpoint.
     //
-    if(ui32Endpoint == USB_EP_0)
-    {
+    if(ui32Endpoint == USB_EP_0) {
         ui32Register = USB_O_CSRL0;
-    }
-    else
-    {
+    } else {
         ui32Register = USB_O_RXCSRL1 + EP_OFFSET(ui32Endpoint);
     }
 
     //
     // Is there a packet ready in the FIFO?
     //
-    if((HWREGH(ui32Base + ui32Register) & USB_CSRL0_RXRDY) == 0)
-    {
+    if((HWREGH(ui32Base + ui32Register) & USB_CSRL0_RXRDY) == 0) {
         return(0);
     }
 
@@ -2810,20 +2645,16 @@ USBEndpointDataGet(uint32_t ui32Base, uint32_t ui32Endpoint,
     // Get the address of the receive status register to use, based on the
     // endpoint.
     //
-    if(ui32Endpoint == USB_EP_0)
-    {
+    if(ui32Endpoint == USB_EP_0) {
         ui32Register = USB_O_CSRL0;
-    }
-    else
-    {
+    } else {
         ui32Register = USB_O_RXCSRL1 + EP_OFFSET(ui32Endpoint);
     }
 
     //
     // Don't allow reading of data if the RxPktRdy bit is not set.
     //
-    if((HWREGH(ui32Base + ui32Register) & USB_CSRL0_RXRDY) == 0)
-    {
+    if((HWREGH(ui32Base + ui32Register) & USB_CSRL0_RXRDY) == 0) {
         //
         // Can't read the data because none is available.
         //
@@ -2858,8 +2689,7 @@ USBEndpointDataGet(uint32_t ui32Base, uint32_t ui32Endpoint,
     //
     // Read the data out of the FIFO.
     //
-    for(; ui32ByteCount > 0; ui32ByteCount--)
-    {
+    for(; ui32ByteCount > 0; ui32ByteCount--) {
         //
         // Read a byte at a time from the FIFO.
         //
@@ -2909,16 +2739,13 @@ USBDevEndpointDataAck(uint32_t ui32Base, uint32_t ui32Endpoint,
     //
     // Determine which endpoint is being acked.
     //
-    if(ui32Endpoint == USB_EP_0)
-    {
+    if(ui32Endpoint == USB_EP_0) {
         //
         // Clear RxPktRdy, and optionally DataEnd, on endpoint zero.
         //
         HWREGB(ui32Base + USB_O_CSRL0) =
             USB_CSRL0_RXRDYC | (bIsLastPacket ? USB_CSRL0_DATAEND : 0);
-    }
-    else
-    {
+    } else {
         //
         // Clear RxPktRdy on all other endpoints.
         //
@@ -2959,12 +2786,9 @@ USBHostEndpointDataAck(uint32_t ui32Base, uint32_t ui32Endpoint)
     //
     // Clear RxPktRdy.
     //
-    if(ui32Endpoint == USB_EP_0)
-    {
+    if(ui32Endpoint == USB_EP_0) {
         HWREGB(ui32Base + USB_O_CSRL0) &= ~USB_CSRL0_RXRDY;
-    }
-    else
-    {
+    } else {
         HWREGB(ui32Base + USB_O_RXCSRL1 + EP_OFFSET(ui32Endpoint)) &=
             ~(USB_RXCSRL1_RXRDY);
     }
@@ -3009,20 +2833,16 @@ USBEndpointDataPut(uint32_t ui32Base, uint32_t ui32Endpoint,
     //
     // Get the bit position of TxPktRdy based on the endpoint.
     //
-    if(ui32Endpoint == USB_EP_0)
-    {
+    if(ui32Endpoint == USB_EP_0) {
         ui8TxPktRdy = USB_CSRL0_TXRDY;
-    }
-    else
-    {
+    } else {
         ui8TxPktRdy = USB_TXCSRL1_TXRDY;
     }
 
     //
     // Don't allow transmit of data if the TxPktRdy bit is already set.
     //
-    if(HWREGB(ui32Base + USB_O_CSRL0 + ui32Endpoint) & ui8TxPktRdy)
-    {
+    if(HWREGB(ui32Base + USB_O_CSRL0 + ui32Endpoint) & ui8TxPktRdy) {
         return(-1);
     }
 
@@ -3034,8 +2854,7 @@ USBEndpointDataPut(uint32_t ui32Base, uint32_t ui32Endpoint,
     //
     // Write the data to the FIFO.
     //
-    for(; ui32Size > 0; ui32Size--)
-    {
+    for(; ui32Size > 0; ui32Size--) {
         HWREGB(ui32FIFO) = *pui8Data++;
     }
 
@@ -3089,25 +2908,20 @@ USBEndpointDataSend(uint32_t ui32Base, uint32_t ui32Endpoint,
     //
     // Get the bit position of TxPktRdy based on the endpoint.
     //
-    if(ui32Endpoint == USB_EP_0)
-    {
+    if(ui32Endpoint == USB_EP_0) {
         //
         // Don't allow transmit of data if the TxPktRdy bit is already set.
         //
-        if(HWREGB(ui32Base + USB_O_CSRL0) & USB_CSRL0_TXRDY)
-        {
+        if(HWREGB(ui32Base + USB_O_CSRL0) & USB_CSRL0_TXRDY) {
             return(-1);
         }
 
         ui32TxPktRdy = ui32TransType & 0xff;
-    }
-    else
-    {
+    } else {
         //
         // Don't allow transmit of data if the TxPktRdy bit is already set.
         //
-        if(HWREGB(ui32Base + USB_O_CSRL0 + ui32Endpoint) & USB_TXCSRL1_TXRDY)
-        {
+        if(HWREGB(ui32Base + USB_O_CSRL0 + ui32Endpoint) & USB_TXCSRL1_TXRDY) {
             return(-1);
         }
 
@@ -3156,48 +2970,39 @@ USBFIFOFlush(uint32_t ui32Base, uint32_t ui32Endpoint, uint32_t ui32Flags)
     //
     // Endpoint zero has a different register set for FIFO flushing.
     //
-    if(ui32Endpoint == USB_EP_0)
-    {
+    if(ui32Endpoint == USB_EP_0) {
         //
         // Nothing in the FIFO if neither of these bits are set.
         //
         if((HWREGB(ui32Base + USB_O_CSRL0) &
-            (USB_CSRL0_RXRDY | USB_CSRL0_TXRDY)) != 0)
-        {
+                (USB_CSRL0_RXRDY | USB_CSRL0_TXRDY)) != 0) {
             //
             // Hit the Flush FIFO bit.
             //
             HWREGB(ui32Base + USB_O_CSRH0) = USB_CSRH0_FLUSH;
         }
-    }
-    else
-    {
+    } else {
         //
         // Only reset the IN or OUT FIFO.
         //
-        if(ui32Flags & (USB_EP_HOST_OUT | USB_EP_DEV_IN))
-        {
+        if(ui32Flags & (USB_EP_HOST_OUT | USB_EP_DEV_IN)) {
             //
             // Make sure the FIFO is not empty.
             //
             if(HWREGB(ui32Base + USB_O_TXCSRL1 + EP_OFFSET(ui32Endpoint)) &
-               USB_TXCSRL1_TXRDY)
-            {
+                    USB_TXCSRL1_TXRDY) {
                 //
                 // Hit the Flush FIFO bit.
                 //
                 HWREGB(ui32Base + USB_O_TXCSRL1 + EP_OFFSET(ui32Endpoint)) |=
                     USB_TXCSRL1_FLUSH;
             }
-        }
-        else
-        {
+        } else {
             //
             // Make sure that the FIFO is not empty.
             //
             if(HWREGB(ui32Base + USB_O_RXCSRL1 + EP_OFFSET(ui32Endpoint)) &
-               USB_RXCSRL1_RXRDY)
-            {
+                    USB_RXCSRL1_RXRDY) {
                 //
                 // Hit the Flush FIFO bit.
                 //
@@ -3242,12 +3047,9 @@ USBHostRequestIN(uint32_t ui32Base, uint32_t ui32Endpoint)
     //
     // Endpoint zero uses a different offset than the other endpoints.
     //
-    if(ui32Endpoint == USB_EP_0)
-    {
+    if(ui32Endpoint == USB_EP_0) {
         ui32Register = USB_O_CSRL0;
-    }
-    else
-    {
+    } else {
         ui32Register = USB_O_RXCSRL1 + EP_OFFSET(ui32Endpoint);
     }
 
@@ -3292,12 +3094,9 @@ USBHostRequestINClear(uint32_t ui32Base, uint32_t ui32Endpoint)
     //
     // Endpoint zero uses a different offset than the other endpoints.
     //
-    if(ui32Endpoint == USB_EP_0)
-    {
+    if(ui32Endpoint == USB_EP_0) {
         ui32Register = USB_O_CSRL0;
-    }
-    else
-    {
+    } else {
         ui32Register = USB_O_RXCSRL1 + EP_OFFSET(ui32Endpoint);
     }
 
@@ -3376,15 +3175,12 @@ USBHostAddrSet(uint32_t ui32Base, uint32_t ui32Endpoint, uint32_t ui32Addr,
     //
     // See if the transmit or receive address is set.
     //
-    if(ui32Flags & USB_EP_HOST_OUT)
-    {
+    if(ui32Flags & USB_EP_HOST_OUT) {
         //
         // Set the transmit address.
         //
         HWREGB(ui32Base + USB_O_TXFUNCADDR0 + (ui32Endpoint >> 1)) = ui32Addr;
-    }
-    else
-    {
+    } else {
         //
         // Set the receive address.
         //
@@ -3425,15 +3221,12 @@ USBHostAddrGet(uint32_t ui32Base, uint32_t ui32Endpoint, uint32_t ui32Flags)
     //
     // See if the transmit or receive address is returned.
     //
-    if(ui32Flags & USB_EP_HOST_OUT)
-    {
+    if(ui32Flags & USB_EP_HOST_OUT) {
         //
         // Return this endpoint's transmit address.
         //
         return(HWREGB(ui32Base + USB_O_TXFUNCADDR0 + (ui32Endpoint >> 1)));
-    }
-    else
-    {
+    } else {
         //
         // Return this endpoint's receive address.
         //
@@ -3480,15 +3273,12 @@ USBHostHubAddrSet(uint32_t ui32Base, uint32_t ui32Endpoint, uint32_t ui32Addr,
     //
     // See if the hub transmit or receive address is being set.
     //
-    if(ui32Flags & USB_EP_HOST_OUT)
-    {
+    if(ui32Flags & USB_EP_HOST_OUT) {
         //
         // Set the hub transmit address and port number for this endpoint.
         //
         HWREGH(ui32Base + USB_O_TXHUBADDR0 + (ui32Endpoint >> 1)) = ui32Addr;
-    }
-    else
-    {
+    } else {
         //
         // Set the hub receive address and port number for this endpoint.
         //
@@ -3501,18 +3291,12 @@ USBHostHubAddrSet(uint32_t ui32Base, uint32_t ui32Endpoint, uint32_t ui32Addr,
     // done here because it changes on a transaction-by-transaction basis for
     // EP0.  For other endpoints, this is set in USBHostEndpointConfig().
     //
-    if(ui32Endpoint == USB_EP_0)
-    {
-        if(ui32Flags & USB_EP_SPEED_FULL)
-        {
+    if(ui32Endpoint == USB_EP_0) {
+        if(ui32Flags & USB_EP_SPEED_FULL) {
             HWREGB(ui32Base + USB_O_TYPE0) = USB_TYPE0_SPEED_FULL;
-        }
-        else if(ui32Flags & USB_EP_SPEED_HIGH)
-        {
+        } else if(ui32Flags & USB_EP_SPEED_HIGH) {
             HWREGB(ui32Base + USB_O_TYPE0) = USB_TYPE0_SPEED_HIGH;
-        }
-        else
-        {
+        } else {
             HWREGB(ui32Base + USB_O_TYPE0) = USB_TYPE0_SPEED_LOW;
         }
     }
@@ -3551,15 +3335,12 @@ USBHostHubAddrGet(uint32_t ui32Base, uint32_t ui32Endpoint, uint32_t ui32Flags)
     //
     // See if the hub transmit or receive address is returned.
     //
-    if(ui32Flags & USB_EP_HOST_OUT)
-    {
+    if(ui32Flags & USB_EP_HOST_OUT) {
         //
         // Return the hub transmit address for this endpoint.
         //
         return(HWREGB(ui32Base + USB_O_TXHUBADDR0 + (ui32Endpoint >> 1)));
-    }
-    else
-    {
+    } else {
         //
         // Return the hub receive address for this endpoint.
         //
@@ -3813,12 +3594,9 @@ USBOTGSessionRequest(uint32_t ui32Base, bool bStart)
     //
     // Start or end the session as directed.
     //
-    if(bStart)
-    {
+    if(bStart) {
         HWREGB(ui32Base + USB_O_DEVCTL) |= USB_DEVCTL_SESSION;
-    }
-    else
-    {
+    } else {
         HWREGB(ui32Base + USB_O_DEVCTL) &= ~USB_DEVCTL_SESSION;
     }
 }
@@ -5106,8 +4884,7 @@ USBULPIRegRead(uint32_t ui32Base, uint8_t ui8Reg)
     //
     // Wait for the access to complete.
     //
-    while((HWREGB(ui32Base + USB_O_ULPIREGCTL) & USB_ULPIREGCTL_REGCMPLT) == 0)
-    {
+    while((HWREGB(ui32Base + USB_O_ULPIREGCTL) & USB_ULPIREGCTL_REGCMPLT) == 0) {
     }
 
     //
@@ -5163,8 +4940,7 @@ USBULPIRegWrite(uint32_t ui32Base, uint8_t ui8Reg, uint8_t ui8Data)
     //
     // Wait for the access to complete.
     //
-    while((HWREGB(ui32Base + USB_O_ULPIREGCTL) & USB_ULPIREGCTL_REGCMPLT) == 0)
-    {
+    while((HWREGB(ui32Base + USB_O_ULPIREGCTL) & USB_ULPIREGCTL_REGCMPLT) == 0) {
     }
 
     //
@@ -5664,8 +5440,7 @@ USBLPMRemoteWakeEnabled(uint32_t ui32Base)
 {
     ASSERT(ui32Base == USB0_BASE);
 
-    if(HWREGH(ui32Base + USB_O_LPMATTR) & USB_LPMATTR_RMTWAK)
-    {
+    if(HWREGH(ui32Base + USB_O_LPMATTR) & USB_LPMATTR_RMTWAK) {
         return(true);
     }
     return(false);

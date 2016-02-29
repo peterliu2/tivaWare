@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Utility Library.
 //
 //*****************************************************************************
@@ -212,10 +212,10 @@ extern void lwIPHostTimerHandler(void);
 #include "semphr.h"
 #endif
 #if ((RTOS_FREERTOS) < 1)
-    #error No RTOS is defined.  Please define an RTOS.
+#error No RTOS is defined.  Please define an RTOS.
 #endif
 #if ((RTOS_FREERTOS) > 1)
-    #error More than one RTOS defined.  Please define only one RTOS at a time.
+#error More than one RTOS defined.  Please define only one RTOS at a time.
 #endif
 #endif
 
@@ -405,13 +405,11 @@ lwIPInterruptTask(void *pvArg)
     //
     // Loop forever.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Wait until the semaphore has been signaled.
         //
-        while(xQueueReceive(g_pInterrupt, &pvArg, portMAX_DELAY) != pdPASS)
-        {
+        while(xQueueReceive(g_pInterrupt, &pvArg, portMAX_DELAY) != pdPASS) {
         }
 
         //
@@ -453,8 +451,7 @@ lwIPLinkDetect(void)
     //
     // Return without doing anything else if the link state hasn't changed.
     //
-    if(bHaveLink == g_bLinkActive)
-    {
+    if(bHaveLink == g_bLinkActive) {
         return;
     }
 
@@ -474,14 +471,12 @@ lwIPLinkDetect(void)
     //
     // See if there is a link now.
     //
-    if(bHaveLink)
-    {
+    if(bHaveLink) {
         //
         // Start DHCP, if enabled.
         //
 #if LWIP_DHCP
-        if(g_ui32IPMode == IPADDR_USE_DHCP)
-        {
+        if(g_ui32IPMode == IPADDR_USE_DHCP) {
             dhcp_start(&g_sNetIF);
         }
 #endif
@@ -490,20 +485,16 @@ lwIPLinkDetect(void)
         // Start AutoIP, if enabled and DHCP is not.
         //
 #if LWIP_AUTOIP
-        if(g_ui32IPMode == IPADDR_USE_AUTOIP)
-        {
+        if(g_ui32IPMode == IPADDR_USE_AUTOIP) {
             autoip_start(&g_sNetIF);
         }
 #endif
-    }
-    else
-    {
+    } else {
         //
         // Stop DHCP, if enabled.
         //
 #if LWIP_DHCP
-        if(g_ui32IPMode == IPADDR_USE_DHCP)
-        {
+        if(g_ui32IPMode == IPADDR_USE_DHCP) {
             dhcp_stop(&g_sNetIF);
         }
 #endif
@@ -512,8 +503,7 @@ lwIPLinkDetect(void)
         // Stop AutoIP, if enabled and DHCP is not.
         //
 #if LWIP_AUTOIP
-        if(g_ui32IPMode == IPADDR_USE_AUTOIP)
-        {
+        if(g_ui32IPMode == IPADDR_USE_AUTOIP) {
             autoip_stop(&g_sNetIF);
         }
 #endif
@@ -537,8 +527,7 @@ lwIPServiceTimers(void)
     // Service the host timer.
     //
 #if HOST_TMR_INTERVAL
-    if((g_ui32LocalTimer - g_ui32HostTimer) >= HOST_TMR_INTERVAL)
-    {
+    if((g_ui32LocalTimer - g_ui32HostTimer) >= HOST_TMR_INTERVAL) {
         g_ui32HostTimer = g_ui32LocalTimer;
         lwIPHostTimerHandler();
     }
@@ -548,8 +537,7 @@ lwIPServiceTimers(void)
     // Service the ARP timer.
     //
 #if LWIP_ARP
-    if((g_ui32LocalTimer - g_ui32ARPTimer) >= ARP_TMR_INTERVAL)
-    {
+    if((g_ui32LocalTimer - g_ui32ARPTimer) >= ARP_TMR_INTERVAL) {
         g_ui32ARPTimer = g_ui32LocalTimer;
         etharp_tmr();
     }
@@ -559,8 +547,7 @@ lwIPServiceTimers(void)
     // Service the TCP timer.
     //
 #if LWIP_TCP
-    if((g_ui32LocalTimer - g_ui32TCPTimer) >= TCP_TMR_INTERVAL)
-    {
+    if((g_ui32LocalTimer - g_ui32TCPTimer) >= TCP_TMR_INTERVAL) {
         g_ui32TCPTimer = g_ui32LocalTimer;
         tcp_tmr();
     }
@@ -570,8 +557,7 @@ lwIPServiceTimers(void)
     // Service the AutoIP timer.
     //
 #if LWIP_AUTOIP
-    if((g_ui32LocalTimer - g_ui32AutoIPTimer) >= AUTOIP_TMR_INTERVAL)
-    {
+    if((g_ui32LocalTimer - g_ui32AutoIPTimer) >= AUTOIP_TMR_INTERVAL) {
         g_ui32AutoIPTimer = g_ui32LocalTimer;
         autoip_tmr();
     }
@@ -581,8 +567,7 @@ lwIPServiceTimers(void)
     // Service the DCHP Coarse Timer.
     //
 #if LWIP_DHCP
-    if((g_ui32LocalTimer - g_ui32DHCPCoarseTimer) >= DHCP_COARSE_TIMER_MSECS)
-    {
+    if((g_ui32LocalTimer - g_ui32DHCPCoarseTimer) >= DHCP_COARSE_TIMER_MSECS) {
         g_ui32DHCPCoarseTimer = g_ui32LocalTimer;
         dhcp_coarse_tmr();
     }
@@ -592,8 +577,7 @@ lwIPServiceTimers(void)
     // Service the DCHP Fine Timer.
     //
 #if LWIP_DHCP
-    if((g_ui32LocalTimer - g_ui32DHCPFineTimer) >= DHCP_FINE_TIMER_MSECS)
-    {
+    if((g_ui32LocalTimer - g_ui32DHCPFineTimer) >= DHCP_FINE_TIMER_MSECS) {
         g_ui32DHCPFineTimer = g_ui32LocalTimer;
         dhcp_fine_tmr();
     }
@@ -603,8 +587,7 @@ lwIPServiceTimers(void)
     // Service the IP Reassembly Timer
     //
 #if IP_REASSEMBLY
-    if((g_ui32LocalTimer - g_ui32IPReassemblyTimer) >= IP_TMR_INTERVAL)
-    {
+    if((g_ui32LocalTimer - g_ui32IPReassemblyTimer) >= IP_TMR_INTERVAL) {
         g_ui32IPReassemblyTimer = g_ui32LocalTimer;
         ip_reass_tmr();
     }
@@ -614,8 +597,7 @@ lwIPServiceTimers(void)
     // Service the IGMP Timer
     //
 #if LWIP_IGMP
-    if((g_ui32LocalTimer - g_ui32IGMPTimer) >= IGMP_TMR_INTERVAL)
-    {
+    if((g_ui32LocalTimer - g_ui32IGMPTimer) >= IGMP_TMR_INTERVAL) {
         g_ui32IGMPTimer = g_ui32LocalTimer;
         igmp_tmr();
     }
@@ -625,8 +607,7 @@ lwIPServiceTimers(void)
     // Service the DNS Timer
     //
 #if LWIP_DNS
-    if((g_ui32LocalTimer - g_ui32DNSTimer) >= DNS_TMR_INTERVAL)
-    {
+    if((g_ui32LocalTimer - g_ui32DNSTimer) >= DNS_TMR_INTERVAL) {
         g_ui32DNSTimer = g_ui32LocalTimer;
         dns_tmr();
     }
@@ -636,8 +617,7 @@ lwIPServiceTimers(void)
     // Service the link timer.
     //
 #if LWIP_AUTOIP || LWIP_DHCP
-    if((g_ui32LocalTimer - g_ui32LinkTimer) >= LINK_TMR_INTERVAL)
-    {
+    if((g_ui32LocalTimer - g_ui32LinkTimer) >= LINK_TMR_INTERVAL) {
         g_ui32LinkTimer = g_ui32LocalTimer;
         lwIPLinkDetect();
     }
@@ -732,14 +712,11 @@ lwIPPrivateInit(void *pvArg)
     //
     // Setup the network address values.
     //
-    if(g_ui32IPMode == IPADDR_USE_STATIC)
-    {
+    if(g_ui32IPMode == IPADDR_USE_STATIC) {
         ip_addr.addr = htonl(g_ui32IPAddr);
         net_mask.addr = htonl(g_ui32NetMask);
         gw_addr.addr = htonl(g_ui32GWAddr);
-    }
-    else
-    {
+    } else {
         ip_addr.addr = 0;
         net_mask.addr = 0;
         gw_addr.addr = 0;
@@ -832,27 +809,22 @@ lwIPInit(uint32_t ui32SysClkHz, const uint8_t *pui8MAC, uint32_t ui32IPAddr,
     // Enable the internal PHY if it's present and we're being
     // asked to use it.
     //
-    if((EMAC_PHY_CONFIG & EMAC_PHY_TYPE_MASK) == EMAC_PHY_TYPE_INTERNAL)
-    {
+    if((EMAC_PHY_CONFIG & EMAC_PHY_TYPE_MASK) == EMAC_PHY_TYPE_INTERNAL) {
         //
         // We've been asked to configure for use with the internal
         // PHY.  Is it present?
         //
-        if(MAP_SysCtlPeripheralPresent(SYSCTL_PERIPH_EPHY0))
-        {
+        if(MAP_SysCtlPeripheralPresent(SYSCTL_PERIPH_EPHY0)) {
             //
             // Yes - enable and reset it.
             //
             MAP_SysCtlPeripheralEnable(SYSCTL_PERIPH_EPHY0);
             MAP_SysCtlPeripheralReset(SYSCTL_PERIPH_EPHY0);
-        }
-        else
-        {
+        } else {
             //
             // Internal PHY is not present on this part so hang here.
             //
-            while(1)
-            {
+            while(1) {
             }
         }
     }
@@ -860,8 +832,7 @@ lwIPInit(uint32_t ui32SysClkHz, const uint8_t *pui8MAC, uint32_t ui32IPAddr,
     //
     // Wait for the MAC to come out of reset.
     //
-    while(!MAP_SysCtlPeripheralReady(SYSCTL_PERIPH_EMAC0))
-    {
+    while(!MAP_SysCtlPeripheralReady(SYSCTL_PERIPH_EMAC0)) {
     }
 
     //
@@ -1020,16 +991,14 @@ lwIPEthernetIntHandler(void)
     // If the interrupt really came from the Ethernet and not our
     // timer, clear it.
     //
-    if(ui32Status)
-    {
+    if(ui32Status) {
         MAP_EMACIntClear(EMAC0_BASE, ui32Status);
     }
 
     //
     // Check to see whether a hardware timer interrupt has been reported.
     //
-    if(ui32Status & EMAC_INT_TIMESTAMP)
-    {
+    if(ui32Status & EMAC_INT_TIMESTAMP) {
         //
         // Yes - read and clear the timestamp interrupt status.
         //
@@ -1038,8 +1007,7 @@ lwIPEthernetIntHandler(void)
         //
         // If a timer interrupt handler has been registered, call it.
         //
-        if(g_pfnTimerHandler)
-        {
+        if(g_pfnTimerHandler) {
             g_pfnTimerHandler(EMAC0_BASE, ui32TimerStatus);
         }
     }
@@ -1052,8 +1020,7 @@ lwIPEthernetIntHandler(void)
     // No RTOS is being used.  If a transmit/receive interrupt was active,
     // run the low-level interrupt handler.
     //
-    if(ui32Status)
-    {
+    if(ui32Status) {
         tivaif_interrupt(&g_sNetIF, ui32Status);
     }
 
@@ -1081,8 +1048,7 @@ lwIPEthernetIntHandler(void)
     // Potentially task switch as a result of the above queue write.
     //
 #if RTOS_FREERTOS
-    if(xWake == pdTRUE)
-    {
+    if(xWake == pdTRUE) {
         portYIELD_FROM_ISR(true);
     }
 #endif
@@ -1103,12 +1069,9 @@ uint32_t
 lwIPLocalIPAddrGet(void)
 {
 #if LWIP_AUTOIP || LWIP_DHCP
-    if(g_bLinkActive)
-    {
+    if(g_bLinkActive) {
         return((uint32_t)g_sNetIF.ip_addr.addr);
-    }
-    else
-    {
+    } else {
         return(0xffffffff);
     }
 #else
@@ -1190,15 +1153,13 @@ lwIPPrivateNetworkConfigChange(void *pvArg)
     //
     // Setup the network address values.
     //
-    if(ui32IPMode == IPADDR_USE_STATIC)
-    {
+    if(ui32IPMode == IPADDR_USE_STATIC) {
         ip_addr.addr = htonl(g_ui32IPAddr);
         net_mask.addr = htonl(g_ui32NetMask);
         gw_addr.addr = htonl(g_ui32GWAddr);
     }
 #if LWIP_DHCP || LWIP_AUTOIP
-    else
-    {
+    else {
         ip_addr.addr = 0;
         net_mask.addr = 0;
         gw_addr.addr = 0;
@@ -1208,13 +1169,11 @@ lwIPPrivateNetworkConfigChange(void *pvArg)
     //
     // Switch on the current IP Address Aquisition mode.
     //
-    switch(g_ui32IPMode)
-    {
+    switch(g_ui32IPMode) {
         //
         // Static IP
         //
-        case IPADDR_USE_STATIC:
-        {
+        case IPADDR_USE_STATIC: {
             //
             // Set the new address parameters.  This will change the address
             // configuration in lwIP, and if necessary, will reset any links
@@ -1226,8 +1185,7 @@ lwIPPrivateNetworkConfigChange(void *pvArg)
             // If we are going to DHCP mode, then start the DHCP server now.
             //
 #if LWIP_DHCP
-            if((ui32IPMode == IPADDR_USE_DHCP) && g_bLinkActive)
-            {
+            if((ui32IPMode == IPADDR_USE_DHCP) && g_bLinkActive) {
                 dhcp_start(&g_sNetIF);
             }
 #endif
@@ -1237,8 +1195,7 @@ lwIPPrivateNetworkConfigChange(void *pvArg)
             // now.
             //
 #if LWIP_AUTOIP
-            if((ui32IPMode == IPADDR_USE_AUTOIP) && g_bLinkActive)
-            {
+            if((ui32IPMode == IPADDR_USE_AUTOIP) && g_bLinkActive) {
                 autoip_start(&g_sNetIF);
             }
 #endif
@@ -1249,18 +1206,16 @@ lwIPPrivateNetworkConfigChange(void *pvArg)
             break;
         }
 
-        //
-        // DHCP (with AutoIP fallback).
-        //
+            //
+            // DHCP (with AutoIP fallback).
+            //
 #if LWIP_DHCP
-        case IPADDR_USE_DHCP:
-        {
+        case IPADDR_USE_DHCP: {
             //
             // If we are going to static IP addressing, then disable DHCP and
             // force the new static IP address.
             //
-            if(ui32IPMode == IPADDR_USE_STATIC)
-            {
+            if(ui32IPMode == IPADDR_USE_STATIC) {
                 dhcp_stop(&g_sNetIF);
                 netif_set_addr(&g_sNetIF, &ip_addr, &net_mask, &gw_addr);
             }
@@ -1270,12 +1225,10 @@ lwIPPrivateNetworkConfigChange(void *pvArg)
             // the default addresses, and start AutoIP.
             //
 #if LWIP_AUTOIP
-            else if(ui32IPMode == IPADDR_USE_AUTOIP)
-            {
+            else if(ui32IPMode == IPADDR_USE_AUTOIP) {
                 dhcp_stop(&g_sNetIF);
                 netif_set_addr(&g_sNetIF, &ip_addr, &net_mask, &gw_addr);
-                if(g_bLinkActive)
-                {
+                if(g_bLinkActive) {
                     autoip_start(&g_sNetIF);
                 }
             }
@@ -1284,18 +1237,16 @@ lwIPPrivateNetworkConfigChange(void *pvArg)
         }
 #endif
 
-        //
-        // AUTOIP
-        //
+            //
+            // AUTOIP
+            //
 #if LWIP_AUTOIP
-        case IPADDR_USE_AUTOIP:
-        {
+        case IPADDR_USE_AUTOIP: {
             //
             // If we are going to static IP addressing, then disable AutoIP and
             // force the new static IP address.
             //
-            if(ui32IPMode == IPADDR_USE_STATIC)
-            {
+            if(ui32IPMode == IPADDR_USE_STATIC) {
                 autoip_stop(&g_sNetIF);
                 netif_set_addr(&g_sNetIF, &ip_addr, &net_mask, &gw_addr);
             }
@@ -1305,12 +1256,10 @@ lwIPPrivateNetworkConfigChange(void *pvArg)
             // default addresses, and start dhcp.
             //
 #if LWIP_DHCP
-            else if(ui32IPMode == IPADDR_USE_DHCP)
-            {
+            else if(ui32IPMode == IPADDR_USE_DHCP) {
                 autoip_stop(&g_sNetIF);
                 netif_set_addr(&g_sNetIF, &ip_addr, &net_mask, &gw_addr);
-                if(g_bLinkActive)
-                {
+                if(g_bLinkActive) {
                     dhcp_start(&g_sNetIF);
                 }
             }

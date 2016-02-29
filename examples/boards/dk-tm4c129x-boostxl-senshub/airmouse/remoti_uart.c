@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2014-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -168,8 +168,7 @@ RemoTIUARTPutMsg(uint8_t* pui8Msg, uint_fast16_t ui16Length)
     // If the UART transmit is idle prime the transmitter with first byte and
     // enable transmit interrupts.
     //
-    if(!g_bTxBusy)
-    {
+    if(!g_bTxBusy) {
         //
         // Enable the TX interrupts and start the transmission of the first
         // byte.
@@ -187,8 +186,7 @@ RemoTIUARTPutMsg(uint8_t* pui8Msg, uint_fast16_t ui16Length)
     //
     // Restore the master interrupt enable to its previous state.
     //
-    if(!bIntState)
-    {
+    if(!bIntState) {
         IntMasterEnable();
     }
 
@@ -231,54 +229,49 @@ RemoTIUARTGetMsg(uint8_t* pui8Msg, uint_fast16_t ui16Length)
     //
     // Determine if a message is in the buffer available for the caller.
     //
-    if(g_ui16RxMsgCount != 0)
-    {
-       //
-       // Read out the SOF and Msg Length characters.
-       //
-       ui8SOF = RingBufReadOne(&g_rbRemoTIRxRingBuf);
-       ui8MsgLength = RingBufReadOne(&g_rbRemoTIRxRingBuf);
+    if(g_ui16RxMsgCount != 0) {
+        //
+        // Read out the SOF and Msg Length characters.
+        //
+        ui8SOF = RingBufReadOne(&g_rbRemoTIRxRingBuf);
+        ui8MsgLength = RingBufReadOne(&g_rbRemoTIRxRingBuf);
 
-       //
-       // Make sure that the user buffer has room for the message and the
-       // packet overhead bytes.
-       //
-       if((ui8MsgLength + 5) <= ui16Length)
-       {
-           //
-           // We have enough room, so store the two already bytes in the user
-           // buffer.
-           //
-           pui8Msg[0] = ui8SOF;
-           pui8Msg[1] = ui8MsgLength;
+        //
+        // Make sure that the user buffer has room for the message and the
+        // packet overhead bytes.
+        //
+        if((ui8MsgLength + 5) <= ui16Length) {
+            //
+            // We have enough room, so store the two already bytes in the user
+            // buffer.
+            //
+            pui8Msg[0] = ui8SOF;
+            pui8Msg[1] = ui8MsgLength;
 
-           //
-           // Read the remaining bytes to the user buffer.
-           //
-           RingBufRead(&g_rbRemoTIRxRingBuf, pui8Msg + 2, ui8MsgLength + 3);
+            //
+            // Read the remaining bytes to the user buffer.
+            //
+            RingBufRead(&g_rbRemoTIRxRingBuf, pui8Msg + 2, ui8MsgLength + 3);
 
-       }
-       else
-       {
-           //
-           // The user did not provide enough room and we cannot easily put
-           // the first couple of bytes back into the buffer.  Therefore,
-           // we dump the remainder of the message.
-           //
-           RingBufAdvanceRead(&g_rbRemoTIRxRingBuf, ui8MsgLength + 3);
-       }
+        } else {
+            //
+            // The user did not provide enough room and we cannot easily put
+            // the first couple of bytes back into the buffer.  Therefore,
+            // we dump the remainder of the message.
+            //
+            RingBufAdvanceRead(&g_rbRemoTIRxRingBuf, ui8MsgLength + 3);
+        }
 
-       //
-       // Decrement the msg counter. Now one less message in the UART buffer.
-       //
-       g_ui16RxMsgCount -= 1;
+        //
+        // Decrement the msg counter. Now one less message in the UART buffer.
+        //
+        g_ui16RxMsgCount -= 1;
     }
 
     //
     // Restore the master interrupt enable state.
     //
-    if(!bIntState)
-    {
+    if(!bIntState) {
         IntMasterEnable();
     }
 
@@ -316,8 +309,7 @@ RemoTIUARTGetRxMsgCount(void)
     //
     // Restore interrupt enable state.
     //
-    if(!bIntState)
-    {
+    if(!bIntState) {
         IntMasterEnable();
     }
 
@@ -359,8 +351,7 @@ RemoTIUARTRegisterMsgRxCallback(tRemoTICallback *pfnCallback)
     //
     // Restore interrupt master enable state.
     //
-    if(!bIntState)
-    {
+    if(!bIntState) {
         IntMasterEnable();
     }
 
@@ -401,8 +392,7 @@ RemoTIUARTRegisterErrCallback(tRemoTICallback *pfnCallback)
     //
     // Restore interrupt master enable state.
     //
-    if(!bIntState)
-    {
+    if(!bIntState) {
         IntMasterEnable();
     }
 
@@ -442,8 +432,7 @@ RemoTIUARTRegisterTxCompleteCallback(tRemoTICallback *pfnCallback)
     //
     // Restore interrupt master enable state.
     //
-    if(!bIntState)
-    {
+    if(!bIntState) {
         IntMasterEnable();
     }
 
@@ -483,21 +472,16 @@ RemoTIUARTRxHandler(void)
     //
     // Check if this is a start of frame character.
     //
-    if(ui8RxByte == RPC_UART_SOF)
-    {
+    if(ui8RxByte == RPC_UART_SOF) {
         //
         // Check for error condition that all of prev msg was not captured.
         // send callback if present.
         //
-        if(ui16Length != ui16Counter)
-        {
-            if(g_pfnErrCallback)
-            {
+        if(ui16Length != ui16Counter) {
+            if(g_pfnErrCallback) {
                 g_pfnErrCallback(REMOTI_UART_UNEXPECTED_SOF_ERR);
             }
-        }
-        else
-        {
+        } else {
             //
             // This is a start of frame so set the flag and clear all the other
             // state indicators.
@@ -508,15 +492,12 @@ RemoTIUARTRxHandler(void)
             ui8FrameCheck = 0;
             ui8Command0 = 0;
         }
-    }
-    else
-    {
+    } else {
         //
         // This is not a SOF char. if it is the char immediate after a SOF then
         // it is a length char and needs special handling.
         //
-        if(ui8SOFFlag == 1)
-        {
+        if(ui8SOFFlag == 1) {
             //
             // Record the length in terms of total bytes in the UART frame.
             // RemoTI just sends number of bytes in the data payload we want
@@ -536,21 +517,17 @@ RemoTIUARTRxHandler(void)
     // load the new byte in to the ring buffer for later use. unless we are
     // receiving past the end of an expected message's length.
     //
-    if(ui16Counter <= ui16Length)
-    {
+    if(ui16Counter <= ui16Length) {
         RingBufWriteOne(&g_rbRemoTIRxRingBuf, ui8RxByte);
         //
         // increment the counter to track how many bytes are in this msg.
         //
         ui16Counter++;
 
-        if(ui16Counter == 3)
-        {
+        if(ui16Counter == 3) {
             ui8Command0 = ui8RxByte;
         }
-    }
-    else if(g_pfnErrCallback)
-    {
+    } else if(g_pfnErrCallback) {
         //
         // Alert to the user code that RX Msg Length was greater than expected
         //
@@ -560,14 +537,12 @@ RemoTIUARTRxHandler(void)
     //
     // Check if this is the end of the message and manage callbacks
     //
-    if(ui16Length == ui16Counter)
-    {
+    if(ui16Length == ui16Counter) {
         //
         // compare the current Frame Check to the received frame check
         // if not equal then call error callback if present.
         //
-        if(ui8FrameCheck != ui8RxByte)
-        {
+        if(ui8FrameCheck != ui8RxByte) {
             //
             // Advance read index which effectively dumps the erroneous msg.
             //
@@ -576,30 +551,24 @@ RemoTIUARTRxHandler(void)
             //
             // If a callback is registered, call it.
             //
-            if(g_pfnErrCallback)
-            {
+            if(g_pfnErrCallback) {
                 //
                 // Alert the user that the Frame check sequence failed.
                 //
                 g_pfnErrCallback(REMOTI_UART_RX_FCS_ERR);
             }
-        }
-        else
-        {
+        } else {
             //
             // Message was successfully received and copied to local buffers.
             // Frame check was valid.  Increment the message counter and call
             // the receive callback.
             //
             g_ui16RxMsgCount += 1;
-            if(g_pfnRxCallback)
-            {
+            if(g_pfnRxCallback) {
                 g_pfnRxCallback(ui8Command0);
             }
         }
-    }
-    else if(!ui8SOFFlag)
-    {
+    } else if(!ui8SOFFlag) {
         //
         // calculate the frame check as we go.
         //
@@ -624,13 +593,11 @@ RemoTIUARTIntHandler(void)
     //
     // Process all available interrupts while we are in this routine.
     //
-    do
-    {
+    do {
         //
         // Check if a receive interrupt is pending.
         //
-        if(UARTIntStatus(g_ui32UARTBase, 1) & UART_INT_RX)
-        {
+        if(UARTIntStatus(g_ui32UARTBase, 1) & UART_INT_RX) {
             //
             // A char was received, process it first so it does not get
             // overwritten by future bytes.
@@ -642,14 +609,12 @@ RemoTIUARTIntHandler(void)
         //
         // Check if a transmit interrupt is pending.
         //
-        if(UARTIntStatus(g_ui32UARTBase, 1) & UART_INT_TX)
-        {
+        if(UARTIntStatus(g_ui32UARTBase, 1) & UART_INT_TX) {
             //
             // A byte transmission completed so load another byte or turn off
             // tx interrupts.
             //
-            if(RingBufUsed(&g_rbRemoTITxRingBuf))
-            {
+            if(RingBufUsed(&g_rbRemoTITxRingBuf)) {
                 //
                 // We still have more stuff to transfer so read the next byte
                 // from the buffer and load it into the UART.  Finally clear
@@ -658,9 +623,7 @@ RemoTIUARTIntHandler(void)
                 UARTIntClear(g_ui32UARTBase, UART_INT_TX);
                 ui8TxByte = RingBufReadOne(&g_rbRemoTITxRingBuf);
                 UARTCharPutNonBlocking(g_ui32UARTBase, ui8TxByte);
-            }
-            else
-            {
+            } else {
                 //
                 // Transmission is complete and the internal buffer is empty.
                 // Therefore, disable TX interrupts until next transmit is
@@ -677,16 +640,15 @@ RemoTIUARTIntHandler(void)
                 //
                 // Callback to the TX Complete callback function.
                 //
-                if(g_pfnTxCallback)
-                {
+                if(g_pfnTxCallback) {
                     g_pfnTxCallback(0);
                 }
             }
         }
-    //
-    // Continue to process the interrupts until there are no more pending.
-    //
-    }while(UARTIntStatus(g_ui32UARTBase, 1) & (UART_INT_RX | UART_INT_TX));
+        //
+        // Continue to process the interrupts until there are no more pending.
+        //
+    } while(UARTIntStatus(g_ui32UARTBase, 1) & (UART_INT_RX | UART_INT_TX));
 
     //
     // Finished.

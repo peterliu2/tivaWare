@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -36,12 +36,12 @@ extern void SSITRF79x0WriteRegister(unsigned char ucAddress,
                                     unsigned char ucData);
 extern void SSITRF79x0WriteContinuousStart(unsigned char ucAddress);
 extern void SSITRF79x0WriteContinuousData(unsigned char const *pucBuffer,
-                                          unsigned int uiLength);
+        unsigned int uiLength);
 extern void SSITRF79x0WriteContinuousStop(void);
 extern unsigned char SSITRF79x0ReadRegister(unsigned char ucAddress);
 extern void SSITRF79x0ReadContinuousStart(unsigned char ucAddress);
 extern void SSITRF79x0ReadContinuousData(unsigned char *pucBuffer,
-                                         unsigned int uiLength);
+        unsigned int uiLength);
 extern void SSITRF79x0ReadContinuousStop(void);
 extern unsigned char SSITRF79x0ReadIRQStatus(void);
 extern void SSITRF79x0WriteDirectCommand(unsigned char ucCommand);

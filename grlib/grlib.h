@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2007-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Graphics Library.
 //
 //*****************************************************************************
@@ -51,8 +51,7 @@ extern "C"
 //! the rectangle.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The minimum X coordinate of the rectangle.
     //
@@ -80,8 +79,7 @@ tRectangle;
 //! This structure defines the characteristics of a display driver.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The size of this structure.
     //
@@ -106,7 +104,7 @@ typedef struct
     //! A pointer to the function to draw a pixel on this display.
     //
     void (*pfnPixelDraw)(void *pvDisplayData, int32_t i32X, int32_t i32Y,
-                           uint32_t ui32Value);
+                         uint32_t ui32Value);
 
     //
     //! A pointer to the function to draw multiple pixels on this display.
@@ -115,10 +113,10 @@ typedef struct
     //! flags and hints to the driver.
     //
     void (*pfnPixelDrawMultiple)(void *pvDisplayData, int32_t i32X,
-                                   int32_t i32Y, int32_t i32X0,
-                                   int32_t i32Count, int32_t i32BPP,
-                                   const uint8_t *pui8Data,
-                                   const uint8_t *pui8Palette);
+                                 int32_t i32Y, int32_t i32X0,
+                                 int32_t i32Count, int32_t i32BPP,
+                                 const uint8_t *pui8Data,
+                                 const uint8_t *pui8Palette);
 
     //
     //! A pointer to the function to draw a horizontal line on this display.
@@ -171,8 +169,7 @@ tDisplay;
 //! structures may be found in the ``Font Format'' section of the user's guide.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The format of the font.  Can be one of FONT_FMT_UNCOMPRESSED or
     //! FONT_FMT_PIXEL_RLE.
@@ -225,8 +222,7 @@ tFont;
 //! the ``Font Format'' section of the user's guide.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The format of the font.  Can be one of FONT_FMT_EX_UNCOMPRESSED or
     //! FONT_FMT_EX_PIXEL_RLE.
@@ -382,8 +378,7 @@ tFontEx;
 //      -------------------------------
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The format of the font.  Can be one of FONT_FMT_WIDE_UNCOMPRESSED or
     //! FONT_FMT_WIDE_PIXEL_RLE.
@@ -424,8 +419,7 @@ typedef struct
 }
 tFontWide;
 
-typedef struct
-{
+typedef struct {
     //
     //! The first codepoint in this block of characters.  The meaning of this
     //! value depends upon the codepage that the font is using, as defined in
@@ -448,8 +442,7 @@ typedef struct
 }
 tFontBlock;
 
-typedef struct
-{
+typedef struct {
     //
     //! The offset of each glyph in the block relative to the first entry in
     //! this table.  This structure is represented as an array of 1 entry but
@@ -477,8 +470,7 @@ tFontOffsetTable;
 //! dependent upon the storage medium holding the font.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! A pointer to the function which will return information on the
     //! font.  This is used to support GrFontInfoGet.
@@ -517,8 +509,8 @@ typedef struct
     //! codepoints in a given font block.
     //
     uint32_t (*pfnFontBlockCodepointsGet)(uint8_t *pui8FontId,
-                                            uint16_t ui16BlockIndex,
-                                            uint32_t *pui32Start);
+                                          uint16_t ui16BlockIndex,
+                                          uint32_t *pui32Start);
 }
 tFontAccessFuncs;
 
@@ -534,8 +526,7 @@ tFontAccessFuncs;
 //! pointer appropriately.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The format of the font.  Will be FONT_FMT_WRAPPED.
     //
@@ -735,8 +726,7 @@ tFontWrapper;
 //! glyphs from a font.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The codepage used to describe the source characters.
     //
@@ -782,8 +772,7 @@ typedef void (*tStringRenderer)(const struct _tContext *, const char *,
 //! graphics library using the GrLibInit function.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The default string rendering function to use.  This will normally be
     //! GrDefaultStringRenderer but may be replaced when supporting languages
@@ -2159,13 +2148,13 @@ extern uint32_t GrFontMaxWidthGet(const tFont *psFont);
 extern uint32_t GrFontHeightGet(const tFont *psFont);
 extern uint32_t GrFontBaselineGet(const tFont *psFont);
 extern const uint8_t *GrFontGlyphDataGet(const tFont *psFont,
-                                         uint32_t ui32CodePoint,
-                                         uint8_t *pui8Width);
+        uint32_t ui32CodePoint,
+        uint8_t *pui8Width);
 extern uint16_t GrFontCodepageGet(const tFont *psFont);
 extern uint16_t GrFontNumBlocksGet(const tFont *psFont);
 extern uint32_t GrFontBlockCodepointsGet(const tFont *psFont,
-                                         uint16_t ui16BlockIndex,
-                                         uint32_t *pui32Start);
+        uint16_t ui16BlockIndex,
+        uint32_t *pui32Start);
 
 //*****************************************************************************
 //
@@ -2238,23 +2227,23 @@ extern uint32_t GrMapISO8859_9_Unicode(const char *pcSrcChar,
                                        uint32_t ui32Count,
                                        uint32_t *pui32Skip);
 extern uint32_t GrMapISO8859_10_Unicode(const char *pcSrcChar,
-                                       uint32_t ui32Count,
-                                       uint32_t *pui32Skip);
+                                        uint32_t ui32Count,
+                                        uint32_t *pui32Skip);
 extern uint32_t GrMapISO8859_11_Unicode(const char *pcSrcChar,
-                                       uint32_t ui32Count,
-                                       uint32_t *pui32Skip);
+                                        uint32_t ui32Count,
+                                        uint32_t *pui32Skip);
 extern uint32_t GrMapISO8859_13_Unicode(const char *pcSrcChar,
-                                       uint32_t ui32Count,
-                                       uint32_t *pui32Skip);
+                                        uint32_t ui32Count,
+                                        uint32_t *pui32Skip);
 extern uint32_t GrMapISO8859_14_Unicode(const char *pcSrcChar,
-                                       uint32_t ui32Count,
-                                       uint32_t *pui32Skip);
+                                        uint32_t ui32Count,
+                                        uint32_t *pui32Skip);
 extern uint32_t GrMapISO8859_15_Unicode(const char *pcSrcChar,
-                                       uint32_t ui32Count,
-                                       uint32_t *pui32Skip);
+                                        uint32_t ui32Count,
+                                        uint32_t *pui32Skip);
 extern uint32_t GrMapISO8859_16_Unicode(const char *pcSrcChar,
-                                       uint32_t ui32Count,
-                                       uint32_t *pui32Skip);
+                                        uint32_t ui32Count,
+                                        uint32_t *pui32Skip);
 extern uint32_t GrMapWIN1250_Unicode(const char *pcSrcChar,
                                      uint32_t ui32Count,
                                      uint32_t *pui32Skip);

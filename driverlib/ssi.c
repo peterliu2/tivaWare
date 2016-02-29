@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2005-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -60,8 +60,7 @@
 // A mapping of timer base address to interrupt number.
 //
 //*****************************************************************************
-static const uint32_t g_ppui32SSIIntMap[][2] =
-{
+static const uint32_t g_ppui32SSIIntMap[][2] = {
     { SSI0_BASE, INT_SSI0_TM4C123 },
     { SSI1_BASE, INT_SSI1_TM4C123 },
     { SSI2_BASE, INT_SSI2_TM4C123 },
@@ -70,8 +69,7 @@ static const uint32_t g_ppui32SSIIntMap[][2] =
 static const uint_fast8_t g_ui8SSIIntMapRows =
     sizeof(g_ppui32SSIIntMap) / sizeof(g_ppui32SSIIntMap[0]);
 
-static const uint32_t g_ppui32SSIIntMapSnowflake[][2] =
-{
+static const uint32_t g_ppui32SSIIntMapSnowflake[][2] = {
     { SSI0_BASE, INT_SSI0_TM4C129 },
     { SSI1_BASE, INT_SSI1_TM4C129 },
     { SSI2_BASE, INT_SSI2_TM4C129 },
@@ -129,8 +127,7 @@ _SSIIntNumberGet(uint32_t ui32Base)
     ppui32SSIIntMap = g_ppui32SSIIntMap;
     ui8Rows = g_ui8SSIIntMapRows;
 
-    if(CLASS_IS_TM4C129)
-    {
+    if(CLASS_IS_TM4C129) {
         ppui32SSIIntMap = g_ppui32SSIIntMapSnowflake;
         ui8Rows = g_ui8SSIIntMapSnowflakeRows;
     }
@@ -139,13 +136,11 @@ _SSIIntNumberGet(uint32_t ui32Base)
     // Loop through the table that maps SSI base addresses to interrupt
     // numbers.
     //
-    for(ui8Idx = 0; ui8Idx < ui8Rows; ui8Idx++)
-    {
+    for(ui8Idx = 0; ui8Idx < ui8Rows; ui8Idx++) {
         //
         // See if this base address matches.
         //
-        if(ppui32SSIIntMap[ui8Idx][0] == ui32Base)
-        {
+        if(ppui32SSIIntMap[ui8Idx][0] == ui32Base) {
             //
             // Return the corresponding interrupt number.
             //
@@ -176,9 +171,9 @@ _SSIIntNumberGet(uint32_t ui32Base)
 //! The \e ui32Protocol parameter defines the data frame format.  The
 //! \e ui32Protocol parameter can be one of the following values:
 //! \b SSI_FRF_MOTO_MODE_0, \b SSI_FRF_MOTO_MODE_1, \b SSI_FRF_MOTO_MODE_2,
-//! \b SSI_FRF_MOTO_MODE_3, \b SSI_FRF_TI, or \b SSI_FRF_NMW. Note that 
+//! \b SSI_FRF_MOTO_MODE_3, \b SSI_FRF_TI, or \b SSI_FRF_NMW. Note that
 //! the \b SSI_FRF_NMW option is only available on some devices. Refer to the
-//! device data sheet to determine if the Microwire format is supported on 
+//! device data sheet to determine if the Microwire format is supported on
 //! a particular device.  The Motorola  frame formats encode the following
 //! polarity and phase configurations:
 //!
@@ -213,7 +208,7 @@ _SSIIntNumberGet(uint32_t ui32Base)
 //! the system clock is the value returned by SysCtlClockGet() for TM4C123x
 //! devices or the value returned by SysCtlClockFreqSet() for TM4C129x devices,
 //! or it can be explicitly hard coded if it is constant and known (to save the
-//! code/execution overhead of a call to SysCtlClockGet() or fetch of the 
+//! code/execution overhead of a call to SysCtlClockGet() or fetch of the
 //! variable call holding the return value of SysCtlClockFreqSet()).
 //!
 //! \return None.
@@ -260,12 +255,10 @@ SSIConfigSetExpClk(uint32_t ui32Base, uint32_t ui32SSIClk,
     //
     ui32MaxBitRate = ui32SSIClk / ui32BitRate;
     ui32PreDiv = 0;
-    do
-    {
+    do {
         ui32PreDiv += 2;
         ui32SCR = (ui32MaxBitRate / ui32PreDiv) - 1;
-    }
-    while(ui32SCR > 255);
+    } while(ui32SCR > 255);
     HWREG(ui32Base + SSI_O_CPSR) = ui32PreDiv;
 
     //
@@ -507,12 +500,9 @@ SSIIntStatus(uint32_t ui32Base, bool bMasked)
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return(HWREG(ui32Base + SSI_O_MIS));
-    }
-    else
-    {
+    } else {
         return(HWREG(ui32Base + SSI_O_RIS));
     }
 }
@@ -588,8 +578,7 @@ SSIDataPut(uint32_t ui32Base, uint32_t ui32Data)
     //
     // Wait until there is space.
     //
-    while(!(HWREG(ui32Base + SSI_O_SR) & SSI_SR_TNF))
-    {
+    while(!(HWREG(ui32Base + SSI_O_SR) & SSI_SR_TNF)) {
     }
 
     //
@@ -630,13 +619,10 @@ SSIDataPutNonBlocking(uint32_t ui32Base, uint32_t ui32Data)
     //
     // Check for space to write.
     //
-    if(HWREG(ui32Base + SSI_O_SR) & SSI_SR_TNF)
-    {
+    if(HWREG(ui32Base + SSI_O_SR) & SSI_SR_TNF) {
         HWREG(ui32Base + SSI_O_DR) = ui32Data;
         return(1);
-    }
-    else
-    {
+    } else {
         return(0);
     }
 }
@@ -674,8 +660,7 @@ SSIDataGet(uint32_t ui32Base, uint32_t *pui32Data)
     //
     // Wait until there is data to be read.
     //
-    while(!(HWREG(ui32Base + SSI_O_SR) & SSI_SR_RNE))
-    {
+    while(!(HWREG(ui32Base + SSI_O_SR) & SSI_SR_RNE)) {
     }
 
     //
@@ -717,13 +702,10 @@ SSIDataGetNonBlocking(uint32_t ui32Base, uint32_t *pui32Data)
     //
     // Check for data to read.
     //
-    if(HWREG(ui32Base + SSI_O_SR) & SSI_SR_RNE)
-    {
+    if(HWREG(ui32Base + SSI_O_SR) & SSI_SR_RNE) {
         *pui32Data = HWREG(ui32Base + SSI_O_DR);
         return(1);
-    }
-    else
-    {
+    } else {
         return(0);
     }
 }
@@ -1018,8 +1000,7 @@ SSIAdvDataPutFrameEnd(uint32_t ui32Base, uint32_t ui32Data)
     //
     // Wait until there is space.
     //
-    while(!(HWREG(ui32Base + SSI_O_SR) & SSI_SR_TNF))
-    {
+    while(!(HWREG(ui32Base + SSI_O_SR) & SSI_SR_TNF)) {
     }
 
     //
@@ -1063,14 +1044,11 @@ SSIAdvDataPutFrameEndNonBlocking(uint32_t ui32Base, uint32_t ui32Data)
     //
     // Check for space to write.
     //
-    if(HWREG(ui32Base + SSI_O_SR) & SSI_SR_TNF)
-    {
+    if(HWREG(ui32Base + SSI_O_SR) & SSI_SR_TNF) {
         HWREG(ui32Base + SSI_O_CR1) |= SSI_CR1_EOM;
         HWREG(ui32Base + SSI_O_DR) = ui32Data;
         return(1);
-    }
-    else
-    {
+    } else {
         return(0);
     }
 }
@@ -1111,7 +1089,7 @@ SSIAdvFrameHoldEnable(uint32_t ui32Base)
 
 //*****************************************************************************
 //
-//! Configures the SSI advanced mode to de-assert the SSIFss signal after every 
+//! Configures the SSI advanced mode to de-assert the SSIFss signal after every
 //! byte transfer.
 //!
 //! \param ui32Base is the base address of the SSI module.

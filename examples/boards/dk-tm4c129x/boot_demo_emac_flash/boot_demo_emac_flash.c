@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -64,7 +64,7 @@
 //!
 //! This application is intended for use with flash-based ethernet boot
 //! loader (boot_emac_flash).
-//! 
+//!
 //! The link address for this application is set to 0x4000, the link address
 //! has to be multiple of the flash erase block size(16KB=0x4000).
 //! You may change this address to a 16KB boundary higher than the last
@@ -278,7 +278,7 @@ SetupForUART(void)
     //
     ROM_UARTConfigSetExpClk(UART0_BASE, g_ui32SysClock, 115200,
                             (UART_CONFIG_PAR_NONE | UART_CONFIG_STOP_ONE |
-                            UART_CONFIG_WLEN_8));
+                             UART_CONFIG_WLEN_8));
 
     //
     // Enable the UART operation.
@@ -313,8 +313,8 @@ main(void)
     // Run from the PLL at 120 MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Configure the device pins.
@@ -365,14 +365,12 @@ main(void)
     //
     // Loop forever, processing widget messages.
     //
-    while(!g_bFirmwareUpdate)
-    {
+    while(!g_bFirmwareUpdate) {
         //
         // Do we have an IP address yet? If not, check to see if we've been
         // assigned one since the last time we checked.
         //
-        if(ui32IPAddr == 0 || ui32IPAddr == 0xFFFFFFFF)
-        {
+        if(ui32IPAddr == 0 || ui32IPAddr == 0xFFFFFFFF) {
             //
             // What is our current IP address?
             //
@@ -381,8 +379,7 @@ main(void)
             //
             // If it's non zero, update the display.
             //
-            if(ui32IPAddr!= 0 && ui32IPAddr != 0xFFFFFFFF)
-            {
+            if(ui32IPAddr!= 0 && ui32IPAddr != 0xFFFFFFFF) {
                 usprintf(g_pcIPAddr, "IP: %d.%d.%d.%d",
                          ui32IPAddr & 0xff, (ui32IPAddr >> 8) & 0xff,
                          (ui32IPAddr >> 16) & 0xff,  ui32IPAddr >> 24);

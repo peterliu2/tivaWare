@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2005-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -60,8 +60,7 @@
 // A mapping of I2C base address to interrupt number.
 //
 //*****************************************************************************
-static const uint32_t g_ppui32I2CIntMap[][2] =
-{
+static const uint32_t g_ppui32I2CIntMap[][2] = {
     { I2C0_BASE, INT_I2C0_TM4C123 },
     { I2C1_BASE, INT_I2C1_TM4C123 },
     { I2C2_BASE, INT_I2C2_TM4C123 },
@@ -73,8 +72,7 @@ static const uint32_t g_ppui32I2CIntMap[][2] =
 static const int_fast8_t g_i8I2CIntMapRows =
     sizeof(g_ppui32I2CIntMap) / sizeof(g_ppui32I2CIntMap[0]);
 
-static const uint32_t g_ppui32I2CIntMapSnowflake[][2] =
-{
+static const uint32_t g_ppui32I2CIntMapSnowflake[][2] = {
     { I2C0_BASE, INT_I2C0_TM4C129 },
     { I2C1_BASE, INT_I2C1_TM4C129 },
     { I2C2_BASE, INT_I2C2_TM4C129 },
@@ -141,8 +139,7 @@ _I2CIntNumberGet(uint32_t ui32Base)
     ppui32I2CIntMap = g_ppui32I2CIntMap;
     i8Rows = g_i8I2CIntMapRows;
 
-    if(CLASS_IS_TM4C129)
-    {
+    if(CLASS_IS_TM4C129) {
         ppui32I2CIntMap = g_ppui32I2CIntMapSnowflake;
         i8Rows = g_i8I2CIntMapSnowflakeRows;
     }
@@ -151,13 +148,11 @@ _I2CIntNumberGet(uint32_t ui32Base)
     // Loop through the table that maps I2C base addresses to interrupt
     // numbers.
     //
-    for(i8Idx = 0; i8Idx < i8Rows; i8Idx++)
-    {
+    for(i8Idx = 0; i8Idx < i8Rows; i8Idx++) {
         //
         // See if this base address matches.
         //
-        if(ppui32I2CIntMap[i8Idx][0] == ui32Base)
-        {
+        if(ppui32I2CIntMap[i8Idx][0] == ui32Base) {
             //
             // Return the corresponding interrupt number.
             //
@@ -194,7 +189,7 @@ _I2CIntNumberGet(uint32_t ui32Base)
 //! the system clock is the value returned by SysCtlClockGet() for TM4C123x
 //! devices or the value returned by SysCtlClockFreqSet() for TM4C129x devices,
 //! or it can be explicitly hard coded if it is constant and known (to save the
-//! code/execution overhead of a call to SysCtlClockGet() or fetch of the 
+//! code/execution overhead of a call to SysCtlClockGet() or fetch of the
 //! variable call holding the return value of SysCtlClockFreqSet()).
 //!
 //! \return None.
@@ -220,12 +215,9 @@ I2CMasterInitExpClk(uint32_t ui32Base, uint32_t ui32I2CClk,
     //
     // Get the desired SCL speed.
     //
-    if(bFast == true)
-    {
+    if(bFast == true) {
         ui32SCLFreq = 400000;
-    }
-    else
-    {
+    } else {
         ui32SCLFreq = 100000;
     }
 
@@ -243,8 +235,7 @@ I2CMasterInitExpClk(uint32_t ui32Base, uint32_t ui32I2CClk,
     // Check to see if this I2C peripheral is High-Speed enabled.  If yes, also
     // choose the fastest speed that is less than or equal to 3.4 Mbps.
     //
-    if(HWREG(ui32Base + I2C_O_PP) & I2C_PP_HS)
-    {
+    if(HWREG(ui32Base + I2C_O_PP) & I2C_PP_HS) {
         ui32TPR = ((ui32I2CClk + (2 * 3 * 3400000) - 1) /
                    (2 * 3 * 3400000)) - 1;
         HWREG(ui32Base + I2C_O_MTPR) = I2C_MTPR_HS | ui32TPR;
@@ -318,13 +309,11 @@ I2CSlaveAddressSet(uint32_t ui32Base, uint8_t ui8AddrNum, uint8_t ui8SlaveAddr)
     //
     // Determine which slave address is being set.
     //
-    switch(ui8AddrNum)
-    {
+    switch(ui8AddrNum) {
         //
         // Set up the primary slave address.
         //
-        case 0:
-        {
+        case 0: {
             HWREG(ui32Base + I2C_O_SOAR) = ui8SlaveAddr;
             break;
         }
@@ -332,8 +321,7 @@ I2CSlaveAddressSet(uint32_t ui32Base, uint8_t ui8AddrNum, uint8_t ui8SlaveAddr)
         //
         // Set up and enable the secondary slave address.
         //
-        case 1:
-        {
+        case 1: {
             HWREG(ui32Base + I2C_O_SOAR2) = I2C_SOAR2_OAR2EN | ui8SlaveAddr;
             break;
         }
@@ -826,12 +814,9 @@ I2CMasterIntStatus(uint32_t ui32Base, bool bMasked)
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return((HWREG(ui32Base + I2C_O_MMIS)) ? true : false);
-    }
-    else
-    {
+    } else {
         return((HWREG(ui32Base + I2C_O_MRIS)) ? true : false);
     }
 }
@@ -864,12 +849,9 @@ I2CMasterIntStatusEx(uint32_t ui32Base, bool bMasked)
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return(HWREG(ui32Base + I2C_O_MMIS));
-    }
-    else
-    {
+    } else {
         return(HWREG(ui32Base + I2C_O_MRIS));
     }
 }
@@ -902,12 +884,9 @@ I2CSlaveIntStatus(uint32_t ui32Base, bool bMasked)
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return((HWREG(ui32Base + I2C_O_SMIS)) ? true : false);
-    }
-    else
-    {
+    } else {
         return((HWREG(ui32Base + I2C_O_SRIS)) ? true : false);
     }
 }
@@ -940,12 +919,9 @@ I2CSlaveIntStatusEx(uint32_t ui32Base, bool bMasked)
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return(HWREG(ui32Base + I2C_O_SMIS));
-    }
-    else
-    {
+    } else {
         return(HWREG(ui32Base + I2C_O_SRIS));
     }
 }
@@ -1196,12 +1172,9 @@ I2CMasterBusy(uint32_t ui32Base)
     //
     // Return the busy status.
     //
-    if(HWREG(ui32Base + I2C_O_MCS) & I2C_MCS_BUSY)
-    {
+    if(HWREG(ui32Base + I2C_O_MCS) & I2C_MCS_BUSY) {
         return(true);
-    }
-    else
-    {
+    } else {
         return(false);
     }
 }
@@ -1231,12 +1204,9 @@ I2CMasterBusBusy(uint32_t ui32Base)
     //
     // Return the bus busy status.
     //
-    if(HWREG(ui32Base + I2C_O_MCS) & I2C_MCS_BUSBSY)
-    {
+    if(HWREG(ui32Base + I2C_O_MCS) & I2C_MCS_BUSBSY) {
         return(true);
-    }
-    else
-    {
+    } else {
         return(false);
     }
 }
@@ -1351,20 +1321,16 @@ I2CMasterErr(uint32_t ui32Base)
     // If the I2C master is busy, then all the other bit are invalid, and
     // don't have an error to report.
     //
-    if(ui32Err & I2C_MCS_BUSY)
-    {
+    if(ui32Err & I2C_MCS_BUSY) {
         return(I2C_MASTER_ERR_NONE);
     }
 
     //
     // Check for errors.
     //
-    if(ui32Err & (I2C_MCS_ERROR | I2C_MCS_ARBLST))
-    {
+    if(ui32Err & (I2C_MCS_ERROR | I2C_MCS_ARBLST)) {
         return(ui32Err & (I2C_MCS_ARBLST | I2C_MCS_DATACK | I2C_MCS_ADRACK));
-    }
-    else
-    {
+    } else {
         return(I2C_MASTER_ERR_NONE);
     }
 }
@@ -1481,12 +1447,9 @@ I2CSlaveACKOverride(uint32_t ui32Base, bool bEnable)
     //
     // Enable or disable based on bEnable.
     //
-    if(bEnable)
-    {
+    if(bEnable) {
         HWREG(ui32Base + I2C_O_SACKCTL) |= I2C_SACKCTL_ACKOEN;
-    }
-    else
-    {
+    } else {
         HWREG(ui32Base + I2C_O_SACKCTL) &= ~I2C_SACKCTL_ACKOEN;
     }
 }
@@ -1516,12 +1479,9 @@ I2CSlaveACKValueSet(uint32_t ui32Base, bool bACK)
     //
     // ACK or NACK based on the value of bACK.
     //
-    if(bACK)
-    {
+    if(bACK) {
         HWREG(ui32Base + I2C_O_SACKCTL) &= ~I2C_SACKCTL_ACKOVAL;
-    }
-    else
-    {
+    } else {
         HWREG(ui32Base + I2C_O_SACKCTL) |= I2C_SACKCTL_ACKOVAL;
     }
 }
@@ -1835,8 +1795,7 @@ I2CFIFODataPut(uint32_t ui32Base, uint8_t ui8Data)
     //
     // Wait until there is space.
     //
-    while(HWREG(ui32Base + I2C_O_FIFOSTATUS) & I2C_FIFOSTATUS_TXFF)
-    {
+    while(HWREG(ui32Base + I2C_O_FIFOSTATUS) & I2C_FIFOSTATUS_TXFF) {
     }
 
     //
@@ -1872,12 +1831,9 @@ I2CFIFODataPutNonBlocking(uint32_t ui32Base, uint8_t ui8Data)
     //
     // If FIFO is full, return zero.
     //
-    if(HWREG(ui32Base + I2C_O_FIFOSTATUS) & I2C_FIFOSTATUS_TXFF)
-    {
+    if(HWREG(ui32Base + I2C_O_FIFOSTATUS) & I2C_FIFOSTATUS_TXFF) {
         return(0);
-    }
-    else
-    {
+    } else {
         HWREG(ui32Base + I2C_O_FIFODATA) = ui8Data;
         return(1);
     }
@@ -1910,8 +1866,7 @@ I2CFIFODataGet(uint32_t ui32Base)
     //
     // Wait until there is data to read.
     //
-    while(HWREG(ui32Base + I2C_O_FIFOSTATUS) & I2C_FIFOSTATUS_RXFE)
-    {
+    while(HWREG(ui32Base + I2C_O_FIFOSTATUS) & I2C_FIFOSTATUS_RXFE) {
     }
 
     //
@@ -1948,12 +1903,9 @@ I2CFIFODataGetNonBlocking(uint32_t ui32Base, uint8_t *pui8Data)
     //
     // If nothing in the FIFO, return zero.
     //
-    if(HWREG(ui32Base + I2C_O_FIFOSTATUS) & I2C_FIFOSTATUS_RXFE)
-    {
+    if(HWREG(ui32Base + I2C_O_FIFOSTATUS) & I2C_FIFOSTATUS_RXFE) {
         return(0);
-    }
-    else
-    {
+    } else {
         *pui8Data = HWREG(ui32Base + I2C_O_FIFODATA);
         return(1);
     }
@@ -2065,16 +2017,14 @@ I2CMasterGlitchFilterConfigSet(uint32_t ui32Base, uint32_t ui32Config)
     //
     // Configure the glitch filter field of MTPR if it is TM4C129
     //
-    if(CLASS_IS_TM4C129)
-    {
+    if(CLASS_IS_TM4C129) {
         HWREG(ui32Base + I2C_O_MTPR) |= ui32Config;
     }
 
     //
     // Configure the glitch filter if it is TM4C123
     //
-    if(CLASS_IS_TM4C123)
-    {
+    if(CLASS_IS_TM4C123) {
         //
         // Configure the glitch filter pulse width
         //

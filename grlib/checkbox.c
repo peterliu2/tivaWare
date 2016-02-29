@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Graphics Library.
 //
 //*****************************************************************************
@@ -81,8 +81,7 @@ CheckBoxPaint(tWidget *psWidget, bool bClick)
     //
     // See if the check box fill style is selected.
     //
-    if((pCheck->ui16Style & CB_STYLE_FILL) && !bClick)
-    {
+    if((pCheck->ui16Style & CB_STYLE_FILL) && !bClick) {
         //
         // Fill the check box with the fill color.
         //
@@ -93,8 +92,7 @@ CheckBoxPaint(tWidget *psWidget, bool bClick)
     //
     // See if the check box outline style is selected.
     //
-    if((pCheck->ui16Style & CB_STYLE_OUTLINE) && !bClick)
-    {
+    if((pCheck->ui16Style & CB_STYLE_OUTLINE) && !bClick) {
         //
         // Outline the check box with the outline color.
         //
@@ -107,12 +105,11 @@ CheckBoxPaint(tWidget *psWidget, bool bClick)
     //
     i16Rect.i16XMin = psWidget->sPosition.i16XMin + 2;
     i16Rect.i16YMin = (psWidget->sPosition.i16YMin +
-                   ((psWidget->sPosition.i16YMax - psWidget->sPosition.i16YMin -
-                     pCheck->ui16BoxSize + 1) / 2));
+                       ((psWidget->sPosition.i16YMax - psWidget->sPosition.i16YMin -
+                         pCheck->ui16BoxSize + 1) / 2));
     i16Rect.i16XMax = i16Rect.i16XMin + pCheck->ui16BoxSize - 1;
     i16Rect.i16YMax = i16Rect.i16YMin + pCheck->ui16BoxSize - 1;
-    if(!bClick)
-    {
+    if(!bClick) {
         GrContextForegroundSet(&sCtx, pCheck->ui32OutlineColor);
         GrRectDraw(&sCtx, &i16Rect);
     }
@@ -121,12 +118,9 @@ CheckBoxPaint(tWidget *psWidget, bool bClick)
     // Select the foreground color based on whether or not the check box is
     // selected.
     //
-    if(pCheck->ui16Style & CB_STYLE_SELECTED)
-    {
+    if(pCheck->ui16Style & CB_STYLE_SELECTED) {
         GrContextForegroundSet(&sCtx, pCheck->ui32OutlineColor);
-    }
-    else
-    {
+    } else {
         GrContextForegroundSet(&sCtx, pCheck->ui32FillColor);
     }
 
@@ -141,8 +135,7 @@ CheckBoxPaint(tWidget *psWidget, bool bClick)
     //
     // See if the check box text or image style is selected.
     //
-    if((pCheck->ui16Style & (CB_STYLE_TEXT | CB_STYLE_IMG)) && !bClick)
-    {
+    if((pCheck->ui16Style & (CB_STYLE_TEXT | CB_STYLE_IMG)) && !bClick) {
         //
         // Shrink the clipping region by the size of the check box so that it
         // is not overwritten by further "decorative" portions of the widget.
@@ -154,8 +147,7 @@ CheckBoxPaint(tWidget *psWidget, bool bClick)
         // region by one pixel on each side so that the outline is not
         // overwritten by the text or image.
         //
-        if(pCheck->ui16Style & CB_STYLE_OUTLINE)
-        {
+        if(pCheck->ui16Style & CB_STYLE_OUTLINE) {
             sCtx.sClipRegion.i16YMin++;
             sCtx.sClipRegion.i16XMax--;
             sCtx.sClipRegion.i16YMax--;
@@ -164,8 +156,7 @@ CheckBoxPaint(tWidget *psWidget, bool bClick)
         //
         // See if the check box image style is selected.
         //
-        if(pCheck->ui16Style & CB_STYLE_IMG)
-        {
+        if(pCheck->ui16Style & CB_STYLE_IMG) {
             //
             // Determine where along the Y extent of the widget to draw the
             // image.  It is drawn at the top if it takes all (or more than
@@ -173,15 +164,12 @@ CheckBoxPaint(tWidget *psWidget, bool bClick)
             // it takes less than the Y extent.
             //
             if(GrImageHeightGet(pCheck->pui8Image) >
-               (sCtx.sClipRegion.i16YMax - sCtx.sClipRegion.i16YMin))
-            {
+                    (sCtx.sClipRegion.i16YMax - sCtx.sClipRegion.i16YMin)) {
                 i32Y = sCtx.sClipRegion.i16YMin;
-            }
-            else
-            {
+            } else {
                 i32Y = (sCtx.sClipRegion.i16YMin +
-                      ((sCtx.sClipRegion.i16YMax - sCtx.sClipRegion.i16YMin -
-                        GrImageHeightGet(pCheck->pui8Image) + 1) / 2));
+                        ((sCtx.sClipRegion.i16YMax - sCtx.sClipRegion.i16YMin -
+                          GrImageHeightGet(pCheck->pui8Image) + 1) / 2));
             }
 
             //
@@ -201,8 +189,7 @@ CheckBoxPaint(tWidget *psWidget, bool bClick)
         //
         // See if the check box text style is selected.
         //
-        if(pCheck->ui16Style & CB_STYLE_TEXT)
-        {
+        if(pCheck->ui16Style & CB_STYLE_TEXT) {
             //
             // Determine where along the Y extent of the widget to draw the
             // string.  It is drawn at the top if it takes all (or more than
@@ -210,15 +197,12 @@ CheckBoxPaint(tWidget *psWidget, bool bClick)
             // it takes less than the Y extent.
             //
             if(GrFontHeightGet(pCheck->psFont) >
-               (sCtx.sClipRegion.i16YMax - sCtx.sClipRegion.i16YMin))
-            {
+                    (sCtx.sClipRegion.i16YMax - sCtx.sClipRegion.i16YMin)) {
                 i32Y = sCtx.sClipRegion.i16YMin;
-            }
-            else
-            {
+            } else {
                 i32Y = (sCtx.sClipRegion.i16YMin +
-                      ((sCtx.sClipRegion.i16YMax - sCtx.sClipRegion.i16YMin -
-                        GrFontHeightGet(pCheck->psFont) + 1) / 2));
+                        ((sCtx.sClipRegion.i16YMax - sCtx.sClipRegion.i16YMin -
+                          GrFontHeightGet(pCheck->psFont) + 1) / 2));
             }
 
             //
@@ -273,15 +257,13 @@ CheckBoxClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X, int32_t i32Y)
     // See if the given coordinates are within the extents of the check box.
     //
     if((i32X >= psWidget->sPosition.i16XMin) &&
-       (i32X <= psWidget->sPosition.i16XMax) &&
-       (i32Y >= psWidget->sPosition.i16YMin) &&
-       (i32Y <= psWidget->sPosition.i16YMax))
-    {
+            (i32X <= psWidget->sPosition.i16XMax) &&
+            (i32Y >= psWidget->sPosition.i16YMin) &&
+            (i32Y <= psWidget->sPosition.i16YMax)) {
         //
         // See if the pointer was just raised.
         //
-        if(ui32Msg == WIDGET_MSG_PTR_UP)
-        {
+        if(ui32Msg == WIDGET_MSG_PTR_UP) {
             //
             // Toggle the selected state of this check box.
             //
@@ -296,8 +278,7 @@ CheckBoxClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X, int32_t i32Y)
             // If there is an OnChange callback for this widget then call the
             // callback.
             //
-            if(pCheck->pfnOnChange)
-            {
+            if(pCheck->pfnOnChange) {
                 pCheck->pfnOnChange(psWidget,
                                     pCheck->ui16Style & CB_STYLE_SELECTED);
             }
@@ -345,13 +326,11 @@ CheckBoxMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
     //
     // Determine which message is being sent.
     //
-    switch(ui32Msg)
-    {
+    switch(ui32Msg) {
         //
         // The widget paint request has been sent.
         //
-        case WIDGET_MSG_PAINT:
-        {
+        case WIDGET_MSG_PAINT: {
             //
             // Handle the widget paint request.
             //
@@ -369,8 +348,7 @@ CheckBoxMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
         //
         case WIDGET_MSG_PTR_DOWN:
         case WIDGET_MSG_PTR_MOVE:
-        case WIDGET_MSG_PTR_UP:
-        {
+        case WIDGET_MSG_PTR_UP: {
             //
             // Handle the pointer request, returning the appropriate value.
             //
@@ -380,8 +358,7 @@ CheckBoxMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
         //
         // An unknown request has been sent.
         //
-        default:
-        {
+        default: {
             //
             // Let the default message handler process this message.
             //
@@ -422,8 +399,7 @@ CheckBoxInit(tCheckBoxWidget *psWidget, const tDisplay *psDisplay, int32_t i32X,
     //
     // Clear out the widget structure.
     //
-    for(ui32Idx = 0; ui32Idx < sizeof(tCheckBoxWidget); ui32Idx += 4)
-    {
+    for(ui32Idx = 0; ui32Idx < sizeof(tCheckBoxWidget); ui32Idx += 4) {
         ((uint32_t *)psWidget)[ui32Idx / 4] = 0;
     }
 

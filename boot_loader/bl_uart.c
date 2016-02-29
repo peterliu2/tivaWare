@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2006-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -60,13 +60,11 @@ UARTSend(const uint8_t *pui8Data, uint32_t ui32Size)
     //
     // Transmit the number of bytes requested on the UART port.
     //
-    while(ui32Size--)
-    {
+    while(ui32Size--) {
         //
         // Make sure that the transmit FIFO is not full.
         //
-        while((HWREG(UARTx_BASE + UART_O_FR) & UART_FR_TXFF))
-        {
+        while((HWREG(UARTx_BASE + UART_O_FR) & UART_FR_TXFF)) {
         }
 
         //
@@ -98,15 +96,13 @@ UARTFlush(void)
     // Wait for the UART FIFO to empty and then wait for the shifter to get the
     // bytes out the port.
     //
-    while(!(HWREG(UARTx_BASE + UART_O_FR) & UART_FR_TXFE))
-    {
+    while(!(HWREG(UARTx_BASE + UART_O_FR) & UART_FR_TXFE)) {
     }
 
     //
     // Wait for the FIFO to not be busy so that the shifter completes.
     //
-    while((HWREG(UARTx_BASE + UART_O_FR) & UART_FR_BUSY))
-    {
+    while((HWREG(UARTx_BASE + UART_O_FR) & UART_FR_BUSY)) {
     }
 }
 
@@ -131,13 +127,11 @@ UARTReceive(uint8_t *pui8Data, uint32_t ui32Size)
     //
     // Send out the number of bytes requested.
     //
-    while(ui32Size--)
-    {
+    while(ui32Size--) {
         //
         // Wait for the FIFO to not be empty.
         //
-        while((HWREG(UARTx_BASE + UART_O_FR) & UART_FR_RXFE))
-        {
+        while((HWREG(UARTx_BASE + UART_O_FR) & UART_FR_RXFE)) {
         }
 
         //

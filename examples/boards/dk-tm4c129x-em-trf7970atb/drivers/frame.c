@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -39,8 +39,7 @@
 // The top left corner of the border.
 //
 //*****************************************************************************
-static const uint8_t g_pui8TopLeft[] =
-{
+static const uint8_t g_pui8TopLeft[] = {
     IMAGE_FMT_8BPP_UNCOMP,
     10, 0,
     26, 0,
@@ -114,8 +113,7 @@ static const uint8_t g_pui8TopLeft[] =
 // The top side of the border.
 //
 //*****************************************************************************
-static const uint8_t g_pui8Top[] =
-{
+static const uint8_t g_pui8Top[] = {
     IMAGE_FMT_8BPP_UNCOMP,
     44, 1,
     22, 0,
@@ -719,8 +717,7 @@ static const uint8_t g_pui8Top[] =
 // The top right corner of the border.
 //
 //*****************************************************************************
-static const uint8_t g_pui8TopRight[] =
-{
+static const uint8_t g_pui8TopRight[] = {
     IMAGE_FMT_8BPP_UNCOMP,
     10, 0,
     26, 0,
@@ -791,8 +788,7 @@ static const uint8_t g_pui8TopRight[] =
 // The left side of the border.
 //
 //*****************************************************************************
-static const uint8_t g_pui8Left[] =
-{
+static const uint8_t g_pui8Left[] = {
     IMAGE_FMT_8BPP_UNCOMP,
     6, 0,
     204, 0,
@@ -948,8 +944,7 @@ static const uint8_t g_pui8Left[] =
 // The right side of the border.
 //
 //*****************************************************************************
-static const uint8_t g_pui8Right[] =
-{
+static const uint8_t g_pui8Right[] = {
     IMAGE_FMT_8BPP_UNCOMP,
     6, 0,
     204, 0,
@@ -1105,8 +1100,7 @@ static const uint8_t g_pui8Right[] =
 // The bottom left corner of the border.
 //
 //*****************************************************************************
-static const uint8_t g_pui8BottomLeft[] =
-{
+static const uint8_t g_pui8BottomLeft[] = {
     IMAGE_FMT_8BPP_UNCOMP,
     10, 0,
     10, 0,
@@ -1163,8 +1157,7 @@ static const uint8_t g_pui8BottomLeft[] =
 // The bottom side of the border.
 //
 //*****************************************************************************
-static const uint8_t g_pui8Bottom[] =
-{
+static const uint8_t g_pui8Bottom[] = {
     IMAGE_FMT_8BPP_UNCOMP,
     44, 1,
     6, 0,
@@ -1368,8 +1361,7 @@ static const uint8_t g_pui8Bottom[] =
 // The bottom right corner of the border.
 //
 //*****************************************************************************
-static const uint8_t g_pui8BottomRight[] =
-{
+static const uint8_t g_pui8BottomRight[] = {
     IMAGE_FMT_8BPP_UNCOMP,
     10, 0,
     10, 0,
@@ -1441,8 +1433,7 @@ FrameDraw(tContext *psContext, const char *pcAppName)
     //
     // See if the display is in a landscape or portrait configuration.
     //
-    if(GrContextDpyWidthGet(psContext) == 320)
-    {
+    if(GrContextDpyWidthGet(psContext) == 320) {
         //
         // Reset the clipping region to the entire LCD surface.
         //
@@ -1483,9 +1474,7 @@ FrameDraw(tContext *psContext, const char *pcAppName)
         sRect.i16XMax = 311;
         sRect.i16YMax = 231;
         GrContextClipRegionSet(psContext, &sRect);
-    }
-    else
-    {
+    } else {
         //
         // Reset the clipping region to the entire LCD surface.
         //

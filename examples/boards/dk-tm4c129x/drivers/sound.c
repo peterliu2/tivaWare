@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -47,8 +47,7 @@
 // This structure defines the internal state of the sound driver.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // The number of clocks per PWM period.
     //
@@ -148,8 +147,7 @@ SoundIntHandler(void)
     // If there is an adjustment to be made, the apply it and set allow the
     // update to be done on the next load.
     //
-    if(g_sSoundState.i32RateAdjust)
-    {
+    if(g_sSoundState.i32RateAdjust) {
         g_sSoundState.ui32Period += g_sSoundState.i32RateAdjust;
         g_sSoundState.i32RateAdjust = 0;
         TimerLoadSet(TIMER5_BASE, TIMER_A, g_sSoundState.ui32Period);
@@ -163,8 +161,7 @@ SoundIntHandler(void)
     //
     // See if the startup ramp is in progress.
     //
-    if(HWREGBITW(&g_sSoundState.ui32Flags, SOUND_FLAG_STARTUP))
-    {
+    if(HWREGBITW(&g_sSoundState.ui32Flags, SOUND_FLAG_STARTUP)) {
         //
         // Increment the ramp count.
         //
@@ -178,8 +175,7 @@ SoundIntHandler(void)
         //
         // See if this was the last step of the ramp.
         //
-        if(g_sSoundState.i32Step >= (g_sSoundState.ui32Period / 2))
-        {
+        if(g_sSoundState.i32Step >= (g_sSoundState.ui32Period / 2)) {
             //
             // Indicate that the startup ramp has completed.
             //
@@ -200,13 +196,11 @@ SoundIntHandler(void)
     //
     // See if the shutdown ramp is in progress.
     //
-    if(HWREGBITW(&g_sSoundState.ui32Flags, SOUND_FLAG_SHUTDOWN))
-    {
+    if(HWREGBITW(&g_sSoundState.ui32Flags, SOUND_FLAG_SHUTDOWN)) {
         //
         // See if this was the last step of the ramp.
         //
-        if(g_sSoundState.i32Step == 1)
-        {
+        if(g_sSoundState.i32Step == 1) {
             //
             // Disable the output signals.
             //
@@ -221,9 +215,7 @@ SoundIntHandler(void)
             // Disable the speaker amp.
             //
             ROM_GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_4, 0);
-        }
-        else
-        {
+        } else {
             //
             // Decrement the ramp count.
             //
@@ -268,24 +260,18 @@ SoundIntHandler(void)
     //
     // Increment the sound step based on the sample rate.
     //
-    if(HWREGBITW(&g_sSoundState.ui32Flags, SOUND_FLAG_8KHZ))
-    {
+    if(HWREGBITW(&g_sSoundState.ui32Flags, SOUND_FLAG_8KHZ)) {
         g_sSoundState.i32Step = (g_sSoundState.i32Step + 1) & 7;
-    }
-    else if(HWREGBITW(&g_sSoundState.ui32Flags, SOUND_FLAG_16KHZ))
-    {
+    } else if(HWREGBITW(&g_sSoundState.ui32Flags, SOUND_FLAG_16KHZ)) {
         g_sSoundState.i32Step = (g_sSoundState.i32Step + 2) & 7;
-    }
-    else if(HWREGBITW(&g_sSoundState.ui32Flags, SOUND_FLAG_32KHZ))
-    {
+    } else if(HWREGBITW(&g_sSoundState.ui32Flags, SOUND_FLAG_32KHZ)) {
         g_sSoundState.i32Step = (g_sSoundState.i32Step + 4) & 7;
     }
 
     //
     // See if the next sample has been reached.
     //
-    if(g_sSoundState.i32Step == 0)
-    {
+    if(g_sSoundState.i32Step == 0) {
         //
         // Copy the current sample to the previous sample.
         //
@@ -301,8 +287,7 @@ SoundIntHandler(void)
         // Increment the buffer pointer.
         //
         g_sSoundState.ui32Offset++;
-        if(g_sSoundState.ui32Offset == g_sSoundState.ui32Length)
-        {
+        if(g_sSoundState.ui32Offset == g_sSoundState.ui32Length) {
             g_sSoundState.ui32Offset = 0;
         }
 
@@ -310,14 +295,10 @@ SoundIntHandler(void)
         // Call the callback function if one of the half-buffers has been
         // consumed.
         //
-        if(g_sSoundState.pfnCallback)
-        {
-            if(g_sSoundState.ui32Offset == 0)
-            {
+        if(g_sSoundState.pfnCallback) {
+            if(g_sSoundState.ui32Offset == 0) {
                 g_sSoundState.pfnCallback(1);
-            }
-            else if(g_sSoundState.ui32Offset == (g_sSoundState.ui32Length / 2))
-            {
+            } else if(g_sSoundState.ui32Offset == (g_sSoundState.ui32Length / 2)) {
                 g_sSoundState.pfnCallback(0);
             }
         }
@@ -365,8 +346,7 @@ SoundInit(uint32_t ui32SysClock)
     //
     // Configure the timer to run in PWM mode.
     //
-    if((HWREG(TIMER5_BASE + TIMER_O_CTL) & TIMER_CTL_TBEN) == 0)
-    {
+    if((HWREG(TIMER5_BASE + TIMER_O_CTL) & TIMER_CTL_TBEN) == 0) {
         ROM_TimerConfigure(TIMER5_BASE, (TIMER_CFG_SPLIT_PAIR |
                                          TIMER_CFG_A_PWM |
                                          TIMER_CFG_B_PERIODIC));
@@ -379,7 +359,7 @@ SoundInit(uint32_t ui32SysClock)
     // Update the timer values on timeouts and not immediately.
     //
     TimerUpdateMode(TIMER5_BASE, TIMER_A, TIMER_UP_LOAD_TIMEOUT |
-                                          TIMER_UP_MATCH_TIMEOUT);
+                    TIMER_UP_MATCH_TIMEOUT);
 
     //
     // Configure the timer to generate an interrupt at every time-out event.
@@ -450,32 +430,22 @@ SoundStart(int16_t *pi16Buffer, uint32_t ui32Length, uint32_t ui32Rate,
     //
     // Return without playing the buffer if something is already playing.
     //
-    if(g_sSoundState.ui32Flags)
-    {
+    if(g_sSoundState.ui32Flags) {
         return(false);
     }
 
     //
     // Set the sample rate flag.
     //
-    if(ui32Rate == 8000)
-    {
+    if(ui32Rate == 8000) {
         HWREGBITW(&g_sSoundState.ui32Flags, SOUND_FLAG_8KHZ) = 1;
-    }
-    else if(ui32Rate == 16000)
-    {
+    } else if(ui32Rate == 16000) {
         HWREGBITW(&g_sSoundState.ui32Flags, SOUND_FLAG_16KHZ) = 1;
-    }
-    else if(ui32Rate == 32000)
-    {
+    } else if(ui32Rate == 32000) {
         HWREGBITW(&g_sSoundState.ui32Flags, SOUND_FLAG_32KHZ) = 1;
-    }
-    else if(ui32Rate == 64000)
-    {
+    } else if(ui32Rate == 64000) {
         HWREGBITW(&g_sSoundState.ui32Flags, SOUND_FLAG_64KHZ) = 1;
-    }
-    else
-    {
+    } else {
         return(false);
     }
 
@@ -547,8 +517,7 @@ SoundStop(void)
     // See if playback is in progress.
     //
     if((g_sSoundState.ui32Flags != 0) &&
-       (HWREGBITW(&g_sSoundState.ui32Flags, SOUND_FLAG_SHUTDOWN) == 0))
-    {
+            (HWREGBITW(&g_sSoundState.ui32Flags, SOUND_FLAG_SHUTDOWN) == 0)) {
         //
         // Temporarily disable the timer interrupt.
         //
@@ -637,8 +606,7 @@ SoundVolumeUp(int32_t i32Volume)
     // Compute the new volume, limiting to the maximum if required.
     //
     i32Volume = g_sSoundState.i32Volume + i32Volume;
-    if(i32Volume > 255)
-    {
+    if(i32Volume > 255) {
         i32Volume = 255;
     }
 
@@ -669,8 +637,7 @@ SoundVolumeDown(int32_t i32Volume)
     // Compute the new volume, limiting to the minimum if required.
     //
     i32Volume = g_sSoundState.i32Volume - i32Volume;
-    if(i32Volume < 0)
-    {
+    if(i32Volume < 0) {
         i32Volume = 0;
     }
 

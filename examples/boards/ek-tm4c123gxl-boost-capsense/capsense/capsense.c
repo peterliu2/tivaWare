@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C123GXL Firmware Package.
 //
 //*****************************************************************************
@@ -102,8 +102,7 @@ uint32_t g_ui32PreviousWheelPosition = ILLEGAL_SLIDER_WHEEL_POSITION;
 void
 __error__(char *pcFilename, uint32_t ui32Line)
 {
-    while(1)
-    {
+    while(1) {
         //
         // Hang on runtime error.
         //
@@ -139,16 +138,13 @@ LEDOutput(uint32_t ui32WheelPosition)
     ROM_GPIOPinTypeGPIOInput(GPIO_PORTB_BASE, GPIO_PIN_6);
     ROM_GPIOPinTypeGPIOInput(GPIO_PORTB_BASE, GPIO_PIN_7);
 
-    if((ui32WheelPosition == 0) || (ui32WheelPosition == 8))
-    {
+    if((ui32WheelPosition == 0) || (ui32WheelPosition == 8)) {
         //
         // If the top or bottom button is being pressed, we have no indicator
         // lights, so return without doing anything.
         //
         return;
-    }
-    else if(ui32WheelPosition < 8)
-    {
+    } else if(ui32WheelPosition < 8) {
         //
         // Positions less than 8 correspond to the right side of the wheel,
         // whose LEDs may turn on when PE4 is pulled high.
@@ -159,17 +155,14 @@ LEDOutput(uint32_t ui32WheelPosition)
         // Write a zero to the appropriate GPIO(s) to turn on the light(s)
         // nearest to the current wheel position.
         //
-        switch(ui32WheelPosition)
-        {
-            case 1:
-            {
+        switch(ui32WheelPosition) {
+            case 1: {
                 ROM_GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_5);
                 ROM_GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_5, 0);
                 break;
             }
 
-            case 2:
-            {
+            case 2: {
                 ROM_GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_5);
                 ROM_GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_5, 0);
                 ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_4);
@@ -177,15 +170,13 @@ LEDOutput(uint32_t ui32WheelPosition)
                 break;
             }
 
-            case 3:
-            {
+            case 3: {
                 ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_4);
                 ROM_GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_4, 0);
                 break;
             }
 
-            case 4:
-            {
+            case 4: {
                 ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_4);
                 ROM_GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_4, 0);
                 ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_6);
@@ -193,15 +184,13 @@ LEDOutput(uint32_t ui32WheelPosition)
                 break;
             }
 
-            case 5:
-            {
+            case 5: {
                 ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_6);
                 ROM_GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6, 0);
                 break;
             }
 
-            case 6:
-            {
+            case 6: {
                 ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_6);
                 ROM_GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6, 0);
                 ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_7);
@@ -209,15 +198,13 @@ LEDOutput(uint32_t ui32WheelPosition)
                 break;
             }
 
-            case 7:
-            {
+            case 7: {
                 ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_7);
                 ROM_GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_7, 0);
                 break;
             }
 
-            default:
-            {
+            default: {
                 //
                 // We should never get here.
                 //
@@ -225,9 +212,7 @@ LEDOutput(uint32_t ui32WheelPosition)
             }
         }
 
-    }
-    else
-    {
+    } else {
         //
         // Positions greater than 8 correspond to the left side of the wheel,
         // whose LEDs may turn on when PE4 is pulled low.
@@ -238,17 +223,14 @@ LEDOutput(uint32_t ui32WheelPosition)
         // Write a one to the appropriate GPIO(s) to turn on the light(s)
         // nearest to the current wheel position.
         //
-        switch(ui32WheelPosition)
-        {
-            case 9:
-            {
+        switch(ui32WheelPosition) {
+            case 9: {
                 ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_7);
                 ROM_GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_7, GPIO_PIN_7);
                 break;
             }
 
-            case 10:
-            {
+            case 10: {
                 ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_7);
                 ROM_GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_7, GPIO_PIN_7);
                 ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_6);
@@ -256,15 +238,13 @@ LEDOutput(uint32_t ui32WheelPosition)
                 break;
             }
 
-            case 11:
-            {
+            case 11: {
                 ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_6);
                 ROM_GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6, GPIO_PIN_6);
                 break;
             }
 
-            case 12:
-            {
+            case 12: {
                 ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_6);
                 ROM_GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6, GPIO_PIN_6);
                 ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_4);
@@ -272,15 +252,13 @@ LEDOutput(uint32_t ui32WheelPosition)
                 break;
             }
 
-            case 13:
-            {
+            case 13: {
                 ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_4);
                 ROM_GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_4, GPIO_PIN_4);
                 break;
             }
 
-            case 14:
-            {
+            case 14: {
                 ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_4);
                 ROM_GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_4, GPIO_PIN_4);
                 ROM_GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_5);
@@ -288,15 +266,13 @@ LEDOutput(uint32_t ui32WheelPosition)
                 break;
             }
 
-            case 15:
-            {
+            case 15: {
                 ROM_GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_5);
                 ROM_GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_5, GPIO_PIN_5);
                 break;
             }
 
-            default:
-            {
+            default: {
                 //
                 // We should never get here.
                 //
@@ -330,14 +306,12 @@ GetGesture(uint8_t ui32WheelPosition)
     // If our wheel position was previously valid, we can start calculating a
     // gesture reading.
     //
-    if(g_ui32PreviousWheelPosition != ILLEGAL_SLIDER_WHEEL_POSITION)
-    {
+    if(g_ui32PreviousWheelPosition != ILLEGAL_SLIDER_WHEEL_POSITION) {
         //
         // If our previous wheel position was bigger than our current wheel
         // position...
         //
-        if(g_ui32PreviousWheelPosition > ui32WheelPosition)
-        {
+        if(g_ui32PreviousWheelPosition > ui32WheelPosition) {
             //
             // Calculate a positive difference between the two positions.
             //
@@ -348,8 +322,7 @@ GetGesture(uint8_t ui32WheelPosition)
             // If our positive difference is less than 8 (half of the wheel
             // positions), we must have moved counterclockwise.
             //
-            if(ui8PositionDifference < 8)
-            {
+            if(ui8PositionDifference < 8) {
                 //
                 // Our gesture magnitude will be the positive difference
                 // calculated above, and the direction will be
@@ -357,9 +330,7 @@ GetGesture(uint8_t ui32WheelPosition)
                 //
                 ui8Gesture = ui8PositionDifference;
                 ui8Direction = COUNTER_CLOCKWISE;
-            }
-            else
-            {
+            } else {
                 //
                 // If our positive difference is more than 8 (which means it
                 // spans more than half of the wheel), then we must have
@@ -374,15 +345,12 @@ GetGesture(uint8_t ui32WheelPosition)
                 // Make sure the new difference is still less than eight
                 // though.
                 //
-                if(ui8PositionDifference < 8)
-                {
+                if(ui8PositionDifference < 8) {
                     ui8Gesture = ui8PositionDifference;
                     ui8Direction = CLOCKWISE;
                 }
             }
-        }
-        else
-        {
+        } else {
             //
             // If we get here, our current wheel position is larger than our
             // previous wheel position.
@@ -393,13 +361,10 @@ GetGesture(uint8_t ui32WheelPosition)
             // As before, make sure we're actually going clockwise, and report
             // our calculated difference as the gesture magnitude.
             //
-            if(ui8PositionDifference < 8)
-            {
+            if(ui8PositionDifference < 8) {
                 ui8Gesture = ui8PositionDifference;
                 ui8Direction = CLOCKWISE;
-            }
-            else
-            {
+            } else {
                 //
                 // If we're not actually going clockwise, recalculate our
                 // magnitude for counterclockwise movement, and report our
@@ -411,8 +376,7 @@ GetGesture(uint8_t ui32WheelPosition)
                 // Once again, make sure our new difference is still less than
                 // eight.
                 //
-                if(ui8PositionDifference < 8)
-                {
+                if(ui8PositionDifference < 8) {
                     ui8Gesture = ui8PositionDifference;
                     ui8Direction = COUNTER_CLOCKWISE;
                 }
@@ -424,8 +388,7 @@ GetGesture(uint8_t ui32WheelPosition)
     // If we made it through that without ever reporting a gesture, return an
     // invalid gesture.
     //
-    if(ui8Gesture == INVALID_CONVERTED_POSITION)
-    {
+    if(ui8Gesture == INVALID_CONVERTED_POSITION) {
         return(ui8Gesture);
     }
 
@@ -434,12 +397,9 @@ GetGesture(uint8_t ui32WheelPosition)
     // in our return value to indicate this direction to the PC.  Otherwise,
     // return the value as is.
     //
-    if(ui8Direction == COUNTER_CLOCKWISE)
-    {
+    if(ui8Direction == COUNTER_CLOCKWISE) {
         return(ui8Gesture |= 0x10);
-    }
-    else
-    {
+    } else {
         return(ui8Gesture);
     }
 }
@@ -540,8 +500,7 @@ main(void)
     //
     // Perform an LED startup sequence.
     //
-    for(ui8Loop = 0; ui8Loop < 16; ui8Loop++)
-    {
+    for(ui8Loop = 0; ui8Loop < 16; ui8Loop++) {
         LEDOutput(ui8Loop);
         DelayMs(10);
     }
@@ -570,8 +529,7 @@ main(void)
     //
     // Begin the main capsense loop.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Start by taking a fresh measurement from the wheel.  If it remains
         // set to ILLEGAL_SLIDER_WHEEL_POSITION, we will know it has not been
@@ -584,8 +542,7 @@ main(void)
         // If we registered a touch somewhere on the wheel, we will need to
         // figure out how to report that touch back to the GUI on the PC.
         //
-        if(g_ui32WheelPosition != ILLEGAL_SLIDER_WHEEL_POSITION)
-        {
+        if(g_ui32WheelPosition != ILLEGAL_SLIDER_WHEEL_POSITION) {
             //
             // First, make sure we're not reporting center button touches while
             // the wheel is active.
@@ -598,12 +555,9 @@ main(void)
             // off from "up" on the physical wheel.  We'll do that correction
             // here.
             //
-            if(g_ui32WheelPosition < 8)
-            {
+            if(g_ui32WheelPosition < 8) {
                 g_ui32WheelPosition += 64 - 8;
-            }
-            else
-            {
+            } else {
                 g_ui32WheelPosition -= 8;
             }
 
@@ -632,10 +586,9 @@ main(void)
             // reporting of toggles between two adjacent wheel positions.
             //
             if((ui8GestureDetected == 0) &&
-               ((ui8ConvertedWheelPosition <= 1) ||
-                (ui8ConvertedWheelPosition == 0x11) ||
-                (ui8ConvertedWheelPosition == 0x10)))
-            {
+                    ((ui8ConvertedWheelPosition <= 1) ||
+                     (ui8ConvertedWheelPosition == 0x11) ||
+                     (ui8ConvertedWheelPosition == 0x10))) {
                 //
                 // If we obtained a valid wheel position last time we ran this
                 // loop, keep our wheel position set to that instead of
@@ -643,8 +596,7 @@ main(void)
                 // absolute position and our recorded swipe magnitude.
                 //
                 if(g_ui32PreviousWheelPosition !=
-                   ILLEGAL_SLIDER_WHEEL_POSITION)
-                {
+                        ILLEGAL_SLIDER_WHEEL_POSITION) {
                     g_ui32WheelPosition = g_ui32PreviousWheelPosition;
                 }
 
@@ -667,15 +619,13 @@ main(void)
             // occurring.
             //
             if((ui8ConvertedWheelPosition != 0) &&
-               (ui8ConvertedWheelPosition != 16) &&
-               (ui8ConvertedWheelPosition != INVALID_CONVERTED_POSITION))
-            {
+                    (ui8ConvertedWheelPosition != 16) &&
+                    (ui8ConvertedWheelPosition != INVALID_CONVERTED_POSITION)) {
                 //
                 // If this is a new gesture, we will need to send the gesture
                 // start code.
                 //
-                if(ui8GestureDetected == 0)
-                {
+                if(ui8GestureDetected == 0) {
                     //
                     // Remember that we've started a gesture.
                     //
@@ -696,17 +646,14 @@ main(void)
                 ROM_UARTCharPut(UART0_BASE, ui8ConvertedWheelPosition);
                 ROM_UARTCharPut(UART0_BASE, (g_ui32WheelPosition +
                                              GESTURE_POSITION_OFFSET));
-            }
-            else
-            {
+            } else {
                 //
                 // If we get here, the wheel has been touched, but there hasn't
                 // been any sliding recently.  If there hasn't been any sliding
                 // AT ALL, then this is a "press" event, and we need to start
                 // sending press-style updates to the PC
                 //
-                if(ui8GestureDetected == 0)
-                {
+                if(ui8GestureDetected == 0) {
                     //
                     // Increment our wheel counter.
                     //
@@ -715,8 +662,7 @@ main(void)
                     //
                     // If the user's finger is still in the same place...
                     //
-                    if(ui32WheelTouchCounter >= WHEEL_TOUCH_DELAY)
-                    {
+                    if(ui32WheelTouchCounter >= WHEEL_TOUCH_DELAY) {
                         //
                         // Transmit wheel position (twice) via UART to PC.
                         //
@@ -726,9 +672,7 @@ main(void)
                         ROM_UARTCharPut(UART0_BASE, (g_ui32WheelPosition +
                                                      WHEEL_POSITION_OFFSET));
                     }
-                }
-                else
-                {
+                } else {
                     //
                     // We've received a slide input somewhat recently, but not
                     // during this loop instance.  This most likely means that
@@ -749,24 +693,20 @@ main(void)
             // through the loop.
             //
             g_ui32PreviousWheelPosition = g_ui32WheelPosition;
-        }
-        else
-        {
+        } else {
             //
             // If we get here, there were no touches recorded on the slider
             // wheel.  We should check our middle button to see if it has been
             // pressed, and clean up our recorded state to prepare for future
             // possible wheel-touch events.
             //
-            if(TI_CAPT_Button(&g_sMiddleButton))
-            {
+            if(TI_CAPT_Button(&g_sMiddleButton)) {
                 //
                 // The middle button is currently being touched.  If this is a
                 // new touch event, we need to report it to the PC and also
                 // toggle our center LED.
                 //
-                if(ui8CenterButtonTouched == 0)
-                {
+                if(ui8CenterButtonTouched == 0) {
                     //
                     // Transmit center button code (twice) via UART to PC.
                     //
@@ -781,19 +721,14 @@ main(void)
                     //
                     // Toggle the center LED.
                     //
-                    if(ROM_GPIOPinRead(GPIO_PORTB_BASE, GPIO_PIN_5))
-                    {
+                    if(ROM_GPIOPinRead(GPIO_PORTB_BASE, GPIO_PIN_5)) {
                         ROM_GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_5, 0);
-                    }
-                    else
-                    {
+                    } else {
                         ROM_GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_5,
                                          GPIO_PIN_5);
                     }
                 }
-            }
-            else
-            {
+            } else {
                 //
                 // No touch was registered at all (Not wheel or center button).
                 // Set our center button state to "untouched", and perform any
@@ -805,14 +740,12 @@ main(void)
                 // If there haven't been any gestures recently...
                 //
                 if((ui8ConvertedWheelPosition == INVALID_CONVERTED_POSITION) ||
-                   (ui8GestureDetected == 0))
-                {
+                        (ui8GestureDetected == 0)) {
                     //
                     // ... but we do have a valid "previous" wheel position...
                     //
                     if(g_ui32PreviousWheelPosition !=
-                       ILLEGAL_SLIDER_WHEEL_POSITION)
-                    {
+                            ILLEGAL_SLIDER_WHEEL_POSITION) {
                         //
                         // ... then we probably just had a button-press event
                         // on the wheel.  Send our position data to the computer
@@ -833,8 +766,7 @@ main(void)
                     }
                 }
 
-                if(ui8GestureDetected == 1)
-                {
+                if(ui8GestureDetected == 1) {
                     //
                     // If we were in the middle of a gesture, a "no touch"
                     // event constitutes a "release".  We need to signal this

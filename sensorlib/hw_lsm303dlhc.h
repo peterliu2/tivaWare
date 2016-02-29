@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -67,10 +67,10 @@
 #define LSM303DLHC_O_FIFO_CTRL  0x2E        // FIFO control
 #define LSM303DLHC_O_FIFO_SRC   0x2F        // FIFO_SRC register
 #define LSM303DLHC_O_INT1_CFG_A 0x30        // INT1 interrupt generation; this
-                                            // register only writable after
-                                            // boot
+// register only writable after
+// boot
 #define LSM303DLHC_O_INT1_SRC_A 0x31        // interrupt source register (read
-                                            // only)
+// only)
 #define LSM303DLHC_O_MAG_TEMP_OUT_MSB                                         \
                                 0x31        // Temperature bits 11-4
 #define LSM303DLHC_O_MAG_TEMP_OUT_LSB                                         \
@@ -79,8 +79,8 @@
 #define LSM303DLHC_O_INT1_DURATION_A                                          \
                                 0x33        // INT1 duration register
 #define LSM303DLHC_O_INT2_CFG_A 0x34        // INT2 interrupt generation; this
-                                            // register only writable after
-                                            // boot
+// register only writable after
+// boot
 #define LSM303DLHC_O_INT2_SRC_A 0x35        // INT2 source register (read only)
 #define LSM303DLHC_O_INT2_THS_A 0x36        // INT2 threshold
 #define LSM303DLHC_O_INT2_DURATION_A                                          \
@@ -95,23 +95,23 @@
                                 0x3B        // Time Limit A register
 #define LSM303DLHC_O_TIME_LATENCY_A                                           \
                                 0x3C        // Time Latency A register; 1 LSB =
-                                            // 1/ODR; TLA7 through TLA0 define
-                                            // the time interval that starts
-                                            // after the first click detection
-                                            // where the click detection
-                                            // procedure is disabled, in cases
-                                            // where the device is configured
-                                            // for double click detection
+// 1/ODR; TLA7 through TLA0 define
+// the time interval that starts
+// after the first click detection
+// where the click detection
+// procedure is disabled, in cases
+// where the device is configured
+// for double click detection
 #define LSM303DLHC_O_TIME_WINDOW_A                                            \
                                 0x3D        // Time Window A register; 1 LSB =
-                                            // 1/ODR; TW7 through TW0 define
-                                            // the maximum interval of time
-                                            // that can elapse after the end of
-                                            // the latency interval in which
-                                            // the click detection procedure
-                                            // can start, in cases where the
-                                            // device is configured for double
-                                            // click detection
+// 1/ODR; TW7 through TW0 define
+// the maximum interval of time
+// that can elapse after the end of
+// the latency interval in which
+// the click detection procedure
+// can start, in cases where the
+// device is configured for double
+// click detection
 
 //*****************************************************************************
 //
@@ -194,16 +194,16 @@
 //*****************************************************************************
 #define LSM303DLHC_MAG_SR_LOCK_M                                              \
                                 0x02        // Data output register lock; once
-                                            // a new set of measurements is
-                                            // available, this bit is set when
-                                            // the first magnetic field data
-                                            // register has been read
+// a new set of measurements is
+// available, this bit is set when
+// the first magnetic field data
+// register has been read
 #define LSM303DLHC_MAG_SR_LOCK_LOCKED                                         \
                                 0x02
 #define LSM303DLHC_MAG_SR_DATA_M                                              \
                                 0x01        // Data ready bit; this bit is set
-                                            // when a new set of measures are
-                                            // available
+// when a new set of measures are
+// available
 #define LSM303DLHC_MAG_SR_DATA_READ                                           \
                                 0x01
 
@@ -272,7 +272,7 @@
                                 0x80        // Low power mode
 #define LSM303DLHC_CTRL1_ODR_5376HZ                                           \
                                 0x90        // 1.344KHz normal, 5.376KHz low
-                                            // power
+// power
 #define LSM303DLHC_CTRL1_POWER_M                                              \
                                 0x08        // Power control
 #define LSM303DLHC_CTRL1_POWER_LOWPOW                                         \
@@ -299,7 +299,7 @@
                                 0xC0        // high pass filter mode selection
 #define LSM303DLHC_CTRL2_HPMODE_NORMAL_RESET                                  \
                                 0x00        // normal mode (reset reading
-                                            // HP_RESET_FILTER)
+// HP_RESET_FILTER)
 #define LSM303DLHC_CTRL2_HPMODE_REFERENCE                                     \
                                 0x40        // reference signal for filtering
 #define LSM303DLHC_CTRL2_HPMODE_NORMAL                                        \
@@ -308,7 +308,7 @@
                                 0xC0        // autoreset on interrupt event
 #define LSM303DLHC_CTRL2_HPCUTOFF_M                                           \
                                 0x30        // high pass filter cut-off
-                                            // frequency selection
+// frequency selection
 #define LSM303DLHC_CTRL2_FDS_M  0x08        // Filtered data selection
 #define LSM303DLHC_CTRL2_FDS_BYPASSED                                         \
                                 0x00
@@ -316,21 +316,21 @@
                                 0x08
 #define LSM303DLHC_CTRL2_HPCLICK_M                                            \
                                 0x04        // High pass filter enabled for
-                                            // CLICK function
+// CLICK function
 #define LSM303DLHC_CTRL2_HPCLICK_BYPASSED                                     \
                                 0x00
 #define LSM303DLHC_CTRL2_HPCLICK_FILTERED                                     \
                                 0x04
 #define LSM303DLHC_CTRL2_HPIS2_M                                              \
                                 0x02        // High pass filter enabled for AOI
-                                            // function on Interrupt 2
+// function on Interrupt 2
 #define LSM303DLHC_CTRL2_HPIS2_BYPASSED                                       \
                                 0x00
 #define LSM303DLHC_CTRL2_HPIS2_FILTERED                                       \
                                 0x02
 #define LSM303DLHC_CTRL2_HPIS1_M                                              \
                                 0x01        // High pass filter enabled for AOI
-                                            // function on Interrupt 1
+// function on Interrupt 1
 #define LSM303DLHC_CTRL2_HPIS1_BYPASSED                                       \
                                 0x00
 #define LSM303DLHC_CTRL2_HPIS1_FILTERED                                       \
@@ -396,9 +396,9 @@
 //
 //*****************************************************************************
 #define LSM303DLHC_CTRL4_BDU_M  0x80        // Block data update; default
-                                            // value: 0 (0: continuous update;
-                                            // 1: output registers not updated
-                                            // until MSB and LSB reading)
+// value: 0 (0: continuous update;
+// 1: output registers not updated
+// until MSB and LSB reading)
 #define LSM303DLHC_CTRL4_BDU_CONTINUOUS                                       \
                                 0x00
 #define LSM303DLHC_CTRL4_BDU_MSBLSB                                           \
@@ -410,7 +410,7 @@
 #define LSM303DLHC_CTRL4_ENDIAN_BIG                                           \
                                 0x40
 #define LSM303DLHC_CTRL4_FS_M   0x30        // full scale selection; default
-                                            // value: 0
+// value: 0
 #define LSM303DLHC_CTRL4_FS_2G  0x00
 #define LSM303DLHC_CTRL4_FS_4G  0x10
 #define LSM303DLHC_CTRL4_FS_8G  0x20
@@ -422,7 +422,7 @@
 #define LSM303DLHC_CTRL4_RESOLUTION_HIGH                                      \
                                 0x08
 #define LSM303DLHC_CTRL4_SIM_M  0x01        // SPI Serial Interface Mode
-                                            // selection (default = 0, 4-wire)
+// selection (default = 0, 4-wire)
 #define LSM303DLHC_CTRL4_SIM_4WIRE                                            \
                                 0x00
 #define LSM303DLHC_CTRL4_SIM_3WIRE                                            \
@@ -460,18 +460,18 @@
                                 0x04
 #define LSM303DLHC_CTRL5_LIR_INT2_M                                           \
                                 0x02        // Latch interrupt request on
-                                            // INT2_SRC register, with INT2_SRC
-                                            // register cleared by reading
-                                            // INT2_SRC itself; default value:
-                                            // 0
+// INT2_SRC register, with INT2_SRC
+// register cleared by reading
+// INT2_SRC itself; default value:
+// 0
 #define LSM303DLHC_CTRL5_LIR_INT2_DIS                                         \
                                 0x00
 #define LSM303DLHC_CTRL5_LIR_INT2_EN                                          \
                                 0x02
 #define LSM303DLHC_CTRL5_D4D_INT2_M                                           \
                                 0x01        // 4D enable: 4D detection is
-                                            // enabled on INT2 when 6D bit on
-                                            // INT2_CFG is set to 1
+// enabled on INT2 when 6D bit on
+// INT2_CFG is set to 1
 #define LSM303DLHC_CTRL5_D4D_INT2_DIS                                         \
                                 0x00
 #define LSM303DLHC_CTRL5_D4D_INT2_EN                                          \
@@ -491,21 +491,21 @@
                                 0x80
 #define LSM303DLHC_CTRL6_I2_INT1_M                                            \
                                 0x40        // Interrupt 1 on PAD2; default
-                                            // value 0
+// value 0
 #define LSM303DLHC_CTRL6_I2_INT1_DIS                                          \
                                 0x00
 #define LSM303DLHC_CTRL6_I2_INT1_EN                                           \
                                 0x40
 #define LSM303DLHC_CTRL6_I2_INT2_M                                            \
                                 0x20        // Interrupt 2 on PAD2; default
-                                            // value 0
+// value 0
 #define LSM303DLHC_CTRL6_I2_INT2_DIS                                          \
                                 0x00
 #define LSM303DLHC_CTRL6_I2_INT2_EN                                           \
                                 0x20
 #define LSM303DLHC_CTRL6_BOOT_I2_M                                            \
                                 0x10        // Reboot memory content on PAD2;
-                                            // default value: 0
+// default value: 0
 #define LSM303DLHC_CTRL6_BOOT_I2_DIS                                          \
                                 0x00
 #define LSM303DLHC_CTRL6_BOOT_I2_EN                                           \
@@ -518,8 +518,8 @@
                                 0x08
 #define LSM303DLHC_CTRL6_H_LACTIVE_M                                          \
                                 0x02        // interrupt active configuration
-                                            // on INT; default value 0 (0:
-                                            // high; 1:low)
+// on INT; default value 0 (0:
+// high; 1:low)
 #define LSM303DLHC_CTRL6_H_LACTIVE_HI                                         \
                                 0x00
 #define LSM303DLHC_CTRL6_H_LACTIVE_LOW                                        \
@@ -583,8 +583,8 @@
 //*****************************************************************************
 #define LSM303DLHC_FIFO_SRC_FTH_M                                             \
                                 0x80        // FIFO threshold is greater than
-                                            // or equal to level or less than
-                                            // level
+// or equal to level or less than
+// level
 #define LSM303DLHC_FIFO_SRC_FTH_LT                                            \
                                 0x00
 #define LSM303DLHC_FIFO_SRC_FTH_GEQ                                           \
@@ -599,7 +599,7 @@
                                 0x20
 #define LSM303DLHC_FIFO_SRC_STORE_SAMPLES_M                                   \
                                 0x1F        // FIFO stored data level of the
-                                            // unread samples
+// unread samples
 #define LSM303DLHC_FIFO_SRC_STORE_SAMPLES_S                                   \
                                 0
 
@@ -611,7 +611,7 @@
 //*****************************************************************************
 #define LSM303DLHC_INT1_CFG_A_ANDOR_M                                         \
                                 0x80        // AND/OR combination of Interrupt
-                                            // events; default value: 0
+// events; default value: 0
 #define LSM303DLHC_INT1_CFG_A_ANDOR_OR                                        \
                                 0x00
 #define LSM303DLHC_INT1_CFG_A_ANDOR_AND                                       \
@@ -622,62 +622,62 @@
                                 0x40
 #define LSM303DLHC_INT1_CFG_A_ZHI_M                                           \
                                 0x20        // enable interrupt generation on
-                                            // Z-hi event
+// Z-hi event
 #define LSM303DLHC_INT1_CFG_A_ZHI_EN                                          \
                                 0x20
 #define LSM303DLHC_INT1_CFG_A_ZUPE_M                                          \
                                 0x20        // enable interrupt generation on
-                                            // Z-hi event
+// Z-hi event
 #define LSM303DLHC_INT1_CFG_A_ZUPE_EN                                         \
                                 0x20
 #define LSM303DLHC_INT1_CFG_A_ZDOWNE_M                                        \
                                 0x10        // enable interrupt generation on
-                                            // Z-low event
+// Z-low event
 #define LSM303DLHC_INT1_CFG_A_ZDOWNE_EN                                       \
                                 0x10
 #define LSM303DLHC_INT1_CFG_A_ZLI_M                                           \
                                 0x10        // enable interrupt generation on
-                                            // Z-low event
+// Z-low event
 #define LSM303DLHC_INT1_CFG_A_ZLI_EN                                          \
                                 0x10
 #define LSM303DLHC_INT1_CFG_A_YUPE_M                                          \
                                 0x08        // enable interrupt generation on
-                                            // Y-hi event
+// Y-hi event
 #define LSM303DLHC_INT1_CFG_A_YUPE_EN                                         \
                                 0x08
 #define LSM303DLHC_INT1_CFG_A_YHI_M                                           \
                                 0x08        // enable interrupt generation on
-                                            // Y-hi event
+// Y-hi event
 #define LSM303DLHC_INT1_CFG_A_YHI_EN                                          \
                                 0x08
 #define LSM303DLHC_INT1_CFG_A_YDOWNE_M                                        \
                                 0x04        // enable interrupt generation on
-                                            // Y-low event
+// Y-low event
 #define LSM303DLHC_INT1_CFG_A_YDOWNE_EN                                       \
                                 0x04
 #define LSM303DLHC_INT1_CFG_A_YLI_M                                           \
                                 0x04        // enable interrupt generation on
-                                            // Y-low event
+// Y-low event
 #define LSM303DLHC_INT1_CFG_A_YLI_EN                                          \
                                 0x04
 #define LSM303DLHC_INT1_CFG_A_XHI_M                                           \
                                 0x02        // enable interrupt generation on
-                                            // X-hi event
+// X-hi event
 #define LSM303DLHC_INT1_CFG_A_XHI_EN                                          \
                                 0x02
 #define LSM303DLHC_INT1_CFG_A_XUPE_M                                          \
                                 0x02        // enable interrupt generation on
-                                            // X-hi event
+// X-hi event
 #define LSM303DLHC_INT1_CFG_A_XUPE_EN                                         \
                                 0x02
 #define LSM303DLHC_INT1_CFG_A_XLI_M                                           \
                                 0x01        // enable interrupt generation on
-                                            // X-low event
+// X-low event
 #define LSM303DLHC_INT1_CFG_A_XLI_EN                                          \
                                 0x01
 #define LSM303DLHC_INT1_CFG_A_XDOWNE_M                                        \
                                 0x01        // enable interrupt generation on
-                                            // X-low event
+// X-low event
 #define LSM303DLHC_INT1_CFG_A_XDOWNE_EN                                       \
                                 0x01
 
@@ -758,7 +758,7 @@
                                 0x80
 #define LSM303DLHC_INT1_THS_A_THS_M                                           \
                                 0x7F        // THS[6-0] Interrupt threshold,
-                                            // default 0x0
+// default 0x0
 #define LSM303DLHC_INT1_THS_A_THS_S                                           \
                                 0
 
@@ -787,7 +787,7 @@
 //*****************************************************************************
 #define LSM303DLHC_INT2_CFG_A_ANDOR_M                                         \
                                 0x80        // AND/OR combination of Interrupt
-                                            // events; default value: 0
+// events; default value: 0
 #define LSM303DLHC_INT2_CFG_A_ANDOR_OR                                        \
                                 0x00
 #define LSM303DLHC_INT2_CFG_A_ANDOR_AND                                       \
@@ -798,32 +798,32 @@
                                 0x40
 #define LSM303DLHC_INT2_CFG_A_ZHI_M                                           \
                                 0x20        // enable interrupt generation on
-                                            // Z-hi event
+// Z-hi event
 #define LSM303DLHC_INT2_CFG_A_ZHI_EN                                          \
                                 0x20
 #define LSM303DLHC_INT2_CFG_A_ZLI_M                                           \
                                 0x10        // enable interrupt generation on
-                                            // Z-low event
+// Z-low event
 #define LSM303DLHC_INT2_CFG_A_ZLI_EN                                          \
                                 0x10
 #define LSM303DLHC_INT2_CFG_A_YHI_M                                           \
                                 0x08        // enable interrupt generation on
-                                            // Y-hi event
+// Y-hi event
 #define LSM303DLHC_INT2_CFG_A_YHI_EN                                          \
                                 0x08
 #define LSM303DLHC_INT2_CFG_A_YLI_M                                           \
                                 0x04        // enable interrupt generation on
-                                            // Y-low event
+// Y-low event
 #define LSM303DLHC_INT2_CFG_A_YLI_EN                                          \
                                 0x04
 #define LSM303DLHC_INT2_CFG_A_XHI_M                                           \
                                 0x02        // enable interrupt generation on
-                                            // X-hi event
+// X-hi event
 #define LSM303DLHC_INT2_CFG_A_XHI_EN                                          \
                                 0x02
 #define LSM303DLHC_INT2_CFG_A_XLI_M                                           \
                                 0x01        // enable interrupt generation on
-                                            // X-low event
+// X-low event
 #define LSM303DLHC_INT2_CFG_A_XLI_EN                                          \
                                 0x01
 
@@ -882,7 +882,7 @@
                                 0x80
 #define LSM303DLHC_INT2_THS_A_THS_M                                           \
                                 0x7F        // THS[6-0] Interrupt threshold,
-                                            // default 0x0
+// default 0x0
 #define LSM303DLHC_INT2_THS_A_THS_S                                           \
                                 0
 
@@ -911,42 +911,42 @@
 //*****************************************************************************
 #define LSM303DLHC_CLICK_CFG_A_ZD_M                                           \
                                 0x20        // Enable interrupt double click on
-                                            // Z axis
+// Z axis
 #define LSM303DLHC_CLICK_CFG_A_ZD_DIS                                         \
                                 0x00
 #define LSM303DLHC_CLICK_CFG_A_ZD_EN                                          \
                                 0x20
 #define LSM303DLHC_CLICK_CFG_A_ZS_M                                           \
                                 0x10        // Enable interrupt single click on
-                                            // Z axis
+// Z axis
 #define LSM303DLHC_CLICK_CFG_A_ZS_DIS                                         \
                                 0x00
 #define LSM303DLHC_CLICK_CFG_A_ZS_EN                                          \
                                 0x10
 #define LSM303DLHC_CLICK_CFG_A_YD_M                                           \
                                 0x08        // Enable interrupt double click on
-                                            // Y axis
+// Y axis
 #define LSM303DLHC_CLICK_CFG_A_YD_DIS                                         \
                                 0x00
 #define LSM303DLHC_CLICK_CFG_A_YD_EN                                          \
                                 0x08
 #define LSM303DLHC_CLICK_CFG_A_YS_M                                           \
                                 0x04        // Enable interrupt single click on
-                                            // Y axis
+// Y axis
 #define LSM303DLHC_CLICK_CFG_A_YS_DIS                                         \
                                 0x00
 #define LSM303DLHC_CLICK_CFG_A_YS_EN                                          \
                                 0x04
 #define LSM303DLHC_CLICK_CFG_A_XD_M                                           \
                                 0x02        // Enable interrupt double click on
-                                            // X axis
+// X axis
 #define LSM303DLHC_CLICK_CFG_A_XD_DIS                                         \
                                 0x00
 #define LSM303DLHC_CLICK_CFG_A_XD_EN                                          \
                                 0x02
 #define LSM303DLHC_CLICK_CFG_A_XS_M                                           \
                                 0x01        // Enable interrupt single click on
-                                            // X axis
+// X axis
 #define LSM303DLHC_CLICK_CFG_A_XS_DIS                                         \
                                 0x00
 #define LSM303DLHC_CLICK_CFG_A_XS_EN                                          \
@@ -1001,13 +1001,13 @@
 //*****************************************************************************
 #define LSM303DLHC_CLICK_THS_A_THS_M                                          \
                                 0x7F        // Threshold; 1 LSB = full-scale /
-                                            // 128; THS6 through THS0 define
-                                            // the threshold which is used by
-                                            // the system to start the click
-                                            // detection procedure; the
-                                            // threshold value is expressed
-                                            // over 7 bits as an unsigned
-                                            // number
+// 128; THS6 through THS0 define
+// the threshold which is used by
+// the system to start the click
+// detection procedure; the
+// threshold value is expressed
+// over 7 bits as an unsigned
+// number
 #define LSM303DLHC_CLICK_THS_A_THS_S                                          \
                                 0
 
@@ -1019,15 +1019,15 @@
 //*****************************************************************************
 #define LSM303DLHC_TIME_LIMIT_A_TLI_M                                         \
                                 0x7F        // Time Limit; 1 LSB = 1/ODR; TLI7
-                                            // through TLI0 define the maximum
-                                            // time interval that can elapse
-                                            // between the start of the click
-                                            // detection procedure (the
-                                            // acceleration on the selected
-                                            // channel exceeds the programmed
-                                            // threshold) and when the
-                                            // acceleration goes back below the
-                                            // threshold
+// through TLI0 define the maximum
+// time interval that can elapse
+// between the start of the click
+// detection procedure (the
+// acceleration on the selected
+// channel exceeds the programmed
+// threshold) and when the
+// acceleration goes back below the
+// threshold
 #define LSM303DLHC_TIME_LIMIT_A_TLI_S                                         \
                                 0
 

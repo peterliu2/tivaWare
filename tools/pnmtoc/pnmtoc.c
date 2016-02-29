@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -88,13 +88,11 @@ GetNumColors(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
     // Loop through the pixels of the image.
     //
     g_ui32NumColors = 0;
-    for(ui32Count = 0; ui32Count < (ui32Width * ui32Height); ui32Count++)
-    {
+    for(ui32Count = 0; ui32Count < (ui32Width * ui32Height); ui32Count++) {
         //
         // Extract the color of this pixel.
         //
-        if(bMono)
-        {
+        if(bMono) {
             //
             // For a mono pixel, just set the R, G and B components to the
             // sample value from the file.
@@ -102,9 +100,7 @@ GetNumColors(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
             ui32Color = ((pui8Data[ui32Count] << 16) |
                          (pui8Data[ui32Count] << 8) |
                          pui8Data[ui32Count]);
-        }
-        else
-        {
+        } else {
             ui32Color = ((pui8Data[ui32Count * 3] << 16) |
                          (pui8Data[(ui32Count * 3) + 1] << 8) |
                          pui8Data[(ui32Count * 3) + 2]);
@@ -114,10 +110,8 @@ GetNumColors(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
         // Loop through the current palette to see if this color is already in
         // the palette.
         //
-        for(ui32Idx = 0; ui32Idx < g_ui32NumColors; ui32Idx++)
-        {
-            if(g_pui32Colors[ui32Idx] == ui32Color)
-            {
+        for(ui32Idx = 0; ui32Idx < g_ui32NumColors; ui32Idx++) {
+            if(g_pui32Colors[ui32Idx] == ui32Color) {
                 break;
             }
         }
@@ -125,15 +119,13 @@ GetNumColors(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
         //
         // See if this color is already in the palette.
         //
-        if(ui32Idx == g_ui32NumColors)
-        {
+        if(ui32Idx == g_ui32NumColors) {
             //
             // If there are already 256 colors in the palette, then there is no
             // room for this color.  Simply return and indicate that the
             // palette is too big.
             //
-            if(g_ui32NumColors == 256)
-            {
+            if(g_ui32NumColors == 256) {
                 g_ui32NumColors = 256 * 256 * 256;
                 return;
             }
@@ -172,28 +164,23 @@ Encode1BPP(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
     // Loop through the rows of the image.
     //
     ui32Length = 0;
-    while(ui32Height--)
-    {
+    while(ui32Height--) {
         //
         // Loop through the output bytes of this row.
         //
-        for(ui32X = 0; ui32X < ui32Width; ui32X += 8)
-        {
+        for(ui32X = 0; ui32X < ui32Width; ui32X += 8) {
             //
             // Loop through the columns in this byte.
             //
-            for(ui32Bit = 8, ui32Byte = 0; ui32Bit > 0; ui32Bit--)
-            {
+            for(ui32Bit = 8, ui32Byte = 0; ui32Bit > 0; ui32Bit--) {
                 //
                 // See if this column exists in the image.
                 //
-                if((ui32X + (8 - ui32Bit)) < ui32Width)
-                {
+                if((ui32X + (8 - ui32Bit)) < ui32Width) {
                     //
                     // Extract the color of this pixel.
                     //
-                    if(bMono)
-                    {
+                    if(bMono) {
                         //
                         // For a mono pixel, just set the R, G and B components
                         // to the sample value from the file.
@@ -201,9 +188,7 @@ Encode1BPP(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
                         ui32Color = ((*pui8Data << 16) | (*pui8Data << 8) |
                                      *pui8Data);
                         pui8Data++;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Extract the 3 components for this color pixel
                         //
@@ -215,16 +200,12 @@ Encode1BPP(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
                     //
                     // Select the entry of the palette that matches this pixel.
                     //
-                    for(ui32Idx = 0; ui32Idx < g_ui32NumColors; ui32Idx++)
-                    {
-                        if(g_pui32Colors[ui32Idx] == ui32Color)
-                        {
+                    for(ui32Idx = 0; ui32Idx < g_ui32NumColors; ui32Idx++) {
+                        if(g_pui32Colors[ui32Idx] == ui32Color) {
                             break;
                         }
                     }
-                }
-                else
-                {
+                } else {
                     //
                     // This column does not exist in the image, so provide a
                     // zero padding bit in its place.
@@ -273,18 +254,15 @@ Encode4BPP(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
     // Loop through the rows of the image.
     //
     ui32Length = 0;
-    while(ui32Height--)
-    {
+    while(ui32Height--) {
         //
         // Loop through the output bytes of this row.
         //
-        for(ui32X = 0; ui32X < ui32Width; ui32X += 2)
-        {
+        for(ui32X = 0; ui32X < ui32Width; ui32X += 2) {
             //
             // Extract the color of this pixel.
             //
-            if(bMono)
-            {
+            if(bMono) {
                 //
                 // For a mono pixel, just set the R, G and B components
                 // to the sample value from the file.
@@ -292,9 +270,7 @@ Encode4BPP(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
                 ui32Color = ((*pui8Data << 16) | (*pui8Data << 8) |
                              *pui8Data);
                 pui8Data++;
-            }
-            else
-            {
+            } else {
                 //
                 // Extract the 3 components for this color pixel
                 //
@@ -306,10 +282,8 @@ Encode4BPP(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
             //
             // Select the entry of the palette that matches this pixel.
             //
-            for(ulIdx1 = 0; ulIdx1 < g_ui32NumColors; ulIdx1++)
-            {
-                if(g_pui32Colors[ulIdx1] == ui32Color)
-                {
+            for(ulIdx1 = 0; ulIdx1 < g_ui32NumColors; ulIdx1++) {
+                if(g_pui32Colors[ulIdx1] == ui32Color) {
                     break;
                 }
             }
@@ -317,21 +291,17 @@ Encode4BPP(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
             //
             // See if the second pixel exists in the image.
             //
-            if((ui32X + 1) == ui32Width)
-            {
+            if((ui32X + 1) == ui32Width) {
                 //
                 // The second pixel does not exist in the image, so provide a
                 // zero padding nibble in its place.
                 //
                 ulIdx2 = 0;
-            }
-            else
-            {
+            } else {
                 //
                 // Extract the color of the second pixel.
                 //
-                if(bMono)
-                {
+                if(bMono) {
                     //
                     // For a mono pixel, just set the R, G and B components
                     // to the sample value from the file.
@@ -339,9 +309,7 @@ Encode4BPP(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
                     ui32Color = ((*pui8Data << 16) | (*pui8Data << 8) |
                                  *pui8Data);
                     pui8Data++;
-                }
-                else
-                {
+                } else {
                     //
                     // Extract the 3 components for this color pixel
                     //
@@ -353,10 +321,8 @@ Encode4BPP(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
                 //
                 // Select the entry of the palette that matches this pixel.
                 //
-                for(ulIdx2 = 0; ulIdx2 < g_ui32NumColors; ulIdx2++)
-                {
-                    if(g_pui32Colors[ulIdx2] == ui32Color)
-                    {
+                for(ulIdx2 = 0; ulIdx2 < g_ui32NumColors; ulIdx2++) {
+                    if(g_pui32Colors[ulIdx2] == ui32Color) {
                         break;
                     }
                 }
@@ -398,18 +364,15 @@ Encode8BPP(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
     // Loop through the rows of the image.
     //
     ui32Length = 0;
-    while(ui32Height--)
-    {
+    while(ui32Height--) {
         //
         // Loop through the columns of the image.
         //
-        for(ui32X = 0; ui32X < ui32Width; ui32X++)
-        {
+        for(ui32X = 0; ui32X < ui32Width; ui32X++) {
             //
             // Extract the color of this pixel.
             //
-            if(bMono)
-            {
+            if(bMono) {
                 //
                 // For a mono pixel, just set the R, G and B components
                 // to the sample value from the file.
@@ -417,9 +380,7 @@ Encode8BPP(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
                 ui32Color = ((*pui8Data << 16) | (*pui8Data << 8) |
                              *pui8Data);
                 pui8Data++;
-            }
-            else
-            {
+            } else {
                 //
                 // Extract the 3 components for this color pixel
                 //
@@ -431,10 +392,8 @@ Encode8BPP(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
             //
             // Select the entry of the palette that matches this pixel.
             //
-            for(ui32Idx = 0; ui32Idx < g_ui32NumColors; ui32Idx++)
-            {
-                if(g_pui32Colors[ui32Idx] == ui32Color)
-                {
+            for(ui32Idx = 0; ui32Idx < g_ui32NumColors; ui32Idx++) {
+                if(g_pui32Colors[ui32Idx] == ui32Color) {
                     break;
                 }
             }
@@ -489,19 +448,16 @@ CompressData(uint8_t *pui8Data, uint32_t ui32Length)
     //
     // Loop through the input data.
     //
-    for(ui32Count = 0; ui32Count < ui32Length; ui32Count++)
-    {
+    for(ui32Count = 0; ui32Count < ui32Length; ui32Count++) {
         //
         // Loop through the current dictionary.
         //
         for(ui32Idx = 0, ui32MatchLen = 0; ui32Idx < sizeof(pui8Dictionary);
-            ui32Idx++)
-        {
+                ui32Idx++) {
             //
             // See if this input byte matches this byte of the dictionary.
             //
-            if(pui8Dictionary[ui32Idx] == pui8Data[ui32Count])
-            {
+            if(pui8Dictionary[ui32Idx] == pui8Data[ui32Count]) {
                 //
                 // Loop through the next bytes of the input, comparing them to
                 // the next bytes of the dictionary.  This determines the
@@ -509,11 +465,9 @@ CompressData(uint8_t *pui8Data, uint32_t ui32Length)
                 // this portion of the dictonary.
                 //
                 for(ui32Size = 1;
-                    (ui32Idx + ui32Size) < sizeof(pui8Dictionary); ui32Size++)
-                {
+                        (ui32Idx + ui32Size) < sizeof(pui8Dictionary); ui32Size++) {
                     if(pui8Dictionary[ui32Idx + ui32Size] !=
-                       pui8Data[ui32Count + ui32Size])
-                    {
+                            pui8Data[ui32Count + ui32Size]) {
                         break;
                     }
                 }
@@ -525,8 +479,7 @@ CompressData(uint8_t *pui8Data, uint32_t ui32Length)
                 // longer than any previously found match, then remember the
                 // position and length of this match.
                 //
-                if((ui32Size > 2) && (ui32Size > ui32MatchLen))
-                {
+                if((ui32Size > 2) && (ui32Size > ui32MatchLen)) {
                     ui32Match = ui32Idx;
                     ui32MatchLen = ui32Size;
                 }
@@ -536,14 +489,12 @@ CompressData(uint8_t *pui8Data, uint32_t ui32Length)
         //
         // See if a match was found.
         //
-        if(ui32MatchLen != 0)
-        {
+        if(ui32MatchLen != 0) {
             //
             // The maximum length match that can be encoded is 9 bytes, so
             // limit the match length if required.
             //
-            if(ui32MatchLen > 9)
-            {
+            if(ui32MatchLen > 9) {
                 ui32MatchLen = 9;
             }
 
@@ -573,9 +524,7 @@ CompressData(uint8_t *pui8Data, uint32_t ui32Length)
             // dictionary match.
             //
             ui32Count += ui32MatchLen - 1;
-        }
-        else
-        {
+        } else {
             //
             // Save the literal byte in the encoded data stream.
             //
@@ -598,8 +547,7 @@ CompressData(uint8_t *pui8Data, uint32_t ui32Length)
         //
         // See if all eight flag bits have been used.
         //
-        if(ui8Bits == 8)
-        {
+        if(ui8Bits == 8) {
             //
             // Copy this 9 byte encoded sequence to the output.
             //
@@ -618,8 +566,7 @@ CompressData(uint8_t *pui8Data, uint32_t ui32Length)
     //
     // See if there is any residual data left in the encoded sequence buffer.
     //
-    if(ui8Bits != 0)
-    {
+    if(ui8Bits != 0) {
         //
         // Copy the residual data from the encoded sequence buffer to the
         // output.
@@ -632,8 +579,7 @@ CompressData(uint8_t *pui8Data, uint32_t ui32Length)
     // If the encoded length of the data is larger than the unencoded length of
     // the data, then discard the encoded data.
     //
-    if(ui32EncodedLength > ui32Length)
-    {
+    if(ui32EncodedLength > ui32Length) {
         free(pui8Output);
         return(ui32Length);
     }
@@ -676,36 +622,22 @@ OutputData(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
     // Print the image format based on the number of colors and the use of
     // compression.
     //
-    if(g_ui32NumColors <= 2)
-    {
-        if(ui32Length & 0x80000000)
-        {
+    if(g_ui32NumColors <= 2) {
+        if(ui32Length & 0x80000000) {
             printf("    IMAGE_FMT_1BPP_COMP,\n");
-        }
-        else
-        {
+        } else {
             printf("    IMAGE_FMT_1BPP_UNCOMP,\n");
         }
-    }
-    else if(g_ui32NumColors <= 16)
-    {
-        if(ui32Length & 0x80000000)
-        {
+    } else if(g_ui32NumColors <= 16) {
+        if(ui32Length & 0x80000000) {
             printf("    IMAGE_FMT_4BPP_COMP,\n");
-        }
-        else
-        {
+        } else {
             printf("    IMAGE_FMT_4BPP_UNCOMP,\n");
         }
-    }
-    else
-    {
-        if(ui32Length & 0x80000000)
-        {
+    } else {
+        if(ui32Length & 0x80000000) {
             printf("    IMAGE_FMT_8BPP_COMP,\n");
-        }
-        else
-        {
+        } else {
             printf("    IMAGE_FMT_8BPP_UNCOMP,\n");
         }
     }
@@ -727,11 +659,9 @@ OutputData(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
     //
     // For 4 and 8 bit per pixel formats, print out the color palette.
     //
-    if(g_ui32NumColors > 2)
-    {
+    if(g_ui32NumColors > 2) {
         printf("    %" PRIu32 ",\n", g_ui32NumColors - 1);
-        for(ui32Idx = 0; ui32Idx < g_ui32NumColors; ui32Idx++)
-        {
+        for(ui32Idx = 0; ui32Idx < g_ui32NumColors; ui32Idx++) {
             printf("    0x%02" PRIx32 ", 0x%02" PRIx32 ", 0x%02" PRIx32
                    ",\n", g_pui32Colors[ui32Idx] & 255,
                    (g_pui32Colors[ui32Idx] >> 8) & 255,
@@ -743,14 +673,12 @@ OutputData(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
     //
     // Loop through the image data bytes.
     //
-    for(ui32Idx = 0, ui32Count = 0; ui32Idx < ui32Length; ui32Idx++)
-    {
+    for(ui32Idx = 0, ui32Count = 0; ui32Idx < ui32Length; ui32Idx++) {
         //
         // If this is the first byte of an output line, then provide the
         // required indentation.
         //
-        if(ui32Count++ == 0)
-        {
+        if(ui32Count++ == 0) {
             printf("   ");
         }
 
@@ -762,8 +690,7 @@ OutputData(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
         //
         // If this is the last byte on an output line, then output a newline.
         //
-        if(ui32Count == 12)
-        {
+        if(ui32Count == 12) {
             printf("\n");
             ui32Count = 0;
         }
@@ -772,8 +699,7 @@ OutputData(uint8_t *pui8Data, uint32_t ui32Width, uint32_t ui32Height,
     //
     // If a partial line of bytes has been output, then output a newline.
     //
-    if(ui32Count != 0)
-    {
+    if(ui32Count != 0) {
         printf("\n");
     }
 
@@ -829,18 +755,15 @@ main(int argc, char *argv[])
     //
     // Loop through the switches found on the command line.
     //
-    while((i32Opt = getopt(argc, argv, "ch")) != -1)
-    {
+    while((i32Opt = getopt(argc, argv, "ch")) != -1) {
         //
         // Determine which switch was identified.
         //
-        switch(i32Opt)
-        {
+        switch(i32Opt) {
             //
             // The "-c" switch was found.
             //
-            case 'c':
-            {
+            case 'c': {
                 //
                 // Enable compression of the image.
                 //
@@ -856,8 +779,7 @@ main(int argc, char *argv[])
             // The "-h" switch, or an unknown switch, was found.
             //
             case 'h':
-            default:
-            {
+            default: {
                 //
                 // Display the usage information.
                 //
@@ -875,8 +797,7 @@ main(int argc, char *argv[])
     // There must be one additional argument on the command line, which
     // provides the name of the image file.
     //
-    if((optind + 1) != argc)
-    {
+    if((optind + 1) != argc) {
         //
         // Display the usage information.
         //
@@ -892,8 +813,7 @@ main(int argc, char *argv[])
     // Open the input image file.
     //
     pFile = fopen(argv[optind], "rb");
-    if(!pFile)
-    {
+    if(!pFile) {
         fprintf(stderr, "%s: Unable to open input file '%s'\n",
                 basename(argv[0]), argv[optind]);
         return(1);
@@ -910,8 +830,7 @@ main(int argc, char *argv[])
     // Allocate a memory buffer to store the input image file.
     //
     pui8Data = malloc(ui32Length);
-    if(!pui8Data)
-    {
+    if(!pui8Data) {
         fprintf(stderr, "%s: Unable to allocate buffer for file.\n",
                 basename(argv[0]));
         return(1);
@@ -920,8 +839,7 @@ main(int argc, char *argv[])
     //
     // Read the input image file into the memory buffer.
     //
-    if(fread(pui8Data, 1, ui32Length, pFile) != ui32Length)
-    {
+    if(fread(pui8Data, 1, ui32Length, pFile) != ui32Length) {
         fprintf(stderr, "%s: Unable to read file data.\n", basename(argv[0]));
         return(1);
     }
@@ -936,8 +854,7 @@ main(int argc, char *argv[])
     // to verify that the image file is a format that is recognized.
     //
     if((pui8Data[0] != 'P') || ((pui8Data[1] != '4') && (pui8Data[1] != '6') &&
-                                (pui8Data[1] != '5')))
-    {
+                                (pui8Data[1] != '5'))) {
         fprintf(stderr, "%s: '%s' is not a supported PNM file.\n",
                 basename(argv[0]), argv[1]);
         return(1);
@@ -956,14 +873,12 @@ main(int argc, char *argv[])
     //
     // Loop through the values to be read from the header.
     //
-    for(ui32Count = 0, ui32Max = 2; ui32Count < 3; )
-    {
+    for(ui32Count = 0, ui32Max = 2; ui32Count < 3; ) {
         //
         // Loop until a non-whitespace character is found.
         //
         while((pui8Data[ui32Max] == ' ') || (pui8Data[ui32Max] == '\t') ||
-              (pui8Data[ui32Max] == '\r') || (pui8Data[ui32Max] == '\n'))
-        {
+                (pui8Data[ui32Max] == '\r') || (pui8Data[ui32Max] == '\n')) {
             ui32Max++;
         }
 
@@ -971,13 +886,11 @@ main(int argc, char *argv[])
         // If this is a '#', then it starts a comment line.  Ignore comment
         // lines.
         //
-        if(pui8Data[ui32Max] == '#')
-        {
+        if(pui8Data[ui32Max] == '#') {
             //
             // Loop until the end of the line is found.
             //
-            while((pui8Data[ui32Max] != '\r') && (pui8Data[ui32Max] != '\n'))
-            {
+            while((pui8Data[ui32Max] != '\r') && (pui8Data[ui32Max] != '\n')) {
                 ui32Max++;
             }
 
@@ -990,19 +903,14 @@ main(int argc, char *argv[])
         //
         // Read this value from the file.
         //
-        if(ui32Count == 0)
-        {
-            if(sscanf(pui8Data + ui32Max, "%" PRIu32, &ui32Width) != 1)
-            {
+        if(ui32Count == 0) {
+            if(sscanf(pui8Data + ui32Max, "%" PRIu32, &ui32Width) != 1) {
                 fprintf(stderr, "%s: '%s' has an invalid width.\n",
                         basename(argv[0]), argv[1]);
                 return(1);
             }
-        }
-        else if(ui32Count == 1)
-        {
-            if(sscanf(pui8Data + ui32Max, "%" PRIu32, &ui32Height) != 1)
-            {
+        } else if(ui32Count == 1) {
+            if(sscanf(pui8Data + ui32Max, "%" PRIu32, &ui32Height) != 1) {
                 fprintf(stderr, "%s: '%s' has an invalid height.\n",
                         basename(argv[0]), argv[1]);
                 return(1);
@@ -1012,20 +920,16 @@ main(int argc, char *argv[])
             // We've finished reading the header if this is a bitmap so force
             // the loop to exit.
             //
-            if(bBitmap)
-            {
+            if(bBitmap) {
                 ui32Count = 2;
             }
-        }
-        else
-        {
+        } else {
             //
             // Read the maximum number of colors.  We ignore this value but
             // need to skip past it.  Note that, if this is a bitmap, we will
             // never get here.
             //
-            if(sscanf(pui8Data + ui32Max, "%" PRIu32, &ui32Count) != 1)
-            {
+            if(sscanf(pui8Data + ui32Max, "%" PRIu32, &ui32Count) != 1) {
                 fprintf(stderr, "%s: '%s' has an invalid maximum value.\n",
                         basename(argv[0]), argv[1]);
                 return(1);
@@ -1038,8 +942,7 @@ main(int argc, char *argv[])
         // Skip past this value.
         //
         while((pui8Data[ui32Max] != ' ') && (pui8Data[ui32Max] != '\t') &&
-              (pui8Data[ui32Max] != '\r') && (pui8Data[ui32Max] != '\n'))
-        {
+                (pui8Data[ui32Max] != '\r') && (pui8Data[ui32Max] != '\n')) {
             ui32Max++;
         }
     }
@@ -1047,8 +950,7 @@ main(int argc, char *argv[])
     //
     // Find the end of this line.
     //
-    while((pui8Data[ui32Max] != '\r') && (pui8Data[ui32Max] != '\n'))
-    {
+    while((pui8Data[ui32Max] != '\r') && (pui8Data[ui32Max] != '\n')) {
         ui32Max++;
     }
 
@@ -1056,16 +958,14 @@ main(int argc, char *argv[])
     // Skip this end of line marker.
     //
     ui32Max++;
-    if((pui8Data[ui32Max] == '\r') || (pui8Data[ui32Max] == '\n'))
-    {
+    if((pui8Data[ui32Max] == '\r') || (pui8Data[ui32Max] == '\n')) {
         ui32Max++;
     }
 
     //
     // Is this a bitmap?
     //
-    if(!bBitmap)
-    {
+    if(!bBitmap) {
         //
         // No - get the number of distinct colors in the image.
         //
@@ -1074,35 +974,28 @@ main(int argc, char *argv[])
         //
         // Determine how many colors are in the image.
         //
-        if(g_ui32NumColors <= 2)
-        {
+        if(g_ui32NumColors <= 2) {
             //
             // There are 1 or 2 colors in the image, so encode it with 1 bit
             // per pixel.
             //
             ui32Length = Encode1BPP(pui8Data + ui32Max, ui32Width, ui32Height,
                                     bMono);
-        }
-        else if(g_ui32NumColors <= 16)
-        {
+        } else if(g_ui32NumColors <= 16) {
             //
             // There are 3 through 16 colors in the image, so encode it with
             // 4 bits per pixel.
             //
             ui32Length = Encode4BPP(pui8Data + ui32Max, ui32Width, ui32Height,
                                     bMono);
-        }
-        else if(g_ui32NumColors <= 256)
-        {
+        } else if(g_ui32NumColors <= 256) {
             //
             // There are 17 through 256 colors in the image, so encode it with
             // 8 bits per pixel.
             //
             ui32Length = Encode8BPP(pui8Data + ui32Max, ui32Width, ui32Height,
                                     bMono);
-        }
-        else
-        {
+        } else {
             //
             // There are more than 256 colors in the image, which is not
             // supported.
@@ -1111,9 +1004,7 @@ main(int argc, char *argv[])
                     basename(argv[0]));
             return(1);
         }
-    }
-    else
-    {
+    } else {
         //
         // This is a bitmap so the palette consists of black and white only.
         //
@@ -1134,8 +1025,7 @@ main(int argc, char *argv[])
         // byte.  First check that the data we read is actually the correct
         // length.
         //
-        if((ui32Length - ui32Max) < (((ui32Width + 7) / 8) * ui32Height))
-        {
+        if((ui32Length - ui32Max) < (((ui32Width + 7) / 8) * ui32Height)) {
             fprintf(stderr, "%s: Image data truncated. Size %" PRIu32 "bytes "
                     "but dimensions are %" PRIu32 " x %" PRIu32 ".\n",
                     basename(argv[0]), (ui32Length - ui32Max), ui32Width,
@@ -1152,8 +1042,7 @@ main(int argc, char *argv[])
         // Invert the image data to make 1 bits foreground (white) and 0
         // bits background (black).
         //
-        for(ui32Count = 0; ui32Count < ui32Length; ui32Count++)
-        {
+        for(ui32Count = 0; ui32Count < ui32Length; ui32Count++) {
             *(pui8Data + ui32Max + ui32Count) =
                 ~(*(pui8Data + ui32Max + ui32Count));
         }
@@ -1162,8 +1051,7 @@ main(int argc, char *argv[])
     //
     // Compress the image data if requested.
     //
-    if(i32Compress)
-    {
+    if(i32Compress) {
         ui32Length = CompressData(pui8Data + ui32Max, ui32Length);
     }
 

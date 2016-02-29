@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -52,8 +52,7 @@
 // The CRC table for the polynomial C(x) = x^8 + x^2 + x + 1 (CRC-8-CCITT).
 //
 //*****************************************************************************
-static const uint8_t g_pui8Crc8CCITT[256] =
-{
+static const uint8_t g_pui8Crc8CCITT[256] = {
     0x00, 0x07, 0x0E, 0x09, 0x1C, 0x1B, 0x12, 0x15,
     0x38, 0x3F, 0x36, 0x31, 0x24, 0x23, 0x2A, 0x2D,
     0x70, 0x77, 0x7E, 0x79, 0x6C, 0x6B, 0x62, 0x65,
@@ -94,8 +93,7 @@ static const uint8_t g_pui8Crc8CCITT[256] =
 // CRC-16, also known as CRC-16-IBM and CRC-16-ANSI).
 //
 //*****************************************************************************
-static const uint16_t g_pui16Crc16[256] =
-{
+static const uint16_t g_pui16Crc16[256] = {
     0x0000, 0xC0C1, 0xC181, 0x0140, 0xC301, 0x03C0, 0x0280, 0xC241,
     0xC601, 0x06C0, 0x0780, 0xC741, 0x0500, 0xC5C1, 0xC481, 0x0440,
     0xCC01, 0x0CC0, 0x0D80, 0xCD41, 0x0F00, 0xCFC1, 0xCE81, 0x0E40,
@@ -137,8 +135,7 @@ static const uint16_t g_pui16Crc16[256] =
 // CRC32 as used in Ethernet, MPEG-2, PNG, etc.).
 //
 //*****************************************************************************
-static const uint32_t g_pui32Crc32[] =
-{
+static const uint32_t g_pui32Crc32[] = {
     0x00000000, 0x77073096, 0xee0e612c, 0x990951ba,
     0x076dc419, 0x706af48f, 0xe963a535, 0x9e6495a3,
     0x0edb8832, 0x79dcb8a4, 0xe0d5e91e, 0x97d2d988,
@@ -271,8 +268,7 @@ Crc8CCITT(uint8_t ui8Crc, const uint8_t *pui8Data, uint32_t ui32Count)
     // If the data buffer is not 16 bit-aligned, then perform a single step of
     // the CRC to make it 16 bit-aligned.
     //
-    if((uint32_t)pui8Data & 1)
-    {
+    if((uint32_t)pui8Data & 1) {
         //
         // Perform the CRC on this input byte.
         //
@@ -289,8 +285,7 @@ Crc8CCITT(uint8_t ui8Crc, const uint8_t *pui8Data, uint32_t ui32Count)
     // If the data buffer is not word-aligned and there are at least two bytes
     // of data left, then perform two steps of the CRC to make it word-aligned.
     //
-    if(((uint32_t)pui8Data & 2) && (ui32Count > 1))
-    {
+    if(((uint32_t)pui8Data & 2) && (ui32Count > 1)) {
         //
         // Read the next 16 bits.
         //
@@ -313,8 +308,7 @@ Crc8CCITT(uint8_t ui8Crc, const uint8_t *pui8Data, uint32_t ui32Count)
     // While there is at least a word remaining in the data buffer, perform
     // four steps of the CRC to consume a word.
     //
-    while(ui32Count > 3)
-    {
+    while(ui32Count > 3) {
         //
         // Read the next word.
         //
@@ -339,8 +333,7 @@ Crc8CCITT(uint8_t ui8Crc, const uint8_t *pui8Data, uint32_t ui32Count)
     // If there are 16 bits left in the input buffer, then perform two steps of
     // the CRC.
     //
-    if(ui32Count > 1)
-    {
+    if(ui32Count > 1) {
         //
         // Read the 16 bits.
         //
@@ -363,8 +356,7 @@ Crc8CCITT(uint8_t ui8Crc, const uint8_t *pui8Data, uint32_t ui32Count)
     // If there is a final byte remaining in the input buffer, then perform a
     // single step of the CRC.
     //
-    if(ui32Count != 0)
-    {
+    if(ui32Count != 0) {
         ui8Crc = CRC8_ITER(ui8Crc, *pui8Data);
     }
 
@@ -416,8 +408,7 @@ Crc16(uint16_t ui16Crc, const uint8_t *pui8Data, uint32_t ui32Count)
     // If the data buffer is not 16 bit-aligned, then perform a single step of
     // the CRC to make it 16 bit-aligned.
     //
-    if((uint32_t)pui8Data & 1)
-    {
+    if((uint32_t)pui8Data & 1) {
         //
         // Perform the CRC on this input byte.
         //
@@ -434,8 +425,7 @@ Crc16(uint16_t ui16Crc, const uint8_t *pui8Data, uint32_t ui32Count)
     // If the data buffer is not word-aligned and there are at least two bytes
     // of data left, then perform two steps of the CRC to make it word-aligned.
     //
-    if(((uint32_t)pui8Data & 2) && (ui32Count > 1))
-    {
+    if(((uint32_t)pui8Data & 2) && (ui32Count > 1)) {
         //
         // Read the next 16 bits.
         //
@@ -458,8 +448,7 @@ Crc16(uint16_t ui16Crc, const uint8_t *pui8Data, uint32_t ui32Count)
     // While there is at least a word remaining in the data buffer, perform
     // four steps of the CRC to consume a word.
     //
-    while(ui32Count > 3)
-    {
+    while(ui32Count > 3) {
         //
         // Read the next word.
         //
@@ -484,8 +473,7 @@ Crc16(uint16_t ui16Crc, const uint8_t *pui8Data, uint32_t ui32Count)
     // If there are two bytes left in the input buffer, then perform two steps
     // of the CRC.
     //
-    if(ui32Count > 1)
-    {
+    if(ui32Count > 1) {
         //
         // Read the two bytes.
         //
@@ -508,8 +496,7 @@ Crc16(uint16_t ui16Crc, const uint8_t *pui8Data, uint32_t ui32Count)
     // If there is a final byte remaining in the input buffer, then perform a
     // single step of the CRC.
     //
-    if(ui32Count != 0)
-    {
+    if(ui32Count != 0) {
         ui16Crc = CRC16_ITER(ui16Crc, *pui8Data);
     }
 
@@ -578,8 +565,7 @@ Crc16Array3(uint32_t ui32WordLen, const uint32_t *pui32Data,
     //
     // Loop while there are more words in the data buffer.
     //
-    while(ui32WordLen--)
-    {
+    while(ui32WordLen--) {
         //
         // Read the next word.
         //
@@ -659,8 +645,7 @@ Crc32(uint32_t ui32Crc, const uint8_t *pui8Data, uint32_t ui32Count)
     // If the data buffer is not 16 bit-aligned, then perform a single step
     // of the CRC to make it 16 bit-aligned.
     //
-    if((uint32_t)pui8Data & 1)
-    {
+    if((uint32_t)pui8Data & 1) {
         //
         // Perform the CRC on this input byte.
         //
@@ -677,8 +662,7 @@ Crc32(uint32_t ui32Crc, const uint8_t *pui8Data, uint32_t ui32Count)
     // If the data buffer is not word-aligned and there are at least two bytes
     // of data left, then perform two steps of the CRC to make it word-aligned.
     //
-    if(((uint32_t)pui8Data & 2) && (ui32Count > 1))
-    {
+    if(((uint32_t)pui8Data & 2) && (ui32Count > 1)) {
         //
         // Read the next int16_t.
         //
@@ -701,8 +685,7 @@ Crc32(uint32_t ui32Crc, const uint8_t *pui8Data, uint32_t ui32Count)
     // While there is at least a word remaining in the data buffer, perform
     // four steps of the CRC to consume a word.
     //
-    while(ui32Count > 3)
-    {
+    while(ui32Count > 3) {
         //
         // Read the next word.
         //
@@ -727,8 +710,7 @@ Crc32(uint32_t ui32Crc, const uint8_t *pui8Data, uint32_t ui32Count)
     // If there are 16 bits left in the input buffer, then perform two steps of
     // the CRC.
     //
-    if(ui32Count > 1)
-    {
+    if(ui32Count > 1) {
         //
         // Read the two bytes.
         //
@@ -751,8 +733,7 @@ Crc32(uint32_t ui32Crc, const uint8_t *pui8Data, uint32_t ui32Count)
     // If there is a final byte remaining in the input buffer, then perform a
     // single step of the CRC.
     //
-    if(ui32Count != 0)
-    {
+    if(ui32Count != 0) {
         ui32Crc = CRC32_ITER(ui32Crc, *pui8Data);
     }
 

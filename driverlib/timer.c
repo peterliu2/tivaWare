@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2005-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -68,8 +68,7 @@
 // A mapping of timer base address to interrupt number.
 //
 //*****************************************************************************
-static const uint32_t g_ppui32TimerIntMap[][2] =
-{
+static const uint32_t g_ppui32TimerIntMap[][2] = {
     { TIMER0_BASE, INT_TIMER0A_TM4C123 },
     { TIMER1_BASE, INT_TIMER1A_TM4C123 },
     { TIMER2_BASE, INT_TIMER2A_TM4C123 },
@@ -86,8 +85,7 @@ static const uint32_t g_ppui32TimerIntMap[][2] =
 static const uint_fast8_t g_ui8TimerIntMapRows =
     sizeof(g_ppui32TimerIntMap) / sizeof(g_ppui32TimerIntMap[0]);
 
-static const uint32_t g_ppui32TimerIntMapSnowflake[][2] =
-{
+static const uint32_t g_ppui32TimerIntMapSnowflake[][2] = {
     { TIMER0_BASE, INT_TIMER0A_TM4C129 },
     { TIMER1_BASE, INT_TIMER1A_TM4C129 },
     { TIMER2_BASE, INT_TIMER2A_TM4C129 },
@@ -156,8 +154,7 @@ _TimerIntNumberGet(uint32_t ui32Base, uint32_t ui32Timer)
     ppui32SSIIntMap = g_ppui32TimerIntMap;
     ui8Rows = g_ui8TimerIntMapRows;
 
-    if(CLASS_IS_TM4C129)
-    {
+    if(CLASS_IS_TM4C129) {
         ppui32SSIIntMap = g_ppui32TimerIntMapSnowflake;
         ui8Rows = g_ui8TimerIntMapRowsSnowflake;
     }
@@ -166,17 +163,14 @@ _TimerIntNumberGet(uint32_t ui32Base, uint32_t ui32Timer)
     // Loop through the table that maps timer base addresses to interrupt
     // numbers.
     //
-    for(ui8Idx = 0; ui8Idx < ui8Rows; ui8Idx++)
-    {
+    for(ui8Idx = 0; ui8Idx < ui8Rows; ui8Idx++) {
         //
         // See if this base address matches.
         //
-        if(ppui32SSIIntMap[ui8Idx][0] == ui32Base)
-        {
+        if(ppui32SSIIntMap[ui8Idx][0] == ui32Base) {
             ui32Int = ppui32SSIIntMap[ui8Idx][1];
 
-            if(ui32Timer == TIMER_B)
-            {
+            if(ui32Timer == TIMER_B) {
                 ui32Int += 1;
             }
 
@@ -221,7 +215,7 @@ TimerEnable(uint32_t ui32Base, uint32_t ui32Timer)
     // Enable the timer(s) module.
     //
     HWREG(ui32Base + TIMER_O_CTL) |= ui32Timer & (TIMER_CTL_TAEN |
-                                                  TIMER_CTL_TBEN);
+                                     TIMER_CTL_TBEN);
 }
 
 //*****************************************************************************
@@ -390,17 +384,14 @@ TimerConfigure(uint32_t ui32Base, uint32_t ui32Config)
     // Note that the B timer configuration is ignored by the hardware in 32-bit
     // modes.
     //
-    if(NEW_TIMER_CONFIGURATION)
-    {
+    if(NEW_TIMER_CONFIGURATION) {
         HWREG(ui32Base + TIMER_O_TAMR) = (((ui32Config & 0x000f0000) >> 4) |
                                           (ui32Config & 0xff) |
                                           TIMER_TAMR_TAPWMIE);
         HWREG(ui32Base + TIMER_O_TBMR) = (((ui32Config & 0x00f00000) >> 8) |
                                           ((ui32Config >> 8) & 0xff) |
                                           TIMER_TBMR_TBPWMIE);
-    }
-    else
-    {
+    } else {
         HWREG(ui32Base + TIMER_O_TAMR) = ((ui32Config & 0xff) |
                                           TIMER_TAMR_TAPWMIE);
         HWREG(ui32Base + TIMER_O_TBMR) = (((ui32Config >> 8) & 0xff) |
@@ -476,8 +467,7 @@ TimerControlTrigger(uint32_t ui32Base, uint32_t ui32Timer,
     // On newer devices the Timer time out ADC trigger enable must also
     // be set.
     //
-    if(NEW_TIMER_CONFIGURATION)
-    {
+    if(NEW_TIMER_CONFIGURATION) {
         uint32_t ui32Val;
 
         //
@@ -618,14 +608,10 @@ TimerControlWaitOnTrigger(uint32_t ui32Base, uint32_t ui32Timer,
     //
     // Set the wait on trigger mode for timer A.
     //
-    if((ui32Timer & TIMER_A) != 0)
-    {
-        if(bWait)
-        {
+    if((ui32Timer & TIMER_A) != 0) {
+        if(bWait) {
             HWREG(ui32Base + TIMER_O_TAMR) |= TIMER_TAMR_TAWOT;
-        }
-        else
-        {
+        } else {
             HWREG(ui32Base + TIMER_O_TAMR) &= ~(TIMER_TAMR_TAWOT);
         }
     }
@@ -633,14 +619,10 @@ TimerControlWaitOnTrigger(uint32_t ui32Base, uint32_t ui32Timer,
     //
     // Set the wait on trigger mode for timer B.
     //
-    if((ui32Timer & TIMER_B) != 0)
-    {
-        if(bWait)
-        {
+    if((ui32Timer & TIMER_B) != 0) {
+        if(bWait) {
             HWREG(ui32Base + TIMER_O_TBMR) |= TIMER_TBMR_TBWOT;
-        }
-        else
-        {
+        } else {
             HWREG(ui32Base + TIMER_O_TBMR) &= ~(TIMER_TBMR_TBWOT);
         }
     }
@@ -801,16 +783,14 @@ TimerPrescaleSet(uint32_t ui32Base, uint32_t ui32Timer, uint32_t ui32Value)
     //
     // Set the timer A prescaler if requested.
     //
-    if(ui32Timer & TIMER_A)
-    {
+    if(ui32Timer & TIMER_A) {
         HWREG(ui32Base + TIMER_O_TAPR) = ui32Value;
     }
 
     //
     // Set the timer B prescaler if requested.
     //
-    if(ui32Timer & TIMER_B)
-    {
+    if(ui32Timer & TIMER_B) {
         HWREG(ui32Base + TIMER_O_TBPR) = ui32Value;
     }
 }
@@ -893,16 +873,14 @@ TimerPrescaleMatchSet(uint32_t ui32Base, uint32_t ui32Timer,
     //
     // Set the timer A prescale match if requested.
     //
-    if(ui32Timer & TIMER_A)
-    {
+    if(ui32Timer & TIMER_A) {
         HWREG(ui32Base + TIMER_O_TAPMR) = ui32Value;
     }
 
     //
     // Set the timer B prescale match if requested.
     //
-    if(ui32Timer & TIMER_B)
-    {
+    if(ui32Timer & TIMER_B) {
         HWREG(ui32Base + TIMER_O_TBPMR) = ui32Value;
     }
 }
@@ -979,16 +957,14 @@ TimerLoadSet(uint32_t ui32Base, uint32_t ui32Timer, uint32_t ui32Value)
     //
     // Set the timer A load value if requested.
     //
-    if(ui32Timer & TIMER_A)
-    {
+    if(ui32Timer & TIMER_A) {
         HWREG(ui32Base + TIMER_O_TAILR) = ui32Value;
     }
 
     //
     // Set the timer B load value if requested.
     //
-    if(ui32Timer & TIMER_B)
-    {
+    if(ui32Timer & TIMER_B) {
         HWREG(ui32Base + TIMER_O_TBILR) = ui32Value;
     }
 }
@@ -1087,13 +1063,11 @@ TimerLoadGet64(uint32_t ui32Base)
     // read is performed again until they do match (it should never execute the
     // loop body more than twice).
     //
-    do
-    {
+    do {
         ui32High1 = HWREG(ui32Base + TIMER_O_TBILR);
         ui32Low = HWREG(ui32Base + TIMER_O_TAILR);
         ui32High2 = HWREG(ui32Base + TIMER_O_TBILR);
-    }
-    while(ui32High1 != ui32High2);
+    } while(ui32High1 != ui32High2);
 
     //
     // Return the load value.
@@ -1163,13 +1137,11 @@ TimerValueGet64(uint32_t ui32Base)
     // read is performed again until they do match (it should never execute the
     // loop body more than twice).
     //
-    do
-    {
+    do {
         ui32High1 = HWREG(ui32Base + TIMER_O_TBR);
         ui32Low = HWREG(ui32Base + TIMER_O_TAR);
         ui32High2 = HWREG(ui32Base + TIMER_O_TBR);
-    }
-    while(ui32High1 != ui32High2);
+    } while(ui32High1 != ui32High2);
 
     //
     // Return the timer value.
@@ -1214,16 +1186,14 @@ TimerMatchSet(uint32_t ui32Base, uint32_t ui32Timer,
     //
     // Set the timer A match value if requested.
     //
-    if(ui32Timer & TIMER_A)
-    {
+    if(ui32Timer & TIMER_A) {
         HWREG(ui32Base + TIMER_O_TAMATCHR) = ui32Value;
     }
 
     //
     // Set the timer B match value if requested.
     //
-    if(ui32Timer & TIMER_B)
-    {
+    if(ui32Timer & TIMER_B) {
         HWREG(ui32Base + TIMER_O_TBMATCHR) = ui32Value;
     }
 }
@@ -1321,13 +1291,11 @@ TimerMatchGet64(uint32_t ui32Base)
     // read is performed again until they do match (it should never execute the
     // loop body more than twice).
     //
-    do
-    {
+    do {
         ui32High1 = HWREG(ui32Base + TIMER_O_TBMATCHR);
         ui32Low = HWREG(ui32Base + TIMER_O_TAMATCHR);
         ui32High2 = HWREG(ui32Base + TIMER_O_TBMATCHR);
-    }
-    while(ui32High1 != ui32High2);
+    } while(ui32High1 != ui32High2);
 
     //
     // Return the match value.
@@ -1873,15 +1841,13 @@ TimerUpdateMode(uint32_t ui32Base, uint32_t ui32Timer, uint32_t ui32Config)
 {
     uint32_t ui32Value;
 
-    if((ui32Timer & TIMER_A) == TIMER_A)
-    {
+    if((ui32Timer & TIMER_A) == TIMER_A) {
         ui32Value = HWREG(ui32Base + TIMER_O_TAMR) & ~(0x00000500);
         ui32Value |= ui32Config;
         HWREG(ui32Base + TIMER_O_TAMR) = ui32Value;
     }
 
-    if((ui32Timer & TIMER_B) == TIMER_B)
-    {
+    if((ui32Timer & TIMER_B) == TIMER_B) {
         ui32Value = HWREG(ui32Base + TIMER_O_TBMR) & ~(0x00000500);
         ui32Value |= ui32Config;
         HWREG(ui32Base + TIMER_O_TBMR) = ui32Value;

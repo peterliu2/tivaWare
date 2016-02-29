@@ -69,10 +69,10 @@ extern "C"
 #define LCD_HOME                0x02        // Cursor home.
 #define LCD_MODE                0x04        // Set entry mode (cursor dir)
 #define LCD_ON                  0x08        // Set display, cursor, blinking
-                                            // on/off
+// on/off
 #define LCD_CUR                 0x10        // Cursor, display shift
 #define LCD_IF                  0x20        // Set interface data length,
-                                            // lines, font
+// lines, font
 #define LCD_CGADDR              0x40        // Set CGRAM AC address
 #define LCD_DDADDR              0x80        // Set DDRAM AC address
 

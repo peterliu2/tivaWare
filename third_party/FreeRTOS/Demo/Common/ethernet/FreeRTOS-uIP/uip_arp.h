@@ -61,17 +61,17 @@ extern struct uip_eth_addr uip_ethaddr;
  * The Ethernet header.
  */
 #ifdef __ICCARM__
-	#pragma pack(1)
+#pragma pack(1)
 #endif
 
 struct uip_eth_hdr {
-  struct uip_eth_addr dest;
-  struct uip_eth_addr src;
-  u16_t type;
-}PACK_STRUCT_END;
+    struct uip_eth_addr dest;
+    struct uip_eth_addr src;
+    u16_t type;
+} PACK_STRUCT_END;
 
 #ifdef __ICCARM__
-	#pragma pack()
+#pragma pack()
 #endif
 
 #define UIP_ETHTYPE_ARP 0x0806

@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2009-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -56,35 +56,35 @@ static const char g_pcProgramCopyright[] =
     "Copyright (c) 2009-2015 Texas Instruments Incorporated.  All rights reserved.";
 
 static const char g_pcProgramHelp[] =
-"usage: eflash [options] file\n"
-"\n"
-"Download a file to a remote device, using the Ethernet Boot Loader.\n"
-"The file should be a binary image, and the IP and MAC address of the\n"
-"target device must be specified.\n"
-"Example: eflash -i 169.254.19.63 --mac=00.1a.b6.00.12.04 enet_lwip.bin\n"
-"\n"
-"Required options:\n"
-"  -i addr, --ip=addr     IP address of remote device to program,\n"
-"                         in dotted-decimal notation\n"
-"                         (e.g. 169.254.19.63)\n"
-"  -m addr, --mac=addr    MAC address of remote device to program,\n"
-"                         specified as a series of hexadecimal numbers\n"
-"                         delimited with '-', ':', or '.'.\n"
-"                         (e.g. 00.1a.b6.00.12.04)\n"
-"  file                   binary file to be downloaded to the remote device.\n"
-"                         (e.g. enet_lwip.bin)\n"
-"\n"
-"Output control:\n"
-"      --quiet, --silent  suppress all normal output\n"
-"      --verbose          display additional status information\n"
-"      --debug            display additional diagnostic information\n"
-"\n"
-"Miscellaneous:\n"
-"      --version          display program version information, then exit\n"
-"      --help             display this help text, then exit\n"
-"\n"
-"Support Information:\n"
-"Report any bugs to <support_lmi@ti.com>\n";
+    "usage: eflash [options] file\n"
+    "\n"
+    "Download a file to a remote device, using the Ethernet Boot Loader.\n"
+    "The file should be a binary image, and the IP and MAC address of the\n"
+    "target device must be specified.\n"
+    "Example: eflash -i 169.254.19.63 --mac=00.1a.b6.00.12.04 enet_lwip.bin\n"
+    "\n"
+    "Required options:\n"
+    "  -i addr, --ip=addr     IP address of remote device to program,\n"
+    "                         in dotted-decimal notation\n"
+    "                         (e.g. 169.254.19.63)\n"
+    "  -m addr, --mac=addr    MAC address of remote device to program,\n"
+    "                         specified as a series of hexadecimal numbers\n"
+    "                         delimited with '-', ':', or '.'.\n"
+    "                         (e.g. 00.1a.b6.00.12.04)\n"
+    "  file                   binary file to be downloaded to the remote device.\n"
+    "                         (e.g. enet_lwip.bin)\n"
+    "\n"
+    "Output control:\n"
+    "      --quiet, --silent  suppress all normal output\n"
+    "      --verbose          display additional status information\n"
+    "      --debug            display additional diagnostic information\n"
+    "\n"
+    "Miscellaneous:\n"
+    "      --version          display program version information, then exit\n"
+    "      --help             display this help text, then exit\n"
+    "\n"
+    "Support Information:\n"
+    "Report any bugs to <support_lmi@ti.com>\n";
 
 //*****************************************************************************
 //
@@ -145,8 +145,7 @@ AddressToBytes(char *pcString, void *pValue, int32_t i32Count, int32_t i32Base)
     // are no more tokens to convert.
     //
     pcToken = strtok(pcString, pcDelimit);
-    while((i32Converted < i32Count) && (NULL != pcToken))
-    {
+    while((i32Converted < i32Count) && (NULL != pcToken)) {
         //
         // Convert the pcToken into a number.  If the conversion fails, the
         // input value of "pcTail" will match "pcToken", and that means that
@@ -156,8 +155,7 @@ AddressToBytes(char *pcString, void *pValue, int32_t i32Count, int32_t i32Base)
         //
         ((uint8_t *)pValue)[i32Converted] =
             (strtoul(pcToken, &pcTail, i32Base) & 0xFF);
-        if(pcTail == pcToken)
-        {
+        if(pcTail == pcToken) {
             break;
         }
 
@@ -212,8 +210,7 @@ DisplayVersion(void)
 static void
 ParseOptions(int32_t argc, char **argv)
 {
-    struct option sLongOptions[] =
-    {
+    struct option sLongOptions[] = {
         //
         // GNU Standard Options that set a flag for program operation.
         //
@@ -249,13 +246,11 @@ ParseOptions(int32_t argc, char **argv)
     // below by the same case statement.
     //
     while((i32Option = getopt_long(argc, argv, "m:i:", sLongOptions,
-                                 &i32OptionIndex)) != -1)
-    {
+                                   &i32OptionIndex)) != -1) {
         //
         // Process the current option.
         //
-        switch(i32Option)
-        {
+        switch(i32Option) {
             //
             // Long option with flag set.
             //
@@ -281,10 +276,9 @@ ParseOptions(int32_t argc, char **argv)
             //
             // --mac=string, -m string
             //
-           case 'm':
+            case 'm':
                 i32ReturnCode = AddressToBytes(optarg, g_pui8RemoteMAC, 6, 16);
-                if(i32ReturnCode != 6)
-                {
+                if(i32ReturnCode != 6) {
                     EPRINTF(("Error Processing MAC (%d)\n", i32ReturnCode));
                     DisplayHelp();
                     exit(-(__LINE__));
@@ -294,10 +288,9 @@ ParseOptions(int32_t argc, char **argv)
             //
             // --ip=string, -i string
             //
-           case 'i':
+            case 'i':
                 i32ReturnCode = AddressToBytes(optarg, &g_ui32RemoteAddress, 4, 10);
-                if(i32ReturnCode != 4)
-                {
+                if(i32ReturnCode != 4) {
                     EPRINTF(("Error Processing IP (%d)\n", i32ReturnCode));
                     DisplayHelp();
                     exit(-(__LINE__));
@@ -307,7 +300,7 @@ ParseOptions(int32_t argc, char **argv)
             //
             // Unrecognized option.
             //
-           default:
+            default:
                 DisplayVersion();
                 DisplayHelp();
                 exit(-(__LINE__));
@@ -319,20 +312,15 @@ ParseOptions(int32_t argc, char **argv)
     // Extract filename from the last argument on the command line (if
     // provided).
     //
-    if(optind == argc)
-    {
+    if(optind == argc) {
         EPRINTF(("No File Name Specified\n"));
         DisplayHelp();
         exit(-(__LINE__));
-    }
-    else if(optind > (argc -1))
-    {
+    } else if(optind > (argc -1)) {
         EPRINTF(("Too Many Command Line Options\n"));
         DisplayHelp();
         exit(-(__LINE__));
-    }
-    else
-    {
+    } else {
         g_pcFileName = argv[optind];
     }
 
@@ -340,9 +328,8 @@ ParseOptions(int32_t argc, char **argv)
     // Check for non-zero MAC address.
     //
     if((0 == g_pui8RemoteMAC[0]) && (0 == g_pui8RemoteMAC[1]) &&
-       (0 == g_pui8RemoteMAC[2]) && (0 == g_pui8RemoteMAC[3]) &&
-       (0 == g_pui8RemoteMAC[4]) && (0 == g_pui8RemoteMAC[5]))
-    {
+            (0 == g_pui8RemoteMAC[2]) && (0 == g_pui8RemoteMAC[3]) &&
+            (0 == g_pui8RemoteMAC[4]) && (0 == g_pui8RemoteMAC[5])) {
         EPRINTF(("No MAC Address Specified\n"));
         DisplayHelp();
         exit(-(__LINE__));
@@ -351,8 +338,7 @@ ParseOptions(int32_t argc, char **argv)
     //
     // Check for non-zero IP address.
     //
-    if(0 == g_ui32RemoteAddress)
-    {
+    if(0 == g_ui32RemoteAddress) {
         EPRINTF(("No IP Address Specified\n"));
         DisplayHelp();
         exit(-(__LINE__));
@@ -370,12 +356,9 @@ StatusCallback(uint32_t ui32Percent)
     //
     // Print out the percentage.
     //
-    if(g_i32OptVerbose == 1)
-    {
+    if(g_i32OptVerbose == 1) {
         printf("%% Complete: %3d%%\r", ui32Percent);
-    }
-    else if(g_i32OptVerbose > 1)
-    {
+    } else if(g_i32OptVerbose > 1) {
         printf("%% Complete: %3d%%\n", ui32Percent);
     }
 }
@@ -419,12 +402,9 @@ main(int32_t argc, char **argv)
     //
     // Parse the command line options.
     //
-    if(argc > 1)
-    {
+    if(argc > 1) {
         ParseOptions(argc, argv);
-    }
-    else
-    {
+    } else {
         DisplayVersion();
         DisplayHelp();
         return(0);
@@ -433,8 +413,7 @@ main(int32_t argc, char **argv)
     //
     // Display (if needed) verbose function entry.
     //
-    if(g_i32OptVerbose > 1)
-    {
+    if(g_i32OptVerbose > 1) {
         DisplayVersion();
     }
 
@@ -447,8 +426,7 @@ main(int32_t argc, char **argv)
     // Startup winsock.
     //
     VPRINTF(("Starting WINSOCK\n"));
-    if(WSAStartup(0x202, &sWsaData) != 0)
-    {
+    if(WSAStartup(0x202, &sWsaData) != 0) {
         EPRINTF(("Winsock Failed to Start\n"));
         WSACleanup();
         return(1);
@@ -477,8 +455,7 @@ main(int32_t argc, char **argv)
     //
     // Clean up and return.
     //
-    if(g_bAbortMain)
-    {
+    if(g_bAbortMain) {
         return(2);
     }
     return(0);

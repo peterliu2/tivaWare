@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -71,8 +71,7 @@ extern "C"
 // normal operation.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     //
     // Unconfigured.
     //
@@ -104,8 +103,7 @@ tMouseState;
 // instance of the mouse.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // The USB configuration number set by the host or 0 of the device is
     // currently unconfigured.
@@ -147,8 +145,7 @@ tHIDMouseInstance;
 //! for the HID mouse device.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The vendor ID that this device is to present in the device descriptor.
     //
@@ -270,8 +267,8 @@ tUSBDHIDMouseDevice;
 extern void *USBDHIDMouseInit(uint32_t ui32Index,
                               tUSBDHIDMouseDevice *psMouseDevice);
 extern void *USBDHIDMouseCompositeInit(uint32_t ui32Index,
-                                     tUSBDHIDMouseDevice *psMouseDevice,
-                                     tCompositeEntry *psCompEntry);
+                                       tUSBDHIDMouseDevice *psMouseDevice,
+                                       tCompositeEntry *psCompEntry);
 extern void USBDHIDMouseTerm(void *pvMouseDevice);
 extern void *USBDHIDMouseSetCBData(void *pvMouseDevice, void *pvCBData);
 extern uint32_t USBDHIDMouseStateChange(void *pvMouseDevice, int8_t i8DeltaX,

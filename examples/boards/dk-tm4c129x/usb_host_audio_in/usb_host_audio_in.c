@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -198,11 +198,11 @@ Canvas(g_sStatusText, &g_sStatusPanel, 0, 0, &g_sKentec320x240x16_SSD2119,
 // Record button.
 //
 RectangularButton(g_sRecord, &g_sStatusPanel, &g_sStatusText, 0,
-       &g_sKentec320x240x16_SSD2119, BG_MIN_X + 4,
-       BG_MAX_Y - STATUS_HEIGHT + 4, 50, BUTTON_HEIGHT,
-       PB_STYLE_FILL | PB_STYLE_TEXT |
-       PB_STYLE_RELEASE_NOTIFY, ClrLightGrey, ClrDarkGray, 0,
-       ClrBlack, g_psFontCmss16, "Record", 0, 0, 0 ,0 , OnRecord);
+                  &g_sKentec320x240x16_SSD2119, BG_MIN_X + 4,
+                  BG_MAX_Y - STATUS_HEIGHT + 4, 50, BUTTON_HEIGHT,
+                  PB_STYLE_FILL | PB_STYLE_TEXT |
+                  PB_STYLE_RELEASE_NOTIFY, ClrLightGrey, ClrDarkGray, 0,
+                  ClrBlack, g_psFontCmss16, "Record", 0, 0, 0 ,0 , OnRecord);
 
 //
 // Background of the status area behind the buttons.
@@ -233,50 +233,38 @@ PWMAudioCallback(uint32_t ui32Half)
     // Calculate the number of buffers that we are from ideal.
     //
     i32Current = ((int32_t)g_pui8USBAudioBuffer - (int32_t)g_pui8USBWrite +
-              (USB_AUDIO_BUFFER_SIZE / 2)) / (int32_t)(USB_TRANSFER_SIZE);
+                  (USB_AUDIO_BUFFER_SIZE / 2)) / (int32_t)(USB_TRANSFER_SIZE);
 
     //
     // Make sample rate adjustments based on being in the top half of the
     // ping-pong buffer.
     //
-    if(ui32Half)
-    {
+    if(ui32Half) {
         //
         // USB is faster than the PWM audio.
         //
-        if(g_ui32USBCount > (USB_BUFFERS / 2))
-        {
+        if(g_ui32USBCount > (USB_BUFFERS / 2)) {
             //
             // PWM audio is running slow so speed it up and handle the sign
             // properly.
             //
-            if(i32Current < 0)
-            {
+            if(i32Current < 0) {
                 i32PeriodAdj = i32Current;
-            }
-            else
-            {
+            } else {
                 i32PeriodAdj = -i32Current;
             }
-        }
-        else if(g_ui32USBCount < (USB_BUFFERS / 2))
-        {
+        } else if(g_ui32USBCount < (USB_BUFFERS / 2)) {
             //
             // PWM audio is running fast so slow it down and handle the sign
             // properly.
             //
-            if(i32Current < 0)
-            {
+            if(i32Current < 0) {
                 i32PeriodAdj = -i32Current;
-            }
-            else
-            {
+            } else {
                 i32PeriodAdj = i32Current;
             }
         }
-    }
-    else
-    {
+    } else {
         //
         // The measurements are reversed when in the bottom half.
         //
@@ -285,33 +273,24 @@ PWMAudioCallback(uint32_t ui32Half)
         //
         // USB is faster than the PWM audio.
         //
-        if(g_ui32USBCount > (USB_BUFFERS / 2))
-        {
+        if(g_ui32USBCount > (USB_BUFFERS / 2)) {
             //
             // PWM audio is running slow so speed it up and handle the sign
             // properly.
             //
-            if(i32Current < 0)
-            {
+            if(i32Current < 0) {
                 i32PeriodAdj = i32Current;
-            }
-            else
-            {
+            } else {
                 i32PeriodAdj = -i32Current;
             }
-        }
-        else if(g_ui32USBCount < (USB_BUFFERS / 2))
-        {
+        } else if(g_ui32USBCount < (USB_BUFFERS / 2)) {
             //
             // PWM audio is running fast so slow it down and handle the sign
             // properly.
             //
-            if(i32Current < 0)
-            {
+            if(i32Current < 0) {
                 i32PeriodAdj = -i32Current;
-            }
-            else
-            {
+            } else {
                 i32PeriodAdj = i32Current;
             }
         }
@@ -320,8 +299,7 @@ PWMAudioCallback(uint32_t ui32Half)
     //
     // Was there an adjustment to make?
     //
-    if(i32PeriodAdj != 0)
-    {
+    if(i32PeriodAdj != 0) {
         SoundPeriodAdjust(i32PeriodAdj);
     }
 
@@ -358,8 +336,7 @@ USBAudioInCallback(void *pvBuffer, uint32_t ui32Event, uint32_t ui32Value)
     // If a buffer has been played then schedule a new one to play.
     //
     if((ui32Event == USB_EVENT_RX_AVAILABLE) &&
-       (HWREGBITW(&g_ui32Flags, FLAGS_STREAMING)))
-    {
+            (HWREGBITW(&g_ui32Flags, FLAGS_STREAMING))) {
         //
         // Increment the read pointer.
         //
@@ -368,8 +345,7 @@ USBAudioInCallback(void *pvBuffer, uint32_t ui32Event, uint32_t ui32Value)
         //
         // Wrap the read pointer if necessary.
         //
-        if(g_pui8USBWrite >= (g_pui8USBAudioBuffer + USB_AUDIO_BUFFER_SIZE))
-        {
+        if(g_pui8USBWrite >= (g_pui8USBAudioBuffer + USB_AUDIO_BUFFER_SIZE)) {
             g_pui8USBWrite = g_pui8USBAudioBuffer;
         }
 
@@ -383,18 +359,16 @@ USBAudioInCallback(void *pvBuffer, uint32_t ui32Event, uint32_t ui32Value)
         // This copy throws away 2 out of 3 samples to match the basic
         // sample rate difference of 48kHz versus 16kHz.
         //
-        for(i32Idx = 0; i32Idx < (ui32Value >> 1); i32Idx+=6)
-        {
+        for(i32Idx = 0; i32Idx < (ui32Value >> 1); i32Idx+=6) {
             //
             // Basic stereo mix to mono.
             //
             g_pi16PWMAudioBuffer[i32PWMAudioIdx] = pi16Buffer[i32Idx] +
-                                       pi16Buffer[i32Idx + 1];
+                                                   pi16Buffer[i32Idx + 1];
 
             i32PWMAudioIdx++;
 
-            if(i32PWMAudioIdx >= PWM_AUDIO_BUFFER_SIZE)
-            {
+            if(i32PWMAudioIdx >= PWM_AUDIO_BUFFER_SIZE) {
                 i32PWMAudioIdx = 0;
             }
         }
@@ -422,8 +396,7 @@ StartStreaming(void)
     //
     // Zero out the PWM audio buffer.
     //
-    for(i=0; i< PWM_AUDIO_BUFFER_SIZE; i++)
-    {
+    for(i=0; i< PWM_AUDIO_BUFFER_SIZE; i++) {
         g_pi16PWMAudioBuffer[i] = 0;
     }
 
@@ -480,8 +453,7 @@ StopAudio(void)
     //
     // Zero out the buffer.
     //
-    for(i32Idx = 0; i32Idx < (USB_AUDIO_BUFFER_SIZE >> 2); i32Idx++)
-    {
+    for(i32Idx = 0; i32Idx < (USB_AUDIO_BUFFER_SIZE >> 2); i32Idx++) {
         pui32Buffer[i32Idx] = 0;
     }
 
@@ -512,20 +484,16 @@ OnRecord(tWidget *pWidget)
     //
     // Nothing to do if not ready yet.
     //
-    if(HWREGBITW(&g_ui32Flags, FLAGS_DEVICE_READY))
-    {
+    if(HWREGBITW(&g_ui32Flags, FLAGS_DEVICE_READY)) {
         //
         // Determine if this was a Play or Stop command.
         //
-        if(HWREGBITW(&g_ui32Flags, FLAGS_STREAMING))
-        {
+        if(HWREGBITW(&g_ui32Flags, FLAGS_STREAMING)) {
             //
             // If already playing then this was a press to stop play back.
             //
             StopAudio();
-        }
-        else
-        {
+        } else {
             //
             // Indicate that audio streaming should start.
             //
@@ -544,10 +512,8 @@ OnRecord(tWidget *pWidget)
 static void
 AudioEvent(uint32_t ui32Event, uint32_t ui32Param)
 {
-    switch(ui32Event)
-    {
-        case SOUND_EVENT_READY:
-        {
+    switch(ui32Event) {
+        case SOUND_EVENT_READY: {
             //
             // Flag that a new audio device is present.
             //
@@ -555,8 +521,7 @@ AudioEvent(uint32_t ui32Event, uint32_t ui32Param)
 
             break;
         }
-        case SOUND_EVENT_DISCONNECT:
-        {
+        case SOUND_EVENT_DISCONNECT: {
             //
             // Device is no longer present.
             //
@@ -576,18 +541,14 @@ AudioEvent(uint32_t ui32Event, uint32_t ui32Param)
 
             break;
         }
-        case SOUND_EVENT_UNKNOWN_DEV:
-        {
-            if(ui32Param == 1)
-            {
+        case SOUND_EVENT_UNKNOWN_DEV: {
+            if(ui32Param == 1) {
                 //
                 // Unknown device connected.
                 //
                 CanvasTextSet(&g_sStatusText, "Unknown Device");
                 WidgetPaint((tWidget *)&g_sStatusText);
-            }
-            else
-            {
+            } else {
                 //
                 // Unknown device disconnected.
                 //
@@ -597,8 +558,7 @@ AudioEvent(uint32_t ui32Event, uint32_t ui32Param)
 
             break;
         }
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -718,24 +678,19 @@ main(void)
     SoundInit(g_ui32SysClock);
     SoundVolumeSet(255);
 
-    while(1)
-    {
+    while(1) {
         //
         // On connect change the device state to ready.
         //
-        if(HWREGBITW(&g_ui32Flags, FLAGS_DEVICE_CONNECT))
-        {
+        if(HWREGBITW(&g_ui32Flags, FLAGS_DEVICE_CONNECT)) {
             HWREGBITW(&g_ui32Flags, FLAGS_DEVICE_CONNECT) = 0;
 
             //
             // Attempt to set the audio format to 48000 16 bit stereo.
             //
-            if(USBSoundInputFormatSet(48000, 16, 2) == 0)
-            {
+            if(USBSoundInputFormatSet(48000, 16, 2) == 0) {
                 ui32Temp = 48000;
-            }
-            else
-            {
+            } else {
                 ui32Temp = 0;
             }
 
@@ -744,8 +699,7 @@ main(void)
             // cannot be set.
             //
             if((ui32Temp != 0) &&
-               (USBSoundOutputFormatSet(ui32Temp, 16, 2) != 0))
-            {
+                    (USBSoundOutputFormatSet(ui32Temp, 16, 2) != 0)) {
                 ui32Temp = 0;
             }
 
@@ -753,8 +707,7 @@ main(void)
             // If the audio device was support put the sample rate in the
             // status line.
             //
-            if(ui32Temp != 0)
-            {
+            if(ui32Temp != 0) {
                 //
                 // Print the time string in the format mm.ss/mm.ss
                 //
@@ -765,9 +718,7 @@ main(void)
                 // USB device is ready for operation.
                 //
                 HWREGBITW(&g_ui32Flags, FLAGS_DEVICE_READY) = 1;
-            }
-            else
-            {
+            } else {
                 strcpy(g_pcStatusText, "Unsupported Audio Device");
             }
 

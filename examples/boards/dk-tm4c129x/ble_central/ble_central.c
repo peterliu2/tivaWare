@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -219,8 +219,7 @@ uint32_t g_ui32Width, g_ui32Height;
 // The circular buffer used to store the received HCI message from the CC2540.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     volatile uint8_t pui8RXBuf[BUF_SIZE];
     volatile uint8_t ui8Rd;
     volatile uint8_t ui8Wr;
@@ -248,7 +247,8 @@ volatile enum
     STATE_TERM,
     STATE_TERMED,
     STATE_ERROR,
-}g_iState = STATE_IDLE;
+}
+g_iState = STATE_IDLE;
 
 //*****************************************************************************
 //
@@ -300,8 +300,7 @@ uint16_t g_ui16Handle;
 // The structure of BLE slave information.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // Device Address
     //
@@ -341,8 +340,7 @@ uint8_t        g_ui8DevConnect;
 // The positions of the circles in the animation used while discovering devices
 //
 //*****************************************************************************
-const int32_t g_ppi32CirclePos[][2] =
-{
+const int32_t g_ppi32CirclePos[][2] = {
     {
         12, 0
     },
@@ -374,8 +372,7 @@ const int32_t g_ppi32CirclePos[][2] =
 // The colors of the circles in the animation used while discovering devices
 //
 //*****************************************************************************
-const uint32_t g_pui32CircleColor[] =
-{
+const uint32_t g_pui32CircleColor[] = {
     0x111111,
     0x333333,
     0x555555,
@@ -398,8 +395,7 @@ uint32_t g_ui32ColorIdx;
 // The strings that are displayed in the center and bottom of the display
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     iInitializing = 0,
     iScanning,
     iScan,
@@ -413,8 +409,8 @@ typedef enum
 //
 // eDisplayUpdateIdx is used as index to the following table
 //
-static char *ppcString[][2] =
-{   // Middle of screen, Bottom of screen
+static char *ppcString[][2] = {
+    // Middle of screen, Bottom of screen
     {"Initializing",          0},
     {"Discovering",           "timeout in 20s"},
     {"No Device Found",       "scan"},
@@ -468,10 +464,8 @@ SysTickIntHandler(void)
     // check the message buffer to see if we have received another complete
     // message.
     //
-    if(HWREGBITW(&g_ui32Flags, FLAG_HCI_MSG_COMPLETE) == 0)
-    {
-        if(MessageComplete(g_pui8Msg, &g_ui8MsgLen) == true)
-        {
+    if(HWREGBITW(&g_ui32Flags, FLAG_HCI_MSG_COMPLETE) == 0) {
+        if(MessageComplete(g_pui8Msg, &g_ui8MsgLen) == true) {
             HWREGBITW(&g_ui32Flags, FLAG_HCI_MSG_COMPLETE) = 1;
         }
     }
@@ -480,19 +474,16 @@ SysTickIntHandler(void)
     // Decrement g_ui32Delay to 1, if it is 1 already,
     // meaning it has timed out.
     //
-    if(g_ui32Delay > 1)
-    {
+    if(g_ui32Delay > 1) {
         g_ui32Delay--;
     }
 
     //
     // Draw a circle every 100ms
     //
-    if(HWREGBITW(&g_ui32Flags, FLAG_DRAW_CIRCLE) == 1)
-    {
-        if(g_ui32TickCounter % 10 == 0)
-        {
-           DrawCircle();
+    if(HWREGBITW(&g_ui32Flags, FLAG_DRAW_CIRCLE) == 1) {
+        if(g_ui32TickCounter % 10 == 0) {
+            DrawCircle();
         }
     }
 
@@ -500,8 +491,7 @@ SysTickIntHandler(void)
     // set FLAG_EVERY_SECOND every second.
     // Systick interrupt is every 10ms, so a second is every 100 interrupts.
     //
-    if(g_ui32TickCounter % 100 == 0)
-    {
+    if(g_ui32TickCounter % 100 == 0) {
         HWREGBITW(&g_ui32Flags, FLAG_EVERY_SECOND) = 1;
     }
 }
@@ -529,13 +519,11 @@ UART3IntHandler(void)
     //
     // Loop while there are characters in the receive FIFO.
     //
-    while(ROM_UARTCharsAvail(UART3_BASE))
-    {
+    while(ROM_UARTCharsAvail(UART3_BASE)) {
         //
         // Check for buffer overflow case, this shouldn't happen
         //
-        if((g_sRxBuf.ui8Wr == g_sRxBuf.ui8Rd) && g_sRxBuf.ui8Count)
-        {
+        if((g_sRxBuf.ui8Wr == g_sRxBuf.ui8Rd) && g_sRxBuf.ui8Count) {
             UARTprintf("\nOF!!! Wr %d, Rd %d, Count %d\n", g_sRxBuf.ui8Wr, g_sRxBuf.ui8Rd, g_sRxBuf.ui8Count);
         }
 
@@ -547,8 +535,7 @@ UART3IntHandler(void)
         //
         // Check for the RX buffer wrap.
         //
-        if(g_sRxBuf.ui8Wr >= BUF_SIZE)
-        {
+        if(g_sRxBuf.ui8Wr >= BUF_SIZE) {
             g_sRxBuf.ui8Wr = 0;
         }
 
@@ -570,20 +557,15 @@ TouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
 {
     uint8_t ui8Loop;
 
-    if(ui32Message == WIDGET_MSG_PTR_UP)
-    {
+    if(ui32Message == WIDGET_MSG_PTR_UP) {
         //
         // Check if the bottom of the screen is touched.
         //
-        if(i32Y >= (200 - 8) && i32Y < (200 + 8))
-        {
+        if(i32Y >= (200 - 8) && i32Y < (200 + 8)) {
             if( (g_iState == STATE_READY_FOR_LINK_REQ) ||
-                (g_iState == STATE_START_DISCOVERY))
-            {
+                    (g_iState == STATE_START_DISCOVERY)) {
                 g_bDiscoveryReq = true;
-            }
-            else if(g_iState == STATE_LINKED)
-            {
+            } else if(g_iState == STATE_LINKED) {
                 g_bTermLinkReq = true;
             }
         }
@@ -593,14 +575,11 @@ TouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
         // Check if any of three device names is touched when it is ready
         // to connect
         //
-        if(g_iState == STATE_READY_FOR_LINK_REQ)
-        {
-            for(ui8Loop = 0; ui8Loop < g_ui8DevFound; ui8Loop++)
-            {
+        if(g_iState == STATE_READY_FOR_LINK_REQ) {
+            for(ui8Loop = 0; ui8Loop < g_ui8DevFound; ui8Loop++) {
                 if((g_ui8DevFound >= ui8Loop + 1) &&
-                   (i32Y >= (60 + 40*ui8Loop - 20)) &&
-                   (i32Y <  (60 + 40*ui8Loop + 20)))
-                {
+                        (i32Y >= (60 + 40*ui8Loop - 20)) &&
+                        (i32Y <  (60 + 40*ui8Loop + 20))) {
                     //
                     // save the device index and
                     // set flag to connect the device.
@@ -627,8 +606,7 @@ UARTSend(const uint8_t *pui8Buffer, uint32_t ui32Count)
     //
     // Loop while there are more characters to send.
     //
-    while(ui32Count--)
-    {
+    while(ui32Count--) {
         //
         // Write the next character to the UART.
         //
@@ -647,10 +625,8 @@ DumpBuffer(uint8_t *pui8Buf, uint32_t ui32Len, bool bTX)
     uint32_t ui32Idx = 0;
 
     UARTprintf("\n%s: %d\n", (bTX?"TX":"RX"), ui32Len);
-    for(ui32Idx = 0; ui32Idx < ui32Len; ui32Idx++)
-    {
-        if(ui32Idx && (ui32Idx % 16 == 0))
-        {
+    for(ui32Idx = 0; ui32Idx < ui32Len; ui32Idx++) {
+        if(ui32Idx && (ui32Idx % 16 == 0)) {
             UARTprintf("\n");
         }
         UARTprintf("%02x ", pui8Buf[ui32Idx]);
@@ -672,8 +648,7 @@ MessageComplete(uint8_t *pui8Buf, uint8_t *pui8Len)
 {
     uint8_t ui8Idx;
 
-    if(g_sRxBuf.ui8Count < 7 )
-    {
+    if(g_sRxBuf.ui8Count < 7 ) {
         //
         // Minimum size of a message is 7+ bytes
         //
@@ -698,16 +673,14 @@ MessageComplete(uint8_t *pui8Buf, uint8_t *pui8Len)
     //
     // Check for buffer wrap
     //
-    if(ui8Idx > BUF_SIZE -1)
-    {
+    if(ui8Idx > BUF_SIZE -1) {
         ui8Idx -= BUF_SIZE;
     }
 
     //
     // The whole message length should 3+Datalength
     //
-    if(g_sRxBuf.ui8Count < (g_sRxBuf.pui8RXBuf[ui8Idx] + 3))
-    {
+    if(g_sRxBuf.ui8Count < (g_sRxBuf.pui8RXBuf[ui8Idx] + 3)) {
         return false;
     }
 
@@ -720,14 +693,12 @@ MessageComplete(uint8_t *pui8Buf, uint8_t *pui8Len)
     //
     // Take the rx data out of the buffer and return to caller.
     //
-    for(ui8Idx = 0; ui8Idx < *pui8Len; ui8Idx++)
-    {
+    for(ui8Idx = 0; ui8Idx < *pui8Len; ui8Idx++) {
         pui8Buf[ui8Idx] = g_sRxBuf.pui8RXBuf[g_sRxBuf.ui8Rd++];
         //
         // Check for buffer wrap
         //
-        if(g_sRxBuf.ui8Rd >= BUF_SIZE)
-        {
+        if(g_sRxBuf.ui8Rd >= BUF_SIZE) {
             g_sRxBuf.ui8Rd = 0;
         }
     }
@@ -760,8 +731,7 @@ ProcessRxData( uint8_t *pui8CmdStatus)
     // The third byte should be the data length.
     //
     if((g_pui8Msg[0] != HCI_EVENT_PACKET) ||
-       ((g_pui8Msg[2] + 3) != g_ui8MsgLen))
-    {
+            ((g_pui8Msg[2] + 3) != g_ui8MsgLen)) {
         //
         // Invalid message, toss it
         //
@@ -774,13 +744,10 @@ ProcessRxData( uint8_t *pui8CmdStatus)
     // 0xFF(HCI_VE_EVENT_CODE) or any BLE event code.
     // 3rd and 4th byte are the event
     //
-    if(g_pui8Msg[1] == HCI_VE_EVENT_CODE)
-    {
+    if(g_pui8Msg[1] == HCI_VE_EVENT_CODE) {
         //BLE Ext Event
         g_ui16Event = (g_pui8Msg[3] | (g_pui8Msg[4]<<8));
-    }
-    else
-    {
+    } else {
         //BLE Event
         g_ui16Event = g_pui8Msg[1];
     }
@@ -788,27 +755,22 @@ ProcessRxData( uint8_t *pui8CmdStatus)
     //
     // Get the status in the response(5th byte)
     //
-    if(g_pui8Msg[1] == HCI_VE_EVENT_CODE)
-    {
+    if(g_pui8Msg[1] == HCI_VE_EVENT_CODE) {
         //BLE Ext Event
         *pui8CmdStatus = g_pui8Msg[5];
-    }
-    else
-    {
+    } else {
         //BLE Event
         *pui8CmdStatus = g_pui8Msg[6];
     }
 
-    switch(g_ui16Event)
-    {
+    switch(g_ui16Event) {
         case GAP_HCI_EVENT_EXT_CMD_STATUS:
             //
             // CommandStatus Event
             // Get the command opcode
             //
             g_ui16CmdStatusOpcode = (g_pui8Msg[6] | (g_pui8Msg[7]<<8));
-            if(g_ui16CmdStatusOpcode == HCI_VE_GAP_GET_PARAM_OPCODE)
-            {
+            if(g_ui16CmdStatusOpcode == HCI_VE_GAP_GET_PARAM_OPCODE) {
                 //
                 // Save the parameters.
                 //
@@ -827,10 +789,8 @@ ProcessRxData( uint8_t *pui8CmdStatus)
             // Device Information Event
             // parse the scan response
             //
-            if(g_pui8Msg[6] == GAP_ADTYPE_SCAN_RSP_IND)
-            {
-                if(g_ui8DevFound < MAX_SLAVE_NUM)
-                {
+            if(g_pui8Msg[6] == GAP_ADTYPE_SCAN_RSP_IND) {
+                if(g_ui8DevFound < MAX_SLAVE_NUM) {
                     //
                     // Save the device address
                     //
@@ -852,9 +812,7 @@ ProcessRxData( uint8_t *pui8CmdStatus)
                     // Increment the number of devices found.
                     //
                     g_ui8DevFound++;
-                }
-                else
-                {
+                } else {
                     UARTprintf("More than %d device found, ignor this device\n", MAX_SLAVE_NUM);
                 }
 
@@ -867,8 +825,7 @@ ProcessRxData( uint8_t *pui8CmdStatus)
             // print out devices' info
             //
             UARTprintf("%d Devices found\n", g_pui8Msg[6]);
-            for(ui8Idx = 0; ui8Idx < g_ui8DevFound; ui8Idx++)
-            {
+            for(ui8Idx = 0; ui8Idx < g_ui8DevFound; ui8Idx++) {
                 UARTprintf("Device Name: %s\n", g_psDev[ui8Idx].pcName);
                 UARTprintf(" -Addr Type: %02x\n", g_psDev[ui8Idx].ui8AddrType);
                 UARTprintf(" -Addr: %02x:%02x:%02x:%02x:%02x:%02x\n",
@@ -957,8 +914,7 @@ ProcessRxData( uint8_t *pui8CmdStatus)
             // Get the command opcode
             //
             g_ui16CmdStatusOpcode = (g_pui8Msg[4] | (g_pui8Msg[5]<<8));
-            if(g_ui16CmdStatusOpcode == HCI_READ_RSSI_OPCODE)
-            {
+            if(g_ui16CmdStatusOpcode == HCI_READ_RSSI_OPCODE) {
                 //
                 // RSSI reading response
                 //
@@ -968,19 +924,16 @@ ProcessRxData( uint8_t *pui8CmdStatus)
                 //
                 // Display the data when it is only in LINKED state
                 //
-                if(g_iState == STATE_LINKED)
-                {
+                if(g_iState == STATE_LINKED) {
                     DisplayRSSI(g_ui32Width / 2 + 80, 80 + 40);
                 }
             }
             break;
 
         case GAP_HCI_EVENT_HANDLE_VALUE_NOTIFY:
-            if(g_pui8Msg[8] > 2) //PduLen
-            {
+            if(g_pui8Msg[8] > 2) { //PduLen
                 ui16Val = g_pui8Msg[9] | (g_pui8Msg[10] <<8);
-                switch(ui16Val)
-                {
+                switch(ui16Val) {
                     case GATT_IRTEMP_DATA_UUID_HANDLE:
                         //
                         // Temperatur Sensor data
@@ -990,8 +943,7 @@ ProcessRxData( uint8_t *pui8CmdStatus)
                         //
                         // Display the data when it is LINKED state
                         //
-                        if(g_iState == STATE_LINKED)
-                        {
+                        if(g_iState == STATE_LINKED) {
                             HandleTemp();
                         }
                         break;
@@ -1005,8 +957,7 @@ ProcessRxData( uint8_t *pui8CmdStatus)
                         //
                         // Display the data when it is LINKED state
                         //
-                        if(g_iState == STATE_LINKED)
-                        {
+                        if(g_iState == STATE_LINKED) {
                             HandleHumidity();
                         }
                         break;
@@ -1040,16 +991,14 @@ VerifyMsg(uint16_t ui16ExpectedEvent, uint16_t ui16ExpectedEventParam,
 {
     uint8_t ui8CmdStatus;
 
-    if(ProcessRxData(&ui8CmdStatus) == 0)
-    {
+    if(ProcessRxData(&ui8CmdStatus) == 0) {
         //
         // Message is not valid
         //
         return false;
     }
 
-    if(ui8CmdStatus != SUCCESS)
-    {
+    if(ui8CmdStatus != SUCCESS) {
         //
         // Message return non-success status code
         //
@@ -1058,8 +1007,7 @@ VerifyMsg(uint16_t ui16ExpectedEvent, uint16_t ui16ExpectedEventParam,
 
     //
     // Pass the status code to the caller if a location is provided.
-    if(pui8Status)
-    {
+    if(pui8Status) {
         *pui8Status = ui8CmdStatus;
     }
 
@@ -1067,34 +1015,26 @@ VerifyMsg(uint16_t ui16ExpectedEvent, uint16_t ui16ExpectedEventParam,
     // check the received event
     //
     UARTprintf("RX: event 0x%04x\n", g_ui16Event);
-    if(ui16ExpectedEvent)
-    {
+    if(ui16ExpectedEvent) {
         //
         // We are expecting a specific event, check it.
         //
-        if(g_ui16Event == ui16ExpectedEvent)
-        {
+        if(g_ui16Event == ui16ExpectedEvent) {
             //
             // Validate Event param if supplied.
             //
-            if(ui16ExpectedEventParam)
-            {
-                if(ui16ExpectedEventParam == g_ui16CmdStatusOpcode)
-                {
+            if(ui16ExpectedEventParam) {
+                if(ui16ExpectedEventParam == g_ui16CmdStatusOpcode) {
                     return true;
                 }
-            }
-            else
-            {
+            } else {
                 //
                 // No need to verify EventParam
                 //
                 return true;
             }
         }
-    }
-    else
-    {
+    } else {
         //
         // We are NOT expecting any specific event, just return true.
         //
@@ -1128,16 +1068,13 @@ WaitForRsp(uint16_t ui16ExpectedEvent, uint16_t ui16ExpectedParam,
     //
     // Block until there is a response or timeout
     //
-    while(g_ui32Delay > 1)
-    {
-        if(HWREGBITW(&g_ui32Flags, FLAG_HCI_MSG_COMPLETE) == 1)
-        {
+    while(g_ui32Delay > 1) {
+        if(HWREGBITW(&g_ui32Flags, FLAG_HCI_MSG_COMPLETE) == 1) {
             //
             // Got a response
             //
             bRet = VerifyMsg(ui16ExpectedEvent, ui16ExpectedParam, pui8Status);
-            if(bRet)
-            {
+            if(bRet) {
                 //
                 // Got what we expected, disable timeout, and exit the loop
                 //
@@ -1155,8 +1092,7 @@ WaitForRsp(uint16_t ui16ExpectedEvent, uint16_t ui16ExpectedParam,
     //
     // Check for timeout
     //
-    if(g_ui32Delay == 1)
-    {
+    if(g_ui32Delay == 1) {
         UARTprintf("\nTimeout waiting for response..%04x.\n",
                    ui16ExpectedEvent);
     }
@@ -1175,14 +1111,12 @@ CheckForMsg()
 {
     bool bSuccess = false;
 
-    if(HWREGBITW(&g_ui32Flags, FLAG_HCI_MSG_COMPLETE) == 1)
-    {
+    if(HWREGBITW(&g_ui32Flags, FLAG_HCI_MSG_COMPLETE) == 1) {
         //
         // Got a response
         //
         bSuccess = VerifyMsg(0, 0, 0);
-        if(g_ui16Event == GAP_HCI_EVENT_EXT_DEVICE_TERM_LINK_DONE)
-        {
+        if(g_ui16Event == GAP_HCI_EVENT_EXT_DEVICE_TERM_LINK_DONE) {
             UARTprintf("Slave terminated the link\n");
 
             //
@@ -1222,8 +1156,7 @@ ConfigureSensors(void)
     //
     // Enable IR Sensor and Measurements if it is not yet configured.
     //
-    if(HWREGBITW(&g_ui32Flags, FLAG_SENSOR_CFGD) == 1)
-    {
+    if(HWREGBITW(&g_ui32Flags, FLAG_SENSOR_CFGD) == 1) {
         return;
     }
 
@@ -1235,8 +1168,7 @@ ConfigureSensors(void)
     // Wait for CommandStatus response, timeout after 200ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_DEVICE_WRITE_CHAR_VAL_OPCODE, 200, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
         UARTprintf("ConfigureSensors: Wait for CommandStatus error\n");
     }
 
@@ -1244,8 +1176,7 @@ ConfigureSensors(void)
     // Wait for ATT_WriteRsp event, timeout after 500ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_ATT_WRITE_RSP, 0, 500, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
         UARTprintf("ConfigureSensors: Wait for ATT_WriteRsp error\n");
     }
 
@@ -1259,8 +1190,7 @@ ConfigureSensors(void)
     // Wait for CommandStatus response, timeout after 200ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_DEVICE_WRITE_CHAR_VAL_OPCODE, 200, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
         UARTprintf("ConfigureSensors: Wait for CommandStatus error\n");
     }
 
@@ -1268,8 +1198,7 @@ ConfigureSensors(void)
     // Wait for ATT_WriteRsp event, timeout after 500ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_ATT_WRITE_RSP, 0, 500, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
         UARTprintf("ConfigureSensors: Wait for ATT_WriteRsp error\n");
     }
 
@@ -1282,8 +1211,7 @@ ConfigureSensors(void)
     // Wait for CommandStatus response, timeout after 200ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_DEVICE_WRITE_CHAR_VAL_OPCODE, 200, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
         UARTprintf("ConfigureSensors: Wait for CommandStatus error\n");
     }
 
@@ -1291,8 +1219,7 @@ ConfigureSensors(void)
     // Wait for ATT_WriteRsp event, timeout after 200ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_ATT_WRITE_RSP, 0, 200, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
         UARTprintf("ConfigureSensors: Wait for ATT_WriteRsp error\n");
     }
 
@@ -1306,8 +1233,7 @@ ConfigureSensors(void)
     // Wait for CommandStatus response, timeout after 200ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_DEVICE_WRITE_CHAR_VAL_OPCODE, 200, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
         UARTprintf("ConfigureSensors: Wait for CommandStatus error\n");
     }
 
@@ -1315,8 +1241,7 @@ ConfigureSensors(void)
     // Wait for ATT_WriteRsp event, timeout after 200ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_ATT_WRITE_RSP, 0, 200, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
         UARTprintf("ConfigureSensors: Wait for ATT_WriteRsp error\n");
     }
 
@@ -1338,8 +1263,7 @@ DeConfigureSensors(void)
     uint8_t ui8Status;
     bool    bSuccess;
 
-    if(HWREGBITW(&g_ui32Flags, FLAG_SENSOR_CFGD) == 0)
-    {
+    if(HWREGBITW(&g_ui32Flags, FLAG_SENSOR_CFGD) == 0) {
         // Do nothing if the sensors have not been configured.
         return;
     }
@@ -1356,8 +1280,7 @@ DeConfigureSensors(void)
     // Wait for CommandStatus response, timeout after 200ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_DEVICE_WRITE_CHAR_VAL_OPCODE, 200, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
         UARTprintf("DeConfigureSensors: Wait for CommandStatus error\n");
     }
 
@@ -1371,8 +1294,7 @@ DeConfigureSensors(void)
     // Wait for CommandStatus response, timeout after 200ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_DEVICE_WRITE_CHAR_VAL_OPCODE, 200, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
         UARTprintf("DeConfigureSensors: Wait for CommandStatus error\n");
     }
 
@@ -1380,8 +1302,7 @@ DeConfigureSensors(void)
     // Wait for ATT_WriteRsp event, timeout after 200ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_ATT_WRITE_RSP, 0, 200, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
         UARTprintf("DeConfigureSensors: Wait for ATT_WriteRsp error\n");
     }
 
@@ -1396,8 +1317,7 @@ DeConfigureSensors(void)
     // Wait for CommandStatus response, timeout after 500ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_DEVICE_WRITE_CHAR_VAL_OPCODE, 500, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
         UARTprintf("DeConfigureSensors: Wait for CommandStatus error\n");
     }
 
@@ -1405,8 +1325,7 @@ DeConfigureSensors(void)
     // Wait for ATT_WriteRsp event, timeout after 200ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_ATT_WRITE_RSP, 0, 200, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
         UARTprintf("DeConfigureSensors: Wait for ATT_WriteRsp error\n");
     }
 
@@ -1417,8 +1336,7 @@ DeConfigureSensors(void)
     // Wait for CommandStatus response, timeout after 500ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_DEVICE_WRITE_CHAR_VAL_OPCODE, 500, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
         UARTprintf("DeConfigureSensors: Wait for CommandStatus error\n");
     }
 
@@ -1426,8 +1344,7 @@ DeConfigureSensors(void)
     // Wait for ATT_WriteRsp event, timeout after 200ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_ATT_WRITE_RSP, 0, 200, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
         UARTprintf("DeConfigureSensors: Wait for ATT_WriteRsp error\n");
     }
     HWREGBITW(&g_ui32Flags, FLAG_SENSOR_CFGD) = 0;
@@ -1461,8 +1378,7 @@ GetParam(void)
     // Wait for CommandStatus response, timeout after 200ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_GET_PARAM_OPCODE, 200, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
         UARTprintf("Get Param %x failed\n", TGAP_CONN_EST_INT_MIN);
     }
 
@@ -1475,8 +1391,7 @@ GetParam(void)
     // Wait for CommandStatus response, timeout after 200ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_GET_PARAM_OPCODE, 200, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
         UARTprintf("Get Param %x failed\n", TGAP_CONN_EST_INT_MAX);
     }
 
@@ -1489,8 +1404,7 @@ GetParam(void)
     // Wait for CommandStatus response, timeout after 200ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_GET_PARAM_OPCODE, 200, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
         UARTprintf("Get Param %x failed\n", TGAP_CONN_EST_LATENCY);
     }
 
@@ -1502,17 +1416,13 @@ GetParam(void)
     // Wait for CommandStatus response, timeout after 200ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_GET_PARAM_OPCODE, 200, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
         UARTprintf("Get Param %x failed\n", TGAP_CONN_EST_SUPERV_TIMEOUT);
     }
 
-    if(g_ui16Param[0] != 0 && g_ui16Param[1] != 0 && g_ui16Param[3] != 0)
-    {
+    if(g_ui16Param[0] != 0 && g_ui16Param[1] != 0 && g_ui16Param[3] != 0) {
         return true;
-    }
-    else
-    {
+    } else {
         return false;
     }
 }
@@ -1539,8 +1449,7 @@ SetParam(void)
     // Wait for CommandStatus response, timeout after 200ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_SET_PARAM_OPCODE, 200, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
 
         UARTprintf("Set Param %x failed\n", TGAP_CONN_EST_INT_MIN);
     }
@@ -1554,8 +1463,7 @@ SetParam(void)
     // Wait for CommandStatus response, timeout after 200ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_SET_PARAM_OPCODE, 200, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
 
         UARTprintf("Set Param %x failed\n", TGAP_CONN_EST_INT_MAX);
     }
@@ -1569,8 +1477,7 @@ SetParam(void)
     // Wait for CommandStatus response, timeout after 200ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_SET_PARAM_OPCODE, 200, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
 
         UARTprintf("Set Param %x failed\n", TGAP_CONN_EST_LATENCY);
     }
@@ -1584,8 +1491,7 @@ SetParam(void)
     // Wait for CommandStatus response, timeout after 200ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_SET_PARAM_OPCODE, 200, &ui8Status);
-    if(!bSuccess || ui8Status)
-    {
+    if(!bSuccess || ui8Status) {
 
         UARTprintf("Set Param %x failed\n", TGAP_CONN_EST_SUPERV_TIMEOUT);
     }
@@ -1604,8 +1510,7 @@ Authenticate(void)
     bool bSuccess = false;
     uint8_t ui8Status;
 
-    if(g_psDev[g_ui8DevConnect].sSaveKey.bValid == false)
-    {
+    if(g_psDev[g_ui8DevConnect].sSaveKey.bValid == false) {
         UARTprintf("Initiate Pairing Request...\n");
         GAPAuthenticate(g_ui16Handle);
 
@@ -1613,14 +1518,12 @@ Authenticate(void)
         // Wait for CommandStatus response, timeout after 100ms
         //
         bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_DEVICE_AUTHENTICATE_OPCODE, 100, &ui8Status);
-        if(bSuccess && ui8Status == SUCCESS)
-        {
+        if(bSuccess && ui8Status == SUCCESS) {
             //
             // Wait for PasskeyNeeded event, timeout after 1s
             //
             bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_DEVICE_PASSKEY_NEEDED, 0, 1000, &ui8Status);
-            if(bSuccess && ui8Status == SUCCESS)
-            {
+            if(bSuccess && ui8Status == SUCCESS) {
                 //
                 // Got PasskeyNeeded event, send the key
                 //
@@ -1630,8 +1533,7 @@ Authenticate(void)
                 // Wait for CommandStatus response, timeout after 200ms
                 //
                 bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_DEVICE_PASSKEY_UPDATE_OPCODE, 200, &ui8Status);
-                if(bSuccess && ui8Status == SUCCESS)
-                {
+                if(bSuccess && ui8Status == SUCCESS) {
                     //
                     // Wait for AuthenticationComplete event, timeout after 5s
                     //
@@ -1639,9 +1541,7 @@ Authenticate(void)
                 }
             }
         }
-    }
-    else
-    {
+    } else {
         UARTprintf("Bond Request...\n");
         GAPBond(g_ui16Handle, &g_psDev[g_ui8DevConnect].sSaveKey);
 
@@ -1649,8 +1549,7 @@ Authenticate(void)
         // Wait for CommandStatus response, timeout after 100ms
         //
         bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_DEVICE_BOND_OPCODE, 100, &ui8Status);
-        if(bSuccess && ui8Status == SUCCESS)
-        {
+        if(bSuccess && ui8Status == SUCCESS) {
             //
             // Wait for BondComplete event, timeout after 1s
             //
@@ -1658,8 +1557,7 @@ Authenticate(void)
         }
     }
 
-    if(ui8Status != SUCCESS)
-    {
+    if(ui8Status != SUCCESS) {
         UARTprintf("Authenticate failure 0x%x\n", ui8Status);
         return false;
     }
@@ -1685,26 +1583,22 @@ EstablishLink(uint8_t ui8DevIdx)
     // Wait for CommandStatus response, timeout after 100ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_DEVICE_EST_LINK_REQ_OPCODE, 100, &ui8Status);
-    if(bSuccess && (ui8Status == SUCCESS || ui8Status == bleAlreadyInRequestedMode))
-    {
+    if(bSuccess && (ui8Status == SUCCESS || ui8Status == bleAlreadyInRequestedMode)) {
         //
         // Wait for EstablishLink response, timeout after 15s
         //
         bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_DEVICE_LINK_DONE, 0, 15000, &ui8Status);
-        if(bSuccess && ui8Status == SUCCESS)
-        {
+        if(bSuccess && ui8Status == SUCCESS) {
             //
             // Got DeviceInitDone response, go to the next state
             //
-            if(g_bInitPairReq == true)
-            {
+            if(g_bInitPairReq == true) {
                 bSuccess = Authenticate();
             }
         }
     }
 
-    if(ui8Status != SUCCESS)
-    {
+    if(ui8Status != SUCCESS) {
         return false;
     }
     return bSuccess;
@@ -1734,16 +1628,14 @@ TerminateLink(void)
     // Wait for CommandStatus response, timeout after 200ms
     //
     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_DEVICE_TER_LINK_REQ_OPCODE, 200, &ui8Status);
-    if(bSuccess && ui8Status == SUCCESS)
-    {
+    if(bSuccess && ui8Status == SUCCESS) {
         //
         // Wait for TerminateLink event, timeout after 1s
         //
         bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_DEVICE_TERM_LINK_DONE, 0, 1000, &ui8Status);
     }
 
-    if(ui8Status != SUCCESS)
-    {
+    if(ui8Status != SUCCESS) {
         return false;
     }
     return bSuccess;
@@ -1762,14 +1654,13 @@ DrawCircle(void)
     //
     // Loop through the circles in the animation.
     //
-    for(ui32Idx = 0; ui32Idx < 8; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < 8; ui32Idx++) {
         //
         // Draw this circle.
         //
         GrContextForegroundSet(&g_sContext,
                                g_pui32CircleColor[(g_ui32ColorIdx +
-                                                   ui32Idx) & 7]);
+                                       ui32Idx) & 7]);
         GrCircleFill(&g_sContext,
                      (g_ui32Width / 2) + g_ppi32CirclePos[ui32Idx][0],
                      (g_ui32Height / 2) + g_ppi32CirclePos[ui32Idx][1] + 24,
@@ -1822,8 +1713,7 @@ UpdateDisplay(eDisplayUpdateIdx eUpdate)
     //
     // Update the middle of screen
     //
-    if(eUpdate == iConnecting)
-    {
+    if(eUpdate == iConnecting) {
         //
         // show the to be connected device only
         //
@@ -1845,9 +1735,7 @@ UpdateDisplay(eDisplayUpdateIdx eUpdate)
                              g_ui32Width / 2, 60 + (40*g_ui8DevConnect + 16), false);
         GrContextFontSet(&g_sContext, g_psFontCmss16b);
 
-    }
-    else if(eUpdate == iDisconnect)
-    {
+    } else if(eUpdate == iDisconnect) {
         GrStringDraw(&g_sContext, "IR Temperature:", -1,
                      (g_ui32Width / 2) - 110, 80, false);
         GrStringDraw(&g_sContext, "Ambient Temperature:", -1,
@@ -1868,19 +1756,13 @@ UpdateDisplay(eDisplayUpdateIdx eUpdate)
         DisplayTemp(g_ui32Width / 2 + 80, 80);
         DisplayRSSI(g_ui32Width / 2 + 80, 80 + 40);
         DisplayHumidity(g_ui32Width / 2 + 80, 80 + 60);
-    }
-    else
-    {
-        if(ppcString[eUpdate][0])
-        {
+    } else {
+        if(ppcString[eUpdate][0]) {
             GrStringDrawCentered(&g_sContext, ppcString[eUpdate][0], -1,
                                  g_ui32Width / 2, (g_ui32Height / 2) - 18, false);
-        }
-        else
-        {
+        } else {
 
-            for(ui8Loop = 0; ui8Loop < g_ui8DevFound; ui8Loop++)
-            {
+            for(ui8Loop = 0; ui8Loop < g_ui8DevFound; ui8Loop++) {
                 GrStringDrawCentered(&g_sContext, g_psDev[ui8Loop].pcName, -1,
                                      g_ui32Width / 2, 60 + (40*ui8Loop), false);
 
@@ -1905,8 +1787,7 @@ UpdateDisplay(eDisplayUpdateIdx eUpdate)
     //
     // Update the bottom text.
     //
-    if(ppcString[eUpdate][1])
-    {
+    if(ppcString[eUpdate][1]) {
         GrStringDrawCentered(&g_sContext, ppcString[eUpdate][1], -1,
                              g_ui32Width / 2, 200, false);
     }
@@ -1957,8 +1838,7 @@ HandleTemp(void)
     //
     i16VObj = (int16_t)(g_pui8IRTemp[0] | (g_pui8IRTemp[1]<<8));
     i16TDie = (int16_t)(g_pui8IRTemp[2] | (g_pui8IRTemp[3]<<8));
-    if(i16VObj && i16TDie)
-    {
+    if(i16VObj && i16TDie) {
         g_dIRTemp = calculateTemp(i16TDie>>2, i16VObj);
         g_dAmbTemp = (double)i16TDie /128.0;
         DisplayTemp(g_ui32Width / 2 + 80, 80);
@@ -2068,8 +1948,7 @@ DisplayRSSI(uint32_t ui32X, uint32_t ui32Y)
     //
     // Convert the RSSI data into a string.
     //
-    if(g_i8RSSI >= 0)
-    {
+    if(g_i8RSSI >= 0) {
         //
         // RSSI has to be negative value, discard the nonvalid data.
         //
@@ -2202,7 +2081,7 @@ main(void)
     ROM_GPIOPinConfigure(GPIO_PJ4_U3RTS);
     ROM_GPIOPinConfigure(GPIO_PJ5_U3CTS);
     ROM_GPIOPinTypeUART(GPIO_PORTJ_BASE, GPIO_PIN_0 | GPIO_PIN_1 |
-                                         GPIO_PIN_4 | GPIO_PIN_5);
+                        GPIO_PIN_4 | GPIO_PIN_5);
 
     //
     // EnableUART3
@@ -2261,10 +2140,8 @@ main(void)
     //
     UpdateDisplay(iInitializing);
 
-    while(1)
-    {
-        switch(g_iState)
-        {
+    while(1) {
+        switch(g_iState) {
             case STATE_DEV_INIT:
 
                 UARTprintf("Device Init...\n");
@@ -2279,22 +2156,18 @@ main(void)
                 // Wait for CommandStatus response, timeout after 500ms
                 //
                 bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_DEVICE_INIT_OPCODE, 500, &ui8Status);
-                if(bSuccess && ui8Status == SUCCESS)
-                {
+                if(bSuccess && ui8Status == SUCCESS) {
                     //
                     // Wait for DeviceInitDone response, timeout after 500ms
                     //
                     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_DEVICE_INIT_DONE, 0, 500, &ui8Status);
-                    if(bSuccess && ui8Status == SUCCESS)
-                    {
+                    if(bSuccess && ui8Status == SUCCESS) {
                         //
                         // Got DeviceInitDone response, go to the next state
                         //
                         g_iState = STATE_GET_PARAM;
                     }
-                }
-                else
-                {
+                } else {
                     UARTprintf("CC2540 EM board is not connected to the DK\n");
                     UpdateDisplay(iNoBLE);
 
@@ -2306,8 +2179,7 @@ main(void)
                 break;
 
             case STATE_GET_PARAM:
-                if(GetParam())
-                {
+                if(GetParam()) {
                     //
                     // Query parameter successful, go to the discovery state
                     //
@@ -2319,9 +2191,7 @@ main(void)
                     // Update display
                     //
                     UpdateDisplay(iScanning);
-                }
-                else
-                {
+                } else {
                     //
                     // cannot query parameters on CC2540, something wrong,
                     // go to the error state
@@ -2331,8 +2201,7 @@ main(void)
                 break;
 
             case STATE_START_DISCOVERY:
-                if(g_bDiscoveryReq)
-                {
+                if(g_bDiscoveryReq) {
                     UARTprintf("Start Discovery...\n");
 
                     //
@@ -2354,26 +2223,21 @@ main(void)
                     // Wait for CommandStatus response, timeout after 100ms
                     //
                     bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_CMD_STATUS, HCI_VE_GAP_DEVICE_DISC_REQ_OPCODE, 100, &ui8Status);
-                    if(bSuccess && ui8Status == SUCCESS)
-                    {
+                    if(bSuccess && ui8Status == SUCCESS) {
                         //
                         // Wait for DiscoveryDone response, timeout after 20s
                         //
                         bSuccess = WaitForRsp(GAP_HCI_EVENT_EXT_DEVICE_DISC_DONE, 0, 20000, &ui8Status);
-                        if(bSuccess && ui8Status == SUCCESS)
-                        {
+                        if(bSuccess && ui8Status == SUCCESS) {
                             //
                             // Have we discovered any device?
                             //
-                            if(g_ui8DevFound)
-                            {
+                            if(g_ui8DevFound) {
                                 //
                                 // Got DiscoveryDone response, go to the next state
                                 //
                                 g_iState = STATE_SET_PARAM;
-                            }
-                            else
-                            {
+                            } else {
                                 //
                                 // No device found:
                                 // Stop drawing the circles.
@@ -2393,8 +2257,7 @@ main(void)
                 break;
 
             case STATE_SET_PARAM:
-                if(SetParam())
-                {
+                if(SetParam()) {
                     //
                     // Configure parameters are successful,
                     // go to the next state
@@ -2404,9 +2267,7 @@ main(void)
 
                     HWREGBITW(&g_ui32Flags, FLAG_DRAW_CIRCLE) = 0;
                     UpdateDisplay(iConnect);
-                }
-                else
-                {
+                } else {
                     //
                     // Failed to configure the parameters,
                     // go to the error state
@@ -2419,8 +2280,7 @@ main(void)
                 //
                 // Wait for user to connect any device
                 //
-                if(g_bEstLinkReq == true)
-                {
+                if(g_bEstLinkReq == true) {
                     //
                     // Received connect command from user,
                     // go to the next state to connect the device
@@ -2433,8 +2293,7 @@ main(void)
                 //
                 // Wait for user to do discovery/scan again
                 //
-                if(g_bDiscoveryReq == true)
-                {
+                if(g_bDiscoveryReq == true) {
                     //
                     // Discovery/scan is requested by user
                     //
@@ -2451,8 +2310,7 @@ main(void)
                 //
                 // Connect to the device
                 //
-                if( EstablishLink(g_ui8DevConnect))
-                {
+                if( EstablishLink(g_ui8DevConnect)) {
                     //
                     // Connected the device without errors.
                     // go to the next state.
@@ -2463,9 +2321,7 @@ main(void)
                     // Display the sensor information.
                     //
                     UpdateDisplay(iDisconnect);
-                }
-                else
-                {
+                } else {
                     //
                     // Link failed, go back to STATE_READY_FOR_LINK_REQ.
                     //
@@ -2479,8 +2335,7 @@ main(void)
                 //
                 // Handle Terminate request if any
                 //
-                if(g_bTermLinkReq == true)
-                {
+                if(g_bTermLinkReq == true) {
                     g_iState = STATE_TERM;
                     UpdateDisplay(iDisconnecting);
                     break;
@@ -2499,8 +2354,7 @@ main(void)
                 //
                 // We will read the device's RSSI every second.
                 //
-                if(HWREGBITW(&g_ui32Flags, FLAG_EVERY_SECOND) == 1)
-                {
+                if(HWREGBITW(&g_ui32Flags, FLAG_EVERY_SECOND) == 1) {
                     HWREGBITW(&g_ui32Flags, FLAG_EVERY_SECOND) = 0;
 
                     //
@@ -2514,16 +2368,13 @@ main(void)
                 //
                 // We are told to termniate the link.
                 //
-                if(TerminateLink())
-                {
+                if(TerminateLink()) {
                     //
                     // Terminate success, go to the next state
                     //
                     g_iState = STATE_TERMED;
                     g_bTermLinkReq = false;
-                }
-                else
-                {
+                } else {
                     //TODO
                     g_iState = STATE_TERMED;
                     g_bTermLinkReq = false;

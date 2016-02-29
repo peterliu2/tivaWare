@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2014-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -143,7 +143,8 @@ float g_ppfPath[GESTURE_PATH_LENGTH][GESTURE_NUM_STATES];
 //
 //*****************************************************************************
 const float g_pfInitProb[GESTURE_NUM_STATES] = {0.994f, 0.001f, 0.001f, 0.001f,
-                                                0.001f, 0.001f, 0.001f};
+                                                0.001f, 0.001f, 0.001f
+                                               };
 
 //*****************************************************************************
 //
@@ -151,8 +152,7 @@ const float g_pfInitProb[GESTURE_NUM_STATES] = {0.994f, 0.001f, 0.001f, 0.001f,
 // another state.
 //
 //*****************************************************************************
-const float g_ppfTransitionProb[GESTURE_NUM_STATES][GESTURE_NUM_STATES] =
-{
+const float g_ppfTransitionProb[GESTURE_NUM_STATES][GESTURE_NUM_STATES] = {
     {0.6f,  0.2f, 0.2f, 0.2f, 0.2f, 0.0f,  0.0f},
     {0.1f,  0.9f, 0.0f,  0.0f,  0.0f,  0.0f,  0.0f},
     {0.1f,  0.0f,  0.9f, 0.0f,  0.0f,  0.0f,  0.0f},
@@ -168,8 +168,7 @@ const float g_ppfTransitionProb[GESTURE_NUM_STATES][GESTURE_NUM_STATES] =
 // a particular state observation.
 //
 //*****************************************************************************
-const float g_ppfEmitProb[GESTURE_NUM_STATES][GESTURE_NUM_STATES] =
-{
+const float g_ppfEmitProb[GESTURE_NUM_STATES][GESTURE_NUM_STATES] = {
     {0.897f, 0.01f, 0.01f, 0.01f, 0.1f,  0.0f,  0.0f},
     {0.01f,  0.99f, 0.0f,  0.0f,  0.0f,  0.0f,  0.0f},
     {0.01f,  0.0f,  0.99f, 0.0f,  0.0f,  0.0f,  0.0f},
@@ -189,7 +188,8 @@ const float g_ppfEmitProb[GESTURE_NUM_STATES][GESTURE_NUM_STATES] =
 //
 //*****************************************************************************
 uint_fast16_t g_ui16DeadBands[GESTURE_NUM_STATES] = {15, 10, 10, 10, 15, 15,
-                                                     15};
+                                                     15
+                                                    };
 
 //*****************************************************************************
 //
@@ -229,8 +229,7 @@ MatrixVectorMul(float pfVectorOut[3], float ppfMatrixIn[3][3],
     //
     // Loop through the rows of the matrix.
     //
-    for(ui32Y = 0; ui32Y < 3; ui32Y++)
-    {
+    for(ui32Y = 0; ui32Y < 3; ui32Y++) {
         //
         // Initialize the value to zero
         //
@@ -239,8 +238,7 @@ MatrixVectorMul(float pfVectorOut[3], float ppfMatrixIn[3][3],
         //
         // Loop through the columns of the matrix.
         //
-        for(ui32X = 0; ui32X < 3; ui32X++)
-        {
+        for(ui32X = 0; ui32X < 3; ui32X++) {
             //
             // The answer to this vector's row's value is the sum of each
             // column value multiplied by each vector's row value.
@@ -291,8 +289,7 @@ GestureEmitClassify(tGesture* pGestInst, float* pfEulers, float* pfAccel,
     // switch state will only modify the observation if the state is
     // perceived to have changed.
     //
-    if(pGestInst->ui16DeadBandCounter < g_ui16DeadBands[pGestInst->ui16State])
-    {
+    if(pGestInst->ui16DeadBandCounter < g_ui16DeadBands[pGestInst->ui16State]) {
         pGestInst->ui16DeadBandCounter++;
         return (pGestInst->ui16PrevState);
     }
@@ -301,8 +298,7 @@ GestureEmitClassify(tGesture* pGestInst, float* pfEulers, float* pfAccel,
     // If state changed since our last time through the loop then reset our
     // deadband counter.
     //
-    if(pGestInst->ui16PrevState != pGestInst->ui16State)
-    {
+    if(pGestInst->ui16PrevState != pGestInst->ui16State) {
         pGestInst->ui16DeadBandCounter = 0;
     }
 
@@ -316,62 +312,47 @@ GestureEmitClassify(tGesture* pGestInst, float* pfEulers, float* pfAccel,
     //
     // What observations we can make depend on what state we currently are in.
     //
-    switch(pGestInst->ui16State)
-    {
+    switch(pGestInst->ui16State) {
         //
         // The current state is IDLE
         //
-        case GESTURE_STATE_IDLE:
-        {
+        case GESTURE_STATE_IDLE: {
             //
             // order of if statement checks is important since some gestures
             // may exhibit more than one characteristic we want to prioritize
             // which ones get detected
             //
-            if(pfAccelNet[2] > GESTURE_EMIT_THRESHOLD_ACCEL_UP)
-            {
+            if(pfAccelNet[2] > GESTURE_EMIT_THRESHOLD_ACCEL_UP) {
                 //
                 // Acceleration indicates board is going up.  report lifted
                 // observation.
                 //
                 pGestInst->ui16Emit = GESTURE_STATE_LIFTED;
-            }
-            else if(fabs(pfAngVelocity[2]) >
-                    GESTURE_EMIT_THRESHOLD_YAW_SCROLLING)
-            {
+            } else if(fabs(pfAngVelocity[2]) >
+                      GESTURE_EMIT_THRESHOLD_YAW_SCROLLING) {
                 //
                 // Yaw rate shows a spin of the board. This is a scroll
                 //
                 pGestInst->ui16Emit = GESTURE_STATE_SCROLLING;
-                if(pfAngVelocity[0] < 0.0f)
-                {
+                if(pfAngVelocity[0] < 0.0f) {
                     pGestInst->i8Direction = -1;
-                }
-                else
-                {
+                } else {
                     pGestInst->i8Direction = 1;
                 }
-            }
-            else if(fabs(pfAccelNet[0]) >
-                    GESTURE_EMIT_THRESHOLD_ACCEL_ZOOMING)
-            {
+            } else if(fabs(pfAccelNet[0]) >
+                      GESTURE_EMIT_THRESHOLD_ACCEL_ZOOMING) {
                 //
                 // Acceleration indicates sliding.  This is a "zoom"
                 //
                 pGestInst->ui16Emit = GESTURE_STATE_ZOOMING;
-                if(pfAccelNet[0] < 0.0f)
-                {
+                if(pfAccelNet[0] < 0.0f) {
                     pGestInst->i8Direction = -1;
-                }
-                else
-                {
+                } else {
                     pGestInst->i8Direction = 1;
                 }
-            }
-            else if(((fabs(pfEulers[0]) > GESTURE_EMIT_THRESHOLD_MOUSING) ||
-                    (fabs(pfEulers[1]) > GESTURE_EMIT_THRESHOLD_MOUSING)) &&
-                    (fJerk < GESTURE_EMIT_THRESHOLD_ACCEL_MOUSING))
-            {
+            } else if(((fabs(pfEulers[0]) > GESTURE_EMIT_THRESHOLD_MOUSING) ||
+                       (fabs(pfEulers[1]) > GESTURE_EMIT_THRESHOLD_MOUSING)) &&
+                      (fJerk < GESTURE_EMIT_THRESHOLD_ACCEL_MOUSING)) {
                 //
                 // Either roll or pitch indicates we might be moving the cursor
                 // since external accelerations can throw off the DCM output
@@ -386,15 +367,13 @@ GestureEmitClassify(tGesture* pGestInst, float* pfEulers, float* pfAccel,
         // Current state is moving the mouse. Characterized by roll and pitch
         // changes from the idle flat and level state.
         //
-        case GESTURE_STATE_MOUSING:
-        {
+        case GESTURE_STATE_MOUSING: {
             //
             // If the roll and pitch drop below the threshold we are back to
             // idle.  otherwise stay in mouse mode.
             //
             if((fabs(pfEulers[0]) < GESTURE_EMIT_THRESHOLD_MOUSING) &&
-               (fabs(pfEulers[1]) < GESTURE_EMIT_THRESHOLD_MOUSING))
-            {
+                    (fabs(pfEulers[1]) < GESTURE_EMIT_THRESHOLD_MOUSING)) {
                 pGestInst->ui16Emit = GESTURE_STATE_IDLE;
             }
             break;
@@ -404,25 +383,19 @@ GestureEmitClassify(tGesture* pGestInst, float* pfEulers, float* pfAccel,
         // Current State is lifted. Characterized by a quick jerk up of the
         // mouse into the air.
         //
-        case GESTURE_STATE_LIFTED:
-        {
-            if(pfAccelNet[2] < GESTURE_EMIT_THRESHOLD_ACCEL_DOWN)
-            {
+        case GESTURE_STATE_LIFTED: {
+            if(pfAccelNet[2] < GESTURE_EMIT_THRESHOLD_ACCEL_DOWN) {
                 //
                 // Accelerometer indicates we saw a down event. Go back to
                 // idle state.
                 //
                 pGestInst->ui16Emit = GESTURE_STATE_IDLE;
-            }
-            else if(pfAngVelocity[1] < GESTURE_EMIT_THRESHOLD_TWIST_RIGHT)
-            {
+            } else if(pfAngVelocity[1] < GESTURE_EMIT_THRESHOLD_TWIST_RIGHT) {
                 //
                 // Angular velocities show a twist right
                 //
                 pGestInst->ui16Emit = GESTURE_STATE_TWIST_RIGHT;
-            }
-            else if(pfAngVelocity[1] > GESTURE_EMIT_THRESHOLD_TWIST_LEFT)
-            {
+            } else if(pfAngVelocity[1] > GESTURE_EMIT_THRESHOLD_TWIST_LEFT) {
                 //
                 // Angular velocities show a twist left
                 //
@@ -435,10 +408,8 @@ GestureEmitClassify(tGesture* pGestInst, float* pfEulers, float* pfAccel,
         // We are currently in the scrolling state. Characterized by a sharp
         // rotation or spin of the mouse around the Z access.
         //
-        case GESTURE_STATE_SCROLLING:
-        {
-            if(fabs(pfAngVelocity[2]) < GESTURE_EMIT_THRESHOLD_YAW_SCROLLING)
-            {
+        case GESTURE_STATE_SCROLLING: {
+            if(fabs(pfAngVelocity[2]) < GESTURE_EMIT_THRESHOLD_YAW_SCROLLING) {
                 //
                 // angular velocity is now below the scrolling threshold so
                 // we sense we are idle.
@@ -454,10 +425,8 @@ GestureEmitClassify(tGesture* pGestInst, float* pfEulers, float* pfAccel,
         // critical, we are sensing on twist angle.
         //
         case GESTURE_STATE_TWIST_RIGHT:
-        case GESTURE_STATE_TWIST_LEFT:
-        {
-            if(fabs(pfEulers[1]) < GESTURE_EMIT_THRESHOLD_TWIST_LEVEL)
-            {
+        case GESTURE_STATE_TWIST_LEFT: {
+            if(fabs(pfEulers[1]) < GESTURE_EMIT_THRESHOLD_TWIST_LEVEL) {
                 //
                 // Eulers show that we are back to near level so return to
                 // plain lifted state.
@@ -471,10 +440,8 @@ GestureEmitClassify(tGesture* pGestInst, float* pfEulers, float* pfAccel,
         // We are in the zooming state. Characterized by a sharp acceleration
         // in the left/right axis while in idle mode.
         //
-        case GESTURE_STATE_ZOOMING:
-        {
-            if(fabs(pfAccelNet[1]) < GESTURE_EMIT_THRESHOLD_ACCEL_ZOOMING)
-            {
+        case GESTURE_STATE_ZOOMING: {
+            if(fabs(pfAccelNet[1]) < GESTURE_EMIT_THRESHOLD_ACCEL_ZOOMING) {
                 //
                 // Accel indicates we have dropped back below the zoom
                 // threshold therefore report we are observing idle.
@@ -526,13 +493,11 @@ GestureInit(tGesture* pGestInst, const float* pfInitProb,
     // Search for most probable state based on initial state probabilities and
     // and the initial observation.
     //
-    for(ui16Idx = 0; ui16Idx < pGestInst->ui16NumStates; ui16Idx++)
-    {
+    for(ui16Idx = 0; ui16Idx < pGestInst->ui16NumStates; ui16Idx++) {
         pGestInst->ppfPath[0][ui16Idx] = g_pfInitProb[ui16Idx] *
                                          g_ppfEmitProb[ui16Idx][ui16ObsState];
 
-        if(pGestInst->ppfPath[0][ui16Idx] > fMax)
-        {
+        if(pGestInst->ppfPath[0][ui16Idx] > fMax) {
             fMax = pGestInst->ppfPath[0][ui16Idx];
             ui16State = ui16Idx;
         }
@@ -565,16 +530,14 @@ GestureNormalize(tGesture * pGestInst)
     //
     // Calculate the sum of all the probabilities.
     //
-    for(ui16Idx = 0; ui16Idx < pGestInst->ui16NumStates; ui16Idx++)
-    {
+    for(ui16Idx = 0; ui16Idx < pGestInst->ui16NumStates; ui16Idx++) {
         fSum += pGestInst->ppfPath[pGestInst->ui16PathCounter][ui16Idx];
     }
 
     //
     // Divide by the sum so that now the sum of the probabilities will be 1.0.
     //
-    for(ui16Idx = 0; ui16Idx < pGestInst->ui16NumStates; ui16Idx++)
-    {
+    for(ui16Idx = 0; ui16Idx < pGestInst->ui16NumStates; ui16Idx++) {
         pGestInst->ppfPath[pGestInst->ui16PathCounter][ui16Idx] /= fSum;
     }
 }
@@ -597,8 +560,7 @@ GestureUpdate(tGesture *pGestInst, uint_fast16_t ui16ObsState)
     //
     ui16PrevProbIndex = pGestInst->ui16PathCounter;
     pGestInst->ui16PathCounter++;
-    if(pGestInst->ui16PathCounter >= pGestInst->ui16PathLength)
-    {
+    if(pGestInst->ui16PathCounter >= pGestInst->ui16PathLength) {
         pGestInst->ui16PathCounter = 0;
     }
 
@@ -618,13 +580,11 @@ GestureUpdate(tGesture *pGestInst, uint_fast16_t ui16ObsState)
     fProbMax = 0.0f;
     ui16StateMax = 0;
 
-    for(ui16Idx0 = 0; ui16Idx0 < pGestInst->ui16NumStates; ui16Idx0++)
-    {
+    for(ui16Idx0 = 0; ui16Idx0 < pGestInst->ui16NumStates; ui16Idx0++) {
         //
         // iterate through each possible state
         //
-        for(ui16Idx1 = 0; ui16Idx1 < pGestInst->ui16NumStates; ui16Idx1++)
-        {
+        for(ui16Idx1 = 0; ui16Idx1 < pGestInst->ui16NumStates; ui16Idx1++) {
             //
             // calculate this states probability
             //
@@ -636,8 +596,7 @@ GestureUpdate(tGesture *pGestInst, uint_fast16_t ui16ObsState)
             // if this state has highest probability so far record it as new
             // maximum
             //
-            if(fProb > fProbMax)
-            {
+            if(fProb > fProbMax) {
                 fProbMax = fProb;
                 ui16StateMax = ui16Idx1;
             }
@@ -675,8 +634,7 @@ void MotionCallback(void* pvCallbackData, uint_fast8_t ui8Status)
     // If the transaction succeeded set the data flag to indicate to
     // application that this transaction is complete and data may be ready.
     //
-    if(ui8Status == I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status == I2CM_STATUS_SUCCESS) {
         //
         // Set the motion event flag to show that we have completed the
         // i2c transfer
@@ -709,9 +667,7 @@ void MotionCallback(void* pvCallbackData, uint_fast8_t ui8Status)
                               -g_pfGyro[2]);
             CompDCMUpdate(&g_sCompDCMInst);
         }
-    }
-    else
-    {
+    } else {
         //
         // An Error occurred in the I2C transaction.
         //
@@ -746,8 +702,7 @@ GPIOSIntHandler(void)
     //
     // Check which GPIO caused the interrupt event.
     //
-    if(ui32Status & GPIO_PIN_2)
-    {
+    if(ui32Status & GPIO_PIN_2) {
         //
         // The MPU9150 data ready pin was asserted so start an I2C transfer
         // to go get the latest data from the device.
@@ -790,8 +745,7 @@ MotionI2CWait(char* pcFilename, uint_fast32_t ui32Line)
     // indicate that the transaction is complete.
     //
     while((HWREGBITW(&g_ui32Events, MOTION_EVENT) == 0) &&
-          (g_vui8ErrorFlag == 0))
-    {
+            (g_vui8ErrorFlag == 0)) {
         //
         // Do Nothing
         //
@@ -805,8 +759,7 @@ MotionI2CWait(char* pcFilename, uint_fast32_t ui32Line)
     //
     // If an error occurred call the error handler immediately.
     //
-    if(g_vui8ErrorFlag)
-    {
+    if(g_vui8ErrorFlag) {
         MotionErrorHandler(pcFilename, ui32Line);
         g_vui8ErrorFlag = 0;
     }
@@ -938,20 +891,17 @@ MotionInit(void)
 void
 MotionMain(void)
 {
-    switch(g_ui8MotionState)
-    {
+    switch(g_ui8MotionState) {
         //
         // This is our initial data set from the MPU9150, start the DCM.
         //
-        case MOTION_STATE_INIT:
-        {
+        case MOTION_STATE_INIT: {
             //
             // Check the read data buffer of the MPU9150 to see if the
             // Magnetometer data is ready and present. This may not be the case
             // for the first few data captures.
             //
-            if(g_sMPU9150Inst.pui8Data[14] & AK8975_ST1_DRDY)
-            {
+            if(g_sMPU9150Inst.pui8Data[14] & AK8975_ST1_DRDY) {
                 //
                 // Get local copy of Accel and Mag data to feed to the DCM
                 // start.
@@ -959,7 +909,7 @@ MotionMain(void)
                 MPU9150DataAccelGetFloat(&g_sMPU9150Inst, g_pfAccel,
                                          g_pfAccel + 1, g_pfAccel + 2);
                 MPU9150DataMagnetoGetFloat(&g_sMPU9150Inst, g_pfMag,
-                                          g_pfMag + 1, g_pfMag + 2);
+                                           g_pfMag + 1, g_pfMag + 2);
                 MPU9150DataGyroGetFloat(&g_sMPU9150Inst, g_pfGyro,
                                         g_pfGyro + 1, g_pfGyro + 2);
 
@@ -990,8 +940,7 @@ MotionMain(void)
         //
         // DCM has been started and we are ready for normal operations.
         //
-        case MOTION_STATE_RUN:
-        {
+        case MOTION_STATE_RUN: {
             //
             // Get the latest Euler data from the DCM. DCMUpdate is done
             // inside the interrupt routine to insure it is not skipped and
@@ -1018,8 +967,7 @@ MotionMain(void)
             // rollovers of the g_ui32SysTickCount variable.  This rollover
             // only occurs after 1.3+ years of continuous operation.
             //
-            if(g_ui32SysTickCount > (g_ui32MotionBlinkCounter + 10))
-            {
+            if(g_ui32SysTickCount > (g_ui32MotionBlinkCounter + 10)) {
                 //
                 // 10 ticks have expired since we last toggled so toggle the
                 // blue LED and reset the counter.
@@ -1043,8 +991,7 @@ MotionMain(void)
         // send.  In practice there are ways to clear this condition.  They are
         // not implemented here.  To clear power cycle the board.
         //
-        case MOTION_STATE_ERROR:
-        {
+        case MOTION_STATE_ERROR: {
             //
             // Display this error and how to clear.
             //
@@ -1082,8 +1029,7 @@ MotionMouseGet(int8_t *i8DeltaX, int8_t *i8DeltaY, uint8_t *ui8Buttons)
     *i8DeltaX = 0;
     *i8DeltaY = 0;
 
-    if(g_sGestureInst.ui16State == GESTURE_STATE_MOUSING)
-    {
+    if(g_sGestureInst.ui16State == GESTURE_STATE_MOUSING) {
         //
         // Set DeltaX and DeltaY proportional to roll and pitch
         // Negate DeltaX to get the left right orientation correct.
@@ -1120,8 +1066,7 @@ MotionKeyboardGet(uint8_t * ui8Modifiers, uint8_t *ui8Key, bool *bModifierHold,
     //
     // USB Is connected and not suspended so begin gesture checking
     //
-    if(g_sGestureInst.ui16State == g_sGestureInst.ui16PrevState)
-    {
+    if(g_sGestureInst.ui16State == g_sGestureInst.ui16PrevState) {
         //
         // If this gesture state is the same as the previous gesture
         // state then we have nothing to do here.
@@ -1129,13 +1074,11 @@ MotionKeyboardGet(uint8_t * ui8Modifiers, uint8_t *ui8Key, bool *bModifierHold,
         return(false);
     }
 
-    switch(g_sGestureInst.ui16State)
-    {
+    switch(g_sGestureInst.ui16State) {
         //
         // Mouse has experienced lift gesture
         //
-        case GESTURE_STATE_LIFTED:
-        {
+        case GESTURE_STATE_LIFTED: {
             //
             // Always maintain the ALT regardless of our previous state.
             //
@@ -1146,8 +1089,7 @@ MotionKeyboardGet(uint8_t * ui8Modifiers, uint8_t *ui8Key, bool *bModifierHold,
             // Check if previous state was idle. If so send TAB as well to
             // start the window selection session.
             //
-            if(g_sGestureInst.ui16PrevState == GESTURE_STATE_IDLE)
-            {
+            if(g_sGestureInst.ui16PrevState == GESTURE_STATE_IDLE) {
                 *ui8Key = HID_KEYB_USAGE_TAB;
                 *bKeyHold = false;
             }
@@ -1158,8 +1100,7 @@ MotionKeyboardGet(uint8_t * ui8Modifiers, uint8_t *ui8Key, bool *bModifierHold,
         // Mouse experienced a sharp wrist twist to the left while
         // in the lifted state.
         //
-        case GESTURE_STATE_TWIST_LEFT:
-        {
+        case GESTURE_STATE_TWIST_LEFT: {
             *ui8Modifiers = HID_KEYB_LEFT_ALT;
             *bModifierHold = true;
             *ui8Key = HID_KEYB_USAGE_LEFT_ARROW;
@@ -1172,8 +1113,7 @@ MotionKeyboardGet(uint8_t * ui8Modifiers, uint8_t *ui8Key, bool *bModifierHold,
         // Mouse experienced a sharp twist to the right while in the
         // lifted state.
         //
-        case GESTURE_STATE_TWIST_RIGHT:
-        {
+        case GESTURE_STATE_TWIST_RIGHT: {
             *ui8Modifiers = HID_KEYB_LEFT_ALT;
             *bModifierHold = true;
             *ui8Key = HID_KEYB_USAGE_RIGHT_ARROW;
@@ -1185,17 +1125,13 @@ MotionKeyboardGet(uint8_t * ui8Modifiers, uint8_t *ui8Key, bool *bModifierHold,
         //
         // Mouse experienced a jerk forward or back while in the Idle state.
         //
-        case GESTURE_STATE_ZOOMING:
-        {
-            if(g_sGestureInst.i8Direction > 0)
-            {
+        case GESTURE_STATE_ZOOMING: {
+            if(g_sGestureInst.i8Direction > 0) {
                 *ui8Modifiers = HID_KEYB_LEFT_CTRL;
                 *bModifierHold = false;
                 *ui8Key = HID_KEYB_USAGE_KEYPAD_PLUS;
                 *bKeyHold = false;
-            }
-            else
-            {
+            } else {
                 *ui8Modifiers = HID_KEYB_LEFT_CTRL;
                 *bModifierHold = false;
                 *ui8Key = HID_KEYB_USAGE_KEYPAD_MINUS;
@@ -1208,17 +1144,13 @@ MotionKeyboardGet(uint8_t * ui8Modifiers, uint8_t *ui8Key, bool *bModifierHold,
         // Mouse experienced a sharp twist of the Z axis while in the
         // idle state.
         //
-        case GESTURE_STATE_SCROLLING:
-        {
-            if(g_sGestureInst.i8Direction > 0)
-            {
+        case GESTURE_STATE_SCROLLING: {
+            if(g_sGestureInst.i8Direction > 0) {
                 *ui8Modifiers = 0;
                 *bModifierHold = false;
                 *ui8Key = HID_KEYB_USAGE_PAGE_UP;
                 *bKeyHold = false;
-            }
-            else
-            {
+            } else {
                 *ui8Modifiers = 0;
                 *bModifierHold = false;
                 *ui8Key = HID_KEYB_USAGE_PAGE_DOWN;
@@ -1230,10 +1162,8 @@ MotionKeyboardGet(uint8_t * ui8Modifiers, uint8_t *ui8Key, bool *bModifierHold,
         //
         // Mouse has gone back to the idle state from some other state.
         //
-        case GESTURE_STATE_IDLE:
-        {
-            if(g_sGestureInst.ui16PrevState == GESTURE_STATE_LIFTED)
-            {
+        case GESTURE_STATE_IDLE: {
+            if(g_sGestureInst.ui16PrevState == GESTURE_STATE_LIFTED) {
                 *ui8Modifiers = 0;
                 *bModifierHold = false;
                 *ui8Key = 0;

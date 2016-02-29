@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-LM4F232 Firmware Package.
 //
 //*****************************************************************************
@@ -83,8 +83,7 @@ tDisplay g_sOffscreenDisplay;
 // Create a palette for the off-screen buffer that is used by the strip chart.
 //
 //*****************************************************************************
-uint32_t g_pui32Palette[] =
-{
+uint32_t g_pui32Palette[] = {
     ClrBlack,
     ClrWhite,
     ClrRed,
@@ -99,8 +98,7 @@ uint32_t g_pui32Palette[] =
 //
 //*****************************************************************************
 #define SERIES_LENGTH 96
-static tStripChartSeries g_sSeries =
-{
+static tStripChartSeries g_sSeries = {
     0, "SINE", ClrRed, 1, 1, 0, 0
 };
 
@@ -109,8 +107,7 @@ static tStripChartSeries g_sSeries =
 // Defines the X-axis for the strip chart
 //
 //*****************************************************************************
-static tStripChartAxis i16Axis16X =
-{
+static tStripChartAxis i16Axis16X = {
     "TIME",                                 // title of axis
     0,                                      // label for minimum of axis
     0,                                      // label for maximum of axis
@@ -124,8 +121,7 @@ static tStripChartAxis i16Axis16X =
 // Defines the Y-axis for the strip chart.
 //
 //*****************************************************************************
-static tStripChartAxis i16Axis16Y =
-{
+static tStripChartAxis i16Axis16Y = {
     "SIN(2pi*t/4)*0.5",                     // title of the axis
     "-1",                                   // label for minimum of axis
     "+1",                                   // label for maximum of axis
@@ -243,8 +239,7 @@ main(void)
     //
     // Enter a loop to continuously calculate a sine wave.
     //
-    while(1)
-    {
+    while(1) {
         float fElapsedTime;
         float fRadians;
         float fSine;
@@ -252,8 +247,7 @@ main(void)
         //
         // Wait for the next timer tick.
         //
-        while(ui32LastTickCount == g_ui32TickCount)
-        {
+        while(ui32LastTickCount == g_ui32TickCount) {
         }
         ui32LastTickCount = g_ui32TickCount;
 
@@ -263,8 +257,7 @@ main(void)
         // maximum value, then the data points need to "slide down" in the
         // buffer so new data can be added at the end.
         //
-        if(ui16ItemCount == SERIES_LENGTH)
-        {
+        if(ui16ItemCount == SERIES_LENGTH) {
             memmove(&g_i8SeriesData[0], &g_i8SeriesData[1], SERIES_LENGTH - 1);
         }
 
@@ -272,8 +265,7 @@ main(void)
         // Otherwise, the series data buffer is less than full so just
         // increment the count of data points.
         //
-        else
-        {
+        else {
             //
             // Increment the number of items that have been added to the strip
             // chart series data buffer.

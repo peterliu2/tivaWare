@@ -579,12 +579,9 @@ QEIIntStatus(unsigned long ulBase, tBoolean bMasked)
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return(HWREG(ulBase + QEI_O_ISC));
-    }
-    else
-    {
+    } else {
         return(HWREG(ulBase + QEI_O_RIS));
     }
 }

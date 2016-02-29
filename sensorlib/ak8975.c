@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -72,16 +72,14 @@ AK8975Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     // to the idle state (which will also result in a callback to propagate the
     // error).
     //
-    if(ui8Status != I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status != I2CM_STATUS_SUCCESS) {
         psInst->ui8State = AK8975_STATE_IDLE;
     }
 
     //
     // Determine the current state of the AK8975 state machine.
     //
-    switch(psInst->ui8State)
-    {
+    switch(psInst->ui8State) {
         //
         // All states that trivially transition to IDLE, and all unknown
         // states.
@@ -89,8 +87,7 @@ AK8975Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         case AK8975_STATE_READ:
         case AK8975_STATE_WRITE:
         case AK8975_STATE_RMW:
-        default:
-        {
+        default: {
             //
             // The state machine is now idle.
             //
@@ -106,8 +103,7 @@ AK8975Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if the state machine is now idle and there is a callback function.
     //
-    if((psInst->ui8State == AK8975_STATE_IDLE) && psInst->pfnCallback)
-    {
+    if((psInst->ui8State == AK8975_STATE_IDLE) && psInst->pfnCallback) {
         //
         // Call the application-supplied callback function.
         //
@@ -146,8 +142,7 @@ AK8975Init(tAK8975 *psInst, tI2CMInstance *psI2CInst, uint_fast8_t ui8I2CAddr,
     //
     // The default settings are ok.  Return success and call the callback.
     //
-    if(pfnCallback)
-    {
+    if(pfnCallback) {
         pfnCallback(pvCallbackData, 0);
     }
 
@@ -186,8 +181,7 @@ AK8975Read(tAK8975 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     // Return a failure if the AK8975 driver is not idle (in other words, there
     // is already an outstanding request to the AK8975).
     //
-    if(psInst->ui8State != AK8975_STATE_IDLE)
-    {
+    if(psInst->ui8State != AK8975_STATE_IDLE) {
         return(0);
     }
 
@@ -208,8 +202,7 @@ AK8975Read(tAK8975 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     psInst->uCommand.pui8Buffer[0] = ui8Reg;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
                 psInst->uCommand.pui8Buffer, 1, pui8Data, ui16Count,
-                AK8975Callback, psInst) == 0)
-    {
+                AK8975Callback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -254,8 +247,7 @@ AK8975Write(tAK8975 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     // Return a failure if the AK8975 driver is not idle (in other words, there
     // is already an outstanding request to the AK8975).
     //
-    if(psInst->ui8State != AK8975_STATE_IDLE)
-    {
+    if(psInst->ui8State != AK8975_STATE_IDLE) {
         return(0);
     }
 
@@ -275,8 +267,7 @@ AK8975Write(tAK8975 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     //
     if(I2CMWrite8(&(psInst->uCommand.sWriteState), psInst->psI2CInst,
                   psInst->ui8Addr, ui8Reg, pui8Data, ui16Count, AK8975Callback,
-                  psInst) == 0)
-    {
+                  psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -324,8 +315,7 @@ AK8975ReadModifyWrite(tAK8975 *psInst, uint_fast8_t ui8Reg,
     // Return a failure if the AK8975 driver is not idle (in other words, there
     // is already an outstanding request to the AK8975).
     //
-    if(psInst->ui8State != AK8975_STATE_IDLE)
-    {
+    if(psInst->ui8State != AK8975_STATE_IDLE) {
         return(0);
     }
 
@@ -345,8 +335,7 @@ AK8975ReadModifyWrite(tAK8975 *psInst, uint_fast8_t ui8Reg,
     //
     if(I2CMReadModifyWrite8(&(psInst->uCommand.sReadModifyWriteState),
                             psInst->psI2CInst, psInst->ui8Addr, ui8Reg,
-                            ui8Mask, ui8Value, AK8975Callback, psInst) == 0)
-    {
+                            ui8Mask, ui8Value, AK8975Callback, psInst) == 0) {
         //
         // The I2C read-modify-write failed, so move to the idle state and
         // return a failure.
@@ -388,8 +377,7 @@ AK8975DataRead(tAK8975 *psInst, tSensorCallback *pfnCallback,
     // Return a failure if the AK8975 driver is not idle (in other words, there
     // is already an outstanding request to the AK8975).
     //
-    if(psInst->ui8State != AK8975_STATE_IDLE)
-    {
+    if(psInst->ui8State != AK8975_STATE_IDLE) {
         return(0);
     }
 
@@ -411,8 +399,7 @@ AK8975DataRead(tAK8975 *psInst, tSensorCallback *pfnCallback,
     //
     psInst->pui8Data[0] = AK8975_O_ST1;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr, psInst->pui8Data, 1,
-                psInst->pui8Data, 8, AK8975Callback, psInst) == 0)
-    {
+                psInst->pui8Data, 8, AK8975Callback, psInst) == 0) {
         //
         // The I2C read failed, so move to the idle state and return a failure.
         //
@@ -453,16 +440,13 @@ AK8975DataMagnetoGetRaw(tAK8975 *psInst, uint_fast16_t *pui16MagnetoX,
     //
     // Return the raw magnetometer values.
     //
-    if(pui16MagnetoX)
-    {
+    if(pui16MagnetoX) {
         *pui16MagnetoX = (psInst->pui8Data[2] << 8) | psInst->pui8Data[1];
     }
-    if(pui16MagnetoY)
-    {
+    if(pui16MagnetoY) {
         *pui16MagnetoY = (psInst->pui8Data[4] << 8) | psInst->pui8Data[3];
     }
-    if(pui16MagnetoZ)
-    {
+    if(pui16MagnetoZ) {
         *pui16MagnetoZ = (psInst->pui8Data[6] << 8) | psInst->pui8Data[5];
     }
 }
@@ -493,20 +477,17 @@ AK8975DataMagnetoGetFloat(tAK8975 *psInst, float *pfMagnetoX,
     //
     // Convert the magnetometer values into floating-point tesla values.
     //
-    if(pfMagnetoX)
-    {
+    if(pfMagnetoX) {
         *pfMagnetoX = ((float)(int16_t)((psInst->pui8Data[2] << 8) |
                                         psInst->pui8Data[1]) *
                        CONVERT_TO_TESLA);
     }
-    if(pfMagnetoY)
-    {
+    if(pfMagnetoY) {
         *pfMagnetoY = ((float)(int16_t)((psInst->pui8Data[4] << 8) |
                                         psInst->pui8Data[3]) *
                        CONVERT_TO_TESLA);
     }
-    if(pfMagnetoZ)
-    {
+    if(pfMagnetoZ) {
         *pfMagnetoZ = ((float)(int16_t)((psInst->pui8Data[6] << 8) |
                                         psInst->pui8Data[5]) *
                        CONVERT_TO_TESLA);
@@ -540,12 +521,10 @@ AK8975DataGetStatus(tAK8975 *psInst, uint_fast8_t *pui8Status1,
     //
     // Return the status registers
     //
-    if(pui8Status1)
-    {
+    if(pui8Status1) {
         *pui8Status1 = psInst->pui8Data[0];
     }
-    if(pui8Status2)
-    {
+    if(pui8Status2) {
         *pui8Status2 = psInst->pui8Data[7];
     }
 }

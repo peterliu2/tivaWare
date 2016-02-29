@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -65,8 +65,7 @@ extern "C"
 //! descriptors.
 //
 //*****************************************************************************
-struct tDeviceInfo
-{
+struct tDeviceInfo {
     //
     //! A pointer to a structure containing pointers to event handler functions
     //! provided by the client to support the operation of this device.
@@ -134,8 +133,7 @@ struct tDeviceInfo
 //!
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! This is the top level device information structure.
     //
@@ -174,26 +172,26 @@ extern void USBDCDRequestDataEP0(uint32_t ui32Index, uint8_t *pui8Data,
 extern void USBDCDSendDataEP0(uint32_t ui32Index, uint8_t *pui8Data,
                               uint32_t ui32Size);
 extern void USBDCDSetDefaultConfiguration(uint32_t ui32Index,
-                                          uint32_t ui32DefaultConfig);
+        uint32_t ui32DefaultConfig);
 extern uint32_t USBDCDConfigDescGetSize(const tConfigHeader *psConfig);
 extern uint32_t USBDCDConfigDescGetNum(const tConfigHeader *psConfig,
                                        uint32_t ui32Type);
 extern tDescriptorHeader *USBDCDConfigDescGet(const tConfigHeader *psConfig,
-                                              uint32_t ui32Type,
-                                              uint32_t ui32Index,
-                                              uint32_t *pui32Section);
+        uint32_t ui32Type,
+        uint32_t ui32Index,
+        uint32_t *pui32Section);
 extern uint32_t
-       USBDCDConfigGetNumAlternateInterfaces(const tConfigHeader *psConfig,
-                                             uint8_t ui8InterfaceNumber);
+USBDCDConfigGetNumAlternateInterfaces(const tConfigHeader *psConfig,
+                                      uint8_t ui8InterfaceNumber);
 extern tInterfaceDescriptor *
-       USBDCDConfigGetInterface(const tConfigHeader *psConfig,
-                                uint32_t ui32Index, uint32_t ui32AltCfg,
-                                uint32_t *pui32Section);
+USBDCDConfigGetInterface(const tConfigHeader *psConfig,
+                         uint32_t ui32Index, uint32_t ui32AltCfg,
+                         uint32_t *pui32Section);
 extern tEndpointDescriptor *
-       USBDCDConfigGetInterfaceEndpoint(const tConfigHeader *psConfig,
-                                        uint32_t ui32InterfaceNumber,
-                                        uint32_t ui32AltCfg,
-                                        uint32_t ui32Index);
+USBDCDConfigGetInterfaceEndpoint(const tConfigHeader *psConfig,
+                                 uint32_t ui32InterfaceNumber,
+                                 uint32_t ui32AltCfg,
+                                 uint32_t ui32Index);
 extern bool USBDCDRemoteWakeupRequest(uint32_t ui32Index);
 extern bool USBDCDFeatureSet(uint32_t ui32Index, uint32_t ui32Feature,
                              void *pvFeature);

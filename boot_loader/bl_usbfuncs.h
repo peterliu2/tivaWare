@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -131,8 +131,7 @@ extern "C"
 //! specification.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! Determines the type and direction of the request.
     //
@@ -221,8 +220,7 @@ PACKED tUSBRequest;
 //! USB other speed configuration descriptor defined in section 9.6.4.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The length of this descriptor in bytes.  All configuration descriptors
     //! are 9 bytes long.
@@ -304,8 +302,7 @@ PACKED tConfigDescriptor;
 //! language IDs present in the descriptor is given by ((bLength - 2) / 2).
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The length of this descriptor in bytes.  This value will vary
     //! depending upon the number of language codes provided in the descriptor.
@@ -334,8 +331,7 @@ PACKED tString0Descriptor;
 //! other than 0 as defined in USB 2.0 specification section 9.6.7.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The length of this descriptor in bytes.  This value will be 2 greater
     //! than the number of bytes comprising the UNICODE string that the
@@ -385,17 +381,17 @@ PACKED tStringDescriptor;
 #define USB_DEV_RX_SENT_STALL   0x00400000  // Stall was sent on this endpoint
 #define USB_DEV_RX_DATA_ERROR   0x00080000  // CRC error on the data
 #define USB_DEV_RX_OVERRUN      0x00040000  // OUT packet was not loaded due to
-                                            // a full FIFO
+// a full FIFO
 #define USB_DEV_RX_FIFO_FULL    0x00020000  // RX FIFO full
 #define USB_DEV_RX_PKT_RDY      0x00010000  // Data packet ready
 #define USB_DEV_TX_NOT_COMP     0x00000080  // Large packet split up, more data
-                                            // to come
+// to come
 #define USB_DEV_TX_SENT_STALL   0x00000020  // Stall was sent on this endpoint
 #define USB_DEV_TX_UNDERRUN     0x00000004  // IN received with no data ready
 #define USB_DEV_TX_FIFO_NE      0x00000002  // The TX FIFO is not empty
 #define USB_DEV_TX_TXPKTRDY     0x00000001  // Transmit still being transmitted
 #define USB_DEV_EP0_SETUP_END   0x00000010  // Control transaction ended before
-                                            // Data End seen
+// Data End seen
 #define USB_DEV_EP0_SENT_STALL  0x00000004  // Stall was sent on this endpoint
 #define USB_DEV_EP0_IN_PKTPEND  0x00000002  // Transmit data packet pending
 #define USB_DEV_EP0_OUT_PKTRDY  0x00000001  // Receive data packet ready
@@ -434,11 +430,11 @@ PACKED tStringDescriptor;
 #define USB_TRANS_OUT           0x00000102  // Normal OUT transaction
 #define USB_TRANS_IN            0x00000102  // Normal IN transaction
 #define USB_TRANS_IN_LAST       0x0000010a  // Final IN transaction (for
-                                            // endpoint 0 in device mode)
+// endpoint 0 in device mode)
 #define USB_TRANS_SETUP         0x0000110a  // Setup transaction (for endpoint
-                                            // 0)
+// 0)
 #define USB_TRANS_STATUS        0x00000142  // Status transaction (for endpoint
-                                            // 0)
+// 0)
 
 //*****************************************************************************
 //

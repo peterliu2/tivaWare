@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C123G Firmware Package.
 //
 //*****************************************************************************
@@ -107,8 +107,7 @@ DECLARE_EVENT_DRIVER(g_sUSBEventDriver, 0, 0, USBHCDEvents);
 // In this case, only the Keyboard class is loaded.
 //
 //*****************************************************************************
-static tUSBHostClassDriver const * const g_ppHostClassDrivers[] =
-{
+static tUSBHostClassDriver const * const g_ppHostClassDrivers[] = {
     &g_sUSBHIDClassDriver,
     &g_sUSBEventDriver
 };
@@ -158,8 +157,7 @@ static tUSBHKeyboard *g_psKeyboardInstance;
 // This enumerated type is used to hold the states of the keyboard.
 //
 //*****************************************************************************
-enum
-{
+enum {
     //
     // No device is present.
     //
@@ -298,8 +296,7 @@ PrintChar(const char cChar)
     //
     // If both the line and column have gone to zero then clear the screen.
     //
-    if((g_ui32Line == 0) && (g_ui32Column == 0))
-    {
+    if((g_ui32Line == 0) && (g_ui32Column == 0)) {
         //
         // Form the rectangle that makes up the text box.
         //
@@ -307,7 +304,7 @@ PrintChar(const char cChar)
         sRect.i16YMin = (2 * DISPLAY_BANNER_HEIGHT) + DISPLAY_TEXT_BORDER;
         sRect.i16XMax = GrContextDpyWidthGet(&g_sContext) - DISPLAY_TEXT_BORDER;
         sRect.i16YMax = GrContextDpyHeightGet(&g_sContext) -
-                      DISPLAY_BANNER_HEIGHT - DISPLAY_TEXT_BORDER;
+                        DISPLAY_BANNER_HEIGHT - DISPLAY_TEXT_BORDER;
 
         //
         // Change the foreground color to black and draw black rectangle to
@@ -330,13 +327,11 @@ PrintChar(const char cChar)
     //
     // Allow new lines to cause the column to go back to zero.
     //
-    if(cChar != '\n')
-    {
+    if(cChar != '\n') {
         //
         // Did we get a backspace character?
         //
-        if(cChar != ASCII_BACKSPACE)
-        {
+        if(cChar != ASCII_BACKSPACE) {
             //
             // This is not a backspace so print the character to the screen.
             //
@@ -344,24 +339,18 @@ PrintChar(const char cChar)
                          GrFontMaxWidthGet(g_psFontFixed6x8) * g_ui32Column,
                          (2 * DISPLAY_BANNER_HEIGHT) + DISPLAY_TEXT_BORDER +
                          (g_ui32Line * GrFontHeightGet(g_psFontFixed6x8)), 0);
-        }
-        else
-        {
+        } else {
             //
             // We got a backspace.  If we are at the top left of the screen,
             // return since we don't need to do anything.
             //
-            if(g_ui32Column || g_ui32Line)
-            {
+            if(g_ui32Column || g_ui32Line) {
                 //
                 // Adjust the cursor position to erase the last character.
                 //
-                if(g_ui32Column)
-                {
+                if(g_ui32Column) {
                     g_ui32Column--;
-                }
-                else
-                {
+                } else {
                     g_ui32Column = g_ui32CharsPerLine;
                     g_ui32Line--;
                 }
@@ -378,9 +367,7 @@ PrintChar(const char cChar)
             }
             return;
         }
-    }
-    else
-    {
+    } else {
         //
         // This will allow the code below to properly handle the new line.
         //
@@ -390,15 +377,12 @@ PrintChar(const char cChar)
     //
     // Update the text row and column that the next character will use.
     //
-    if(g_ui32Column < g_ui32CharsPerLine)
-    {
+    if(g_ui32Column < g_ui32CharsPerLine) {
         //
         // No line wrap yet so move one column over.
         //
         g_ui32Column++;
-    }
-    else
-    {
+    } else {
         //
         // Line wrapped so go back to the first column and update the line.
         //
@@ -408,8 +392,7 @@ PrintChar(const char cChar)
         //
         // The line has gone past the end so go back to the first line.
         //
-        if(g_ui32Line >= g_ui32LinesPerScreen)
-        {
+        if(g_ui32Line >= g_ui32LinesPerScreen) {
             g_ui32Line = 0;
         }
     }
@@ -431,7 +414,7 @@ UpdateStatus(void)
     //
     sRect.i16XMin = 0;
     sRect.i16YMin = GrContextDpyHeightGet(&g_sContext) -
-                  DISPLAY_BANNER_HEIGHT - 1;
+                    DISPLAY_BANNER_HEIGHT - 1;
     sRect.i16XMax = GrContextDpyWidthGet(&g_sContext) - 1;
     sRect.i16YMax = sRect.i16YMin + DISPLAY_BANNER_HEIGHT;
 
@@ -452,36 +435,29 @@ UpdateStatus(void)
     //
     // Update the status on the screen.
     //
-    if(g_eUSBState == STATE_NO_DEVICE)
-    {
+    if(g_eUSBState == STATE_NO_DEVICE) {
         //
         // Keyboard is currently disconnected.
         //
         GrStringDrawCentered(&g_sContext, "no device", -1,
                              GrContextDpyWidthGet(&g_sContext) / 2,
                              sRect.i16YMin + 5, 0);
-    }
-    else if(g_eUSBState == STATE_UNKNOWN_DEVICE)
-    {
+    } else if(g_eUSBState == STATE_UNKNOWN_DEVICE) {
         //
         // Unknown device is currently connected.
         //
         GrStringDrawCentered(&g_sContext, "unknown device", -1,
                              GrContextDpyWidthGet(&g_sContext) / 2,
                              sRect.i16YMin + 5, 0);
-    }
-    else if(g_eUSBState == STATE_POWER_FAULT)
-    {
+    } else if(g_eUSBState == STATE_POWER_FAULT) {
         //
         // Something caused a power fault.
         //
         GrStringDrawCentered(&g_sContext, "power fault", -1,
                              GrContextDpyWidthGet(&g_sContext) / 2,
                              sRect.i16YMin + 5, 0);
-    }
-    else if((g_eUSBState == STATE_KEYBOARD_CONNECTED) ||
-            (g_eUSBState == STATE_KEYBOARD_UPDATE))
-    {
+    } else if((g_eUSBState == STATE_KEYBOARD_CONNECTED) ||
+              (g_eUSBState == STATE_KEYBOARD_UPDATE)) {
         //
         // Keyboard is connected.
         //
@@ -492,8 +468,7 @@ UpdateStatus(void)
         //
         // Update the CAPS Lock status.
         //
-        if(g_ui32Modifiers & HID_KEYB_CAPS_LOCK)
-        {
+        if(g_ui32Modifiers & HID_KEYB_CAPS_LOCK) {
             GrStringDrawCentered(&g_sContext, "C",
                                  GrContextDpyWidthGet(&g_sContext) / 2,
                                  sRect.i16XMax - 10,
@@ -527,20 +502,17 @@ USBHCDEvents(void *pvData)
     //
     pEventInfo = (tEventInfo *)pvData;
 
-    switch(pEventInfo->ui32Event)
-    {
+    switch(pEventInfo->ui32Event) {
         //
         // New keyboard detected.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             //
             // See if this is a HID Keyboard.
             //
             if((USBHCDDevClass(pEventInfo->ui32Instance, 0) == USB_CLASS_HID) &&
-               (USBHCDDevProtocol(pEventInfo->ui32Instance, 0) ==
-                USB_HID_PROTOCOL_KEYB))
-            {
+                    (USBHCDDevProtocol(pEventInfo->ui32Instance, 0) ==
+                     USB_HID_PROTOCOL_KEYB)) {
                 //
                 // Indicate that the keyboard has been detected.
                 //
@@ -559,8 +531,7 @@ USBHCDEvents(void *pvData)
         //
         // Unsupported device detected.
         //
-        case USB_EVENT_UNKNOWN_CONNECTED:
-        {
+        case USB_EVENT_UNKNOWN_CONNECTED: {
             UARTprintf("Unsupported Device Class (0x%02x) Connected.\n",
                        pEventInfo->ui32Instance);
 
@@ -576,8 +547,7 @@ USBHCDEvents(void *pvData)
         //
         // Device has been unplugged.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             //
             // Indicate that the device has been disconnected.
             //
@@ -599,8 +569,7 @@ USBHCDEvents(void *pvData)
         //
         // Power Fault occurred.
         //
-        case USB_EVENT_POWER_FAULT:
-        {
+        case USB_EVENT_POWER_FAULT: {
             UARTprintf("Power Fault\n");
 
             //
@@ -612,8 +581,7 @@ USBHCDEvents(void *pvData)
 
             break;
         }
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -642,25 +610,20 @@ ModeCallback(uint32_t ui32Index, tUSBMode eMode)
     //
     g_eCurrentUSBMode = eMode;
 
-    switch(eMode)
-    {
-        case eUSBModeHost:
-        {
+    switch(eMode) {
+        case eUSBModeHost: {
             UARTprintf("\nHost Mode.\n");
             break;
         }
-        case eUSBModeDevice:
-        {
+        case eUSBModeDevice: {
             UARTprintf("\nDevice Mode.\n");
             break;
         }
-        case eUSBModeNone:
-        {
+        case eUSBModeNone: {
             UARTprintf("\nIdle Mode.\n");
             break;
         }
-        default:
-        {
+        default: {
             UARTprintf("ERROR: Bad Mode!\n");
             break;
         }
@@ -689,18 +652,15 @@ KeyboardCallback(tUSBHKeyboard *psKbInstance, uint32_t ui32Event,
 {
     char cChar;
 
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // New Key press detected.
         //
-        case USBH_EVENT_HID_KB_PRESS:
-        {
+        case USBH_EVENT_HID_KB_PRESS: {
             //
             // If this was a Caps Lock key then update the Caps Lock state.
             //
-            if(ui32MsgParam == HID_KEYB_USAGE_CAPSLOCK)
-            {
+            if(ui32MsgParam == HID_KEYB_USAGE_CAPSLOCK) {
                 //
                 // The main loop needs to update the keyboard's Caps Lock
                 // state.
@@ -716,9 +676,7 @@ KeyboardCallback(tUSBHKeyboard *psKbInstance, uint32_t ui32Event,
                 // Update the screen based on the Caps Lock status.
                 //
                 UpdateStatus();
-            }
-            else if(ui32MsgParam == HID_KEYB_USAGE_SCROLLOCK)
-            {
+            } else if(ui32MsgParam == HID_KEYB_USAGE_SCROLLOCK) {
                 //
                 // The main loop needs to update the keyboard's Scroll Lock
                 // state.
@@ -729,9 +687,7 @@ KeyboardCallback(tUSBHKeyboard *psKbInstance, uint32_t ui32Event,
                 // Toggle the current Scroll Lock state.
                 //
                 g_ui32Modifiers ^= HID_KEYB_SCROLL_LOCK;
-            }
-            else if(ui32MsgParam == HID_KEYB_USAGE_NUMLOCK)
-            {
+            } else if(ui32MsgParam == HID_KEYB_USAGE_NUMLOCK) {
                 //
                 // The main loop needs to update the keyboard's Scroll Lock
                 // state.
@@ -742,54 +698,46 @@ KeyboardCallback(tUSBHKeyboard *psKbInstance, uint32_t ui32Event,
                 // Toggle the current Num Lock state.
                 //
                 g_ui32Modifiers ^= HID_KEYB_NUM_LOCK;
-            }
-            else
-            {
+            } else {
                 //
                 // Was this the backspace key?
                 //
-                if((uint8_t)ui32MsgParam == HID_KEYB_USAGE_BACKSPACE)
-                {
+                if((uint8_t)ui32MsgParam == HID_KEYB_USAGE_BACKSPACE) {
                     //
                     // Yes - set the ASCII code for a backspace key.  This is
                     // not returned by USBHKeyboardUsageToChar since this only
                     // returns printable characters.
                     //
                     cChar = ASCII_BACKSPACE;
-                }
-                else
-                {
+                } else {
                     //
                     // This is not backspace so try to map the usage code to a
                     // printable ASCII character.
                     //
                     cChar = (char)
-                        USBHKeyboardUsageToChar(g_psKeyboardInstance,
-                                                &g_sUSKeyboardMap,
-                                                (uint8_t)ui32MsgParam);
+                            USBHKeyboardUsageToChar(g_psKeyboardInstance,
+                                                    &g_sUSKeyboardMap,
+                                                    (uint8_t)ui32MsgParam);
                 }
 
                 //
                 // A zero value indicates there was no textual mapping of this
                 // usage code.
                 //
-                if(cChar != 0)
-                {
+                if(cChar != 0) {
                     PrintChar(cChar);
                 }
             }
             break;
         }
-        case USBH_EVENT_HID_KB_MOD:
-        {
+        case USBH_EVENT_HID_KB_MOD: {
             //
             // This application ignores the state of the shift or control
             // and other special keys.
             //
             break;
         }
-        case USBH_EVENT_HID_KB_REL:
-        {
+        case USBH_EVENT_HID_KB_REL: {
             //
             // This applications ignores the release of keys as well.
             //
@@ -813,12 +761,9 @@ GetTickms(void)
     ui32RetVal = g_ui32SysTickCount;
     ui32Saved = ui32RetVal;
 
-    if(ui32Saved > g_ui32LastTick)
-    {
+    if(ui32Saved > g_ui32LastTick) {
         ui32RetVal = ui32Saved - g_ui32LastTick;
-    }
-    else
-    {
+    } else {
         ui32RetVal = g_ui32LastTick - ui32Saved;
     }
 
@@ -997,7 +942,7 @@ main(void)
     GrStringDrawCentered(&g_sContext, "usb-host-", -1,
                          GrContextDpyWidthGet(&g_sContext) / 2, 4, 0);
     GrStringDrawCentered(&g_sContext, "keyboard", -1,
-                             GrContextDpyWidthGet(&g_sContext) / 2, 14, 0);
+                         GrContextDpyWidthGet(&g_sContext) / 2, 14, 0);
 
 
     //
@@ -1005,7 +950,7 @@ main(void)
     // Make sure to leave a small border for the text box.
     //
     g_ui32CharsPerLine = (GrContextDpyWidthGet(&g_sContext) - 4) /
-                        GrFontMaxWidthGet(g_psFontFixed6x8);
+                         GrFontMaxWidthGet(g_psFontFixed6x8);
 
     //
     // Calculate the number of lines per usable text screen.  This requires
@@ -1013,8 +958,8 @@ main(void)
     // for a border.
     //
     g_ui32LinesPerScreen = (GrContextDpyHeightGet(&g_sContext) -
-                          (3*(DISPLAY_BANNER_HEIGHT + 1)))/
-                          GrFontHeightGet(g_psFontFixed6x8);
+                            (3*(DISPLAY_BANNER_HEIGHT + 1)))/
+                           GrFontHeightGet(g_psFontFixed6x8);
 
     //
     // Open and instance of the keyboard class driver.
@@ -1029,8 +974,7 @@ main(void)
     //
     // The main loop for the application.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Tell the OTG library code how much time has passed in
         // milliseconds since the last call.
@@ -1040,15 +984,13 @@ main(void)
         //
         // Has the USB mode changed since last time we checked?
         //
-        if(g_eCurrentUSBMode != eLastMode)
-        {
+        if(g_eCurrentUSBMode != eLastMode) {
             //
             // Remember the new mode.
             //
             eLastMode = g_eCurrentUSBMode;
 
-            switch(eLastMode)
-            {
+            switch(eLastMode) {
                 case eUSBModeHost:
                     pcString = "HOST";
                     break;
@@ -1069,13 +1011,11 @@ main(void)
             UARTprintf("USB mode changed to %s\n", pcString);
         }
 
-        switch(g_eUSBState)
-        {
+        switch(g_eUSBState) {
             //
             // This state is entered when they keyboard is first detected.
             //
-            case STATE_KEYBOARD_INIT:
-            {
+            case STATE_KEYBOARD_INIT: {
                 //
                 // Initialized the newly connected keyboard.
                 //
@@ -1096,8 +1036,7 @@ main(void)
 
                 break;
             }
-            case STATE_KEYBOARD_UPDATE:
-            {
+            case STATE_KEYBOARD_UPDATE: {
                 //
                 // If the application detected a change that required an
                 // update to be sent to the keyboard to change the modifier
@@ -1109,8 +1048,7 @@ main(void)
 
                 break;
             }
-            case STATE_KEYBOARD_CONNECTED:
-            {
+            case STATE_KEYBOARD_CONNECTED: {
                 //
                 // Nothing is currently done in the main loop when the keyboard
                 // is connected.
@@ -1118,24 +1056,21 @@ main(void)
                 break;
             }
 
-            case STATE_UNKNOWN_DEVICE:
-            {
+            case STATE_UNKNOWN_DEVICE: {
                 //
                 // Nothing to do as the device is unknown.
                 //
                 break;
             }
 
-            case STATE_NO_DEVICE:
-            {
+            case STATE_NO_DEVICE: {
                 //
                 // Nothing is currently done in the main loop when the keyboard
                 // is not connected.
                 //
                 break;
             }
-            default:
-            {
+            default: {
                 break;
             }
         }

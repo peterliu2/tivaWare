@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -347,19 +347,15 @@ DirectModeSend(int iMode, void const *pvBuffer, unsigned int uiBytes,
     //
     SequenceZ();
 
-    while(usPos++ < uiBytes)
-    {
+    while(usPos++ < uiBytes) {
         //
         // Prepare the bit counter and value for this byte for either
         // 8 bits per byte or 9 bits per 16 bit word.
         //
-        if(iMode == DIRECT_MODE_SEND_OPAQUE)
-        {
+        if(iMode == DIRECT_MODE_SEND_OPAQUE) {
             ucBitsRemain = 8;
             usCurrentByte = *pucCurrent;
-        }
-        else
-        {
+        } else {
             ucBitsRemain = 9;
             usCurrentByte = pucCurrent[0] | (pucCurrent[1] << 8);
         }
@@ -367,29 +363,22 @@ DirectModeSend(int iMode, void const *pvBuffer, unsigned int uiBytes,
         //
         // Send the bits of this byte.
         //
-        do
-        {
+        do {
             ucCurrentBit = usCurrentByte & 0x1;
 
-            if(ucCurrentBit)
-            {
+            if(ucCurrentBit) {
                 //
                 // Transfer a 1 Bit.
                 //
                 SequenceX();
-            }
-            else
-            {
+            } else {
                 //
                 // Transfer a 0-Bit, encoded differently depending on if this
                 // was the last bit.
                 //
-                if(ucLastBit)
-                {
+                if(ucLastBit) {
                     SequenceY();
-                }
-                else
-                {
+                } else {
                     SequenceZ();
                 }
             }
@@ -400,8 +389,7 @@ DirectModeSend(int iMode, void const *pvBuffer, unsigned int uiBytes,
             usCurrentByte >>= 1;
 
             ucLastBit = ucCurrentBit;
-        }
-        while(--ucBitsRemain > 0);
+        } while(--ucBitsRemain > 0);
 
         //
         // Increment the data pointer by either a byte or one 16 bit word.
@@ -412,42 +400,33 @@ DirectModeSend(int iMode, void const *pvBuffer, unsigned int uiBytes,
     //
     // This is the same as above for the possibly remaining fractional byte.
     //
-    if(uiBits > 0)
-    {
+    if(uiBits > 0) {
         ucBitsRemain = uiBits;
         usCurrentByte = *pucCurrent;
 
         //
         // If sending parity then or in the parity.
         //
-        if(iMode == DIRECT_MODE_SEND_PARITY)
-        {
+        if(iMode == DIRECT_MODE_SEND_PARITY) {
             usCurrentByte |= pucCurrent[-1] << 8;
         }
 
-        do
-        {
+        do {
             ucCurrentBit = usCurrentByte & 0x1;
 
             //
             // Transfer a 1 Bit.
             //
-            if(ucCurrentBit)
-            {
+            if(ucCurrentBit) {
                 SequenceX();
-            }
-            else
-            {
+            } else {
                 //
                 // Transfer a 0-Bit, encoded differently depending on if this
                 // was the last bit.
                 //
-                if(ucLastBit)
-                {
+                if(ucLastBit) {
                     SequenceY();
-                }
-                else
-                {
+                } else {
                     SequenceZ();
                 }
             }
@@ -457,19 +436,15 @@ DirectModeSend(int iMode, void const *pvBuffer, unsigned int uiBytes,
             //
             usCurrentByte >>= 1;
             ucLastBit = ucCurrentBit;
-        }
-        while(--ucBitsRemain > 0);
+        } while(--ucBitsRemain > 0);
     }
 
     //
     // EOF is either a 0 or a Y.
     //
-    if(ucLastBit)
-    {
+    if(ucLastBit) {
         SequenceY();
-    }
-    else
-    {
+    } else {
         SequenceZ();
     }
 
@@ -546,8 +521,7 @@ DirectModeReceive(int iMode, void *pvBuffer, unsigned int *puiBytes,
     //
     // Make sure that data parameters are correct before using them.
     //
-    if((pvBuffer == NULL) || (puiBytes == NULL) || (*puiBytes == 0))
-    {
+    if((pvBuffer == NULL) || (puiBytes == NULL) || (*puiBytes == 0)) {
         return;
     }
 
@@ -583,12 +557,9 @@ DirectModeReceive(int iMode, void *pvBuffer, unsigned int *puiBytes,
     //
     // Initialized the number of bits left in the data unit.
     //
-    if(iMode == DIRECT_MODE_RECV_OPAQUE)
-    {
+    if(iMode == DIRECT_MODE_RECV_OPAQUE) {
         uiBitsRemain = 8;
-    }
-    else
-    {
+    } else {
         uiBitsRemain = 9;
     }
 
@@ -608,8 +579,7 @@ DirectModeReceive(int iMode, void *pvBuffer, unsigned int *puiBytes,
         iTimeout = DIRECTMODE_RECEIVE_TIMEOUT;
 
         while(!(GPIOIntStatus(TRF79X0_RX_BASE, 0) &
-                TRF79X0_RX_PIN) && (iTimeout-- > 0))
-        {
+                TRF79X0_RX_PIN) && (iTimeout-- > 0)) {
         }
     }
 
@@ -624,8 +594,7 @@ DirectModeReceive(int iMode, void *pvBuffer, unsigned int *puiBytes,
     //
     GPIOIntClear(TRF79X0_RX_BASE, TRF79X0_RX_PIN);
 
-    do
-    {
+    do {
         //
         // Wait until the end of the current sampling interval.
         //
@@ -642,24 +611,18 @@ DirectModeReceive(int iMode, void *pvBuffer, unsigned int *puiBytes,
         //
         // Check for a change in bit polarity.
         //
-        if(iLastBitVal != iCurrentBitVal)
-        {
-            if(iLastBitVal)
-            {
+        if(iLastBitVal != iCurrentBitVal) {
+            if(iLastBitVal) {
                 //
                 // may be overly long.
                 //
-                if(iCount <= 6)
-                {
+                if(iCount <= 6) {
                     //
                     // ignore, but force iCount to sane value.
                     //
                     iCount = 4;
-                }
-                else
-                {
-                    if(iHaveSOF)
-                    {
+                } else {
+                    if(iHaveSOF) {
                         //
                         // This edge is a 1 bit, add it to the current data
                         // unit.
@@ -669,9 +632,7 @@ DirectModeReceive(int iMode, void *pvBuffer, unsigned int *puiBytes,
                         uiCurrentByte |= 1 << uiCountBits;
 
                         uiCountBits++;
-                    }
-                    else
-                    {
+                    } else {
                         iHaveSOF = 1;
                     }
 
@@ -680,32 +641,24 @@ DirectModeReceive(int iMode, void *pvBuffer, unsigned int *puiBytes,
                     //
                     iCount = 0;
                 }
-            }
-            else
-            {
+            } else {
                 //
                 // may be overly short
                 //
-                if(iCount <= 5)
-                {
+                if(iCount <= 5) {
                     //
                     // ignore, but force iCount to sane value.
                     //
                     iCount = 4;
-                }
-                else
-                {
-                    if(iHaveSOF)
-                    {
+                } else {
+                    if(iHaveSOF) {
                         //
                         // This edge is a 0 bit, add it to the current data
                         // unit.
                         //
                         uiBitsRemain--;
                         uiCountBits++;
-                    }
-                    else
-                    {
+                    } else {
                         iHaveSOF = 1;
                     }
 
@@ -724,19 +677,15 @@ DirectModeReceive(int iMode, void *pvBuffer, unsigned int *puiBytes,
         iCount++;
         iLastBitVal = iCurrentBitVal;
 
-        if(uiBitsRemain == 0)
-        {
+        if(uiBitsRemain == 0) {
             //
             // Store received data unit, advance pointer.
             //
-            if(iMode == DIRECT_MODE_RECV_OPAQUE)
-            {
+            if(iMode == DIRECT_MODE_RECV_OPAQUE) {
                 uiBitsRemain = 8;
                 *pucCurrent = uiCurrentByte;
                 pucCurrent += 1;
-            }
-            else
-            {
+            } else {
                 uiBitsRemain = 9;
                 pucCurrent[0] = uiCurrentByte & 0xff;
                 pucCurrent[1] = uiCurrentByte >> 8;
@@ -753,8 +702,7 @@ DirectModeReceive(int iMode, void *pvBuffer, unsigned int *puiBytes,
             // Increment counter, abort when the receive buffer is full.
             //
             uiCountBytes++;
-            if((uiCountBytes + 1) >= uiMaxBytes)
-            {
+            if((uiCountBytes + 1) >= uiMaxBytes) {
                 break;
             }
         }
@@ -763,8 +711,7 @@ DirectModeReceive(int iMode, void *pvBuffer, unsigned int *puiBytes,
         // More than 2 bit periods (16 eighth bit periods) since the last edge
         // signify a time out, end of reception.
         //
-    }
-    while(iCount < 16);
+    } while(iCount < 16);
 
     //
     // Stop timer.
@@ -776,19 +723,14 @@ DirectModeReceive(int iMode, void *pvBuffer, unsigned int *puiBytes,
     //
     *puiBytes = uiCountBytes;
 
-    if(puiBits != NULL)
-    {
-        if(uiCountBits > 0)
-        {
+    if(puiBits != NULL) {
+        if(uiCountBits > 0) {
             //
             // Store incomplete byte.
             //
-            if(iMode == DIRECT_MODE_RECV_OPAQUE)
-            {
+            if(iMode == DIRECT_MODE_RECV_OPAQUE) {
                 *pucCurrent = uiCurrentByte;
-            }
-            else
-            {
+            } else {
                 pucCurrent[0] = uiCurrentByte & 0xff;
                 pucCurrent[1] = uiCurrentByte >> 8;
             }
@@ -867,8 +809,7 @@ DirectModeTransceive(int iMode, void const *pvSendBuf, unsigned int uiSendBytes,
     //
     // Enable interrupts if necessary.
     //
-    if(iDisabled == 0)
-    {
+    if(iDisabled == 0) {
         IntMasterEnable();
     }
 }
@@ -896,8 +837,7 @@ DirectModeEnable(unsigned int iMode)
     //
     // Check to see if direct mode is already enabled, and if so, do nothing
     //
-    if(g_iDirectModeEnabled)
-    {
+    if(g_iDirectModeEnabled) {
         return;
     }
 
@@ -909,13 +849,10 @@ DirectModeEnable(unsigned int iMode)
     //
     // Set direct mode type to bitstream.
     //
-    if(iMode)
-    {
+    if(iMode) {
         pucRegs[TRF79X0_ISO_CONTROL_REG] |= TRF79X0_ISO_CONTROL_DIR_MODE;
 
-    }
-    else
-    {
+    } else {
         pucRegs[TRF79X0_ISO_CONTROL_REG] &= ~TRF79X0_ISO_CONTROL_DIR_MODE;
     }
 
@@ -986,8 +923,7 @@ DirectModeDisable(void)
     //
     // Check to see if direct mode is enabled, and if not, do nothing.
     //
-    if(!g_iDirectModeEnabled)
-    {
+    if(!g_iDirectModeEnabled) {
         return;
     }
 
@@ -1023,8 +959,7 @@ DirectModeDisable(void)
     //
     // Re-enable processor IRQ if necessary.
     //
-    if(iDisabled == 0)
-    {
+    if(iDisabled == 0) {
         IntMasterEnable();
     }
 

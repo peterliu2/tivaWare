@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -92,12 +92,11 @@
 // changed at runtime based on the client's requirements.
 //
 //*****************************************************************************
-uint8_t g_pui8BulkDeviceDescriptor[] =
-{
+uint8_t g_pui8BulkDeviceDescriptor[] = {
     18,                         // Size of this structure.
     USB_DTYPE_DEVICE,           // Type of this structure.
     USBShort(0x110),            // USB version 1.1 (if we say 2.0, hosts assume
-                                // high-speed - see USB 2.0 spec 9.2.6.6)
+    // high-speed - see USB 2.0 spec 9.2.6.6)
     USB_CLASS_VEND_SPECIFIC,    // USB Device Class
     0,                          // USB Device Sub-class
     0,                          // USB Device protocol
@@ -125,8 +124,7 @@ uint8_t g_pui8BulkDeviceDescriptor[] =
 // be able to patch some values in it based on client requirements.
 //
 //*****************************************************************************
-uint8_t g_pui8BulkDescriptor[] =
-{
+uint8_t g_pui8BulkDescriptor[] = {
     //
     // Configuration descriptor header.
     //
@@ -134,10 +132,10 @@ uint8_t g_pui8BulkDescriptor[] =
     USB_DTYPE_CONFIGURATION,    // Type of this descriptor.
     USBShort(32),               // The total size of this full structure.
     1,                          // The number of interfaces in this
-                                // configuration.
+    // configuration.
     1,                          // The unique value for this configuration.
     5,                          // The string identifier that describes this
-                                // configuration.
+    // configuration.
     USB_CONF_ATTR_SELF_PWR,     // Bus Powered, Self Powered, remote wake up.
     250,                        // The maximum power in 2mA increments.
 };
@@ -148,8 +146,7 @@ uint8_t g_pui8BulkDescriptor[] =
 // don't need to modify anything in it at runtime.
 //
 //*****************************************************************************
-const uint8_t g_pui8BulkInterface[BULKINTERFACE_SIZE] =
-{
+const uint8_t g_pui8BulkInterface[BULKINTERFACE_SIZE] = {
     //
     // Vendor-specific Interface Descriptor.
     //
@@ -157,13 +154,13 @@ const uint8_t g_pui8BulkInterface[BULKINTERFACE_SIZE] =
     USB_DTYPE_INTERFACE,            // Type of this descriptor.
     0,                              // The index for this interface.
     0,                              // The alternate setting for this
-                                    // interface.
+    // interface.
     2,                              // The number of endpoints used by this
-                                    // interface.
+    // interface.
     USB_CLASS_VEND_SPECIFIC,        // The interface class
     0,                              // The interface sub-class.
     0,                              // The interface protocol for the sub-class
-                                    // specified above.
+    // specified above.
     4,                              // The string index for this interface.
 
     //
@@ -187,8 +184,7 @@ const uint8_t g_pui8BulkInterface[BULKINTERFACE_SIZE] =
     0,                               // The polling interval for this endpoint.
 };
 
-const uint8_t g_pui8BulkInterfaceHS[BULKINTERFACE_SIZE] =
-{
+const uint8_t g_pui8BulkInterfaceHS[BULKINTERFACE_SIZE] = {
     //
     // Vendor-specific Interface Descriptor.
     //
@@ -196,13 +192,13 @@ const uint8_t g_pui8BulkInterfaceHS[BULKINTERFACE_SIZE] =
     USB_DTYPE_INTERFACE,            // Type of this descriptor.
     0,                              // The index for this interface.
     0,                              // The alternate setting for this
-                                    // interface.
+    // interface.
     2,                              // The number of endpoints used by this
-                                    // interface.
+    // interface.
     USB_CLASS_VEND_SPECIFIC,        // The interface class
     0,                              // The interface sub-class.
     0,                              // The interface protocol for the sub-class
-                                    // specified above.
+    // specified above.
     4,                              // The string index for this interface.
 
     //
@@ -233,20 +229,17 @@ const uint8_t g_pui8BulkInterfaceHS[BULKINTERFACE_SIZE] =
 // containing everything else that is sent to the host along with it.
 //
 //*****************************************************************************
-const tConfigSection g_sBulkConfigSection =
-{
+const tConfigSection g_sBulkConfigSection = {
     sizeof(g_pui8BulkDescriptor),
     g_pui8BulkDescriptor
 };
 
-const tConfigSection g_sBulkInterfaceSection =
-{
+const tConfigSection g_sBulkInterfaceSection = {
     sizeof(g_pui8BulkInterface),
     g_pui8BulkInterface
 };
 
-const tConfigSection g_sBulkInterfaceSectionHS =
-{
+const tConfigSection g_sBulkInterfaceSectionHS = {
     sizeof(g_pui8BulkInterfaceHS),
     g_pui8BulkInterfaceHS
 };
@@ -257,14 +250,12 @@ const tConfigSection g_sBulkInterfaceSectionHS =
 // single, complete bulk device configuration descriptor.
 //
 //*****************************************************************************
-const tConfigSection *g_psBulkSections[] =
-{
+const tConfigSection *g_psBulkSections[] = {
     &g_sBulkConfigSection,
     &g_sBulkInterfaceSection
 };
 
-const tConfigSection *g_psBulkSectionsHS[] =
-{
+const tConfigSection *g_psBulkSectionsHS[] = {
     &g_sBulkConfigSection,
     &g_sBulkInterfaceSectionHS
 };
@@ -279,14 +270,12 @@ const tConfigSection *g_psBulkSectionsHS[] =
 // together to generate the configuration descriptor.
 //
 //*****************************************************************************
-const tConfigHeader g_sBulkConfigHeader =
-{
+const tConfigHeader g_sBulkConfigHeader = {
     NUM_BULK_SECTIONS,
     g_psBulkSections
 };
 
-const tConfigHeader g_sBulkConfigHeaderHS =
-{
+const tConfigHeader g_sBulkConfigHeaderHS = {
     NUM_BULK_SECTIONS,
     g_psBulkSectionsHS
 };
@@ -296,13 +285,11 @@ const tConfigHeader g_sBulkConfigHeaderHS =
 // Configuration Descriptor.
 //
 //*****************************************************************************
-const tConfigHeader * const g_ppBulkConfigDescriptors[] =
-{
+const tConfigHeader * const g_ppBulkConfigDescriptors[] = {
     &g_sBulkConfigHeader
 };
 
-const tConfigHeader * const g_ppBulkConfigDescriptorsHS[] =
-{
+const tConfigHeader * const g_ppBulkConfigDescriptorsHS[] = {
     &g_sBulkConfigHeaderHS
 };
 
@@ -331,8 +318,7 @@ static void HandleDevice(void *pvBulkDevice, uint32_t ui32Request,
 // Device event handler callbacks.
 //
 //*****************************************************************************
-const tCustomHandlers g_sBulkHandlers =
-{
+const tCustomHandlers g_sBulkHandlers = {
     //
     // GetDescriptor
     //
@@ -464,8 +450,7 @@ ProcessDataFromHost(tUSBDBulkDevice *psBulkDevice, uint32_t ui32Status)
     //
     // Has a packet been received?
     //
-    if(ui32EPStatus & USB_DEV_RX_PKT_RDY)
-    {
+    if(ui32EPStatus & USB_DEV_RX_PKT_RDY) {
         //
         // Set the flag we use to indicate that a packet read is pending.  This
         // will be cleared if the packet is read.  If the client does not read
@@ -489,15 +474,12 @@ ProcessDataFromHost(tUSBDBulkDevice *psBulkDevice, uint32_t ui32Status)
         psBulkDevice->pfnRxCallback(psBulkDevice->pvRxCBData,
                                     USB_EVENT_RX_AVAILABLE,
                                     ui32Size, (void *)0);
-    }
-    else
-    {
+    } else {
         //
         // No packet was received.  Some error must have been reported.  Check
         // and pass this on to the client if necessary.
         //
-        if(ui32EPStatus & USB_RX_ERROR_FLAGS)
-        {
+        if(ui32EPStatus & USB_RX_ERROR_FLAGS) {
             //
             // This is an error we report to the client so allow the callback
             // to handle it.
@@ -599,8 +581,7 @@ HandleEndpoints(void *pvBulkDevice, uint32_t ui32Status)
     //
     // Handler for the bulk OUT data endpoint.
     //
-    if(ui32Status & (0x10000 << USBEPToIndex(psInst->ui8OUTEndpoint)))
-    {
+    if(ui32Status & (0x10000 << USBEPToIndex(psInst->ui8OUTEndpoint))) {
         //
         // Data is being sent to us from the host.
         //
@@ -610,8 +591,7 @@ HandleEndpoints(void *pvBulkDevice, uint32_t ui32Status)
     //
     // Handler for the bulk IN data endpoint.
     //
-    if(ui32Status & (1 << USBEPToIndex(psInst->ui8INEndpoint)))
-    {
+    if(ui32Status & (1 << USBEPToIndex(psInst->ui8INEndpoint))) {
         ProcessDataToHost(psBulkDevice, ui32Status);
     }
 }
@@ -649,8 +629,7 @@ HandleConfigChange(void *pvBulkDevice, uint32_t ui32Info)
     // If we have a control callback, let the client know we are open for
     // business.
     //
-    if(psBulkDevice->pfnRxCallback)
-    {
+    if(psBulkDevice->pfnRxCallback) {
         //
         // Pass the connected event to the client.
         //
@@ -692,13 +671,11 @@ HandleDevice(void *pvBulkDevice, uint32_t ui32Request, void *pvRequestData)
     //
     pui8Data = (uint8_t *)pvRequestData;
 
-    switch(ui32Request)
-    {
+    switch(ui32Request) {
         //
         // This was an interface change event.
         //
-        case USB_EVENT_COMP_IFACE_CHANGE:
-        {
+        case USB_EVENT_COMP_IFACE_CHANGE: {
             psInst->ui8Interface = pui8Data[1];
             break;
         }
@@ -706,17 +683,13 @@ HandleDevice(void *pvBulkDevice, uint32_t ui32Request, void *pvRequestData)
         //
         // This was an endpoint change event.
         //
-        case USB_EVENT_COMP_EP_CHANGE:
-        {
+        case USB_EVENT_COMP_EP_CHANGE: {
             //
             // Determine if this is an IN or OUT endpoint that has changed.
             //
-            if(pui8Data[0] & USB_EP_DESC_IN)
-            {
+            if(pui8Data[0] & USB_EP_DESC_IN) {
                 psInst->ui8INEndpoint = IndexToUSBEP((pui8Data[1] & 0x7f));
-            }
-            else
-            {
+            } else {
                 //
                 // Extract the new endpoint number.
                 //
@@ -724,10 +697,8 @@ HandleDevice(void *pvBulkDevice, uint32_t ui32Request, void *pvRequestData)
             }
             break;
         }
-        case USB_EVENT_LPM_RESUME:
-        {
-            if(psBulkDevice->pfnRxCallback)
-            {
+        case USB_EVENT_LPM_RESUME: {
+            if(psBulkDevice->pfnRxCallback) {
                 //
                 // Pass the LPM resume event to the client.
                 //
@@ -737,10 +708,8 @@ HandleDevice(void *pvBulkDevice, uint32_t ui32Request, void *pvRequestData)
             }
             break;
         }
-        case USB_EVENT_LPM_SLEEP:
-        {
-            if(psBulkDevice->pfnRxCallback)
-            {
+        case USB_EVENT_LPM_SLEEP: {
+            if(psBulkDevice->pfnRxCallback) {
                 //
                 // Pass the LPM sleep event to the client.
                 //
@@ -749,10 +718,8 @@ HandleDevice(void *pvBulkDevice, uint32_t ui32Request, void *pvRequestData)
             }
             break;
         }
-        case USB_EVENT_LPM_ERROR:
-        {
-            if(psBulkDevice->pfnRxCallback)
-            {
+        case USB_EVENT_LPM_ERROR: {
+            if(psBulkDevice->pfnRxCallback) {
                 //
                 // Pass the LPM error event to the client.
                 //
@@ -761,8 +728,7 @@ HandleDevice(void *pvBulkDevice, uint32_t ui32Request, void *pvRequestData)
             }
             break;
         }
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -796,8 +762,7 @@ HandleDisconnect(void *pvBulkDevice)
     // If we are not currently connected so let the client know we are open
     // for business.
     //
-    if(psInst->bConnected)
-    {
+    if(psInst->bConnected) {
         //
         // Pass the disconnected event to the client.
         //
@@ -896,8 +861,7 @@ BulkTickHandler(void *pvBulkDevice, uint32_t ui32TimemS)
     //
     // Do we have a deferred receive waiting
     //
-    if(psInst->ui16DeferredOpFlags & (1 << BULK_DO_PACKET_RX))
-    {
+    if(psInst->ui16DeferredOpFlags & (1 << BULK_DO_PACKET_RX)) {
         //
         // Yes - how big is the waiting packet?
         //
@@ -979,8 +943,7 @@ USBDBulkInit(uint32_t ui32Index, tUSBDBulkDevice *psBulkDevice)
 
     pvBulkDevice = USBDBulkCompositeInit(ui32Index, psBulkDevice, 0);
 
-    if(pvBulkDevice)
-    {
+    if(pvBulkDevice) {
         //
         // Fix up the device descriptor with the client-supplied values.
         //
@@ -1056,8 +1019,7 @@ USBDBulkCompositeInit(uint32_t ui32Index, tUSBDBulkDevice *psBulkDevice,
     // Initialize the composite entry that is used by the composite device
     // class.
     //
-    if(psCompEntry != 0)
-    {
+    if(psCompEntry != 0) {
         psCompEntry->psDevInfo = &psInst->sDevInfo;
         psCompEntry->pvInstance = (void *)psBulkDevice;
     }
@@ -1075,8 +1037,7 @@ USBDBulkCompositeInit(uint32_t ui32Index, tUSBDBulkDevice *psBulkDevice,
     psInst->sDevInfo.psCallbacks = &g_sBulkHandlers;
     psInst->sDevInfo.pui8DeviceDescriptor = g_pui8BulkDeviceDescriptor;
     psInst->sDevInfo.ppsConfigDescriptors = g_ppBulkConfigDescriptors;
-    if (USBLIB_FEATURE_ULPI_HS == ui32ulpiFeature)
-    {
+    if (USBLIB_FEATURE_ULPI_HS == ui32ulpiFeature) {
         psInst->sDevInfo.ppsConfigDescriptors = g_ppBulkConfigDescriptorsHS;
         g_ui16MaxPacketSize = USBFIFOSizeToBytes(USB_FIFO_SZ_512);
     }
@@ -1109,9 +1070,9 @@ USBDBulkCompositeInit(uint32_t ui32Index, tUSBDBulkDevice *psBulkDevice,
     // structure.
     //
     psInst->sDevInfo.ppui8StringDescriptors =
-                                        psBulkDevice->ppui8StringDescriptors;
+        psBulkDevice->ppui8StringDescriptors;
     psInst->sDevInfo.ui32NumStringDescriptors =
-                                        psBulkDevice->ui32NumStringDescriptors;
+        psBulkDevice->ui32NumStringDescriptors;
 
     //
     // Initialize the USB tick module, this will prevent it from being
@@ -1310,8 +1271,7 @@ USBDBulkPacketWrite(void *pvBulkDevice, uint8_t *pi8Data, uint32_t ui32Length,
     // Can we send the data provided?
     //
     if((ui32Length > g_ui16MaxPacketSize) ||
-       (psInst->iBulkTxState != eBulkStateIdle))
-    {
+            (psInst->iBulkTxState != eBulkStateIdle)) {
         //
         // Either the packet was too big or we are in the middle of sending
         // another packet.  Return 0 to indicate that we can't send this data.
@@ -1329,8 +1289,7 @@ USBDBulkPacketWrite(void *pvBulkDevice, uint8_t *pi8Data, uint32_t ui32Length,
     //
     // Did we copy the data successfully?
     //
-    if(i32Retcode != -1)
-    {
+    if(i32Retcode != -1) {
         //
         // Remember how many bytes we sent.
         //
@@ -1339,8 +1298,7 @@ USBDBulkPacketWrite(void *pvBulkDevice, uint8_t *pi8Data, uint32_t ui32Length,
         //
         // If this is the last call for this packet, schedule transmission.
         //
-        if(bLast)
-        {
+        if(bLast) {
             //
             // Send the packet to the host if we have received all the data we
             // can expect for this packet.
@@ -1355,15 +1313,12 @@ USBDBulkPacketWrite(void *pvBulkDevice, uint8_t *pi8Data, uint32_t ui32Length,
     //
     // Did an error occur while trying to send the data?
     //
-    if(i32Retcode != -1)
-    {
+    if(i32Retcode != -1) {
         //
         // No - tell the caller we sent all the bytes provided.
         //
         return(ui32Length);
-    }
-    else
-    {
+    } else {
         //
         // Yes - tell the caller we could not send the data.
         //
@@ -1416,8 +1371,7 @@ USBDBulkPacketRead(void *pvBulkDevice, uint8_t *pi8Data, uint32_t ui32Length,
     ui32EPStatus = MAP_USBEndpointStatus(psInst->ui32USBBase,
                                          psInst->ui8OUTEndpoint);
 
-    if(ui32EPStatus & USB_DEV_RX_PKT_RDY)
-    {
+    if(ui32EPStatus & USB_DEV_RX_PKT_RDY) {
         //
         // How many bytes are available for us to receive?
         //
@@ -1435,8 +1389,7 @@ USBDBulkPacketRead(void *pvBulkDevice, uint8_t *pi8Data, uint32_t ui32Length,
         //
         // Did we read the last of the packet data?
         //
-        if(ui32Count == ui32Pkt)
-        {
+        if(ui32Count == ui32Pkt) {
             //
             // Clear the endpoint status so that we know no packet is
             // waiting.
@@ -1463,8 +1416,7 @@ USBDBulkPacketRead(void *pvBulkDevice, uint8_t *pi8Data, uint32_t ui32Length,
         //
         // If all went well, tell the caller how many bytes they got.
         //
-        if(i32Retcode != -1)
-        {
+        if(i32Retcode != -1) {
             return(ui32Count);
         }
     }
@@ -1506,15 +1458,12 @@ USBDBulkTxPacketAvailable(void *pvBulkDevice)
     //
     // Do we have a packet transmission currently ongoing?
     //
-    if(psInst->iBulkTxState != eBulkStateIdle)
-    {
+    if(psInst->iBulkTxState != eBulkStateIdle) {
         //
         // We are not ready to receive a new packet so return 0.
         //
         return(0);
-    }
-    else
-    {
+    } else {
         //
         // We can receive a packet so return the max packet size for the
         // relevant endpoint.
@@ -1558,8 +1507,7 @@ USBDBulkRxPacketAvailable(void *pvBulkDevice)
     ui32EPStatus = MAP_USBEndpointStatus(psInst->ui32USBBase,
                                          psInst->ui8OUTEndpoint);
 
-    if(ui32EPStatus & USB_DEV_RX_PKT_RDY)
-    {
+    if(ui32EPStatus & USB_DEV_RX_PKT_RDY) {
         //
         // Yes - a packet is waiting.  How big is it?
         //
@@ -1567,9 +1515,7 @@ USBDBulkRxPacketAvailable(void *pvBulkDevice)
                                             psInst->ui8OUTEndpoint);
 
         return(ui32Size);
-    }
-    else
-    {
+    } else {
         //
         // There is no packet waiting to be received.
         //

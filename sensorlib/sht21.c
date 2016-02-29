@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -45,7 +45,7 @@
 #define SHT21_STATE_WRITE       3           // Waiting for register write
 #define SHT21_STATE_RMW         4
 #define SHT21_STATE_READ_DATA   5           // Waiting for temperature or
-                                            // humidity data
+// humidity data
 
 //*****************************************************************************
 //
@@ -68,16 +68,14 @@ SHT21Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     // to the idle state (which will also result in a callback to propagate the
     // error).
     //
-    if(ui8Status != I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status != I2CM_STATUS_SUCCESS) {
         psInst->ui8State = SHT21_STATE_IDLE;
     }
 
     //
     // Determine the current state of the SHT21 state machine.
     //
-    switch(psInst->ui8State)
-    {
+    switch(psInst->ui8State) {
         //
         // All states that trivially transition to IDLE, and all unknown
         // states.
@@ -87,8 +85,7 @@ SHT21Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         case SHT21_STATE_WRITE:
         case SHT21_STATE_READ_DATA:
         case SHT21_STATE_RMW:
-        default:
-        {
+        default: {
             //
             // The state machine is now idle.
             //
@@ -104,8 +101,7 @@ SHT21Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if the state machine is now idle and there is a callback function.
     //
-    if((psInst->ui8State == SHT21_STATE_IDLE) && psInst->pfnCallback)
-    {
+    if((psInst->ui8State == SHT21_STATE_IDLE) && psInst->pfnCallback) {
         //
         // Call the application-supplied callback function.
         //
@@ -154,8 +150,7 @@ SHT21Init(tSHT21 *psInst, tI2CMInstance *psI2CInst, uint_fast8_t ui8I2CAddr,
     //
     psInst->pui8Data[0] = SHT21_CMD_SOFT_RESET;
     if(I2CMWrite(psInst->psI2CInst, ui8I2CAddr, psInst->pui8Data, 1,
-                 SHT21Callback, psInst) == 0)
-    {
+                 SHT21Callback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -198,8 +193,7 @@ SHT21Read(tSHT21 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     // Return a failure if the SHT21 driver is not idle (in other words, there
     // is already an outstanding request to the SHT21).
     //
-    if(psInst->ui8State != SHT21_STATE_IDLE)
-    {
+    if(psInst->ui8State != SHT21_STATE_IDLE) {
         return(0);
     }
 
@@ -220,8 +214,7 @@ SHT21Read(tSHT21 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     psInst->uCommand.pui8Buffer[0] = ui8Reg;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
                 psInst->uCommand.pui8Buffer, 1, pui8Data, ui16Count,
-                SHT21Callback, (void *)psInst) == 0)
-    {
+                SHT21Callback, (void *)psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -266,8 +259,7 @@ SHT21Write(tSHT21 *psInst, uint_fast8_t ui8Reg, const uint8_t *pui8Data,
     // Return a failure if the SHT21 driver is not idle (in other words, there
     // is already an outstanding request to the SHT21).
     //
-    if(psInst->ui8State != SHT21_STATE_IDLE)
-    {
+    if(psInst->ui8State != SHT21_STATE_IDLE) {
         return(0);
     }
 
@@ -287,8 +279,7 @@ SHT21Write(tSHT21 *psInst, uint_fast8_t ui8Reg, const uint8_t *pui8Data,
     //
     if(I2CMWrite8(&(psInst->uCommand.sWriteState), psInst->psI2CInst,
                   psInst->ui8Addr, ui8Reg, pui8Data, ui16Count, SHT21Callback,
-                  psInst) == 0)
-    {
+                  psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -335,8 +326,7 @@ SHT21ReadModifyWrite(tSHT21 *psInst, uint_fast8_t ui8Reg, uint_fast8_t ui8Mask,
     // Return a failure if the SHT21 driver is not idle (in other words, there
     // is already an outstanding request to the SHT21).
     //
-    if(psInst->ui8State != SHT21_STATE_IDLE)
-    {
+    if(psInst->ui8State != SHT21_STATE_IDLE) {
         return(0);
     }
 
@@ -356,8 +346,7 @@ SHT21ReadModifyWrite(tSHT21 *psInst, uint_fast8_t ui8Reg, uint_fast8_t ui8Mask,
     //
     if(I2CMReadModifyWrite8(&(psInst->uCommand.sReadModifyWriteState),
                             psInst->psI2CInst, psInst->ui8Addr, ui8Reg,
-                            ui8Mask, ui8Value, SHT21Callback, psInst) == 0)
-    {
+                            ui8Mask, ui8Value, SHT21Callback, psInst) == 0) {
         //
         // The I2C read-modify-write failed, so move to the idle state and
         // return a failure.
@@ -404,8 +393,7 @@ SHT21DataRead(tSHT21 *psInst, tSensorCallback *pfnCallback,
     // Return a failure if the SHT21 driver is not idle (in other words, there
     // is already an outstanding request to the SHT21).
     //
-    if(psInst->ui8State != SHT21_STATE_IDLE)
-    {
+    if(psInst->ui8State != SHT21_STATE_IDLE) {
         return(0);
     }
 
@@ -424,8 +412,7 @@ SHT21DataRead(tSHT21 *psInst, tSensorCallback *pfnCallback,
     // Read the data registers from the SHT21.
     //
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr, 0, 0, psInst->pui8Data, 2,
-                SHT21Callback, psInst) == 0)
-    {
+                SHT21Callback, psInst) == 0) {
         psInst->ui8State = SHT21_STATE_IDLE;
         return(0);
     }

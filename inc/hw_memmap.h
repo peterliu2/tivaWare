@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2005-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -113,11 +113,11 @@
 #define GPIO_PORTP_BASE         0x40065000  // GPIO Port P
 #define GPIO_PORTQ_BASE         0x40066000  // GPIO Port Q
 #define GPIO_PORTR_BASE         0x40067000  // General-Purpose Input/Outputs
-                                            // (GPIOs)
+// (GPIOs)
 #define GPIO_PORTS_BASE         0x40068000  // General-Purpose Input/Outputs
-                                            // (GPIOs)
+// (GPIOs)
 #define GPIO_PORTT_BASE         0x40069000  // General-Purpose Input/Outputs
-                                            // (GPIOs)
+// (GPIOs)
 #define EEPROM_BASE             0x400AF000  // EEPROM memory
 #define ONEWIRE0_BASE           0x400B6000  // 1-Wire Master Module
 #define I2C8_BASE               0x400B8000  // I2C8
@@ -138,9 +138,9 @@
 #define CCM0_BASE               0x44030000  // Cyclical Redundancy Check (CRC)
 #define SHAMD5_BASE             0x44034000  // SHA/MD5 Accelerator
 #define AES_BASE                0x44036000  // Advance Encryption
-                                            // Hardware-Accelerated Module
+// Hardware-Accelerated Module
 #define DES_BASE                0x44038000  // Data Encryption Standard
-                                            // Accelerator (DES)
+// Accelerator (DES)
 #define LCD0_BASE               0x44050000  // LCD Controller
 #define ITM_BASE                0xE0000000  // Instrumentation Trace Macrocell
 #define DWT_BASE                0xE0001000  // Data Watchpoint and Trace

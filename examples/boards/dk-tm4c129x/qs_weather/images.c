@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -32,8 +32,7 @@
 // Sun Image
 //
 //*****************************************************************************
-const uint8_t g_pui8SunImage[] =
-{
+const uint8_t g_pui8SunImage[] = {
     IMAGE_FMT_8BPP_COMP,
     128, 0,
     128, 0,
@@ -1105,8 +1104,7 @@ const uint8_t g_pui8SunImage[] =
 // Cloudy Image
 //
 //*****************************************************************************
-const uint8_t g_pui8CloudyImage[] =
-{
+const uint8_t g_pui8CloudyImage[] = {
     IMAGE_FMT_8BPP_COMP,
     128, 0,
     128, 0,
@@ -1923,8 +1921,7 @@ const uint8_t g_pui8CloudyImage[] =
 // Rain Image
 //
 //*****************************************************************************
-const uint8_t g_pui8RainImage[] =
-{
+const uint8_t g_pui8RainImage[] = {
     IMAGE_FMT_8BPP_COMP,
     128, 0,
     128, 0,
@@ -2917,8 +2914,7 @@ const uint8_t g_pui8RainImage[] =
 // Thunderstorm Image
 //
 //*****************************************************************************
-const uint8_t g_pui8ThuderStormImage[] =
-{
+const uint8_t g_pui8ThuderStormImage[] = {
     IMAGE_FMT_8BPP_COMP,
     128, 0,
     128, 0,
@@ -3914,8 +3910,7 @@ const uint8_t g_pui8ThuderStormImage[] =
 // Fog/Mist Image
 //
 //*****************************************************************************
-const uint8_t g_pui8FogImage[] =
-{
+const uint8_t g_pui8FogImage[] = {
     IMAGE_FMT_8BPP_COMP,
     128, 0,
     128, 0,
@@ -4430,8 +4425,7 @@ const uint8_t g_pui8FogImage[] =
 // Snow Image
 //
 //*****************************************************************************
-const uint8_t g_pui8SnowImage[] =
-{
+const uint8_t g_pui8SnowImage[] = {
     IMAGE_FMT_8BPP_COMP,
     128, 0,
     128, 0,
@@ -5426,8 +5420,7 @@ const uint8_t g_pui8SnowImage[] =
 // Moon Image
 //
 //*****************************************************************************
-const uint8_t g_pui8MoonImage[] =
-{
+const uint8_t g_pui8MoonImage[] = {
     IMAGE_FMT_8BPP_COMP,
     128, 0,
     128, 0,
@@ -6615,8 +6608,7 @@ const uint8_t g_pui8MoonImage[] =
 // Right Arrow Image
 //
 //*****************************************************************************
-const uint8_t g_pui8RightImage[] =
-{
+const uint8_t g_pui8RightImage[] = {
     IMAGE_FMT_1BPP_UNCOMP,
     10, 0,
     39, 0,
@@ -6635,8 +6627,7 @@ const uint8_t g_pui8RightImage[] =
 // Left Arrow Image
 //
 //*****************************************************************************
-const uint8_t g_pui8LeftImage[] =
-{
+const uint8_t g_pui8LeftImage[] = {
     IMAGE_FMT_1BPP_UNCOMP,
     10, 0,
     39, 0,
@@ -6655,8 +6646,7 @@ const uint8_t g_pui8LeftImage[] =
 // Up Tab Image
 //
 //*****************************************************************************
-const uint8_t g_pui8UpTabImage[] =
-{
+const uint8_t g_pui8UpTabImage[] = {
     IMAGE_FMT_1BPP_UNCOMP,
     32, 0,
     10, 0,
@@ -6672,8 +6662,7 @@ const uint8_t g_pui8UpTabImage[] =
 // Down Tab Image
 //
 //*****************************************************************************
-const uint8_t g_pui8DownTabImage[] =
-{
+const uint8_t g_pui8DownTabImage[] = {
     IMAGE_FMT_1BPP_UNCOMP,
     32, 0,
     10, 0,
@@ -6690,8 +6679,7 @@ const uint8_t g_pui8DownTabImage[] =
 //
 //*****************************************************************************
 uint8_t g_pui8TIImagePalette[16 * 3];
-uint8_t g_pui8TIImage[] =
-{
+uint8_t g_pui8TIImage[] = {
     IMAGE_FMT_4BPP_COMP,
     64, 1,
     78, 0,

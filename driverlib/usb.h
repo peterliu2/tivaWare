@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2007-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -173,46 +173,46 @@ extern "C"
 #define USB_HOST_IN_NOT_COMP    0x01000000  // Device failed to respond
 #define USB_HOST_IN_STALL       0x00400000  // Stall on this endpoint received
 #define USB_HOST_IN_DATA_ERROR  0x00080000  // CRC or bit-stuff error
-                                            // (ISOC Mode)
+// (ISOC Mode)
 #define USB_HOST_IN_NAK_TO      0x00080000  // NAK received for more than the
-                                            // specified timeout period
+// specified timeout period
 #define USB_HOST_IN_ERROR       0x00040000  // Failed to communicate with a
-                                            // device
+// device
 #define USB_HOST_IN_FIFO_FULL   0x00020000  // RX FIFO full
 #define USB_HOST_IN_PKTRDY      0x00010000  // Data packet ready
 #define USB_HOST_OUT_STATUS     0x000000A7  // Mask of all host OUT interrupts
 #define USB_HOST_OUT_NAK_TO     0x00000080  // NAK received for more than the
-                                            // specified timeout period
+// specified timeout period
 #define USB_HOST_OUT_NOT_COMP   0x00000080  // No response from device
-                                            // (ISOC mode)
+// (ISOC mode)
 #define USB_HOST_OUT_STALL      0x00000020  // Stall on this endpoint received
 #define USB_HOST_OUT_ERROR      0x00000004  // Failed to communicate with a
-                                            // device
+// device
 #define USB_HOST_OUT_FIFO_NE    0x00000002  // TX FIFO is not empty
 #define USB_HOST_OUT_PKTPEND    0x00000001  // Transmit still being transmitted
 #define USB_HOST_EP0_NAK_TO     0x00000080  // NAK received for more than the
-                                            // specified timeout period
+// specified timeout period
 #define USB_HOST_EP0_STATUS     0x00000040  // This was a status packet
 #define USB_HOST_EP0_ERROR      0x00000010  // Failed to communicate with a
-                                            // device
+// device
 #define USB_HOST_EP0_RX_STALL   0x00000004  // Stall on this endpoint received
 #define USB_HOST_EP0_RXPKTRDY   0x00000001  // Receive data packet ready
 #define USB_DEV_RX_PID_ERROR    0x01000000  // PID error in isochronous
-                                            // transfer
+// transfer
 #define USB_DEV_RX_SENT_STALL   0x00400000  // Stall was sent on this endpoint
 #define USB_DEV_RX_DATA_ERROR   0x00080000  // CRC error on the data
 #define USB_DEV_RX_OVERRUN      0x00040000  // OUT packet was not loaded due to
-                                            // a full FIFO
+// a full FIFO
 #define USB_DEV_RX_FIFO_FULL    0x00020000  // RX FIFO full
 #define USB_DEV_RX_PKT_RDY      0x00010000  // Data packet ready
 #define USB_DEV_TX_NOT_COMP     0x00000080  // Large packet split up, more data
-                                            // to come
+// to come
 #define USB_DEV_TX_SENT_STALL   0x00000020  // Stall was sent on this endpoint
 #define USB_DEV_TX_UNDERRUN     0x00000004  // IN received with no data ready
 #define USB_DEV_TX_FIFO_NE      0x00000002  // The TX FIFO is not empty
 #define USB_DEV_TX_TXPKTRDY     0x00000001  // Transmit still being transmitted
 #define USB_DEV_EP0_SETUP_END   0x00000010  // Control transaction ended before
-                                            // Data End seen
+// Data End seen
 #define USB_DEV_EP0_SENT_STALL  0x00000004  // Stall was sent on this endpoint
 #define USB_DEV_EP0_IN_PKTPEND  0x00000002  // Transmit data packet pending
 #define USB_DEV_EP0_OUT_PKTRDY  0x00000001  // Receive data packet ready
@@ -229,8 +229,8 @@ extern "C"
 #define USB_EP_DMA_MODE_0       0x00000008  // Enable DMA access using mode 0
 #define USB_EP_DMA_MODE_1       0x00000010  // Enable DMA access using mode 1
 #define USB_EP_DIS_NYET         0x00000020  // Disable NYET response for
-                                            // high-speed Bulk and Interrupt
-                                            // endpoints in device mode.
+// high-speed Bulk and Interrupt
+// endpoints in device mode.
 #define USB_EP_MODE_ISOC        0x00000000  // Isochronous endpoint
 #define USB_EP_MODE_BULK        0x00000100  // Bulk endpoint
 #define USB_EP_MODE_INT         0x00000200  // Interrupt endpoint
@@ -396,11 +396,11 @@ extern "C"
 #define USB_TRANS_OUT           0x00000102  // Normal OUT transaction
 #define USB_TRANS_IN            0x00000102  // Normal IN transaction
 #define USB_TRANS_IN_LAST       0x0000010a  // Final IN transaction (for
-                                            // endpoint 0 in device mode)
+// endpoint 0 in device mode)
 #define USB_TRANS_SETUP         0x0000110a  // Setup transaction (for endpoint
-                                            // 0)
+// 0)
 #define USB_TRANS_STATUS        0x00000142  // Status transaction (for endpoint
-                                            // 0)
+// 0)
 
 //*****************************************************************************
 //
@@ -408,27 +408,27 @@ extern "C"
 //
 //*****************************************************************************
 #define USB_DUAL_MODE_HOST      0x00000001  // Dual mode controller is in Host
-                                            // mode.
+// mode.
 #define USB_DUAL_MODE_DEVICE    0x00000081  // Dual mode controller is in
-                                            // Device mode.
+// Device mode.
 #define USB_DUAL_MODE_NONE      0x00000080  // Dual mode controller mode is not
-                                            // set.
+// set.
 #define USB_OTG_MODE_ASIDE_HOST 0x0000001d  // OTG controller on the A side of
-                                            // the cable.
+// the cable.
 #define USB_OTG_MODE_ASIDE_NPWR 0x00000001  // OTG controller on the A side of
-                                            // the cable.
+// the cable.
 #define USB_OTG_MODE_ASIDE_SESS 0x00000009  // OTG controller on the A side of
-                                            // the cable Session Valid.
+// the cable Session Valid.
 #define USB_OTG_MODE_ASIDE_AVAL 0x00000011  // OTG controller on the A side of
-                                            // the cable A valid.
+// the cable A valid.
 #define USB_OTG_MODE_ASIDE_DEV  0x00000019  // OTG controller on the A side of
-                                            // the cable.
+// the cable.
 #define USB_OTG_MODE_BSIDE_HOST 0x0000009d  // OTG controller on the B side of
-                                            // the cable.
+// the cable.
 #define USB_OTG_MODE_BSIDE_DEV  0x00000099  // OTG controller on the B side of
-                                            // the cable.
+// the cable.
 #define USB_OTG_MODE_BSIDE_NPWR 0x00000081  // OTG controller on the B side of
-                                            // the cable.
+// the cable.
 #define USB_OTG_MODE_NONE       0x00000080  // OTG controller mode is not set.
 
 //*****************************************************************************
@@ -459,9 +459,9 @@ extern "C"
 //
 //*****************************************************************************
 #define USB_CONTROLLER_VER_0    0x00000000  // This is for Blizzard class
-                                            // devices.
+// devices.
 #define USB_CONTROLLER_VER_1    0x00000001  // This is for Snowflake class
-                                            // devices.
+// devices.
 
 //*****************************************************************************
 //

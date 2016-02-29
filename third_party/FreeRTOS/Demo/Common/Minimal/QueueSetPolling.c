@@ -126,91 +126,81 @@ static uint32_t ulCycleCounter = 0;
 
 void vStartQueueSetPollingTask( void )
 {
-	/* Create the queue that is added to the set, the set, and add the queue to
-	the set. */
-	xQueue = xQueueCreate( setpollQUEUE_LENGTH, sizeof( uint32_t ) );
-	xQueueSet = xQueueCreateSet( setpollQUEUE_LENGTH );
-	xQueueAddToSet( xQueue, xQueueSet );
+    /* Create the queue that is added to the set, the set, and add the queue to
+    the set. */
+    xQueue = xQueueCreate( setpollQUEUE_LENGTH, sizeof( uint32_t ) );
+    xQueueSet = xQueueCreateSet( setpollQUEUE_LENGTH );
+    xQueueAddToSet( xQueue, xQueueSet );
 
-	/* Create the task. */
-	xTaskCreate( prvQueueSetReceivingTask, "SetPoll", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL );
+    /* Create the task. */
+    xTaskCreate( prvQueueSetReceivingTask, "SetPoll", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL );
 }
 /*-----------------------------------------------------------*/
 
 static void prvQueueSetReceivingTask( void *pvParameters )
 {
-uint32_t ulReceived, ulExpected = 0;
-QueueHandle_t xActivatedQueue;
+    uint32_t ulReceived, ulExpected = 0;
+    QueueHandle_t xActivatedQueue;
 
-	/* Remove compiler warnings. */
-	( void ) pvParameters;
+    /* Remove compiler warnings. */
+    ( void ) pvParameters;
 
-	for( ;; )
-	{
-		/* Is a message waiting?  A block time is not used to ensure the queue
-		set is polled while it is being written to from an interrupt. */
-		xActivatedQueue = xQueueSelectFromSet( xQueueSet, setpollDONT_BLOCK );
+    for( ;; ) {
+        /* Is a message waiting?  A block time is not used to ensure the queue
+        set is polled while it is being written to from an interrupt. */
+        xActivatedQueue = xQueueSelectFromSet( xQueueSet, setpollDONT_BLOCK );
 
-		if( xActivatedQueue != NULL )
-		{
-			/* Reading from the queue should pass with a zero block time as
-			this task will only run when something has been posted to a task
-			in the queue set. */
-			if( xQueueReceive( xActivatedQueue, &ulReceived, setpollDONT_BLOCK ) != pdPASS )
-			{
-				xQueueSetPollStatus = pdFAIL;
-			}
+        if( xActivatedQueue != NULL ) {
+            /* Reading from the queue should pass with a zero block time as
+            this task will only run when something has been posted to a task
+            in the queue set. */
+            if( xQueueReceive( xActivatedQueue, &ulReceived, setpollDONT_BLOCK ) != pdPASS ) {
+                xQueueSetPollStatus = pdFAIL;
+            }
 
-			if( ulReceived == ulExpected )
-			{
-				ulExpected++;
-			}
-			else
-			{
-				xQueueSetPollStatus = pdFAIL;
-			}
+            if( ulReceived == ulExpected ) {
+                ulExpected++;
+            } else {
+                xQueueSetPollStatus = pdFAIL;
+            }
 
-			if( xQueueSetPollStatus == pdPASS )
-			{
-				ulCycleCounter++;
-			}
-		}
-	}
+            if( xQueueSetPollStatus == pdPASS ) {
+                ulCycleCounter++;
+            }
+        }
+    }
 }
 /*-----------------------------------------------------------*/
 
 void vQueueSetPollingInterruptAccess( void )
 {
-static uint32_t ulCallCount = 0, ulValueToSend = 0;
+    static uint32_t ulCallCount = 0, ulValueToSend = 0;
 
-	/* It is intended that this function is called from the tick hook
-	function, so each call is one tick period apart. */
-	ulCallCount++;
-	if( ulCallCount > queuesetISR_TX_PERIOD )
-	{
-		ulCallCount = 0;
+    /* It is intended that this function is called from the tick hook
+    function, so each call is one tick period apart. */
+    ulCallCount++;
+    if( ulCallCount > queuesetISR_TX_PERIOD ) {
+        ulCallCount = 0;
 
-		if( xQueueSendFromISR( xQueue, ( void * ) &ulValueToSend, NULL ) == pdPASS )
-		{
-			/* Send the next value next time. */
-			ulValueToSend++;
-		}
-	}
+        if( xQueueSendFromISR( xQueue, ( void * ) &ulValueToSend, NULL ) == pdPASS ) {
+            /* Send the next value next time. */
+            ulValueToSend++;
+        }
+    }
 }
 /*-----------------------------------------------------------*/
 
 BaseType_t xAreQueueSetPollTasksStillRunning( void )
 {
-static uint32_t ulLastCycleCounter = 0;
+    static uint32_t ulLastCycleCounter = 0;
 
-	if( ulLastCycleCounter == ulCycleCounter )
-	{
-		xQueueSetPollStatus = pdFAIL;
-	}
+    if( ulLastCycleCounter == ulCycleCounter ) {
+        xQueueSetPollStatus = pdFAIL;
+    }
 
-	ulLastCycleCounter = ulCycleCounter;
+    ulLastCycleCounter = ulCycleCounter;
 
-	return xQueueSetPollStatus;
+    return xQueueSetPollStatus;
 }
 /*-----------------------------------------------------------*/
 

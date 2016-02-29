@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -72,8 +72,7 @@ MX66L51235FInit(uint32_t ui32SysClock)
     // (even though it is not selected) if the SPI clock exceeds 12.5 MHz.
     //
     ui32SPIClock = ui32SysClock / 4;
-    if(ui32SPIClock > 12500000)
-    {
+    if(ui32SPIClock > 12500000) {
         ui32SPIClock = 12500000;
     }
 
@@ -110,8 +109,7 @@ MX66L51235FWriteEnable(void)
     //
     // Wait until the command has been completely transmitted.
     //
-    while(ROM_SSIBusy(SSI3_BASE))
-    {
+    while(ROM_SSIBusy(SSI3_BASE)) {
     }
 
     //
@@ -133,8 +131,7 @@ MX66L51235FWait(void)
     //
     // Loop until the requested operation has completed.
     //
-    do
-    {
+    do {
         //
         // Assert the chip select to the MX66L51235F.
         //
@@ -149,8 +146,7 @@ MX66L51235FWait(void)
         // De-assert the chip select to the MX66L51235F.
         //
         ROM_GPIOPinWrite(GPIO_PORTQ_BASE, GPIO_PIN_1, GPIO_PIN_1);
-    }
-    while(ui8Status & 1);
+    } while(ui8Status & 1);
 }
 
 //*****************************************************************************
@@ -165,8 +161,7 @@ MX66L51235FWriteEAR(uint32_t ui32Addr)
     //
     // See if the extended address register needs to be written.
     //
-    if((ui32Addr & 0xff000000) == (g_ui32MX66L51235FAddr & 0xff000000))
-    {
+    if((ui32Addr & 0xff000000) == (g_ui32MX66L51235FAddr & 0xff000000)) {
         //
         // The extended address register does not need to be changed, so return
         // without doing anything.
@@ -208,8 +203,7 @@ MX66L51235FWriteEAR(uint32_t ui32Addr)
     //
     // Wait until the command has been completely transmitted.
     //
-    while(ROM_SSIBusy(SSI3_BASE))
-    {
+    while(ROM_SSIBusy(SSI3_BASE)) {
     }
 
     //
@@ -258,8 +252,7 @@ MX66L51235FSectorErase(uint32_t ui32Addr)
     //
     // Wait until the command has been completely transmitted.
     //
-    while(ROM_SSIBusy(SSI3_BASE))
-    {
+    while(ROM_SSIBusy(SSI3_BASE)) {
     }
 
     //
@@ -313,8 +306,7 @@ MX66L51235FBlockErase32(uint32_t ui32Addr)
     //
     // Wait until the command has been completely transmitted.
     //
-    while(ROM_SSIBusy(SSI3_BASE))
-    {
+    while(ROM_SSIBusy(SSI3_BASE)) {
     }
 
     //
@@ -368,8 +360,7 @@ MX66L51235FBlockErase64(uint32_t ui32Addr)
     //
     // Wait until the command has been completely transmitted.
     //
-    while(ROM_SSIBusy(SSI3_BASE))
-    {
+    while(ROM_SSIBusy(SSI3_BASE)) {
     }
 
     //
@@ -415,8 +406,7 @@ MX66L51235FChipErase(void)
     //
     // Wait until the command has been completely transmitted.
     //
-    while(ROM_SSIBusy(SSI3_BASE))
-    {
+    while(ROM_SSIBusy(SSI3_BASE)) {
     }
 
     //
@@ -473,8 +463,7 @@ MX66L51235FPageProgram(uint32_t ui32Addr, const uint8_t *pui8Data,
     //
     // Wait until the command has been completely transmitted.
     //
-    while(ROM_SSIBusy(SSI3_BASE))
-    {
+    while(ROM_SSIBusy(SSI3_BASE)) {
     }
 
     //

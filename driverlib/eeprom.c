@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -140,8 +140,7 @@ _EEPROMWaitForDone(void)
     //
     // Is the EEPROM still busy?
     //
-    while(HWREG(EEPROM_EEDONE) & EEPROM_EEDONE_WORKING)
-    {
+    while(HWREG(EEPROM_EEDONE) & EEPROM_EEDONE_WORKING) {
         //
         // Spin while EEPROM is busy.
         //
@@ -199,8 +198,7 @@ EEPROMInit(void)
     //
     // Did an error of some sort occur during initialization?
     //
-    if(ui32Status & (EEPROM_EESUPP_PRETRY | EEPROM_EESUPP_ERETRY))
-    {
+    if(ui32Status & (EEPROM_EESUPP_PRETRY | EEPROM_EESUPP_ERETRY)) {
         return(EEPROM_INIT_ERROR);
     }
 
@@ -223,8 +221,7 @@ EEPROMInit(void)
     //
     // Was an error reported following the second reset?
     //
-    if(ui32Status & (EEPROM_EESUPP_PRETRY | EEPROM_EESUPP_ERETRY))
-    {
+    if(ui32Status & (EEPROM_EESUPP_PRETRY | EEPROM_EESUPP_ERETRY)) {
         return(EEPROM_INIT_ERROR);
     }
 
@@ -330,8 +327,7 @@ EEPROMRead(uint32_t *pui32Data, uint32_t ui32Address, uint32_t ui32Count)
     //
     // Read each word in turn.
     //
-    while(ui32Count)
-    {
+    while(ui32Count) {
         //
         // Read the next word through the autoincrementing register.
         //
@@ -351,8 +347,7 @@ EEPROMRead(uint32_t *pui32Data, uint32_t ui32Address, uint32_t ui32Count)
         // next.  If a mass erase is requested instead, the mass erase will
         // fail.
         //
-        if(ui32Count && (HWREG(EEPROM_EEOFFSET) == 0))
-        {
+        if(ui32Count && (HWREG(EEPROM_EEOFFSET) == 0)) {
             HWREG(EEPROM_EEBLOCK) += 1;
         }
     }
@@ -395,14 +390,12 @@ EEPROMProgram(uint32_t *pui32Data, uint32_t ui32Address, uint32_t ui32Count)
     //
     // Make sure the EEPROM is idle before we start.
     //
-    do
-    {
+    do {
         //
         // Read the status.
         //
         ui32Status = HWREG(EEPROM_EEDONE);
-    }
-    while(ui32Status & EEPROM_EEDONE_WORKING);
+    } while(ui32Status & EEPROM_EEDONE_WORKING);
 
     //
     // Set the block and offset appropriately to program the first word.
@@ -418,15 +411,13 @@ EEPROMProgram(uint32_t *pui32Data, uint32_t ui32Address, uint32_t ui32Count)
     //
     // Write each word in turn.
     //
-    while(ui32Count)
-    {
+    while(ui32Count) {
         //
         // This is a workaround for a silicon problem on Blizzard rev A.  We
         // need to do this before every word write to ensure that we don't
         // have problems in multi-word writes that span multiple flash sectors.
         //
-        if(CLASS_IS_TM4C123 && REVISION_IS_A0)
-        {
+        if(CLASS_IS_TM4C123 && REVISION_IS_A0) {
             _EEPROMSectorMaskSet(ui32Address);
         }
 
@@ -445,28 +436,24 @@ EEPROMProgram(uint32_t *pui32Data, uint32_t ui32Address, uint32_t ui32Count)
         //
         // Wait for the write to complete.
         //
-        do
-        {
+        do {
             //
             // Read the status.
             //
             ui32Status = HWREG(EEPROM_EEDONE);
-        }
-        while(ui32Status & EEPROM_EEDONE_WORKING);
+        } while(ui32Status & EEPROM_EEDONE_WORKING);
 
         //
         // Make sure we completed the write without errors.  Note that we
         // must check this per-word because write permission can be set per
         // block resulting in only a section of the write not being performed.
         //
-        if(ui32Status & EEPROM_EEDONE_NOPERM)
-        {
+        if(ui32Status & EEPROM_EEDONE_NOPERM) {
             //
             // An error was reported that would prevent the values from
             // being written correctly.
             //
-            if(CLASS_IS_TM4C123 && REVISION_IS_A0)
-            {
+            if(CLASS_IS_TM4C123 && REVISION_IS_A0) {
                 _EEPROMSectorMaskClear();
             }
             return(ui32Status);
@@ -486,8 +473,7 @@ EEPROMProgram(uint32_t *pui32Data, uint32_t ui32Address, uint32_t ui32Count)
         // next.  If a mass erase is requested instead, the mass erase will
         // fail.
         //
-        if(ui32Count && (HWREG(EEPROM_EEOFFSET) == 0))
-        {
+        if(ui32Count && (HWREG(EEPROM_EEOFFSET) == 0)) {
             HWREG(EEPROM_EEBLOCK) += 1;
         }
     }
@@ -496,8 +482,7 @@ EEPROMProgram(uint32_t *pui32Data, uint32_t ui32Address, uint32_t ui32Count)
     // Clear the sector protection bits to prevent possible problems when
     // programming the main flash array later.
     //
-    if(CLASS_IS_TM4C123 && REVISION_IS_A0)
-    {
+    if(CLASS_IS_TM4C123 && REVISION_IS_A0) {
         _EEPROMSectorMaskClear();
     }
 
@@ -542,8 +527,7 @@ EEPROMProgramNonBlocking(uint32_t ui32Data, uint32_t ui32Address)
     //
     // This is a workaround for a silicon problem on Blizzard rev A.
     //
-    if(CLASS_IS_TM4C123 && REVISION_IS_A0)
-    {
+    if(CLASS_IS_TM4C123 && REVISION_IS_A0) {
         _EEPROMSectorMaskSet(ui32Address);
     }
 
@@ -589,8 +573,7 @@ EEPROMMassErase(void)
     //
     // This is a workaround for a silicon problem on Blizzard rev A.
     //
-    if(CLASS_IS_TM4C123 && REVISION_IS_A0)
-    {
+    if(CLASS_IS_TM4C123 && REVISION_IS_A0) {
         _EEPROMSectorMaskClear();
     }
 
@@ -723,8 +706,7 @@ EEPROMBlockProtectSet(uint32_t ui32Block, uint32_t ui32Protect)
     //
     // Wait for the write to complete.
     //
-    while(HWREG(EEPROM_EEDONE) & EEPROM_EEDONE_WORKING)
-    {
+    while(HWREG(EEPROM_EEDONE) & EEPROM_EEDONE_WORKING) {
         //
         // Still working.
         //
@@ -793,8 +775,7 @@ EEPROMBlockPasswordSet(uint32_t ui32Block, uint32_t *pui32Password,
     //
     // Write the password.
     //
-    while(ui32Count)
-    {
+    while(ui32Count) {
         //
         // Start the process of writing the password.
         //
@@ -810,8 +791,7 @@ EEPROMBlockPasswordSet(uint32_t ui32Block, uint32_t *pui32Password,
         //
         // Wait for the last word write to complete or an error to be reported.
         //
-        while(HWREG(EEPROM_EEDONE) & EEPROM_EEDONE_WORKING)
-        {
+        while(HWREG(EEPROM_EEDONE) & EEPROM_EEDONE_WORKING) {
             //
             // Still working.
             //
@@ -928,8 +908,7 @@ EEPROMBlockUnlock(uint32_t ui32Block, uint32_t *pui32Password,
     //
     // Write the supplied password to unlock the block.
     //
-    while(ui32Count)
-    {
+    while(ui32Count) {
         HWREG(EEPROM_EEUNLOCK) = *pui32Password--;
         ui32Count--;
     }
@@ -1062,8 +1041,7 @@ EEPROMIntDisable(uint32_t ui32IntFlags)
 uint32_t
 EEPROMIntStatus(bool bMasked)
 {
-    if(bMasked)
-    {
+    if(bMasked) {
         //
         // If asked for the masked interrupt status, we check to see if the
         // relevant interrupt is pending in the flash controller then return
@@ -1071,9 +1049,7 @@ EEPROMIntStatus(bool bMasked)
         //
         return((HWREG(FLASH_FCMISC) & FLASH_FCMISC_EMISC) ?
                EEPROM_INT_PROGRAM : 0);
-    }
-    else
-    {
+    } else {
         //
         // If asked for the unmasked interrupt status, infer that an interrupt
         // is pending if the WORKING bit of the EEDONE register is clear.  The
@@ -1120,8 +1096,7 @@ EEPROMIntClear(uint32_t ui32IntFlags)
     // Clear the sector protection bits to prevent possible problems when
     // programming the main flash array later.
     //
-    if(CLASS_IS_TM4C123 && REVISION_IS_A0)
-    {
+    if(CLASS_IS_TM4C123 && REVISION_IS_A0) {
         _EEPROMSectorMaskClear();
     }
 }

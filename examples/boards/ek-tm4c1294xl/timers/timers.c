@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -143,7 +143,7 @@ Timer1IntHandler(void)
 
     //
     // Update the interrupt status.
-    // 
+    //
     ROM_IntMasterDisable();
     cOne = HWREGBITW(&g_ui32Flags, 0) ? '1' : '0';
     cTwo = HWREGBITW(&g_ui32Flags, 1) ? '1' : '0';
@@ -195,9 +195,9 @@ main(void)
     // Set the clocking to run directly from the crystal at 120MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN |
-                                             SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN |
+                                            SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Initialize the UART and write status.
@@ -254,7 +254,6 @@ main(void)
     //
     // Loop forever while the timers run.
     //
-    while(1)
-    {
+    while(1) {
     }
 }

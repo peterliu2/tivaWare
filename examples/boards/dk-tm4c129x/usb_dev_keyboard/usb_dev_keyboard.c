@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -115,8 +115,7 @@
 // all the alphanumeric keys.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // The label string for the key.
     //
@@ -150,8 +149,7 @@ typedef struct
 // A list of the states that the keyboard can be in.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     //
     // Neither shift nor caps lock is active.
     //
@@ -185,8 +183,7 @@ tKeyState g_eVirtualKeyState = KEY_STATE_NORMAL;
 // A structure describing typical alphanumeric keys.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // Strings containing the unshifted, shifted and caps representations of
     // each of the keys in the row.
@@ -200,8 +197,7 @@ typedef struct
 // A structure describing a single row of the virtual keyboard.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // Does this row consist of alphanumeric keys or special keys?
     //
@@ -265,19 +261,19 @@ typedef struct
 //*****************************************************************************
 #define NUM_ROW0_KEYS 10
 
-const char g_pcRow0UsageCodes[NUM_ROW0_KEYS] =
-{
+const char g_pcRow0UsageCodes[NUM_ROW0_KEYS] = {
     HID_KEYB_USAGE_1, HID_KEYB_USAGE_2, HID_KEYB_USAGE_3, HID_KEYB_USAGE_4,
     HID_KEYB_USAGE_5, HID_KEYB_USAGE_6, HID_KEYB_USAGE_7, HID_KEYB_USAGE_8,
     HID_KEYB_USAGE_9, HID_KEYB_USAGE_0
 };
 
-const tAlphaKeys g_sRow0 =
-{
-    {"1234567890",  // Normal
-     "!@#$%^&*()",  // Shift
-     "1234567890",  // Caps
-     "!@#$%^&*()"}, // Shift + Caps
+const tAlphaKeys g_sRow0 = {
+    {
+        "1234567890",  // Normal
+        "!@#$%^&*()",  // Shift
+        "1234567890",  // Caps
+        "!@#$%^&*()"
+    }, // Shift + Caps
     g_pcRow0UsageCodes
 };
 
@@ -289,19 +285,19 @@ const tAlphaKeys g_sRow0 =
 //*****************************************************************************
 #define NUM_ROW1_KEYS 10
 
-const char g_pcRow1UsageCodes[NUM_ROW1_KEYS] =
-{
+const char g_pcRow1UsageCodes[NUM_ROW1_KEYS] = {
     HID_KEYB_USAGE_Q, HID_KEYB_USAGE_W, HID_KEYB_USAGE_E, HID_KEYB_USAGE_R,
     HID_KEYB_USAGE_T, HID_KEYB_USAGE_Y, HID_KEYB_USAGE_U, HID_KEYB_USAGE_I,
     HID_KEYB_USAGE_O, HID_KEYB_USAGE_P
 };
 
-const tAlphaKeys g_sRow1 =
-{
-    {"qwertyuiop",   // Normal
-     "QWERTYUIOP",   // Shift
-     "QWERTYUIOP",   // Caps
-     "qwertyuiop"},  // Shift + Caps
+const tAlphaKeys g_sRow1 = {
+    {
+        "qwertyuiop",   // Normal
+        "QWERTYUIOP",   // Shift
+        "QWERTYUIOP",   // Caps
+        "qwertyuiop"
+    },  // Shift + Caps
     g_pcRow1UsageCodes
 };
 
@@ -313,19 +309,19 @@ const tAlphaKeys g_sRow1 =
 //*****************************************************************************
 #define NUM_ROW2_KEYS 10
 
-const char g_pcRow2UsageCodes[NUM_ROW2_KEYS] =
-{
+const char g_pcRow2UsageCodes[NUM_ROW2_KEYS] = {
     HID_KEYB_USAGE_A, HID_KEYB_USAGE_S, HID_KEYB_USAGE_D, HID_KEYB_USAGE_F,
     HID_KEYB_USAGE_G, HID_KEYB_USAGE_H, HID_KEYB_USAGE_J, HID_KEYB_USAGE_K,
     HID_KEYB_USAGE_L, HID_KEYB_USAGE_SEMICOLON
 };
 
-const tAlphaKeys g_sRow2 =
-{
-    {"asdfghjkl;",  // Normal
-     "ASDFGHJKL:",  // Shift
-     "ASDFGHJKL;",  // Caps
-     "asdfghjkl;"}, // Shift + Caps
+const tAlphaKeys g_sRow2 = {
+    {
+        "asdfghjkl;",  // Normal
+        "ASDFGHJKL:",  // Shift
+        "ASDFGHJKL;",  // Caps
+        "asdfghjkl;"
+    }, // Shift + Caps
     g_pcRow2UsageCodes
 };
 
@@ -337,19 +333,19 @@ const tAlphaKeys g_sRow2 =
 //*****************************************************************************
 #define NUM_ROW3_KEYS 10
 
-const char g_pcRow3UsageCodes[NUM_ROW3_KEYS] =
-{
- HID_KEYB_USAGE_Z, HID_KEYB_USAGE_X, HID_KEYB_USAGE_C, HID_KEYB_USAGE_V,
- HID_KEYB_USAGE_B, HID_KEYB_USAGE_N, HID_KEYB_USAGE_M, HID_KEYB_USAGE_COMMA,
- HID_KEYB_USAGE_PERIOD, HID_KEYB_USAGE_FSLASH
+const char g_pcRow3UsageCodes[NUM_ROW3_KEYS] = {
+    HID_KEYB_USAGE_Z, HID_KEYB_USAGE_X, HID_KEYB_USAGE_C, HID_KEYB_USAGE_V,
+    HID_KEYB_USAGE_B, HID_KEYB_USAGE_N, HID_KEYB_USAGE_M, HID_KEYB_USAGE_COMMA,
+    HID_KEYB_USAGE_PERIOD, HID_KEYB_USAGE_FSLASH
 };
 
-const tAlphaKeys g_sRow3 =
-{
-    {"zxcvbnm,./",   // Normal
-     "ZXCVBNM<>?",   // Shift
-     "ZXCVBNM,./",   // Caps
-     "zxcvbnm<>?"},  // Shift + Caps
+const tAlphaKeys g_sRow3 = {
+    {
+        "zxcvbnm,./",   // Normal
+        "ZXCVBNM<>?",   // Shift
+        "ZXCVBNM,./",   // Caps
+        "zxcvbnm<>?"
+    },  // Shift + Caps
     g_pcRow3UsageCodes
 };
 
@@ -381,10 +377,11 @@ void GUIRedrawHandler(int16_t i16Col, int16_t i16Row, bool bFocus,
 // handled differently from the basic, alphanumeric keys.
 //
 //*****************************************************************************
-const tSpecialKey g_psRow4[] =
-{
-    {"Cap", 38, HID_KEYB_USAGE_CAPSLOCK, CapsLockHandler,
-     CapsLockRedrawHandler},
+const tSpecialKey g_psRow4[] = {
+    {
+        "Cap", 38, HID_KEYB_USAGE_CAPSLOCK, CapsLockHandler,
+        CapsLockRedrawHandler
+    },
     {"Shift", 54 , 0, ShiftLockHandler, ShiftLockRedrawHandler},
     {" ", 80, HID_KEYB_USAGE_SPACE, DefaultSpecialHandler, 0},
     {"Ent", 54, HID_KEYB_USAGE_ENTER, DefaultSpecialHandler, 0},
@@ -400,8 +397,7 @@ const tSpecialKey g_psRow4[] =
 // cursor keys so the key caps are the same for each state.
 //
 //*****************************************************************************
-const tSpecialKey g_psRow5[] =
-{
+const tSpecialKey g_psRow5[] = {
     {"Alt", 54, 0, AltHandler, AltRedrawHandler},
     {"Ctrl", 54, 0, CtrlHandler, CtrlRedrawHandler},
     {"GUI", 36, 0, GUIHandler, GUIRedrawHandler},
@@ -418,12 +414,13 @@ const tSpecialKey g_psRow5[] =
 // Define the rows of the virtual keyboard.
 //
 //*****************************************************************************
-const tRow g_psKeyboard[NUM_KEYBOARD_ROWS] =
-{
+const tRow g_psKeyboard[NUM_KEYBOARD_ROWS] = {
     {false, (void *)&g_sRow0, NUM_ROW0_KEYS, 10},
     {false, (void *)&g_sRow1, NUM_ROW1_KEYS, 10 + (KEYBOARD_CELL_WIDTH / 3)},
-    {false, (void *)&g_sRow2, NUM_ROW2_KEYS, 10 +
-     ((2 * KEYBOARD_CELL_WIDTH) / 3)},
+    {
+        false, (void *)&g_sRow2, NUM_ROW2_KEYS, 10 +
+        ((2 * KEYBOARD_CELL_WIDTH) / 3)
+    },
     {false, (void *)&g_sRow3, NUM_ROW3_KEYS, 20},
     {true, (void *)g_psRow4, NUM_ROW4_KEYS, 20},
     {true, (void *)g_psRow5, NUM_ROW5_KEYS, 20 + (KEYBOARD_CELL_WIDTH / 4)}
@@ -550,7 +547,8 @@ volatile enum
     // Waiting on data to be sent out.
     //
     STATE_SENDING
-} g_eKeyboardState = STATE_UNCONFIGURED;
+}
+g_eKeyboardState = STATE_UNCONFIGURED;
 
 //*****************************************************************************
 //
@@ -591,8 +589,7 @@ tContext g_sContext;
 void
 __error__(char *pcFilename, uint32_t ui32Line)
 {
-    while(1)
-    {
+    while(1) {
     }
 }
 #else
@@ -615,8 +612,7 @@ __error__(char *pcFilename, uint32_t ui32Line)
 static int32_t
 KeyboardTouchHandler(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
 {
-    switch(ui32Message)
-    {
+    switch(ui32Message) {
         //
         // The touchscreen has been pressed.  Remember the coordinates and
         // set the flag indicating that the main loop should process some new
@@ -668,13 +664,11 @@ uint32_t
 KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
                 void *pvMsgData)
 {
-    switch (ui32Event)
-    {
+    switch (ui32Event) {
         //
         // The host has connected to us and configured the device.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             g_bConnected = true;
             g_bSuspended = false;
             break;
@@ -683,8 +677,7 @@ KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // The host has disconnected from us.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             g_bConnected = false;
             break;
         }
@@ -694,8 +687,7 @@ KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         // of a report. It is used here purely as a way of determining whether
         // the host is still talking to us or not.
         //
-        case USB_EVENT_TX_COMPLETE:
-        {
+        case USB_EVENT_TX_COMPLETE: {
             //
             // Enter the idle state since we finished sending something.
             //
@@ -706,8 +698,7 @@ KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // This event indicates that the host has suspended the USB bus.
         //
-        case USB_EVENT_SUSPEND:
-        {
+        case USB_EVENT_SUSPEND: {
             g_bSuspended = true;
             break;
         }
@@ -715,8 +706,7 @@ KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // This event signals that the host has resumed signaling on the bus.
         //
-        case USB_EVENT_RESUME:
-        {
+        case USB_EVENT_RESUME: {
             g_bSuspended = false;
             break;
         }
@@ -726,8 +716,7 @@ KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         // Feature report and that the report is now in the buffer we provided
         // on the previous USBD_HID_EVENT_GET_REPORT_BUFFER callback.
         //
-        case USBD_HID_KEYB_EVENT_SET_LEDS:
-        {
+        case USBD_HID_KEYB_EVENT_SET_LEDS: {
 
             //
             // Remember the new LED state.
@@ -745,8 +734,7 @@ KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // We ignore all other events.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -777,13 +765,11 @@ bool WaitForSendIdle(uint_fast32_t ui32TimeoutTicks)
     ui32Start = g_ui32SysTickCount;
     ui32Elapsed = 0;
 
-    while (ui32Elapsed < ui32TimeoutTicks)
-    {
+    while (ui32Elapsed < ui32TimeoutTicks) {
         //
         // Is the keyboard is idle, return immediately.
         //
-        if (g_eKeyboardState == STATE_IDLE)
-        {
+        if (g_eKeyboardState == STATE_IDLE) {
             return (true);
         }
 
@@ -828,8 +814,7 @@ int16_t GetVirtualKeyX(int16_t i16Col, int16_t i16Row)
     //
     // Is this a row of special keys?
     //
-    if (g_psKeyboard[i16Row].bSpecial)
-    {
+    if (g_psKeyboard[i16Row].bSpecial) {
         //
         // Yes - we need to walk along the row of keys since the widths can
         // vary by key.
@@ -837,8 +822,7 @@ int16_t GetVirtualKeyX(int16_t i16Col, int16_t i16Row)
         i16X = g_psKeyboard[i16Row].i16LeftOffset;
         psKey = (tSpecialKey *)(g_psKeyboard[i16Row].pvKeys);
 
-        for (i16Count = 0; i16Count < i16Col; i16Count++)
-        {
+        for (i16Count = 0; i16Count < i16Col; i16Count++) {
             i16X += (psKey[i16Count].i16Width + KEYBOARD_COL_SPACING);
         }
 
@@ -846,9 +830,7 @@ int16_t GetVirtualKeyX(int16_t i16Col, int16_t i16Row)
         // Return the calculated X position for the key.
         //
         return (i16X + 1);
-    }
-    else
-    {
+    } else {
         //
         // This is a normal alphanumeric row so the keys are all the same
         // width.
@@ -885,11 +867,9 @@ int16_t VirtualKeyboardFindClosestKey(int16_t i16FromCol, int16_t i16FromRow,
     // index in the new row (taking care to pass back a valid key index).
     //
     if (!g_psKeyboard[i16FromRow].bSpecial &&
-        !g_psKeyboard[i16ToRow].bSpecial)
-    {
+            !g_psKeyboard[i16ToRow].bSpecial) {
         i16Index = i16FromCol;
-        if (i16Index > g_psKeyboard[i16ToRow].i16NumKeys)
-        {
+        if (i16Index > g_psKeyboard[i16ToRow].i16NumKeys) {
             i16Index = g_psKeyboard[i16ToRow].i16NumKeys - 1;
         }
 
@@ -905,8 +885,7 @@ int16_t VirtualKeyboardFindClosestKey(int16_t i16FromCol, int16_t i16FromRow,
     // Check for cases where the supplied x coordinate is at or to the left of
     // any key in this row.  In this case, we always pass back index 0.
     //
-    if (i16X <= g_psKeyboard[i16ToRow].i16LeftOffset)
-    {
+    if (i16X <= g_psKeyboard[i16ToRow].i16LeftOffset) {
         return (0);
     }
 
@@ -915,22 +894,19 @@ int16_t VirtualKeyboardFindClosestKey(int16_t i16FromCol, int16_t i16FromRow,
     // which particular key it relates to.  The position is associated with a
     // key if it falls within the width of the key and the following space.
     //
-    if (g_psKeyboard[i16ToRow].bSpecial)
-    {
+    if (g_psKeyboard[i16ToRow].bSpecial) {
         //
         // This is a special key so the keys on this row can all have different
         // widths.  We walk through them looking for a hit.
         //
         for (i16Index = 1; i16Index < g_psKeyboard[i16ToRow].i16NumKeys;
-             i16Index++)
-        {
+                i16Index++) {
             //
             // If the passed coordinate is less than the leftmost position of
             // this key, we've overshot.  Drop out since we've found our
             // answer.
             //
-            if (i16X < GetVirtualKeyX(i16Index, i16ToRow))
-            {
+            if (i16X < GetVirtualKeyX(i16Index, i16ToRow)) {
                 break;
             }
         }
@@ -943,9 +919,7 @@ int16_t VirtualKeyboardFindClosestKey(int16_t i16FromCol, int16_t i16FromRow,
         // row.
         //
         return (i16Index - 1);
-    }
-    else
-    {
+    } else {
         //
         // This is an alphanumeric row so we determine the index based on
         // the fixed character cell width.
@@ -957,8 +931,7 @@ int16_t VirtualKeyboardFindClosestKey(int16_t i16FromCol, int16_t i16FromRow,
         // If we calculated an index higher than the number of keys on the
         // row, return the largest index supported.
         //
-        if (i16Index >= g_psKeyboard[i16ToRow].i16NumKeys)
-        {
+        if (i16Index >= g_psKeyboard[i16ToRow].i16NumKeys) {
             i16Index = g_psKeyboard[i16ToRow].i16NumKeys - 1;
         }
     }
@@ -1015,14 +988,11 @@ void DrawKey(int16_t i16Col, int16_t i16Row, bool bFocus, bool bPressed,
     //
     i16X = GetVirtualKeyX(i16Col, i16Row);
     i16Y = KEYBOARD_TOP + (i16Row * KEYBOARD_CELL_HEIGHT);
-    if (g_psKeyboard[i16Row].bSpecial)
-    {
+    if (g_psKeyboard[i16Row].bSpecial) {
         psSpecial = (tSpecialKey *)g_psKeyboard[i16Row].pvKeys;
         i16Width = psSpecial[i16Col].i16Width;
         pcLabel = (char *)psSpecial[i16Col].pcLabel;
-    }
-    else
-    {
+    } else {
         i16Width = KEYBOARD_KEY_WIDTH;
 
         psAlpha = (tAlphaKeys *)g_psKeyboard[i16Row].pvKeys;
@@ -1054,16 +1024,13 @@ void DrawKey(int16_t i16Col, int16_t i16Row, bool bFocus, bool bPressed,
     // Pick the relevant highlight and shadow colors depending upon the button
     // state.
     //
-    if (!bBright)
-    {
+    if (!bBright) {
         //
         // The key is not bright so just pick the normal (grey)
         //
         ui32Highlight = bPressed ? SHADOW_COLOR : HIGHLIGHT_COLOR;
         ui32Shadow = bPressed ? HIGHLIGHT_COLOR : SHADOW_COLOR;
-    }
-    else
-    {
+    } else {
         ui32Highlight = bPressed ? SHADOW_BRIGHT_COLOR :
                         HIGHLIGHT_BRIGHT_COLOR;
         ui32Shadow = bPressed ? HIGHLIGHT_BRIGHT_COLOR : SHADOW_BRIGHT_COLOR;
@@ -1072,13 +1039,12 @@ void DrawKey(int16_t i16Col, int16_t i16Row, bool bFocus, bool bPressed,
     //
     // Are we drawing the whole key or merely updating the label?
     //
-    if (bBorder)
-    {
+    if (bBorder) {
         //
         // Draw the focus border in the relevant color.
         //
         GrContextForegroundSet(&g_sContext, bFocus ? FOCUS_COLOR
-                        : BACKGROUND_COLOR);
+                               : BACKGROUND_COLOR);
         GrRectDraw(&g_sContext, &sFocusBorder);
 
         //
@@ -1089,9 +1055,9 @@ void DrawKey(int16_t i16Col, int16_t i16Row, bool bFocus, bool bPressed,
         GrLineDrawV(&g_sContext, i16X, i16Y, i16Y + KEYBOARD_KEY_HEIGHT - 1);
         GrContextForegroundSet(&g_sContext, ui32Shadow);
         GrLineDrawH(&g_sContext, i16X + 1, i16X + i16Width - 1, i16Y
-                        + KEYBOARD_KEY_HEIGHT - 1);
+                    + KEYBOARD_KEY_HEIGHT - 1);
         GrLineDrawV(&g_sContext, i16X + i16Width - 1, i16Y + 1, i16Y
-                        + KEYBOARD_KEY_HEIGHT - 1);
+                    + KEYBOARD_KEY_HEIGHT - 1);
     }
 
     //
@@ -1110,9 +1076,9 @@ void DrawKey(int16_t i16Col, int16_t i16Row, bool bFocus, bool bPressed,
                            KEY_COLOR);
     GrContextClipRegionSet(&g_sContext, &sRectOutline);
     GrStringDrawCentered(&g_sContext, pcLabel, -1, (bPressed ? 1 : 0)
-                    + ((sRectOutline.i16XMax + sRectOutline.i16XMin) / 2),
-                          (bPressed ? 1 : 0) + ((sRectOutline.i16YMax
-                                         + sRectOutline.i16YMin) / 2), true);
+                         + ((sRectOutline.i16XMax + sRectOutline.i16XMin) / 2),
+                         (bPressed ? 1 : 0) + ((sRectOutline.i16YMax
+                                 + sRectOutline.i16YMin) / 2), true);
 
     //
     // Revert to the previous clipping region.
@@ -1172,16 +1138,13 @@ void DrawVirtualKey(int16_t i16Col, int16_t i16Row, bool bFocus,
     // Is this a special row and, if so, does the current key have a redraw
     // handler installed?
     //
-    if (g_psKeyboard[i16Row].bSpecial && psSpecial[i16Col].pfnRedrawHandler)
-    {
+    if (g_psKeyboard[i16Row].bSpecial && psSpecial[i16Col].pfnRedrawHandler) {
         //
         // Yes - call the special handler for this key.
         //
         psSpecial[i16Col].pfnRedrawHandler(i16Col, i16Row, bFocus, bPressed,
                                            bBorder);
-    }
-    else
-    {
+    } else {
         //
         // The key has no redraw handler so just treat it as a normal
         // key.
@@ -1217,13 +1180,11 @@ void DrawVirtualKeyboard(bool bBorder)
     //
     // Loop through each row, drawing each to the display
     //
-    for (i16Row = 0; i16Row < NUM_KEYBOARD_ROWS; i16Row++)
-    {
+    for (i16Row = 0; i16Row < NUM_KEYBOARD_ROWS; i16Row++) {
         //
         // Loop through each key on this row of the keyboard.
         //
-        for (i16Col = 0; i16Col < g_psKeyboard[i16Row].i16NumKeys; i16Col++)
-        {
+        for (i16Col = 0; i16Col < g_psKeyboard[i16Row].i16NumKeys; i16Col++) {
             //
             // Draw a single key.
             //
@@ -1257,44 +1218,34 @@ void KeyboardLEDsChanged(void)
     // Update the state to ensure that the communicated CAPSLOCK state is
     // incorporated.
     //
-    switch (g_eVirtualKeyState)
-    {
+    switch (g_eVirtualKeyState) {
         //
         // Are we in an unshifted state?
         //
         case KEY_STATE_NORMAL:
-        case KEY_STATE_CAPS:
-        {
-            if (bCapsOn)
-            {
+        case KEY_STATE_CAPS: {
+            if (bCapsOn) {
                 g_eVirtualKeyState = KEY_STATE_CAPS;
-            }
-            else
-            {
+            } else {
                 g_eVirtualKeyState = KEY_STATE_NORMAL;
             }
             break;
         }
 
-            //
-            // Are we in a shifted state?
-            //
+        //
+        // Are we in a shifted state?
+        //
         case KEY_STATE_SHIFT:
-        case KEY_STATE_BOTH:
-        {
-            if (bCapsOn)
-            {
+        case KEY_STATE_BOTH: {
+            if (bCapsOn) {
                 g_eVirtualKeyState = KEY_STATE_BOTH;
-            }
-            else
-            {
+            } else {
                 g_eVirtualKeyState = KEY_STATE_SHIFT;
             }
             break;
         }
 
-        default:
-        {
+        default: {
             //
             // Do nothing.  This default case merely prevents a compiler
             // warning related to the NUM_KEY_STATES enum member not having
@@ -1313,7 +1264,7 @@ void KeyboardLEDsChanged(void)
     // Set the CAPSLOCK LED appropriately.
     //
     ROM_GPIOPinWrite(CAPSLOCK_GPIO_BASE, CAPSLOCK_GPIO_PIN,
-    bCapsOn ? CAPSLOCK_ACTIVE : CAPSLOCK_INACTIVE);
+                     bCapsOn ? CAPSLOCK_ACTIVE : CAPSLOCK_INACTIVE);
 }
 
 //***************************************************************************
@@ -1352,9 +1303,9 @@ CapsLockHandler(int16_t i16Col, int16_t i16Row, bool bPress)
     //
     g_eKeyboardState = STATE_SENDING;
     ui32Retcode = USBDHIDKeyboardKeyStateChange((void *)&g_sKeyboardDevice,
-                                                g_ui8Modifiers,
-                                                HID_KEYB_USAGE_CAPSLOCK,
-                                                bPress);
+                  g_ui8Modifiers,
+                  HID_KEYB_USAGE_CAPSLOCK,
+                  bPress);
 
     return (ui32Retcode);
 }
@@ -1383,8 +1334,7 @@ CtrlHandler(int16_t i16Col, int16_t i16Row, bool bPress)
     //
     // Ignore key release messages.
     //
-    if(bPress)
-    {
+    if(bPress) {
         //
         // Toggle the modifier bit for the left control key.
         //
@@ -1397,12 +1347,10 @@ CtrlHandler(int16_t i16Col, int16_t i16Row, bool bPress)
         //
         g_eKeyboardState = STATE_SENDING;
         ui32Retcode = USBDHIDKeyboardKeyStateChange((void *)&g_sKeyboardDevice,
-                                                    g_ui8Modifiers,
-                                                    HID_KEYB_USAGE_RESERVED,
-                                                    true);
-    }
-    else
-    {
+                      g_ui8Modifiers,
+                      HID_KEYB_USAGE_RESERVED,
+                      true);
+    } else {
         //
         // We are ignoring key release but tell the caller that all is well.
         //
@@ -1442,8 +1390,7 @@ AltHandler(int16_t i16Col, int16_t i16Row, bool bPress)
     //
     // Ignore key release messages.
     //
-    if(bPress)
-    {
+    if(bPress) {
         //
         // Toggle the modifier bit for the left ALT key.
         //
@@ -1456,12 +1403,10 @@ AltHandler(int16_t i16Col, int16_t i16Row, bool bPress)
         //
         g_eKeyboardState = STATE_SENDING;
         ui32Retcode = USBDHIDKeyboardKeyStateChange((void *)&g_sKeyboardDevice,
-                                                    g_ui8Modifiers,
-                                                    HID_KEYB_USAGE_RESERVED,
-                                                    true);
-    }
-    else
-    {
+                      g_ui8Modifiers,
+                      HID_KEYB_USAGE_RESERVED,
+                      true);
+    } else {
         //
         // We are ignoring key release but tell the caller that all is well.
         //
@@ -1501,8 +1446,7 @@ GUIHandler(int16_t i16Col, int16_t i16Row, bool bPress)
     //
     // Ignore key release messages.
     //
-    if(bPress)
-    {
+    if(bPress) {
         //
         // Toggle the modifier bit for the left GUI key.
         //
@@ -1515,12 +1459,10 @@ GUIHandler(int16_t i16Col, int16_t i16Row, bool bPress)
         //
         g_eKeyboardState = STATE_SENDING;
         ui32Retcode = USBDHIDKeyboardKeyStateChange((void *)&g_sKeyboardDevice,
-                                                    g_ui8Modifiers,
-                                                    HID_KEYB_USAGE_RESERVED,
-                                                    true);
-    }
-    else
-    {
+                      g_ui8Modifiers,
+                      HID_KEYB_USAGE_RESERVED,
+                      true);
+    } else {
         //
         // We are ignoring key release but tell the caller that all is well.
         //
@@ -1557,43 +1499,36 @@ ShiftLockHandler(int16_t i16Col, int16_t i16Row, bool bPress)
     //
     // We ignore key release for the shift lock.
     //
-    if(bPress)
-    {
+    if(bPress) {
         //
         // Set the new state by toggling the shift component.
         //
-        switch(g_eVirtualKeyState)
-        {
-            case KEY_STATE_NORMAL:
-            {
+        switch(g_eVirtualKeyState) {
+            case KEY_STATE_NORMAL: {
                 g_eVirtualKeyState = KEY_STATE_SHIFT;
                 g_ui8Modifiers |= HID_KEYB_LEFT_SHIFT;
                 break;
             }
 
-            case KEY_STATE_SHIFT:
-            {
+            case KEY_STATE_SHIFT: {
                 g_eVirtualKeyState = KEY_STATE_NORMAL;
                 g_ui8Modifiers &= ~HID_KEYB_LEFT_SHIFT;
                 break;
             }
 
-            case KEY_STATE_CAPS:
-            {
+            case KEY_STATE_CAPS: {
                 g_eVirtualKeyState = KEY_STATE_BOTH;
                 g_ui8Modifiers |= HID_KEYB_LEFT_SHIFT;
                 break;
             }
 
-            case KEY_STATE_BOTH:
-            {
+            case KEY_STATE_BOTH: {
                 g_eVirtualKeyState = KEY_STATE_CAPS;
                 g_ui8Modifiers &= ~HID_KEYB_LEFT_SHIFT;
                 break;
             }
 
-            default:
-            {
+            default: {
                 //
                 // Do nothing.  This default case merely prevents a compiler
                 // warning related to the NUM_KEY_STATES enum member not having
@@ -1711,7 +1646,7 @@ GUIRedrawHandler(int16_t i16Col, int16_t i16Row, bool bFocus,
     // or in the bright color if it is.
     //
     DrawKey(i16Col, i16Row, bFocus, bPressed, bBorder,
-           (g_ui8Modifiers & HID_KEYB_LEFT_GUI) ? true : false);
+            (g_ui8Modifiers & HID_KEYB_LEFT_GUI) ? true : false);
 }
 
 //***************************************************************************
@@ -1750,9 +1685,9 @@ DefaultSpecialHandler(int16_t i16Col, int16_t i16Row, bool bPress)
     //
     g_eKeyboardState = STATE_SENDING;
     ui32Retcode = USBDHIDKeyboardKeyStateChange((void *)&g_sKeyboardDevice,
-                                                g_ui8Modifiers,
-                                                psKey[i16Col].cUsageCode,
-                                                bPress);
+                  g_ui8Modifiers,
+                  psKey[i16Col].cUsageCode,
+                  bPress);
 
     //
     // Redraw the key in the appropriate state.
@@ -1790,8 +1725,7 @@ VirtualKeyboardKeyPress(int16_t i16Col, int16_t i16Row, bool bPress)
     //
     // Are we dealing with a special key?
     //
-    if(g_psKeyboard[i16Row].bSpecial)
-    {
+    if(g_psKeyboard[i16Row].bSpecial) {
         //
         // Yes - call the handler for this special key.
         //
@@ -1800,9 +1734,7 @@ VirtualKeyboardKeyPress(int16_t i16Col, int16_t i16Row, bool bPress)
 
         DEBUG_PRINT("Key \"%s\" %s\n", psKey[i16Col].pcLabel,
                     (bPress ? "pressed" : "released"));
-    }
-    else
-    {
+    } else {
         //
         // Normal key - add or remove this key from the list of keys currently
         // pressed and pass the latest report back to the host.
@@ -1810,10 +1742,10 @@ VirtualKeyboardKeyPress(int16_t i16Col, int16_t i16Row, bool bPress)
         psAlphaKeys = (tAlphaKeys *)g_psKeyboard[i16Row].pvKeys;
         g_eKeyboardState = STATE_SENDING;
         ui32Retcode = USBDHIDKeyboardKeyStateChange(
-                                           (void *)&g_sKeyboardDevice,
-                                           g_ui8Modifiers,
-                                           psAlphaKeys->pcUsageCodes[i16Col],
-                                           bPress);
+                          (void *)&g_sKeyboardDevice,
+                          g_ui8Modifiers,
+                          psAlphaKeys->pcUsageCodes[i16Col],
+                          bPress);
         DEBUG_PRINT("Key \"%c\" %s\n",
                     psAlphaKeys->pcKey[g_eVirtualKeyState][i16Col],
                     (bPress ? "pressed" : "released"));
@@ -1827,8 +1759,7 @@ VirtualKeyboardKeyPress(int16_t i16Col, int16_t i16Row, bool bPress)
     //
     // Did we schedule the report for transmission?
     //
-    if(ui32Retcode == KEYB_SUCCESS)
-    {
+    if(ui32Retcode == KEYB_SUCCESS) {
         //
         // Wait for the host to acknowledge the transmission if all went well.
         //
@@ -1837,17 +1768,14 @@ VirtualKeyboardKeyPress(int16_t i16Col, int16_t i16Row, bool bPress)
         //
         // Did we time out waiting for the packet to be sent?
         //
-        if (!bSuccess)
-        {
+        if (!bSuccess) {
             //
             // Yes - assume the host disconnected and go back to
             // waiting for a new connection.
             //
             g_bConnected = 0;
         }
-    }
-    else
-    {
+    } else {
         //
         // An error was reported when trying to send the character.
         //
@@ -1887,23 +1815,19 @@ FindVirtualKey(int16_t i16X, int16_t i16Y, int16_t *psCol, int16_t *psRow)
     //
     // Determine which row the coordinates occur in.
     //
-    for(ui32Row = 0; ui32Row < NUM_KEYBOARD_ROWS; ui32Row++)
-    {
+    for(ui32Row = 0; ui32Row < NUM_KEYBOARD_ROWS; ui32Row++) {
         if((i16Y > (KEYBOARD_TOP + (ui32Row * KEYBOARD_CELL_HEIGHT))) &&
-           (i16Y < (KEYBOARD_TOP + (ui32Row * KEYBOARD_CELL_HEIGHT) +
-            KEYBOARD_KEY_HEIGHT)))
-        {
+                (i16Y < (KEYBOARD_TOP + (ui32Row * KEYBOARD_CELL_HEIGHT) +
+                         KEYBOARD_KEY_HEIGHT))) {
             //
             // If this is a standard alphanumeric row, we can determine the
             // mapping arithmetically since all the keys are the same width.
-            if(!g_psKeyboard[ui32Row].bSpecial)
-            {
+            if(!g_psKeyboard[ui32Row].bSpecial) {
                 //
                 // First check to make sure that the press is not to the left
                 // of the first key in the row.
                 //
-                if(i16X < g_psKeyboard[ui32Row].i16LeftOffset)
-                {
+                if(i16X < g_psKeyboard[ui32Row].i16LeftOffset) {
                     return(false);
                 }
 
@@ -1914,20 +1838,17 @@ FindVirtualKey(int16_t i16X, int16_t i16Y, int16_t *psCol, int16_t *psRow)
                 // couple of pixels, this is probably perfectly fine.
                 //
                 ui32Col = ((i16X - g_psKeyboard[ui32Row].i16LeftOffset) /
-                         KEYBOARD_CELL_WIDTH);
+                           KEYBOARD_CELL_WIDTH);
 
                 //
                 // If we calculated an out of range column, this means no key
                 // exists under the press position so return false to indicate
                 // this.
                 //
-                if(ui32Col >= g_psKeyboard[ui32Row].i16NumKeys)
-                {
+                if(ui32Col >= g_psKeyboard[ui32Row].i16NumKeys) {
                     return(false);
                 }
-            }
-            else
-            {
+            } else {
                 //
                 // The touch is somewhere within this row of keys.  How many keys
                 // are in this row?
@@ -1938,14 +1859,12 @@ FindVirtualKey(int16_t i16X, int16_t i16Y, int16_t *psCol, int16_t *psRow)
                 //
                 // Walk through the keys in this row.
                 //
-                for(ui32Col = 0; ui32Col < ui32NumKeys; ui32Col++)
-                {
+                for(ui32Col = 0; ui32Col < ui32NumKeys; ui32Col++) {
                     i16KeyX = GetVirtualKeyX(ui32Col, ui32Row);
                     psKey = (tSpecialKey *)(g_psKeyboard[ui32Row].pvKeys);
                     i16KeyWidth = psKey[ui32Col].i16Width + KEYBOARD_COL_SPACING;
 
-                    if((i16X >= i16KeyX) && (i16X < (i16KeyX + i16KeyWidth)))
-                    {
+                    if((i16X >= i16KeyX) && (i16X < (i16KeyX + i16KeyWidth))) {
                         //
                         // We found a matching key so drop out of the loop.
                         //
@@ -1957,8 +1876,7 @@ FindVirtualKey(int16_t i16X, int16_t i16Y, int16_t *psCol, int16_t *psRow)
                 // If we get here and ui32Col has reached ui32NumKeys, we didn't
                 // find a key under the press position.
                 //
-                if(ui32Col == ui32NumKeys)
-                {
+                if(ui32Col == ui32NumKeys) {
                     return(false);
                 }
             }
@@ -1970,8 +1888,7 @@ FindVirtualKey(int16_t i16X, int16_t i16Y, int16_t *psCol, int16_t *psRow)
     // If we end up here and the row number is equal to the number of rows in
     // the keyboard, the press was not in any keyboard row so return false.
     //
-    if(ui32Row == NUM_KEYBOARD_ROWS)
-    {
+    if(ui32Row == NUM_KEYBOARD_ROWS) {
         return(false);
     }
 
@@ -2095,8 +2012,7 @@ main(void)
     // then drop into the main keyboard handling section.  If the host
     // disconnects, we return to the top and wait for a new connection.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Fill all but the top 24 rows of the screen with black to erase the
         // keyboard.
@@ -2114,7 +2030,7 @@ main(void)
         GrContextFontSet(&g_sContext, g_psFontCmss20b);
         GrContextForegroundSet(&g_sContext, ClrWhite);
         GrStringDrawCentered(&g_sContext, " Waiting for host... ", -1,
-                        int32CenterX, 40, true);
+                             int32CenterX, 40, true);
         GrContextFontSet(&g_sContext, g_psFontFixed6x8);
         DEBUG_PRINT("Waiting for host connection...\n");
 
@@ -2123,8 +2039,7 @@ main(void)
         // for key presses and, if any occur while the bus is suspended, we
         // issue a remote wakeup request.
         //
-        while(!g_bConnected)
-        {
+        while(!g_bConnected) {
             //
             // Remember the current time.
             //
@@ -2133,8 +2048,7 @@ main(void)
             //
             // Has the suspend state changed since last time we checked?
             //
-            if(bLastSuspend != g_bSuspended)
-            {
+            if(bLastSuspend != g_bSuspended) {
                 //
                 // Yes - the state changed so update the display.
                 //
@@ -2142,7 +2056,7 @@ main(void)
                 GrContextFontSet(&g_sContext, g_psFontCmss20b);
                 GrStringDrawCentered(&g_sContext,
                                      (bLastSuspend ? "   Bus suspended...   ":
-                                                     " Waiting for host... "),
+                                      " Waiting for host... "),
                                      -1, int32CenterX, 40, true);
                 DEBUG_PRINT(bLastSuspend ? "Bus suspended.\n" :
                             "Bus resumed.\n");
@@ -2153,8 +2067,7 @@ main(void)
             // Wait for at least 1 system tick to have gone by before we poll
             // the buttons again.
             //
-            while(g_ui32SysTickCount == ui32LastTickCount)
-            {
+            while(g_ui32SysTickCount == ui32LastTickCount) {
                 //
                 // Hang around doing nothing.
                 //
@@ -2166,7 +2079,7 @@ main(void)
         //
         GrContextFontSet(&g_sContext, g_psFontCmss20b);
         GrStringDrawCentered(&g_sContext, " Host connected... ", -1,
-                        int32CenterX, 40, true);
+                             int32CenterX, 40, true);
         DEBUG_PRINT("Host connected.\n");
 
         //
@@ -2194,8 +2107,7 @@ main(void)
         // Keep transfering characters from the UART to the USB host for as
         // long as we are connected to the host.
         //
-        while(g_bConnected)
-        {
+        while(g_bConnected) {
             //
             // Remember the current time.
             //
@@ -2204,8 +2116,7 @@ main(void)
             //
             // Has the suspend state changed since last time we checked?
             //
-            if(bLastSuspend != g_bSuspended)
-            {
+            if(bLastSuspend != g_bSuspended) {
                 //
                 // Yes - the state changed so update the display.
                 //
@@ -2213,7 +2124,7 @@ main(void)
                 GrContextFontSet(&g_sContext, g_psFontCmss20b);
                 GrStringDrawCentered(&g_sContext,
                                      (bLastSuspend ? " Bus suspended...  ":
-                                                     " Host connected... "),
+                                      " Host connected... "),
                                      -1, int32CenterX, 40, true);
                 DEBUG_PRINT(bLastSuspend ? "Bus suspended.\n" :
                             "Bus resumed.\n");
@@ -2222,8 +2133,7 @@ main(void)
             //
             // Do we have any touchscreen input to process?
             //
-            if(g_ui32Command)
-            {
+            if(g_ui32Command) {
                 //
                 // Take a snapshot of the commands we were sent then clear
                 // the global command flags.
@@ -2234,13 +2144,12 @@ main(void)
                 //
                 // Is the bus currently suspended?
                 //
-                if(g_bSuspended)
-                {
+                if(g_bSuspended) {
                     //
                     // We are suspended so request a remote wakeup.
                     //
                     USBDHIDKeyboardRemoteWakeupRequest(
-                                                   (void *)&g_sKeyboardDevice);
+                        (void *)&g_sKeyboardDevice);
                 }
 
                 //
@@ -2248,21 +2157,18 @@ main(void)
                 // release commands in which case we ignore them.
                 //
                 if(!((ui32Processing & (COMMAND_PRESS | COMMAND_RELEASE)) ==
-                     (COMMAND_PRESS | COMMAND_RELEASE)))
-                {
+                        (COMMAND_PRESS | COMMAND_RELEASE))) {
                     //
                     // Was the touchscreen pressed?
                     //
-                    if(ui32Processing & COMMAND_PRESS)
-                    {
+                    if(ui32Processing & COMMAND_PRESS) {
                         //
                         // Map the touchscreen press to an actual key in the
                         // virtual keyboard.
                         //
                         bRetcode = FindVirtualKey(g_i16XPress, g_i16YPress,
-                                                 &g_i16FocusCol, &g_i16FocusRow);
-                        if(!bRetcode)
-                        {
+                                                  &g_i16FocusCol, &g_i16FocusRow);
+                        if(!bRetcode) {
                             //
                             // The press was outside any key on the virtual
                             // keyboard so just go back and wait for something
@@ -2282,22 +2188,18 @@ main(void)
                     // making sure we only send a message if we really saw a
                     // change of state.
                     //
-                    if(bKeyPressed)
-                    {
+                    if(bKeyPressed) {
                         bRetcode = VirtualKeyboardKeyPress(g_i16FocusCol, g_i16FocusRow,
-                                           ((ui32Processing == COMMAND_PRESS) ?
-                                           true : false));
-                    }
-                    else
-                    {
+                                                           ((ui32Processing == COMMAND_PRESS) ?
+                                                            true : false));
+                    } else {
                         bRetcode = true;
                     }
 
                     //
                     // Remember that no key is currently pressed.
                     //
-                    if(ui32Processing & COMMAND_RELEASE)
-                    {
+                    if(ui32Processing & COMMAND_RELEASE) {
                         bKeyPressed = false;
                     }
 
@@ -2306,8 +2208,7 @@ main(void)
                     // indicates that the host has disconnected so drop out of
                     // the loop and go back to looking for a new connection.
                     //
-                    if(!bRetcode)
-                    {
+                    if(!bRetcode) {
                         break;
                     }
                 }
@@ -2316,8 +2217,7 @@ main(void)
             //
             // Update the state if the host set the LEDs since we last looked.
             //
-            if(g_bLEDStateChanged)
-            {
+            if(g_bLEDStateChanged) {
                 KeyboardLEDsChanged();
             }
 
@@ -2325,8 +2225,7 @@ main(void)
             // Wait for at least 1 system tick to have gone by before we poll
             // the buttons again.
             //
-            while(g_ui32SysTickCount == ui32LastTickCount)
-            {
+            while(g_ui32SysTickCount == ui32LastTickCount) {
                 //
                 // Hang around doing nothing.
                 //

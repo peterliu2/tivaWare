@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -350,14 +350,11 @@ EPIDividerCSSet(uint32_t ui32Base, uint32_t ui32CS,
     //
     // Write the divider value to the register bitfield.
     //
-    if(ui32CS < 2)
-    {
+    if(ui32CS < 2) {
         ui32Reg = HWREG(ui32Base + EPI_O_BAUD) & ~(0xffff << (16 * ui32CS));
         ui32Reg |= ((ui32Divider & 0xffff) << (16 * ui32CS));
         HWREG(ui32Base + EPI_O_BAUD) = ui32Reg;
-    }
-    else
-    {
+    } else {
         ui32Reg = (HWREG(ui32Base + EPI_O_BAUD2) &
                    ~(0xffff << (16 * (ui32CS - 2))));
         ui32Reg |= ((ui32Divider & 0xffff) << (16 * (ui32CS - 2)));
@@ -800,12 +797,9 @@ EPIConfigHB8CSSet(uint32_t ui32Base, uint32_t ui32CS, uint32_t ui32Config)
     //
     // Determine the register offset based on the ui32CS provided.
     //
-    if(ui32CS < 2)
-    {
+    if(ui32CS < 2) {
         ui32Offset = EPI_O_HB8CFG + (ui32CS << 2);
-    }
-    else
-    {
+    } else {
         ui32Offset = EPI_O_HB8CFG3 + ((ui32CS - 2) << 2);
     }
 
@@ -887,12 +881,9 @@ EPIConfigHB16CSSet(uint32_t ui32Base, uint32_t ui32CS, uint32_t ui32Config)
     //
     // Determine the register offset based on the ui32CS provided.
     //
-    if(ui32CS < 2)
-    {
+    if(ui32CS < 2) {
         ui32Offset = EPI_O_HB16CFG + (ui32CS << 2);
-    }
-    else
-    {
+    } else {
         ui32Offset = EPI_O_HB16CFG3 + ((ui32CS - 2) << 2);
     }
 
@@ -1082,12 +1073,9 @@ EPIPSRAMConfigRegSet(uint32_t ui32Base, uint32_t ui32CS, uint32_t ui32CR)
     //
     // Determine the register offset based on the ui32CS provided.
     //
-    if(ui32CS < 2)
-    {
+    if(ui32CS < 2) {
         ui32Offset = EPI_O_HB16CFG + (ui32CS << 2);
-    }
-    else
-    {
+    } else {
         ui32Offset = EPI_O_HB16CFG3 + ((ui32CS - 2) << 2);
     }
 
@@ -1141,12 +1129,9 @@ EPIPSRAMConfigRegRead(uint32_t ui32Base, uint32_t ui32CS)
     //
     // Determine the register offset based on the ui32CS provided.
     //
-    if(ui32CS < 2)
-    {
+    if(ui32CS < 2) {
         ui32Offset = EPI_O_HB16CFG + (ui32CS << 2);
-    }
-    else
-    {
+    } else {
         ui32Offset = EPI_O_HB16CFG3 + ((ui32CS - 2) << 2);
     }
 
@@ -1199,20 +1184,16 @@ EPIPSRAMConfigRegGetNonBlocking(uint32_t ui32Base, uint32_t ui32CS,
     //
     // Determine the register offset based on the ui32CS provided.
     //
-    if(ui32CS < 2)
-    {
+    if(ui32CS < 2) {
         ui32Offset = EPI_O_HB16CFG + (ui32CS << 2);
-    }
-    else
-    {
+    } else {
         ui32Offset = EPI_O_HB16CFG3 + ((ui32CS - 2) << 2);
     }
 
     //
     // Verify PSRAM read enable is not asserted.
     //
-    if(HWREG(ui32Base + ui32Offset) & EPI_HB16CFG_RDCRE)
-    {
+    if(HWREG(ui32Base + ui32Offset) & EPI_HB16CFG_RDCRE) {
         return(false);
     }
 
@@ -1268,20 +1249,16 @@ EPIPSRAMConfigRegGet(uint32_t ui32Base, uint32_t ui32CS)
     //
     // Determine the register offset based on the ui32CS provided.
     //
-    if(ui32CS < 2)
-    {
+    if(ui32CS < 2) {
         ui32Offset = EPI_O_HB16CFG + (ui32CS << 2);
-    }
-    else
-    {
+    } else {
         ui32Offset = EPI_O_HB16CFG3 + ((ui32CS - 2) << 2);
     }
 
     //
     // Wait for PSRAM read enable to deassert if necessary.
     //
-    while(HWREG(ui32Base + ui32Offset) & EPI_HB16CFG_RDCRE)
-    {
+    while(HWREG(ui32Base + ui32Offset) & EPI_HB16CFG_RDCRE) {
     }
 
     //
@@ -1665,8 +1642,7 @@ EPINonBlockingReadGet32(uint32_t ui32Base, uint32_t ui32Count,
     // Read from the FIFO while there are any items to read and
     // the caller's specified count is not exceeded.
     //
-    while(HWREG(ui32Base + EPI_O_RFIFOCNT) && ui32Count--)
-    {
+    while(HWREG(ui32Base + EPI_O_RFIFOCNT) && ui32Count--) {
         //
         // Read from the FIFO and store in the caller supplied buffer.
         //
@@ -1720,8 +1696,7 @@ EPINonBlockingReadGet16(uint32_t ui32Base, uint32_t ui32Count,
     // Read from the FIFO while there are any items to read, and
     // the caller's specified count is not exceeded.
     //
-    while(HWREG(ui32Base + EPI_O_RFIFOCNT) && ui32Count--)
-    {
+    while(HWREG(ui32Base + EPI_O_RFIFOCNT) && ui32Count--) {
         //
         // Read from the FIFO and store in the caller-supplied buffer.
         //
@@ -1775,8 +1750,7 @@ EPINonBlockingReadGet8(uint32_t ui32Base, uint32_t ui32Count,
     // Read from the FIFO while there are any items to read, and
     // the caller's specified count is not exceeded.
     //
-    while(HWREG(ui32Base + EPI_O_RFIFOCNT) && ui32Count--)
-    {
+    while(HWREG(ui32Base + EPI_O_RFIFOCNT) && ui32Count--) {
         //
         // Read from the FIFO and store in the caller supplied buffer.
         //
@@ -1971,12 +1945,9 @@ EPIIntStatus(uint32_t ui32Base, bool bMasked)
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return(HWREG(ui32Base + EPI_O_MIS));
-    }
-    else
-    {
+    } else {
         return(HWREG(ui32Base + EPI_O_RIS));
     }
 }
@@ -2081,8 +2052,7 @@ _EPIIntNumberGet(uint32_t ui32Base)
     //
     ui32Int = 0;
 
-    if(CLASS_IS_TM4C129)
-    {
+    if(CLASS_IS_TM4C129) {
         ui32Int = INT_EPI0_TM4C129;
     }
 

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C123GXL Firmware Package.
 //
 //*****************************************************************************
@@ -153,8 +153,7 @@ void
 __error__(char *pcFilename, uint32_t ui32Line)
 {
     UARTprintf("Error at line %d of %s\n", ui32Line, pcFilename);
-    while(1)
-    {
+    while(1) {
     }
 }
 #endif
@@ -233,8 +232,7 @@ EchoNewDataToHost(tUSBDBulkDevice *psDevice, uint8_t *pui8Data,
     ui32ReadIndex = (uint32_t)(pui8Data - g_pui8USBRxBuffer);
     ui32WriteIndex = sTxRing.ui32WriteIndex;
 
-    while(ui32Loop)
-    {
+    while(ui32Loop) {
         //
         // Copy from the receive buffer to the transmit buffer converting
         // character case on the way.
@@ -244,35 +242,29 @@ EchoNewDataToHost(tUSBDBulkDevice *psDevice, uint8_t *pui8Data,
         // Is this a lower case character?
         //
         if((g_pui8USBRxBuffer[ui32ReadIndex] >= 'a') &&
-           (g_pui8USBRxBuffer[ui32ReadIndex] <= 'z'))
-        {
+                (g_pui8USBRxBuffer[ui32ReadIndex] <= 'z')) {
             //
             // Convert to upper case and write to the transmit buffer.
             //
             g_pui8USBTxBuffer[ui32WriteIndex] =
                 (g_pui8USBRxBuffer[ui32ReadIndex] - 'a') + 'A';
-        }
-        else
-        {
+        } else {
             //
             // Is this an upper case character?
             //
             if((g_pui8USBRxBuffer[ui32ReadIndex] >= 'A') &&
-               (g_pui8USBRxBuffer[ui32ReadIndex] <= 'Z'))
-            {
+                    (g_pui8USBRxBuffer[ui32ReadIndex] <= 'Z')) {
                 //
                 // Convert to lower case and write to the transmit buffer.
                 //
                 g_pui8USBTxBuffer[ui32WriteIndex] =
                     (g_pui8USBRxBuffer[ui32ReadIndex] - 'Z') + 'z';
-            }
-            else
-            {
+            } else {
                 //
                 // Copy the received character to the transmit buffer.
                 //
                 g_pui8USBTxBuffer[ui32WriteIndex] =
-                        g_pui8USBRxBuffer[ui32ReadIndex];
+                    g_pui8USBRxBuffer[ui32ReadIndex];
             }
         }
 
@@ -332,8 +324,7 @@ TxHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
     // We are not required to do anything in response to any transmit event
     // in this example. All we do is update our transmit counter.
     //
-    if(ui32Event == USB_EVENT_TX_COMPLETE)
-    {
+    if(ui32Event == USB_EVENT_TX_COMPLETE) {
         g_ui32TxCount += ui32MsgValue;
     }
 
@@ -364,18 +355,16 @@ TxHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
 //*****************************************************************************
 uint32_t
 RxHandler(void *pvCBData, uint32_t ui32Event,
-               uint32_t ui32MsgValue, void *pvMsgData)
+          uint32_t ui32MsgValue, void *pvMsgData)
 {
     //
     // Which event are we being sent?
     //
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // We are connected to a host and communication is now possible.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             g_bUSBConfigured = true;
             UARTprintf("Host connected.\n");
 
@@ -391,8 +380,7 @@ RxHandler(void *pvCBData, uint32_t ui32Event,
         //
         // The host has disconnected.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             g_bUSBConfigured = false;
             UARTprintf("Host disconnected.\n");
             break;
@@ -401,8 +389,7 @@ RxHandler(void *pvCBData, uint32_t ui32Event,
         //
         // A new packet has been received.
         //
-        case USB_EVENT_RX_AVAILABLE:
-        {
+        case USB_EVENT_RX_AVAILABLE: {
             tUSBDBulkDevice *psDevice;
 
             //
@@ -421,16 +408,14 @@ RxHandler(void *pvCBData, uint32_t ui32Event,
         // Ignore SUSPEND and RESUME for now.
         //
         case USB_EVENT_SUSPEND:
-        case USB_EVENT_RESUME:
-        {
+        case USB_EVENT_RESUME: {
             break;
         }
 
         //
         // Ignore all other events and return 0.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -572,18 +557,15 @@ main(void)
     //
     // Main application loop.
     //
-    while(1)
-    {
+    while(1) {
         //
         // See if any data has been transferred.
         //
-        if((ui32TxCount != g_ui32TxCount) || (ui32RxCount != g_ui32RxCount))
-        {
+        if((ui32TxCount != g_ui32TxCount) || (ui32RxCount != g_ui32RxCount)) {
             //
             // Has there been any transmit traffic since we last checked?
             //
-            if(ui32TxCount != g_ui32TxCount)
-            {
+            if(ui32TxCount != g_ui32TxCount) {
                 //
                 // Turn on the Green LED.
                 //
@@ -592,8 +574,7 @@ main(void)
                 //
                 // Delay for a bit.
                 //
-                for(ui32Loop = 0; ui32Loop < 150000; ui32Loop++)
-                {
+                for(ui32Loop = 0; ui32Loop < 150000; ui32Loop++) {
                 }
 
                 //
@@ -610,8 +591,7 @@ main(void)
             //
             // Has there been any receive traffic since we last checked?
             //
-            if(ui32RxCount != g_ui32RxCount)
-            {
+            if(ui32RxCount != g_ui32RxCount) {
                 //
                 // Turn on the Blue LED.
                 //
@@ -620,8 +600,7 @@ main(void)
                 //
                 // Delay for a bit.
                 //
-                for(ui32Loop = 0; ui32Loop < 150000; ui32Loop++)
-                {
+                for(ui32Loop = 0; ui32Loop < 150000; ui32Loop++) {
                 }
 
                 //

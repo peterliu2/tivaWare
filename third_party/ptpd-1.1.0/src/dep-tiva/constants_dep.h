@@ -6,15 +6,15 @@
 /* platform dependent */
 
 #ifdef IF_NAMESIZE
-    #define IFACE_NAME_LENGTH   IF_NAMESIZE
+#define IFACE_NAME_LENGTH   IF_NAMESIZE
 #else
-    #define IFACE_NAME_LENGTH   16
+#define IFACE_NAME_LENGTH   16
 #endif
 
 #ifdef INET_ADDRSTRLEN
-    #define NET_ADDRESS_LENGTH  INET_ADDRSTRLEN
+#define NET_ADDRESS_LENGTH  INET_ADDRSTRLEN
 #else
-    #define NET_ADDRESS_LENGTH  16
+#define NET_ADDRESS_LENGTH  16
 #endif
 
 #define IFCONF_LENGTH 10

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -78,8 +78,7 @@ tDMAControlTable g_psDMAControlTable[64] __attribute__((aligned(1024)));
 // Random data for use with the test vectors.
 //
 //*****************************************************************************
-uint32_t g_pui32RandomData[] =
-{
+uint32_t g_pui32RandomData[] = {
     0x8a5f1b22, 0xcb935d29, 0xcc1ac092, 0x5dad8c9e, 0x6a83b39f, 0x8607dc60,
     0xda0ba4d2, 0xf49b0fa2, 0xaf35d524, 0xffa8001d, 0xbcc931e8, 0x4a2c99ef,
     0x7fa297ab, 0xab943bae, 0x07c61cc4, 0x47c8627d
@@ -90,8 +89,7 @@ uint32_t g_pui32RandomData[] =
 // Test Vector Structure
 //
 //*****************************************************************************
-typedef struct CRCTestVectorStruct
-{
+typedef struct CRCTestVectorStruct {
     uint32_t ui32TestNumber;
     uint32_t ui32Seed;
     uint32_t ui32Result;
@@ -103,8 +101,7 @@ tCRCTestVector;
 // CRC-32 Test Vectors
 //
 //*****************************************************************************
-tCRCTestVector g_psCRC4C11DB7TestVectors[3] =
-{
+tCRCTestVector g_psCRC4C11DB7TestVectors[3] = {
     {
         0,
         0x00000000,
@@ -149,8 +146,7 @@ CRC32DataProcess(uint32_t *pui32Data, uint32_t ui32Length, uint32_t ui32Seed,
     // Perform a soft reset.
     //
     ROM_SysCtlPeripheralReset(SYSCTL_PERIPH_CCM0);
-    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0))
-    {
+    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0)) {
     }
 
     //
@@ -167,8 +163,7 @@ CRC32DataProcess(uint32_t *pui32Data, uint32_t ui32Length, uint32_t ui32Seed,
     //
     // Generate CRC using uDMA to copy data.
     //
-    if(bUseDMA)
-    {
+    if(bUseDMA) {
         //
         // Setup the DMA module to copy data in.
         //
@@ -197,8 +192,7 @@ CRC32DataProcess(uint32_t *pui32Data, uint32_t ui32Length, uint32_t ui32Seed,
         //
         // Wait for the transfer to finish.
         //
-        while(ROM_uDMAChannelIsEnabled(UDMA_CH30_SW))
-        {
+        while(ROM_uDMAChannelIsEnabled(UDMA_CH30_SW)) {
         }
 
         //
@@ -210,8 +204,7 @@ CRC32DataProcess(uint32_t *pui32Data, uint32_t ui32Length, uint32_t ui32Seed,
     //
     // Generate CRC using CPU to copy data.
     //
-    else
-    {
+    else {
         ui32Result = ROM_CRCDataProcess(CCM0_BASE, g_pui32RandomData,
                                         ui32Length, false);
     }
@@ -256,8 +249,7 @@ CRCInit(void)
     //
     // Check that the CCM peripheral is present.
     //
-    if(!ROM_SysCtlPeripheralPresent(SYSCTL_PERIPH_CCM0))
-    {
+    if(!ROM_SysCtlPeripheralPresent(SYSCTL_PERIPH_CCM0)) {
         UARTprintf("No CCM peripheral found!\n");
 
         //
@@ -275,15 +267,13 @@ CRCInit(void)
     // Wait for the peripheral to be ready.
     //
     ui32Loop = 0;
-    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0))
-    {
+    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0)) {
         //
         // Increment our poll counter.
         //
         ui32Loop++;
 
-        if(ui32Loop > CCM_LOOP_TIMEOUT)
-        {
+        if(ui32Loop > CCM_LOOP_TIMEOUT) {
             //
             // Timed out, notify and spin.
             //
@@ -305,15 +295,13 @@ CRCInit(void)
     // Wait for the peripheral to be ready again.
     //
     ui32Loop = 0;
-    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0))
-    {
+    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0)) {
         //
         // Increment our poll counter.
         //
         ui32Loop++;
 
-        if(ui32Loop > CCM_LOOP_TIMEOUT)
-        {
+        if(ui32Loop > CCM_LOOP_TIMEOUT) {
             //
             // Timed out, spin.
             //
@@ -410,8 +398,7 @@ main(void)
     //
     // Initialize the CRC and CCM modules.
     //
-    if(!CRCInit())
-    {
+    if(!CRCInit()) {
         UARTprintf("Initialization of the CRC  module failed.\n");
         ui32Errors |= 0x00000001;
     }
@@ -420,9 +407,8 @@ main(void)
     // Run through the test vectors.
     //
     for(ui32Idx = 0;
-        ui32Idx < (sizeof(g_psCRC4C11DB7TestVectors) / sizeof(tCRCTestVector));
-        ui32Idx++)
-    {
+            ui32Idx < (sizeof(g_psCRC4C11DB7TestVectors) / sizeof(tCRCTestVector));
+            ui32Idx++) {
         UARTprintf("Starting vector #%d\n", ui32Idx);
 
         //
@@ -435,8 +421,7 @@ main(void)
                              g_psCRC4C11DB7TestVectors[ui32Idx].ui32Seed,
                              false);
 
-        if(ui32Result != g_psCRC4C11DB7TestVectors[ui32Idx].ui32Result)
-        {
+        if(ui32Result != g_psCRC4C11DB7TestVectors[ui32Idx].ui32Result) {
             UARTprintf("CRC result mismatch - Exp: 0x%08x, Act: 0x%08x\n",
                        g_psCRC4C11DB7TestVectors[ui32Idx].ui32Result,
                        ui32Result);
@@ -452,8 +437,7 @@ main(void)
                              g_psCRC4C11DB7TestVectors[ui32Idx].ui32Seed,
                              true);
 
-        if(ui32Result != g_psCRC4C11DB7TestVectors[ui32Idx].ui32Result)
-        {
+        if(ui32Result != g_psCRC4C11DB7TestVectors[ui32Idx].ui32Result) {
             UARTprintf("CRC result mismatch - Exp: 0x%08x, Act: 0x%08x\n",
                        g_psCRC4C11DB7TestVectors[ui32Idx].ui32Result,
                        ui32Result);
@@ -463,20 +447,16 @@ main(void)
     //
     // Finished.
     //
-    if(ui32Errors)
-    {
+    if(ui32Errors) {
         UARTprintf("Demo failed with error code 0x%x.\n", ui32Errors);
         GrStringDrawCentered(&sContext, "Demo failed.", -1,
                              GrContextDpyWidthGet(&sContext) / 2, 180, false);
-    }
-    else
-    {
+    } else {
         UARTprintf("Demo completed successfully.\n");
         GrStringDrawCentered(&sContext, "Demo passed.", -1,
                              GrContextDpyWidthGet(&sContext) / 2, 180, false);
     }
 
-    while(1)
-    {
+    while(1) {
     }
 }

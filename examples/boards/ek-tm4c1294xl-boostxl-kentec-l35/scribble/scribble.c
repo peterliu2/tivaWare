@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -57,8 +57,7 @@
 // handler function to the main loop for processing.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint32_t ui32Msg;
     int32_t i32X;
     int32_t i32Y;
@@ -105,8 +104,7 @@ uint32_t g_ui32SysClock;
 // The colors that are used to draw on the screen.
 //
 //*****************************************************************************
-static const uint32_t g_pui32Colors[] =
-{
+static const uint32_t g_pui32Colors[] = {
     ClrWhite,
     ClrYellow,
     ClrMagenta,
@@ -160,8 +158,7 @@ TSHandler(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
     //
     // Make sure the queue isn't full. If it is, we just ignore this message.
     //
-    if(!RingBufFull(&g_sMsgQueue))
-    {
+    if(!RingBufFull(&g_sMsgQueue)) {
         RingBufWrite(&g_sMsgQueue, (uint8_t *)&sMsg, sizeof(tScribbleMessage));
     }
 
@@ -184,13 +181,11 @@ TSMainHandler(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
     //
     // See which event is being sent from the touch screen driver.
     //
-    switch(ui32Message)
-    {
+    switch(ui32Message) {
         //
         // The pen has just been placed down.
         //
-        case WIDGET_MSG_PTR_DOWN:
-        {
+        case WIDGET_MSG_PTR_DOWN: {
             //
             // Erase the drawing area.
             //
@@ -226,8 +221,7 @@ TSMainHandler(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
         //
         // Then pen has moved.
         //
-        case WIDGET_MSG_PTR_MOVE:
-        {
+        case WIDGET_MSG_PTR_MOVE: {
             //
             // Draw a line from the previous position to the current position.
             //
@@ -253,8 +247,7 @@ TSMainHandler(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
         //
         // The pen has just been picked up.
         //
-        case WIDGET_MSG_PTR_UP:
-        {
+        case WIDGET_MSG_PTR_UP: {
             //
             // Draw a line from the previous position to the current position.
             //
@@ -270,8 +263,7 @@ TSMainHandler(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
             //
             g_ui32ColorIdx++;
             if(g_ui32ColorIdx ==
-               (sizeof(g_pui32Colors) / sizeof(g_pui32Colors[0])))
-            {
+                    (sizeof(g_pui32Colors) / sizeof(g_pui32Colors[0]))) {
                 g_ui32ColorIdx = 0;
             }
 
@@ -305,8 +297,7 @@ ProcessTouchMessages(void)
     //
     // Loop while there are more messages to process.
     //
-    while(!RingBufEmpty(&g_sMsgQueue))
-    {
+    while(!RingBufEmpty(&g_sMsgQueue)) {
         //
         // Get the next message.
         //
@@ -331,9 +322,9 @@ main(void)
     // Run from the PLL at 120 MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN |
-                                             SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN |
+                                            SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Configure the device pins for this board.
@@ -398,8 +389,7 @@ main(void)
     // Loop forever.  All the drawing is done in the touch screen event
     // handler.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Process any new touchscreen messages.
         //

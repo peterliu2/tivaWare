@@ -7,20 +7,20 @@
 //
 // Copyright (c) 2014-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -183,119 +183,115 @@ uint8_t LLCP_addTLV(tLLCPParamaeter eLLCPparam, uint8_t * pui8TLVBufferPtr)
 {
     uint8_t ui8PacketLength = 0;
 
-    switch(eLLCPparam)
-    {
-    case LLCP_VERSION:
-        // Type
-        pui8TLVBufferPtr[0] = (uint8_t) LLCP_VERSION;
-        // Length
-        pui8TLVBufferPtr[1] = 0x01;
-        // Value
-        pui8TLVBufferPtr[2] = 0x11;     // Version 1.1
-        break;
-    case LLCP_MIUX:
-        // Type
-        pui8TLVBufferPtr[0] = (uint8_t) LLCP_MIUX;
-        // Length
-        pui8TLVBufferPtr[1] = 0x02;
-        // Value
-        // 128 + MIUX (120) = MIU (248)
-        pui8TLVBufferPtr[2] = (LLCP_MIUX_SIZE >> 8) & 0xFF;     // MIUX 15:8
-        pui8TLVBufferPtr[3] = (uint8_t) LLCP_MIUX_SIZE;        // MIUX 7:0
-        break;
-    case LLCP_WKS:
-        // Type
-        pui8TLVBufferPtr[0] = (uint8_t) LLCP_WKS;
-        // Length
-        pui8TLVBufferPtr[1] = 0x02;
-        // Value
-        pui8TLVBufferPtr[2] = 0x00;
-        pui8TLVBufferPtr[3] = 0x03;
-        break;
-    case LLCP_LTO:
-        // Type
-        pui8TLVBufferPtr[0] = (uint8_t) LLCP_LTO;
-        // Length
-        pui8TLVBufferPtr[1] = 0x01;
-        // Value
-        pui8TLVBufferPtr[2] = 0x64;     // (100 (0x64) * 10 mS = 1000 mS timeout, Figure 22, LLP)
-        break;
-    case LLCP_RW:
-        // Type
-        pui8TLVBufferPtr[0] = (uint8_t) LLCP_RW;
-        // Length
-        pui8TLVBufferPtr[1] = 0x01;
-        // Value
-        // Section 5.6.2.2 LLP
-        // A receive window size of zero indicates that the local LLC will not
-        // accept I PDUs on that data link connection. A receive window size of
-        // one indicates that the local LLC will acknowledge every I PDU before
-        // accepting additional I PDUs.
-        //
-        pui8TLVBufferPtr[2] = 0x04;
-        break;
-    case LLCP_SN:
-        // Type
-        pui8TLVBufferPtr[0] = (uint8_t) LLCP_SN;
-        if(g_eCurrentServiceEnabled == NPP_SERVICE)
-        {
+    switch(eLLCPparam) {
+        case LLCP_VERSION:
+            // Type
+            pui8TLVBufferPtr[0] = (uint8_t) LLCP_VERSION;
             // Length
-            pui8TLVBufferPtr[1] = 0x0F;
+            pui8TLVBufferPtr[1] = 0x01;
             // Value
-            pui8TLVBufferPtr[2] = 'c';
-            pui8TLVBufferPtr[3] = 'o';
-            pui8TLVBufferPtr[4] = 'm';
-            pui8TLVBufferPtr[5] = '.';
-            pui8TLVBufferPtr[6] = 'a';
-            pui8TLVBufferPtr[7] = 'n';
-            pui8TLVBufferPtr[8] = 'd';
-            pui8TLVBufferPtr[9] = 'r';
-            pui8TLVBufferPtr[10] = 'o';
-            pui8TLVBufferPtr[11] = 'i';
-            pui8TLVBufferPtr[12] = 'd';
-            pui8TLVBufferPtr[13] = '.';
-            pui8TLVBufferPtr[14] = 'n';
-            pui8TLVBufferPtr[15] = 'p';
-            pui8TLVBufferPtr[16] = 'p';
-        }
-        else if(g_eCurrentServiceEnabled == SNEP_SERVICE)
-        {
+            pui8TLVBufferPtr[2] = 0x11;     // Version 1.1
+            break;
+        case LLCP_MIUX:
+            // Type
+            pui8TLVBufferPtr[0] = (uint8_t) LLCP_MIUX;
             // Length
-            pui8TLVBufferPtr[1] = 0x0F;
+            pui8TLVBufferPtr[1] = 0x02;
             // Value
-            pui8TLVBufferPtr[2] = 'u';
-            pui8TLVBufferPtr[3] = 'r';
-            pui8TLVBufferPtr[4] = 'n';
-            pui8TLVBufferPtr[5] = ':';
-            pui8TLVBufferPtr[6] = 'n';
-            pui8TLVBufferPtr[7] = 'f';
-            pui8TLVBufferPtr[8] = 'c';
-            pui8TLVBufferPtr[9] = ':';
-            pui8TLVBufferPtr[10] = 's';
-            pui8TLVBufferPtr[11] = 'n';
-            pui8TLVBufferPtr[12] = ':';
-            pui8TLVBufferPtr[13] = 's';
-            pui8TLVBufferPtr[14] = 'n';
-            pui8TLVBufferPtr[15] = 'e';
-            pui8TLVBufferPtr[16] = 'p';
+            // 128 + MIUX (120) = MIU (248)
+            pui8TLVBufferPtr[2] = (LLCP_MIUX_SIZE >> 8) & 0xFF;     // MIUX 15:8
+            pui8TLVBufferPtr[3] = (uint8_t) LLCP_MIUX_SIZE;        // MIUX 7:0
+            break;
+        case LLCP_WKS:
+            // Type
+            pui8TLVBufferPtr[0] = (uint8_t) LLCP_WKS;
+            // Length
+            pui8TLVBufferPtr[1] = 0x02;
+            // Value
+            pui8TLVBufferPtr[2] = 0x00;
+            pui8TLVBufferPtr[3] = 0x03;
+            break;
+        case LLCP_LTO:
+            // Type
+            pui8TLVBufferPtr[0] = (uint8_t) LLCP_LTO;
+            // Length
+            pui8TLVBufferPtr[1] = 0x01;
+            // Value
+            pui8TLVBufferPtr[2] = 0x64;     // (100 (0x64) * 10 mS = 1000 mS timeout, Figure 22, LLP)
+            break;
+        case LLCP_RW:
+            // Type
+            pui8TLVBufferPtr[0] = (uint8_t) LLCP_RW;
+            // Length
+            pui8TLVBufferPtr[1] = 0x01;
+            // Value
+            // Section 5.6.2.2 LLP
+            // A receive window size of zero indicates that the local LLC will not
+            // accept I PDUs on that data link connection. A receive window size of
+            // one indicates that the local LLC will acknowledge every I PDU before
+            // accepting additional I PDUs.
+            //
+            pui8TLVBufferPtr[2] = 0x04;
+            break;
+        case LLCP_SN:
+            // Type
+            pui8TLVBufferPtr[0] = (uint8_t) LLCP_SN;
+            if(g_eCurrentServiceEnabled == NPP_SERVICE) {
+                // Length
+                pui8TLVBufferPtr[1] = 0x0F;
+                // Value
+                pui8TLVBufferPtr[2] = 'c';
+                pui8TLVBufferPtr[3] = 'o';
+                pui8TLVBufferPtr[4] = 'm';
+                pui8TLVBufferPtr[5] = '.';
+                pui8TLVBufferPtr[6] = 'a';
+                pui8TLVBufferPtr[7] = 'n';
+                pui8TLVBufferPtr[8] = 'd';
+                pui8TLVBufferPtr[9] = 'r';
+                pui8TLVBufferPtr[10] = 'o';
+                pui8TLVBufferPtr[11] = 'i';
+                pui8TLVBufferPtr[12] = 'd';
+                pui8TLVBufferPtr[13] = '.';
+                pui8TLVBufferPtr[14] = 'n';
+                pui8TLVBufferPtr[15] = 'p';
+                pui8TLVBufferPtr[16] = 'p';
+            } else if(g_eCurrentServiceEnabled == SNEP_SERVICE) {
+                // Length
+                pui8TLVBufferPtr[1] = 0x0F;
+                // Value
+                pui8TLVBufferPtr[2] = 'u';
+                pui8TLVBufferPtr[3] = 'r';
+                pui8TLVBufferPtr[4] = 'n';
+                pui8TLVBufferPtr[5] = ':';
+                pui8TLVBufferPtr[6] = 'n';
+                pui8TLVBufferPtr[7] = 'f';
+                pui8TLVBufferPtr[8] = 'c';
+                pui8TLVBufferPtr[9] = ':';
+                pui8TLVBufferPtr[10] = 's';
+                pui8TLVBufferPtr[11] = 'n';
+                pui8TLVBufferPtr[12] = ':';
+                pui8TLVBufferPtr[13] = 's';
+                pui8TLVBufferPtr[14] = 'n';
+                pui8TLVBufferPtr[15] = 'e';
+                pui8TLVBufferPtr[16] = 'p';
 
-        }
-        break;
-    case LLCP_OPT:
-        // Type
-        pui8TLVBufferPtr[0] = (uint8_t) LLCP_OPT;
-        // Length
-        pui8TLVBufferPtr[1] = 0x01;
-        // Value
-        pui8TLVBufferPtr[2] = 0x03;     // (Class 3) (Table 7, LLP)
-        break;
-    case LLCP_SDREQ:
-        break;
-    case LLCP_SDRES:
-        break;
-    default:
-        pui8TLVBufferPtr[0] = LLCP_ERROR;
-        break;
+            }
+            break;
+        case LLCP_OPT:
+            // Type
+            pui8TLVBufferPtr[0] = (uint8_t) LLCP_OPT;
+            // Length
+            pui8TLVBufferPtr[1] = 0x01;
+            // Value
+            pui8TLVBufferPtr[2] = 0x03;     // (Class 3) (Table 7, LLP)
+            break;
+        case LLCP_SDREQ:
+            break;
+        case LLCP_SDRES:
+            break;
+        default:
+            pui8TLVBufferPtr[0] = LLCP_ERROR;
+            break;
     }
 
     if(pui8TLVBufferPtr[0] == LLCP_ERROR)
@@ -323,45 +319,41 @@ uint8_t LLCP_addTLV(tLLCPParamaeter eLLCPparam, uint8_t * pui8TLVBufferPtr)
 void LLCP_processTLV(uint8_t * pui8TLVBufferPtr)
 {
     uint16_t ui16Miu;
-    switch(pui8TLVBufferPtr[0])
-    {
-    case LLCP_VERSION:
-        break;
-    case LLCP_MIUX:
-        // MIU = 128 + MIUX
-        ui16Miu = (pui8TLVBufferPtr[2] << 8)+pui8TLVBufferPtr[3]+128;
-        // Check if the received MIU is less than 248, the modify the current MIU to it
-        if(ui16Miu < 248)
-        {
-            // Modify MIU to be less
-            g_ui8LLCPmiu = (uint8_t) ui16Miu;
+    switch(pui8TLVBufferPtr[0]) {
+        case LLCP_VERSION:
+            break;
+        case LLCP_MIUX:
+            // MIU = 128 + MIUX
+            ui16Miu = (pui8TLVBufferPtr[2] << 8)+pui8TLVBufferPtr[3]+128;
+            // Check if the received MIU is less than 248, the modify the current MIU to it
+            if(ui16Miu < 248) {
+                // Modify MIU to be less
+                g_ui8LLCPmiu = (uint8_t) ui16Miu;
 
-        }
-        else
-        {
-            // Maximum supported MIU is 248
-            g_ui8LLCPmiu = 248;
-        }
+            } else {
+                // Maximum supported MIU is 248
+                g_ui8LLCPmiu = 248;
+            }
 
-        SNEP_setMaxPayload(g_ui8LLCPmiu);
-        break;
-    case LLCP_WKS:
-        break;
-    case LLCP_LTO:
-        g_ui16LLCPlto = pui8TLVBufferPtr[2] * 10;
-        break;
-    case LLCP_RW:
-        break;
-    case LLCP_SN:
-        break;
-    case LLCP_OPT:
-        break;
-    case LLCP_SDREQ:
-        break;
-    case LLCP_SDRES:
-        break;
-    default:
-        break;
+            SNEP_setMaxPayload(g_ui8LLCPmiu);
+            break;
+        case LLCP_WKS:
+            break;
+        case LLCP_LTO:
+            g_ui16LLCPlto = pui8TLVBufferPtr[2] * 10;
+            break;
+        case LLCP_RW:
+            break;
+        case LLCP_SN:
+            break;
+        case LLCP_OPT:
+            break;
+        case LLCP_SDREQ:
+            break;
+        case LLCP_SDRES:
+            break;
+        default:
+            break;
     }
 }
 
@@ -385,91 +377,73 @@ uint8_t LLCP_stateMachine(uint8_t * pui8PduBufferPtr)
 {
     uint8_t ui8PacketLength=0;
 
-    switch(g_eNextPduQueue)
-    {
-        case LLCP_SYMM_PDU:
-        {
-                //UARTprintf("TX: SYMM\n");
+    switch(g_eNextPduQueue) {
+        case LLCP_SYMM_PDU: {
+            //UARTprintf("TX: SYMM\n");
             ui8PacketLength = LLCP_sendSYMM(pui8PduBufferPtr);
             break;
         }
-        case LLCP_PAX_PDU:
-        {
+        case LLCP_PAX_PDU: {
             break;
         }
-        case LLCP_AGF_PDU:
-        {
+        case LLCP_AGF_PDU: {
             break;
         }
-        case LLCP_UI_PDU:
-        {
+        case LLCP_UI_PDU: {
             break;
         }
-        case LLCP_CONNECT_PDU:
-        {
+        case LLCP_CONNECT_PDU: {
             //UARTprintf("TX: CONNECT\n");
             ui8PacketLength = LLCP_sendCONNECT(pui8PduBufferPtr);
             g_eNextPduQueue = LLCP_SYMM_PDU;
             break;
         }
-        case LLCP_DISC_PDU:
-        {
-            if(g_eCurrentServiceEnabled == HANDOVER_SERVICE)
-            {
+        case LLCP_DISC_PDU: {
+            if(g_eCurrentServiceEnabled == HANDOVER_SERVICE) {
                 g_eCurrentServiceEnabled = SNEP_SERVICE;
             }
             //UARTprintf("TX: DISC\n");
             ui8PacketLength = LLCP_sendDISC(pui8PduBufferPtr);
             break;
         }
-        case LLCP_CC_PDU:
-        {
+        case LLCP_CC_PDU: {
             //UARTprintf("TX: CC\n");
             ui8PacketLength = LLCP_sendCC(pui8PduBufferPtr);
             break;
         }
-        case LLCP_DM_PDU:
-        {
+        case LLCP_DM_PDU: {
             //UARTprintf("TX: DM\n");
             g_eLLCPConnectionStatus = LLCP_CONNECTION_IDLE;
             ui8PacketLength = LLCP_sendDM(pui8PduBufferPtr,g_eDMReason);
             g_eNextPduQueue = LLCP_SYMM_PDU;
             break;
         }
-        case LLCP_FRMR_PDU:
-        {
+        case LLCP_FRMR_PDU: {
             break;
         }
-        case LLCP_SNL_PDU:
-        {
+        case LLCP_SNL_PDU: {
             break;
         }
-        case LLCP_I_PDU:
-        {
+        case LLCP_I_PDU: {
             //UARTprintf("TX: I\n");
             ui8PacketLength = LLCP_sendI(pui8PduBufferPtr);
             break;
         }
-        case LLCP_RR_PDU:
-        {
+        case LLCP_RR_PDU: {
             //UARTprintf("TX: RR\n");
-            if(g_eCurrentServiceEnabled == HANDOVER_SERVICE)
-            {
+            if(g_eCurrentServiceEnabled == HANDOVER_SERVICE) {
                 g_eLLCPConnectionStatus = LLCP_CONNECTION_IDLE;
             }
             ui8PacketLength = LLCP_sendRR(pui8PduBufferPtr);
             break;
         }
-        case LLCP_RNR_PDU:
-        {
+        case LLCP_RNR_PDU: {
             break;
         }
-        case LLCP_RESERVED_PDU:
-        {
+        case LLCP_RESERVED_PDU: {
             break;
         }
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -501,80 +475,62 @@ tStatus LLCP_processReceivedData(uint8_t * pui8RxBuffer, uint8_t ui8PduLength)
     tSNEPConnectionStatus eSnepProtocolStatus;
 
     ePduType = (tLLCPPduPtype) ( ((pui8RxBuffer[0] & 0x03) << 2) +
-                                    ((pui8RxBuffer[1] & 0xC0) >> 6));
+                                 ((pui8RxBuffer[1] & 0xC0) >> 6));
 
-    switch(ePduType)
-    {
-    case LLCP_SYMM_PDU:
-        if(g_eCurrentServiceEnabled == SNEP_SERVICE)
-        {
-            eSnepProtocolStatus = SNEP_getProtocolStatus();
-            if((g_eNextPduQueue == LLCP_CONNECT_PDU) ||
-                (g_eNextPduQueue == LLCP_I_PDU))
-            {
-                //
-                // Do no modify the next PDU
-                //
-            }
-            else if(eSnepProtocolStatus == SNEP_CONNECTION_SEND_COMPLETE)
-            {
-                SNEP_setProtocolStatus(SNEP_CONNECTION_IDLE);
-                //UARTprintf("RX: SYMM ");
-                g_eNextPduQueue = LLCP_DISC_PDU;
-            }
-            else if((eSnepProtocolStatus ==
-                                    SNEP_CONNECTION_RECEIVED_FIRST_PACKET) ||
-                    (eSnepProtocolStatus ==
-                                    SNEP_CONNECTION_RECEIVE_COMPLETE) ||
-                    (eSnepProtocolStatus ==
-                                    SNEP_CONNECTION_EXCESS_SIZE) ||
-                    (eSnepProtocolStatus ==
-                                    SNEP_CONNECTION_SENDING_N_FRAGMENTS))
-            {
-                //UARTprintf("RX: SYMM ");
-                g_eNextPduQueue = LLCP_I_PDU;
-            }
-            else
-            {
-                if(g_eLLCPConnectionStatus != LLCP_CONNECTION_IDLE)
-                {
+    switch(ePduType) {
+        case LLCP_SYMM_PDU:
+            if(g_eCurrentServiceEnabled == SNEP_SERVICE) {
+                eSnepProtocolStatus = SNEP_getProtocolStatus();
+                if((g_eNextPduQueue == LLCP_CONNECT_PDU) ||
+                        (g_eNextPduQueue == LLCP_I_PDU)) {
+                    //
+                    // Do no modify the next PDU
+                    //
+                } else if(eSnepProtocolStatus == SNEP_CONNECTION_SEND_COMPLETE) {
+                    SNEP_setProtocolStatus(SNEP_CONNECTION_IDLE);
+                    //UARTprintf("RX: SYMM ");
+                    g_eNextPduQueue = LLCP_DISC_PDU;
+                } else if((eSnepProtocolStatus ==
+                           SNEP_CONNECTION_RECEIVED_FIRST_PACKET) ||
+                          (eSnepProtocolStatus ==
+                           SNEP_CONNECTION_RECEIVE_COMPLETE) ||
+                          (eSnepProtocolStatus ==
+                           SNEP_CONNECTION_EXCESS_SIZE) ||
+                          (eSnepProtocolStatus ==
+                           SNEP_CONNECTION_SENDING_N_FRAGMENTS)) {
+                    //UARTprintf("RX: SYMM ");
+                    g_eNextPduQueue = LLCP_I_PDU;
+                } else {
+                    if(g_eLLCPConnectionStatus != LLCP_CONNECTION_IDLE) {
+                        g_eNextPduQueue = LLCP_SYMM_PDU;
+                    }
+                }
+            } else if(g_eCurrentServiceEnabled == HANDOVER_SERVICE) {
+                if(g_eLLCPConnectionStatus == LLCP_CONNECTION_IDLE) {
+                    g_eNextPduQueue = LLCP_DISC_PDU;
+                } else
+                    g_eNextPduQueue = LLCP_SYMM_PDU;
+            } else {
+                if(g_eLLCPConnectionStatus != LLCP_CONNECTION_IDLE) {
+                    //UARTprintf("RX: SYMM ");
                     g_eNextPduQueue = LLCP_SYMM_PDU;
                 }
             }
-        }
-        else if(g_eCurrentServiceEnabled == HANDOVER_SERVICE)
-        {
-            if(g_eLLCPConnectionStatus == LLCP_CONNECTION_IDLE)
-            {
-                g_eNextPduQueue = LLCP_DISC_PDU;
-            }
-            else
-                g_eNextPduQueue = LLCP_SYMM_PDU;
-        }
-        else
-        {
-            if(g_eLLCPConnectionStatus != LLCP_CONNECTION_IDLE)
-            {
-                //UARTprintf("RX: SYMM ");
-                g_eNextPduQueue = LLCP_SYMM_PDU;
-            }
-        }
-        break;
-    case LLCP_PAX_PDU:
-        // Not Supported
-        break;
-    case LLCP_AGF_PDU:
-        // Not Supported
-        break;
-    case LLCP_UI_PDU:
-        // Not Supported
-        break;
-    case LLCP_CONNECT_PDU:
-        g_ui8dsapValue = (pui8RxBuffer[1] & 0x3F);
+            break;
+        case LLCP_PAX_PDU:
+            // Not Supported
+            break;
+        case LLCP_AGF_PDU:
+            // Not Supported
+            break;
+        case LLCP_UI_PDU:
+            // Not Supported
+            break;
+        case LLCP_CONNECT_PDU:
+            g_ui8dsapValue = (pui8RxBuffer[1] & 0x3F);
 
             // Check Service Name TLV
-            if(pui8RxBuffer[2] == 0x06)
-            {
+            if(pui8RxBuffer[2] == 0x06) {
                 if (pui8RxBuffer[3] == 0x0F && pui8RxBuffer[4] == 'u'
                         && pui8RxBuffer[5] == 'r' && pui8RxBuffer[6] == 'n'
                         && pui8RxBuffer[7] == ':' && pui8RxBuffer[8] == 'n'
@@ -582,52 +538,42 @@ tStatus LLCP_processReceivedData(uint8_t * pui8RxBuffer, uint8_t ui8PduLength)
                         && pui8RxBuffer[11] == ':' && pui8RxBuffer[12] == 's'
                         && pui8RxBuffer[13] == 'n' && pui8RxBuffer[14] == ':'
                         && pui8RxBuffer[15] == 's' && pui8RxBuffer[16] == 'n'
-                        && pui8RxBuffer[17] == 'e' && pui8RxBuffer[18] == 'p')
-                {
+                        && pui8RxBuffer[17] == 'e' && pui8RxBuffer[18] == 'p') {
                     // SNEP
                     g_eCurrentServiceEnabled = SNEP_SERVICE;
-                }
-                else if (pui8RxBuffer[3] == 0x0F && pui8RxBuffer[4] == 'c'
-                        && pui8RxBuffer[5] == 'o' && pui8RxBuffer[6] == 'm'
-                        && pui8RxBuffer[7] == '.' && pui8RxBuffer[8] == 'a'
-                        && pui8RxBuffer[9] == 'n' && pui8RxBuffer[10] == 'd'
-                        && pui8RxBuffer[11] == 'r' && pui8RxBuffer[12] == 'o'
-                        && pui8RxBuffer[13] == 'i' && pui8RxBuffer[14] == 'd'
-                        && pui8RxBuffer[15] == '.' && pui8RxBuffer[16] == 'n'
-                        && pui8RxBuffer[17] == 'p' && pui8RxBuffer[18] == 'p')
-                {
+                } else if (pui8RxBuffer[3] == 0x0F && pui8RxBuffer[4] == 'c'
+                           && pui8RxBuffer[5] == 'o' && pui8RxBuffer[6] == 'm'
+                           && pui8RxBuffer[7] == '.' && pui8RxBuffer[8] == 'a'
+                           && pui8RxBuffer[9] == 'n' && pui8RxBuffer[10] == 'd'
+                           && pui8RxBuffer[11] == 'r' && pui8RxBuffer[12] == 'o'
+                           && pui8RxBuffer[13] == 'i' && pui8RxBuffer[14] == 'd'
+                           && pui8RxBuffer[15] == '.' && pui8RxBuffer[16] == 'n'
+                           && pui8RxBuffer[17] == 'p' && pui8RxBuffer[18] == 'p') {
                     // NPP
                     g_eCurrentServiceEnabled = NPP_SERVICE;
-                }
-                else if (pui8RxBuffer[3] == 0x13 && pui8RxBuffer[4] == 'u'
-                        && pui8RxBuffer[5] == 'r' && pui8RxBuffer[6] == 'n'
-                        && pui8RxBuffer[7] == ':' && pui8RxBuffer[8] == 'n'
-                        && pui8RxBuffer[9] == 'f' && pui8RxBuffer[10] == 'c'
-                        && pui8RxBuffer[11] == ':' && pui8RxBuffer[12] == 's'
-                        && pui8RxBuffer[13] == 'n' && pui8RxBuffer[14] == ':'
-                        && pui8RxBuffer[15] == 'h' && pui8RxBuffer[16] == 'a'
-                        && pui8RxBuffer[17] == 'n' && pui8RxBuffer[18] == 'd'
-                        && pui8RxBuffer[19] == 'o' && pui8RxBuffer[20] == 'v'
-                        && pui8RxBuffer[21] == 'e' && pui8RxBuffer[22] == 'r')
-                {
+                } else if (pui8RxBuffer[3] == 0x13 && pui8RxBuffer[4] == 'u'
+                           && pui8RxBuffer[5] == 'r' && pui8RxBuffer[6] == 'n'
+                           && pui8RxBuffer[7] == ':' && pui8RxBuffer[8] == 'n'
+                           && pui8RxBuffer[9] == 'f' && pui8RxBuffer[10] == 'c'
+                           && pui8RxBuffer[11] == ':' && pui8RxBuffer[12] == 's'
+                           && pui8RxBuffer[13] == 'n' && pui8RxBuffer[14] == ':'
+                           && pui8RxBuffer[15] == 'h' && pui8RxBuffer[16] == 'a'
+                           && pui8RxBuffer[17] == 'n' && pui8RxBuffer[18] == 'd'
+                           && pui8RxBuffer[19] == 'o' && pui8RxBuffer[20] == 'v'
+                           && pui8RxBuffer[21] == 'e' && pui8RxBuffer[22] == 'r') {
                     // Handover
                     g_eCurrentServiceEnabled = HANDOVER_SERVICE;
-                }
-            else if(ui8PduLength == 2)
-            {
-                // SNEP
-                g_eCurrentServiceEnabled = SNEP_SERVICE;
-            }
-                else
-                {
-    //              // Debug Incoming Request
-    //              while(1);
+                } else if(ui8PduLength == 2) {
+                    // SNEP
+                    g_eCurrentServiceEnabled = SNEP_SERVICE;
+                } else {
+                    //              // Debug Incoming Request
+                    //              while(1);
                     // Ignore the command
                     g_eNextPduQueue = LLCP_SYMM_PDU;
                     break;
                 }
-            }
-            else
+            } else
                 g_eCurrentServiceEnabled = SNEP_SERVICE;
 
             g_eNextPduQueue = LLCP_CC_PDU;
@@ -658,16 +604,12 @@ tStatus LLCP_processReceivedData(uint8_t * pui8RxBuffer, uint8_t ui8PduLength)
             //UARTprintf("RX: I ");
             if(g_eCurrentServiceEnabled == SNEP_SERVICE)
                 SNEP_processReceivedData(&pui8RxBuffer[3],ui8PduLength-3);
-            else if(g_eCurrentServiceEnabled == NPP_SERVICE)
-            {
+            else if(g_eCurrentServiceEnabled == NPP_SERVICE) {
+                // Not Supported
+            } else if(g_eCurrentServiceEnabled == HANDOVER_SERVICE) {
                 // Not Supported
             }
-            else if(g_eCurrentServiceEnabled == HANDOVER_SERVICE)
-            {
-                // Not Supported
-            }
-            if(g_eLLCPConnectionStatus == LLCP_CONNECTION_ESTABLISHED)
-            {
+            if(g_eLLCPConnectionStatus == LLCP_CONNECTION_ESTABLISHED) {
                 g_eLLCPConnectionStatus = LLCP_CONNECTION_RECEIVING;
             }
             g_eNextPduQueue = LLCP_RR_PDU;
@@ -676,28 +618,20 @@ tStatus LLCP_processReceivedData(uint8_t * pui8RxBuffer, uint8_t ui8PduLength)
             //UARTprintf("RX: RR \n");
             g_eNextPduQueue = LLCP_SYMM_PDU;
             eSnepProtocolStatus = SNEP_getProtocolStatus();
-            if(g_eLLCPConnectionStatus == LLCP_CONNECTION_SENDING)
-            {
+            if(g_eLLCPConnectionStatus == LLCP_CONNECTION_SENDING) {
                 if(
                     (eSnepProtocolStatus ==
-                                        SNEP_CONNECTION_WAITING_FOR_CONTINUE) ||
-                   (eSnepProtocolStatus ==
-                                        SNEP_CONNECTION_WAITING_FOR_SUCCESS))
-                {
-                   g_eNextPduQueue = LLCP_SYMM_PDU;
-                }
-                else if(eSnepProtocolStatus ==
-                                            SNEP_CONNECTION_SENDING_N_FRAGMENTS)
-                {
+                     SNEP_CONNECTION_WAITING_FOR_CONTINUE) ||
+                    (eSnepProtocolStatus ==
+                     SNEP_CONNECTION_WAITING_FOR_SUCCESS)) {
+                    g_eNextPduQueue = LLCP_SYMM_PDU;
+                } else if(eSnepProtocolStatus ==
+                          SNEP_CONNECTION_SENDING_N_FRAGMENTS) {
                     g_eNextPduQueue = LLCP_I_PDU;
-                }
-                else if(eSnepProtocolStatus == SNEP_CONNECTION_SEND_COMPLETE)
-                {
+                } else if(eSnepProtocolStatus == SNEP_CONNECTION_SEND_COMPLETE) {
                     g_eNextPduQueue = LLCP_DISC_PDU;
                 }
-            }
-            else
-            {
+            } else {
                 //
                 // Used for debugging
                 //
@@ -756,15 +690,12 @@ tStatus LLCP_setNextPDU(tLLCPPduPtype eNextPdu)
 {
     tStatus eSetNextPduStatus;
     if(g_eLLCPConnectionStatus == LLCP_CONNECTION_IDLE ||
-        g_eLLCPConnectionStatus == LLCP_CONNECTION_ESTABLISHED)
-    {
+            g_eLLCPConnectionStatus == LLCP_CONNECTION_ESTABLISHED) {
         g_eNextPduQueue = eNextPdu;
         if(eNextPdu == LLCP_CONNECT_PDU)
             g_eCurrentServiceEnabled = SNEP_SERVICE;
         eSetNextPduStatus = STATUS_SUCCESS;
-    }
-    else
-    {
+    } else {
         eSetNextPduStatus = STATUS_FAIL;
     }
     return eSetNextPduStatus;
@@ -821,19 +752,19 @@ uint8_t LLCP_sendCONNECT(uint8_t * pui8PduBufferPtr)
 
     // DSAP (6 bits)  PTYPE (4 bits)  SSAP (6 bits)
     pui8PduBufferPtr[ui8IndexTemp++] = (g_ui8dsapValue << 2) |
-                                        ( (LLCP_CONNECT_PDU & 0xFC) >> 2);
+                                       ( (LLCP_CONNECT_PDU & 0xFC) >> 2);
     pui8PduBufferPtr[ui8IndexTemp++] = ( (LLCP_CONNECT_PDU & 0x03) << 6) |
-                                        g_ui8ssapValue;
+                                       g_ui8ssapValue;
 
     //
     // TLV Fields
     //
     ui8IndexTemp = ui8IndexTemp +
-                        LLCP_addTLV(LLCP_SN, &pui8PduBufferPtr[ui8IndexTemp]);
+                   LLCP_addTLV(LLCP_SN, &pui8PduBufferPtr[ui8IndexTemp]);
     ui8IndexTemp = ui8IndexTemp +
-                        LLCP_addTLV(LLCP_MIUX, &pui8PduBufferPtr[ui8IndexTemp]);
+                   LLCP_addTLV(LLCP_MIUX, &pui8PduBufferPtr[ui8IndexTemp]);
     ui8IndexTemp = ui8IndexTemp +
-                        LLCP_addTLV(LLCP_RW, &pui8PduBufferPtr[ui8IndexTemp]);
+                   LLCP_addTLV(LLCP_RW, &pui8PduBufferPtr[ui8IndexTemp]);
 
     return ui8IndexTemp;
 }
@@ -858,9 +789,9 @@ uint8_t LLCP_sendDISC(uint8_t * pui8PduBufferPtr)
     // DSAP (6 bits)  PTYPE (4 bits)  SSAP (6 bits)
     //
     pui8PduBufferPtr[ui8IndexTemp++] = (g_ui8dsapValue << 2) |
-                                        ( (LLCP_DISC_PDU & 0xFC) >> 2);
+                                       ( (LLCP_DISC_PDU & 0xFC) >> 2);
     pui8PduBufferPtr[ui8IndexTemp++] = ( (LLCP_DISC_PDU & 0x03) << 6) |
-                                            g_ui8ssapValue;
+                                       g_ui8ssapValue;
 
     return ui8IndexTemp;
 }
@@ -892,17 +823,17 @@ uint8_t LLCP_sendCC(uint8_t * pui8PduBufferPtr)
 
     // DSAP (6 bits)  PTYPE (4 bits)  SSAP (6 bits)
     pui8PduBufferPtr[ui8IndexTemp++] = (g_ui8dsapValue << 2) |
-                                            ( (LLCP_CC_PDU & 0xFC) >> 2);
+                                       ( (LLCP_CC_PDU & 0xFC) >> 2);
     pui8PduBufferPtr[ui8IndexTemp++] = ( (LLCP_CC_PDU & 0x03) << 6) |
-                                            g_ui8ssapValue;
+                                       g_ui8ssapValue;
 
     //
     // TLV Fields
     //
     ui8IndexTemp = ui8IndexTemp +
-                        LLCP_addTLV(LLCP_MIUX, &pui8PduBufferPtr[ui8IndexTemp]);
+                   LLCP_addTLV(LLCP_MIUX, &pui8PduBufferPtr[ui8IndexTemp]);
     ui8IndexTemp = ui8IndexTemp +
-                        LLCP_addTLV(LLCP_RW, &pui8PduBufferPtr[ui8IndexTemp]);
+                   LLCP_addTLV(LLCP_RW, &pui8PduBufferPtr[ui8IndexTemp]);
 
     return ui8IndexTemp;
 }
@@ -937,9 +868,9 @@ uint8_t LLCP_sendDM(uint8_t * pui8PduBufferPtr,tDisconnectModeReason eDmReason)
 
     // DSAP (6 bits)  PTYPE (4 bits)  SSAP (6 bits)
     pui8PduBufferPtr[ui8IndexTemp++] = (g_ui8dsapValue << 2) |
-                                            ( (LLCP_DM_PDU & 0xFC) >> 2);
+                                       ( (LLCP_DM_PDU & 0xFC) >> 2);
     pui8PduBufferPtr[ui8IndexTemp++] = ( (LLCP_DM_PDU & 0x03) << 6) |
-                                            g_ui8ssapValue;
+                                       g_ui8ssapValue;
 
     pui8PduBufferPtr[ui8IndexTemp++] = (uint8_t) eDmReason;
 
@@ -971,42 +902,30 @@ uint8_t LLCP_sendI(uint8_t * pui8PduBufferPtr)
 
     g_ui8NSNR = (g_ui8NSNR & 0x0F) | (((g_ui8NSNR >> 4) + 0x01) << 4); // Increment N(S)
 
-    if(g_eLLCPConnectionStatus == LLCP_CONNECTION_ESTABLISHED)
-    {
+    if(g_eLLCPConnectionStatus == LLCP_CONNECTION_ESTABLISHED) {
         g_eLLCPConnectionStatus = LLCP_CONNECTION_SENDING;
     }
-    if(g_eCurrentServiceEnabled == SNEP_SERVICE)
-    {
-        if(g_eLLCPConnectionStatus == LLCP_CONNECTION_SENDING)
-        {
+    if(g_eCurrentServiceEnabled == SNEP_SERVICE) {
+        if(g_eLLCPConnectionStatus == LLCP_CONNECTION_SENDING) {
             ui8IndexTemp = ui8IndexTemp +
-            SNEP_sendRequest(&pui8PduBufferPtr[ui8IndexTemp],SNEP_REQUEST_PUT);
-        }
-        else if(g_eLLCPConnectionStatus == LLCP_CONNECTION_RECEIVING)
-        {
+                           SNEP_sendRequest(&pui8PduBufferPtr[ui8IndexTemp],SNEP_REQUEST_PUT);
+        } else if(g_eLLCPConnectionStatus == LLCP_CONNECTION_RECEIVING) {
             eSnepProtocolStatus = SNEP_getProtocolStatus();
-            if(eSnepProtocolStatus == SNEP_CONNECTION_RECEIVED_FIRST_PACKET)
-            {
+            if(eSnepProtocolStatus == SNEP_CONNECTION_RECEIVED_FIRST_PACKET) {
                 ui8IndexTemp = ui8IndexTemp +
-                SNEP_sendResponse(&pui8PduBufferPtr[ui8IndexTemp],
-                                    SNEP_RESPONSE_CONTINUE);
-            }
-            else if(eSnepProtocolStatus == SNEP_CONNECTION_RECEIVE_COMPLETE)
-            {
+                               SNEP_sendResponse(&pui8PduBufferPtr[ui8IndexTemp],
+                                                 SNEP_RESPONSE_CONTINUE);
+            } else if(eSnepProtocolStatus == SNEP_CONNECTION_RECEIVE_COMPLETE) {
                 ui8IndexTemp = ui8IndexTemp +
-                SNEP_sendResponse(&pui8PduBufferPtr[ui8IndexTemp],
-                                    SNEP_RESPONSE_SUCCESS);
-            }
-            else if(eSnepProtocolStatus == SNEP_CONNECTION_EXCESS_SIZE)
-            {
+                               SNEP_sendResponse(&pui8PduBufferPtr[ui8IndexTemp],
+                                                 SNEP_RESPONSE_SUCCESS);
+            } else if(eSnepProtocolStatus == SNEP_CONNECTION_EXCESS_SIZE) {
                 ui8IndexTemp = ui8IndexTemp +
-                SNEP_sendResponse(&pui8PduBufferPtr[ui8IndexTemp],
-                                    SNEP_RESPONSE_REJECT);
+                               SNEP_sendResponse(&pui8PduBufferPtr[ui8IndexTemp],
+                                                 SNEP_RESPONSE_REJECT);
             }
         }
-    }
-    else if(g_eCurrentServiceEnabled == NPP_SERVICE)
-    {
+    } else if(g_eCurrentServiceEnabled == NPP_SERVICE) {
         // RFU
     }
 
@@ -1031,9 +950,9 @@ uint8_t LLCP_sendRR(uint8_t * pui8PduBufferPtr)
 
     // DSAP (6 bits)  PTYPE (4 bits)  SSAP (6 bits)
     pui8PduBufferPtr[ui8IndexTemp++] = (g_ui8dsapValue << 2) | \
-                                      ((LLCP_RR_PDU & 0xFC) >> 2);
+                                       ((LLCP_RR_PDU & 0xFC) >> 2);
     pui8PduBufferPtr[ui8IndexTemp++] = ( (LLCP_RR_PDU & 0x03) << 6) | \
-                                         g_ui8ssapValue;
+                                       g_ui8ssapValue;
 
     // Increment N(R)
     g_ui8NSNR = (g_ui8NSNR & 0xF0) | ((g_ui8NSNR + 0x01) & 0x0F);

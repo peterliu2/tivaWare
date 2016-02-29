@@ -69,8 +69,8 @@ ISO14443BSetupRegisters(void)
     // Configure the Special Settings Register.
     //
     TRF79x0WriteRegister(TRF79X0_RX_SPECIAL_SETTINGS_REG,
-       (TRF79x0ReadRegister(TRF79X0_RX_SPECIAL_SETTINGS_REG) & 0x0f) |
-        TRF79X0_RX_SP_SET_M848);
+                         (TRF79x0ReadRegister(TRF79X0_RX_SPECIAL_SETTINGS_REG) & 0x0f) |
+                         TRF79X0_RX_SP_SET_M848);
 
     //
     // Configure the Test Settings Register.
@@ -153,12 +153,12 @@ ISO14443BHalt(unsigned char *pucPUPI)
     TRF79x0Transceive(pucHLTA, sizeof(pucHLTA), 0, &ucResponse, &uiRxSize, NULL,
                       TRF79X0_TRANSCEIVE_CRC);
 
-	//
-	// Valid answer to HLTB received.
+    //
+    // Valid answer to HLTB received.
     if((uiRxSize == 1) && (ucResponse == 0))
-    	return(uiRxSize);
+        return(uiRxSize);
     else
-    	return(0);
+        return(0);
 }
 
 //*****************************************************************************
@@ -200,21 +200,32 @@ ISO14443BSlotMARKER(unsigned char ucSlot)
 //*****************************************************************************
 int
 ISO14443BREQB(unsigned char ucCmd, unsigned char ucAFI, unsigned char ucN,
-		      unsigned char *pucATQB, unsigned int *puiATQBSize)
+              unsigned char *pucATQB, unsigned int *puiATQBSize)
 {
     unsigned char pucREQB[3];
     unsigned char pucResponse[12];
     unsigned int uiRxSize;
     int i, slotTotal, slot;
 
-    switch(ucN)
-    {
-    	case 0:		slotTotal = 1;		break;
-    	case 1:		slotTotal = 2;		break;
-    	case 2:		slotTotal = 4;		break;
-    	case 3:		slotTotal = 8;		break;
-    	case 4:		slotTotal = 16;		break;
-    	default:	slotTotal = 1;		break;
+    switch(ucN) {
+        case 0:
+            slotTotal = 1;
+            break;
+        case 1:
+            slotTotal = 2;
+            break;
+        case 2:
+            slotTotal = 4;
+            break;
+        case 3:
+            slotTotal = 8;
+            break;
+        case 4:
+            slotTotal = 16;
+            break;
+        default:
+            slotTotal = 1;
+            break;
     }
 
     uiRxSize = sizeof(pucResponse);
@@ -230,52 +241,47 @@ ISO14443BREQB(unsigned char ucCmd, unsigned char ucAFI, unsigned char ucN,
     //
     // the first byte of ATQB is 0x50
     //
-	TRF79x0Transceive(pucREQB, sizeof(pucREQB), 0, pucResponse, &uiRxSize, 0,
-					 TRF79X0_TRANSCEIVE_CRC);
+    TRF79x0Transceive(pucREQB, sizeof(pucREQB), 0, pucResponse, &uiRxSize, 0,
+                      TRF79X0_TRANSCEIVE_CRC);
 
-	//
-	// check if needing to scan slot
-	//
-	slot = 1;
-	while((pucResponse[0] != 0x50) && (slot < slotTotal))
-	{
-	    uiRxSize = 12;
-	    pucResponse[0] = 0;
+    //
+    // check if needing to scan slot
+    //
+    slot = 1;
+    while((pucResponse[0] != 0x50) && (slot < slotTotal)) {
+        uiRxSize = 12;
+        pucResponse[0] = 0;
 
-	    TRF79x0IRQClearCauses(TRF79X0_WAIT_RXEND);
-	    //
-	    // the order of the two function must not reversed, because the TRF79x0ReceiveAgain() called
-	    // TRF79x0Command(TRF79X0_RESET_FIFO_CMD); to reset receive FIFO
-	    // the most important action TRF79x0ReceiveAgain() done is to set g_sRXState.uiMaxLength as uiRxSize
-	    // in order to enable the TRF7970A interrupt to continue receive data
-	    //
-		ISO14443BSlotMARKER(slot++);
-		TRF79x0ReceiveAgain(pucResponse, &uiRxSize);
-	};
+        TRF79x0IRQClearCauses(TRF79X0_WAIT_RXEND);
+        //
+        // the order of the two function must not reversed, because the TRF79x0ReceiveAgain() called
+        // TRF79x0Command(TRF79X0_RESET_FIFO_CMD); to reset receive FIFO
+        // the most important action TRF79x0ReceiveAgain() done is to set g_sRXState.uiMaxLength as uiRxSize
+        // in order to enable the TRF7970A interrupt to continue receive data
+        //
+        ISO14443BSlotMARKER(slot++);
+        TRF79x0ReceiveAgain(pucResponse, &uiRxSize);
+    };
 
-	//
-	// Valid ATQB received. Was transmitted LSByte first.
-	//
-    if(pucResponse[0] == 0x50)
-    {
-		if(pucATQB != NULL)
-		{
-			for(i = 0; i < uiRxSize; i++)
-				pucATQB[i] = pucResponse[i];
-		}
-		*puiATQBSize = uiRxSize;
+    //
+    // Valid ATQB received. Was transmitted LSByte first.
+    //
+    if(pucResponse[0] == 0x50) {
+        if(pucATQB != NULL) {
+            for(i = 0; i < uiRxSize; i++)
+                pucATQB[i] = pucResponse[i];
+        }
+        *puiATQBSize = uiRxSize;
 
-		//
-		// Return true
-		//
-		return(1);
-    }
-    else
-    {
-		//
-		// No response at all
-		//
-		return(0);
+        //
+        // Return true
+        //
+        return(1);
+    } else {
+        //
+        // No response at all
+        //
+        return(0);
     }
 }
 
@@ -294,8 +300,8 @@ ISO14443BREQB(unsigned char ucCmd, unsigned char ucAFI, unsigned char ucN,
 //*****************************************************************************
 int
 ISO14443BATTRIB(unsigned char *pucPUPI, unsigned char ucTR0, unsigned char ucTR1, unsigned char ucEOF_SOF,
-				unsigned char ucMaxFrameSize, unsigned char ucBitRateD2C, unsigned char ucBitRateC2D,
-				unsigned char ucProtocolType, unsigned char ucCID, unsigned char *A2ATTRIB)
+                unsigned char ucMaxFrameSize, unsigned char ucBitRateD2C, unsigned char ucBitRateC2D,
+                unsigned char ucProtocolType, unsigned char ucCID, unsigned char *A2ATTRIB)
 {
     unsigned char pucResponse[3];
     unsigned int uiRxSize;
@@ -322,18 +328,15 @@ ISO14443BATTRIB(unsigned char *pucPUPI, unsigned char ucTR0, unsigned char ucTR1
     TRF79x0Transceive(pucATTRIB, sizeof(pucATTRIB), 0, pucResponse, &uiRxSize, NULL,
                       TRF79X0_TRANSCEIVE_CRC);
 
-    if(uiRxSize == 1 )
-    {
+    if(uiRxSize == 1 ) {
         //
         // Valid answer to ATTRIB command received, return it as an char, uiRxSize NOT including two CRC bytes
         //
         if(A2ATTRIB != NULL)
-        	*A2ATTRIB = pucResponse[0];
+            *A2ATTRIB = pucResponse[0];
 
         return(uiRxSize);
-    }
-    else
-    {
-    	return(0);
+    } else {
+        return(0);
     }
 }

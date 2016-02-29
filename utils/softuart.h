@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Utility Library.
 //
 //*****************************************************************************
@@ -49,8 +49,7 @@ extern "C"
 //! module.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The address of the callback function that is called to simulate the
     //! interrupts that would be produced by a hardware UART implementation.
@@ -339,7 +338,7 @@ extern bool SoftUARTSpaceAvail(tSoftUART *psUART);
 extern int32_t SoftUARTCharGetNonBlocking(tSoftUART *psUART);
 extern int32_t SoftUARTCharGet(tSoftUART *psUART);
 extern bool SoftUARTCharPutNonBlocking(tSoftUART *psUART,
-                                           uint8_t ui8Data);
+                                       uint8_t ui8Data);
 extern void SoftUARTCharPut(tSoftUART *psUART, uint8_t ui8Data);
 extern void SoftUARTBreakCtl(tSoftUART *psUART, bool bBreakState);
 extern bool SoftUARTBusy(tSoftUART *psUART);

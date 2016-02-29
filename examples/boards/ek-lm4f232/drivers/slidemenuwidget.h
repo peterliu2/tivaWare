@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-LM4F232 Firmware Package.
 //
 //*****************************************************************************
@@ -48,8 +48,7 @@ extern "C"
 //! The structure that describes a menu item in the menu tree.
 //
 //*****************************************************************************
-typedef struct _SlideMenuItem
-{
+typedef struct _SlideMenuItem {
     //
     //! A pointer to text to be rendered within the node.
     //
@@ -83,8 +82,7 @@ tSlideMenuItem;
 //! The structure that describes a menu.
 //
 //*****************************************************************************
-typedef struct _SlideMenu
-{
+typedef struct _SlideMenu {
     //
     //! The parent menu of this menu.
     //
@@ -132,8 +130,7 @@ typedef struct _SlideMenu
 //! The structure that describes a slide menu widget.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The generic widget information.
     //
@@ -426,7 +423,7 @@ tSlideMenuWidget;
 //
 //*****************************************************************************
 extern int32_t SlideMenuMsgProc(tWidget *psWidget, uint32_t ui32Msg,
-                             uint32_t ui32Param1, uint32_t ui32Param2);
+                                uint32_t ui32Param1, uint32_t ui32Param2);
 void SlideMenuDraw(tSlideMenuWidget *psMenuWidget, tContext *pContext,
                    int32_t i32OffsetY);
 extern void SlideMenuInit(tSlideMenuWidget *psWidget, const tDisplay *pDisplay,

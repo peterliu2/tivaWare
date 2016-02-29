@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -160,8 +160,7 @@ extern void httpd_init(void);
 // files that it serves.
 //
 //*****************************************************************************
-static const char *g_pcConfigSSITags[] =
-{
+static const char *g_pcConfigSSITags[] = {
     "LEDtxt",        // SSI_INDEX_LEDSTATE
     "FormVars",      // SSI_INDEX_FORMVARS
     "speed"          // SSI_INDEX_SPEED
@@ -209,8 +208,7 @@ static int32_t SSIHandler(int32_t iIndex, char *pcInsert, int32_t iInsertLen);
 // process it.
 //
 //*****************************************************************************
-static const tCGI g_psConfigCGIURIs[] =
-{
+static const tCGI g_psConfigCGIURIs[] = {
     { "/iocontrol.cgi", (tCGIHandler)ControlCGIHandler }, // CGI_INDEX_CONTROL
     { "/settxt.cgi", (tCGIHandler)SetTextCGIHandler }     // CGI_INDEX_TEXT
 };
@@ -303,13 +301,12 @@ ControlCGIHandler(int32_t iIndex, int32_t i32NumParams, char *pcParam[],
     //
     i32LEDState = FindCGIParameter("LEDOn", pcParam, i32NumParams);
     i32Speed = GetCGIParam("speed_percent", pcParam, pcValue, i32NumParams,
-            &bParamError);
+                           &bParamError);
 
     //
     // Was there any error reported by the parameter parser?
     //
-    if(bParamError || (i32Speed < 0) || (i32Speed > 100))
-    {
+    if(bParamError || (i32Speed < 0) || (i32Speed > 100)) {
         return(PARAM_ERROR_RESPONSE);
     }
 
@@ -346,8 +343,7 @@ SetTextCGIHandler(int32_t i32Index, int32_t i32NumParams, char *pcParam[],
     //
     // If the parameter was not found, show the error page.
     //
-    if(lStringParam == -1)
-    {
+    if(lStringParam == -1) {
         return(PARAM_ERROR_RESPONSE);
     }
 
@@ -382,19 +378,18 @@ SSIHandler(int32_t iIndex, char *pcInsert, int32_t iInsertLen)
     //
     // Which SSI tag have we been passed?
     //
-    switch(iIndex)
-    {
+    switch(iIndex) {
         case SSI_INDEX_LEDSTATE:
             io_get_ledstate(pcInsert, iInsertLen);
             break;
 
         case SSI_INDEX_FORMVARS:
             usnprintf(pcInsert, iInsertLen,
-                    "%sls=%d;\nsp=%d;\n%s",
-                    JAVASCRIPT_HEADER,
-                    io_is_led_on(),
-                    io_get_animation_speed(),
-                    JAVASCRIPT_FOOTER);
+                      "%sls=%d;\nsp=%d;\n%s",
+                      JAVASCRIPT_HEADER,
+                      io_is_led_on(),
+                      io_get_animation_speed(),
+                      JAVASCRIPT_FOOTER);
             break;
 
         case SSI_INDEX_SPEED:
@@ -459,7 +454,7 @@ DisplayIPAddress(uint32_t ui32Addr)
     // Convert the IP Address into a string.
     //
     usprintf(pcBuf, "%d.%d.%d.%d", ui32Addr & 0xff, (ui32Addr >> 8) & 0xff,
-            (ui32Addr >> 16) & 0xff, (ui32Addr >> 24) & 0xff);
+             (ui32Addr >> 16) & 0xff, (ui32Addr >> 24) & 0xff);
 
     //
     // Display the string.
@@ -485,28 +480,22 @@ lwIPHostTimerHandler(void)
     //
     // See if the IP address has changed.
     //
-    if(ui32NewIPAddress != g_ui32IPAddress)
-    {
+    if(ui32NewIPAddress != g_ui32IPAddress) {
         //
         // See if there is an IP address assigned.
         //
-        if(ui32NewIPAddress == 0xffffffff)
-        {
+        if(ui32NewIPAddress == 0xffffffff) {
             //
             // Indicate that there is no link.
             //
             UARTprintf("Waiting for link.\n");
-        }
-        else if(ui32NewIPAddress == 0)
-        {
+        } else if(ui32NewIPAddress == 0) {
             //
             // There is no IP address, so indicate that the DHCP process is
             // running.
             //
             UARTprintf("Waiting for IP address.\n");
-        }
-        else
-        {
+        } else {
             //
             // Display the new IP address.
             //
@@ -525,11 +514,10 @@ lwIPHostTimerHandler(void)
     //
     // If there is not an IP address.
     //
-    if((ui32NewIPAddress == 0) || (ui32NewIPAddress == 0xffffffff))
-    {
-       //
-       // Do nothing and keep waiting.
-       //
+    if((ui32NewIPAddress == 0) || (ui32NewIPAddress == 0xffffffff)) {
+        //
+        // Do nothing and keep waiting.
+        //
     }
 }
 
@@ -558,9 +546,9 @@ main(void)
     // Run from the PLL at 120 MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN |
-                                             SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN |
+                                            SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Configure the device pins.
@@ -591,15 +579,13 @@ main(void)
     // USER0 and USER1 registers.
     //
     MAP_FlashUserGet(&ui32User0, &ui32User1);
-    if((ui32User0 == 0xffffffff) || (ui32User1 == 0xffffffff))
-    {
+    if((ui32User0 == 0xffffffff) || (ui32User1 == 0xffffffff)) {
         //
         // Let the user know there is no MAC address
         //
         UARTprintf("No MAC programmed!\n");
 
-        while(1)
-        {
+        while(1) {
         }
     }
 
@@ -651,7 +637,7 @@ main(void)
     // Pass our tag information to the HTTP server.
     //
     http_set_ssi_handler((tSSIHandler)SSIHandler, g_pcConfigSSITags,
-            NUM_CONFIG_SSI_TAGS);
+                         NUM_CONFIG_SSI_TAGS);
 
     //
     // Pass our CGI handlers to the HTTP server.
@@ -667,13 +653,11 @@ main(void)
     // Loop forever, processing the on-screen animation.  All other work is
     // done in the interrupt handlers.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Wait for a new tick to occur.
         //
-        while(!g_ulFlags)
-        {
+        while(!g_ulFlags) {
             //
             // Do nothing.
             //
@@ -688,7 +672,7 @@ main(void)
         // Toggle the GPIO
         //
         MAP_GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1,
-                (MAP_GPIOPinRead(GPIO_PORTN_BASE, GPIO_PIN_1) ^
-                 GPIO_PIN_1));
+                         (MAP_GPIOPinRead(GPIO_PORTN_BASE, GPIO_PIN_1) ^
+                          GPIO_PIN_1));
     }
 }

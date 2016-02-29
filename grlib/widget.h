@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Graphics Library.
 //
 //*****************************************************************************
@@ -49,8 +49,7 @@ extern "C"
 //! ``class'' for all other widgets.
 //
 //*****************************************************************************
-typedef struct __Widget
-{
+typedef struct __Widget {
     //
     //! The size of this structure.  This will be the size of the full
     //! structure, not just the generic widget subset.
@@ -218,15 +217,15 @@ extern int32_t WidgetDefaultMsgProc(tWidget *psWidget, uint32_t ui32Message,
 extern void WidgetAdd(tWidget *psParent, tWidget *psWidget);
 extern void WidgetRemove(tWidget *psWidget);
 extern uint32_t WidgetMessageSendPreOrder(tWidget *psWidget,
-                                          uint32_t ui32Message,
-                                          uint32_t ui32Param1,
-                                          uint32_t ui32Param2,
-                                          bool bStopOnSuccess);
+        uint32_t ui32Message,
+        uint32_t ui32Param1,
+        uint32_t ui32Param2,
+        bool bStopOnSuccess);
 extern uint32_t WidgetMessageSendPostOrder(tWidget *psWidget,
-                                           uint32_t ui32Message,
-                                           uint32_t ui32Param1,
-                                           uint32_t ui32Param2,
-                                           bool bStopOnSuccess);
+        uint32_t ui32Message,
+        uint32_t ui32Param1,
+        uint32_t ui32Param2,
+        bool bStopOnSuccess);
 extern int32_t WidgetMessageQueueAdd(tWidget *psWidget, uint32_t ui32Message,
                                      uint32_t ui32Param1,
                                      uint32_t ui32Param2,

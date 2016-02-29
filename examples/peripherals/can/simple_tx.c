@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -177,8 +177,7 @@ CANIntHandler(void)
     //
     // If the cause is a controller status interrupt, then get the status
     //
-    if(ui32Status == CAN_INT_INTID_STATUS)
-    {
+    if(ui32Status == CAN_INT_INTID_STATUS) {
         //
         // Read the controller status.  This will return a field of status
         // error bits that can indicate various errors.  Error processing
@@ -201,8 +200,7 @@ CANIntHandler(void)
     // Check if the cause is message object 1, which what we are using for
     // sending messages.
     //
-    else if(ui32Status == 1)
-    {
+    else if(ui32Status == 1) {
         //
         // Getting to this point means that the TX interrupt occurred on
         // message object 1, and the message TX is complete.  Clear the
@@ -227,8 +225,7 @@ CANIntHandler(void)
     // Otherwise, something unexpected caused the interrupt.  This should
     // never happen.
     //
-    else
-    {
+    else {
         //
         // Spurious interrupt handling can go here.
         //
@@ -266,7 +263,7 @@ main(void)
     ui32SysClock = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
                                        SYSCTL_OSC_MAIN |
                                        SYSCTL_USE_OSC)
-                                       25000000);
+                                      25000000);
 #else
     SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN |
                    SYSCTL_XTAL_16MHZ);
@@ -322,13 +319,13 @@ main(void)
     // over the CAN bus timing by using the function CANBitTimingSet() instead
     // of this one, if needed.
     // In this example, the CAN bus is set to 500 kHz.  In the function below,
-    // the call to SysCtlClockGet() or ui32SysClock is used to determine the 
-    // clock rate that is used for clocking the CAN peripheral.  This can be 
-    // replaced with a  fixed value if you know the value of the system clock, 
-    // saving the extra function call.  For some parts, the CAN peripheral is 
-    // clocked by a fixed 8 MHz regardless of the system clock in which case 
-    // the call to SysCtlClockGet() or ui32SysClock should be replaced with 
-    // 8000000.  Consult the data sheet for more information about CAN 
+    // the call to SysCtlClockGet() or ui32SysClock is used to determine the
+    // clock rate that is used for clocking the CAN peripheral.  This can be
+    // replaced with a  fixed value if you know the value of the system clock,
+    // saving the extra function call.  For some parts, the CAN peripheral is
+    // clocked by a fixed 8 MHz regardless of the system clock in which case
+    // the call to SysCtlClockGet() or ui32SysClock should be replaced with
+    // 8000000.  Consult the data sheet for more information about CAN
     // peripheral clocking.
     //
 #if defined(TARGET_IS_TM4C129_RA0) ||                                         \
@@ -377,8 +374,7 @@ main(void)
     // second.  The 4 bytes of message content will be treated as an uint32_t
     // and incremented by one each time.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Print a message to the console showing the message count and the
         // contents of the message being sent.
@@ -402,12 +398,9 @@ main(void)
         //
         // Check the error flag to see if errors occurred
         //
-        if(g_bErrFlag)
-        {
+        if(g_bErrFlag) {
             UARTprintf(" error - cable connected?\n");
-        }
-        else
-        {
+        } else {
             //
             // If no errors then print the count of message sent
             //

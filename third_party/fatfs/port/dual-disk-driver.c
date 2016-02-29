@@ -138,12 +138,9 @@ disk_initialize(
     /* driver. Note that we call each with physical drive number 0 since the */
     /* low level drivers typically expect this (they only support a single */
     /* drive). */
-    if(bValue == 0)
-    {
+    if(bValue == 0) {
         return(disk0_initialize(0));
-    }
-    else
-    {
+    } else {
         return(disk1_initialize(0));
     }
 }
@@ -158,12 +155,9 @@ DSTATUS disk_status (
     /* driver. Note that we call each with physical drive number 0 since the */
     /* low level drivers typically expect this (they only support a single */
     /* drive). */
-    if(drv == 0)
-    {
+    if(drv == 0) {
         return(disk0_status(0));
-    }
-    else
-    {
+    } else {
         return(disk1_status(0));
     }
 
@@ -182,12 +176,9 @@ DRESULT disk_read (
     /* driver. Note that we call each with physical drive number 0 since the */
     /* low level drivers typically expect this (they only support a single */
     /* drive). */
-    if(drv == 0)
-    {
+    if(drv == 0) {
         return(disk0_read(0, buff, sector, count));
-    }
-    else
-    {
+    } else {
         return(disk1_read(0, buff, sector, count));
     }
 }
@@ -208,12 +199,9 @@ DRESULT disk_write (
     /* driver. Note that we call each with physical drive number 0 since the */
     /* low level drivers typically expect this (they only support a single */
     /* drive). */
-    if(ucDrive == 0)
-    {
+    if(ucDrive == 0) {
         return(disk0_write(0, buff, sector, count));
-    }
-    else
-    {
+    } else {
         return(disk1_write(0, buff, sector, count));
     }
 }
@@ -231,12 +219,9 @@ DRESULT disk_ioctl (
     /* driver. Note that we call each with physical drive number 0 since the */
     /* low level drivers typically expect this (they only support a single */
     /* drive). */
-    if(drv == 0)
-    {
+    if(drv == 0) {
         return(disk0_ioctl(0, ctrl, buff));
-    }
-    else
-    {
+    } else {
         return(disk1_ioctl(0, ctrl, buff));
     }
 }

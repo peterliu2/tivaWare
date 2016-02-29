@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Graphics Library.
 //
 //*****************************************************************************
@@ -84,13 +84,11 @@ SliderValueToPosition(tSliderWidget *pSlider, int32_t i32Value)
     //
     // First check for values at the top of the range.
     //
-    if(i32Value >= pSlider->i32Max)
-    {
+    if(i32Value >= pSlider->i32Max) {
         //
         // Is this a vertical slider?
         //
-        if(pSlider->ui32Style & SL_STYLE_VERTICAL)
-        {
+        if(pSlider->ui32Style & SL_STYLE_VERTICAL) {
             //
             // Vertical slider case.  Return the top position.
             //
@@ -99,13 +97,10 @@ SliderValueToPosition(tSliderWidget *pSlider, int32_t i32Value)
             //
             // Adjust by 1 to move past the border if this widget has one.
             //
-            if(pSlider->ui32Style & SL_STYLE_OUTLINE)
-            {
+            if(pSlider->ui32Style & SL_STYLE_OUTLINE) {
                 i32Pos++;
             }
-        }
-        else
-        {
+        } else {
             //
             // Horizontal slider case.  Return the rightmost position.
             //
@@ -114,8 +109,7 @@ SliderValueToPosition(tSliderWidget *pSlider, int32_t i32Value)
             //
             // Adjust by 1 to move past the border if this widget has one.
             //
-            if(pSlider->ui32Style & SL_STYLE_OUTLINE)
-            {
+            if(pSlider->ui32Style & SL_STYLE_OUTLINE) {
                 i32Pos--;
             }
         }
@@ -125,13 +119,11 @@ SliderValueToPosition(tSliderWidget *pSlider, int32_t i32Value)
     //
     // Now look at the bottom end of the range.
     //
-    if(i32Value <= pSlider->i32Min)
-    {
+    if(i32Value <= pSlider->i32Min) {
         //
         // Is this a vertical slider?
         //
-        if(pSlider->ui32Style & SL_STYLE_VERTICAL)
-        {
+        if(pSlider->ui32Style & SL_STYLE_VERTICAL) {
             //
             // Vertical slider case.  Return the bottom position.
             //
@@ -140,13 +132,10 @@ SliderValueToPosition(tSliderWidget *pSlider, int32_t i32Value)
             //
             // Adjust by 1 to move past the border if this widget has one.
             //
-            if(pSlider->ui32Style & SL_STYLE_OUTLINE)
-            {
+            if(pSlider->ui32Style & SL_STYLE_OUTLINE) {
                 i32Pos--;
             }
-        }
-        else
-        {
+        } else {
             //
             // Horizontal slider case.  Return the leftmost position.
             //
@@ -155,8 +144,7 @@ SliderValueToPosition(tSliderWidget *pSlider, int32_t i32Value)
             //
             // Adjust by 1 to move past the border if this widget has one.
             //
-            if(pSlider->ui32Style & SL_STYLE_OUTLINE)
-            {
+            if(pSlider->ui32Style & SL_STYLE_OUTLINE) {
                 i32Pos++;
             }
         }
@@ -166,28 +154,24 @@ SliderValueToPosition(tSliderWidget *pSlider, int32_t i32Value)
     //
     // What is the length of the whole slider?
     //
-    if(pSlider->ui32Style & SL_STYLE_VERTICAL)
-    {
+    if(pSlider->ui32Style & SL_STYLE_VERTICAL) {
         //
         // Vertical slider case.
         //
         ui16Size = (pSlider->sBase.sPosition.i16YMax -
-                  pSlider->sBase.sPosition.i16YMin) + 1;
-    }
-    else
-    {
+                    pSlider->sBase.sPosition.i16YMin) + 1;
+    } else {
         //
         // Horizontal slider case.
         //
         ui16Size = (pSlider->sBase.sPosition.i16XMax -
-                  pSlider->sBase.sPosition.i16XMin) + 1;
+                    pSlider->sBase.sPosition.i16XMin) + 1;
     }
 
     //
     // Adjust the range if the slider has an outline (which removes 2 pixels).
     //
-    if(pSlider->ui32Style & SL_STYLE_OUTLINE)
-    {
+    if(pSlider->ui32Style & SL_STYLE_OUTLINE) {
         ui16Size -= 2;
     }
 
@@ -213,15 +197,12 @@ SliderValueToPosition(tSliderWidget *pSlider, int32_t i32Value)
     //
     // Adjust for the position of the widget relative to the screen origin.
     //
-    if(pSlider->ui32Style & SL_STYLE_VERTICAL)
-    {
+    if(pSlider->ui32Style & SL_STYLE_VERTICAL) {
         //
         // Vertical case - adjust the Y coordinate.
         //
         i32Pos = pSlider->sBase.sPosition.i16YMax - i32Pos;
-    }
-    else
-    {
+    } else {
         //
         // Horizontal case - adjust the X coordinate.
         //
@@ -267,13 +248,10 @@ SliderPositionToValue(tSliderWidget *pSlider, int16_t i16Pos)
     //
     // Determine the bounds of the control on the display.
     //
-    if(pSlider->ui32Style & SL_STYLE_VERTICAL)
-    {
+    if(pSlider->ui32Style & SL_STYLE_VERTICAL) {
         i16Max = pSlider->sBase.sPosition.i16YMax;
         i16Min = pSlider->sBase.sPosition.i16YMin;
-    }
-    else
-    {
+    } else {
         i16Max = pSlider->sBase.sPosition.i16XMax;
         i16Min = pSlider->sBase.sPosition.i16XMin;
     }
@@ -281,8 +259,7 @@ SliderPositionToValue(tSliderWidget *pSlider, int16_t i16Pos)
     //
     // Adjust for the outline if present.
     //
-    if(pSlider->ui32Style & SL_STYLE_OUTLINE)
-    {
+    if(pSlider->ui32Style & SL_STYLE_OUTLINE) {
         i16Max--;
         i16Min--;
     }
@@ -292,8 +269,7 @@ SliderPositionToValue(tSliderWidget *pSlider, int16_t i16Pos)
     // rather than throwing a divide by zero later.
     //
     ASSERT(i16Max > i16Min);
-    if(i16Max <= i16Min)
-    {
+    if(i16Max <= i16Min) {
         return(pSlider->i32Min);
     }
 
@@ -306,13 +282,11 @@ SliderPositionToValue(tSliderWidget *pSlider, int16_t i16Pos)
     //
     // Adjust the position to make it relative to the start of the slider.
     //
-    if(pSlider->ui32Style & SL_STYLE_VERTICAL)
-    {
+    if(pSlider->ui32Style & SL_STYLE_VERTICAL) {
         i16Pos = i16Max - i16Pos;
     }
 
-    else
-    {
+    else {
         i16Pos -= i16Min;
     }
 
@@ -320,7 +294,7 @@ SliderPositionToValue(tSliderWidget *pSlider, int16_t i16Pos)
     // Calculate the value represented by this position.
     //
     i32Value = ((int32_t)i16Pos * ((pSlider->i32Max - pSlider->i32Min) + 1)) /
-             (int32_t)((i16Max - i16Min) + 1);
+               (int32_t)((i16Max - i16Min) + 1);
 
     //
     // Adjust for the bottom of the value range.
@@ -382,8 +356,7 @@ SliderPaint(tWidget *psWidget, tRectangle *psDirty)
     //
     // Draw the control outline if necessary.
     //
-    if(pSlider->ui32Style & SL_STYLE_OUTLINE)
-    {
+    if(pSlider->ui32Style & SL_STYLE_OUTLINE) {
         //
         // Outline the slider with the outline color.
         //
@@ -394,23 +367,19 @@ SliderPaint(tWidget *psWidget, tRectangle *psDirty)
         // Adjust the clipping rectangle to prevent the outline from being
         // corrupted later.
         //
-        if(sClipRect.i16XMin == psWidget->sPosition.i16XMin)
-        {
+        if(sClipRect.i16XMin == psWidget->sPosition.i16XMin) {
             sClipRect.i16XMin++;
         }
 
-        if(sClipRect.i16YMin == psWidget->sPosition.i16YMin)
-        {
+        if(sClipRect.i16YMin == psWidget->sPosition.i16YMin) {
             sClipRect.i16YMin++;
         }
 
-        if(sClipRect.i16XMax == psWidget->sPosition.i16XMax)
-        {
+        if(sClipRect.i16XMax == psWidget->sPosition.i16XMax) {
             sClipRect.i16XMax--;
         }
 
-        if(sClipRect.i16YMax == psWidget->sPosition.i16YMax)
-        {
+        if(sClipRect.i16YMax == psWidget->sPosition.i16YMax) {
             sClipRect.i16YMax--;
         }
     }
@@ -430,8 +399,7 @@ SliderPaint(tWidget *psWidget, tRectangle *psDirty)
     // Determine the rectangles for the active and empty portions of the
     // widget.
     //
-    if(pSlider->ui32Style & SL_STYLE_VERTICAL)
-    {
+    if(pSlider->ui32Style & SL_STYLE_VERTICAL) {
         //
         // Determine the rectangle corresponding to the bottom (value) portion
         // of the slider.
@@ -449,9 +417,7 @@ SliderPaint(tWidget *psWidget, tRectangle *psDirty)
         sEmptyRect.i16XMax = psWidget->sPosition.i16XMax;
         sEmptyRect.i16YMin = psWidget->sPosition.i16YMin;
         sEmptyRect.i16YMax = max(sEmptyRect.i16YMin, sValueRect.i16YMin - 1);
-    }
-    else
-    {
+    } else {
         //
         // Determine the rectangle corresponding to the bottom (value) portion
         // of the slider.
@@ -476,11 +442,11 @@ SliderPaint(tWidget *psWidget, tRectangle *psDirty)
     // text or an image.
     //
     i32X = (psWidget->sPosition.i16XMin +
-          ((psWidget->sPosition.i16XMax -
-            psWidget->sPosition.i16XMin + 1) / 2));
+            ((psWidget->sPosition.i16XMax -
+              psWidget->sPosition.i16XMin + 1) / 2));
     i32Y = (psWidget->sPosition.i16YMin +
-          ((psWidget->sPosition.i16YMax -
-            psWidget->sPosition.i16YMin + 1) / 2));
+            ((psWidget->sPosition.i16YMax -
+              psWidget->sPosition.i16YMin + 1) / 2));
 
     //
     // Get the required clipping rectangle for the active/value part of
@@ -492,8 +458,7 @@ SliderPaint(tWidget *psWidget, tRectangle *psDirty)
     // Does any part of the value rectangle intersect with the region we are
     // supposed to be redrawing?
     //
-    if(bIntersect)
-    {
+    if(bIntersect) {
         //
         // Yes - we have something to draw.
         //
@@ -506,8 +471,7 @@ SliderPaint(tWidget *psWidget, tRectangle *psDirty)
         //
         // Do we need to fill the active area with a color?
         //
-        if(pSlider->ui32Style & SL_STYLE_FILL)
-        {
+        if(pSlider->ui32Style & SL_STYLE_FILL) {
             GrContextForegroundSet(&sCtx, pSlider->ui32FillColor);
             GrRectFill(&sCtx, &sValueRect);
         }
@@ -515,8 +479,7 @@ SliderPaint(tWidget *psWidget, tRectangle *psDirty)
         //
         // Do we need to draw an image in the active area?
         //
-        if(pSlider->ui32Style & SL_STYLE_IMG)
-        {
+        if(pSlider->ui32Style & SL_STYLE_IMG) {
             GrContextForegroundSet(&sCtx, pSlider->ui32TextColor);
             GrContextBackgroundSet(&sCtx, pSlider->ui32FillColor);
             GrImageDraw(&sCtx, pSlider->pui8Image,
@@ -527,8 +490,7 @@ SliderPaint(tWidget *psWidget, tRectangle *psDirty)
         //
         // Do we need to render a text string over the top of the active area?
         //
-        if(pSlider->ui32Style & SL_STYLE_TEXT)
-        {
+        if(pSlider->ui32Style & SL_STYLE_TEXT) {
             GrContextFontSet(&sCtx, pSlider->psFont);
             GrContextForegroundSet(&sCtx, pSlider->ui32TextColor);
             GrContextBackgroundSet(&sCtx, pSlider->ui32FillColor);
@@ -547,8 +509,7 @@ SliderPaint(tWidget *psWidget, tRectangle *psDirty)
     // Does any part of the background rectangle intersect with the region we
     // are supposed to be redrawing?
     //
-    if(bIntersect)
-    {
+    if(bIntersect) {
         //
         // Yes - we have something to draw.
         //
@@ -561,8 +522,7 @@ SliderPaint(tWidget *psWidget, tRectangle *psDirty)
         //
         // Do we need to fill the active area with a color?
         //
-        if(pSlider->ui32Style & SL_STYLE_BACKG_FILL)
-        {
+        if(pSlider->ui32Style & SL_STYLE_BACKG_FILL) {
             GrContextForegroundSet(&sCtx, pSlider->ui32BackgroundFillColor);
             GrRectFill(&sCtx, &sEmptyRect);
         }
@@ -570,25 +530,23 @@ SliderPaint(tWidget *psWidget, tRectangle *psDirty)
         //
         // Do we need to draw an image in the active area?
         //
-        if(pSlider->ui32Style & SL_STYLE_BACKG_IMG)
-        {
+        if(pSlider->ui32Style & SL_STYLE_BACKG_IMG) {
             GrContextForegroundSet(&sCtx, pSlider->ui32BackgroundTextColor);
             GrContextBackgroundSet(&sCtx, pSlider->ui32BackgroundFillColor);
             GrImageDraw(&sCtx, pSlider->pui8BackgroundImage,
-                  i32X - (GrImageWidthGet(pSlider->pui8BackgroundImage) / 2),
-                  i32Y - (GrImageHeightGet(pSlider->pui8BackgroundImage) / 2));
+                        i32X - (GrImageWidthGet(pSlider->pui8BackgroundImage) / 2),
+                        i32Y - (GrImageHeightGet(pSlider->pui8BackgroundImage) / 2));
         }
 
         //
         // Do we need to render a text string over the top of the active area?
         //
-        if(pSlider->ui32Style & SL_STYLE_BACKG_TEXT)
-        {
+        if(pSlider->ui32Style & SL_STYLE_BACKG_TEXT) {
             GrContextFontSet(&sCtx, pSlider->psFont);
             GrContextForegroundSet(&sCtx, pSlider->ui32BackgroundTextColor);
             GrContextBackgroundSet(&sCtx, pSlider->ui32BackgroundFillColor);
             GrStringDrawCentered(&sCtx, pSlider->pcText, -1, i32X, i32Y,
-                              pSlider->ui32Style & SL_STYLE_BACKG_TEXT_OPAQUE);
+                                 pSlider->ui32Style & SL_STYLE_BACKG_TEXT_OPAQUE);
         }
     }
 }
@@ -635,8 +593,7 @@ SliderClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X, int32_t i32Y)
     //
     // If the slider is locked, ignore all pointer messages.
     //
-    if(pSlider->ui32Style & SL_STYLE_LOCKED)
-    {
+    if(pSlider->ui32Style & SL_STYLE_LOCKED) {
         return(0);
     }
 
@@ -644,18 +601,17 @@ SliderClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X, int32_t i32Y)
     // See if the given coordinates are within the extents of the slider.
     //
     if((ui32Msg == WIDGET_MSG_PTR_MOVE) ||
-       ((ui32Msg == WIDGET_MSG_PTR_DOWN) &&
-        (i32X >= psWidget->sPosition.i16XMin) &&
-        (i32X <= psWidget->sPosition.i16XMax) &&
-        (i32Y >= psWidget->sPosition.i16YMin) &&
-        (i32Y <= psWidget->sPosition.i16YMax)))
-    {
+            ((ui32Msg == WIDGET_MSG_PTR_DOWN) &&
+             (i32X >= psWidget->sPosition.i16XMin) &&
+             (i32X <= psWidget->sPosition.i16XMax) &&
+             (i32Y >= psWidget->sPosition.i16YMin) &&
+             (i32Y <= psWidget->sPosition.i16YMax))) {
         //
         // Map the pointer position to a slider value.
         //
         i32NewVal = SliderPositionToValue(pSlider,
-                             (pSlider->ui32Style & SL_STYLE_VERTICAL) ?
-                             i32Y : i32X);
+                                          (pSlider->ui32Style & SL_STYLE_VERTICAL) ?
+                                          i32Y : i32X);
 
         //
         // Convert back to ensure that the dirty rectangle we calculate here
@@ -667,14 +623,12 @@ SliderClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X, int32_t i32Y)
         //
         // Did the value change?
         //
-        if(i32NewVal != pSlider->i32Value)
-        {
+        if(i32NewVal != pSlider->i32Value) {
             //
             // Yes - the value changed so report it to the app and redraw the
             // slider.
             //
-            if(pSlider->pfnOnChange)
-            {
+            if(pSlider->pfnOnChange) {
                 (pSlider->pfnOnChange)(psWidget, i32NewVal);
             }
 
@@ -682,8 +636,7 @@ SliderClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X, int32_t i32Y)
             // Determine the rectangle that we need to redraw to update the
             // slider to the new position.
             //
-            if(pSlider->ui32Style & SL_STYLE_VERTICAL)
-            {
+            if(pSlider->ui32Style & SL_STYLE_VERTICAL) {
                 //
                 // Vertical slider case.
                 //
@@ -691,9 +644,7 @@ SliderClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X, int32_t i32Y)
                 sRedrawRect.i16YMax = max(pSlider->i16Pos, i16Pos);
                 sRedrawRect.i16XMin = psWidget->sPosition.i16XMin;
                 sRedrawRect.i16XMax = psWidget->sPosition.i16XMax;
-            }
-            else
-            {
+            } else {
                 //
                 // Horizontal slider case.
                 //
@@ -757,13 +708,11 @@ SliderMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
     //
     // Determine which message is being sent.
     //
-    switch(ui32Msg)
-    {
+    switch(ui32Msg) {
         //
         // The widget paint request has been sent.
         //
-        case WIDGET_MSG_PAINT:
-        {
+        case WIDGET_MSG_PAINT: {
             //
             // Handle the widget paint request.
             //
@@ -781,8 +730,7 @@ SliderMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
         //
         case WIDGET_MSG_PTR_DOWN:
         case WIDGET_MSG_PTR_MOVE:
-        case WIDGET_MSG_PTR_UP:
-        {
+        case WIDGET_MSG_PTR_UP: {
             //
             // Handle the pointer request, returning the appropriate value.
             //
@@ -792,8 +740,7 @@ SliderMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
         //
         // An unknown request has been sent.
         //
-        default:
-        {
+        default: {
             //
             // Let the default message handler process this message.
             //
@@ -834,8 +781,7 @@ SliderInit(tSliderWidget *psWidget, const tDisplay *psDisplay, int32_t i32X,
     //
     // Clear out the widget structure.
     //
-    for(ui32Idx = 0; ui32Idx < sizeof(tSliderWidget); ui32Idx += 4)
-    {
+    for(ui32Idx = 0; ui32Idx < sizeof(tSliderWidget); ui32Idx += 4) {
         ((uint32_t *)psWidget)[ui32Idx / 4] = 0;
     }
 

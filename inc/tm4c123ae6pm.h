@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -74,7 +74,7 @@
 #define INT_COMP1               42          // Analog Comparator 1
 #define INT_SYSCTL              44          // System Control
 #define INT_FLASH               45          // Flash Memory Control and EEPROM
-                                            // Control
+// Control
 #define INT_GPIOF               46          // GPIO Port F
 #define INT_GPIOG               47          // GPIO Port G
 #define INT_UART2               49          // UART2
@@ -2115,9 +2115,9 @@
 //
 //*****************************************************************************
 #define UDMA_SRCENDP            0x00000000  // DMA Channel Source Address End
-                                            // Pointer
+// Pointer
 #define UDMA_DSTENDP            0x00000004  // DMA Channel Destination Address
-                                            // End Pointer
+// End Pointer
 #define UDMA_CHCTL              0x00000008  // DMA Channel Control Word
 
 //*****************************************************************************
@@ -2329,9 +2329,9 @@
 //*****************************************************************************
 #define GPIO_LOCK_M             0xFFFFFFFF  // GPIO Lock
 #define GPIO_LOCK_UNLOCKED      0x00000000  // The GPIOCR register is unlocked
-                                            // and may be modified
+// and may be modified
 #define GPIO_LOCK_LOCKED        0x00000001  // The GPIOCR register is locked
-                                            // and may not be modified
+// and may not be modified
 #define GPIO_LOCK_KEY           0x4C4F434B  // Unlocks the GPIO_CR register
 
 //*****************************************************************************
@@ -2643,7 +2643,7 @@
 #define SSI_CR1_EOT             0x00000010  // End of Transmission
 #define SSI_CR1_MS              0x00000004  // SSI Master/Slave Select
 #define SSI_CR1_SSE             0x00000002  // SSI Synchronous Serial Port
-                                            // Enable
+// Enable
 #define SSI_CR1_LBM             0x00000001  // SSI Loopback Mode
 
 //*****************************************************************************
@@ -2681,9 +2681,9 @@
 #define SSI_IM_TXIM             0x00000008  // SSI Transmit FIFO Interrupt Mask
 #define SSI_IM_RXIM             0x00000004  // SSI Receive FIFO Interrupt Mask
 #define SSI_IM_RTIM             0x00000002  // SSI Receive Time-Out Interrupt
-                                            // Mask
+// Mask
 #define SSI_IM_RORIM            0x00000001  // SSI Receive Overrun Interrupt
-                                            // Mask
+// Mask
 
 //*****************************************************************************
 //
@@ -2691,13 +2691,13 @@
 //
 //*****************************************************************************
 #define SSI_RIS_TXRIS           0x00000008  // SSI Transmit FIFO Raw Interrupt
-                                            // Status
+// Status
 #define SSI_RIS_RXRIS           0x00000004  // SSI Receive FIFO Raw Interrupt
-                                            // Status
+// Status
 #define SSI_RIS_RTRIS           0x00000002  // SSI Receive Time-Out Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define SSI_RIS_RORRIS          0x00000001  // SSI Receive Overrun Raw
-                                            // Interrupt Status
+// Interrupt Status
 
 //*****************************************************************************
 //
@@ -2705,13 +2705,13 @@
 //
 //*****************************************************************************
 #define SSI_MIS_TXMIS           0x00000008  // SSI Transmit FIFO Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define SSI_MIS_RXMIS           0x00000004  // SSI Receive FIFO Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define SSI_MIS_RTMIS           0x00000002  // SSI Receive Time-Out Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define SSI_MIS_RORMIS          0x00000001  // SSI Receive Overrun Masked
-                                            // Interrupt Status
+// Interrupt Status
 
 //*****************************************************************************
 //
@@ -2719,9 +2719,9 @@
 //
 //*****************************************************************************
 #define SSI_ICR_RTIC            0x00000002  // SSI Receive Time-Out Interrupt
-                                            // Clear
+// Clear
 #define SSI_ICR_RORIC           0x00000001  // SSI Receive Overrun Interrupt
-                                            // Clear
+// Clear
 
 //*****************************************************************************
 //
@@ -2738,7 +2738,7 @@
 //*****************************************************************************
 #define SSI_CC_CS_M             0x0000000F  // SSI Baud Clock Source
 #define SSI_CC_CS_SYSPLL        0x00000000  // System clock (based on clock
-                                            // source and divisor factor)
+// source and divisor factor)
 #define SSI_CC_CS_PIOSC         0x00000005  // PIOSC
 
 //*****************************************************************************
@@ -2848,14 +2848,14 @@
 //
 //*****************************************************************************
 #define UART_IFLS_RX_M          0x00000038  // UART Receive Interrupt FIFO
-                                            // Level Select
+// Level Select
 #define UART_IFLS_RX1_8         0x00000000  // RX FIFO >= 1/8 full
 #define UART_IFLS_RX2_8         0x00000008  // RX FIFO >= 1/4 full
 #define UART_IFLS_RX4_8         0x00000010  // RX FIFO >= 1/2 full (default)
 #define UART_IFLS_RX6_8         0x00000018  // RX FIFO >= 3/4 full
 #define UART_IFLS_RX7_8         0x00000020  // RX FIFO >= 7/8 full
 #define UART_IFLS_TX_M          0x00000007  // UART Transmit Interrupt FIFO
-                                            // Level Select
+// Level Select
 #define UART_IFLS_TX1_8         0x00000000  // TX FIFO <= 1/8 full
 #define UART_IFLS_TX2_8         0x00000001  // TX FIFO <= 1/4 full
 #define UART_IFLS_TX4_8         0x00000002  // TX FIFO <= 1/2 full (default)
@@ -2869,17 +2869,17 @@
 //*****************************************************************************
 #define UART_IM_9BITIM          0x00001000  // 9-Bit Mode Interrupt Mask
 #define UART_IM_OEIM            0x00000400  // UART Overrun Error Interrupt
-                                            // Mask
+// Mask
 #define UART_IM_BEIM            0x00000200  // UART Break Error Interrupt Mask
 #define UART_IM_PEIM            0x00000100  // UART Parity Error Interrupt Mask
 #define UART_IM_FEIM            0x00000080  // UART Framing Error Interrupt
-                                            // Mask
+// Mask
 #define UART_IM_RTIM            0x00000040  // UART Receive Time-Out Interrupt
-                                            // Mask
+// Mask
 #define UART_IM_TXIM            0x00000020  // UART Transmit Interrupt Mask
 #define UART_IM_RXIM            0x00000010  // UART Receive Interrupt Mask
 #define UART_IM_CTSMIM          0x00000002  // UART Clear to Send Modem
-                                            // Interrupt Mask
+// Interrupt Mask
 
 //*****************************************************************************
 //
@@ -2888,21 +2888,21 @@
 //*****************************************************************************
 #define UART_RIS_9BITRIS        0x00001000  // 9-Bit Mode Raw Interrupt Status
 #define UART_RIS_OERIS          0x00000400  // UART Overrun Error Raw Interrupt
-                                            // Status
+// Status
 #define UART_RIS_BERIS          0x00000200  // UART Break Error Raw Interrupt
-                                            // Status
+// Status
 #define UART_RIS_PERIS          0x00000100  // UART Parity Error Raw Interrupt
-                                            // Status
+// Status
 #define UART_RIS_FERIS          0x00000080  // UART Framing Error Raw Interrupt
-                                            // Status
+// Status
 #define UART_RIS_RTRIS          0x00000040  // UART Receive Time-Out Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define UART_RIS_TXRIS          0x00000020  // UART Transmit Raw Interrupt
-                                            // Status
+// Status
 #define UART_RIS_RXRIS          0x00000010  // UART Receive Raw Interrupt
-                                            // Status
+// Status
 #define UART_RIS_CTSRIS         0x00000002  // UART Clear to Send Modem Raw
-                                            // Interrupt Status
+// Interrupt Status
 
 //*****************************************************************************
 //
@@ -2910,23 +2910,23 @@
 //
 //*****************************************************************************
 #define UART_MIS_9BITMIS        0x00001000  // 9-Bit Mode Masked Interrupt
-                                            // Status
+// Status
 #define UART_MIS_OEMIS          0x00000400  // UART Overrun Error Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define UART_MIS_BEMIS          0x00000200  // UART Break Error Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define UART_MIS_PEMIS          0x00000100  // UART Parity Error Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define UART_MIS_FEMIS          0x00000080  // UART Framing Error Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define UART_MIS_RTMIS          0x00000040  // UART Receive Time-Out Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define UART_MIS_TXMIS          0x00000020  // UART Transmit Masked Interrupt
-                                            // Status
+// Status
 #define UART_MIS_RXMIS          0x00000010  // UART Receive Masked Interrupt
-                                            // Status
+// Status
 #define UART_MIS_CTSMIS         0x00000002  // UART Clear to Send Modem Masked
-                                            // Interrupt Status
+// Interrupt Status
 
 //*****************************************************************************
 //
@@ -2942,7 +2942,7 @@
 #define UART_ICR_TXIC           0x00000020  // Transmit Interrupt Clear
 #define UART_ICR_RXIC           0x00000010  // Receive Interrupt Clear
 #define UART_ICR_CTSMIC         0x00000002  // UART Clear to Send Modem
-                                            // Interrupt Clear
+// Interrupt Clear
 
 //*****************************************************************************
 //
@@ -2987,7 +2987,7 @@
 //*****************************************************************************
 #define UART_CC_CS_M            0x0000000F  // UART Baud Clock Source
 #define UART_CC_CS_SYSCLK       0x00000000  // System clock (based on clock
-                                            // source and divisor factor)
+// source and divisor factor)
 #define UART_CC_CS_PIOSC        0x00000005  // PIOSC
 
 //*****************************************************************************
@@ -3024,7 +3024,7 @@
 //
 //*****************************************************************************
 #define I2C_MDR_DATA_M          0x000000FF  // This byte contains the data
-                                            // transferred during a transaction
+// transferred during a transaction
 #define I2C_MDR_DATA_S          0
 
 //*****************************************************************************
@@ -3050,7 +3050,7 @@
 //
 //*****************************************************************************
 #define I2C_MRIS_CLKRIS         0x00000002  // Clock Timeout Raw Interrupt
-                                            // Status
+// Status
 #define I2C_MRIS_RIS            0x00000001  // Master Raw Interrupt Status
 
 //*****************************************************************************
@@ -3059,7 +3059,7 @@
 //
 //*****************************************************************************
 #define I2C_MMIS_CLKMIS         0x00000002  // Clock Timeout Masked Interrupt
-                                            // Status
+// Status
 #define I2C_MMIS_MIS            0x00000001  // Masked Interrupt Status
 
 //*****************************************************************************
@@ -3153,9 +3153,9 @@
 //
 //*****************************************************************************
 #define I2C_SRIS_STOPRIS        0x00000004  // Stop Condition Raw Interrupt
-                                            // Status
+// Status
 #define I2C_SRIS_STARTRIS       0x00000002  // Start Condition Raw Interrupt
-                                            // Status
+// Status
 #define I2C_SRIS_DATARIS        0x00000001  // Data Raw Interrupt Status
 
 //*****************************************************************************
@@ -3164,9 +3164,9 @@
 //
 //*****************************************************************************
 #define I2C_SMIS_STOPMIS        0x00000004  // Stop Condition Masked Interrupt
-                                            // Status
+// Status
 #define I2C_SMIS_STARTMIS       0x00000002  // Start Condition Masked Interrupt
-                                            // Status
+// Status
 #define I2C_SMIS_DATAMIS        0x00000001  // Data Masked Interrupt Status
 
 //*****************************************************************************
@@ -3416,21 +3416,21 @@
 //
 //*****************************************************************************
 #define PWM_0_INTEN_TRCMPBD     0x00002000  // Trigger for Counter=PWMnCMPB
-                                            // Down
+// Down
 #define PWM_0_INTEN_TRCMPBU     0x00001000  // Trigger for Counter=PWMnCMPB Up
 #define PWM_0_INTEN_TRCMPAD     0x00000800  // Trigger for Counter=PWMnCMPA
-                                            // Down
+// Down
 #define PWM_0_INTEN_TRCMPAU     0x00000400  // Trigger for Counter=PWMnCMPA Up
 #define PWM_0_INTEN_TRCNTLOAD   0x00000200  // Trigger for Counter=PWMnLOAD
 #define PWM_0_INTEN_TRCNTZERO   0x00000100  // Trigger for Counter=0
 #define PWM_0_INTEN_INTCMPBD    0x00000020  // Interrupt for Counter=PWMnCMPB
-                                            // Down
+// Down
 #define PWM_0_INTEN_INTCMPBU    0x00000010  // Interrupt for Counter=PWMnCMPB
-                                            // Up
+// Up
 #define PWM_0_INTEN_INTCMPAD    0x00000008  // Interrupt for Counter=PWMnCMPA
-                                            // Down
+// Down
 #define PWM_0_INTEN_INTCMPAU    0x00000004  // Interrupt for Counter=PWMnCMPA
-                                            // Up
+// Up
 #define PWM_0_INTEN_INTCNTLOAD  0x00000002  // Interrupt for Counter=PWMnLOAD
 #define PWM_0_INTEN_INTCNTZERO  0x00000001  // Interrupt for Counter=0
 
@@ -3440,10 +3440,10 @@
 //
 //*****************************************************************************
 #define PWM_0_RIS_INTCMPBD      0x00000020  // Comparator B Down Interrupt
-                                            // Status
+// Status
 #define PWM_0_RIS_INTCMPBU      0x00000010  // Comparator B Up Interrupt Status
 #define PWM_0_RIS_INTCMPAD      0x00000008  // Comparator A Down Interrupt
-                                            // Status
+// Status
 #define PWM_0_RIS_INTCMPAU      0x00000004  // Comparator A Up Interrupt Status
 #define PWM_0_RIS_INTCNTLOAD    0x00000002  // Counter=Load Interrupt Status
 #define PWM_0_RIS_INTCNTZERO    0x00000001  // Counter=0 Interrupt Status
@@ -3679,21 +3679,21 @@
 //
 //*****************************************************************************
 #define PWM_1_INTEN_TRCMPBD     0x00002000  // Trigger for Counter=PWMnCMPB
-                                            // Down
+// Down
 #define PWM_1_INTEN_TRCMPBU     0x00001000  // Trigger for Counter=PWMnCMPB Up
 #define PWM_1_INTEN_TRCMPAD     0x00000800  // Trigger for Counter=PWMnCMPA
-                                            // Down
+// Down
 #define PWM_1_INTEN_TRCMPAU     0x00000400  // Trigger for Counter=PWMnCMPA Up
 #define PWM_1_INTEN_TRCNTLOAD   0x00000200  // Trigger for Counter=PWMnLOAD
 #define PWM_1_INTEN_TRCNTZERO   0x00000100  // Trigger for Counter=0
 #define PWM_1_INTEN_INTCMPBD    0x00000020  // Interrupt for Counter=PWMnCMPB
-                                            // Down
+// Down
 #define PWM_1_INTEN_INTCMPBU    0x00000010  // Interrupt for Counter=PWMnCMPB
-                                            // Up
+// Up
 #define PWM_1_INTEN_INTCMPAD    0x00000008  // Interrupt for Counter=PWMnCMPA
-                                            // Down
+// Down
 #define PWM_1_INTEN_INTCMPAU    0x00000004  // Interrupt for Counter=PWMnCMPA
-                                            // Up
+// Up
 #define PWM_1_INTEN_INTCNTLOAD  0x00000002  // Interrupt for Counter=PWMnLOAD
 #define PWM_1_INTEN_INTCNTZERO  0x00000001  // Interrupt for Counter=0
 
@@ -3703,10 +3703,10 @@
 //
 //*****************************************************************************
 #define PWM_1_RIS_INTCMPBD      0x00000020  // Comparator B Down Interrupt
-                                            // Status
+// Status
 #define PWM_1_RIS_INTCMPBU      0x00000010  // Comparator B Up Interrupt Status
 #define PWM_1_RIS_INTCMPAD      0x00000008  // Comparator A Down Interrupt
-                                            // Status
+// Status
 #define PWM_1_RIS_INTCMPAU      0x00000004  // Comparator A Up Interrupt Status
 #define PWM_1_RIS_INTCNTLOAD    0x00000002  // Counter=Load Interrupt Status
 #define PWM_1_RIS_INTCNTZERO    0x00000001  // Counter=0 Interrupt Status
@@ -3946,21 +3946,21 @@
 //
 //*****************************************************************************
 #define PWM_2_INTEN_TRCMPBD     0x00002000  // Trigger for Counter=PWMnCMPB
-                                            // Down
+// Down
 #define PWM_2_INTEN_TRCMPBU     0x00001000  // Trigger for Counter=PWMnCMPB Up
 #define PWM_2_INTEN_TRCMPAD     0x00000800  // Trigger for Counter=PWMnCMPA
-                                            // Down
+// Down
 #define PWM_2_INTEN_TRCMPAU     0x00000400  // Trigger for Counter=PWMnCMPA Up
 #define PWM_2_INTEN_TRCNTLOAD   0x00000200  // Trigger for Counter=PWMnLOAD
 #define PWM_2_INTEN_TRCNTZERO   0x00000100  // Trigger for Counter=0
 #define PWM_2_INTEN_INTCMPBD    0x00000020  // Interrupt for Counter=PWMnCMPB
-                                            // Down
+// Down
 #define PWM_2_INTEN_INTCMPBU    0x00000010  // Interrupt for Counter=PWMnCMPB
-                                            // Up
+// Up
 #define PWM_2_INTEN_INTCMPAD    0x00000008  // Interrupt for Counter=PWMnCMPA
-                                            // Down
+// Down
 #define PWM_2_INTEN_INTCMPAU    0x00000004  // Interrupt for Counter=PWMnCMPA
-                                            // Up
+// Up
 #define PWM_2_INTEN_INTCNTLOAD  0x00000002  // Interrupt for Counter=PWMnLOAD
 #define PWM_2_INTEN_INTCNTZERO  0x00000001  // Interrupt for Counter=0
 
@@ -3970,10 +3970,10 @@
 //
 //*****************************************************************************
 #define PWM_2_RIS_INTCMPBD      0x00000020  // Comparator B Down Interrupt
-                                            // Status
+// Status
 #define PWM_2_RIS_INTCMPBU      0x00000010  // Comparator B Up Interrupt Status
 #define PWM_2_RIS_INTCMPAD      0x00000008  // Comparator A Down Interrupt
-                                            // Status
+// Status
 #define PWM_2_RIS_INTCMPAU      0x00000004  // Comparator A Up Interrupt Status
 #define PWM_2_RIS_INTCNTLOAD    0x00000002  // Counter=Load Interrupt Status
 #define PWM_2_RIS_INTCNTZERO    0x00000001  // Counter=0 Interrupt Status
@@ -4213,21 +4213,21 @@
 //
 //*****************************************************************************
 #define PWM_3_INTEN_TRCMPBD     0x00002000  // Trigger for Counter=PWMnCMPB
-                                            // Down
+// Down
 #define PWM_3_INTEN_TRCMPBU     0x00001000  // Trigger for Counter=PWMnCMPB Up
 #define PWM_3_INTEN_TRCMPAD     0x00000800  // Trigger for Counter=PWMnCMPA
-                                            // Down
+// Down
 #define PWM_3_INTEN_TRCMPAU     0x00000400  // Trigger for Counter=PWMnCMPA Up
 #define PWM_3_INTEN_TRCNTLOAD   0x00000200  // Trigger for Counter=PWMnLOAD
 #define PWM_3_INTEN_TRCNTZERO   0x00000100  // Trigger for Counter=0
 #define PWM_3_INTEN_INTCMPBD    0x00000020  // Interrupt for Counter=PWMnCMPB
-                                            // Down
+// Down
 #define PWM_3_INTEN_INTCMPBU    0x00000010  // Interrupt for Counter=PWMnCMPB
-                                            // Up
+// Up
 #define PWM_3_INTEN_INTCMPAD    0x00000008  // Interrupt for Counter=PWMnCMPA
-                                            // Down
+// Down
 #define PWM_3_INTEN_INTCMPAU    0x00000004  // Interrupt for Counter=PWMnCMPA
-                                            // Up
+// Up
 #define PWM_3_INTEN_INTCNTLOAD  0x00000002  // Interrupt for Counter=PWMnLOAD
 #define PWM_3_INTEN_INTCNTZERO  0x00000001  // Interrupt for Counter=0
 
@@ -4237,10 +4237,10 @@
 //
 //*****************************************************************************
 #define PWM_3_RIS_INTCMPBD      0x00000020  // Comparator B Down Interrupt
-                                            // Status
+// Status
 #define PWM_3_RIS_INTCMPBU      0x00000010  // Comparator B Up Interrupt Status
 #define PWM_3_RIS_INTCMPAD      0x00000008  // Comparator A Down Interrupt
-                                            // Status
+// Status
 #define PWM_3_RIS_INTCMPAU      0x00000004  // Comparator A Up Interrupt Status
 #define PWM_3_RIS_INTCNTLOAD    0x00000002  // Counter=Load Interrupt Status
 #define PWM_3_RIS_INTCNTZERO    0x00000001  // Counter=0 Interrupt Status
@@ -4638,7 +4638,7 @@
 //
 //*****************************************************************************
 #define QEI_POS_M               0xFFFFFFFF  // Current Position Integrator
-                                            // Value
+// Value
 #define QEI_POS_S               0
 
 //*****************************************************************************
@@ -4647,7 +4647,7 @@
 //
 //*****************************************************************************
 #define QEI_MAXPOS_M            0xFFFFFFFF  // Maximum Position Integrator
-                                            // Value
+// Value
 #define QEI_MAXPOS_S            0
 
 //*****************************************************************************
@@ -4689,10 +4689,10 @@
 //*****************************************************************************
 #define QEI_INTEN_ERROR         0x00000008  // Phase Error Interrupt Enable
 #define QEI_INTEN_DIR           0x00000004  // Direction Change Interrupt
-                                            // Enable
+// Enable
 #define QEI_INTEN_TIMER         0x00000002  // Timer Expires Interrupt Enable
 #define QEI_INTEN_INDEX         0x00000001  // Index Pulse Detected Interrupt
-                                            // Enable
+// Enable
 
 //*****************************************************************************
 //
@@ -4721,15 +4721,15 @@
 //*****************************************************************************
 #define TIMER_CFG_M             0x00000007  // GPTM Configuration
 #define TIMER_CFG_32_BIT_TIMER  0x00000000  // For a 16/32-bit timer, this
-                                            // value selects the 32-bit timer
-                                            // configuration
+// value selects the 32-bit timer
+// configuration
 #define TIMER_CFG_32_BIT_RTC    0x00000001  // For a 16/32-bit timer, this
-                                            // value selects the 32-bit
-                                            // real-time clock (RTC) counter
-                                            // configuration
+// value selects the 32-bit
+// real-time clock (RTC) counter
+// configuration
 #define TIMER_CFG_16_BIT        0x00000004  // For a 16/32-bit timer, this
-                                            // value selects the 16-bit timer
-                                            // configuration
+// value selects the 16-bit timer
+// configuration
 
 //*****************************************************************************
 //
@@ -4737,19 +4737,19 @@
 //
 //*****************************************************************************
 #define TIMER_TAMR_TAPLO        0x00000800  // GPTM Timer A PWM Legacy
-                                            // Operation
+// Operation
 #define TIMER_TAMR_TAMRSU       0x00000400  // GPTM Timer A Match Register
-                                            // Update
+// Update
 #define TIMER_TAMR_TAPWMIE      0x00000200  // GPTM Timer A PWM Interrupt
-                                            // Enable
+// Enable
 #define TIMER_TAMR_TAILD        0x00000100  // GPTM Timer A Interval Load Write
 #define TIMER_TAMR_TASNAPS      0x00000080  // GPTM Timer A Snap-Shot Mode
 #define TIMER_TAMR_TAWOT        0x00000040  // GPTM Timer A Wait-on-Trigger
 #define TIMER_TAMR_TAMIE        0x00000020  // GPTM Timer A Match Interrupt
-                                            // Enable
+// Enable
 #define TIMER_TAMR_TACDIR       0x00000010  // GPTM Timer A Count Direction
 #define TIMER_TAMR_TAAMS        0x00000008  // GPTM Timer A Alternate Mode
-                                            // Select
+// Select
 #define TIMER_TAMR_TACMR        0x00000004  // GPTM Timer A Capture Mode
 #define TIMER_TAMR_TAMR_M       0x00000003  // GPTM Timer A Mode
 #define TIMER_TAMR_TAMR_1_SHOT  0x00000001  // One-Shot Timer mode
@@ -4762,19 +4762,19 @@
 //
 //*****************************************************************************
 #define TIMER_TBMR_TBPLO        0x00000800  // GPTM Timer B PWM Legacy
-                                            // Operation
+// Operation
 #define TIMER_TBMR_TBMRSU       0x00000400  // GPTM Timer B Match Register
-                                            // Update
+// Update
 #define TIMER_TBMR_TBPWMIE      0x00000200  // GPTM Timer B PWM Interrupt
-                                            // Enable
+// Enable
 #define TIMER_TBMR_TBILD        0x00000100  // GPTM Timer B Interval Load Write
 #define TIMER_TBMR_TBSNAPS      0x00000080  // GPTM Timer B Snap-Shot Mode
 #define TIMER_TBMR_TBWOT        0x00000040  // GPTM Timer B Wait-on-Trigger
 #define TIMER_TBMR_TBMIE        0x00000020  // GPTM Timer B Match Interrupt
-                                            // Enable
+// Enable
 #define TIMER_TBMR_TBCDIR       0x00000010  // GPTM Timer B Count Direction
 #define TIMER_TBMR_TBAMS        0x00000008  // GPTM Timer B Alternate Mode
-                                            // Select
+// Select
 #define TIMER_TBMR_TBCMR        0x00000004  // GPTM Timer B Capture Mode
 #define TIMER_TBMR_TBMR_M       0x00000003  // GPTM Timer B Mode
 #define TIMER_TBMR_TBMR_1_SHOT  0x00000001  // One-Shot Timer mode
@@ -4788,7 +4788,7 @@
 //*****************************************************************************
 #define TIMER_CTL_TBPWML        0x00004000  // GPTM Timer B PWM Output Level
 #define TIMER_CTL_TBOTE         0x00002000  // GPTM Timer B Output Trigger
-                                            // Enable
+// Enable
 #define TIMER_CTL_TBEVENT_M     0x00000C00  // GPTM Timer B Event Mode
 #define TIMER_CTL_TBEVENT_POS   0x00000000  // Positive edge
 #define TIMER_CTL_TBEVENT_NEG   0x00000400  // Negative edge
@@ -4797,7 +4797,7 @@
 #define TIMER_CTL_TBEN          0x00000100  // GPTM Timer B Enable
 #define TIMER_CTL_TAPWML        0x00000040  // GPTM Timer A PWM Output Level
 #define TIMER_CTL_TAOTE         0x00000020  // GPTM Timer A Output Trigger
-                                            // Enable
+// Enable
 #define TIMER_CTL_RTCEN         0x00000010  // GPTM RTC Stall Enable
 #define TIMER_CTL_TAEVENT_M     0x0000000C  // GPTM Timer A Event Mode
 #define TIMER_CTL_TAEVENT_POS   0x00000000  // Positive edge
@@ -4812,137 +4812,137 @@
 //
 //*****************************************************************************
 #define TIMER_SYNC_SYNCWT5_M    0x00C00000  // Synchronize GPTM 32/64-Bit Timer
-                                            // 5
+// 5
 #define TIMER_SYNC_SYNCWT5_NONE 0x00000000  // GPTM 32/64-Bit Timer 5 is not
-                                            // affected
+// affected
 #define TIMER_SYNC_SYNCWT5_TA   0x00400000  // A timeout event for Timer A of
-                                            // GPTM 32/64-Bit Timer 5 is
-                                            // triggered
+// GPTM 32/64-Bit Timer 5 is
+// triggered
 #define TIMER_SYNC_SYNCWT5_TB   0x00800000  // A timeout event for Timer B of
-                                            // GPTM 32/64-Bit Timer 5 is
-                                            // triggered
+// GPTM 32/64-Bit Timer 5 is
+// triggered
 #define TIMER_SYNC_SYNCWT5_TATB 0x00C00000  // A timeout event for both Timer A
-                                            // and Timer B of GPTM 32/64-Bit
-                                            // Timer 5 is triggered
+// and Timer B of GPTM 32/64-Bit
+// Timer 5 is triggered
 #define TIMER_SYNC_SYNCWT4_M    0x00300000  // Synchronize GPTM 32/64-Bit Timer
-                                            // 4
+// 4
 #define TIMER_SYNC_SYNCWT4_NONE 0x00000000  // GPTM 32/64-Bit Timer 4 is not
-                                            // affected
+// affected
 #define TIMER_SYNC_SYNCWT4_TA   0x00100000  // A timeout event for Timer A of
-                                            // GPTM 32/64-Bit Timer 4 is
-                                            // triggered
+// GPTM 32/64-Bit Timer 4 is
+// triggered
 #define TIMER_SYNC_SYNCWT4_TB   0x00200000  // A timeout event for Timer B of
-                                            // GPTM 32/64-Bit Timer 4 is
-                                            // triggered
+// GPTM 32/64-Bit Timer 4 is
+// triggered
 #define TIMER_SYNC_SYNCWT4_TATB 0x00300000  // A timeout event for both Timer A
-                                            // and Timer B of GPTM 32/64-Bit
-                                            // Timer 4 is triggered
+// and Timer B of GPTM 32/64-Bit
+// Timer 4 is triggered
 #define TIMER_SYNC_SYNCWT3_M    0x000C0000  // Synchronize GPTM 32/64-Bit Timer
-                                            // 3
+// 3
 #define TIMER_SYNC_SYNCWT3_NONE 0x00000000  // GPTM 32/64-Bit Timer 3 is not
-                                            // affected
+// affected
 #define TIMER_SYNC_SYNCWT3_TA   0x00040000  // A timeout event for Timer A of
-                                            // GPTM 32/64-Bit Timer 3 is
-                                            // triggered
+// GPTM 32/64-Bit Timer 3 is
+// triggered
 #define TIMER_SYNC_SYNCWT3_TB   0x00080000  // A timeout event for Timer B of
-                                            // GPTM 32/64-Bit Timer 3 is
-                                            // triggered
+// GPTM 32/64-Bit Timer 3 is
+// triggered
 #define TIMER_SYNC_SYNCWT3_TATB 0x000C0000  // A timeout event for both Timer A
-                                            // and Timer B of GPTM 32/64-Bit
-                                            // Timer 3 is triggered
+// and Timer B of GPTM 32/64-Bit
+// Timer 3 is triggered
 #define TIMER_SYNC_SYNCWT2_M    0x00030000  // Synchronize GPTM 32/64-Bit Timer
-                                            // 2
+// 2
 #define TIMER_SYNC_SYNCWT2_NONE 0x00000000  // GPTM 32/64-Bit Timer 2 is not
-                                            // affected
+// affected
 #define TIMER_SYNC_SYNCWT2_TA   0x00010000  // A timeout event for Timer A of
-                                            // GPTM 32/64-Bit Timer 2 is
-                                            // triggered
+// GPTM 32/64-Bit Timer 2 is
+// triggered
 #define TIMER_SYNC_SYNCWT2_TB   0x00020000  // A timeout event for Timer B of
-                                            // GPTM 32/64-Bit Timer 2 is
-                                            // triggered
+// GPTM 32/64-Bit Timer 2 is
+// triggered
 #define TIMER_SYNC_SYNCWT2_TATB 0x00030000  // A timeout event for both Timer A
-                                            // and Timer B of GPTM 32/64-Bit
-                                            // Timer 2 is triggered
+// and Timer B of GPTM 32/64-Bit
+// Timer 2 is triggered
 #define TIMER_SYNC_SYNCWT1_M    0x0000C000  // Synchronize GPTM 32/64-Bit Timer
-                                            // 1
+// 1
 #define TIMER_SYNC_SYNCWT1_NONE 0x00000000  // GPTM 32/64-Bit Timer 1 is not
-                                            // affected
+// affected
 #define TIMER_SYNC_SYNCWT1_TA   0x00004000  // A timeout event for Timer A of
-                                            // GPTM 32/64-Bit Timer 1 is
-                                            // triggered
+// GPTM 32/64-Bit Timer 1 is
+// triggered
 #define TIMER_SYNC_SYNCWT1_TB   0x00008000  // A timeout event for Timer B of
-                                            // GPTM 32/64-Bit Timer 1 is
-                                            // triggered
+// GPTM 32/64-Bit Timer 1 is
+// triggered
 #define TIMER_SYNC_SYNCWT1_TATB 0x0000C000  // A timeout event for both Timer A
-                                            // and Timer B of GPTM 32/64-Bit
-                                            // Timer 1 is triggered
+// and Timer B of GPTM 32/64-Bit
+// Timer 1 is triggered
 #define TIMER_SYNC_SYNCWT0_M    0x00003000  // Synchronize GPTM 32/64-Bit Timer
-                                            // 0
+// 0
 #define TIMER_SYNC_SYNCWT0_NONE 0x00000000  // GPTM 32/64-Bit Timer 0 is not
-                                            // affected
+// affected
 #define TIMER_SYNC_SYNCWT0_TA   0x00001000  // A timeout event for Timer A of
-                                            // GPTM 32/64-Bit Timer 0 is
-                                            // triggered
+// GPTM 32/64-Bit Timer 0 is
+// triggered
 #define TIMER_SYNC_SYNCWT0_TB   0x00002000  // A timeout event for Timer B of
-                                            // GPTM 32/64-Bit Timer 0 is
-                                            // triggered
+// GPTM 32/64-Bit Timer 0 is
+// triggered
 #define TIMER_SYNC_SYNCWT0_TATB 0x00003000  // A timeout event for both Timer A
-                                            // and Timer B of GPTM 32/64-Bit
-                                            // Timer 0 is triggered
+// and Timer B of GPTM 32/64-Bit
+// Timer 0 is triggered
 #define TIMER_SYNC_SYNCT5_M     0x00000C00  // Synchronize GPTM Timer 5
 #define TIMER_SYNC_SYNCT5_NONE  0x00000000  // GPTM5 is not affected
 #define TIMER_SYNC_SYNCT5_TA    0x00000400  // A timeout event for Timer A of
-                                            // GPTM5 is triggered
+// GPTM5 is triggered
 #define TIMER_SYNC_SYNCT5_TB    0x00000800  // A timeout event for Timer B of
-                                            // GPTM5 is triggered
+// GPTM5 is triggered
 #define TIMER_SYNC_SYNCT5_TATB  0x00000C00  // A timeout event for both Timer A
-                                            // and Timer B of GPTM5 is
-                                            // triggered
+// and Timer B of GPTM5 is
+// triggered
 #define TIMER_SYNC_SYNCT4_M     0x00000300  // Synchronize GPTM Timer 4
 #define TIMER_SYNC_SYNCT4_NONE  0x00000000  // GPTM4 is not affected
 #define TIMER_SYNC_SYNCT4_TA    0x00000100  // A timeout event for Timer A of
-                                            // GPTM4 is triggered
+// GPTM4 is triggered
 #define TIMER_SYNC_SYNCT4_TB    0x00000200  // A timeout event for Timer B of
-                                            // GPTM4 is triggered
+// GPTM4 is triggered
 #define TIMER_SYNC_SYNCT4_TATB  0x00000300  // A timeout event for both Timer A
-                                            // and Timer B of GPTM4 is
-                                            // triggered
+// and Timer B of GPTM4 is
+// triggered
 #define TIMER_SYNC_SYNCT3_M     0x000000C0  // Synchronize GPTM Timer 3
 #define TIMER_SYNC_SYNCT3_NONE  0x00000000  // GPTM3 is not affected
 #define TIMER_SYNC_SYNCT3_TA    0x00000040  // A timeout event for Timer A of
-                                            // GPTM3 is triggered
+// GPTM3 is triggered
 #define TIMER_SYNC_SYNCT3_TB    0x00000080  // A timeout event for Timer B of
-                                            // GPTM3 is triggered
+// GPTM3 is triggered
 #define TIMER_SYNC_SYNCT3_TATB  0x000000C0  // A timeout event for both Timer A
-                                            // and Timer B of GPTM3 is
-                                            // triggered
+// and Timer B of GPTM3 is
+// triggered
 #define TIMER_SYNC_SYNCT2_M     0x00000030  // Synchronize GPTM Timer 2
 #define TIMER_SYNC_SYNCT2_NONE  0x00000000  // GPTM2 is not affected
 #define TIMER_SYNC_SYNCT2_TA    0x00000010  // A timeout event for Timer A of
-                                            // GPTM2 is triggered
+// GPTM2 is triggered
 #define TIMER_SYNC_SYNCT2_TB    0x00000020  // A timeout event for Timer B of
-                                            // GPTM2 is triggered
+// GPTM2 is triggered
 #define TIMER_SYNC_SYNCT2_TATB  0x00000030  // A timeout event for both Timer A
-                                            // and Timer B of GPTM2 is
-                                            // triggered
+// and Timer B of GPTM2 is
+// triggered
 #define TIMER_SYNC_SYNCT1_M     0x0000000C  // Synchronize GPTM Timer 1
 #define TIMER_SYNC_SYNCT1_NONE  0x00000000  // GPTM1 is not affected
 #define TIMER_SYNC_SYNCT1_TA    0x00000004  // A timeout event for Timer A of
-                                            // GPTM1 is triggered
+// GPTM1 is triggered
 #define TIMER_SYNC_SYNCT1_TB    0x00000008  // A timeout event for Timer B of
-                                            // GPTM1 is triggered
+// GPTM1 is triggered
 #define TIMER_SYNC_SYNCT1_TATB  0x0000000C  // A timeout event for both Timer A
-                                            // and Timer B of GPTM1 is
-                                            // triggered
+// and Timer B of GPTM1 is
+// triggered
 #define TIMER_SYNC_SYNCT0_M     0x00000003  // Synchronize GPTM Timer 0
 #define TIMER_SYNC_SYNCT0_NONE  0x00000000  // GPTM0 is not affected
 #define TIMER_SYNC_SYNCT0_TA    0x00000001  // A timeout event for Timer A of
-                                            // GPTM0 is triggered
+// GPTM0 is triggered
 #define TIMER_SYNC_SYNCT0_TB    0x00000002  // A timeout event for Timer B of
-                                            // GPTM0 is triggered
+// GPTM0 is triggered
 #define TIMER_SYNC_SYNCT0_TATB  0x00000003  // A timeout event for both Timer A
-                                            // and Timer B of GPTM0 is
-                                            // triggered
+// and Timer B of GPTM0 is
+// triggered
 
 //*****************************************************************************
 //
@@ -4950,24 +4950,24 @@
 //
 //*****************************************************************************
 #define TIMER_IMR_WUEIM         0x00010000  // 32/64-Bit Wide GPTM Write Update
-                                            // Error Interrupt Mask
+// Error Interrupt Mask
 #define TIMER_IMR_TBMIM         0x00000800  // GPTM Timer B Match Interrupt
-                                            // Mask
+// Mask
 #define TIMER_IMR_CBEIM         0x00000400  // GPTM Timer B Capture Mode Event
-                                            // Interrupt Mask
+// Interrupt Mask
 #define TIMER_IMR_CBMIM         0x00000200  // GPTM Timer B Capture Mode Match
-                                            // Interrupt Mask
+// Interrupt Mask
 #define TIMER_IMR_TBTOIM        0x00000100  // GPTM Timer B Time-Out Interrupt
-                                            // Mask
+// Mask
 #define TIMER_IMR_TAMIM         0x00000010  // GPTM Timer A Match Interrupt
-                                            // Mask
+// Mask
 #define TIMER_IMR_RTCIM         0x00000008  // GPTM RTC Interrupt Mask
 #define TIMER_IMR_CAEIM         0x00000004  // GPTM Timer A Capture Mode Event
-                                            // Interrupt Mask
+// Interrupt Mask
 #define TIMER_IMR_CAMIM         0x00000002  // GPTM Timer A Capture Mode Match
-                                            // Interrupt Mask
+// Interrupt Mask
 #define TIMER_IMR_TATOIM        0x00000001  // GPTM Timer A Time-Out Interrupt
-                                            // Mask
+// Mask
 
 //*****************************************************************************
 //
@@ -4975,22 +4975,22 @@
 //
 //*****************************************************************************
 #define TIMER_RIS_WUERIS        0x00010000  // 32/64-Bit Wide GPTM Write Update
-                                            // Error Raw Interrupt Status
+// Error Raw Interrupt Status
 #define TIMER_RIS_TBMRIS        0x00000800  // GPTM Timer B Match Raw Interrupt
 #define TIMER_RIS_CBERIS        0x00000400  // GPTM Timer B Capture Mode Event
-                                            // Raw Interrupt
+// Raw Interrupt
 #define TIMER_RIS_CBMRIS        0x00000200  // GPTM Timer B Capture Mode Match
-                                            // Raw Interrupt
+// Raw Interrupt
 #define TIMER_RIS_TBTORIS       0x00000100  // GPTM Timer B Time-Out Raw
-                                            // Interrupt
+// Interrupt
 #define TIMER_RIS_TAMRIS        0x00000010  // GPTM Timer A Match Raw Interrupt
 #define TIMER_RIS_RTCRIS        0x00000008  // GPTM RTC Raw Interrupt
 #define TIMER_RIS_CAERIS        0x00000004  // GPTM Timer A Capture Mode Event
-                                            // Raw Interrupt
+// Raw Interrupt
 #define TIMER_RIS_CAMRIS        0x00000002  // GPTM Timer A Capture Mode Match
-                                            // Raw Interrupt
+// Raw Interrupt
 #define TIMER_RIS_TATORIS       0x00000001  // GPTM Timer A Time-Out Raw
-                                            // Interrupt
+// Interrupt
 
 //*****************************************************************************
 //
@@ -4998,24 +4998,24 @@
 //
 //*****************************************************************************
 #define TIMER_MIS_WUEMIS        0x00010000  // 32/64-Bit Wide GPTM Write Update
-                                            // Error Masked Interrupt Status
+// Error Masked Interrupt Status
 #define TIMER_MIS_TBMMIS        0x00000800  // GPTM Timer B Match Masked
-                                            // Interrupt
+// Interrupt
 #define TIMER_MIS_CBEMIS        0x00000400  // GPTM Timer B Capture Mode Event
-                                            // Masked Interrupt
+// Masked Interrupt
 #define TIMER_MIS_CBMMIS        0x00000200  // GPTM Timer B Capture Mode Match
-                                            // Masked Interrupt
+// Masked Interrupt
 #define TIMER_MIS_TBTOMIS       0x00000100  // GPTM Timer B Time-Out Masked
-                                            // Interrupt
+// Interrupt
 #define TIMER_MIS_TAMMIS        0x00000010  // GPTM Timer A Match Masked
-                                            // Interrupt
+// Interrupt
 #define TIMER_MIS_RTCMIS        0x00000008  // GPTM RTC Masked Interrupt
 #define TIMER_MIS_CAEMIS        0x00000004  // GPTM Timer A Capture Mode Event
-                                            // Masked Interrupt
+// Masked Interrupt
 #define TIMER_MIS_CAMMIS        0x00000002  // GPTM Timer A Capture Mode Match
-                                            // Masked Interrupt
+// Masked Interrupt
 #define TIMER_MIS_TATOMIS       0x00000001  // GPTM Timer A Time-Out Masked
-                                            // Interrupt
+// Interrupt
 
 //*****************************************************************************
 //
@@ -5023,24 +5023,24 @@
 //
 //*****************************************************************************
 #define TIMER_ICR_WUECINT       0x00010000  // 32/64-Bit Wide GPTM Write Update
-                                            // Error Interrupt Clear
+// Error Interrupt Clear
 #define TIMER_ICR_TBMCINT       0x00000800  // GPTM Timer B Match Interrupt
-                                            // Clear
+// Clear
 #define TIMER_ICR_CBECINT       0x00000400  // GPTM Timer B Capture Mode Event
-                                            // Interrupt Clear
+// Interrupt Clear
 #define TIMER_ICR_CBMCINT       0x00000200  // GPTM Timer B Capture Mode Match
-                                            // Interrupt Clear
+// Interrupt Clear
 #define TIMER_ICR_TBTOCINT      0x00000100  // GPTM Timer B Time-Out Interrupt
-                                            // Clear
+// Clear
 #define TIMER_ICR_TAMCINT       0x00000010  // GPTM Timer A Match Interrupt
-                                            // Clear
+// Clear
 #define TIMER_ICR_RTCCINT       0x00000008  // GPTM RTC Interrupt Clear
 #define TIMER_ICR_CAECINT       0x00000004  // GPTM Timer A Capture Mode Event
-                                            // Interrupt Clear
+// Interrupt Clear
 #define TIMER_ICR_CAMCINT       0x00000002  // GPTM Timer A Capture Mode Match
-                                            // Interrupt Clear
+// Interrupt Clear
 #define TIMER_ICR_TATOCINT      0x00000001  // GPTM Timer A Time-Out Raw
-                                            // Interrupt
+// Interrupt
 
 //*****************************************************************************
 //
@@ -5048,7 +5048,7 @@
 //
 //*****************************************************************************
 #define TIMER_TAILR_M           0xFFFFFFFF  // GPTM Timer A Interval Load
-                                            // Register
+// Register
 #define TIMER_TAILR_S           0
 
 //*****************************************************************************
@@ -5057,7 +5057,7 @@
 //
 //*****************************************************************************
 #define TIMER_TBILR_M           0xFFFFFFFF  // GPTM Timer B Interval Load
-                                            // Register
+// Register
 #define TIMER_TBILR_S           0
 
 //*****************************************************************************
@@ -5104,7 +5104,7 @@
 //
 //*****************************************************************************
 #define TIMER_TAPMR_TAPSMRH_M   0x0000FF00  // GPTM Timer A Prescale Match High
-                                            // Byte
+// Byte
 #define TIMER_TAPMR_TAPSMR_M    0x000000FF  // GPTM TimerA Prescale Match
 #define TIMER_TAPMR_TAPSMRH_S   8
 #define TIMER_TAPMR_TAPSMR_S    0
@@ -5115,7 +5115,7 @@
 //
 //*****************************************************************************
 #define TIMER_TBPMR_TBPSMRH_M   0x0000FF00  // GPTM Timer B Prescale Match High
-                                            // Byte
+// Byte
 #define TIMER_TBPMR_TBPSMR_M    0x000000FF  // GPTM TimerB Prescale Match
 #define TIMER_TBPMR_TBPSMRH_S   8
 #define TIMER_TBPMR_TBPSMR_S    0
@@ -5199,11 +5199,11 @@
 //*****************************************************************************
 #define TIMER_PP_SIZE_M         0x0000000F  // Count Size
 #define TIMER_PP_SIZE_16        0x00000000  // Timer A and Timer B counters are
-                                            // 16 bits each with an 8-bit
-                                            // prescale counter
+// 16 bits each with an 8-bit
+// prescale counter
 #define TIMER_PP_SIZE_32        0x00000001  // Timer A and Timer B counters are
-                                            // 32 bits each with a 16-bit
-                                            // prescale counter
+// 32 bits each with a 16-bit
+// prescale counter
 
 //*****************************************************************************
 //
@@ -5222,7 +5222,7 @@
 //
 //*****************************************************************************
 #define ADC_RIS_INRDC           0x00010000  // Digital Comparator Raw Interrupt
-                                            // Status
+// Status
 #define ADC_RIS_INR3            0x00000008  // SS3 Raw Interrupt Status
 #define ADC_RIS_INR2            0x00000004  // SS2 Raw Interrupt Status
 #define ADC_RIS_INR1            0x00000002  // SS1 Raw Interrupt Status
@@ -5234,13 +5234,13 @@
 //
 //*****************************************************************************
 #define ADC_IM_DCONSS3          0x00080000  // Digital Comparator Interrupt on
-                                            // SS3
+// SS3
 #define ADC_IM_DCONSS2          0x00040000  // Digital Comparator Interrupt on
-                                            // SS2
+// SS2
 #define ADC_IM_DCONSS1          0x00020000  // Digital Comparator Interrupt on
-                                            // SS1
+// SS1
 #define ADC_IM_DCONSS0          0x00010000  // Digital Comparator Interrupt on
-                                            // SS0
+// SS0
 #define ADC_IM_MASK3            0x00000008  // SS3 Interrupt Mask
 #define ADC_IM_MASK2            0x00000004  // SS2 Interrupt Mask
 #define ADC_IM_MASK1            0x00000002  // SS1 Interrupt Mask
@@ -5252,13 +5252,13 @@
 //
 //*****************************************************************************
 #define ADC_ISC_DCINSS3         0x00080000  // Digital Comparator Interrupt
-                                            // Status on SS3
+// Status on SS3
 #define ADC_ISC_DCINSS2         0x00040000  // Digital Comparator Interrupt
-                                            // Status on SS2
+// Status on SS2
 #define ADC_ISC_DCINSS1         0x00020000  // Digital Comparator Interrupt
-                                            // Status on SS1
+// Status on SS1
 #define ADC_ISC_DCINSS0         0x00010000  // Digital Comparator Interrupt
-                                            // Status on SS0
+// Status on SS0
 #define ADC_ISC_IN3             0x00000008  // SS3 Interrupt Status and Clear
 #define ADC_ISC_IN2             0x00000004  // SS2 Interrupt Status and Clear
 #define ADC_ISC_IN1             0x00000002  // SS1 Interrupt Status and Clear
@@ -5340,29 +5340,29 @@
 //
 //*****************************************************************************
 #define ADC_TSSEL_PS3_M         0x30000000  // Generator 3 PWM Module Trigger
-                                            // Select
+// Select
 #define ADC_TSSEL_PS3_0         0x00000000  // Use Generator 3 (and its
-                                            // trigger) in PWM module 0
+// trigger) in PWM module 0
 #define ADC_TSSEL_PS3_1         0x10000000  // Use Generator 3 (and its
-                                            // trigger) in PWM module 1
+// trigger) in PWM module 1
 #define ADC_TSSEL_PS2_M         0x00300000  // Generator 2 PWM Module Trigger
-                                            // Select
+// Select
 #define ADC_TSSEL_PS2_0         0x00000000  // Use Generator 2 (and its
-                                            // trigger) in PWM module 0
+// trigger) in PWM module 0
 #define ADC_TSSEL_PS2_1         0x00100000  // Use Generator 2 (and its
-                                            // trigger) in PWM module 1
+// trigger) in PWM module 1
 #define ADC_TSSEL_PS1_M         0x00003000  // Generator 1 PWM Module Trigger
-                                            // Select
+// Select
 #define ADC_TSSEL_PS1_0         0x00000000  // Use Generator 1 (and its
-                                            // trigger) in PWM module 0
+// trigger) in PWM module 0
 #define ADC_TSSEL_PS1_1         0x00001000  // Use Generator 1 (and its
-                                            // trigger) in PWM module 1
+// trigger) in PWM module 1
 #define ADC_TSSEL_PS0_M         0x00000030  // Generator 0 PWM Module Trigger
-                                            // Select
+// Select
 #define ADC_TSSEL_PS0_0         0x00000000  // Use Generator 0 (and its
-                                            // trigger) in PWM module 0
+// trigger) in PWM module 0
 #define ADC_TSSEL_PS0_1         0x00000010  // Use Generator 0 (and its
-                                            // trigger) in PWM module 1
+// trigger) in PWM module 1
 
 //*****************************************************************************
 //
@@ -5429,21 +5429,21 @@
 //
 //*****************************************************************************
 #define ADC_DCISC_DCINT7        0x00000080  // Digital Comparator 7 Interrupt
-                                            // Status and Clear
+// Status and Clear
 #define ADC_DCISC_DCINT6        0x00000040  // Digital Comparator 6 Interrupt
-                                            // Status and Clear
+// Status and Clear
 #define ADC_DCISC_DCINT5        0x00000020  // Digital Comparator 5 Interrupt
-                                            // Status and Clear
+// Status and Clear
 #define ADC_DCISC_DCINT4        0x00000010  // Digital Comparator 4 Interrupt
-                                            // Status and Clear
+// Status and Clear
 #define ADC_DCISC_DCINT3        0x00000008  // Digital Comparator 3 Interrupt
-                                            // Status and Clear
+// Status and Clear
 #define ADC_DCISC_DCINT2        0x00000004  // Digital Comparator 2 Interrupt
-                                            // Status and Clear
+// Status and Clear
 #define ADC_DCISC_DCINT1        0x00000002  // Digital Comparator 1 Interrupt
-                                            // Status and Clear
+// Status and Clear
 #define ADC_DCISC_DCINT0        0x00000001  // Digital Comparator 0 Interrupt
-                                            // Status and Clear
+// Status and Clear
 
 //*****************************************************************************
 //
@@ -5452,7 +5452,7 @@
 //*****************************************************************************
 #define ADC_CTL_VREF_M          0x00000001  // Voltage Reference Select
 #define ADC_CTL_VREF_INTERNAL   0x00000000  // VDDA and GNDA are the voltage
-                                            // references
+// references
 
 //*****************************************************************************
 //
@@ -5485,42 +5485,42 @@
 #define ADC_SSCTL0_IE7          0x40000000  // 8th Sample Interrupt Enable
 #define ADC_SSCTL0_END7         0x20000000  // 8th Sample is End of Sequence
 #define ADC_SSCTL0_D7           0x10000000  // 8th Sample Differential Input
-                                            // Select
+// Select
 #define ADC_SSCTL0_TS6          0x08000000  // 7th Sample Temp Sensor Select
 #define ADC_SSCTL0_IE6          0x04000000  // 7th Sample Interrupt Enable
 #define ADC_SSCTL0_END6         0x02000000  // 7th Sample is End of Sequence
 #define ADC_SSCTL0_D6           0x01000000  // 7th Sample Differential Input
-                                            // Select
+// Select
 #define ADC_SSCTL0_TS5          0x00800000  // 6th Sample Temp Sensor Select
 #define ADC_SSCTL0_IE5          0x00400000  // 6th Sample Interrupt Enable
 #define ADC_SSCTL0_END5         0x00200000  // 6th Sample is End of Sequence
 #define ADC_SSCTL0_D5           0x00100000  // 6th Sample Differential Input
-                                            // Select
+// Select
 #define ADC_SSCTL0_TS4          0x00080000  // 5th Sample Temp Sensor Select
 #define ADC_SSCTL0_IE4          0x00040000  // 5th Sample Interrupt Enable
 #define ADC_SSCTL0_END4         0x00020000  // 5th Sample is End of Sequence
 #define ADC_SSCTL0_D4           0x00010000  // 5th Sample Differential Input
-                                            // Select
+// Select
 #define ADC_SSCTL0_TS3          0x00008000  // 4th Sample Temp Sensor Select
 #define ADC_SSCTL0_IE3          0x00004000  // 4th Sample Interrupt Enable
 #define ADC_SSCTL0_END3         0x00002000  // 4th Sample is End of Sequence
 #define ADC_SSCTL0_D3           0x00001000  // 4th Sample Differential Input
-                                            // Select
+// Select
 #define ADC_SSCTL0_TS2          0x00000800  // 3rd Sample Temp Sensor Select
 #define ADC_SSCTL0_IE2          0x00000400  // 3rd Sample Interrupt Enable
 #define ADC_SSCTL0_END2         0x00000200  // 3rd Sample is End of Sequence
 #define ADC_SSCTL0_D2           0x00000100  // 3rd Sample Differential Input
-                                            // Select
+// Select
 #define ADC_SSCTL0_TS1          0x00000080  // 2nd Sample Temp Sensor Select
 #define ADC_SSCTL0_IE1          0x00000040  // 2nd Sample Interrupt Enable
 #define ADC_SSCTL0_END1         0x00000020  // 2nd Sample is End of Sequence
 #define ADC_SSCTL0_D1           0x00000010  // 2nd Sample Differential Input
-                                            // Select
+// Select
 #define ADC_SSCTL0_TS0          0x00000008  // 1st Sample Temp Sensor Select
 #define ADC_SSCTL0_IE0          0x00000004  // 1st Sample Interrupt Enable
 #define ADC_SSCTL0_END0         0x00000002  // 1st Sample is End of Sequence
 #define ADC_SSCTL0_D0           0x00000001  // 1st Sample Differential Input
-                                            // Select
+// Select
 
 //*****************************************************************************
 //
@@ -5548,21 +5548,21 @@
 //
 //*****************************************************************************
 #define ADC_SSOP0_S7DCOP        0x10000000  // Sample 7 Digital Comparator
-                                            // Operation
+// Operation
 #define ADC_SSOP0_S6DCOP        0x01000000  // Sample 6 Digital Comparator
-                                            // Operation
+// Operation
 #define ADC_SSOP0_S5DCOP        0x00100000  // Sample 5 Digital Comparator
-                                            // Operation
+// Operation
 #define ADC_SSOP0_S4DCOP        0x00010000  // Sample 4 Digital Comparator
-                                            // Operation
+// Operation
 #define ADC_SSOP0_S3DCOP        0x00001000  // Sample 3 Digital Comparator
-                                            // Operation
+// Operation
 #define ADC_SSOP0_S2DCOP        0x00000100  // Sample 2 Digital Comparator
-                                            // Operation
+// Operation
 #define ADC_SSOP0_S1DCOP        0x00000010  // Sample 1 Digital Comparator
-                                            // Operation
+// Operation
 #define ADC_SSOP0_S0DCOP        0x00000001  // Sample 0 Digital Comparator
-                                            // Operation
+// Operation
 
 //*****************************************************************************
 //
@@ -5570,21 +5570,21 @@
 //
 //*****************************************************************************
 #define ADC_SSDC0_S7DCSEL_M     0xF0000000  // Sample 7 Digital Comparator
-                                            // Select
+// Select
 #define ADC_SSDC0_S6DCSEL_M     0x0F000000  // Sample 6 Digital Comparator
-                                            // Select
+// Select
 #define ADC_SSDC0_S5DCSEL_M     0x00F00000  // Sample 5 Digital Comparator
-                                            // Select
+// Select
 #define ADC_SSDC0_S4DCSEL_M     0x000F0000  // Sample 4 Digital Comparator
-                                            // Select
+// Select
 #define ADC_SSDC0_S3DCSEL_M     0x0000F000  // Sample 3 Digital Comparator
-                                            // Select
+// Select
 #define ADC_SSDC0_S2DCSEL_M     0x00000F00  // Sample 2 Digital Comparator
-                                            // Select
+// Select
 #define ADC_SSDC0_S1DCSEL_M     0x000000F0  // Sample 1 Digital Comparator
-                                            // Select
+// Select
 #define ADC_SSDC0_S0DCSEL_M     0x0000000F  // Sample 0 Digital Comparator
-                                            // Select
+// Select
 #define ADC_SSDC0_S6DCSEL_S     24
 #define ADC_SSDC0_S5DCSEL_S     20
 #define ADC_SSDC0_S4DCSEL_S     16
@@ -5616,22 +5616,22 @@
 #define ADC_SSCTL1_IE3          0x00004000  // 4th Sample Interrupt Enable
 #define ADC_SSCTL1_END3         0x00002000  // 4th Sample is End of Sequence
 #define ADC_SSCTL1_D3           0x00001000  // 4th Sample Differential Input
-                                            // Select
+// Select
 #define ADC_SSCTL1_TS2          0x00000800  // 3rd Sample Temp Sensor Select
 #define ADC_SSCTL1_IE2          0x00000400  // 3rd Sample Interrupt Enable
 #define ADC_SSCTL1_END2         0x00000200  // 3rd Sample is End of Sequence
 #define ADC_SSCTL1_D2           0x00000100  // 3rd Sample Differential Input
-                                            // Select
+// Select
 #define ADC_SSCTL1_TS1          0x00000080  // 2nd Sample Temp Sensor Select
 #define ADC_SSCTL1_IE1          0x00000040  // 2nd Sample Interrupt Enable
 #define ADC_SSCTL1_END1         0x00000020  // 2nd Sample is End of Sequence
 #define ADC_SSCTL1_D1           0x00000010  // 2nd Sample Differential Input
-                                            // Select
+// Select
 #define ADC_SSCTL1_TS0          0x00000008  // 1st Sample Temp Sensor Select
 #define ADC_SSCTL1_IE0          0x00000004  // 1st Sample Interrupt Enable
 #define ADC_SSCTL1_END0         0x00000002  // 1st Sample is End of Sequence
 #define ADC_SSCTL1_D0           0x00000001  // 1st Sample Differential Input
-                                            // Select
+// Select
 
 //*****************************************************************************
 //
@@ -5659,13 +5659,13 @@
 //
 //*****************************************************************************
 #define ADC_SSOP1_S3DCOP        0x00001000  // Sample 3 Digital Comparator
-                                            // Operation
+// Operation
 #define ADC_SSOP1_S2DCOP        0x00000100  // Sample 2 Digital Comparator
-                                            // Operation
+// Operation
 #define ADC_SSOP1_S1DCOP        0x00000010  // Sample 1 Digital Comparator
-                                            // Operation
+// Operation
 #define ADC_SSOP1_S0DCOP        0x00000001  // Sample 0 Digital Comparator
-                                            // Operation
+// Operation
 
 //*****************************************************************************
 //
@@ -5673,13 +5673,13 @@
 //
 //*****************************************************************************
 #define ADC_SSDC1_S3DCSEL_M     0x0000F000  // Sample 3 Digital Comparator
-                                            // Select
+// Select
 #define ADC_SSDC1_S2DCSEL_M     0x00000F00  // Sample 2 Digital Comparator
-                                            // Select
+// Select
 #define ADC_SSDC1_S1DCSEL_M     0x000000F0  // Sample 1 Digital Comparator
-                                            // Select
+// Select
 #define ADC_SSDC1_S0DCSEL_M     0x0000000F  // Sample 0 Digital Comparator
-                                            // Select
+// Select
 #define ADC_SSDC1_S2DCSEL_S     8
 #define ADC_SSDC1_S1DCSEL_S     4
 #define ADC_SSDC1_S0DCSEL_S     0
@@ -5707,22 +5707,22 @@
 #define ADC_SSCTL2_IE3          0x00004000  // 4th Sample Interrupt Enable
 #define ADC_SSCTL2_END3         0x00002000  // 4th Sample is End of Sequence
 #define ADC_SSCTL2_D3           0x00001000  // 4th Sample Differential Input
-                                            // Select
+// Select
 #define ADC_SSCTL2_TS2          0x00000800  // 3rd Sample Temp Sensor Select
 #define ADC_SSCTL2_IE2          0x00000400  // 3rd Sample Interrupt Enable
 #define ADC_SSCTL2_END2         0x00000200  // 3rd Sample is End of Sequence
 #define ADC_SSCTL2_D2           0x00000100  // 3rd Sample Differential Input
-                                            // Select
+// Select
 #define ADC_SSCTL2_TS1          0x00000080  // 2nd Sample Temp Sensor Select
 #define ADC_SSCTL2_IE1          0x00000040  // 2nd Sample Interrupt Enable
 #define ADC_SSCTL2_END1         0x00000020  // 2nd Sample is End of Sequence
 #define ADC_SSCTL2_D1           0x00000010  // 2nd Sample Differential Input
-                                            // Select
+// Select
 #define ADC_SSCTL2_TS0          0x00000008  // 1st Sample Temp Sensor Select
 #define ADC_SSCTL2_IE0          0x00000004  // 1st Sample Interrupt Enable
 #define ADC_SSCTL2_END0         0x00000002  // 1st Sample is End of Sequence
 #define ADC_SSCTL2_D0           0x00000001  // 1st Sample Differential Input
-                                            // Select
+// Select
 
 //*****************************************************************************
 //
@@ -5750,13 +5750,13 @@
 //
 //*****************************************************************************
 #define ADC_SSOP2_S3DCOP        0x00001000  // Sample 3 Digital Comparator
-                                            // Operation
+// Operation
 #define ADC_SSOP2_S2DCOP        0x00000100  // Sample 2 Digital Comparator
-                                            // Operation
+// Operation
 #define ADC_SSOP2_S1DCOP        0x00000010  // Sample 1 Digital Comparator
-                                            // Operation
+// Operation
 #define ADC_SSOP2_S0DCOP        0x00000001  // Sample 0 Digital Comparator
-                                            // Operation
+// Operation
 
 //*****************************************************************************
 //
@@ -5764,13 +5764,13 @@
 //
 //*****************************************************************************
 #define ADC_SSDC2_S3DCSEL_M     0x0000F000  // Sample 3 Digital Comparator
-                                            // Select
+// Select
 #define ADC_SSDC2_S2DCSEL_M     0x00000F00  // Sample 2 Digital Comparator
-                                            // Select
+// Select
 #define ADC_SSDC2_S1DCSEL_M     0x000000F0  // Sample 1 Digital Comparator
-                                            // Select
+// Select
 #define ADC_SSDC2_S0DCSEL_M     0x0000000F  // Sample 0 Digital Comparator
-                                            // Select
+// Select
 #define ADC_SSDC2_S2DCSEL_S     8
 #define ADC_SSDC2_S1DCSEL_S     4
 #define ADC_SSDC2_S0DCSEL_S     0
@@ -5819,7 +5819,7 @@
 //
 //*****************************************************************************
 #define ADC_SSOP3_S0DCOP        0x00000001  // Sample 0 Digital Comparator
-                                            // Operation
+// Operation
 
 //*****************************************************************************
 //
@@ -5827,7 +5827,7 @@
 //
 //*****************************************************************************
 #define ADC_SSDC3_S0DCSEL_M     0x0000000F  // Sample 0 Digital Comparator
-                                            // Select
+// Select
 
 //*****************************************************************************
 //
@@ -6185,9 +6185,9 @@
 //
 //*****************************************************************************
 #define COMP_ACMIS_IN1          0x00000002  // Comparator 1 Masked Interrupt
-                                            // Status
+// Status
 #define COMP_ACMIS_IN0          0x00000001  // Comparator 0 Masked Interrupt
-                                            // Status
+// Status
 
 //*****************************************************************************
 //
@@ -6311,7 +6311,7 @@
 #define CAN_STS_EPASS           0x00000020  // Error Passive
 #define CAN_STS_RXOK            0x00000010  // Received a Message Successfully
 #define CAN_STS_TXOK            0x00000008  // Transmitted a Message
-                                            // Successfully
+// Successfully
 #define CAN_STS_LEC_M           0x00000007  // Last Error Code
 #define CAN_STS_LEC_NONE        0x00000000  // No Error
 #define CAN_STS_LEC_STUFF       0x00000001  // Stuff Error
@@ -6708,7 +6708,7 @@
 //*****************************************************************************
 #define EEPROM_EERDWRINC_VALUE_M                                              \
                                 0xFFFFFFFF  // EEPROM Read or Write Data with
-                                            // Increment
+// Increment
 #define EEPROM_EERDWRINC_VALUE_S                                              \
                                 0
 
@@ -6749,15 +6749,15 @@
 #define EEPROM_EEPROT_PROT_M    0x00000007  // Protection Control
 #define EEPROM_EEPROT_PROT_RWNPW                                              \
                                 0x00000000  // This setting is the default. If
-                                            // there is no password, the block
-                                            // is not protected and is readable
-                                            // and writable
+// there is no password, the block
+// is not protected and is readable
+// and writable
 #define EEPROM_EEPROT_PROT_RWPW 0x00000001  // If there is a password, the
-                                            // block is readable or writable
-                                            // only when unlocked
+// block is readable or writable
+// only when unlocked
 #define EEPROM_EEPROT_PROT_RONPW                                              \
                                 0x00000002  // If there is no password, the
-                                            // block is readable, not writable
+// block is readable, not writable
 
 //*****************************************************************************
 //
@@ -6820,17 +6820,17 @@
 //
 //*****************************************************************************
 #define SYSEXC_RIS_FPIXCRIS     0x00000020  // Floating-Point Inexact Exception
-                                            // Raw Interrupt Status
+// Raw Interrupt Status
 #define SYSEXC_RIS_FPOFCRIS     0x00000010  // Floating-Point Overflow
-                                            // Exception Raw Interrupt Status
+// Exception Raw Interrupt Status
 #define SYSEXC_RIS_FPUFCRIS     0x00000008  // Floating-Point Underflow
-                                            // Exception Raw Interrupt Status
+// Exception Raw Interrupt Status
 #define SYSEXC_RIS_FPIOCRIS     0x00000004  // Floating-Point Invalid Operation
-                                            // Raw Interrupt Status
+// Raw Interrupt Status
 #define SYSEXC_RIS_FPDZCRIS     0x00000002  // Floating-Point Divide By 0
-                                            // Exception Raw Interrupt Status
+// Exception Raw Interrupt Status
 #define SYSEXC_RIS_FPIDCRIS     0x00000001  // Floating-Point Input Denormal
-                                            // Exception Raw Interrupt Status
+// Exception Raw Interrupt Status
 
 //*****************************************************************************
 //
@@ -6838,17 +6838,17 @@
 //
 //*****************************************************************************
 #define SYSEXC_IM_FPIXCIM       0x00000020  // Floating-Point Inexact Exception
-                                            // Interrupt Mask
+// Interrupt Mask
 #define SYSEXC_IM_FPOFCIM       0x00000010  // Floating-Point Overflow
-                                            // Exception Interrupt Mask
+// Exception Interrupt Mask
 #define SYSEXC_IM_FPUFCIM       0x00000008  // Floating-Point Underflow
-                                            // Exception Interrupt Mask
+// Exception Interrupt Mask
 #define SYSEXC_IM_FPIOCIM       0x00000004  // Floating-Point Invalid Operation
-                                            // Interrupt Mask
+// Interrupt Mask
 #define SYSEXC_IM_FPDZCIM       0x00000002  // Floating-Point Divide By 0
-                                            // Exception Interrupt Mask
+// Exception Interrupt Mask
 #define SYSEXC_IM_FPIDCIM       0x00000001  // Floating-Point Input Denormal
-                                            // Exception Interrupt Mask
+// Exception Interrupt Mask
 
 //*****************************************************************************
 //
@@ -6856,21 +6856,21 @@
 //
 //*****************************************************************************
 #define SYSEXC_MIS_FPIXCMIS     0x00000020  // Floating-Point Inexact Exception
-                                            // Masked Interrupt Status
+// Masked Interrupt Status
 #define SYSEXC_MIS_FPOFCMIS     0x00000010  // Floating-Point Overflow
-                                            // Exception Masked Interrupt
-                                            // Status
+// Exception Masked Interrupt
+// Status
 #define SYSEXC_MIS_FPUFCMIS     0x00000008  // Floating-Point Underflow
-                                            // Exception Masked Interrupt
-                                            // Status
+// Exception Masked Interrupt
+// Status
 #define SYSEXC_MIS_FPIOCMIS     0x00000004  // Floating-Point Invalid Operation
-                                            // Masked Interrupt Status
+// Masked Interrupt Status
 #define SYSEXC_MIS_FPDZCMIS     0x00000002  // Floating-Point Divide By 0
-                                            // Exception Masked Interrupt
-                                            // Status
+// Exception Masked Interrupt
+// Status
 #define SYSEXC_MIS_FPIDCMIS     0x00000001  // Floating-Point Input Denormal
-                                            // Exception Masked Interrupt
-                                            // Status
+// Exception Masked Interrupt
+// Status
 
 //*****************************************************************************
 //
@@ -6878,17 +6878,17 @@
 //
 //*****************************************************************************
 #define SYSEXC_IC_FPIXCIC       0x00000020  // Floating-Point Inexact Exception
-                                            // Interrupt Clear
+// Interrupt Clear
 #define SYSEXC_IC_FPOFCIC       0x00000010  // Floating-Point Overflow
-                                            // Exception Interrupt Clear
+// Exception Interrupt Clear
 #define SYSEXC_IC_FPUFCIC       0x00000008  // Floating-Point Underflow
-                                            // Exception Interrupt Clear
+// Exception Interrupt Clear
 #define SYSEXC_IC_FPIOCIC       0x00000004  // Floating-Point Invalid Operation
-                                            // Interrupt Clear
+// Interrupt Clear
 #define SYSEXC_IC_FPDZCIC       0x00000002  // Floating-Point Divide By 0
-                                            // Exception Interrupt Clear
+// Exception Interrupt Clear
 #define SYSEXC_IC_FPIDCIC       0x00000001  // Floating-Point Input Denormal
-                                            // Exception Interrupt Clear
+// Exception Interrupt Clear
 
 //*****************************************************************************
 //
@@ -6923,13 +6923,13 @@
 //
 //*****************************************************************************
 #define FLASH_FCRIS_PROGRIS     0x00002000  // Program Verify Error Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define FLASH_FCRIS_ERRIS       0x00000800  // Erase Verify Error Raw Interrupt
-                                            // Status
+// Status
 #define FLASH_FCRIS_INVDRIS     0x00000400  // Invalid Data Raw Interrupt
-                                            // Status
+// Status
 #define FLASH_FCRIS_VOLTRIS     0x00000200  // Pump Voltage Raw Interrupt
-                                            // Status
+// Status
 #define FLASH_FCRIS_ERIS        0x00000004  // EEPROM Raw Interrupt Status
 #define FLASH_FCRIS_PRIS        0x00000002  // Programming Raw Interrupt Status
 #define FLASH_FCRIS_ARIS        0x00000001  // Access Raw Interrupt Status
@@ -6953,19 +6953,19 @@
 //
 //*****************************************************************************
 #define FLASH_FCMISC_PROGMISC   0x00002000  // PROGVER Masked Interrupt Status
-                                            // and Clear
+// and Clear
 #define FLASH_FCMISC_ERMISC     0x00000800  // ERVER Masked Interrupt Status
-                                            // and Clear
+// and Clear
 #define FLASH_FCMISC_INVDMISC   0x00000400  // Invalid Data Masked Interrupt
-                                            // Status and Clear
+// Status and Clear
 #define FLASH_FCMISC_VOLTMISC   0x00000200  // VOLT Masked Interrupt Status and
-                                            // Clear
+// Clear
 #define FLASH_FCMISC_EMISC      0x00000004  // EEPROM Masked Interrupt Status
-                                            // and Clear
+// and Clear
 #define FLASH_FCMISC_PMISC      0x00000002  // Programming Masked Interrupt
-                                            // Status and Clear
+// Status and Clear
 #define FLASH_FCMISC_AMISC      0x00000001  // Access Masked Interrupt Status
-                                            // and Clear
+// and Clear
 
 //*****************************************************************************
 //
@@ -7087,20 +7087,20 @@
 //*****************************************************************************
 #define SYSCTL_DID0_VER_M       0x70000000  // DID0 Version
 #define SYSCTL_DID0_VER_1       0x10000000  // Second version of the DID0
-                                            // register format.
+// register format.
 #define SYSCTL_DID0_CLASS_M     0x00FF0000  // Device Class
 #define SYSCTL_DID0_CLASS_TM4C123                                             \
                                 0x00050000  // Tiva TM4C123x and TM4E123x
-                                            // microcontrollers
+// microcontrollers
 #define SYSCTL_DID0_MAJ_M       0x0000FF00  // Major Revision
 #define SYSCTL_DID0_MAJ_REVA    0x00000000  // Revision A (initial device)
 #define SYSCTL_DID0_MAJ_REVB    0x00000100  // Revision B (first base layer
-                                            // revision)
+// revision)
 #define SYSCTL_DID0_MAJ_REVC    0x00000200  // Revision C (second base layer
-                                            // revision)
+// revision)
 #define SYSCTL_DID0_MIN_M       0x000000FF  // Minor Revision
 #define SYSCTL_DID0_MIN_0       0x00000000  // Initial device, or a major
-                                            // revision update
+// revision update
 #define SYSCTL_DID0_MIN_1       0x00000001  // First metal layer change
 #define SYSCTL_DID0_MIN_2       0x00000002  // Second metal layer change
 
@@ -7126,9 +7126,9 @@
 #define SYSCTL_DID1_TEMP_I      0x00000020  // Industrial temperature range
 #define SYSCTL_DID1_TEMP_E      0x00000040  // Extended temperature range
 #define SYSCTL_DID1_TEMP_IE     0x00000060  // Available in both industrial
-                                            // temperature range (-40C to 85C)
-                                            // and extended temperature range
-                                            // (-40C to 105C) devices. See
+// temperature range (-40C to 85C)
+// and extended temperature range
+// (-40C to 105C) devices. See
 #define SYSCTL_DID1_PKG_M       0x00000018  // Package Type
 #define SYSCTL_DID1_PKG_QFP     0x00000008  // QFP package
 #define SYSCTL_DID1_PKG_BGA     0x00000010  // BGA package
@@ -7177,15 +7177,15 @@
 #define SYSCTL_DC1_ADC0         0x00010000  // ADC Module 0 Present
 #define SYSCTL_DC1_MINSYSDIV_M  0x0000F000  // System Clock Divider
 #define SYSCTL_DC1_MINSYSDIV_80 0x00002000  // Specifies an 80-MHz CPU clock
-                                            // with a PLL divider of 2.5
+// with a PLL divider of 2.5
 #define SYSCTL_DC1_MINSYSDIV_50 0x00003000  // Specifies a 50-MHz CPU clock
-                                            // with a PLL divider of 4
+// with a PLL divider of 4
 #define SYSCTL_DC1_MINSYSDIV_40 0x00004000  // Specifies a 40-MHz CPU clock
-                                            // with a PLL divider of 5
+// with a PLL divider of 5
 #define SYSCTL_DC1_MINSYSDIV_25 0x00007000  // Specifies a 25-MHz clock with a
-                                            // PLL divider of 8
+// PLL divider of 8
 #define SYSCTL_DC1_MINSYSDIV_20 0x00009000  // Specifies a 20-MHz clock with a
-                                            // PLL divider of 10
+// PLL divider of 10
 #define SYSCTL_DC1_ADC1SPD_M    0x00000C00  // Max ADC1 Speed
 #define SYSCTL_DC1_ADC1SPD_125K 0x00000000  // 125K samples/second
 #define SYSCTL_DC1_ADC1SPD_250K 0x00000400  // 250K samples/second
@@ -7459,16 +7459,16 @@
 //
 //*****************************************************************************
 #define SYSCTL_RIS_BOR0RIS      0x00000800  // VDD under BOR0 Raw Interrupt
-                                            // Status
+// Status
 #define SYSCTL_RIS_VDDARIS      0x00000400  // VDDA Power OK Event Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define SYSCTL_RIS_MOSCPUPRIS   0x00000100  // MOSC Power Up Raw Interrupt
-                                            // Status
+// Status
 #define SYSCTL_RIS_PLLLRIS      0x00000040  // PLL Lock Raw Interrupt Status
 #define SYSCTL_RIS_MOFRIS       0x00000008  // Main Oscillator Failure Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define SYSCTL_RIS_BOR1RIS      0x00000002  // VDD under BOR1 Raw Interrupt
-                                            // Status
+// Status
 
 //*****************************************************************************
 //
@@ -7480,7 +7480,7 @@
 #define SYSCTL_IMC_MOSCPUPIM    0x00000100  // MOSC Power Up Interrupt Mask
 #define SYSCTL_IMC_PLLLIM       0x00000040  // PLL Lock Interrupt Mask
 #define SYSCTL_IMC_MOFIM        0x00000008  // Main Oscillator Failure
-                                            // Interrupt Mask
+// Interrupt Mask
 #define SYSCTL_IMC_BOR1IM       0x00000002  // VDD under BOR1 Interrupt Mask
 
 //*****************************************************************************
@@ -7489,16 +7489,16 @@
 //
 //*****************************************************************************
 #define SYSCTL_MISC_BOR0MIS     0x00000800  // VDD under BOR0 Masked Interrupt
-                                            // Status
+// Status
 #define SYSCTL_MISC_VDDAMIS     0x00000400  // VDDA Power OK Masked Interrupt
-                                            // Status
+// Status
 #define SYSCTL_MISC_MOSCPUPMIS  0x00000100  // MOSC Power Up Masked Interrupt
-                                            // Status
+// Status
 #define SYSCTL_MISC_PLLLMIS     0x00000040  // PLL Lock Masked Interrupt Status
 #define SYSCTL_MISC_MOFMIS      0x00000008  // Main Oscillator Failure Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define SYSCTL_MISC_BOR1MIS     0x00000002  // VDD under BOR1 Masked Interrupt
-                                            // Status
+// Status
 
 //*****************************************************************************
 //
@@ -7568,19 +7568,19 @@
 //
 //*****************************************************************************
 #define SYSCTL_GPIOHBCTL_PORTG  0x00000040  // Port G Advanced High-Performance
-                                            // Bus
+// Bus
 #define SYSCTL_GPIOHBCTL_PORTF  0x00000020  // Port F Advanced High-Performance
-                                            // Bus
+// Bus
 #define SYSCTL_GPIOHBCTL_PORTE  0x00000010  // Port E Advanced High-Performance
-                                            // Bus
+// Bus
 #define SYSCTL_GPIOHBCTL_PORTD  0x00000008  // Port D Advanced High-Performance
-                                            // Bus
+// Bus
 #define SYSCTL_GPIOHBCTL_PORTC  0x00000004  // Port C Advanced High-Performance
-                                            // Bus
+// Bus
 #define SYSCTL_GPIOHBCTL_PORTB  0x00000002  // Port B Advanced High-Performance
-                                            // Bus
+// Bus
 #define SYSCTL_GPIOHBCTL_PORTA  0x00000001  // Port A Advanced High-Performance
-                                            // Bus
+// Bus
 
 //*****************************************************************************
 //
@@ -7589,7 +7589,7 @@
 //*****************************************************************************
 #define SYSCTL_RCC2_USERCC2     0x80000000  // Use RCC2
 #define SYSCTL_RCC2_DIV400      0x40000000  // Divide PLL as 400 MHz vs. 200
-                                            // MHz
+// MHz
 #define SYSCTL_RCC2_SYSDIV2_M   0x1F800000  // System Clock Divisor 2
 #define SYSCTL_RCC2_SYSDIV2LSB  0x00400000  // Additional LSB for SYSDIV2
 #define SYSCTL_RCC2_PWRDN2      0x00002000  // Power-Down PLL 2
@@ -7902,7 +7902,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_NVMSTAT_FWB      0x00000001  // 32 Word Flash Write Buffer
-                                            // Available
+// Available
 
 //*****************************************************************************
 //
@@ -7964,17 +7964,17 @@
 //
 //*****************************************************************************
 #define SYSCTL_PPTIMER_P5       0x00000020  // 16/32-Bit General-Purpose Timer
-                                            // 5 Present
+// 5 Present
 #define SYSCTL_PPTIMER_P4       0x00000010  // 16/32-Bit General-Purpose Timer
-                                            // 4 Present
+// 4 Present
 #define SYSCTL_PPTIMER_P3       0x00000008  // 16/32-Bit General-Purpose Timer
-                                            // 3 Present
+// 3 Present
 #define SYSCTL_PPTIMER_P2       0x00000004  // 16/32-Bit General-Purpose Timer
-                                            // 2 Present
+// 2 Present
 #define SYSCTL_PPTIMER_P1       0x00000002  // 16/32-Bit General-Purpose Timer
-                                            // 1 Present
+// 1 Present
 #define SYSCTL_PPTIMER_P0       0x00000001  // 16/32-Bit General-Purpose Timer
-                                            // 0 Present
+// 0 Present
 
 //*****************************************************************************
 //
@@ -8108,17 +8108,17 @@
 //
 //*****************************************************************************
 #define SYSCTL_PPWTIMER_P5      0x00000020  // 32/64-Bit Wide General-Purpose
-                                            // Timer 5 Present
+// Timer 5 Present
 #define SYSCTL_PPWTIMER_P4      0x00000010  // 32/64-Bit Wide General-Purpose
-                                            // Timer 4 Present
+// Timer 4 Present
 #define SYSCTL_PPWTIMER_P3      0x00000008  // 32/64-Bit Wide General-Purpose
-                                            // Timer 3 Present
+// Timer 3 Present
 #define SYSCTL_PPWTIMER_P2      0x00000004  // 32/64-Bit Wide General-Purpose
-                                            // Timer 2 Present
+// Timer 2 Present
 #define SYSCTL_PPWTIMER_P1      0x00000002  // 32/64-Bit Wide General-Purpose
-                                            // Timer 1 Present
+// Timer 1 Present
 #define SYSCTL_PPWTIMER_P0      0x00000001  // 32/64-Bit Wide General-Purpose
-                                            // Timer 0 Present
+// Timer 0 Present
 
 //*****************************************************************************
 //
@@ -8134,17 +8134,17 @@
 //
 //*****************************************************************************
 #define SYSCTL_SRTIMER_R5       0x00000020  // 16/32-Bit General-Purpose Timer
-                                            // 5 Software Reset
+// 5 Software Reset
 #define SYSCTL_SRTIMER_R4       0x00000010  // 16/32-Bit General-Purpose Timer
-                                            // 4 Software Reset
+// 4 Software Reset
 #define SYSCTL_SRTIMER_R3       0x00000008  // 16/32-Bit General-Purpose Timer
-                                            // 3 Software Reset
+// 3 Software Reset
 #define SYSCTL_SRTIMER_R2       0x00000004  // 16/32-Bit General-Purpose Timer
-                                            // 2 Software Reset
+// 2 Software Reset
 #define SYSCTL_SRTIMER_R1       0x00000002  // 16/32-Bit General-Purpose Timer
-                                            // 1 Software Reset
+// 1 Software Reset
 #define SYSCTL_SRTIMER_R0       0x00000001  // 16/32-Bit General-Purpose Timer
-                                            // 0 Software Reset
+// 0 Software Reset
 
 //*****************************************************************************
 //
@@ -8224,7 +8224,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_SRACMP_R0        0x00000001  // Analog Comparator Module 0
-                                            // Software Reset
+// Software Reset
 
 //*****************************************************************************
 //
@@ -8257,17 +8257,17 @@
 //
 //*****************************************************************************
 #define SYSCTL_SRWTIMER_R5      0x00000020  // 32/64-Bit Wide General-Purpose
-                                            // Timer 5 Software Reset
+// Timer 5 Software Reset
 #define SYSCTL_SRWTIMER_R4      0x00000010  // 32/64-Bit Wide General-Purpose
-                                            // Timer 4 Software Reset
+// Timer 4 Software Reset
 #define SYSCTL_SRWTIMER_R3      0x00000008  // 32/64-Bit Wide General-Purpose
-                                            // Timer 3 Software Reset
+// Timer 3 Software Reset
 #define SYSCTL_SRWTIMER_R2      0x00000004  // 32/64-Bit Wide General-Purpose
-                                            // Timer 2 Software Reset
+// Timer 2 Software Reset
 #define SYSCTL_SRWTIMER_R1      0x00000002  // 32/64-Bit Wide General-Purpose
-                                            // Timer 1 Software Reset
+// Timer 1 Software Reset
 #define SYSCTL_SRWTIMER_R0      0x00000001  // 32/64-Bit Wide General-Purpose
-                                            // Timer 0 Software Reset
+// Timer 0 Software Reset
 
 //*****************************************************************************
 //
@@ -8275,9 +8275,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCWD_R1        0x00000002  // Watchdog Timer 1 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCWD_R0        0x00000001  // Watchdog Timer 0 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8286,17 +8286,17 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCTIMER_R5     0x00000020  // 16/32-Bit General-Purpose Timer
-                                            // 5 Run Mode Clock Gating Control
+// 5 Run Mode Clock Gating Control
 #define SYSCTL_RCGCTIMER_R4     0x00000010  // 16/32-Bit General-Purpose Timer
-                                            // 4 Run Mode Clock Gating Control
+// 4 Run Mode Clock Gating Control
 #define SYSCTL_RCGCTIMER_R3     0x00000008  // 16/32-Bit General-Purpose Timer
-                                            // 3 Run Mode Clock Gating Control
+// 3 Run Mode Clock Gating Control
 #define SYSCTL_RCGCTIMER_R2     0x00000004  // 16/32-Bit General-Purpose Timer
-                                            // 2 Run Mode Clock Gating Control
+// 2 Run Mode Clock Gating Control
 #define SYSCTL_RCGCTIMER_R1     0x00000002  // 16/32-Bit General-Purpose Timer
-                                            // 1 Run Mode Clock Gating Control
+// 1 Run Mode Clock Gating Control
 #define SYSCTL_RCGCTIMER_R0     0x00000001  // 16/32-Bit General-Purpose Timer
-                                            // 0 Run Mode Clock Gating Control
+// 0 Run Mode Clock Gating Control
 
 //*****************************************************************************
 //
@@ -8305,19 +8305,19 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCGPIO_R6      0x00000040  // GPIO Port G Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R5      0x00000020  // GPIO Port F Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R4      0x00000010  // GPIO Port E Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R3      0x00000008  // GPIO Port D Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R2      0x00000004  // GPIO Port C Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R1      0x00000002  // GPIO Port B Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R0      0x00000001  // GPIO Port A Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8325,7 +8325,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCDMA_R0       0x00000001  // uDMA Module Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8334,21 +8334,21 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCUART_R7      0x00000080  // UART Module 7 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCUART_R6      0x00000040  // UART Module 6 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCUART_R5      0x00000020  // UART Module 5 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCUART_R4      0x00000010  // UART Module 4 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCUART_R3      0x00000008  // UART Module 3 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCUART_R2      0x00000004  // UART Module 2 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCUART_R1      0x00000002  // UART Module 1 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCUART_R0      0x00000001  // UART Module 0 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8356,13 +8356,13 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCSSI_R3       0x00000008  // SSI Module 3 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCSSI_R2       0x00000004  // SSI Module 2 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCSSI_R1       0x00000002  // SSI Module 1 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCSSI_R0       0x00000001  // SSI Module 0 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8370,17 +8370,17 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCI2C_R5       0x00000020  // I2C Module 5 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCI2C_R4       0x00000010  // I2C Module 4 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCI2C_R3       0x00000008  // I2C Module 3 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCI2C_R2       0x00000004  // I2C Module 2 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCI2C_R1       0x00000002  // I2C Module 1 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCI2C_R0       0x00000001  // I2C Module 0 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8388,9 +8388,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCCAN_R1       0x00000002  // CAN Module 1 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCCAN_R0       0x00000001  // CAN Module 0 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8398,9 +8398,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCADC_R1       0x00000002  // ADC Module 1 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCADC_R0       0x00000001  // ADC Module 0 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8409,7 +8409,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCACMP_R0      0x00000001  // Analog Comparator Module 0 Run
-                                            // Mode Clock Gating Control
+// Mode Clock Gating Control
 
 //*****************************************************************************
 //
@@ -8417,9 +8417,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCPWM_R1       0x00000002  // PWM Module 1 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCPWM_R0       0x00000001  // PWM Module 0 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8427,9 +8427,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCQEI_R1       0x00000002  // QEI Module 1 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCQEI_R0       0x00000001  // QEI Module 0 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8438,7 +8438,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCEEPROM_R0    0x00000001  // EEPROM Module Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8447,23 +8447,23 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCWTIMER_R5    0x00000020  // 32/64-Bit Wide General-Purpose
-                                            // Timer 5 Run Mode Clock Gating
-                                            // Control
+// Timer 5 Run Mode Clock Gating
+// Control
 #define SYSCTL_RCGCWTIMER_R4    0x00000010  // 32/64-Bit Wide General-Purpose
-                                            // Timer 4 Run Mode Clock Gating
-                                            // Control
+// Timer 4 Run Mode Clock Gating
+// Control
 #define SYSCTL_RCGCWTIMER_R3    0x00000008  // 32/64-Bit Wide General-Purpose
-                                            // Timer 3 Run Mode Clock Gating
-                                            // Control
+// Timer 3 Run Mode Clock Gating
+// Control
 #define SYSCTL_RCGCWTIMER_R2    0x00000004  // 32/64-Bit Wide General-Purpose
-                                            // Timer 2 Run Mode Clock Gating
-                                            // Control
+// Timer 2 Run Mode Clock Gating
+// Control
 #define SYSCTL_RCGCWTIMER_R1    0x00000002  // 32/64-Bit Wide General-Purpose
-                                            // Timer 1 Run Mode Clock Gating
-                                            // Control
+// Timer 1 Run Mode Clock Gating
+// Control
 #define SYSCTL_RCGCWTIMER_R0    0x00000001  // 32/64-Bit Wide General-Purpose
-                                            // Timer 0 Run Mode Clock Gating
-                                            // Control
+// Timer 0 Run Mode Clock Gating
+// Control
 
 //*****************************************************************************
 //
@@ -8471,9 +8471,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCWD_S1        0x00000002  // Watchdog Timer 1 Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_SCGCWD_S0        0x00000001  // Watchdog Timer 0 Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -8482,23 +8482,23 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCTIMER_S5     0x00000020  // 16/32-Bit General-Purpose Timer
-                                            // 5 Sleep Mode Clock Gating
-                                            // Control
+// 5 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCTIMER_S4     0x00000010  // 16/32-Bit General-Purpose Timer
-                                            // 4 Sleep Mode Clock Gating
-                                            // Control
+// 4 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCTIMER_S3     0x00000008  // 16/32-Bit General-Purpose Timer
-                                            // 3 Sleep Mode Clock Gating
-                                            // Control
+// 3 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCTIMER_S2     0x00000004  // 16/32-Bit General-Purpose Timer
-                                            // 2 Sleep Mode Clock Gating
-                                            // Control
+// 2 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCTIMER_S1     0x00000002  // 16/32-Bit General-Purpose Timer
-                                            // 1 Sleep Mode Clock Gating
-                                            // Control
+// 1 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCTIMER_S0     0x00000001  // 16/32-Bit General-Purpose Timer
-                                            // 0 Sleep Mode Clock Gating
-                                            // Control
+// 0 Sleep Mode Clock Gating
+// Control
 
 //*****************************************************************************
 //
@@ -8507,19 +8507,19 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCGPIO_S6      0x00000040  // GPIO Port G Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S5      0x00000020  // GPIO Port F Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S4      0x00000010  // GPIO Port E Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S3      0x00000008  // GPIO Port D Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S2      0x00000004  // GPIO Port C Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S1      0x00000002  // GPIO Port B Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S0      0x00000001  // GPIO Port A Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8527,7 +8527,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCDMA_S0       0x00000001  // uDMA Module Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8536,21 +8536,21 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCUART_S7      0x00000080  // UART Module 7 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCUART_S6      0x00000040  // UART Module 6 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCUART_S5      0x00000020  // UART Module 5 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCUART_S4      0x00000010  // UART Module 4 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCUART_S3      0x00000008  // UART Module 3 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCUART_S2      0x00000004  // UART Module 2 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCUART_S1      0x00000002  // UART Module 1 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCUART_S0      0x00000001  // UART Module 0 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8558,13 +8558,13 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCSSI_S3       0x00000008  // SSI Module 3 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCSSI_S2       0x00000004  // SSI Module 2 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCSSI_S1       0x00000002  // SSI Module 1 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCSSI_S0       0x00000001  // SSI Module 0 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8572,17 +8572,17 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCI2C_S5       0x00000020  // I2C Module 5 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCI2C_S4       0x00000010  // I2C Module 4 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCI2C_S3       0x00000008  // I2C Module 3 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCI2C_S2       0x00000004  // I2C Module 2 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCI2C_S1       0x00000002  // I2C Module 1 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCI2C_S0       0x00000001  // I2C Module 0 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8590,9 +8590,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCCAN_S1       0x00000002  // CAN Module 1 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCCAN_S0       0x00000001  // CAN Module 0 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8600,9 +8600,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCADC_S1       0x00000002  // ADC Module 1 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCADC_S0       0x00000001  // ADC Module 0 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8611,7 +8611,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCACMP_S0      0x00000001  // Analog Comparator Module 0 Sleep
-                                            // Mode Clock Gating Control
+// Mode Clock Gating Control
 
 //*****************************************************************************
 //
@@ -8619,9 +8619,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCPWM_S1       0x00000002  // PWM Module 1 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCPWM_S0       0x00000001  // PWM Module 0 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8629,9 +8629,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCQEI_S1       0x00000002  // QEI Module 1 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCQEI_S0       0x00000001  // QEI Module 0 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8640,7 +8640,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCEEPROM_S0    0x00000001  // EEPROM Module Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8649,23 +8649,23 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCWTIMER_S5    0x00000020  // 32/64-Bit Wide General-Purpose
-                                            // Timer 5 Sleep Mode Clock Gating
-                                            // Control
+// Timer 5 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCWTIMER_S4    0x00000010  // 32/64-Bit Wide General-Purpose
-                                            // Timer 4 Sleep Mode Clock Gating
-                                            // Control
+// Timer 4 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCWTIMER_S3    0x00000008  // 32/64-Bit Wide General-Purpose
-                                            // Timer 3 Sleep Mode Clock Gating
-                                            // Control
+// Timer 3 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCWTIMER_S2    0x00000004  // 32/64-Bit Wide General-Purpose
-                                            // Timer 2 Sleep Mode Clock Gating
-                                            // Control
+// Timer 2 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCWTIMER_S1    0x00000002  // 32/64-Bit Wide General-Purpose
-                                            // Timer 1 Sleep Mode Clock Gating
-                                            // Control
+// Timer 1 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCWTIMER_S0    0x00000001  // 32/64-Bit Wide General-Purpose
-                                            // Timer 0 Sleep Mode Clock Gating
-                                            // Control
+// Timer 0 Sleep Mode Clock Gating
+// Control
 
 //*****************************************************************************
 //
@@ -8673,9 +8673,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCWD_D1        0x00000002  // Watchdog Timer 1 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCWD_D0        0x00000001  // Watchdog Timer 0 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -8684,23 +8684,23 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCTIMER_D5     0x00000020  // 16/32-Bit General-Purpose Timer
-                                            // 5 Deep-Sleep Mode Clock Gating
-                                            // Control
+// 5 Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCTIMER_D4     0x00000010  // 16/32-Bit General-Purpose Timer
-                                            // 4 Deep-Sleep Mode Clock Gating
-                                            // Control
+// 4 Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCTIMER_D3     0x00000008  // 16/32-Bit General-Purpose Timer
-                                            // 3 Deep-Sleep Mode Clock Gating
-                                            // Control
+// 3 Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCTIMER_D2     0x00000004  // 16/32-Bit General-Purpose Timer
-                                            // 2 Deep-Sleep Mode Clock Gating
-                                            // Control
+// 2 Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCTIMER_D1     0x00000002  // 16/32-Bit General-Purpose Timer
-                                            // 1 Deep-Sleep Mode Clock Gating
-                                            // Control
+// 1 Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCTIMER_D0     0x00000001  // 16/32-Bit General-Purpose Timer
-                                            // 0 Deep-Sleep Mode Clock Gating
-                                            // Control
+// 0 Deep-Sleep Mode Clock Gating
+// Control
 
 //*****************************************************************************
 //
@@ -8709,19 +8709,19 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCGPIO_D6      0x00000040  // GPIO Port G Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D5      0x00000020  // GPIO Port F Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D4      0x00000010  // GPIO Port E Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D3      0x00000008  // GPIO Port D Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D2      0x00000004  // GPIO Port C Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D1      0x00000002  // GPIO Port B Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D0      0x00000001  // GPIO Port A Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -8729,7 +8729,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCDMA_D0       0x00000001  // uDMA Module Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -8738,21 +8738,21 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCUART_D7      0x00000080  // UART Module 7 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCUART_D6      0x00000040  // UART Module 6 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCUART_D5      0x00000020  // UART Module 5 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCUART_D4      0x00000010  // UART Module 4 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCUART_D3      0x00000008  // UART Module 3 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCUART_D2      0x00000004  // UART Module 2 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCUART_D1      0x00000002  // UART Module 1 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCUART_D0      0x00000001  // UART Module 0 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -8760,13 +8760,13 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCSSI_D3       0x00000008  // SSI Module 3 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCSSI_D2       0x00000004  // SSI Module 2 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCSSI_D1       0x00000002  // SSI Module 1 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCSSI_D0       0x00000001  // SSI Module 0 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -8774,17 +8774,17 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCI2C_D5       0x00000020  // I2C Module 5 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCI2C_D4       0x00000010  // I2C Module 4 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCI2C_D3       0x00000008  // I2C Module 3 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCI2C_D2       0x00000004  // I2C Module 2 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCI2C_D1       0x00000002  // I2C Module 1 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCI2C_D0       0x00000001  // I2C Module 0 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -8792,9 +8792,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCCAN_D1       0x00000002  // CAN Module 1 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCCAN_D0       0x00000001  // CAN Module 0 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -8802,9 +8802,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCADC_D1       0x00000002  // ADC Module 1 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCADC_D0       0x00000001  // ADC Module 0 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -8813,8 +8813,8 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCACMP_D0      0x00000001  // Analog Comparator Module 0
-                                            // Deep-Sleep Mode Clock Gating
-                                            // Control
+// Deep-Sleep Mode Clock Gating
+// Control
 
 //*****************************************************************************
 //
@@ -8822,9 +8822,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCPWM_D1       0x00000002  // PWM Module 1 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCPWM_D0       0x00000001  // PWM Module 0 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -8832,9 +8832,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCQEI_D1       0x00000002  // QEI Module 1 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCQEI_D0       0x00000001  // QEI Module 0 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -8843,7 +8843,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCEEPROM_D0    0x00000001  // EEPROM Module Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -8852,23 +8852,23 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCWTIMER_D5    0x00000020  // 32/64-Bit Wide General-Purpose
-                                            // Timer 5 Deep-Sleep Mode Clock
-                                            // Gating Control
+// Timer 5 Deep-Sleep Mode Clock
+// Gating Control
 #define SYSCTL_DCGCWTIMER_D4    0x00000010  // 32/64-Bit Wide General-Purpose
-                                            // Timer 4 Deep-Sleep Mode Clock
-                                            // Gating Control
+// Timer 4 Deep-Sleep Mode Clock
+// Gating Control
 #define SYSCTL_DCGCWTIMER_D3    0x00000008  // 32/64-Bit Wide General-Purpose
-                                            // Timer 3 Deep-Sleep Mode Clock
-                                            // Gating Control
+// Timer 3 Deep-Sleep Mode Clock
+// Gating Control
 #define SYSCTL_DCGCWTIMER_D2    0x00000004  // 32/64-Bit Wide General-Purpose
-                                            // Timer 2 Deep-Sleep Mode Clock
-                                            // Gating Control
+// Timer 2 Deep-Sleep Mode Clock
+// Gating Control
 #define SYSCTL_DCGCWTIMER_D1    0x00000002  // 32/64-Bit Wide General-Purpose
-                                            // Timer 1 Deep-Sleep Mode Clock
-                                            // Gating Control
+// Timer 1 Deep-Sleep Mode Clock
+// Gating Control
 #define SYSCTL_DCGCWTIMER_D0    0x00000001  // 32/64-Bit Wide General-Purpose
-                                            // Timer 0 Deep-Sleep Mode Clock
-                                            // Gating Control
+// Timer 0 Deep-Sleep Mode Clock
+// Gating Control
 
 //*****************************************************************************
 //
@@ -8876,9 +8876,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_PRWD_R1          0x00000002  // Watchdog Timer 1 Peripheral
-                                            // Ready
+// Ready
 #define SYSCTL_PRWD_R0          0x00000001  // Watchdog Timer 0 Peripheral
-                                            // Ready
+// Ready
 
 //*****************************************************************************
 //
@@ -8886,17 +8886,17 @@
 //
 //*****************************************************************************
 #define SYSCTL_PRTIMER_R5       0x00000020  // 16/32-Bit General-Purpose Timer
-                                            // 5 Peripheral Ready
+// 5 Peripheral Ready
 #define SYSCTL_PRTIMER_R4       0x00000010  // 16/32-Bit General-Purpose Timer
-                                            // 4 Peripheral Ready
+// 4 Peripheral Ready
 #define SYSCTL_PRTIMER_R3       0x00000008  // 16/32-Bit General-Purpose Timer
-                                            // 3 Peripheral Ready
+// 3 Peripheral Ready
 #define SYSCTL_PRTIMER_R2       0x00000004  // 16/32-Bit General-Purpose Timer
-                                            // 2 Peripheral Ready
+// 2 Peripheral Ready
 #define SYSCTL_PRTIMER_R1       0x00000002  // 16/32-Bit General-Purpose Timer
-                                            // 1 Peripheral Ready
+// 1 Peripheral Ready
 #define SYSCTL_PRTIMER_R0       0x00000001  // 16/32-Bit General-Purpose Timer
-                                            // 0 Peripheral Ready
+// 0 Peripheral Ready
 
 //*****************************************************************************
 //
@@ -8976,7 +8976,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_PRACMP_R0        0x00000001  // Analog Comparator Module 0
-                                            // Peripheral Ready
+// Peripheral Ready
 
 //*****************************************************************************
 //
@@ -9009,17 +9009,17 @@
 //
 //*****************************************************************************
 #define SYSCTL_PRWTIMER_R5      0x00000020  // 32/64-Bit Wide General-Purpose
-                                            // Timer 5 Peripheral Ready
+// Timer 5 Peripheral Ready
 #define SYSCTL_PRWTIMER_R4      0x00000010  // 32/64-Bit Wide General-Purpose
-                                            // Timer 4 Peripheral Ready
+// Timer 4 Peripheral Ready
 #define SYSCTL_PRWTIMER_R3      0x00000008  // 32/64-Bit Wide General-Purpose
-                                            // Timer 3 Peripheral Ready
+// Timer 3 Peripheral Ready
 #define SYSCTL_PRWTIMER_R2      0x00000004  // 32/64-Bit Wide General-Purpose
-                                            // Timer 2 Peripheral Ready
+// Timer 2 Peripheral Ready
 #define SYSCTL_PRWTIMER_R1      0x00000002  // 32/64-Bit Wide General-Purpose
-                                            // Timer 1 Peripheral Ready
+// Timer 1 Peripheral Ready
 #define SYSCTL_PRWTIMER_R0      0x00000001  // 32/64-Bit Wide General-Purpose
-                                            // Timer 0 Peripheral Ready
+// Timer 0 Peripheral Ready
 
 //*****************************************************************************
 //
@@ -9039,7 +9039,7 @@
 #define UDMA_STAT_STATE_WR_DSTDAT                                             \
                                 0x00000050  // Writing destination data
 #define UDMA_STAT_STATE_WAIT    0x00000060  // Waiting for uDMA request to
-                                            // clear
+// clear
 #define UDMA_STAT_STATE_WR_CTRL 0x00000070  // Writing channel controller data
 #define UDMA_STAT_STATE_STALL   0x00000080  // Stalled
 #define UDMA_STAT_STATE_DONE    0x00000090  // Done
@@ -9068,7 +9068,7 @@
 //
 //*****************************************************************************
 #define UDMA_ALTBASE_ADDR_M     0xFFFFFFFF  // Alternate Channel Address
-                                            // Pointer
+// Pointer
 #define UDMA_ALTBASE_ADDR_S     0
 
 //*****************************************************************************
@@ -9173,9 +9173,9 @@
 //*****************************************************************************
 #define UDMA_CHASGN_M           0xFFFFFFFF  // Channel [n] Assignment Select
 #define UDMA_CHASGN_PRIMARY     0x00000000  // Use the primary channel
-                                            // assignment
+// assignment
 #define UDMA_CHASGN_SECONDARY   0x00000001  // Use the secondary channel
-                                            // assignment
+// assignment
 
 //*****************************************************************************
 //
@@ -9342,7 +9342,7 @@
                                 0x00000006  // Peripheral Scatter-Gather
 #define UDMA_CHCTL_XFERMODE_PER_SGA                                           \
                                 0x00000007  // Alternate Peripheral
-                                            // Scatter-Gather
+// Scatter-Gather
 #define UDMA_CHCTL_XFERSIZE_S   4
 
 //*****************************************************************************
@@ -9351,12 +9351,12 @@
 //
 //*****************************************************************************
 #define NVIC_ACTLR_DISOOFP      0x00000200  // Disable Out-Of-Order Floating
-                                            // Point
+// Point
 #define NVIC_ACTLR_DISFPCA      0x00000100  // Disable CONTROL
 #define NVIC_ACTLR_DISFOLD      0x00000004  // Disable IT Folding
 #define NVIC_ACTLR_DISWBUF      0x00000002  // Disable Write Buffer
 #define NVIC_ACTLR_DISMCYC      0x00000001  // Disable Interrupts of Multiple
-                                            // Cycle Instructions
+// Cycle Instructions
 
 //*****************************************************************************
 //
@@ -10028,13 +10028,13 @@
 //
 //*****************************************************************************
 #define NVIC_PRI33_INTD_M       0xE0000000  // Interrupt Priority for Interrupt
-                                            // [4n+3]
+// [4n+3]
 #define NVIC_PRI33_INTC_M       0x00E00000  // Interrupt Priority for Interrupt
-                                            // [4n+2]
+// [4n+2]
 #define NVIC_PRI33_INTB_M       0x0000E000  // Interrupt Priority for Interrupt
-                                            // [4n+1]
+// [4n+1]
 #define NVIC_PRI33_INTA_M       0x000000E0  // Interrupt Priority for Interrupt
-                                            // [4n]
+// [4n]
 #define NVIC_PRI33_INTD_S       29
 #define NVIC_PRI33_INTC_S       21
 #define NVIC_PRI33_INTB_S       13
@@ -10046,13 +10046,13 @@
 //
 //*****************************************************************************
 #define NVIC_PRI34_INTD_M       0xE0000000  // Interrupt Priority for Interrupt
-                                            // [4n+3]
+// [4n+3]
 #define NVIC_PRI34_INTC_M       0x00E00000  // Interrupt Priority for Interrupt
-                                            // [4n+2]
+// [4n+2]
 #define NVIC_PRI34_INTB_M       0x0000E000  // Interrupt Priority for Interrupt
-                                            // [4n+1]
+// [4n+1]
 #define NVIC_PRI34_INTA_M       0x000000E0  // Interrupt Priority for Interrupt
-                                            // [4n]
+// [4n]
 #define NVIC_PRI34_INTD_S       29
 #define NVIC_PRI34_INTC_S       21
 #define NVIC_PRI34_INTB_S       13
@@ -10148,9 +10148,9 @@
 //
 //*****************************************************************************
 #define NVIC_CFG_CTRL_STKALIGN  0x00000200  // Stack Alignment on Exception
-                                            // Entry
+// Entry
 #define NVIC_CFG_CTRL_BFHFNMIGN 0x00000100  // Ignore Bus Fault in NMI and
-                                            // Fault
+// Fault
 #define NVIC_CFG_CTRL_DIV0      0x00000010  // Trap on Divide by 0
 #define NVIC_CFG_CTRL_UNALIGNED 0x00000008  // Trap on Unaligned Access
 #define NVIC_CFG_CTRL_MAIN_PEND 0x00000002  // Allow Main Interrupt Trigger
@@ -10222,20 +10222,20 @@
 #define NVIC_FAULT_STAT_INVPC   0x00040000  // Invalid PC Load Usage Fault
 #define NVIC_FAULT_STAT_INVSTAT 0x00020000  // Invalid State Usage Fault
 #define NVIC_FAULT_STAT_UNDEF   0x00010000  // Undefined Instruction Usage
-                                            // Fault
+// Fault
 #define NVIC_FAULT_STAT_BFARV   0x00008000  // Bus Fault Address Register Valid
 #define NVIC_FAULT_STAT_BLSPERR 0x00002000  // Bus Fault on Floating-Point Lazy
-                                            // State Preservation
+// State Preservation
 #define NVIC_FAULT_STAT_BSTKE   0x00001000  // Stack Bus Fault
 #define NVIC_FAULT_STAT_BUSTKE  0x00000800  // Unstack Bus Fault
 #define NVIC_FAULT_STAT_IMPRE   0x00000400  // Imprecise Data Bus Error
 #define NVIC_FAULT_STAT_PRECISE 0x00000200  // Precise Data Bus Error
 #define NVIC_FAULT_STAT_IBUS    0x00000100  // Instruction Bus Error
 #define NVIC_FAULT_STAT_MMARV   0x00000080  // Memory Management Fault Address
-                                            // Register Valid
+// Register Valid
 #define NVIC_FAULT_STAT_MLSPERR 0x00000020  // Memory Management Fault on
-                                            // Floating-Point Lazy State
-                                            // Preservation
+// Floating-Point Lazy State
+// Preservation
 #define NVIC_FAULT_STAT_MSTKE   0x00000010  // Stack Access Violation
 #define NVIC_FAULT_STAT_MUSTKE  0x00000008  // Unstack Access Violation
 #define NVIC_FAULT_STAT_DERR    0x00000002  // Data Access Violation
@@ -10286,12 +10286,12 @@
 //
 //*****************************************************************************
 #define NVIC_CPAC_CP11_M        0x00C00000  // CP11 Coprocessor Access
-                                            // Privilege
+// Privilege
 #define NVIC_CPAC_CP11_DIS      0x00000000  // Access Denied
 #define NVIC_CPAC_CP11_PRIV     0x00400000  // Privileged Access Only
 #define NVIC_CPAC_CP11_FULL     0x00C00000  // Full Access
 #define NVIC_CPAC_CP10_M        0x00300000  // CP10 Coprocessor Access
-                                            // Privilege
+// Privilege
 #define NVIC_CPAC_CP10_DIS      0x00000000  // Access Denied
 #define NVIC_CPAC_CP10_PRIV     0x00100000  // Privileged Access Only
 #define NVIC_CPAC_CP10_FULL     0x00300000  // Full Access
@@ -10449,7 +10449,7 @@
                                 0x02000000  // Core has reset since last read
 #define NVIC_DBG_CTRL_S_RETIRE_ST                                             \
                                 0x01000000  // Core has executed insruction
-                                            // since last read
+// since last read
 #define NVIC_DBG_CTRL_S_LOCKUP  0x00080000  // Core is locked up
 #define NVIC_DBG_CTRL_S_SLEEP   0x00040000  // Core is sleeping
 #define NVIC_DBG_CTRL_S_HALT    0x00020000  // Core status on halt
@@ -10529,7 +10529,7 @@
 //
 //*****************************************************************************
 #define NVIC_FPCC_ASPEN         0x80000000  // Automatic State Preservation
-                                            // Enable
+// Enable
 #define NVIC_FPCC_LSPEN         0x40000000  // Lazy State Preservation Enable
 #define NVIC_FPCC_MONRDY        0x00000100  // Monitor Ready
 #define NVIC_FPCC_BFRDY         0x00000040  // Bus Fault Ready
@@ -10558,9 +10558,9 @@
 #define NVIC_FPDSC_RMODE_M      0x00C00000  // RMODE Bit Default
 #define NVIC_FPDSC_RMODE_RN     0x00000000  // Round to Nearest (RN) mode
 #define NVIC_FPDSC_RMODE_RP     0x00400000  // Round towards Plus Infinity (RP)
-                                            // mode
+// mode
 #define NVIC_FPDSC_RMODE_RM     0x00800000  // Round towards Minus Infinity
-                                            // (RM) mode
+// (RM) mode
 #define NVIC_FPDSC_RMODE_RZ     0x00C00000  // Round towards Zero (RZ) mode
 
 //*****************************************************************************
@@ -10571,7 +10571,7 @@
 #ifndef DEPRECATED
 #define SYSCTL_DID0_CLASS_BLIZZARD                                            \
                                 0x00050000  // Tiva(TM) C Series TM4C123-class
-                                            // microcontrollers
+// microcontrollers
 
 #endif
 

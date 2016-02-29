@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2006-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -37,7 +37,7 @@ extern void BLInternalFlashProgram(uint32_t ui32DstAddr, uint8_t *pui8SrcData,
                                    uint32_t ui32Length);
 extern uint32_t BLInternalFlashSizeGet(void);
 extern uint32_t BLInternalFlashStartAddrCheck(uint32_t ui32Addr,
-                                              uint32_t ui32ImgSize);
+        uint32_t ui32ImgSize);
 extern uint32_t BLInternalFlashErrorCheck(void);
 extern void BLInternalFlashErrorClear(void);
 
@@ -86,8 +86,8 @@ extern void BL_FLASH_ERASE_FN_HOOK(uint32_t ui32Address);
 #endif
 #else
 extern uint32_t BL_FLASH_PROGRAM_FN_HOOK(uint32_t ui32DstAddr,
-                                         uint8_t *pui8SrcData,
-                                         uint32_t ui32Length);
+        uint8_t *pui8SrcData,
+        uint32_t ui32Length);
 #endif
 
 #ifndef BL_FLASH_CL_ERR_FN_HOOK
@@ -121,7 +121,7 @@ extern uint32_t BL_FLASH_END_FN_HOOK(void);
         BLInternalFlashStartAddrCheck((ui32Addr), (ui32Size))
 #else
 extern uint32_t BL_FLASH_AD_CHECK_FN_HOOK(uint32_t ui32Address,
-                                          uint32_t ui32Length);
+        uint32_t ui32Length);
 #endif
 
 #endif // __BL_FLASH_H__

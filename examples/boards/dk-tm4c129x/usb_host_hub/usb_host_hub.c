@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -106,8 +106,7 @@ DECLARE_EVENT_DRIVER(g_sUSBEventDriver, 0, 0, USBHCDEvents);
 // In this case, only the Keyboard class is loaded.
 //
 //*****************************************************************************
-static tUSBHostClassDriver const * const g_ppHostClassDrivers[] =
-{
+static tUSBHostClassDriver const * const g_ppHostClassDrivers[] = {
     &g_sUSBHostMSCClassDriver,
     &g_sUSBHIDClassDriver,
     &g_sUSBHubClassDriver,
@@ -121,7 +120,7 @@ static tUSBHostClassDriver const * const g_ppHostClassDrivers[] =
 //
 //*****************************************************************************
 static const uint32_t g_ui32NumHostClassDrivers =
-                  sizeof(g_ppHostClassDrivers) / sizeof(tUSBHostClassDriver *);
+    sizeof(g_ppHostClassDrivers) / sizeof(tUSBHostClassDriver *);
 
 //*****************************************************************************
 //
@@ -233,8 +232,7 @@ static uint32_t g_ui32CurrentLine;
 //
 //*****************************************************************************
 #define NUM_HUB_STATUS          4
-struct
-{
+struct {
     //
     // Holds if there is a device connected to this port.
     //
@@ -264,8 +262,7 @@ WriteString(const char *pcString)
     //
     // Check if the string requires scrolling the text in order to print.
     //
-    if((g_ui32Line >= MAX_LINES) && (g_ui32Column == 0))
-    {
+    if((g_ui32Line >= MAX_LINES) && (g_ui32Column == 0)) {
         //
         // Start redrawing at line 0.
         //
@@ -274,8 +271,7 @@ WriteString(const char *pcString)
         //
         // Print lines from the current position down first.
         //
-        for(i32Idx = g_ui32CurrentLine + 1; i32Idx < MAX_LINES; i32Idx++)
-        {
+        for(i32Idx = g_ui32CurrentLine + 1; i32Idx < MAX_LINES; i32Idx++) {
             GrStringDraw(&g_sContext, g_pcLines + (MAX_COLUMNS * i32Idx),
                          ustrlen(g_pcLines + (MAX_COLUMNS * i32Idx)),
                          DISPLAY_TEXT_BORDER_H,
@@ -289,10 +285,8 @@ WriteString(const char *pcString)
         // If not already at the top then print the lines starting at the
         // top of the buffer.
         //
-        if(g_ui32CurrentLine != 0)
-        {
-            for(i32Idx = 0; i32Idx < g_ui32CurrentLine; i32Idx++)
-            {
+        if(g_ui32CurrentLine != 0) {
+            for(i32Idx = 0; i32Idx < g_ui32CurrentLine; i32Idx++) {
                 GrStringDraw(&g_sContext, g_pcLines + (MAX_COLUMNS * i32Idx),
                              ustrlen(g_pcLines + (MAX_COLUMNS * i32Idx)),
                              DISPLAY_TEXT_BORDER_H,
@@ -310,25 +304,20 @@ WriteString(const char *pcString)
     //
     pcCurLine = g_pcLines + (MAX_COLUMNS * g_ui32CurrentLine);
 
-    if(g_ui32Column + ui32StrSize >= MAX_COLUMNS - 1)
-    {
+    if(g_ui32Column + ui32StrSize >= MAX_COLUMNS - 1) {
         ui32Size = MAX_COLUMNS - g_ui32Column - 1;
-    }
-    else
-    {
+    } else {
         ui32Size = ui32StrSize;
     }
 
     //
     // Handle the case where the string has a new line at the end.
     //
-    if(pcString[ui32StrSize-1] == '\n')
-    {
+    if(pcString[ui32StrSize-1] == '\n') {
         //
         // Make sure that this is not a single new line.
         //
-        if(ui32Size > 0 )
-        {
+        if(ui32Size > 0 ) {
             //
             // Copy the string into the screen buffer.
             //
@@ -339,14 +328,12 @@ WriteString(const char *pcString)
         // If this is the start of a new line then clear out the rest of the
         // line by writing spaces to the end of the line.
         //
-        if(g_ui32Column == 0)
-        {
+        if(g_ui32Column == 0) {
             //
             // Clear out the string with spaces to overwrite any existing
             // characters with spaces.
             //
-            for(i32Idx = ui32Size - 1; i32Idx < MAX_COLUMNS; i32Idx++)
-            {
+            for(i32Idx = ui32Size - 1; i32Idx < MAX_COLUMNS; i32Idx++) {
                 pcCurLine[i32Idx] = ' ';
             }
         }
@@ -371,14 +358,11 @@ WriteString(const char *pcString)
         g_ui32Line++;
         g_ui32CurrentLine++;
 
-        if(g_ui32CurrentLine >= MAX_LINES)
-        {
+        if(g_ui32CurrentLine >= MAX_LINES) {
             g_ui32CurrentLine = 0;
         }
         g_ui32Column = 0;
-    }
-    else
-    {
+    } else {
         //
         // Copy the string into the screen buffer.
         //
@@ -387,14 +371,12 @@ WriteString(const char *pcString)
         //
         // See if this was the first string draw on this line.
         //
-        if(g_ui32Column == 0)
-        {
+        if(g_ui32Column == 0) {
             //
             // Pad the rest of the string with spaces to overwrite any existing
             // characters with spaces.
             //
-            for(i32Idx = ui32Size; i32Idx < MAX_COLUMNS - 1; i32Idx++)
-            {
+            for(i32Idx = ui32Size; i32Idx < MAX_COLUMNS - 1; i32Idx++) {
                 pcCurLine[i32Idx] = ' ';
             }
 
@@ -407,9 +389,7 @@ WriteString(const char *pcString)
                          (GrFontMaxWidthGet(g_psFontFixed6x8) * g_ui32Column),
                          DISPLAY_BANNER_HEIGHT + DISPLAY_TEXT_BORDER +
                          (g_ui32Line * GrFontHeightGet(g_psFontFixed6x8)), 1);
-        }
-        else
-        {
+        } else {
             //
             // Draw the new string.
             //
@@ -454,13 +434,11 @@ PrintChar(const char cChar)
     //
     // Allow new lines to cause the column to go back to zero.
     //
-    if(cChar != '\n')
-    {
+    if(cChar != '\n') {
         //
         // Handle when receiving a backspace character.
         //
-        if(cChar != ASCII_BACKSPACE)
-        {
+        if(cChar != ASCII_BACKSPACE) {
             //
             // This is not a backspace so print the character to the screen.
             //
@@ -471,20 +449,16 @@ PrintChar(const char cChar)
                          (g_ui32Line * GrFontHeightGet(g_psFontFixed6x8)), 1);
 
             pcCurLine[g_ui32Column] = cChar;
-        }
-        else
-        {
+        } else {
             //
             // We got a backspace.  If we are at the top left of the screen,
             // return since we don't need to do anything.
             //
-            if(g_ui32Column || g_ui32Line)
-            {
+            if(g_ui32Column || g_ui32Line) {
                 //
                 // Adjust the cursor position to erase the last character.
                 //
-                if(g_ui32Column > 2)
-                {
+                if(g_ui32Column > 2) {
                     g_ui32Column--;
                     g_ui32CmdIdx--;
                 }
@@ -494,21 +468,18 @@ PrintChar(const char cChar)
                 // the cursor again.
                 //
                 GrStringDraw(&g_sContext, " ", 1,
-                          DISPLAY_TEXT_BORDER_H +
-                          (GrFontMaxWidthGet(g_psFontFixed6x8) * g_ui32Column),
-                          DISPLAY_BANNER_HEIGHT + DISPLAY_TEXT_BORDER +
-                          (g_ui32Line * GrFontHeightGet(g_psFontFixed6x8)),
-                          true);
+                             DISPLAY_TEXT_BORDER_H +
+                             (GrFontMaxWidthGet(g_psFontFixed6x8) * g_ui32Column),
+                             DISPLAY_BANNER_HEIGHT + DISPLAY_TEXT_BORDER +
+                             (g_ui32Line * GrFontHeightGet(g_psFontFixed6x8)),
+                             true);
 
                 pcCurLine[g_ui32Column] = ' ';
             }
             return;
         }
-    }
-    else
-    {
-        for(i32Char = g_ui32Column; i32Char < MAX_COLUMNS - 1; i32Char++)
-        {
+    } else {
+        for(i32Char = g_ui32Column; i32Char < MAX_COLUMNS - 1; i32Char++) {
             pcCurLine[i32Char] = ' ';
         }
 
@@ -518,8 +489,7 @@ PrintChar(const char cChar)
         pcCurLine[MAX_COLUMNS - 1] = 0;
 
         g_ui32CurrentLine++;
-        if(g_ui32CurrentLine >= MAX_LINES)
-        {
+        if(g_ui32CurrentLine >= MAX_LINES) {
             g_ui32CurrentLine = 0;
         }
 
@@ -537,15 +507,12 @@ PrintChar(const char cChar)
     //
     // Update the text row and column that the next character will use.
     //
-    if(g_ui32Column < g_ui32CharsPerLine)
-    {
+    if(g_ui32Column < g_ui32CharsPerLine) {
         //
         // No line wrap yet so move one column over.
         //
         g_ui32Column++;
-    }
-    else
-    {
+    } else {
         //
         // Line wrapped so go back to the first column and update the line.
         //
@@ -555,8 +522,7 @@ PrintChar(const char cChar)
         //
         // The line has gone past the end so go back to the first line.
         //
-        if(g_ui32Line >= g_ui32LinesPerScreen)
-        {
+        if(g_ui32Line >= g_ui32LinesPerScreen) {
             g_ui32Line = g_ui32LinesPerScreen - 1;
         }
     }
@@ -593,8 +559,7 @@ Cmd_help(int argc, char *argv[])
     // Enter a loop to read each entry from the command table.  The
     // end of the table has been reached when the command name is NULL.
     //
-    while(psEntry->pcCmd)
-    {
+    while(psEntry->pcCmd) {
         //
         // Print the command name and the brief description.
         //
@@ -620,8 +585,7 @@ Cmd_help(int argc, char *argv[])
 // and brief description.
 //
 //*****************************************************************************
-tCmdLineEntry g_psCmdTable[] =
-{
+tCmdLineEntry g_psCmdTable[] = {
     { "help",   Cmd_help,      " : Display list of commands" },
     { "h",      Cmd_help,   "    : alias for help" },
     { "?",      Cmd_help,   "    : alias for help" },
@@ -658,13 +622,10 @@ UpdateStatusBox(tRectangle *psRect, const char *pcString, bool bActive)
     //
     // Change the status box to green for active devices.
     //
-    if(bActive)
-    {
+    if(bActive) {
         GrContextForegroundSet(&g_sContext, ClrOrange);
         ui32TextColor = ClrBlack;
-    }
-    else
-    {
+    } else {
         GrContextForegroundSet(&g_sContext, ClrBlack);
         ui32TextColor = ClrWhite;
     }
@@ -723,8 +684,7 @@ UpdateStatus(int32_t i32Port)
     //
     // Slightly adjust the first box to draw it off screen properly.
     //
-    if(i32Port == (NUM_HUB_STATUS - 1))
-    {
+    if(i32Port == (NUM_HUB_STATUS - 1)) {
         sRect.i16XMax -= 2;
     }
 
@@ -733,60 +693,45 @@ UpdateStatus(int32_t i32Port)
     //
     GrContextFontSet(&g_sContext, g_psFontFixed6x8);
 
-    if(g_psHubStatus[i32Port].bConnected)
-    {
+    if(g_psHubStatus[i32Port].bConnected) {
         ui8DevClass = USBHCDDevClass(g_psHubStatus[i32Port].ui32Instance, 0);
         ui8DevProtocol = USBHCDDevProtocol(
-                                       g_psHubStatus[i32Port].ui32Instance, 0);
+                             g_psHubStatus[i32Port].ui32Instance, 0);
 
-        if(ui8DevClass == USB_CLASS_HID)
-        {
-            if(ui8DevProtocol == USB_HID_PROTOCOL_MOUSE)
-            {
+        if(ui8DevClass == USB_CLASS_HID) {
+            if(ui8DevProtocol == USB_HID_PROTOCOL_MOUSE) {
                 //
                 // Mouse is currently connected.
                 //
                 UpdateStatusBox(&sRect, "Mouse", true);
-            }
-            else if(ui8DevProtocol == USB_HID_PROTOCOL_KEYB)
-            {
+            } else if(ui8DevProtocol == USB_HID_PROTOCOL_KEYB) {
                 //
                 // Keyboard is currently connected.
                 //
                 UpdateStatusBox(&sRect, "Keyboard", true);
-            }
-            else
-            {
+            } else {
                 //
                 // Unknown device is currently connected.
                 //
                 UpdateStatusBox(&sRect, "Unknown", true);
             }
-        }
-        else if(ui8DevClass == USB_CLASS_MASS_STORAGE)
-        {
+        } else if(ui8DevClass == USB_CLASS_MASS_STORAGE) {
             //
             // MSC device is currently connected.
             //
             UpdateStatusBox(&sRect, "Mass Storage", true);
-        }
-        else if(ui8DevClass == USB_CLASS_HUB)
-        {
+        } else if(ui8DevClass == USB_CLASS_HUB) {
             //
             // MSC device is currently connected.
             //
             UpdateStatusBox(&sRect, "Hub", true);
-        }
-        else
-        {
+        } else {
             //
             // Unknown device is currently connected.
             //
             UpdateStatusBox(&sRect, "Unknown", true);
         }
-    }
-    else
-    {
+    } else {
         //
         // Unknown device is currently connected.
         //
@@ -825,16 +770,13 @@ USBHCDEvents(void *pvData)
     //
     ui8Port = USBHCDDevHubPort(pEventInfo->ui32Instance);
 
-    switch(pEventInfo->ui32Event)
-    {
+    switch(pEventInfo->ui32Event) {
         case USB_EVENT_UNKNOWN_CONNECTED:
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             //
             // If this is the hub then ignore this connection.
             //
-            if(USBHCDDevClass(pEventInfo->ui32Instance, 0) == USB_CLASS_HUB)
-            {
+            if(USBHCDDevClass(pEventInfo->ui32Instance, 0) == USB_CLASS_HUB) {
                 break;
             }
 
@@ -842,8 +784,7 @@ USBHCDEvents(void *pvData)
             // If this is not a direct connection, then the hub is on
             // port 0 so the index should be moved down from 1-4 to 0-3.
             //
-            if(ui8Port > 0)
-            {
+            if(ui8Port > 0) {
                 ui8Port--;
             }
 
@@ -863,14 +804,12 @@ USBHCDEvents(void *pvData)
         //
         // A device has been unplugged.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             //
             // If this is not a direct connection, then the hub is on
             // port 0 so the index should be moved down from 1-4 to 0-3.
             //
-            if(ui8Port > 0)
-            {
+            if(ui8Port > 0) {
                 ui8Port--;
             }
 
@@ -886,8 +825,7 @@ USBHCDEvents(void *pvData)
 
             break;
         }
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -965,8 +903,7 @@ main(void)
     //
     // Initialize the hub port status.
     //
-    for(i32Idx = 0; i32Idx < NUM_HUB_STATUS; i32Idx++)
-    {
+    for(i32Idx = 0; i32Idx < NUM_HUB_STATUS; i32Idx++) {
         g_psHubStatus[i32Idx].bConnected = false;
     }
 
@@ -1047,7 +984,7 @@ main(void)
     // for a border.
     //
     g_ui32LinesPerScreen = (GrContextDpyHeightGet(&g_sContext) -
-                           (2*(DISPLAY_BANNER_HEIGHT + 1)))/
+                            (2*(DISPLAY_BANNER_HEIGHT + 1)))/
                            GrFontHeightGet(g_psFontFixed6x8);
 
     //
@@ -1069,8 +1006,7 @@ main(void)
     //
     // The main loop for the application.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Print a prompt to the console.  Show the CWD.
         //
@@ -1079,8 +1015,7 @@ main(void)
         //
         // Is there a command waiting to be processed?
         //
-        while((g_ui32Flags & FLAG_CMD_READY) == 0)
-        {
+        while((g_ui32Flags & FLAG_CMD_READY) == 0) {
             //
             // Call the YSB library to let non-interrupt code run.
             //
@@ -1102,23 +1037,20 @@ main(void)
         //
         // Handle the case of bad command.
         //
-        if(i32Status == CMDLINE_BAD_CMD)
-        {
+        if(i32Status == CMDLINE_BAD_CMD) {
             WriteString("Bad command!\n");
         }
         //
         // Handle the case of too many arguments.
         //
-        else if(i32Status == CMDLINE_TOO_MANY_ARGS)
-        {
+        else if(i32Status == CMDLINE_TOO_MANY_ARGS) {
             WriteString("Too many arguments for command processor!\n");
         }
         //
         // Otherwise the command was executed.  Print the error
         // code if one was returned.
         //
-        else if(i32Status != 0)
-        {
+        else if(i32Status != 0) {
             WriteString("Command returned error code\n");
             WriteString((char *)StringFromFresult((FRESULT)i32Status));
             WriteString("\n");

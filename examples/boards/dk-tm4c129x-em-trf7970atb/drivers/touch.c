@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -102,8 +102,7 @@
 // selection.
 //
 //*****************************************************************************
-const int32_t g_pi32TouchParameters[7] =
-{
+const int32_t g_pi32TouchParameters[7] = {
 #ifdef PORTRAIT
     3840,                       // M0
     318720,                     // M1
@@ -254,21 +253,18 @@ TouchScreenDebouncer(void)
     //
     // See if the touch screen is being touched.
     //
-    if((g_i16TouchX < g_i16TouchMin) || (g_i16TouchY < g_i16TouchMin))
-    {
+    if((g_i16TouchX < g_i16TouchMin) || (g_i16TouchY < g_i16TouchMin)) {
         //
         // If there are no valid values yet then ignore this state.
         //
-        if((g_ui8State & 0x80) == 0)
-        {
+        if((g_ui8State & 0x80) == 0) {
             g_ui8State = 0;
         }
 
         //
         // See if the pen is not up right now.
         //
-        if(g_ui8State != 0x00)
-        {
+        if(g_ui8State != 0x00) {
             //
             // Decrement the state count.
             //
@@ -277,8 +273,7 @@ TouchScreenDebouncer(void)
             //
             // See if the pen has been detected as up three times in a row.
             //
-            if(g_ui8State == 0x80)
-            {
+            if(g_ui8State == 0x80) {
                 //
                 // Indicate that the pen is up.
                 //
@@ -287,15 +282,13 @@ TouchScreenDebouncer(void)
                 //
                 // See if there is a touch screen event handler.
                 //
-                if(g_pfnTSHandler)
-                {
+                if(g_pfnTSHandler) {
                     //
                     // If we got caught pre-filling the values, just return the
                     // first valid value as a press and release.  If this is
                     // not done there is a perceived miss of a press event.
                     //
-                    if(g_i8Index < 0)
-                    {
+                    if(g_i8Index < 0) {
                         g_pfnTSHandler(WIDGET_MSG_PTR_DOWN, g_pi16Samples[0],
                                        g_pi16Samples[1]);
                         g_i8Index = 0;
@@ -310,15 +303,12 @@ TouchScreenDebouncer(void)
                 }
             }
         }
-    }
-    else
-    {
+    } else {
         //
         // If the state was counting down above then fall back to the idle
         // state and start waiting for new values.
         //
-        if((g_ui8State & 0x80) && (g_ui8State != 0x83))
-        {
+        if((g_ui8State & 0x80) && (g_ui8State != 0x83)) {
             //
             // Restart the release count down.
             //
@@ -328,8 +318,7 @@ TouchScreenDebouncer(void)
         //
         // See if the pen is not down right now.
         //
-        if(g_ui8State != 0x83)
-        {
+        if(g_ui8State != 0x83) {
             //
             // Increment the state count.
             //
@@ -338,8 +327,7 @@ TouchScreenDebouncer(void)
             //
             // See if the pen has been detected as down three times in a row.
             //
-            if(g_ui8State == 0x03)
-            {
+            if(g_ui8State == 0x03) {
                 //
                 // Indicate that the pen is down.
                 //
@@ -358,19 +346,15 @@ TouchScreenDebouncer(void)
                 g_pi16Samples[0] = i32X;
                 g_pi16Samples[1] = i32Y;
             }
-        }
-        else
-        {
+        } else {
             //
             // See if the sample buffer pre-fill has completed.
             //
-            if(g_i8Index == -2)
-            {
+            if(g_i8Index == -2) {
                 //
                 // See if there is a touch screen event handler.
                 //
-                if(g_pfnTSHandler)
-                {
+                if(g_pfnTSHandler) {
                     //
                     // Send the pen down message to the touch screen event
                     // handler.
@@ -394,8 +378,7 @@ TouchScreenDebouncer(void)
             //
             // Otherwise, see if the sample buffer pre-fill is in progress.
             //
-            else if(g_i8Index < 0)
-            {
+            else if(g_i8Index < 0) {
                 //
                 // Store this sample into the sample buffer.
                 //
@@ -411,13 +394,11 @@ TouchScreenDebouncer(void)
             //
             // Otherwise, the sample buffer is full.
             //
-            else
-            {
+            else {
                 //
                 // See if there is a touch screen event handler.
                 //
-                if(g_pfnTSHandler)
-                {
+                if(g_pfnTSHandler) {
                     //
                     // Send the pen move message to the touch screen event
                     // handler.
@@ -468,13 +449,11 @@ TouchScreenIntHandler(void)
     //
     // Determine what to do based on the current state of the state machine.
     //
-    switch(g_ui32TSState)
-    {
+    switch(g_ui32TSState) {
         //
         // The new sample is an X axis sample that should be discarded.
         //
-        case TS_STATE_SKIP_X:
-        {
+        case TS_STATE_SKIP_X: {
             //
             // Read and throw away the ADC sample.
             //
@@ -505,8 +484,7 @@ TouchScreenIntHandler(void)
         //
         // The new sample is an X axis sample that should be processed.
         //
-        case TS_STATE_READ_X:
-        {
+        case TS_STATE_READ_X: {
             //
             // Read the raw ADC sample.
             //
@@ -555,8 +533,7 @@ TouchScreenIntHandler(void)
         //
         // The new sample is a Y axis sample that should be discarded.
         //
-        case TS_STATE_SKIP_Y:
-        {
+        case TS_STATE_SKIP_Y: {
             //
             // Read and throw away the ADC sample.
             //
@@ -587,8 +564,7 @@ TouchScreenIntHandler(void)
         //
         // The new sample is a Y axis sample that should be processed.
         //
-        case TS_STATE_READ_Y:
-        {
+        case TS_STATE_READ_Y: {
             //
             // Read the raw ADC sample.
             //
@@ -604,8 +580,7 @@ TouchScreenIntHandler(void)
         //
         // The state machine is in its initial state
         //
-        case TS_STATE_INIT:
-        {
+        case TS_STATE_INIT: {
             //
             // Clear the analog mode select for the XP pin.
             //
@@ -639,8 +614,7 @@ TouchScreenIntHandler(void)
             // If this is the valid Y sample state, then there is a new X/Y
             // sample pair.  In that case, run the touch screen debouncer.
             //
-            if(g_ui32TSState == TS_STATE_READ_Y)
-            {
+            if(g_ui32TSState == TS_STATE_READ_Y) {
                 TouchScreenDebouncer();
             }
 
@@ -711,8 +685,7 @@ TouchScreenInit(uint32_t ui32SysClock)
     // Configure the timer to trigger the sampling of the touch screen
     // every 2.5 milliseconds.
     //
-    if((HWREG(TIMER5_BASE + TIMER_O_CTL) & TIMER_CTL_TAEN) == 0)
-    {
+    if((HWREG(TIMER5_BASE + TIMER_O_CTL) & TIMER_CTL_TAEN) == 0) {
         ROM_TimerConfigure(TIMER5_BASE, (TIMER_CFG_SPLIT_PAIR |
                                          TIMER_CFG_A_PWM |
                                          TIMER_CFG_B_PERIODIC));
@@ -746,7 +719,7 @@ TouchScreenInit(uint32_t ui32SysClock)
 //*****************************************************************************
 void
 TouchScreenCallbackSet(int32_t (*pfnCallback)(uint32_t ui32Message,
-                                              int32_t i32X, int32_t i32Y))
+                       int32_t i32X, int32_t i32Y))
 {
     //
     // Save the pointer to the callback function.

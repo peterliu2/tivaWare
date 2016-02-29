@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2014-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Utility Library.
 //
 //*****************************************************************************
@@ -124,16 +124,14 @@ EEPROMPBIsValid(uint8_t *pui8Offset)
     //
     // Loop through the bytes in the block, computing the checksum.
     //
-    for(ui32Idx = 0, ui32Sum = 0; ui32Idx < g_ui32EEPROMPBSize; ui32Idx++)
-    {
+    for(ui32Idx = 0, ui32Sum = 0; ui32Idx < g_ui32EEPROMPBSize; ui32Idx++) {
         ui32Sum += pui8Offset[ui32Idx];
     }
 
     //
     // The checksum should be zero, so return a failure if it is not.
     //
-    if((ui32Sum & 255) != 0)
-    {
+    if((ui32Sum & 255) != 0) {
         return(0);
     }
 
@@ -141,8 +139,7 @@ EEPROMPBIsValid(uint8_t *pui8Offset)
     // If the sum is equal to the size * 255, then the block is all ones and
     // should not be considered valid.
     //
-    if((g_ui32EEPROMPBSize * 255) == ui32Sum)
-    {
+    if((g_ui32EEPROMPBSize * 255) == ui32Sum) {
         return(0);
     }
 
@@ -170,8 +167,7 @@ EEPROMPBGet(void)
     //
     // See if there is a valid parameter block.
     //
-    if(g_pui8EEPROMPBCurrent)
-    {
+    if(g_pui8EEPROMPBCurrent) {
         //
         // Return the address of the most recent parameter block.
         //
@@ -228,17 +224,14 @@ EEPROMPBSave(uint8_t *pui8Buffer)
     //
     // See if there is a valid parameter block in flash.
     //
-    if(g_pui8EEPROMPBCurrent)
-    {
+    if(g_pui8EEPROMPBCurrent) {
         //
         // Set the sequence number to one greater than the most recent
         // parameter block.
         //
         pui8Buffer[0] = g_pui8EEPROMPBCurrent[0] + 1;
 
-    }
-    else
-    {
+    } else {
         //
         // There is not a valid parameter block in flash, so set the sequence
         // number of this parameter block to zero.
@@ -249,8 +242,7 @@ EEPROMPBSave(uint8_t *pui8Buffer)
     //
     // Compute the checksum of the parameter block to be written.
     //
-    for(ui32Idx = 0, ui32Sum = 0; ui32Idx < g_ui32EEPROMPBSize; ui32Idx++)
-    {
+    for(ui32Idx = 0, ui32Sum = 0; ui32Idx < g_ui32EEPROMPBSize; ui32Idx++) {
         ui32Sum -= pui8Buffer[ui32Idx];
     }
 
@@ -262,12 +254,10 @@ EEPROMPBSave(uint8_t *pui8Buffer)
     //
     // Write this parameter block to flash.
     //
-    for(ui32Idx = 0; ui32Idx < g_ui32EEPROMPBSize; ui32Idx += 4)
-    {
+    for(ui32Idx = 0; ui32Idx < g_ui32EEPROMPBSize; ui32Idx += 4) {
         ui32Data = *(uint32_t *)(pui8Buffer + ui32Idx);
         ui32Sum = EEPROMProgram(&ui32Data, g_ui32EEPROMPBStart + ui32Idx, 4);
-        if(ui32Sum != 0)
-        {
+        if(ui32Sum != 0) {
             g_pui8EEPROMPBCurrent = (uint8_t *)0;
             return;
         }
@@ -283,8 +273,7 @@ EEPROMPBSave(uint8_t *pui8Buffer)
     // See if this is a valid parameter block (in other words, the checksum
     // is correct).
     //
-    if(!EEPROMPBIsValid((uint8_t *)g_pui32EEPROMPBShadowBuffer))
-    {
+    if(!EEPROMPBIsValid((uint8_t *)g_pui32EEPROMPBShadowBuffer)) {
         //
         // Indicate that we have no valid parameter block.
         //
@@ -299,10 +288,8 @@ EEPROMPBSave(uint8_t *pui8Buffer)
     // block failed to properly program).
     //
     pui8New = (uint8_t *)g_pui32EEPROMPBShadowBuffer;
-    for(ui32Idx = 0; ui32Idx < g_ui32EEPROMPBSize; ui32Idx++)
-    {
-        if(pui8New[ui32Idx] != pui8Buffer[ui32Idx])
-        {
+    for(ui32Idx = 0; ui32Idx < g_ui32EEPROMPBSize; ui32Idx++) {
+        if(pui8New[ui32Idx] != pui8Buffer[ui32Idx]) {
             g_pui8EEPROMPBCurrent = (uint8_t *)0;
             return;
         }
@@ -369,8 +356,7 @@ EEPROMPBInit(uint32_t ui32Start, uint32_t ui32Size)
     // Initialize the EEPROM
     //
     ui32RetValue = EEPROMInit();
-    if(ui32RetValue != EEPROM_INIT_OK)
-    {
+    if(ui32RetValue != EEPROM_INIT_OK) {
         g_pui8EEPROMPBCurrent = (uint8_t *)0;
         return(1);
     }
@@ -379,8 +365,7 @@ EEPROMPBInit(uint32_t ui32Start, uint32_t ui32Size)
     // Verify that the parameter block size will fit within the EEPROM size.
     //
     ui32RetValue = EEPROMSizeGet();
-    if(ui32Size > ui32RetValue)
-    {
+    if(ui32Size > ui32RetValue) {
         g_pui8EEPROMPBCurrent = (uint8_t *)0;
         return(1);
     }
@@ -395,16 +380,13 @@ EEPROMPBInit(uint32_t ui32Start, uint32_t ui32Size)
     // See if this is a valid parameter block (in other words, the checksum
     // is correct).
     //
-    if(EEPROMPBIsValid((uint8_t *)g_pui32EEPROMPBShadowBuffer))
-    {
+    if(EEPROMPBIsValid((uint8_t *)g_pui32EEPROMPBShadowBuffer)) {
         //
         // Save the address of the shadow parameter block found.  If the
         // parameter block is not valid, this will be a NULL pointer.
         //
         g_pui8EEPROMPBCurrent = (uint8_t *)g_pui32EEPROMPBShadowBuffer;
-    }
-    else
-    {
+    } else {
         g_pui8EEPROMPBCurrent = (uint8_t *)0;
     }
 

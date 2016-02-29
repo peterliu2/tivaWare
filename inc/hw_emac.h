@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -55,15 +55,15 @@
 #define EMAC_O_VLANTG           0x0000001C  // Ethernet MAC VLAN Tag
 #define EMAC_O_STATUS           0x00000024  // Ethernet MAC Status
 #define EMAC_O_RWUFF            0x00000028  // Ethernet MAC Remote Wake-Up
-                                            // Frame Filter
+// Frame Filter
 #define EMAC_O_PMTCTLSTAT       0x0000002C  // Ethernet MAC PMT Control and
-                                            // Status Register
+// Status Register
 #define EMAC_O_RIS              0x00000038  // Ethernet MAC Raw Interrupt
-                                            // Status
+// Status
 #define EMAC_O_IM               0x0000003C  // Ethernet MAC Interrupt Mask
 #define EMAC_O_ADDR0H           0x00000040  // Ethernet MAC Address 0 High
 #define EMAC_O_ADDR0L           0x00000044  // Ethernet MAC Address 0 Low
-                                            // Register
+// Register
 #define EMAC_O_ADDR1H           0x00000048  // Ethernet MAC Address 1 High
 #define EMAC_O_ADDR1L           0x0000004C  // Ethernet MAC Address 1 Low
 #define EMAC_O_ADDR2H           0x00000050  // Ethernet MAC Address 2 High
@@ -73,91 +73,91 @@
 #define EMAC_O_WDOGTO           0x000000DC  // Ethernet MAC Watchdog Timeout
 #define EMAC_O_MMCCTRL          0x00000100  // Ethernet MAC MMC Control
 #define EMAC_O_MMCRXRIS         0x00000104  // Ethernet MAC MMC Receive Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define EMAC_O_MMCTXRIS         0x00000108  // Ethernet MAC MMC Transmit Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define EMAC_O_MMCRXIM          0x0000010C  // Ethernet MAC MMC Receive
-                                            // Interrupt Mask
+// Interrupt Mask
 #define EMAC_O_MMCTXIM          0x00000110  // Ethernet MAC MMC Transmit
-                                            // Interrupt Mask
+// Interrupt Mask
 #define EMAC_O_TXCNTGB          0x00000118  // Ethernet MAC Transmit Frame
-                                            // Count for Good and Bad Frames
+// Count for Good and Bad Frames
 #define EMAC_O_TXCNTSCOL        0x0000014C  // Ethernet MAC Transmit Frame
-                                            // Count for Frames Transmitted
-                                            // after Single Collision
+// Count for Frames Transmitted
+// after Single Collision
 #define EMAC_O_TXCNTMCOL        0x00000150  // Ethernet MAC Transmit Frame
-                                            // Count for Frames Transmitted
-                                            // after Multiple Collisions
+// Count for Frames Transmitted
+// after Multiple Collisions
 #define EMAC_O_TXOCTCNTG        0x00000164  // Ethernet MAC Transmit Octet
-                                            // Count Good
+// Count Good
 #define EMAC_O_RXCNTGB          0x00000180  // Ethernet MAC Receive Frame Count
-                                            // for Good and Bad Frames
+// for Good and Bad Frames
 #define EMAC_O_RXCNTCRCERR      0x00000194  // Ethernet MAC Receive Frame Count
-                                            // for CRC Error Frames
+// for CRC Error Frames
 #define EMAC_O_RXCNTALGNERR     0x00000198  // Ethernet MAC Receive Frame Count
-                                            // for Alignment Error Frames
+// for Alignment Error Frames
 #define EMAC_O_RXCNTGUNI        0x000001C4  // Ethernet MAC Receive Frame Count
-                                            // for Good Unicast Frames
+// for Good Unicast Frames
 #define EMAC_O_VLNINCREP        0x00000584  // Ethernet MAC VLAN Tag Inclusion
-                                            // or Replacement
+// or Replacement
 #define EMAC_O_VLANHASH         0x00000588  // Ethernet MAC VLAN Hash Table
 #define EMAC_O_TIMSTCTRL        0x00000700  // Ethernet MAC Timestamp Control
 #define EMAC_O_SUBSECINC        0x00000704  // Ethernet MAC Sub-Second
-                                            // Increment
+// Increment
 #define EMAC_O_TIMSEC           0x00000708  // Ethernet MAC System Time -
-                                            // Seconds
+// Seconds
 #define EMAC_O_TIMNANO          0x0000070C  // Ethernet MAC System Time -
-                                            // Nanoseconds
+// Nanoseconds
 #define EMAC_O_TIMSECU          0x00000710  // Ethernet MAC System Time -
-                                            // Seconds Update
+// Seconds Update
 #define EMAC_O_TIMNANOU         0x00000714  // Ethernet MAC System Time -
-                                            // Nanoseconds Update
+// Nanoseconds Update
 #define EMAC_O_TIMADD           0x00000718  // Ethernet MAC Timestamp Addend
 #define EMAC_O_TARGSEC          0x0000071C  // Ethernet MAC Target Time Seconds
 #define EMAC_O_TARGNANO         0x00000720  // Ethernet MAC Target Time
-                                            // Nanoseconds
+// Nanoseconds
 #define EMAC_O_HWORDSEC         0x00000724  // Ethernet MAC System Time-Higher
-                                            // Word Seconds
+// Word Seconds
 #define EMAC_O_TIMSTAT          0x00000728  // Ethernet MAC Timestamp Status
 #define EMAC_O_PPSCTRL          0x0000072C  // Ethernet MAC PPS Control
 #define EMAC_O_PPS0INTVL        0x00000760  // Ethernet MAC PPS0 Interval
 #define EMAC_O_PPS0WIDTH        0x00000764  // Ethernet MAC PPS0 Width
 #define EMAC_O_DMABUSMOD        0x00000C00  // Ethernet MAC DMA Bus Mode
 #define EMAC_O_TXPOLLD          0x00000C04  // Ethernet MAC Transmit Poll
-                                            // Demand
+// Demand
 #define EMAC_O_RXPOLLD          0x00000C08  // Ethernet MAC Receive Poll Demand
 #define EMAC_O_RXDLADDR         0x00000C0C  // Ethernet MAC Receive Descriptor
-                                            // List Address
+// List Address
 #define EMAC_O_TXDLADDR         0x00000C10  // Ethernet MAC Transmit Descriptor
-                                            // List Address
+// List Address
 #define EMAC_O_DMARIS           0x00000C14  // Ethernet MAC DMA Interrupt
-                                            // Status
+// Status
 #define EMAC_O_DMAOPMODE        0x00000C18  // Ethernet MAC DMA Operation Mode
 #define EMAC_O_DMAIM            0x00000C1C  // Ethernet MAC DMA Interrupt Mask
-                                            // Register
+// Register
 #define EMAC_O_MFBOC            0x00000C20  // Ethernet MAC Missed Frame and
-                                            // Buffer Overflow Counter
+// Buffer Overflow Counter
 #define EMAC_O_RXINTWDT         0x00000C24  // Ethernet MAC Receive Interrupt
-                                            // Watchdog Timer
+// Watchdog Timer
 #define EMAC_O_HOSTXDESC        0x00000C48  // Ethernet MAC Current Host
-                                            // Transmit Descriptor
+// Transmit Descriptor
 #define EMAC_O_HOSRXDESC        0x00000C4C  // Ethernet MAC Current Host
-                                            // Receive Descriptor
+// Receive Descriptor
 #define EMAC_O_HOSTXBA          0x00000C50  // Ethernet MAC Current Host
-                                            // Transmit Buffer Address
+// Transmit Buffer Address
 #define EMAC_O_HOSRXBA          0x00000C54  // Ethernet MAC Current Host
-                                            // Receive Buffer Address
+// Receive Buffer Address
 #define EMAC_O_PP               0x00000FC0  // Ethernet MAC Peripheral Property
-                                            // Register
+// Register
 #define EMAC_O_PC               0x00000FC4  // Ethernet MAC Peripheral
-                                            // Configuration Register
+// Configuration Register
 #define EMAC_O_CC               0x00000FC8  // Ethernet MAC Clock Configuration
-                                            // Register
+// Register
 #define EMAC_O_EPHYRIS          0x00000FD0  // Ethernet PHY Raw Interrupt
-                                            // Status
+// Status
 #define EMAC_O_EPHYIM           0x00000FD4  // Ethernet PHY Interrupt Mask
 #define EMAC_O_EPHYMISC         0x00000FD8  // Ethernet PHY Masked Interrupt
-                                            // Status and Clear
+// Status and Clear
 
 //*****************************************************************************
 //
@@ -179,7 +179,7 @@
 #define EMAC_CFG_IFG_48         0x000C0000  // 48 bit times
 #define EMAC_CFG_IFG_40         0x000E0000  // 40 bit times
 #define EMAC_CFG_DISCRS         0x00010000  // Disable Carrier Sense During
-                                            // Transmission
+// Transmission
 #define EMAC_CFG_PS             0x00008000  // Port Select
 #define EMAC_CFG_FES            0x00004000  // Speed
 #define EMAC_CFG_DRO            0x00002000  // Disable Receive Own
@@ -197,7 +197,7 @@
 #define EMAC_CFG_TE             0x00000008  // Transmitter Enable
 #define EMAC_CFG_RE             0x00000004  // Receiver Enable
 #define EMAC_CFG_PRELEN_M       0x00000003  // Preamble Length for Transmit
-                                            // Frames
+// Frames
 #define EMAC_CFG_PRELEN_7       0x00000000  // 7 bytes of preamble
 #define EMAC_CFG_PRELEN_5       0x00000001  // 5 bytes of preamble
 #define EMAC_CFG_PRELEN_3       0x00000002  // 3 bytes of preamble
@@ -213,24 +213,24 @@
 #define EMAC_FRAMEFLTR_HPF      0x00000400  // Hash or Perfect Filter
 #define EMAC_FRAMEFLTR_SAF      0x00000200  // Source Address Filter Enable
 #define EMAC_FRAMEFLTR_SAIF     0x00000100  // Source Address (SA) Inverse
-                                            // Filtering
+// Filtering
 #define EMAC_FRAMEFLTR_PCF_M    0x000000C0  // Pass Control Frames
 #define EMAC_FRAMEFLTR_PCF_ALL  0x00000000  // The MAC filters all control
-                                            // frames from reaching application
+// frames from reaching application
 #define EMAC_FRAMEFLTR_PCF_PAUSE                                              \
                                 0x00000040  // MAC forwards all control frames
-                                            // except PAUSE control frames to
-                                            // application even if they fail
-                                            // the address filter
+// except PAUSE control frames to
+// application even if they fail
+// the address filter
 #define EMAC_FRAMEFLTR_PCF_NONE 0x00000080  // MAC forwards all control frames
-                                            // to application even if they fail
-                                            // the address Filter
+// to application even if they fail
+// the address Filter
 #define EMAC_FRAMEFLTR_PCF_ADDR 0x000000C0  // MAC forwards control frames that
-                                            // pass the address Filter
+// pass the address Filter
 #define EMAC_FRAMEFLTR_DBF      0x00000020  // Disable Broadcast Frames
 #define EMAC_FRAMEFLTR_PM       0x00000010  // Pass All Multicast
 #define EMAC_FRAMEFLTR_DAIF     0x00000008  // Destination Address (DA) Inverse
-                                            // Filtering
+// Filtering
 #define EMAC_FRAMEFLTR_HMC      0x00000004  // Hash Multicast
 #define EMAC_FRAMEFLTR_HUC      0x00000002  // Hash Unicast
 #define EMAC_FRAMEFLTR_PR       0x00000001  // Promiscuous Mode
@@ -261,20 +261,20 @@
 #define EMAC_MIIADDR_PLA_M      0x0000F800  // Physical Layer Address
 #define EMAC_MIIADDR_MII_M      0x000007C0  // MII Register
 #define EMAC_MIIADDR_CR_M       0x0000003C  // Clock Reference Frequency
-                                            // Selection
+// Selection
 #define EMAC_MIIADDR_CR_60_100  0x00000000  // The frequency of the System
-                                            // Clock is 60 to 100 MHz providing
-                                            // a MDIO clock of SYSCLK/42
+// Clock is 60 to 100 MHz providing
+// a MDIO clock of SYSCLK/42
 #define EMAC_MIIADDR_CR_100_150 0x00000004  // The frequency of the System
-                                            // Clock is 100 to 150 MHz
-                                            // providing a MDIO clock of
-                                            // SYSCLK/62
+// Clock is 100 to 150 MHz
+// providing a MDIO clock of
+// SYSCLK/62
 #define EMAC_MIIADDR_CR_20_35   0x00000008  // The frequency of the System
-                                            // Clock is 20-35 MHz providing a
-                                            // MDIO clock of System Clock/16
+// Clock is 20-35 MHz providing a
+// MDIO clock of System Clock/16
 #define EMAC_MIIADDR_CR_35_60   0x0000000C  // The frequency of the System
-                                            // Clock is 35 to 60 MHz providing
-                                            // a MDIO clock of System Clock/26
+// Clock is 35 to 60 MHz providing
+// a MDIO clock of System Clock/26
 #define EMAC_MIIADDR_MIIW       0x00000002  // MII Write
 #define EMAC_MIIADDR_MIIB       0x00000001  // MII Busy
 #define EMAC_MIIADDR_PLA_S      11
@@ -299,7 +299,7 @@
 #define EMAC_FLOWCTL_RFE        0x00000004  // Receive Flow Control Enable
 #define EMAC_FLOWCTL_TFE        0x00000002  // Transmit Flow Control Enable
 #define EMAC_FLOWCTL_FCBBPA     0x00000001  // Flow Control Busy or
-                                            // Back-pressure Activate
+// Back-pressure Activate
 #define EMAC_FLOWCTL_PT_S       16
 
 //*****************************************************************************
@@ -311,9 +311,9 @@
 #define EMAC_VLANTG_ESVL        0x00040000  // Enable S-VLAN
 #define EMAC_VLANTG_VTIM        0x00020000  // VLAN Tag Inverse Match Enable
 #define EMAC_VLANTG_ETV         0x00010000  // Enable 12-Bit VLAN Tag
-                                            // Comparison
+// Comparison
 #define EMAC_VLANTG_VL_M        0x0000FFFF  // VLAN Tag Identifier for Receive
-                                            // Frames
+// Frames
 #define EMAC_VLANTG_VL_S        0
 
 //*****************************************************************************
@@ -322,57 +322,57 @@
 //
 //*****************************************************************************
 #define EMAC_STATUS_TXFF        0x02000000  // TX/RX Controller TX FIFO Full
-                                            // Status
+// Status
 #define EMAC_STATUS_TXFE        0x01000000  // TX/RX Controller TX FIFO Not
-                                            // Empty Status
+// Empty Status
 #define EMAC_STATUS_TWC         0x00400000  // TX/RX Controller TX FIFO Write
-                                            // Controller Active Status
+// Controller Active Status
 #define EMAC_STATUS_TRC_M       0x00300000  // TX/RX Controller's TX FIFO Read
-                                            // Controller Status
+// Controller Status
 #define EMAC_STATUS_TRC_IDLE    0x00000000  // IDLE state
 #define EMAC_STATUS_TRC_READ    0x00100000  // READ state (transferring data to
-                                            // MAC transmitter)
+// MAC transmitter)
 #define EMAC_STATUS_TRC_WAIT    0x00200000  // Waiting for TX Status from MAC
-                                            // transmitter
+// transmitter
 #define EMAC_STATUS_TRC_WRFLUSH 0x00300000  // Writing the received TX Status
-                                            // or flushing the TX FIFO
+// or flushing the TX FIFO
 #define EMAC_STATUS_TXPAUSED    0x00080000  // MAC Transmitter PAUSE
 #define EMAC_STATUS_TFC_M       0x00060000  // MAC Transmit Frame Controller
-                                            // Status
+// Status
 #define EMAC_STATUS_TFC_IDLE    0x00000000  // IDLE state
 #define EMAC_STATUS_TFC_STATUS  0x00020000  // Waiting for status of previous
-                                            // frame or IFG or backoff period
-                                            // to be over
+// frame or IFG or backoff period
+// to be over
 #define EMAC_STATUS_TFC_PAUSE   0x00040000  // Generating and transmitting a
-                                            // PAUSE control frame (in the
-                                            // full-duplex mode)
+// PAUSE control frame (in the
+// full-duplex mode)
 #define EMAC_STATUS_TFC_INPUT   0x00060000  // Transferring input frame for
-                                            // transmission
+// transmission
 #define EMAC_STATUS_TPE         0x00010000  // MAC MII Transmit Protocol Engine
-                                            // Status
+// Status
 #define EMAC_STATUS_RXF_M       0x00000300  // TX/RX Controller RX FIFO
-                                            // Fill-level Status
+// Fill-level Status
 #define EMAC_STATUS_RXF_EMPTY   0x00000000  // RX FIFO Empty
 #define EMAC_STATUS_RXF_BELOW   0x00000100  // RX FIFO fill level is below the
-                                            // flow-control deactivate
-                                            // threshold
+// flow-control deactivate
+// threshold
 #define EMAC_STATUS_RXF_ABOVE   0x00000200  // RX FIFO fill level is above the
-                                            // flow-control activate threshold
+// flow-control activate threshold
 #define EMAC_STATUS_RXF_FULL    0x00000300  // RX FIFO Full
 #define EMAC_STATUS_RRC_M       0x00000060  // TX/RX Controller Read Controller
-                                            // State
+// State
 #define EMAC_STATUS_RRC_IDLE    0x00000000  // IDLE state
 #define EMAC_STATUS_RRC_STATUS  0x00000020  // Reading frame data
 #define EMAC_STATUS_RRC_DATA    0x00000040  // Reading frame status (or
-                                            // timestamp)
+// timestamp)
 #define EMAC_STATUS_RRC_FLUSH   0x00000060  // Flushing the frame data and
-                                            // status
+// status
 #define EMAC_STATUS_RWC         0x00000010  // TX/RX Controller RX FIFO Write
-                                            // Controller Active Status
+// Controller Active Status
 #define EMAC_STATUS_RFCFC_M     0x00000006  // MAC Receive Frame Controller
-                                            // FIFO Status
+// FIFO Status
 #define EMAC_STATUS_RPE         0x00000001  // MAC MII Receive Protocol Engine
-                                            // Status
+// Status
 #define EMAC_STATUS_RFCFC_S     1
 
 //*****************************************************************************
@@ -391,7 +391,7 @@
 //*****************************************************************************
 #define EMAC_PMTCTLSTAT_WUPFRRST                                              \
                                 0x80000000  // Wake-Up Frame Filter Register
-                                            // Pointer Reset
+// Pointer Reset
 #define EMAC_PMTCTLSTAT_RWKPTR_M                                              \
                                 0x07000000  // Remote Wake-Up FIFO Pointer
 #define EMAC_PMTCTLSTAT_GLBLUCAST                                             \
@@ -516,7 +516,7 @@
 //
 //*****************************************************************************
 #define EMAC_MMCCTRL_UCDBC      0x00000100  // Update MMC Counters for Dropped
-                                            // Broadcast Frames
+// Broadcast Frames
 #define EMAC_MMCCTRL_CNTPRSTLVL 0x00000020  // Full/Half Preset Level Value
 #define EMAC_MMCCTRL_CNTPRST    0x00000010  // Counters Preset
 #define EMAC_MMCCTRL_CNTFREEZ   0x00000008  // MMC Counter Freeze
@@ -531,13 +531,13 @@
 //
 //*****************************************************************************
 #define EMAC_MMCRXRIS_UCGF      0x00020000  // MMC Receive Unicast Good Frame
-                                            // Counter Interrupt Status
+// Counter Interrupt Status
 #define EMAC_MMCRXRIS_ALGNERR   0x00000040  // MMC Receive Alignment Error
-                                            // Frame Counter Interrupt Status
+// Frame Counter Interrupt Status
 #define EMAC_MMCRXRIS_CRCERR    0x00000020  // MMC Receive CRC Error Frame
-                                            // Counter Interrupt Status
+// Counter Interrupt Status
 #define EMAC_MMCRXRIS_GBF       0x00000001  // MMC Receive Good Bad Frame
-                                            // Counter Interrupt Status
+// Counter Interrupt Status
 
 //*****************************************************************************
 //
@@ -547,13 +547,13 @@
 //*****************************************************************************
 #define EMAC_MMCTXRIS_OCTCNT    0x00100000  // Octet Counter Interrupt Status
 #define EMAC_MMCTXRIS_MCOLLGF   0x00008000  // MMC Transmit Multiple Collision
-                                            // Good Frame Counter Interrupt
-                                            // Status
+// Good Frame Counter Interrupt
+// Status
 #define EMAC_MMCTXRIS_SCOLLGF   0x00004000  // MMC Transmit Single Collision
-                                            // Good Frame Counter Interrupt
-                                            // Status
+// Good Frame Counter Interrupt
+// Status
 #define EMAC_MMCTXRIS_GBF       0x00000002  // MMC Transmit Good Bad Frame
-                                            // Counter Interrupt Status
+// Counter Interrupt Status
 
 //*****************************************************************************
 //
@@ -561,13 +561,13 @@
 //
 //*****************************************************************************
 #define EMAC_MMCRXIM_UCGF       0x00020000  // MMC Receive Unicast Good Frame
-                                            // Counter Interrupt Mask
+// Counter Interrupt Mask
 #define EMAC_MMCRXIM_ALGNERR    0x00000040  // MMC Receive Alignment Error
-                                            // Frame Counter Interrupt Mask
+// Frame Counter Interrupt Mask
 #define EMAC_MMCRXIM_CRCERR     0x00000020  // MMC Receive CRC Error Frame
-                                            // Counter Interrupt Mask
+// Counter Interrupt Mask
 #define EMAC_MMCRXIM_GBF        0x00000001  // MMC Receive Good Bad Frame
-                                            // Counter Interrupt Mask
+// Counter Interrupt Mask
 
 //*****************************************************************************
 //
@@ -575,15 +575,15 @@
 //
 //*****************************************************************************
 #define EMAC_MMCTXIM_OCTCNT     0x00100000  // MMC Transmit Good Octet Counter
-                                            // Interrupt Mask
+// Interrupt Mask
 #define EMAC_MMCTXIM_MCOLLGF    0x00008000  // MMC Transmit Multiple Collision
-                                            // Good Frame Counter Interrupt
-                                            // Mask
+// Good Frame Counter Interrupt
+// Mask
 #define EMAC_MMCTXIM_SCOLLGF    0x00004000  // MMC Transmit Single Collision
-                                            // Good Frame Counter Interrupt
-                                            // Mask
+// Good Frame Counter Interrupt
+// Mask
 #define EMAC_MMCTXIM_GBF        0x00000002  // MMC Transmit Good Bad Frame
-                                            // Counter Interrupt Mask
+// Counter Interrupt Mask
 
 //*****************************************************************************
 //
@@ -591,9 +591,9 @@
 //
 //*****************************************************************************
 #define EMAC_TXCNTGB_TXFRMGB_M  0xFFFFFFFF  // This field indicates the number
-                                            // of good and bad frames
-                                            // transmitted, exclusive of
-                                            // retried frames
+// of good and bad frames
+// transmitted, exclusive of
+// retried frames
 #define EMAC_TXCNTGB_TXFRMGB_S  0
 
 //*****************************************************************************
@@ -604,9 +604,9 @@
 //*****************************************************************************
 #define EMAC_TXCNTSCOL_TXSNGLCOLG_M                                           \
                                 0xFFFFFFFF  // This field indicates the number
-                                            // of successfully transmitted
-                                            // frames after a single collision
-                                            // in the half-duplex mode
+// of successfully transmitted
+// frames after a single collision
+// in the half-duplex mode
 #define EMAC_TXCNTSCOL_TXSNGLCOLG_S                                           \
                                 0
 
@@ -618,9 +618,9 @@
 //*****************************************************************************
 #define EMAC_TXCNTMCOL_TXMULTCOLG_M                                           \
                                 0xFFFFFFFF  // This field indicates the number
-                                            // of successfully transmitted
-                                            // frames after multiple collisions
-                                            // in the half-duplex mode
+// of successfully transmitted
+// frames after multiple collisions
+// in the half-duplex mode
 #define EMAC_TXCNTMCOL_TXMULTCOLG_S                                           \
                                 0
 
@@ -631,8 +631,8 @@
 //
 //*****************************************************************************
 #define EMAC_TXOCTCNTG_TXOCTG_M 0xFFFFFFFF  // This field indicates the number
-                                            // of bytes transmitted, exclusive
-                                            // of preamble, in good frames
+// of bytes transmitted, exclusive
+// of preamble, in good frames
 #define EMAC_TXOCTCNTG_TXOCTG_S 0
 
 //*****************************************************************************
@@ -641,7 +641,7 @@
 //
 //*****************************************************************************
 #define EMAC_RXCNTGB_RXFRMGB_M  0xFFFFFFFF  // This field indicates the number
-                                            // of received good and bad frames
+// of received good and bad frames
 #define EMAC_RXCNTGB_RXFRMGB_S  0
 
 //*****************************************************************************
@@ -652,8 +652,8 @@
 //*****************************************************************************
 #define EMAC_RXCNTCRCERR_RXCRCERR_M                                           \
                                 0xFFFFFFFF  // This field indicates the number
-                                            // of frames received with CRC
-                                            // error
+// of frames received with CRC
+// error
 #define EMAC_RXCNTCRCERR_RXCRCERR_S                                           \
                                 0
 
@@ -665,8 +665,8 @@
 //*****************************************************************************
 #define EMAC_RXCNTALGNERR_RXALGNERR_M                                         \
                                 0xFFFFFFFF  // This field indicates the number
-                                            // of frames received with
-                                            // alignment (dribble) error
+// of frames received with
+// alignment (dribble) error
 #define EMAC_RXCNTALGNERR_RXALGNERR_S                                         \
                                 0
 
@@ -678,7 +678,7 @@
 //*****************************************************************************
 #define EMAC_RXCNTGUNI_RXUCASTG_M                                             \
                                 0xFFFFFFFF  // This field indicates the number
-                                            // of received good unicast frames
+// of received good unicast frames
 #define EMAC_RXCNTGUNI_RXUCASTG_S                                             \
                                 0
 
@@ -691,9 +691,9 @@
 #define EMAC_VLNINCREP_CSVL     0x00080000  // C-VLAN or S-VLAN
 #define EMAC_VLNINCREP_VLP      0x00040000  // VLAN Priority Control
 #define EMAC_VLNINCREP_VLC_M    0x00030000  // VLAN Tag Control in Transmit
-                                            // Frames
+// Frames
 #define EMAC_VLNINCREP_VLC_NONE 0x00000000  // No VLAN tag deletion, insertion,
-                                            // or replacement
+// or replacement
 #define EMAC_VLNINCREP_VLC_TAGDEL                                             \
                                 0x00010000  // VLAN tag deletion
 #define EMAC_VLNINCREP_VLC_TAGINS                                             \
@@ -719,27 +719,27 @@
 //
 //*****************************************************************************
 #define EMAC_TIMSTCTRL_PTPFLTR  0x00040000  // Enable MAC address for PTP Frame
-                                            // Filtering
+// Filtering
 #define EMAC_TIMSTCTRL_SELPTP_M 0x00030000  // Select PTP packets for Taking
-                                            // Snapshots
+// Snapshots
 #define EMAC_TIMSTCTRL_TSMAST   0x00008000  // Enable Snapshot for Messages
-                                            // Relevant to Master
+// Relevant to Master
 #define EMAC_TIMSTCTRL_TSEVNT   0x00004000  // Enable Timestamp Snapshot for
-                                            // Event Messages
+// Event Messages
 #define EMAC_TIMSTCTRL_PTPIPV4  0x00002000  // Enable Processing of PTP Frames
-                                            // Sent over IPv4-UDP
+// Sent over IPv4-UDP
 #define EMAC_TIMSTCTRL_PTPIPV6  0x00001000  // Enable Processing of PTP Frames
-                                            // Sent Over IPv6-UDP
+// Sent Over IPv6-UDP
 #define EMAC_TIMSTCTRL_PTPETH   0x00000800  // Enable Processing of PTP Over
-                                            // Ethernet Frames
+// Ethernet Frames
 #define EMAC_TIMSTCTRL_PTPVER2  0x00000400  // Enable PTP Packet Processing For
-                                            // Version 2 Format
+// Version 2 Format
 #define EMAC_TIMSTCTRL_DGTLBIN  0x00000200  // Timestamp Digital or Binary
-                                            // Rollover Control
+// Rollover Control
 #define EMAC_TIMSTCTRL_ALLF     0x00000100  // Enable Timestamp For All Frames
 #define EMAC_TIMSTCTRL_ADDREGUP 0x00000020  // Addend Register Update
 #define EMAC_TIMSTCTRL_INTTRIG  0x00000010  // Timestamp Interrupt Trigger
-                                            // Enable
+// Enable
 #define EMAC_TIMSTCTRL_TSUPDT   0x00000008  // Timestamp Update
 #define EMAC_TIMSTCTRL_TSINIT   0x00000004  // Timestamp Initialize
 #define EMAC_TIMSTCTRL_TSFCUPDT 0x00000002  // Timestamp Fine or Coarse Update
@@ -822,7 +822,7 @@
 //
 //*****************************************************************************
 #define EMAC_HWORDSEC_TSHWR_M   0x0000FFFF  // Target Timestamp Higher Word
-                                            // Register
+// Register
 #define EMAC_HWORDSEC_TSHWR_S   0
 
 //*****************************************************************************
@@ -839,29 +839,29 @@
 //
 //*****************************************************************************
 #define EMAC_PPSCTRL_TRGMODS0_M 0x00000060  // Target Time Register Mode for
-                                            // PPS0 Output
+// PPS0 Output
 #define EMAC_PPSCTRL_TRGMODS0_INTONLY                                         \
                                 0x00000000  // Indicates that the Target Time
-                                            // registers are programmed only
-                                            // for generating the interrupt
-                                            // event
+// registers are programmed only
+// for generating the interrupt
+// event
 #define EMAC_PPSCTRL_TRGMODS0_INTPPS0                                         \
                                 0x00000040  // Indicates that the Target Time
-                                            // registers are programmed for
-                                            // generating the interrupt event
-                                            // and starting or stopping the
-                                            // generation of the EN0PPS output
-                                            // signal
+// registers are programmed for
+// generating the interrupt event
+// and starting or stopping the
+// generation of the EN0PPS output
+// signal
 #define EMAC_PPSCTRL_TRGMODS0_PPS0ONLY                                        \
                                 0x00000060  // Indicates that the Target Time
-                                            // registers are programmed only
-                                            // for starting or stopping the
-                                            // generation of the EN0PPS output
-                                            // signal. No interrupt is asserted
+// registers are programmed only
+// for starting or stopping the
+// generation of the EN0PPS output
+// signal. No interrupt is asserted
 #define EMAC_PPSCTRL_PPSEN0     0x00000010  // Flexible PPS Output Mode Enable
 #define EMAC_PPSCTRL_PPSCTRL_M  0x0000000F  // EN0PPS Output Frequency Control
-                                            // (PPSCTRL) or Command Control
-                                            // (PPSCMD)
+// (PPSCTRL) or Command Control
+// (PPSCMD)
 
 //*****************************************************************************
 //
@@ -894,11 +894,11 @@
 #define EMAC_DMABUSMOD_MB       0x04000000  // Mixed Burst
 #define EMAC_DMABUSMOD_AAL      0x02000000  // Address Aligned Beats
 #define EMAC_DMABUSMOD_8XPBL    0x01000000  // 8 x Programmable Burst Length
-                                            // (PBL) Mode
+// (PBL) Mode
 #define EMAC_DMABUSMOD_USP      0x00800000  // Use Separate Programmable Burst
-                                            // Length (PBL)
+// Length (PBL)
 #define EMAC_DMABUSMOD_RPBL_M   0x007E0000  // RX DMA Programmable Burst Length
-                                            // (PBL)
+// (PBL)
 #define EMAC_DMABUSMOD_FB       0x00010000  // Fixed Burst
 #define EMAC_DMABUSMOD_PR_M     0x0000C000  // Priority Ratio
 #define EMAC_DMABUSMOD_PBL_M    0x00003F00  // Programmable Burst Length
@@ -946,7 +946,7 @@
 //*****************************************************************************
 #define EMAC_TXDLADDR_TXDLADDR_M                                              \
                                 0xFFFFFFFC  // Start of Transmit List Base
-                                            // Address
+// Address
 #define EMAC_TXDLADDR_TXDLADDR_S                                              \
                                 2
 
@@ -956,52 +956,52 @@
 //
 //*****************************************************************************
 #define EMAC_DMARIS_TT          0x20000000  // Timestamp Trigger Interrupt
-                                            // Status
+// Status
 #define EMAC_DMARIS_PMT         0x10000000  // MAC PMT Interrupt Status
 #define EMAC_DMARIS_MMC         0x08000000  // MAC MMC Interrupt
 #define EMAC_DMARIS_AE_M        0x03800000  // Access Error
 #define EMAC_DMARIS_AE_RXDMAWD  0x00000000  // Error during RX DMA Write Data
-                                            // Transfer
+// Transfer
 #define EMAC_DMARIS_AE_TXDMARD  0x01800000  // Error during TX DMA Read Data
-                                            // Transfer
+// Transfer
 #define EMAC_DMARIS_AE_RXDMADW  0x02000000  // Error during RX DMA Descriptor
-                                            // Write Access
+// Write Access
 #define EMAC_DMARIS_AE_TXDMADW  0x02800000  // Error during TX DMA Descriptor
-                                            // Write Access
+// Write Access
 #define EMAC_DMARIS_AE_RXDMADR  0x03000000  // Error during RX DMA Descriptor
-                                            // Read Access
+// Read Access
 #define EMAC_DMARIS_AE_TXDMADR  0x03800000  // Error during TX DMA Descriptor
-                                            // Read Access
+// Read Access
 #define EMAC_DMARIS_TS_M        0x00700000  // Transmit Process State
 #define EMAC_DMARIS_TS_STOP     0x00000000  // Stopped; Reset or Stop transmit
-                                            // command processed
+// command processed
 #define EMAC_DMARIS_TS_RUNTXTD  0x00100000  // Running; Fetching transmit
-                                            // transfer descriptor
+// transfer descriptor
 #define EMAC_DMARIS_TS_STATUS   0x00200000  // Running; Waiting for status
 #define EMAC_DMARIS_TS_RUNTX    0x00300000  // Running; Reading data from host
-                                            // memory buffer and queuing it to
-                                            // transmit buffer (TX FIFO)
+// memory buffer and queuing it to
+// transmit buffer (TX FIFO)
 #define EMAC_DMARIS_TS_TSTAMP   0x00400000  // Writing Timestamp
 #define EMAC_DMARIS_TS_SUSPEND  0x00600000  // Suspended; Transmit descriptor
-                                            // unavailable or transmit buffer
-                                            // underflow
+// unavailable or transmit buffer
+// underflow
 #define EMAC_DMARIS_TS_RUNCTD   0x00700000  // Running; Closing transmit
-                                            // descriptor
+// descriptor
 #define EMAC_DMARIS_RS_M        0x000E0000  // Received Process State
 #define EMAC_DMARIS_RS_STOP     0x00000000  // Stopped: Reset or stop receive
-                                            // command issued
+// command issued
 #define EMAC_DMARIS_RS_RUNRXTD  0x00020000  // Running: Fetching receive
-                                            // transfer descriptor
+// transfer descriptor
 #define EMAC_DMARIS_RS_RUNRXD   0x00060000  // Running: Waiting for receive
-                                            // packet
+// packet
 #define EMAC_DMARIS_RS_SUSPEND  0x00080000  // Suspended: Receive descriptor
-                                            // unavailable
+// unavailable
 #define EMAC_DMARIS_RS_RUNCRD   0x000A0000  // Running: Closing receive
-                                            // descriptor
+// descriptor
 #define EMAC_DMARIS_RS_TSWS     0x000C0000  // Writing Timestamp
 #define EMAC_DMARIS_RS_RUNTXD   0x000E0000  // Running: Transferring the
-                                            // receive packet data from receive
-                                            // buffer to host memory
+// receive packet data from receive
+// buffer to host memory
 #define EMAC_DMARIS_NIS         0x00010000  // Normal Interrupt Summary
 #define EMAC_DMARIS_AIS         0x00008000  // Abnormal Interrupt Summary
 #define EMAC_DMARIS_ERI         0x00004000  // Early Receive Interrupt
@@ -1025,10 +1025,10 @@
 //
 //*****************************************************************************
 #define EMAC_DMAOPMODE_DT       0x04000000  // Disable Dropping of TCP/IP
-                                            // Checksum Error Frames
+// Checksum Error Frames
 #define EMAC_DMAOPMODE_RSF      0x02000000  // Receive Store and Forward
 #define EMAC_DMAOPMODE_DFF      0x01000000  // Disable Flushing of Received
-                                            // Frames
+// Frames
 #define EMAC_DMAOPMODE_TSF      0x00200000  // Transmit Store and Forward
 #define EMAC_DMAOPMODE_FTF      0x00100000  // Flush Transmit FIFO
 #define EMAC_DMAOPMODE_TTC_M    0x0001C000  // Transmit Threshold Control
@@ -1041,7 +1041,7 @@
 #define EMAC_DMAOPMODE_TTC_24   0x00018000  // 24 bytes
 #define EMAC_DMAOPMODE_TTC_16   0x0001C000  // 16 bytes
 #define EMAC_DMAOPMODE_ST       0x00002000  // Start or Stop Transmission
-                                            // Command
+// Command
 #define EMAC_DMAOPMODE_FEF      0x00000080  // Forward Error Frames
 #define EMAC_DMAOPMODE_FUF      0x00000040  // Forward Undersized Good Frames
 #define EMAC_DMAOPMODE_DGF      0x00000020  // Drop Giant Frame Enable
@@ -1060,20 +1060,20 @@
 //*****************************************************************************
 #define EMAC_DMAIM_NIE          0x00010000  // Normal Interrupt Summary Enable
 #define EMAC_DMAIM_AIE          0x00008000  // Abnormal Interrupt Summary
-                                            // Enable
+// Enable
 #define EMAC_DMAIM_ERE          0x00004000  // Early Receive Interrupt Enable
 #define EMAC_DMAIM_FBE          0x00002000  // Fatal Bus Error Enable
 #define EMAC_DMAIM_ETE          0x00000400  // Early Transmit Interrupt Enable
 #define EMAC_DMAIM_RWE          0x00000200  // Receive Watchdog Timeout Enable
 #define EMAC_DMAIM_RSE          0x00000100  // Receive Stopped Enable
 #define EMAC_DMAIM_RUE          0x00000080  // Receive Buffer Unavailable
-                                            // Enable
+// Enable
 #define EMAC_DMAIM_RIE          0x00000040  // Receive Interrupt Enable
 #define EMAC_DMAIM_UNE          0x00000020  // Underflow Interrupt Enable
 #define EMAC_DMAIM_OVE          0x00000010  // Overflow Interrupt Enable
 #define EMAC_DMAIM_TJE          0x00000008  // Transmit Jabber Timeout Enable
 #define EMAC_DMAIM_TUE          0x00000004  // Transmit Buffer Unvailable
-                                            // Enable
+// Enable
 #define EMAC_DMAIM_TSE          0x00000002  // Transmit Stopped Enable
 #define EMAC_DMAIM_TIE          0x00000001  // Transmit Interrupt Enable
 
@@ -1083,10 +1083,10 @@
 //
 //*****************************************************************************
 #define EMAC_MFBOC_OVFCNTOVF    0x10000000  // Overflow Bit for FIFO Overflow
-                                            // Counter
+// Counter
 #define EMAC_MFBOC_OVFFRMCNT_M  0x0FFE0000  // Overflow Frame Counter
 #define EMAC_MFBOC_MISCNTOVF    0x00010000  // Overflow bit for Missed Frame
-                                            // Counter
+// Counter
 #define EMAC_MFBOC_MISFRMCNT_M  0x0000FFFF  // Missed Frame Counter
 #define EMAC_MFBOC_OVFFRMCNT_S  17
 #define EMAC_MFBOC_MISFRMCNT_S  0
@@ -1098,7 +1098,7 @@
 //
 //*****************************************************************************
 #define EMAC_RXINTWDT_RIWT_M    0x000000FF  // Receive Interrupt Watchdog Timer
-                                            // Count
+// Count
 #define EMAC_RXINTWDT_RIWT_S    0
 
 //*****************************************************************************
@@ -1109,7 +1109,7 @@
 //*****************************************************************************
 #define EMAC_HOSTXDESC_CURTXDESC_M                                            \
                                 0xFFFFFFFF  // Host Transmit Descriptor Address
-                                            // Pointer
+// Pointer
 #define EMAC_HOSTXDESC_CURTXDESC_S                                            \
                                 0
 
@@ -1121,7 +1121,7 @@
 //*****************************************************************************
 #define EMAC_HOSRXDESC_CURRXDESC_M                                            \
                                 0xFFFFFFFF  // Host Receive Descriptor Address
-                                            // Pointer
+// Pointer
 #define EMAC_HOSRXDESC_CURRXDESC_S                                            \
                                 0
 
@@ -1132,7 +1132,7 @@
 //*****************************************************************************
 #define EMAC_HOSTXBA_CURTXBUFA_M                                              \
                                 0xFFFFFFFF  // Host Transmit Buffer Address
-                                            // Pointer
+// Pointer
 #define EMAC_HOSTXBA_CURTXBUFA_S                                              \
                                 0
 
@@ -1143,7 +1143,7 @@
 //*****************************************************************************
 #define EMAC_HOSRXBA_CURRXBUFA_M                                              \
                                 0xFFFFFFFF  // Host Receive Buffer Address
-                                            // Pointer
+// Pointer
 #define EMAC_HOSRXBA_CURRXBUFA_S                                              \
                                 0
 
@@ -1166,13 +1166,13 @@
 #define EMAC_PC_PHYEXT          0x80000000  // PHY Select
 #define EMAC_PC_PINTFS_M        0x70000000  // Ethernet Interface Select
 #define EMAC_PC_PINTFS_IMII     0x00000000  // MII (default) Used for internal
-                                            // PHY or external PHY connected
-                                            // via MII
+// PHY or external PHY connected
+// via MII
 #define EMAC_PC_PINTFS_RMII     0x40000000  // RMII: Used for external PHY
-                                            // connected via RMII
+// connected via RMII
 #define EMAC_PC_DIGRESTART      0x02000000  // PHY Soft Restart
 #define EMAC_PC_NIBDETDIS       0x01000000  // Odd Nibble TXER Detection
-                                            // Disable
+// Disable
 #define EMAC_PC_RXERIDLE        0x00800000  // RXER Detection During Idle
 #define EMAC_PC_ISOMIILL        0x00400000  // Isolate MII in Link Loss
 #define EMAC_PC_LRR             0x00200000  // Link Loss Recovery
@@ -1191,13 +1191,13 @@
 #define EMAC_PC_ANEN            0x00000008  // Auto Negotiation Enable
 #define EMAC_PC_ANMODE_M        0x00000006  // Auto Negotiation Mode
 #define EMAC_PC_ANMODE_10HD     0x00000000  // When ANEN = 0x0, the mode is
-                                            // 10Base-T, Half-Duplex
+// 10Base-T, Half-Duplex
 #define EMAC_PC_ANMODE_10FD     0x00000002  // When ANEN = 0x0, the mode is
-                                            // 10Base-T, Full-Duplex
+// 10Base-T, Full-Duplex
 #define EMAC_PC_ANMODE_100HD    0x00000004  // When ANEN = 0x0, the mode is
-                                            // 100Base-TX, Half-Duplex
+// 100Base-TX, Half-Duplex
 #define EMAC_PC_ANMODE_100FD    0x00000006  // When ANEN = 0x0, the mode is
-                                            // 100Base-TX, Full-Duplex
+// 100Base-TX, Full-Duplex
 #define EMAC_PC_PHYHOLD         0x00000001  // Ethernet PHY Hold
 #define EMAC_PC_FASTLDMODE_S    15
 #define EMAC_PC_FASTANSEL_S     4
@@ -1217,7 +1217,7 @@
 //
 //*****************************************************************************
 #define EMAC_EPHYRIS_INT        0x00000001  // Ethernet PHY Raw Interrupt
-                                            // Status
+// Status
 
 //*****************************************************************************
 //
@@ -1233,7 +1233,7 @@
 //
 //*****************************************************************************
 #define EMAC_EPHYMISC_INT       0x00000001  // Ethernet PHY Status and Clear
-                                            // register
+// register
 
 //*****************************************************************************
 //
@@ -1243,19 +1243,19 @@
 #define EPHY_BMCR               0x00000000  // Ethernet PHY Basic Mode Control
 #define EPHY_BMSR               0x00000001  // Ethernet PHY Basic Mode Status
 #define EPHY_ID1                0x00000002  // Ethernet PHY Identifier Register
-                                            // 1
+// 1
 #define EPHY_ID2                0x00000003  // Ethernet PHY Identifier Register
-                                            // 2
+// 2
 #define EPHY_ANA                0x00000004  // Ethernet PHY Auto-Negotiation
-                                            // Advertisement
+// Advertisement
 #define EPHY_ANLPA              0x00000005  // Ethernet PHY Auto-Negotiation
-                                            // Link Partner Ability
+// Link Partner Ability
 #define EPHY_ANER               0x00000006  // Ethernet PHY Auto-Negotiation
-                                            // Expansion
+// Expansion
 #define EPHY_ANNPTR             0x00000007  // Ethernet PHY Auto-Negotiation
-                                            // Next Page TX
+// Next Page TX
 #define EPHY_ANLNPTR            0x00000008  // Ethernet PHY Auto-Negotiation
-                                            // Link Partner Ability Next Page
+// Link Partner Ability Next Page
 #define EPHY_CFG1               0x00000009  // Ethernet PHY Configuration 1
 #define EPHY_CFG2               0x0000000A  // Ethernet PHY Configuration 2
 #define EPHY_CFG3               0x0000000B  // Ethernet PHY Configuration 3
@@ -1264,23 +1264,23 @@
 #define EPHY_STS                0x00000010  // Ethernet PHY Status
 #define EPHY_SCR                0x00000011  // Ethernet PHY Specific Control
 #define EPHY_MISR1              0x00000012  // Ethernet PHY MII Interrupt
-                                            // Status 1
+// Status 1
 #define EPHY_MISR2              0x00000013  // Ethernet PHY MII Interrupt
-                                            // Status 2
+// Status 2
 #define EPHY_FCSCR              0x00000014  // Ethernet PHY False Carrier Sense
-                                            // Counter
+// Counter
 #define EPHY_RXERCNT            0x00000015  // Ethernet PHY Receive Error Count
 #define EPHY_BISTCR             0x00000016  // Ethernet PHY BIST Control
 #define EPHY_LEDCR              0x00000018  // Ethernet PHY LED Control
 #define EPHY_CTL                0x00000019  // Ethernet PHY Control
 #define EPHY_10BTSC             0x0000001A  // Ethernet PHY 10Base-T
-                                            // Status/Control - MR26
+// Status/Control - MR26
 #define EPHY_BICSR1             0x0000001B  // Ethernet PHY BIST Control and
-                                            // Status 1
+// Status 1
 #define EPHY_BICSR2             0x0000001C  // Ethernet PHY BIST Control and
-                                            // Status 2
+// Status 2
 #define EPHY_CDCR               0x0000001E  // Ethernet PHY Cable Diagnostic
-                                            // Control
+// Control
 #define EPHY_RCR                0x0000001F  // Ethernet PHY Reset Control
 #define EPHY_LEDCFG             0x00000025  // Ethernet PHY LED Configuration
 
@@ -1344,9 +1344,9 @@
 #define EPHY_ANA_NP             0x00008000  // Next Page Indication
 #define EPHY_ANA_RF             0x00002000  // Remote Fault
 #define EPHY_ANA_ASMDUP         0x00000800  // Asymmetric PAUSE support for
-                                            // Full Duplex Links
+// Full Duplex Links
 #define EPHY_ANA_PAUSE          0x00000400  // PAUSE Support for Full Duplex
-                                            // Links
+// Links
 #define EPHY_ANA_100BT4         0x00000200  // 100Base-T4 Support
 #define EPHY_ANA_100BTXFD       0x00000100  // 100Base-TX Full Duplex Support
 #define EPHY_ANA_100BTX         0x00000080  // 100Base-TX Support
@@ -1383,7 +1383,7 @@
 #define EPHY_ANER_NPABLE        0x00000004  // Next Page Able
 #define EPHY_ANER_PAGERX        0x00000002  // Link Code Word Page Received
 #define EPHY_ANER_LPANABLE      0x00000001  // Link Partner Auto-Negotiation
-                                            // Able
+// Able
 
 //*****************************************************************************
 //
@@ -1422,7 +1422,7 @@
 #define EPHY_CFG1_RAMDIX        0x00000020  // Robust Auto MDI/MDIX
 #define EPHY_CFG1_FASTANEN      0x00000010  // Fast Auto Negotiation Enable
 #define EPHY_CFG1_FANSEL_M      0x0000000C  // Fast Auto-Negotiation Select
-                                            // Configuration
+// Configuration
 #define EPHY_CFG1_FANSEL_BLT80  0x00000000  // Break Link Timer: 80 ms
 #define EPHY_CFG1_FANSEL_BLT120 0x00000004  // Break Link Timer: 120 ms
 #define EPHY_CFG1_FANSEL_BLT240 0x00000008  // Break Link Timer: 240 ms
@@ -1434,13 +1434,13 @@
 //
 //*****************************************************************************
 #define EPHY_CFG2_FLUPPD        0x00000040  // Fast Link-Up in Parallel Detect
-                                            // Mode
+// Mode
 #define EPHY_CFG2_EXTFD         0x00000020  // Extended Full-Duplex Ability
 #define EPHY_CFG2_ENLEDLINK     0x00000010  // Enhanced LED Functionality
 #define EPHY_CFG2_ISOMIILL      0x00000008  // Isolate MII outputs when
-                                            // Enhanced Link is not Achievable
+// Enhanced Link is not Achievable
 #define EPHY_CFG2_RXERRIDLE     0x00000004  // Detection of Receive Symbol
-                                            // Error During IDLE State
+// Error During IDLE State
 #define EPHY_CFG2_ODDNDETDIS    0x00000002  // Detection of Transmit Error
 
 //*****************************************************************************
@@ -1463,10 +1463,10 @@
 #define EPHY_REGCTL_FUNC_DATANI 0x00004000  // Data, no post increment
 #define EPHY_REGCTL_FUNC_DATAPIRW                                             \
                                 0x00008000  // Data, post increment on read and
-                                            // write
+// write
 #define EPHY_REGCTL_FUNC_DATAPIWO                                             \
                                 0x0000C000  // Data, post increment on write
-                                            // only
+// only
 #define EPHY_REGCTL_DEVAD_M     0x0000001F  // Device Address
 #define EPHY_REGCTL_DEVAD_S     0
 
@@ -1508,7 +1508,7 @@
 #define EPHY_SCR_PSEN           0x00004000  // Power Saving Modes Enable
 #define EPHY_SCR_PSMODE_M       0x00003000  // Power Saving Modes
 #define EPHY_SCR_PSMODE_NORMAL  0x00000000  // Normal: Normal operation mode.
-                                            // PHY is fully functional
+// PHY is fully functional
 #define EPHY_SCR_PSMODE_LOWPWR  0x00001000  // IEEE Power Down
 #define EPHY_SCR_PSMODE_ACTWOL  0x00002000  // Active Sleep
 #define EPHY_SCR_PSMODE_PASWOL  0x00003000  // Passive Sleep
@@ -1530,22 +1530,22 @@
 #define EPHY_MISR1_LINKSTAT     0x00002000  // Change of Link Status Interrupt
 #define EPHY_MISR1_SPEED        0x00001000  // Change of Speed Status Interrupt
 #define EPHY_MISR1_DUPLEXM      0x00000800  // Change of Duplex Status
-                                            // Interrupt
+// Interrupt
 #define EPHY_MISR1_ANC          0x00000400  // Auto-Negotiation Complete
-                                            // Interrupt
+// Interrupt
 #define EPHY_MISR1_FCHF         0x00000200  // False Carrier Counter Half-Full
-                                            // Interrupt
+// Interrupt
 #define EPHY_MISR1_RXHF         0x00000100  // Receive Error Counter Half-Full
-                                            // Interrupt
+// Interrupt
 #define EPHY_MISR1_LINKSTATEN   0x00000020  // Link Status Interrupt Enable
 #define EPHY_MISR1_SPEEDEN      0x00000010  // Speed Change Interrupt Enable
 #define EPHY_MISR1_DUPLEXMEN    0x00000008  // Duplex Status Interrupt Enable
 #define EPHY_MISR1_ANCEN        0x00000004  // Auto-Negotiation Complete
-                                            // Interrupt Enable
+// Interrupt Enable
 #define EPHY_MISR1_FCHFEN       0x00000002  // False Carrier Counter Register
-                                            // half-full Interrupt Enable
+// half-full Interrupt Enable
 #define EPHY_MISR1_RXHFEN       0x00000001  // Receive Error Counter Register
-                                            // Half-Full Event Interrupt
+// Half-Full Event Interrupt
 
 //*****************************************************************************
 //
@@ -1555,25 +1555,25 @@
 #define EPHY_MISR2_ANERR        0x00004000  // Auto-Negotiation Error Interrupt
 #define EPHY_MISR2_PAGERX       0x00002000  // Page Receive Interrupt
 #define EPHY_MISR2_LBFIFO       0x00001000  // Loopback FIFO Overflow/Underflow
-                                            // Event Interrupt
+// Event Interrupt
 #define EPHY_MISR2_MDICO        0x00000800  // MDI/MDIX Crossover Status
-                                            // Changed Interrupt
+// Changed Interrupt
 #define EPHY_MISR2_SLEEP        0x00000400  // Sleep Mode Event Interrupt
 #define EPHY_MISR2_POLINT       0x00000200  // Polarity Changed Interrupt
 #define EPHY_MISR2_JABBER       0x00000100  // Jabber Detect Event Interrupt
 #define EPHY_MISR2_ANERREN      0x00000040  // Auto-Negotiation Error Interrupt
-                                            // Enable
+// Enable
 #define EPHY_MISR2_PAGERXEN     0x00000020  // Page Receive Interrupt Enable
 #define EPHY_MISR2_LBFIFOEN     0x00000010  // Loopback FIFO Overflow/Underflow
-                                            // Interrupt Enable
+// Interrupt Enable
 #define EPHY_MISR2_MDICOEN      0x00000008  // MDI/MDIX Crossover Status
-                                            // Changed Interrupt Enable
+// Changed Interrupt Enable
 #define EPHY_MISR2_SLEEPEN      0x00000004  // Sleep Mode Event Interrupt
-                                            // Enable
+// Enable
 #define EPHY_MISR2_POLINTEN     0x00000002  // Polarity Changed Interrupt
-                                            // Enable
+// Enable
 #define EPHY_MISR2_JABBEREN     0x00000001  // Jabber Detect Event Interrupt
-                                            // Enable
+// Enable
 
 //*****************************************************************************
 //
@@ -1601,26 +1601,26 @@
 #define EPHY_BISTCR_PKTEN       0x00001000  // Packet Generation Enable
 #define EPHY_BISTCR_PRBSCHKLK   0x00000800  // PRBS Checker Lock Indication
 #define EPHY_BISTCR_PRBSCHKSYNC 0x00000400  // PRBS Checker Lock Sync Loss
-                                            // Indication
+// Indication
 #define EPHY_BISTCR_PKTGENSTAT  0x00000200  // Packet Generator Status
-                                            // Indication
+// Indication
 #define EPHY_BISTCR_PWRMODE     0x00000100  // Power Mode Indication
 #define EPHY_BISTCR_TXMIILB     0x00000040  // Transmit Data in MII Loopback
-                                            // Mode
+// Mode
 #define EPHY_BISTCR_LBMODE_M    0x0000001F  // Loopback Mode Select
 #define EPHY_BISTCR_LBMODE_NPCSIN                                             \
                                 0x00000001  // Near-end loopback: PCS Input
-                                            // Loopback
+// Loopback
 #define EPHY_BISTCR_LBMODE_NPCSOUT                                            \
                                 0x00000002  // Near-end loopback: PCS Output
-                                            // Loopback (In 100Base-TX only)
+// Loopback (In 100Base-TX only)
 #define EPHY_BISTCR_LBMODE_NDIG 0x00000004  // Near-end loopback: Digital
-                                            // Loopback
+// Loopback
 #define EPHY_BISTCR_LBMODE_NANA 0x00000008  // Near-end loopback: Analog
-                                            // Loopback (requires 100 Ohm
-                                            // termination)
+// Loopback (requires 100 Ohm
+// termination)
 #define EPHY_BISTCR_LBMODE_FREV 0x00000010  // Far-end Loopback: Reverse
-                                            // Loopback
+// Loopback
 
 //*****************************************************************************
 //
@@ -1628,7 +1628,7 @@
 //
 //*****************************************************************************
 #define EPHY_LEDCR_BLINKRATE_M  0x00000600  // LED Blinking Rate (ON/OFF
-                                            // duration):
+// duration):
 #define EPHY_LEDCR_BLINKRATE_20HZ                                             \
                                 0x00000000  // 20 Hz (50 ms)
 #define EPHY_LEDCR_BLINKRATE_10HZ                                             \
@@ -1658,7 +1658,7 @@
 #define EPHY_10BTSC_RXTHEN      0x00002000  // Lower Receiver Threshold Enable
 #define EPHY_10BTSC_SQUELCH_M   0x00001E00  // Squelch Configuration
 #define EPHY_10BTSC_NLPDIS      0x00000080  // Normal Link Pulse (NLP)
-                                            // Transmission Control
+// Transmission Control
 #define EPHY_10BTSC_POLSTAT     0x00000010  // 10 Mb Polarity Status
 #define EPHY_10BTSC_JABBERD     0x00000001  // Jabber Disable
 #define EPHY_10BTSC_SQUELCH_S   9
@@ -1756,75 +1756,75 @@
 //*****************************************************************************
 #define EMAC_PPSCTRL_PPSCTRL_1HZ                                              \
                                 0x00000000  // When the PPSEN0 bit = 0x0, the
-                                            // EN0PPS signal is 1 pulse of the
-                                            // PTP reference clock.(of width
-                                            // clk_ptp_i) every second
+// EN0PPS signal is 1 pulse of the
+// PTP reference clock.(of width
+// clk_ptp_i) every second
 #define EMAC_PPSCTRL_PPSCTRL_2HZ                                              \
                                 0x00000001  // When the PPSEN0 bit = 0x0, the
-                                            // binary rollover is 2 Hz, and the
-                                            // digital rollover is 1 Hz
+// binary rollover is 2 Hz, and the
+// digital rollover is 1 Hz
 #define EMAC_PPSCTRL_PPSCTRL_4HZ                                              \
                                 0x00000002  // When the PPSEN0 bit = 0x0, the
-                                            // binary rollover is 4 Hz, and the
-                                            // digital rollover is 2 Hz
+// binary rollover is 4 Hz, and the
+// digital rollover is 2 Hz
 #define EMAC_PPSCTRL_PPSCTRL_8HZ                                              \
                                 0x00000003  // When thePPSEN0 bit = 0x0, the
-                                            // binary rollover is 8 Hz, and the
-                                            // digital rollover is 4 Hz,
+// binary rollover is 8 Hz, and the
+// digital rollover is 4 Hz,
 #define EMAC_PPSCTRL_PPSCTRL_16HZ                                             \
                                 0x00000004  // When thePPSEN0 bit = 0x0, the
-                                            // binary rollover is 16 Hz, and
-                                            // the digital rollover is 8 Hz
+// binary rollover is 16 Hz, and
+// the digital rollover is 8 Hz
 #define EMAC_PPSCTRL_PPSCTRL_32HZ                                             \
                                 0x00000005  // When thePPSEN0 bit = 0x0, the
-                                            // binary rollover is 32 Hz, and
-                                            // the digital rollover is 16 Hz
+// binary rollover is 32 Hz, and
+// the digital rollover is 16 Hz
 #define EMAC_PPSCTRL_PPSCTRL_64HZ                                             \
                                 0x00000006  // When thePPSEN0 bit = 0x0, the
-                                            // binary rollover is 64 Hz, and
-                                            // the digital rollover is 32 Hz
+// binary rollover is 64 Hz, and
+// the digital rollover is 32 Hz
 #define EMAC_PPSCTRL_PPSCTRL_128HZ                                            \
                                 0x00000007  // When thePPSEN0 bit = 0x0, the
-                                            // binary rollover is 128 Hz, and
-                                            // the digital rollover is 64 Hz
+// binary rollover is 128 Hz, and
+// the digital rollover is 64 Hz
 #define EMAC_PPSCTRL_PPSCTRL_256HZ                                            \
                                 0x00000008  // When thePPSEN0 bit = 0x0, the
-                                            // binary rollover is 256 Hz, and
-                                            // the digital rollover is 128 Hz
+// binary rollover is 256 Hz, and
+// the digital rollover is 128 Hz
 #define EMAC_PPSCTRL_PPSCTRL_512HZ                                            \
                                 0x00000009  // When thePPSEN0 bit = 0x0, the
-                                            // binary rollover is 512 Hz, and
-                                            // the digital rollover is 256 Hz
+// binary rollover is 512 Hz, and
+// the digital rollover is 256 Hz
 #define EMAC_PPSCTRL_PPSCTRL_1024HZ                                           \
                                 0x0000000A  // When the PPSEN0 bit = 0x0, the
-                                            // binary rollover is 1.024 kHz,
-                                            // and the digital rollover is 512
-                                            // Hz
+// binary rollover is 1.024 kHz,
+// and the digital rollover is 512
+// Hz
 #define EMAC_PPSCTRL_PPSCTRL_2048HZ                                           \
                                 0x0000000B  // When thePPSEN0 bit = 0x0, the
-                                            // binary rollover is 2.048 kHz,
-                                            // and the digital rollover is
-                                            // 1.024 kHz
+// binary rollover is 2.048 kHz,
+// and the digital rollover is
+// 1.024 kHz
 #define EMAC_PPSCTRL_PPSCTRL_4096HZ                                           \
                                 0x0000000C  // When thePPSEN0 bit = 0x0, the
-                                            // binary rollover is 4.096 kHz,
-                                            // and the digital rollover is
-                                            // 2.048 kHz
+// binary rollover is 4.096 kHz,
+// and the digital rollover is
+// 2.048 kHz
 #define EMAC_PPSCTRL_PPSCTRL_8192HZ                                           \
                                 0x0000000D  // When thePPSEN0 bit = 0x0, the
-                                            // binary rollover is 8.192 kHz,
-                                            // and the digital rollover is
-                                            // 4.096 kHz
+// binary rollover is 8.192 kHz,
+// and the digital rollover is
+// 4.096 kHz
 #define EMAC_PPSCTRL_PPSCTRL_16384HZ                                          \
                                 0x0000000E  // When thePPSEN0 bit = 0x0, the
-                                            // binary rollover is 16.384 kHz,
-                                            // and the digital rollover is
-                                            // 8.092 kHz
+// binary rollover is 16.384 kHz,
+// and the digital rollover is
+// 8.092 kHz
 #define EMAC_PPSCTRL_PPSCTRL_32768HZ                                          \
                                 0x0000000F  // When thePPSEN0 bit = 0x0, the
-                                            // binary rollover is 32.768 KHz,
-                                            // and the digital rollover is
-                                            // 16.384 KHz
+// binary rollover is 32.768 KHz,
+// and the digital rollover is
+// 16.384 KHz
 
 //*****************************************************************************
 //

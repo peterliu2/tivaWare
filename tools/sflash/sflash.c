@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2006-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -339,40 +339,39 @@ int32_t g_i32DisableAutoBaud;
 //! that is passed into the program.
 //
 //*****************************************************************************
-static char const pcUsageString[] =
-{
-"\n"
-"Usage: sflash filename -p [program address] -r [execution address]\n"
+static char const pcUsageString[] = {
+    "\n"
+    "Usage: sflash filename -p [program address] -r [execution address]\n"
 #ifdef __WIN32
-"    -c [COM port number] -d -l [Boot Loader filename] -b [baud rate]\n"
+    "    -c [COM port number] -d -l [Boot Loader filename] -b [baud rate]\n"
 #else
-"    -c [tty] -d -l [Boot Loader filename] -b [baud rate]\n"
+    "    -c [tty] -d -l [Boot Loader filename] -b [baud rate]\n"
 #endif
-"    -s [data size]\n\n"
-"-p [program address]:\n"
-"    if address is not specified it is assumed to be 0x00000000\n"
-"    if there is no 0x prefix is added then the address is assumed to be \n"
-"    in decimal\n"
-"-r [execution address]:\n"
-"    if address is not specified then no run command will be sent.\n"
+    "    -s [data size]\n\n"
+    "-p [program address]:\n"
+    "    if address is not specified it is assumed to be 0x00000000\n"
+    "    if there is no 0x prefix is added then the address is assumed to be \n"
+    "    in decimal\n"
+    "-r [execution address]:\n"
+    "    if address is not specified then no run command will be sent.\n"
 #ifdef __WIN32
-"-c [COM port number]:\n"
-"    This is the number of the COM port to use.\n"
+    "-c [COM port number]:\n"
+    "    This is the number of the COM port to use.\n"
 #else
-"-c [tty]:\n"
-"    This is the name of the TTY device to use.\n"
+    "-c [tty]:\n"
+    "    This is the name of the TTY device to use.\n"
 #endif
-"-l [Boot Loader filename]:\n"
-"    This specifies a boot loader binary that will be loaded to the device\n"
-"    before downloading the application specified by the filename parameter.\n"
-"-b [baud rate]:\n"
-"    Specifies the baud rate in decimal.\n"
-"-d  Disable Auto-Baud support\n"
-"-s [data size]:\n"
-"    Specifies the number of data bytes to be sent in each data packet.  Must\n"
-"    be a multiple of 4 between 4 and 252 (inclusive).\n\n"
-"    Example: Download test.bin using COM 1 to address 0x800 and run at 0x820\n"
-"        sflash test.bin -p 0x800 -r 0x820 -c 1\n"
+    "-l [Boot Loader filename]:\n"
+    "    This specifies a boot loader binary that will be loaded to the device\n"
+    "    before downloading the application specified by the filename parameter.\n"
+    "-b [baud rate]:\n"
+    "    Specifies the baud rate in decimal.\n"
+    "-d  Disable Auto-Baud support\n"
+    "-s [data size]:\n"
+    "    Specifies the number of data bytes to be sent in each data packet.  Must\n"
+    "    be a multiple of 4 between 4 and 252 (inclusive).\n\n"
+    "    Example: Download test.bin using COM 1 to address 0x800 and run at 0x820\n"
+    "        sflash test.bin -p 0x800 -r 0x820 -c 1\n"
 };
 
 //*****************************************************************************
@@ -413,8 +412,7 @@ static uint32_t g_ui32StartAddress;
 //! port that has been requested.
 //
 //*****************************************************************************
-static char g_pcCOMName[32] =
-{
+static char g_pcCOMName[32] = {
 #ifdef __WIN32
     "\\\\.\\COM1"
 #else
@@ -437,15 +435,14 @@ static char g_pcCOMName[32] =
 int32_t
 AutoBaud(void)
 {
-    static uint8_t const pui8SyncPattern[]={0x55, 0x55};
+    static uint8_t const pui8SyncPattern[]= {0x55, 0x55};
     uint8_t ui8Command;
     uint8_t ui8Ack;
 
     //
     // Send out the sync pattern and wait for an ack from the board.
     //
-    if(UARTSendData(pui8SyncPattern, 2))
-    {
+    if(UARTSendData(pui8SyncPattern, 2)) {
         return(-1);
     }
 
@@ -453,13 +450,11 @@ AutoBaud(void)
     // Wait for the ACK to be received, if something besides an ACK or a zero
     // is received then something went wrong.
     //
-    do
-    {
+    do {
         UARTReceiveData(&ui8Ack, 1);
     } while(ui8Ack == 0);
 
-    if (ui8Ack != COMMAND_ACK)
-    {
+    if (ui8Ack != COMMAND_ACK) {
         return(-1);
     }
 
@@ -467,8 +462,7 @@ AutoBaud(void)
     // Make sure we can at least communicate with the board.
     //
     ui8Command = COMMAND_PING;
-    if(SendCommand(&ui8Command, 1) < 0)
-    {
+    if(SendCommand(&ui8Command, 1) < 0) {
         return(-1);
     }
     return(0);
@@ -497,8 +491,7 @@ SendCommand(uint8_t *pui8Command, uint8_t ui8Size)
     //
     // Send the command itself.
     //
-    if(SendPacket(pui8Command, ui8Size, 1) < 0)
-    {
+    if(SendPacket(pui8Command, ui8Size, 1) < 0) {
         return(-1);
     }
 
@@ -507,8 +500,7 @@ SendCommand(uint8_t *pui8Command, uint8_t ui8Size)
     // the host.
     //
     ui8Status = COMMAND_GET_STATUS;
-    if(SendPacket(&ui8Status, 1, 1) < 0)
-    {
+    if(SendPacket(&ui8Status, 1, 1) < 0) {
         printf("Failed to Get Status\n");
         return(-1);
     }
@@ -517,15 +509,13 @@ SendCommand(uint8_t *pui8Command, uint8_t ui8Size)
     // Read back the status provided from the device.
     //
     ui8Size = sizeof(ui8Status);
-    if(GetPacket(&ui8Status, &ui8Size) < 0)
-    {
+    if(GetPacket(&ui8Status, &ui8Size) < 0) {
         printf("Failed to Get Packet\n");
         return(-1);
     }
-    if(ui8Status != COMMAND_RET_SUCCESS)
-    {
+    if(ui8Status != COMMAND_RET_SUCCESS) {
         printf("Failed to get download command Return Code: %04x\n",
-            ui8Status);
+               ui8Status);
         return(-1);
     }
     return(0);
@@ -553,26 +543,19 @@ parseArgs(int32_t argc, char **argv)
 
     cArg = 0;
 
-    for(i = 1; i < argc; i++)
-    {
-        if(argv[i][0] != '-')
-        {
-            if(cArg)
-            {
-                switch(cArg)
-                {
-                    case 'p':
-                    {
+    for(i = 1; i < argc; i++) {
+        if(argv[i][0] != '-') {
+            if(cArg) {
+                switch(cArg) {
+                    case 'p': {
                         g_ui32DownloadAddress = strtoul(argv[i], 0, 0);
                         break;
                     }
-                    case 'r':
-                    {
+                    case 'r': {
                         g_ui32StartAddress = strtoul(argv[i], 0, 0);
                         break;
                     }
-                    case 'c':
-                    {
+                    case 'c': {
 #ifdef __WIN32
                         sprintf(g_pcCOMName, "\\\\.\\COM%s", argv[i]);
 #else
@@ -580,68 +563,54 @@ parseArgs(int32_t argc, char **argv)
 #endif
                         break;
                     }
-                    case 'l':
-                    {
+                    case 'l': {
                         g_pcBootLoadName = argv[i];
                         break;
                     }
-                    case 'b':
-                    {
+                    case 'b': {
                         g_pui32BaudRate = strtoul(argv[i], 0, 0);
                         break;
                     }
-                    case 's':
-                    {
+                    case 's': {
                         g_ui32DataSize = strtoul(argv[i], 0, 0);
-                        if((g_ui32DataSize < 4) || (g_ui32DataSize > 252))
-                        {
+                        if((g_ui32DataSize < 4) || (g_ui32DataSize > 252)) {
                             g_ui32DataSize = 8;
                         }
                         g_ui32DataSize &= ~3;
                         break;
                     }
-                    default:
-                    {
+                    default: {
                         printf("ERROR: Invalid argument\n");
                         return(-1);
                     }
                 }
                 cArg = 0;
-            }
-            else
-            {
+            } else {
                 //
                 // If we already have a filename then error out as everything
                 // else should have an option before it.
                 //
-                if(g_pcFilename)
-                {
+                if(g_pcFilename) {
                     return(-1);
                 }
                 g_pcFilename = argv[i];
             }
-        }
-        else
-        {
+        } else {
             //
             // Single flag parameters go here.
             //
-            switch(argv[i][1])
-            {
+            switch(argv[i][1]) {
                 case '-':
                 case '?':
-                case 'h':
-                {
+                case 'h': {
                     return(-2);
                     break;
                 }
-                case 'd':
-                {
+                case 'd': {
                     g_i32DisableAutoBaud = 1;
                     break;
                 }
-                default:
-                {
+                default: {
                     cArg = argv[i][1];
                     break;
                 }
@@ -686,28 +655,24 @@ main(int32_t argc, char **argv)
     //
     // Get any arguments that were passed in.
     //
-    if(parseArgs(argc, argv))
-    {
+    if(parseArgs(argc, argv)) {
         printf("%s", pcUsageString);
         return(-1);
     }
 
-    if(CheckArgs())
-    {
+    if(CheckArgs()) {
         return(-1);
     }
 
     //
     // If a boot loader was specified then open it.
     //
-    if(g_pcBootLoadName)
-    {
+    if(g_pcBootLoadName) {
         //
         // Open the boot loader file to download.
         //
         hFileBoot = fopen(g_pcBootLoadName, "rb");
-        if(hFileBoot == 0)
-        {
+        if(hFileBoot == 0) {
             printf("Failed to open file: %s\n", g_pcBootLoadName);
             return(-1);
         }
@@ -717,14 +682,12 @@ main(int32_t argc, char **argv)
     // Open the file to download.
     //
     hFile = fopen(g_pcFilename, "rb");
-    if(hFile == 0)
-    {
+    if(hFile == 0) {
         printf("Failed to open file: %s\n", g_pcFilename);
         return(-1);
     }
 
-    if(OpenUART(g_pcCOMName, g_pui32BaudRate))
-    {
+    if(OpenUART(g_pcCOMName, g_pui32BaudRate)) {
         printf("Failed to configure Host UART\n");
         return(-1);
     }
@@ -733,18 +696,15 @@ main(int32_t argc, char **argv)
     // Now try to auto baud with the board by sending the Sync and waiting
     // for an ack from the board.
     //
-    if(g_i32DisableAutoBaud == 0)
-    {
-        if(AutoBaud())
-        {
+    if(g_i32DisableAutoBaud == 0) {
+        if(AutoBaud()) {
             printf("Failed to synchronize with board.\n");
             return(-1);
         }
     }
 
     printf("\n");
-    if(g_pcBootLoadName)
-    {
+    if(g_pcBootLoadName) {
         printf("Boot Loader    : %s\n", g_pcBootLoadName);
     }
     printf("Application    : %s\n", g_pcFilename);
@@ -758,18 +718,15 @@ main(int32_t argc, char **argv)
     // If both a boot loader and an application were specified then update both
     // the boot loader and the application.
     //
-    if(g_pcBootLoadName != 0)
-    {
-        if(UpdateFlash(hFile, hFileBoot, g_ui32DownloadAddress) < 0)
-        {
+    if(g_pcBootLoadName != 0) {
+        if(UpdateFlash(hFile, hFileBoot, g_ui32DownloadAddress) < 0) {
             return(-1);
         }
     }
     //
     // Otherwise just update the application.
     //
-    else if(UpdateFlash(hFile, 0, g_ui32DownloadAddress) < 0)
-    {
+    else if(UpdateFlash(hFile, 0, g_ui32DownloadAddress) < 0) {
         return(-1);
     }
 
@@ -777,8 +734,7 @@ main(int32_t argc, char **argv)
     // If a start address was specified then send the run command to the
     // boot loader.
     //
-    if(g_ui32StartAddress != 0xffffffff)
-    {
+    if(g_ui32StartAddress != 0xffffffff) {
         //
         // Send the run command but just send the packet, there will likely
         // be no boot loader to answer after this command completes.
@@ -788,17 +744,12 @@ main(int32_t argc, char **argv)
         g_pui8Buffer[2] = (uint8_t)(g_ui32StartAddress>>16);
         g_pui8Buffer[3] = (uint8_t)(g_ui32StartAddress>>8);
         g_pui8Buffer[4] = (uint8_t)g_ui32StartAddress;
-        if(SendPacket(g_pui8Buffer, 5, 0) < 0)
-        {
+        if(SendPacket(g_pui8Buffer, 5, 0) < 0) {
             printf("Failed to Send Run command\n");
-        }
-        else
-        {
+        } else {
             printf("Running from address %08x\n",g_ui32StartAddress);
         }
-    }
-    else
-    {
+    } else {
         //
         // Send the reset command but just send the packet, there will likely
         // be no boot loader to answer after this command completes.
@@ -806,8 +757,7 @@ main(int32_t argc, char **argv)
         g_pui8Buffer[0] = COMMAND_RESET;
         SendPacket(g_pui8Buffer, 1, 0);
     }
-    if(hFile != 0)
-    {
+    if(hFile != 0) {
         fclose(hFile);
     }
     printf("Successfully downloaded to device.\n");
@@ -847,8 +797,7 @@ UpdateFlash(FILE *hFile, FILE *hBootFile, uint32_t ui32Address)
     //
     // At least one file must be specified.
     //
-    if(hFile == 0)
-    {
+    if(hFile == 0) {
         return(-1);
     }
 
@@ -865,8 +814,7 @@ UpdateFlash(FILE *hFile, FILE *hBootFile, uint32_t ui32Address)
     ui32TransferLength = ui32FileLength;
     ui32TransferStart = ui32Address;
 
-    if(hBootFile)
-    {
+    if(hBootFile) {
         fseek(hBootFile, 0, SEEK_END);
         ui32BootFileLength = ftell(hBootFile);
         fseek(hBootFile, 0, SEEK_SET);
@@ -876,21 +824,17 @@ UpdateFlash(FILE *hFile, FILE *hBootFile, uint32_t ui32Address)
     }
 
     pui8FileBuffer = malloc(ui32TransferLength);
-    if(pui8FileBuffer == 0)
-    {
+    if(pui8FileBuffer == 0) {
         return(-1);
     }
 
-    if(hBootFile)
-    {
+    if(hBootFile) {
         if(fread(pui8FileBuffer, 1, ui32BootFileLength, hBootFile) !=
-            ui32BootFileLength)
-        {
+                ui32BootFileLength) {
             return(-1);
         }
 
-        if(ui32Address < ui32BootFileLength)
-        {
+        if(ui32Address < ui32BootFileLength) {
             return(-1);
         }
 
@@ -899,24 +843,20 @@ UpdateFlash(FILE *hFile, FILE *hBootFile, uint32_t ui32Address)
         // a known state.
         //
         memset(&pui8FileBuffer[ui32BootFileLength], 0xff,
-            ui32Address - ui32BootFileLength);
+               ui32Address - ui32BootFileLength);
 
         //
         // Append the application to the boot loader image.
         //
         if(fread(&pui8FileBuffer[ui32Address], 1, ui32FileLength, hFile) !=
-            ui32FileLength)
-        {
+                ui32FileLength) {
             return(-1);
         }
-    }
-    else
-    {
+    } else {
         //
         // Just read in the full application since there is not boot loader.
         //
-        if(fread(pui8FileBuffer, 1, ui32TransferLength, hFile) != ui32TransferLength)
-        {
+        if(fread(pui8FileBuffer, 1, ui32TransferLength, hFile) != ui32TransferLength) {
             return(-1);
         }
     }
@@ -933,8 +873,7 @@ UpdateFlash(FILE *hFile, FILE *hBootFile, uint32_t ui32Address)
     g_pui8Buffer[6] = (uint8_t)(ui32TransferLength>>16);
     g_pui8Buffer[7] = (uint8_t)(ui32TransferLength>>8);
     g_pui8Buffer[8] = (uint8_t)ui32TransferLength;
-    if(SendCommand(g_pui8Buffer, 9) < 0)
-    {
+    if(SendCommand(g_pui8Buffer, 9) < 0) {
         printf("Failed to Send Download Command\n");
         return(-1);
     }
@@ -942,8 +881,7 @@ UpdateFlash(FILE *hFile, FILE *hBootFile, uint32_t ui32Address)
     ui32Offset = 0;
 
     printf("Remaining Bytes: ");
-    do
-    {
+    do {
         uint8_t ui8BytesSent;
 
         g_pui8Buffer[0] = COMMAND_SEND_DATA;
@@ -954,16 +892,13 @@ UpdateFlash(FILE *hFile, FILE *hBootFile, uint32_t ui32Address)
         // Send out 8 bytes at a time to throttle download rate and avoid
         // overruning the device since it is programming flash on the fly.
         //
-        if(ui32TransferLength >= g_ui32DataSize)
-        {
+        if(ui32TransferLength >= g_ui32DataSize) {
             memcpy(&g_pui8Buffer[1], &pui8FileBuffer[ui32Offset], g_ui32DataSize);
 
             ui32Offset += g_ui32DataSize;
             ui32TransferLength -= g_ui32DataSize;
             ui8BytesSent = g_ui32DataSize + 1;
-        }
-        else
-        {
+        } else {
             memcpy(&g_pui8Buffer[1], &pui8FileBuffer[ui32Offset], ui32TransferLength);
             ui32Offset += ui32TransferLength;
             ui8BytesSent = ui32TransferLength + 1;
@@ -972,8 +907,7 @@ UpdateFlash(FILE *hFile, FILE *hBootFile, uint32_t ui32Address)
         //
         // Send the Send Data command to the device.
         //
-        if(SendCommand(g_pui8Buffer, ui8BytesSent) < 0)
-        {
+        if(SendCommand(g_pui8Buffer, ui8BytesSent) < 0) {
             printf("Failed to Send Packet data\n");
             break;
         }
@@ -982,8 +916,7 @@ UpdateFlash(FILE *hFile, FILE *hBootFile, uint32_t ui32Address)
     } while (ui32TransferLength);
     printf("00000000\n");
 
-    if(pui8FileBuffer)
-    {
+    if(pui8FileBuffer) {
         free(pui8FileBuffer);
     }
     return(0);
@@ -1009,8 +942,7 @@ CheckArgs(void)
     //
     // No file names specified.
     //
-    if((g_pcFilename == 0) && (g_pcBootLoadName == 0))
-    {
+    if((g_pcFilename == 0) && (g_pcBootLoadName == 0)) {
         printf("ERROR: no file names specified.\n");
         return(-1);
     }
@@ -1019,11 +951,10 @@ CheckArgs(void)
     // Both filenames are specified but the address is zero.
     //
     if((g_pcFilename != 0) && (g_pcBootLoadName != 0) &&
-        (g_ui32DownloadAddress == 0))
-    {
+            (g_ui32DownloadAddress == 0)) {
         printf(
-        "ERROR: Download address cannot be zero and specify a boot loader \n"
-        "binary as well as an application binary\n");
+            "ERROR: Download address cannot be zero and specify a boot loader \n"
+            "binary as well as an application binary\n");
         return(-1);
     }
 
@@ -1031,8 +962,7 @@ CheckArgs(void)
     // If only a boot loader was specified then set the address to 0 and
     // specify only one file to download.
     //
-    if((g_pcBootLoadName != 0) && (g_pcFilename == 0))
-    {
+    if((g_pcBootLoadName != 0) && (g_pcFilename == 0)) {
         g_pcFilename = g_pcBootLoadName;
         g_pcBootLoadName = 0;
         g_ui32DownloadAddress = 0;

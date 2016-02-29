@@ -111,7 +111,7 @@ extern unsigned long TimerPrescaleGet(unsigned long ulBase,
 extern void TimerPrescaleMatchSet(unsigned long ulBase, unsigned long ulTimer,
                                   unsigned long ulValue);
 extern unsigned long TimerPrescaleMatchGet(unsigned long ulBase,
-                                           unsigned long ulTimer);
+        unsigned long ulTimer);
 extern void TimerLoadSet(unsigned long ulBase, unsigned long ulTimer,
                          unsigned long ulValue);
 extern unsigned long TimerLoadGet(unsigned long ulBase, unsigned long ulTimer);

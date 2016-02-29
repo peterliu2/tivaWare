@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -86,23 +86,18 @@ uDMAUSBChannelStatus(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32Channel)
     //
     // Check if there is a pending DMA transfer.
     //
-    if(psUSBDMAInst->ui32Complete & (1 << (ui32Channel - 1)))
-    {
+    if(psUSBDMAInst->ui32Complete & (1 << (ui32Channel - 1))) {
         //
         // Return that the DMA transfer has completed and clear the
         // DMA pending flag.
         //
         ui32Status = USBLIBSTATUS_DMA_COMPLETE;
-    }
-    else if(psUSBDMAInst->ui32Pending & (1 << (ui32Channel - 1)))
-    {
+    } else if(psUSBDMAInst->ui32Pending & (1 << (ui32Channel - 1))) {
         //
         // DMA transfer is still pending.
         //
         ui32Status = USBLIBSTATUS_DMA_PENDING;
-    }
-    else
-    {
+    } else {
         //
         // DMA transfer is still pending.
         //
@@ -132,30 +127,24 @@ iDMAUSBChannelStatus(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32Channel)
     // Check if an error has occurred.
     //
     if(USBDMAChannelStatus(psUSBDMAInst->ui32Base, ui32Channel) ==
-       USB_DMA_STATUS_ERROR)
-    {
+            USB_DMA_STATUS_ERROR) {
         ui32Status = USBLIBSTATUS_DMA_ERROR;
     }
     //
     // Otherwise check if there a pending DMA transfer has completed.
     //
-    else if(psUSBDMAInst->ui32Complete & (1 << (ui32Channel - 1)))
-    {
+    else if(psUSBDMAInst->ui32Complete & (1 << (ui32Channel - 1))) {
         //
         // Return that the DMA transfer has completed and clear the
         // DMA pending flag.
         //
         ui32Status = USBLIBSTATUS_DMA_COMPLETE;
-    }
-    else if(psUSBDMAInst->ui32Pending & (1 << (ui32Channel - 1)))
-    {
+    } else if(psUSBDMAInst->ui32Pending & (1 << (ui32Channel - 1))) {
         //
         // DMA transfer is still pending.
         //
         ui32Status = USBLIBSTATUS_DMA_PENDING;
-    }
-    else
-    {
+    } else {
         //
         // DMA Channel is idle.
         //
@@ -195,14 +184,12 @@ uDMAUSBIntStatus(tUSBDMAInstance *psUSBDMAInst)
     // Loop through channels to find out if any pending DMA transfers have
     // completed.
     //
-    for(i32Channel = 0; i32Channel < USB_MAX_DMA_CHANNELS; i32Channel++)
-    {
+    for(i32Channel = 0; i32Channel < USB_MAX_DMA_CHANNELS; i32Channel++) {
         //
         // If pending and stopped then the DMA completed.
         //
         if((ui32Pending & 1) &&
-           (MAP_uDMAChannelModeGet(i32Channel) == UDMA_MODE_STOP))
-        {
+                (MAP_uDMAChannelModeGet(i32Channel) == UDMA_MODE_STOP)) {
             ui32Status |= (1 << i32Channel);
         }
         ui32Pending >>= 1;
@@ -210,8 +197,7 @@ uDMAUSBIntStatus(tUSBDMAInstance *psUSBDMAInst)
         //
         // Done if this is zero.
         //
-        if(ui32Pending == 0)
-        {
+        if(ui32Pending == 0) {
             break;
         }
     }
@@ -264,21 +250,18 @@ DMAUSBIntHandler(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32DMAIntStatus)
 {
     uint32_t ui32Channel;
 
-    if(ui32DMAIntStatus == 0)
-    {
+    if(ui32DMAIntStatus == 0) {
         return;
     }
 
     //
     // Determine if the uDMA is used or the USB DMA controller.
     //
-    for(ui32Channel = 0; ui32Channel < USB_MAX_DMA_CHANNELS; ui32Channel++)
-    {
+    for(ui32Channel = 0; ui32Channel < USB_MAX_DMA_CHANNELS; ui32Channel++) {
         //
         // Mark any pending interrupts as completed.
         //
-        if(ui32DMAIntStatus & 1)
-        {
+        if(ui32DMAIntStatus & 1) {
             psUSBDMAInst->ui32Pending &= ~(1 << ui32Channel);
             psUSBDMAInst->ui32Complete |= (1 << ui32Channel);
         }
@@ -291,8 +274,7 @@ DMAUSBIntHandler(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32DMAIntStatus)
         //
         // Break if there are no more pending DMA interrupts.
         //
-        if(ui32DMAIntStatus == 0)
-        {
+        if(ui32DMAIntStatus == 0) {
             break;
         }
     }
@@ -316,8 +298,7 @@ uDMAUSBChannelEnable(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32Channel)
     //
     // Disable the USB interrupt if it was enabled.
     //
-    if(ui32IntEnabled)
-    {
+    if(ui32IntEnabled) {
         OS_INT_DISABLE(psUSBDMAInst->ui32IntNum);
     }
 
@@ -330,14 +311,11 @@ uDMAUSBChannelEnable(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32Channel)
     //
     // Enable DMA for the endpoint.
     //
-    if(UDMAConfigIsRx(psUSBDMAInst->pui32Config[ui32Channel - 1]))
-    {
+    if(UDMAConfigIsRx(psUSBDMAInst->pui32Config[ui32Channel - 1])) {
         MAP_USBEndpointDMAEnable(psUSBDMAInst->ui32Base,
                                  psUSBDMAInst->pui8Endpoint[ui32Channel - 1],
                                  USB_EP_DEV_OUT | USB_EP_HOST_IN);
-    }
-    else
-    {
+    } else {
         MAP_USBEndpointDMAEnable(psUSBDMAInst->ui32Base,
                                  psUSBDMAInst->pui8Endpoint[ui32Channel - 1],
                                  USB_EP_DEV_IN | USB_EP_HOST_OUT);
@@ -351,8 +329,7 @@ uDMAUSBChannelEnable(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32Channel)
     //
     // Enable the USB interrupt if it was enabled before.
     //
-    if(ui32IntEnabled)
-    {
+    if(ui32IntEnabled) {
         OS_INT_ENABLE(psUSBDMAInst->ui32IntNum);
     }
 }
@@ -376,8 +353,7 @@ iDMAUSBChannelEnable(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32Channel)
     //
     // Disable the USB interrupt if it was enabled.
     //
-    if(ui32IntEnabled)
-    {
+    if(ui32IntEnabled) {
         OS_INT_DISABLE(psUSBDMAInst->ui32IntNum);
     }
 
@@ -400,8 +376,7 @@ iDMAUSBChannelEnable(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32Channel)
     //
     // Enable the USB interrupt if it was enabled before.
     //
-    if(ui32IntEnabled)
-    {
+    if(ui32IntEnabled) {
         OS_INT_ENABLE(psUSBDMAInst->ui32IntNum);
     }
 }
@@ -417,14 +392,11 @@ uDMAUSBChannelDisable(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32Channel)
     //
     // Disable DMA for the endpoint.
     //
-    if(UDMAConfigIsRx(psUSBDMAInst->pui32Config[ui32Channel - 1]))
-    {
+    if(UDMAConfigIsRx(psUSBDMAInst->pui32Config[ui32Channel - 1])) {
         MAP_USBEndpointDMADisable(psUSBDMAInst->ui32Base,
                                   psUSBDMAInst->pui8Endpoint[ui32Channel - 1],
                                   USB_EP_DEV_OUT);
-    }
-    else
-    {
+    } else {
         MAP_USBEndpointDMADisable(psUSBDMAInst->ui32Base,
                                   psUSBDMAInst->pui8Endpoint[ui32Channel - 1],
                                   USB_EP_DEV_IN);
@@ -538,8 +510,7 @@ uDMAUSBTransfer(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32Channel,
     uint32_t ui32PacketCount;
     uint32_t ui32TransferCount;
 
-    if((ui32Size < 64) || ((uint32_t)pvBuffer & 0x3))
-    {
+    if((ui32Size < 64) || ((uint32_t)pvBuffer & 0x3)) {
         return(0);
     }
 
@@ -559,7 +530,7 @@ uDMAUSBTransfer(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32Channel,
     // Need the address of the FIFO.
     //
     pvFIFO = (void *)USBFIFOAddrGet(psUSBDMAInst->ui32Base,
-                                psUSBDMAInst->pui8Endpoint[ui32Channel - 1]);
+                                    psUSBDMAInst->pui8Endpoint[ui32Channel - 1]);
 
     //
     // Calculate the uDMA channel for this RX channel.
@@ -569,26 +540,20 @@ uDMAUSBTransfer(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32Channel,
     ui32TransferCount = ui32Size;
 
     if((psUSBDMAInst->pui32Config[ui32Channel - 1] & UDMA_SIZE_32) ==
-       UDMA_SIZE_32)
-    {
+            UDMA_SIZE_32) {
         ui32TransferCount >>= 2;
-    }
-    else if((psUSBDMAInst->pui32Config[ui32Channel - 1] & UDMA_SIZE_32) ==
-            UDMA_SIZE_32)
-    {
+    } else if((psUSBDMAInst->pui32Config[ui32Channel - 1] & UDMA_SIZE_32) ==
+              UDMA_SIZE_32) {
         ui32TransferCount >>= 1;
     }
 
     //
     // If source increment is none this is an RX transfer.
     //
-    if(UDMAConfigIsRx(psUSBDMAInst->pui32Config[ui32Channel - 1]))
-    {
+    if(UDMAConfigIsRx(psUSBDMAInst->pui32Config[ui32Channel - 1])) {
         MAP_uDMAChannelTransferSet(uluDMAChannel, UDMA_MODE_BASIC, pvFIFO,
                                    pvBuffer, ui32TransferCount);
-    }
-    else
-    {
+    } else {
         MAP_uDMAChannelTransferSet(uluDMAChannel, UDMA_MODE_BASIC, pvBuffer,
                                    pvFIFO, ui32TransferCount);
     }
@@ -597,13 +562,12 @@ uDMAUSBTransfer(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32Channel,
     // Set the mode based on the size of the transfer.  More than one
     // packet requires mode 1.
     //
-    if(ui32Size > psUSBDMAInst->pui32MaxPacketSize[ui32Channel - 1])
-    {
+    if(ui32Size > psUSBDMAInst->pui32MaxPacketSize[ui32Channel - 1]) {
         //
         // Calculate the number of packets required for this transfer.
         //
         ui32PacketCount = ((ui32Size /
-                           psUSBDMAInst->pui32MaxPacketSize[ui32Channel - 1]));
+                            psUSBDMAInst->pui32MaxPacketSize[ui32Channel - 1]));
 
         //
         // Set the packet count so that the last packet does not generate
@@ -619,9 +583,7 @@ uDMAUSBTransfer(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32Channel,
         USBEndpointDMAConfigSet(psUSBDMAInst->ui32Base,
                                 psUSBDMAInst->pui8Endpoint[ui32Channel - 1],
                                 psUSBDMAInst->pui32EPDMAMode1[ui32Channel - 1]);
-    }
-    else
-    {
+    } else {
         //
         // Configure the USB endpoint in mode 0 for this DMA transfer.
         //
@@ -649,8 +611,7 @@ iDMAUSBTransfer(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32Channel,
 {
     uint32_t ui32PacketCount;
 
-    if((uint32_t)pvBuffer & 0x3)
-    {
+    if((uint32_t)pvBuffer & 0x3) {
         return(0);
     }
 
@@ -680,16 +641,14 @@ iDMAUSBTransfer(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32Channel,
     // Set the mode based on the size of the transfer.  More than one
     // packet requires mode 1.
     //
-    if(ui32Size > psUSBDMAInst->pui32MaxPacketSize[ui32Channel - 1])
-    {
+    if(ui32Size > psUSBDMAInst->pui32MaxPacketSize[ui32Channel - 1]) {
         //
         // Calculate the number of packets required for this transfer.
         //
         ui32PacketCount = ui32Size /
                           psUSBDMAInst->pui32MaxPacketSize[ui32Channel - 1];
 
-        if(ui32Size % psUSBDMAInst->pui32MaxPacketSize[ui32Channel - 1])
-        {
+        if(ui32Size % psUSBDMAInst->pui32MaxPacketSize[ui32Channel - 1]) {
             ui32PacketCount += 1;
         }
 
@@ -712,34 +671,29 @@ iDMAUSBTransfer(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32Channel,
         //
         // Enable DMA on the endpoint.
         //
-        if(psUSBDMAInst->pui32Config[ui32Channel - 1] & USB_DMA_CFG_DIR_TX)
-        {
+        if(psUSBDMAInst->pui32Config[ui32Channel - 1] & USB_DMA_CFG_DIR_TX) {
             //
             // Make sure that DMA is enabled on the endpoint.
             //
             MAP_USBEndpointDMAEnable(
-                                psUSBDMAInst->ui32Base,
-                                psUSBDMAInst->pui8Endpoint[ui32Channel - 1],
-                                USB_EP_HOST_OUT);
-        }
-        else
-        {
+                psUSBDMAInst->ui32Base,
+                psUSBDMAInst->pui8Endpoint[ui32Channel - 1],
+                USB_EP_HOST_OUT);
+        } else {
             //
             // Make sure that DMA is enabled on the endpoint.
             //
             MAP_USBEndpointDMAEnable(
-                                   psUSBDMAInst->ui32Base,
-                                   psUSBDMAInst->pui8Endpoint[ui32Channel - 1],
-                                   USB_EP_HOST_IN);
+                psUSBDMAInst->ui32Base,
+                psUSBDMAInst->pui8Endpoint[ui32Channel - 1],
+                USB_EP_HOST_IN);
         }
 
         //
         // Enable the DMA channel.
         //
         USBDMAChannelEnable(psUSBDMAInst->ui32Base, ui32Channel - 1);
-    }
-    else
-    {
+    } else {
         //
         // Configure the USB DMA controller for mode 0.
         //
@@ -755,30 +709,27 @@ iDMAUSBTransfer(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32Channel,
         //
         // In mode 0 only enable DMA transfer for mode 0.
         //
-        if(psUSBDMAInst->pui32Config[ui32Channel - 1] & USB_DMA_CFG_DIR_TX)
-        {
+        if(psUSBDMAInst->pui32Config[ui32Channel - 1] & USB_DMA_CFG_DIR_TX) {
             //
             // Make sure that DMA is enabled on the endpoint.
             //
             MAP_USBEndpointDMAEnable(
-                                psUSBDMAInst->ui32Base,
-                                psUSBDMAInst->pui8Endpoint[ui32Channel - 1],
-                                USB_EP_HOST_OUT);
+                psUSBDMAInst->ui32Base,
+                psUSBDMAInst->pui8Endpoint[ui32Channel - 1],
+                USB_EP_HOST_OUT);
             //
             // Enable the DMA channel.
             //
             USBDMAChannelEnable(psUSBDMAInst->ui32Base, ui32Channel - 1);
-        }
-        else
-        {
+        } else {
             //
             // Make sure that DMA is disabled on the endpoint, it will
             // be enabled when the endpoint interrupt occurs.
             //
             MAP_USBEndpointDMADisable(
-                                   psUSBDMAInst->ui32Base,
-                                   psUSBDMAInst->pui8Endpoint[ui32Channel - 1],
-                                   USB_EP_HOST_IN);
+                psUSBDMAInst->ui32Base,
+                psUSBDMAInst->pui8Endpoint[ui32Channel - 1],
+                USB_EP_HOST_IN);
 
         }
     }
@@ -801,26 +752,21 @@ uDMAUSBChannelAllocate(tUSBDMAInstance *psUSBDMAInst, uint8_t ui8Endpoint,
     // The DMA channels are organized in pairs on this controller and the
     // transmit channels are 1, 3, and 5 while receive are 0, 2, and 4.
     //
-    if(ui32Config & USB_DMA_EP_RX)
-    {
+    if(ui32Config & USB_DMA_EP_RX) {
         ui32Channel = 0;
-    }
-    else
-    {
+    } else {
         ui32Channel = 1;
     }
 
     //
     // Search for an available DMA channel to use.
     //
-    for(; ui32Channel < USB_MAX_DMA_CHANNELS_0; ui32Channel += 2)
-    {
+    for(; ui32Channel < USB_MAX_DMA_CHANNELS_0; ui32Channel += 2) {
         //
         // If the current endpoint value is zero then this channel is
         // available.
         //
-        if(psUSBDMAInst->pui8Endpoint[ui32Channel] == 0)
-        {
+        if(psUSBDMAInst->pui8Endpoint[ui32Channel] == 0) {
             //
             // Save the endpoint for this DMA channel.
             //
@@ -834,33 +780,29 @@ uDMAUSBChannelAllocate(tUSBDMAInstance *psUSBDMAInst, uint8_t ui8Endpoint,
             //
             // Set the channel configuration based on the direction.
             //
-            if(ui32Config & USB_DMA_EP_RX)
-            {
+            if(ui32Config & USB_DMA_EP_RX) {
                 psUSBDMAInst->pui32Config[ui32Channel] =
-                        UDMA_SIZE_8 | UDMA_SRC_INC_NONE | UDMA_DST_INC_8 |
-                        UDMA_ARB_64;
+                    UDMA_SIZE_8 | UDMA_SRC_INC_NONE | UDMA_DST_INC_8 |
+                    UDMA_ARB_64;
 
                 //
                 // If in device mode and Isochronous.
                 //
                 if(((ui32Config & USB_DMA_EP_HOST) == 0) &&
-                   ((ui32Config & USB_DMA_EP_TYPE_M) == USB_DMA_EP_TYPE_ISOC))
-                {
+                        ((ui32Config & USB_DMA_EP_TYPE_M) == USB_DMA_EP_TYPE_ISOC)) {
                     //
                     // USB_EP_AUTO_REQUEST is required for device
                     // Isochronous endpoints.
                     //
                     psUSBDMAInst->pui32EPDMAMode0[ui32Channel] =
-                                                    USB_EP_DMA_MODE_0 |
-                                                    USB_EP_AUTO_REQUEST |
-                                                    USB_EP_HOST_IN;
-                }
-                else
-                {
+                        USB_EP_DMA_MODE_0 |
+                        USB_EP_AUTO_REQUEST |
+                        USB_EP_HOST_IN;
+                } else {
                     psUSBDMAInst->pui32EPDMAMode0[ui32Channel] =
-                                                    USB_EP_DMA_MODE_0 |
-                                                    USB_EP_AUTO_CLEAR |
-                                                    USB_EP_HOST_IN;
+                        USB_EP_DMA_MODE_0 |
+                        USB_EP_AUTO_CLEAR |
+                        USB_EP_HOST_IN;
                 }
 
                 //
@@ -868,33 +810,28 @@ uDMAUSBChannelAllocate(tUSBDMAInstance *psUSBDMAInst, uint8_t ui8Endpoint,
                 // isochronous endpoint.
                 //
                 if(((ui32Config & USB_DMA_EP_HOST) == 0) &&
-                   ((ui32Config & USB_DMA_EP_TYPE_M) != USB_DMA_EP_TYPE_ISOC))
-                {
+                        ((ui32Config & USB_DMA_EP_TYPE_M) != USB_DMA_EP_TYPE_ISOC)) {
                     psUSBDMAInst->pui32EPDMAMode1[ui32Channel] =
-                                                USB_EP_DMA_MODE_1 |
-                                                USB_EP_HOST_IN |
-                                                USB_EP_AUTO_CLEAR;
-                }
-                else
-                {
+                        USB_EP_DMA_MODE_1 |
+                        USB_EP_HOST_IN |
+                        USB_EP_AUTO_CLEAR;
+                } else {
                     psUSBDMAInst->pui32EPDMAMode1[ui32Channel] =
-                                                USB_EP_DMA_MODE_1 |
-                                                USB_EP_HOST_IN |
-                                                USB_EP_AUTO_REQUEST |
-                                                USB_EP_AUTO_CLEAR;
+                        USB_EP_DMA_MODE_1 |
+                        USB_EP_HOST_IN |
+                        USB_EP_AUTO_REQUEST |
+                        USB_EP_AUTO_CLEAR;
                 }
-            }
-            else
-            {
+            } else {
                 psUSBDMAInst->pui32Config[ui32Channel] =
-                        UDMA_SIZE_8 | UDMA_SRC_INC_8 | UDMA_DST_INC_NONE |
-                        UDMA_ARB_64;
+                    UDMA_SIZE_8 | UDMA_SRC_INC_8 | UDMA_DST_INC_NONE |
+                    UDMA_ARB_64;
 
                 psUSBDMAInst->pui32EPDMAMode0[ui32Channel] = USB_EP_DMA_MODE_0 |
-                                                             USB_EP_HOST_OUT;
+                        USB_EP_HOST_OUT;
                 psUSBDMAInst->pui32EPDMAMode1[ui32Channel] = USB_EP_DMA_MODE_1 |
-                                                             USB_EP_HOST_OUT |
-                                                             USB_EP_AUTO_SET;
+                        USB_EP_HOST_OUT |
+                        USB_EP_AUTO_SET;
             }
 
             //
@@ -914,13 +851,10 @@ uDMAUSBChannelAllocate(tUSBDMAInstance *psUSBDMAInst, uint8_t ui8Endpoint,
             MAP_uDMAChannelControlSet(ui32Channel,
                                       psUSBDMAInst->pui32Config[ui32Channel]);
 
-            if(ui32Config & USB_DMA_EP_RX)
-            {
+            if(ui32Config & USB_DMA_EP_RX) {
                 MAP_USBEndpointDMADisable(psUSBDMAInst->ui32Base, ui8Endpoint,
                                           USB_EP_DEV_OUT);
-            }
-            else
-            {
+            } else {
                 MAP_USBEndpointDMADisable(psUSBDMAInst->ui32Base, ui8Endpoint,
                                           USB_EP_DEV_IN);
             }
@@ -950,14 +884,12 @@ iDMAUSBChannelAllocate(tUSBDMAInstance *psUSBDMAInst, uint8_t ui8Endpoint,
     //
     // Search for an available DMA channel to use.
     //
-    for(ui32Channel = 0; ui32Channel < USB_MAX_DMA_CHANNELS_0; ui32Channel++)
-    {
+    for(ui32Channel = 0; ui32Channel < USB_MAX_DMA_CHANNELS_0; ui32Channel++) {
         //
         // If the current endpoint value is zero then this channel is
         // available.
         //
-        if(psUSBDMAInst->pui8Endpoint[ui32Channel] == 0)
-        {
+        if(psUSBDMAInst->pui8Endpoint[ui32Channel] == 0) {
             //
             // Clear out the attributes on this channel.
             //
@@ -976,34 +908,30 @@ iDMAUSBChannelAllocate(tUSBDMAInstance *psUSBDMAInst, uint8_t ui8Endpoint,
             //
             // Assign the endpoint to the channel and set the direction.
             //
-            if(ui32Config & USB_DMA_EP_RX)
-            {
+            if(ui32Config & USB_DMA_EP_RX) {
                 psUSBDMAInst->pui32Config[ui32Channel] =
-                                        USB_DMA_CFG_DIR_RX |
-                                        USB_DMA_CFG_BURST_NONE |
-                                        USB_DMA_CFG_INT_EN;
+                    USB_DMA_CFG_DIR_RX |
+                    USB_DMA_CFG_BURST_NONE |
+                    USB_DMA_CFG_INT_EN;
 
                 //
                 // If in device mode and Isochronous.
                 //
                 if(((ui32Config & USB_DMA_EP_HOST) == 0) &&
-                   ((ui32Config & USB_DMA_EP_TYPE_M) == USB_DMA_EP_TYPE_ISOC))
-                {
+                        ((ui32Config & USB_DMA_EP_TYPE_M) == USB_DMA_EP_TYPE_ISOC)) {
                     //
                     // USB_EP_AUTO_REQUEST is required for device
                     // Isochronous endpoints.
                     //
                     psUSBDMAInst->pui32EPDMAMode0[ui32Channel] =
-                                                    USB_EP_DMA_MODE_0 |
-                                                    USB_EP_AUTO_REQUEST |
-                                                    USB_EP_HOST_IN;
-                }
-                else
-                {
+                        USB_EP_DMA_MODE_0 |
+                        USB_EP_AUTO_REQUEST |
+                        USB_EP_HOST_IN;
+                } else {
                     psUSBDMAInst->pui32EPDMAMode0[ui32Channel] =
-                                                    USB_EP_DMA_MODE_0 |
-                                                    USB_EP_AUTO_CLEAR |
-                                                    USB_EP_HOST_IN;
+                        USB_EP_DMA_MODE_0 |
+                        USB_EP_AUTO_CLEAR |
+                        USB_EP_HOST_IN;
                 }
 
                 //
@@ -1011,36 +939,31 @@ iDMAUSBChannelAllocate(tUSBDMAInstance *psUSBDMAInst, uint8_t ui8Endpoint,
                 // isochronous endpoint.
                 //
                 if(((ui32Config & USB_DMA_EP_HOST) == 0) &&
-                   ((ui32Config & USB_DMA_EP_TYPE_M) != USB_DMA_EP_TYPE_ISOC))
-                {
+                        ((ui32Config & USB_DMA_EP_TYPE_M) != USB_DMA_EP_TYPE_ISOC)) {
                     psUSBDMAInst->pui32EPDMAMode1[ui32Channel] =
-                                                USB_EP_DMA_MODE_1 |
-                                                USB_EP_HOST_IN |
-                                                USB_EP_AUTO_CLEAR;
-                }
-                else
-                {
+                        USB_EP_DMA_MODE_1 |
+                        USB_EP_HOST_IN |
+                        USB_EP_AUTO_CLEAR;
+                } else {
                     psUSBDMAInst->pui32EPDMAMode1[ui32Channel] =
-                                                USB_EP_DMA_MODE_1 |
-                                                USB_EP_HOST_IN |
-                                                USB_EP_AUTO_REQUEST |
-                                                USB_EP_AUTO_CLEAR;
+                        USB_EP_DMA_MODE_1 |
+                        USB_EP_HOST_IN |
+                        USB_EP_AUTO_REQUEST |
+                        USB_EP_AUTO_CLEAR;
                 }
-            }
-            else
-            {
+            } else {
                 psUSBDMAInst->pui32Config[ui32Channel] =
-                                                USB_DMA_CFG_DIR_TX |
-                                                USB_DMA_CFG_BURST_NONE |
-                                                USB_DMA_CFG_INT_EN;
+                    USB_DMA_CFG_DIR_TX |
+                    USB_DMA_CFG_BURST_NONE |
+                    USB_DMA_CFG_INT_EN;
 
                 psUSBDMAInst->pui32EPDMAMode0[ui32Channel] =
-                                                USB_EP_DMA_MODE_0 |
-                                                USB_EP_HOST_OUT;
+                    USB_EP_DMA_MODE_0 |
+                    USB_EP_HOST_OUT;
                 psUSBDMAInst->pui32EPDMAMode1[ui32Channel] =
-                                                USB_EP_DMA_MODE_1 |
-                                                USB_EP_HOST_OUT |
-                                                USB_EP_AUTO_SET;
+                    USB_EP_DMA_MODE_1 |
+                    USB_EP_HOST_OUT |
+                    USB_EP_AUTO_SET;
             }
 
             //
@@ -1068,17 +991,14 @@ uDMAUSBChannelRelease(tUSBDMAInstance *psUSBDMAInst, uint8_t ui32Channel)
     //
     MAP_uDMAChannelAttributeDisable(ui32Channel - 1, UDMA_ATTR_ALL);
 
-    if(psUSBDMAInst->pui8Endpoint[ui32Channel] & USB_DMA_EP_RX)
-    {
+    if(psUSBDMAInst->pui8Endpoint[ui32Channel] & USB_DMA_EP_RX) {
         MAP_USBEndpointDMADisable(psUSBDMAInst->ui32Base,
-                (psUSBDMAInst->pui8Endpoint[ui32Channel] & ~USB_DMA_EP_RX),
-                USB_EP_DEV_OUT);
-    }
-    else
-    {
+                                  (psUSBDMAInst->pui8Endpoint[ui32Channel] & ~USB_DMA_EP_RX),
+                                  USB_EP_DEV_OUT);
+    } else {
         MAP_USBEndpointDMADisable(psUSBDMAInst->ui32Base,
-                (psUSBDMAInst->pui8Endpoint[ui32Channel] & ~USB_DMA_EP_RX),
-                USB_EP_DEV_IN);
+                                  (psUSBDMAInst->pui8Endpoint[ui32Channel] & ~USB_DMA_EP_RX),
+                                  USB_EP_DEV_IN);
     }
 
     //
@@ -1131,57 +1051,43 @@ uDMAUSBUnitSizeSet(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32Channel,
 
     ASSERT(ui32Channel < USB_MAX_DMA_CHANNELS_0);
 
-    if(ui32BitSize == 8)
-    {
+    if(ui32BitSize == 8) {
         ui32Value = UDMA_SIZE_8;
 
-        if(UDMAConfigIsRx(psUSBDMAInst->pui32Config[ui32Channel - 1]))
-        {
+        if(UDMAConfigIsRx(psUSBDMAInst->pui32Config[ui32Channel - 1])) {
             //
             // Receive increments destination and not source.
             //
             ui32Value |= UDMA_DST_INC_8 | UDMA_SRC_INC_NONE;
-        }
-        else
-        {
+        } else {
             //
             // Transmit increments source and not destination.
             //
             ui32Value |= UDMA_SRC_INC_8 | UDMA_DST_INC_NONE;
         }
-    }
-    else if(ui32BitSize == 16)
-    {
+    } else if(ui32BitSize == 16) {
         ui32Value = UDMA_SIZE_16;
 
-        if(UDMAConfigIsRx(psUSBDMAInst->pui32Config[ui32Channel - 1]))
-        {
+        if(UDMAConfigIsRx(psUSBDMAInst->pui32Config[ui32Channel - 1])) {
             //
             // Receive increments destination and not source.
             //
             ui32Value |= UDMA_DST_INC_16 | UDMA_SRC_INC_NONE;
-        }
-        else
-        {
+        } else {
             //
             // Transmit increments source and not destination.
             //
             ui32Value |= UDMA_SRC_INC_16 | UDMA_DST_INC_NONE;
         }
-    }
-    else
-    {
+    } else {
         ui32Value = UDMA_SIZE_32;
 
-        if(UDMAConfigIsRx(psUSBDMAInst->pui32Config[ui32Channel - 1]))
-        {
+        if(UDMAConfigIsRx(psUSBDMAInst->pui32Config[ui32Channel - 1])) {
             //
             // Receive increments destination and not source.
             //
             ui32Value |= (UDMA_DST_INC_32 | UDMA_SRC_INC_NONE);
-        }
-        else
-        {
+        } else {
             //
             // Transmit increments source and not destination.
             //
@@ -1226,40 +1132,23 @@ uDMAUSBArbSizeSet(tUSBDMAInstance *psUSBDMAInst, uint32_t ui32Channel,
     //
     // Get the arbitration size value.
     //
-    if(ui32ArbSize == 2)
-    {
+    if(ui32ArbSize == 2) {
         ui32Value = UDMA_ARB_2;
-    }
-    else if(ui32ArbSize == 4)
-    {
+    } else if(ui32ArbSize == 4) {
         ui32Value = UDMA_ARB_4;
-    }
-    else if(ui32ArbSize == 8)
-    {
+    } else if(ui32ArbSize == 8) {
         ui32Value = UDMA_ARB_8;
-    }
-    else if(ui32ArbSize == 16)
-    {
+    } else if(ui32ArbSize == 16) {
         ui32Value = UDMA_ARB_16;
-    }
-    else if(ui32ArbSize == 32)
-    {
+    } else if(ui32ArbSize == 32) {
         ui32Value = UDMA_ARB_32;
-    }
-    else if(ui32ArbSize == 64)
-    {
+    } else if(ui32ArbSize == 64) {
         ui32Value = UDMA_ARB_64;
-    }
-    else if(ui32ArbSize == 128)
-    {
+    } else if(ui32ArbSize == 128) {
         ui32Value = UDMA_ARB_128;
-    }
-    else if(ui32ArbSize == 256)
-    {
+    } else if(ui32ArbSize == 256) {
         ui32Value = UDMA_ARB_256;
-    }
-    else
-    {
+    } else {
         //
         // Default to arbitration size of 1.
         //
@@ -1373,8 +1262,7 @@ USBLibDMAInit(uint32_t ui32Index)
     //
     // Make sure that the DMA has not already been initialized.
     //
-    if(g_psUSBDMAInst[0].ui32Base == USB0_BASE)
-    {
+    if(g_psUSBDMAInst[0].ui32Base == USB0_BASE) {
         return(&g_psUSBDMAInst[0]);
     }
 
@@ -1409,16 +1297,14 @@ USBLibDMAInit(uint32_t ui32Index)
     //
     // These devices have a different USB interrupt number.
     //
-    if(CLASS_IS_TM4C129)
-    {
+    if(CLASS_IS_TM4C129) {
         g_psUSBDMAInst[0].ui32IntNum = INT_USB0_TM4C129;
     }
 
     //
     // Initialize the function pointers for the integrated USB DMA controller.
     //
-    if(USBControllerVersion(g_psUSBDMAInst[0].ui32Base) == USB_CONTROLLER_VER_1)
-    {
+    if(USBControllerVersion(g_psUSBDMAInst[0].ui32Base) == USB_CONTROLLER_VER_1) {
         g_psUSBDMAInst[0].pfnArbSizeSet = iDMAUSBArbSizeSet;
         g_psUSBDMAInst[0].pfnChannelAllocate = iDMAUSBChannelAllocate;
         g_psUSBDMAInst[0].pfnChannelStatus = iDMAUSBChannelStatus;
@@ -1435,8 +1321,7 @@ USBLibDMAInit(uint32_t ui32Index)
     //
     // Clear out the endpoint and the current configuration.
     //
-    for(ui32Channel = 0; ui32Channel < USB_MAX_DMA_CHANNELS; ui32Channel++)
-    {
+    for(ui32Channel = 0; ui32Channel < USB_MAX_DMA_CHANNELS; ui32Channel++) {
         g_psUSBDMAInst[0].pui8Endpoint[ui32Channel] = 0;
         g_psUSBDMAInst[0].pui32Config[ui32Channel] = 0;
         g_psUSBDMAInst[0].ui32Pending = 0;

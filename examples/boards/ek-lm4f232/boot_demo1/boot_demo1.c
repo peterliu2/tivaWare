@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-LM4F232 Firmware Package.
 //
 //*****************************************************************************
@@ -70,8 +70,8 @@
 //! Note that the LM4F232 and other Blizzard-class devices also
 //! support the serial and USB boot loaders in ROM.  To make use of this
 //! function, link your application to run at address 0x0000 in flash and enter
-//! the bootloader using the ROM_UpdateSerial and ROM_UpdateUSB functions 
-//! (defined in rom.h).  This mechanism is used in the utils/swupdate.c 
+//! the bootloader using the ROM_UpdateSerial and ROM_UpdateUSB functions
+//! (defined in rom.h).  This mechanism is used in the utils/swupdate.c
 //! module when built specifically targeting a suitable Blizzard-class device.
 //
 //*****************************************************************************
@@ -151,7 +151,7 @@ SetupForUART(void)
     //
     ROM_UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 115200,
                             (UART_CONFIG_PAR_NONE | UART_CONFIG_STOP_ONE |
-                            UART_CONFIG_WLEN_8));
+                             UART_CONFIG_WLEN_8));
 
     //
     // Enable the UART operation.
@@ -186,7 +186,7 @@ main(void)
 {
     tRectangle sRect;
     tContext sContext;
-    
+
     //
     // Enable lazy stacking for interrupt handlers.  This allows floating-point
     // instructions to be used within interrupt handlers, but at the expense of

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-LM4F232 Firmware Package.
 //
 //*****************************************************************************
@@ -202,8 +202,7 @@ SysTickHandler(void)
     // If the number of ticks per second has occurred, then increment the
     // seconds counter.
     //
-    if(!(g_ui32TickCount % SYSTICKS_PER_SECOND))
-    {
+    if(!(g_ui32TickCount % SYSTICKS_PER_SECOND)) {
         g_ui32Seconds++;
     }
 
@@ -236,8 +235,7 @@ uDMAErrorHandler(void)
     // If there is a uDMA error, then clear the error and increment
     // the error counter.
     //
-    if(ui32Status)
-    {
+    if(ui32Status) {
         ROM_uDMAErrorStatusClear();
         g_ui32uDMAErrCount++;
     }
@@ -259,8 +257,7 @@ uDMAIntHandler(void)
     // Check for the primary control structure to indicate complete.
     //
     ui32Mode = ROM_uDMAChannelModeGet(UDMA_CHANNEL_SW);
-    if(ui32Mode == UDMA_MODE_STOP)
-    {
+    if(ui32Mode == UDMA_MODE_STOP) {
         //
         // Increment the count of completed transfers.
         //
@@ -283,8 +280,7 @@ uDMAIntHandler(void)
     //
     // If the channel is not stopped, then something is wrong.
     //
-    else
-    {
+    else {
         g_ui32BadISR++;
     }
 }
@@ -331,8 +327,7 @@ UART0IntHandler(void)
     // receive buffer is done.  The uDMA controller should still be receiving
     // data into the "B" buffer.
     //
-    if(ui32Mode == UDMA_MODE_STOP)
-    {
+    if(ui32Mode == UDMA_MODE_STOP) {
         //
         // Increment a counter to indicate data was received into buffer A.  In
         // a real application this would be used to signal the main thread that
@@ -367,8 +362,7 @@ UART0IntHandler(void)
     // receive buffer is done.  The uDMA controller should still be receiving
     // data into the "A" buffer.
     //
-    if(ui32Mode == UDMA_MODE_STOP)
-    {
+    if(ui32Mode == UDMA_MODE_STOP) {
         //
         // Increment a counter to indicate data was received into buffer A.  In
         // a real application this would be used to signal the main thread that
@@ -395,8 +389,7 @@ UART0IntHandler(void)
     // If the UART0 DMA TX channel is disabled, that means the TX DMA transfer
     // is done.
     //
-    if(!ROM_uDMAChannelIsEnabled(UDMA_CHANNEL_UART0TX))
-    {
+    if(!ROM_uDMAChannelIsEnabled(UDMA_CHANNEL_UART0TX)) {
         //
         // Start another DMA transfer to UART0 TX.
         //
@@ -429,8 +422,7 @@ InitUART0Transfer(void)
     //
     // Fill the TX buffer with a simple data pattern.
     //
-    for(ui16Idx = 0; ui16Idx < UART_TXBUF_SIZE; ui16Idx++)
-    {
+    for(ui16Idx = 0; ui16Idx < UART_TXBUF_SIZE; ui16Idx++) {
         g_ui8TxBuf[ui16Idx] = ui16Idx;
     }
 
@@ -596,8 +588,7 @@ InitSWTransfer(void)
     //
     // Fill the source memory buffer with a simple incrementing pattern.
     //
-    for(ui16Idx = 0; ui16Idx < MEM_BUFFER_SIZE; ui16Idx++)
-    {
+    for(ui16Idx = 0; ui16Idx < MEM_BUFFER_SIZE; ui16Idx++) {
         g_ui32SrcBuf[ui16Idx] = ui16Idx;
     }
 
@@ -613,7 +604,7 @@ InitSWTransfer(void)
     ROM_uDMAChannelAttributeDisable(UDMA_CHANNEL_SW,
                                     UDMA_ATTR_USEBURST | UDMA_ATTR_ALTSELECT |
                                     (UDMA_ATTR_HIGH_PRIORITY |
-                                    UDMA_ATTR_REQMASK));
+                                     UDMA_ATTR_REQMASK));
 
     //
     // Configure the control parameters for the SW channel.  The SW channel
@@ -802,14 +793,12 @@ main(void)
     // Loop until the button is pressed.  The processor is put to sleep
     // in this loop so that CPU utilization can be measured.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Check to see if one second has elapsed.  If so, the make some
         // updates.
         //
-        if(g_ui32Seconds != ui32PrevSeconds)
-        {
+        if(g_ui32Seconds != ui32PrevSeconds) {
             //
             // Print a message to the display showing the CPU usage percent.
             // The fractional part of the percent value is ignored.
@@ -861,7 +850,7 @@ main(void)
             // second.
             //
             ui32XfersCompleted = (g_ui32RxBufACount + g_ui32RxBufBCount -
-                                ui32PrevUARTCount);
+                                  ui32PrevUARTCount);
 
             //
             // Remember the new UART transfer count.
@@ -894,8 +883,7 @@ main(void)
         //
         // See if we have run int32_t enough and exit the loop if so.
         //
-        if(g_ui32Seconds >= 10)
-        {
+        if(g_ui32Seconds >= 10) {
             break;
         }
     }
@@ -910,7 +898,6 @@ main(void)
     //
     // Loop forever with the CPU not sleeping, so the debugger can connect.
     //
-    while(1)
-    {
+    while(1) {
     }
 }

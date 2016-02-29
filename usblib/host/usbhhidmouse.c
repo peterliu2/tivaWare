@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -66,8 +66,7 @@ static uint32_t USBHMouseCallback(void *pvMouse, uint32_t ui32Event,
 // This is the structure definition for a mouse device instance.
 //
 //*****************************************************************************
-struct tUSBHMouse
-{
+struct tUSBHMouse {
     //
     // Global flags for an instance of a mouse.
     //
@@ -112,8 +111,7 @@ struct tUSBHMouse
 // This is the per instance information for a mouse device.
 //
 //*****************************************************************************
-static tUSBHMouse g_sUSBHMouse =
-{
+static tUSBHMouse g_sUSBHMouse = {
     0
 };
 
@@ -150,8 +148,8 @@ USBHMouseOpen(tUSBHIDMouseCallback pfnCallback, uint8_t *pui8Buffer,
     // Save the instance pointer for the HID device that was opened.
     //
     g_sUSBHMouse.psHIDInstance = USBHHIDOpen(eUSBHHIDClassMouse,
-                                             USBHMouseCallback,
-                                             (void *)&g_sUSBHMouse);
+                                 USBHMouseCallback,
+                                 (void *)&g_sUSBHMouse);
 
     //
     // Save the heap buffer and size.
@@ -251,13 +249,10 @@ UpdateMouseState(tUSBHMouse *psMsInstance)
 {
     uint32_t ui32Button;
 
-    if(psMsInstance->pui8Buffer[0] != psMsInstance->ui8Buttons)
-    {
-        for(ui32Button = 1; ui32Button <= 0x4; ui32Button <<= 1)
-        {
+    if(psMsInstance->pui8Buffer[0] != psMsInstance->ui8Buttons) {
+        for(ui32Button = 1; ui32Button <= 0x4; ui32Button <<= 1) {
             if(((psMsInstance->pui8Buffer[0] & ui32Button) != 0) &&
-               ((psMsInstance->ui8Buttons & ui32Button) == 0))
-            {
+                    ((psMsInstance->ui8Buttons & ui32Button) == 0)) {
                 //
                 // Send the mouse button press notification to the application.
                 //
@@ -265,14 +260,13 @@ UpdateMouseState(tUSBHMouse *psMsInstance)
                                           ui32Button, 0);
             }
             if(((psMsInstance->pui8Buffer[0] & ui32Button) == 0) &&
-               ((psMsInstance->ui8Buttons & ui32Button) != 0))
-            {
+                    ((psMsInstance->ui8Buttons & ui32Button) != 0)) {
                 //
                 // Send the mouse button release notification to the
                 // application.
                 //
                 psMsInstance->pfnCallback(0, USBH_EVENT_HID_MS_REL,
-                                         ui32Button, 0);
+                                          ui32Button, 0);
             }
         }
 
@@ -282,8 +276,7 @@ UpdateMouseState(tUSBHMouse *psMsInstance)
         psMsInstance->ui8Buttons = psMsInstance->pui8Buffer[0];
     }
 
-    if(psMsInstance->pui8Buffer[1] != 0)
-    {
+    if(psMsInstance->pui8Buffer[1] != 0) {
         //
         // Send the mouse button release notification to the
         // application.
@@ -292,8 +285,7 @@ UpdateMouseState(tUSBHMouse *psMsInstance)
                                   (uint32_t)psMsInstance->pui8Buffer[1], 0);
     }
 
-    if(psMsInstance->pui8Buffer[2] != 0)
-    {
+    if(psMsInstance->pui8Buffer[2] != 0) {
         //
         // Send the mouse button release notification to the
         // application.
@@ -333,13 +325,11 @@ USBHMouseCallback(void *pvMouse, uint32_t ui32Event,
     //
     psMsInstance = (tUSBHMouse *)pvMouse;
 
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // New mouse has been connected so notify the application.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             //
             // Remember that a mouse is present.
             //
@@ -352,8 +342,7 @@ USBHMouseCallback(void *pvMouse, uint32_t ui32Event,
 
             break;
         }
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             //
             // No mouse is present.
             //
@@ -366,8 +355,7 @@ USBHMouseCallback(void *pvMouse, uint32_t ui32Event,
 
             break;
         }
-        case USB_EVENT_RX_AVAILABLE:
-        {
+        case USB_EVENT_RX_AVAILABLE: {
             //
             // New mouse report structure was received.
             //

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -277,8 +277,7 @@ EthernetIntHandler(void)
     //
     // Check to see if an RX Interrupt has occurred.
     //
-    if(ui32Temp & EMAC_INT_RECEIVE)
-    {
+    if(ui32Temp & EMAC_INT_RECEIVE) {
         //
         // Indicate that a packet has been received.
         //
@@ -288,8 +287,7 @@ EthernetIntHandler(void)
     //
     // Has the DMA finished transferring a packet to the transmitter?
     //
-    if(ui32Temp & EMAC_INT_TRANSMIT)
-    {
+    if(ui32Temp & EMAC_INT_TRANSMIT) {
         //
         // Indicate that a packet has been sent.
         //
@@ -336,8 +334,7 @@ PacketReceive(uint32_t ui32Base, uint8_t *pui8Buf, int32_t i32BufLen)
     //
     // Make sure that we own the receive descriptor.
     //
-    if(!(g_psRxDescriptor[g_ui32RxDescIndex].ui32CtrlStatus & DES0_RX_CTRL_OWN))
-    {
+    if(!(g_psRxDescriptor[g_ui32RxDescIndex].ui32CtrlStatus & DES0_RX_CTRL_OWN)) {
         //
         // We own the receive descriptor so check to see if it contains a valid
         // frame.  Look for a descriptor error, indicating that the incoming
@@ -345,8 +342,7 @@ PacketReceive(uint32_t ui32Base, uint8_t *pui8Buf, int32_t i32BufLen)
         // the receive error bit.
         //
         if(!(g_psRxDescriptor[g_ui32RxDescIndex].ui32CtrlStatus &
-             DES0_RX_STAT_ERR))
-        {
+                DES0_RX_STAT_ERR)) {
             //
             // We have a valid frame so copy the content to the supplied
             // buffer. First check that the "last descriptor" flag is set.  We
@@ -354,8 +350,7 @@ PacketReceive(uint32_t ui32Base, uint8_t *pui8Buf, int32_t i32BufLen)
             // frame so this flag should never be clear at this point but...
             //
             if(g_psRxDescriptor[g_ui32RxDescIndex].ui32CtrlStatus &
-               DES0_RX_STAT_LAST_DESC)
-            {
+                    DES0_RX_STAT_LAST_DESC) {
                 i32FrameLen =
                     ((g_psRxDescriptor[g_ui32RxDescIndex].ui32CtrlStatus &
                       DES0_RX_STAT_FRAME_LENGTH_M) >>
@@ -366,8 +361,7 @@ PacketReceive(uint32_t ui32Base, uint8_t *pui8Buf, int32_t i32BufLen)
                 // uIP buffer such that it's the same size as the DMA receive
                 // buffer but, just in case...
                 //
-                if(i32FrameLen > i32BufLen)
-                {
+                if(i32FrameLen > i32BufLen) {
                     i32FrameLen = i32BufLen;
                 }
 
@@ -375,8 +369,7 @@ PacketReceive(uint32_t ui32Base, uint8_t *pui8Buf, int32_t i32BufLen)
                 // Copy the data from the DMA receive buffer into the provided
                 // frame buffer.
                 //
-                for(i32Loop = 0; i32Loop < i32FrameLen; i32Loop++)
-                {
+                for(i32Loop = 0; i32Loop < i32FrameLen; i32Loop++) {
                     pui8Buf[i32Loop] = g_pui8RxBuffer[i32Loop];
                 }
             }
@@ -386,8 +379,7 @@ PacketReceive(uint32_t ui32Base, uint8_t *pui8Buf, int32_t i32BufLen)
         // Move on to the next descriptor in the chain.
         //
         g_ui32RxDescIndex++;
-        if(g_ui32RxDescIndex == NUM_RX_DESCRIPTORS)
-        {
+        if(g_ui32RxDescIndex == NUM_RX_DESCRIPTORS) {
             g_ui32RxDescIndex = 0;
         }
 
@@ -423,8 +415,7 @@ PacketTransmit(uint32_t ui32Base, uint8_t *pui8Buf, int32_t i32BufLen)
     // Wait for the previous packet to be transmitted.
     //
     while(g_psTxDescriptor[g_ui32TxDescIndex].ui32CtrlStatus &
-          DES0_TX_CTRL_OWN)
-    {
+            DES0_TX_CTRL_OWN) {
         //
         // Spin and waste time.
         //
@@ -435,16 +426,14 @@ PacketTransmit(uint32_t ui32Base, uint8_t *pui8Buf, int32_t i32BufLen)
     // shouldn't be necessary since the uIP buffer is smaller than our DMA
     // transmit buffer but, just in case...
     //
-    if(i32BufLen > TX_BUFFER_SIZE)
-    {
+    if(i32BufLen > TX_BUFFER_SIZE) {
         i32BufLen = TX_BUFFER_SIZE;
     }
 
     //
     // Copy the packet data into the transmit buffer.
     //
-    for(i32Loop = 0; i32Loop < i32BufLen; i32Loop++)
-    {
+    for(i32Loop = 0; i32Loop < i32BufLen; i32Loop++) {
         g_pui8TxBuffer[i32Loop] = pui8Buf[i32Loop];
     }
 
@@ -452,8 +441,7 @@ PacketTransmit(uint32_t ui32Base, uint8_t *pui8Buf, int32_t i32BufLen)
     // Move to the next descriptor.
     //
     g_ui32TxDescIndex++;
-    if(g_ui32TxDescIndex == NUM_TX_DESCRIPTORS)
-    {
+    if(g_ui32TxDescIndex == NUM_TX_DESCRIPTORS) {
         g_ui32TxDescIndex = 0;
     }
 
@@ -495,8 +483,7 @@ InitDescriptors(uint32_t ui32Base)
     // Initialize each of the transmit descriptors.  Note that we leave the OWN
     // bit clear here since we have not set up any transmissions yet.
     //
-    for(ui32Loop = 0; ui32Loop < NUM_TX_DESCRIPTORS; ui32Loop++)
-    {
+    for(ui32Loop = 0; ui32Loop < NUM_TX_DESCRIPTORS; ui32Loop++) {
         g_psTxDescriptor[ui32Loop].ui32Count =
             (DES1_TX_CTRL_SADDR_INSERT |
              (TX_BUFFER_SIZE << DES1_TX_CTRL_BUFF1_SIZE_S));
@@ -515,8 +502,7 @@ InitDescriptors(uint32_t ui32Base)
     // to make sure that the receiver doesn't start writing anything
     // immediately.
     //
-    for(ui32Loop = 0; ui32Loop < NUM_RX_DESCRIPTORS; ui32Loop++)
-    {
+    for(ui32Loop = 0; ui32Loop < NUM_RX_DESCRIPTORS; ui32Loop++) {
         g_psRxDescriptor[ui32Loop].ui32CtrlStatus = 0;
         g_psRxDescriptor[ui32Loop].ui32Count =
             (DES1_RX_CTRL_CHAINED |
@@ -586,15 +572,13 @@ main(void)
     // Read the MAC address from the user registers.
     //
     MAP_FlashUserGet(&ui32User0, &ui32User1);
-    if((ui32User0 == 0xffffffff) || (ui32User1 == 0xffffffff))
-    {
+    if((ui32User0 == 0xffffffff) || (ui32User1 == 0xffffffff)) {
         //
         // We should never get here.  This is an error if the MAC address has
         // not been programmed into the device.  Exit the program.
         //
         UpdateStatus("MAC Address Not Programmed!");
-        while(1)
-        {
+        while(1) {
         }
     }
 
@@ -629,8 +613,7 @@ main(void)
     // Wait for the MAC to be ready.
     //
     UpdateStatus("Waiting for MAC to be ready...");
-    while(!MAP_SysCtlPeripheralReady(SYSCTL_PERIPH_EMAC0))
-    {
+    while(!MAP_SysCtlPeripheralReady(SYSCTL_PERIPH_EMAC0)) {
     }
 
     //
@@ -680,8 +663,7 @@ main(void)
     //
     UpdateStatus("Waiting for Link.");
     while((MAP_EMACPHYRead(EMAC0_BASE, 0, EPHY_BMSR) &
-           EPHY_BMSR_LINKSTAT) == 0)
-    {
+            EPHY_BMSR_LINKSTAT) == 0) {
     }
 
     UpdateStatus("Link Established.");
@@ -764,22 +746,19 @@ main(void)
     //
     i32PeriodicTimer = 0;
     i32ARPTimer = 0;
-    while(true)
-    {
+    while(true) {
         //
         // Wait for an event to occur.  This can be either a System Tick event,
         // or an RX Packet event.
         //
-        while(!g_ui32Flags)
-        {
+        while(!g_ui32Flags) {
         }
 
         //
         // If SysTick, Clear the SysTick interrupt flag and increment the
         // timers.
         //
-        if(HWREGBITW(&g_ui32Flags, FLAG_SYSTICK) == 1)
-        {
+        if(HWREGBITW(&g_ui32Flags, FLAG_SYSTICK) == 1) {
             HWREGBITW(&g_ui32Flags, FLAG_SYSTICK) = 0;
             i32PeriodicTimer += SYSTICKMS;
             i32ARPTimer += SYSTICKMS;
@@ -788,8 +767,7 @@ main(void)
         //
         // Check for an RX Packet and read it.
         //
-        if(HWREGBITW(&g_ui32Flags, FLAG_RXPKT))
-        {
+        if(HWREGBITW(&g_ui32Flags, FLAG_RXPKT)) {
             //
             // Clear the RX Packet event flag.
             //
@@ -803,8 +781,7 @@ main(void)
             //
             // Process incoming IP packets here.
             //
-            if(BUF->type == htons(UIP_ETHTYPE_IP))
-            {
+            if(BUF->type == htons(UIP_ETHTYPE_IP)) {
                 uip_arp_ipin();
                 uip_input();
 
@@ -813,8 +790,7 @@ main(void)
                 // should be sent out on the network, the global variable
                 // uip_len is set to a value > 0.
                 //
-                if(uip_len > 0)
-                {
+                if(uip_len > 0) {
                     uip_arp_out();
                     PacketTransmit(EMAC0_BASE, uip_buf, uip_len);
                     uip_len = 0;
@@ -824,8 +800,7 @@ main(void)
             //
             // Process incoming ARP packets here.
             //
-            else if(BUF->type == htons(UIP_ETHTYPE_ARP))
-            {
+            else if(BUF->type == htons(UIP_ETHTYPE_ARP)) {
                 uip_arp_arpin();
 
                 //
@@ -833,8 +808,7 @@ main(void)
                 // should be sent out on the network, the global variable
                 // uip_len is set to a value > 0.
                 //
-                if(uip_len > 0)
-                {
+                if(uip_len > 0) {
                     PacketTransmit(EMAC0_BASE, uip_buf, uip_len);
                     uip_len = 0;
                 }
@@ -844,11 +818,9 @@ main(void)
         //
         // Process TCP/IP Periodic Timer here.
         //
-        if(i32PeriodicTimer > UIP_PERIODIC_TIMER_MS)
-        {
+        if(i32PeriodicTimer > UIP_PERIODIC_TIMER_MS) {
             i32PeriodicTimer = 0;
-            for(ui32Temp = 0; ui32Temp < UIP_CONNS; ui32Temp++)
-            {
+            for(ui32Temp = 0; ui32Temp < UIP_CONNS; ui32Temp++) {
                 uip_periodic(ui32Temp);
 
                 //
@@ -856,8 +828,7 @@ main(void)
                 // should be sent out on the network, the global variable
                 // uip_len is set to a value > 0.
                 //
-                if(uip_len > 0)
-                {
+                if(uip_len > 0) {
                     uip_arp_out();
                     PacketTransmit(EMAC0_BASE, uip_buf, uip_len);
                     uip_len = 0;
@@ -865,8 +836,7 @@ main(void)
             }
 
 #if UIP_UDP
-            for(ui32Temp = 0; ui32Temp < UIP_UDP_CONNS; ui32Temp++)
-            {
+            for(ui32Temp = 0; ui32Temp < UIP_UDP_CONNS; ui32Temp++) {
                 uip_udp_periodic(ui32Temp);
 
                 //
@@ -874,8 +844,7 @@ main(void)
                 // should be sent out on the network, the global variable
                 // uip_len is set to a value > 0.
                 //
-                if(uip_len > 0)
-                {
+                if(uip_len > 0) {
                     uip_arp_out();
                     PacketTransmit(EMAC0_BASE, uip_buf, uip_len);
                     uip_len = 0;
@@ -887,8 +856,7 @@ main(void)
         //
         // Process ARP Timer here.
         //
-        if(i32ARPTimer > UIP_ARP_TIMER_MS)
-        {
+        if(i32ARPTimer > UIP_ARP_TIMER_MS) {
             i32ARPTimer = 0;
             uip_arp_timer();
         }

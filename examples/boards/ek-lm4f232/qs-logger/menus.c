@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-LM4F232 Firmware Package.
 //
 //*****************************************************************************
@@ -72,8 +72,7 @@ tDisplay g_sOffscreenDisplayB;
 // values.
 //
 //*****************************************************************************
-uint32_t g_pui32Palette[] =
-{
+uint32_t g_pui32Palette[] = {
     ClrBlack,
     ClrWhite,
     ClrDarkBlue,
@@ -117,18 +116,18 @@ static char g_pcTextFields[NUM_TEXT_ITEMS][TEXT_FIELD_LENGTH];
 tCanvasWidget g_sTempContainerCanvas;
 Canvas(g_sTempExtValueCanvas, &g_sTempContainerCanvas, 0, 0,
        &g_sCFAL96x64x16, 0, 44, 96, 20, (CANVAS_STYLE_OUTLINE |
-                                         CANVAS_STYLE_TEXT |
-                                         CANVAS_STYLE_TEXT_OPAQUE |
-                                         CANVAS_STYLE_TEXT_HCENTER |
-                                         CANVAS_STYLE_TEXT_VCENTER),
+               CANVAS_STYLE_TEXT |
+               CANVAS_STYLE_TEXT_OPAQUE |
+               CANVAS_STYLE_TEXT_HCENTER |
+               CANVAS_STYLE_TEXT_VCENTER),
        ClrDarkBlue, ClrWhite, ClrWhite, &g_sFontFixed6x8,
        g_pcTextFields[LOG_ITEM_EXTTEMP], 0, 0);
 Canvas(g_sTempIntValueCanvas, &g_sTempContainerCanvas, &g_sTempExtValueCanvas,
        0, &g_sCFAL96x64x16, 0, 24, 96, 20, (CANVAS_STYLE_OUTLINE |
-                                            CANVAS_STYLE_TEXT |
-                                            CANVAS_STYLE_TEXT_OPAQUE |
-                                            CANVAS_STYLE_TEXT_HCENTER |
-                                            CANVAS_STYLE_TEXT_VCENTER),
+               CANVAS_STYLE_TEXT |
+               CANVAS_STYLE_TEXT_OPAQUE |
+               CANVAS_STYLE_TEXT_HCENTER |
+               CANVAS_STYLE_TEXT_VCENTER),
        ClrDarkBlue, ClrWhite, ClrWhite, &g_sFontFixed6x8,
        g_pcTextFields[LOG_ITEM_INTTEMP], 0, 0);
 Canvas(g_sTempTitleCanvas, &g_sTempContainerCanvas, &g_sTempIntValueCanvas, 0,
@@ -155,16 +154,16 @@ Canvas(g_sAccelZCanvas, &g_sAccelContainerCanvas, 0, 0, &g_sCFAL96x64x16, 0,
        g_pcTextFields[LOG_ITEM_ACCELZ], 0, 0);
 Canvas(g_sAccelYCanvas, &g_sAccelContainerCanvas, &g_sAccelZCanvas, 0,
        &g_sCFAL96x64x16, 0, 32, 96, 16, (CANVAS_STYLE_TEXT |
-                                         CANVAS_STYLE_TEXT_OPAQUE |
-                                         CANVAS_STYLE_TEXT_HCENTER |
-                                         CANVAS_STYLE_TEXT_VCENTER),
+               CANVAS_STYLE_TEXT_OPAQUE |
+               CANVAS_STYLE_TEXT_HCENTER |
+               CANVAS_STYLE_TEXT_VCENTER),
        ClrDarkBlue, ClrWhite, ClrWhite, &g_sFontFixed6x8,
        g_pcTextFields[LOG_ITEM_ACCELY], 0, 0);
 Canvas(g_sAccelXCanvas, &g_sAccelContainerCanvas, &g_sAccelYCanvas, 0,
        &g_sCFAL96x64x16, 0, 16, 96, 16, (CANVAS_STYLE_TEXT |
-                                         CANVAS_STYLE_TEXT_OPAQUE |
-                                         CANVAS_STYLE_TEXT_HCENTER |
-                                         CANVAS_STYLE_TEXT_VCENTER),
+               CANVAS_STYLE_TEXT_OPAQUE |
+               CANVAS_STYLE_TEXT_HCENTER |
+               CANVAS_STYLE_TEXT_VCENTER),
        ClrDarkBlue, ClrWhite, ClrWhite, &g_sFontFixed6x8,
        g_pcTextFields[LOG_ITEM_ACCELX], 0, 0);
 Canvas(g_sAccelTitleCanvas, &g_sAccelContainerCanvas, &g_sAccelXCanvas, 0,
@@ -191,16 +190,16 @@ Canvas(g_sAIN3Canvas, &g_sAINContainerCanvas, 0, 0, &g_sCFAL96x64x16, 0, 48,
        g_pcTextFields[LOG_ITEM_USER3], 0, 0);
 Canvas(g_sAIN2Canvas, &g_sAINContainerCanvas, &g_sAIN3Canvas, 0,
        &g_sCFAL96x64x16, 0, 32, 96, 16, (CANVAS_STYLE_TEXT |
-                                         CANVAS_STYLE_TEXT_OPAQUE |
-                                         CANVAS_STYLE_TEXT_HCENTER |
-                                         CANVAS_STYLE_TEXT_VCENTER),
+               CANVAS_STYLE_TEXT_OPAQUE |
+               CANVAS_STYLE_TEXT_HCENTER |
+               CANVAS_STYLE_TEXT_VCENTER),
        ClrDarkGreen, ClrWhite, ClrWhite, &g_sFontFixed6x8,
        g_pcTextFields[LOG_ITEM_USER2], 0, 0);
 Canvas(g_sAIN1Canvas, &g_sAINContainerCanvas, &g_sAIN2Canvas, 0,
        &g_sCFAL96x64x16, 0, 16, 96, 16, (CANVAS_STYLE_TEXT |
-                                         CANVAS_STYLE_TEXT_OPAQUE |
-                                         CANVAS_STYLE_TEXT_HCENTER |
-                                         CANVAS_STYLE_TEXT_VCENTER),
+               CANVAS_STYLE_TEXT_OPAQUE |
+               CANVAS_STYLE_TEXT_HCENTER |
+               CANVAS_STYLE_TEXT_VCENTER),
        ClrDarkGreen, ClrWhite, ClrWhite, &g_sFontFixed6x8,
        g_pcTextFields[LOG_ITEM_USER1], 0, 0);
 Canvas(g_sAIN0Canvas, &g_sAINContainerCanvas, &g_sAIN1Canvas, 0,
@@ -222,9 +221,9 @@ Canvas(g_sAINContainerCanvas, 0, 0, &g_sAIN0Canvas, &g_sCFAL96x64x16, 0, 0, 96,
 tCanvasWidget g_sCurrentContainerCanvas;
 Canvas(g_sCurrentValueCanvas, &g_sCurrentContainerCanvas, 0, 0,
        &g_sCFAL96x64x16, 0, 24, 96, 40, (CANVAS_STYLE_TEXT |
-                                         CANVAS_STYLE_TEXT_OPAQUE |
-                                         CANVAS_STYLE_TEXT_HCENTER |
-                                         CANVAS_STYLE_TEXT_VCENTER),
+               CANVAS_STYLE_TEXT_OPAQUE |
+               CANVAS_STYLE_TEXT_HCENTER |
+               CANVAS_STYLE_TEXT_VCENTER),
        ClrBlack, ClrWhite, ClrWhite, &g_sFontFixed6x8,
        g_pcTextFields[LOG_ITEM_CURRENT], 0, 0);
 Canvas(g_sCurrentTitleCanvas, &g_sCurrentContainerCanvas,
@@ -250,9 +249,9 @@ Canvas(g_sClockTimeCanvas, &g_sClockContainerCanvas, 0, 0, &g_sCFAL96x64x16, 0,
        g_pcTextFields[TEXT_ITEM_TIME], 0, 0);
 Canvas(g_sClockDateCanvas, &g_sClockContainerCanvas, &g_sClockTimeCanvas,
        0, &g_sCFAL96x64x16, 0, 22, 96, 16, (CANVAS_STYLE_TEXT |
-                                            CANVAS_STYLE_TEXT_OPAQUE |
-                                            CANVAS_STYLE_TEXT_HCENTER |
-                                            CANVAS_STYLE_TEXT_VCENTER),
+               CANVAS_STYLE_TEXT_OPAQUE |
+               CANVAS_STYLE_TEXT_HCENTER |
+               CANVAS_STYLE_TEXT_VCENTER),
        ClrDarkBlue, ClrWhite, ClrWhite, &g_sFontFixed6x8,
        g_pcTextFields[TEXT_ITEM_DATE], 0, 0);
 Canvas(g_sClockTitleCanvas, &g_sClockContainerCanvas, &g_sClockDateCanvas, 0,
@@ -282,18 +281,18 @@ Canvas(g_sStatus3Canvas, &g_sStatusContainerCanvas, 0, 0, &g_sCFAL96x64x16, 1,
        g_pcTextFields[TEXT_ITEM_STATUS3], 0, 0);
 Canvas(g_sStatus2Canvas, &g_sStatusContainerCanvas, &g_sStatus3Canvas, 0,
        &g_sCFAL96x64x16, 1, 30, 94, 12, (CANVAS_STYLE_TEXT |
-                                         CANVAS_STYLE_TEXT_OPAQUE |
-                                         CANVAS_STYLE_FILL |
-                                         CANVAS_STYLE_TEXT_HCENTER |
-                                         CANVAS_STYLE_TEXT_VCENTER),
+               CANVAS_STYLE_TEXT_OPAQUE |
+               CANVAS_STYLE_FILL |
+               CANVAS_STYLE_TEXT_HCENTER |
+               CANVAS_STYLE_TEXT_VCENTER),
        ClrRed, ClrWhite, ClrWhite, &g_sFontFixed6x8,
        g_pcTextFields[TEXT_ITEM_STATUS2], 0, 0);
 Canvas(g_sStatus1Canvas, &g_sStatusContainerCanvas, &g_sStatus2Canvas, 0,
        &g_sCFAL96x64x16, 1, 18, 94, 12, (CANVAS_STYLE_TEXT |
-                                         CANVAS_STYLE_TEXT_OPAQUE |
-                                         CANVAS_STYLE_FILL |
-                                         CANVAS_STYLE_TEXT_HCENTER |
-                                         CANVAS_STYLE_TEXT_VCENTER),
+               CANVAS_STYLE_TEXT_OPAQUE |
+               CANVAS_STYLE_FILL |
+               CANVAS_STYLE_TEXT_HCENTER |
+               CANVAS_STYLE_TEXT_VCENTER),
        ClrRed, ClrWhite, ClrWhite, &g_sFontFixed6x8,
        g_pcTextFields[TEXT_ITEM_STATUS1], 0, 0);
 Canvas(g_sStatusTitleCanvas, &g_sStatusContainerCanvas, &g_sStatus1Canvas, 0,
@@ -332,16 +331,14 @@ ClockSet(g_sClockSetter, 0, 0, 0, &g_sCFAL96x64x16, 0, 0, 96, 64,
 tSlideMenu g_sConfigMenu;
 tSlideMenu g_sViewMenu;
 tSlideMenu g_sConfirmMenu;
-tSlideMenuItem g_psMainMenuItems[] =
-{
+tSlideMenuItem g_psMainMenuItems[] = {
     {"CONFIG", &g_sConfigMenu, 0, 0},
     {"START", 0, &g_sStripChart.sBase, ClrBlack},
     {"VIEW", &g_sViewMenu, 0, 0},
     {"SAVE", 0, &g_sStatusContainerCanvas.sBase, ClrRed},
     {"ERASE", &g_sConfirmMenu, 0, 0}
 };
-tSlideMenu g_psMainMenu =
-{
+tSlideMenu g_psMainMenu = {
     0, (sizeof(g_psMainMenuItems) / sizeof(tSlideMenuItem)), g_psMainMenuItems,
     0, 0, 0, 0
 };
@@ -357,14 +354,12 @@ tSlideMenu g_sChannelsMenu;
 tSlideMenu g_sPeriodMenu;
 tSlideMenu g_sStorageMenu;
 tSlideMenu g_sSleepMenu;
-tSlideMenuItem g_psConfigMenuItems[] =
-{
+tSlideMenuItem g_psConfigMenuItems[] = {
     {"CHANNELS", &g_sChannelsMenu, 0, 0}, {"PERIOD", &g_sPeriodMenu, 0, 0},
     {"STORAGE", &g_sStorageMenu, 0, 0}, {"SLEEP", &g_sSleepMenu, 0, 0},
     {"CLOCK", 0, &g_sClockSetter.sBase, ClrDarkGreen}
 };
-tSlideMenu g_sConfigMenu =
-{
+tSlideMenu g_sConfigMenu = {
     &g_psMainMenu, (sizeof(g_psConfigMenuItems) / sizeof(tSlideMenuItem)),
     g_psConfigMenuItems, 0, 0, 0, 0
 };
@@ -376,15 +371,13 @@ tSlideMenu g_sConfigMenu =
 //  (root)-->CONFIG-->CHANNELS
 //
 //*****************************************************************************
-tSlideMenuItem g_psChannelsMenuItems[] =
-{
+tSlideMenuItem g_psChannelsMenuItems[] = {
     {"CHAN 0", 0, 0, 0}, {"CHAN 1", 0, 0, 0}, {"CHAN 2", 0, 0, 0},
     {"CHAN 3", 0, 0, 0}, {"ACCEL X", 0, 0, 0}, {"ACCEL Y", 0, 0, 0},
     {"ACCEL Z", 0, 0, 0}, {"EXT TEMP", 0, 0, 0}, {"INT TEMP", 0, 0, 0},
     {"CURRENT", 0, 0, 0},
 };
-tSlideMenu g_sChannelsMenu =
-{
+tSlideMenu g_sChannelsMenu = {
     &g_sConfigMenu, (sizeof(g_psChannelsMenuItems) / sizeof(tSlideMenuItem)),
     g_psChannelsMenuItems, 0, 0, 1, 0
 };
@@ -397,16 +390,14 @@ tSlideMenu g_sChannelsMenu =
 //
 //*****************************************************************************
 #define MENU_CONFIG_PERIOD_DEFAULT 3
-tSlideMenuItem g_psPeriodMenuItems[] =
-{
+tSlideMenuItem g_psPeriodMenuItems[] = {
     {"1/32 sec", 0, 0, 0}, {"1/16 sec", 0, 0, 0}, {"1/8 sec", 0, 0, 0},
     {"1/4 sec", 0, 0, 0}, {"1/2 sec", 0, 0, 0}, {"1 sec", 0, 0, 0},
     {"5 sec", 0, 0, 0}, {"10 sec", 0, 0, 0}, {"1 min", 0, 0, 0},
     {"5 min", 0, 0, 0}, {"10 min", 0, 0, 0}, {"1 hour", 0, 0, 0},
     {"5 hour", 0, 0, 0}, {"10 hour", 0, 0, 0}, {"1 day", 0, 0, 0},
 };
-tSlideMenu g_sPeriodMenu =
-{
+tSlideMenu g_sPeriodMenu = {
     &g_sConfigMenu, (sizeof(g_psPeriodMenuItems) / sizeof(tSlideMenuItem)),
     g_psPeriodMenuItems, 0, 0, 0, 0
 };
@@ -420,8 +411,7 @@ tSlideMenu g_sPeriodMenu =
 // menu in menus.c.
 //
 //*****************************************************************************
-static uint32_t g_pui32LogPeriod[] =
-{
+static uint32_t g_pui32LogPeriod[] = {
     0x00000004, // 1/32
     0x00000008, // 1/16
     0x00000010, // 1/8
@@ -446,13 +436,11 @@ static uint32_t g_pui32LogPeriod[] =
 //  (root)-->CONFIG-->STORAGE
 //
 //*****************************************************************************
-tSlideMenuItem g_psStorageMenuItems[] =
-{
+tSlideMenuItem g_psStorageMenuItems[] = {
     {"NONE", 0, 0, 0}, {"USB", 0, 0, 0}, {"HOST PC", 0, 0, 0},
     {"FLASH", 0, 0, 0},
 };
-tSlideMenu g_sStorageMenu =
-{
+tSlideMenu g_sStorageMenu = {
     &g_sConfigMenu, (sizeof(g_psStorageMenuItems) / sizeof(tSlideMenuItem)),
     g_psStorageMenuItems, 0, 0, 0, 0
 };
@@ -464,13 +452,11 @@ tSlideMenu g_sStorageMenu =
 //  (root)-->CONFIG-->SLEEP
 //
 //*****************************************************************************
-tSlideMenuItem g_psSleepMenuItems[] =
-{
+tSlideMenuItem g_psSleepMenuItems[] = {
     {"NO", 0, 0, 0}, {"YES", 0, 0, 0},
 };
 
-tSlideMenu g_sSleepMenu =
-{
+tSlideMenu g_sSleepMenu = {
     &g_sConfigMenu, (sizeof(g_psSleepMenuItems) / sizeof(tSlideMenuItem)),
     g_psSleepMenuItems, 0, 0, 0, 0
 };
@@ -482,8 +468,7 @@ tSlideMenu g_sSleepMenu =
 //  (root)-->VIEW
 //
 //*****************************************************************************
-tSlideMenuItem g_psViewMenuItems[] =
-{
+tSlideMenuItem g_psViewMenuItems[] = {
     {"AIN0-3", 0, (tWidget *)&g_sAINContainerCanvas, ClrDarkGreen},
     {"ACCEL", 0, (tWidget *)&g_sAccelContainerCanvas, ClrDarkBlue},
     {"TEMPERATURE", 0, (tWidget *)&g_sTempContainerCanvas, ClrDarkBlue},
@@ -491,8 +476,7 @@ tSlideMenuItem g_psViewMenuItems[] =
     {"CLOCK", 0, &g_sClockContainerCanvas.sBase, ClrDarkBlue},
     {"FLASH SPACE", 0, &g_sStatusContainerCanvas.sBase, ClrRed},
 };
-tSlideMenu g_sViewMenu =
-{
+tSlideMenu g_sViewMenu = {
     &g_psMainMenu, (sizeof(g_psViewMenuItems) / sizeof(tSlideMenuItem)),
     g_psViewMenuItems, 0, 0, 0, 0
 };
@@ -504,12 +488,10 @@ tSlideMenu g_sViewMenu =
 //  (root)-->ERASE
 //
 //*****************************************************************************
-tSlideMenuItem g_sConfirmMenuItems[] =
-{
+tSlideMenuItem g_sConfirmMenuItems[] = {
     {"ERASE DATA?", 0, &g_sStatusContainerCanvas.sBase, ClrRed},
 };
-tSlideMenu g_sConfirmMenu =
-{
+tSlideMenu g_sConfirmMenu = {
     &g_psMainMenu, (sizeof(g_sConfirmMenuItems) / sizeof(tSlideMenuItem)),
     g_sConfirmMenuItems, 0, 0, 0, 0
 };
@@ -537,8 +519,7 @@ MenuUpdateText(uint32_t ui32TextID, const char *pcText)
     // field.  The next time the associated widget is painted, the new text
     // will be shown.
     //
-    if(ui32TextID < NUM_TEXT_ITEMS)
-    {
+    if(ui32TextID < NUM_TEXT_ITEMS) {
         usnprintf(g_pcTextFields[ui32TextID], TEXT_FIELD_LENGTH, "%s", pcText);
     }
 }
@@ -561,20 +542,16 @@ MenuGetState(tConfigState *psState)
     //
     ASSERT(psState);
 
-    if(!psState)
-    {
+    if(!psState) {
         return;
     }
 
     //
     // Read the various configuration menus and store their state
     //
-    if(SlideMenuFocusItemGet(&g_sSleepMenu) > 0)
-    {
+    if(SlideMenuFocusItemGet(&g_sSleepMenu) > 0) {
         psState->bSleep = true;
-    }
-    else
-    {
+    } else {
         psState->bSleep = false;
     }
     ui32Temp = SlideMenuFocusItemGet(&g_sStorageMenu);;
@@ -616,10 +593,8 @@ MenuSetState(tConfigState *psState)
     // For the period, search the values table to find the index
     //
     for(ui32Idx = 0; ui32Idx < (sizeof(g_pui32LogPeriod) / sizeof(uint32_t));
-        ui32Idx++)
-    {
-        if(psState->ui32Period == g_pui32LogPeriod[ui32Idx])
-        {
+            ui32Idx++) {
+        if(psState->ui32Period == g_pui32LogPeriod[ui32Idx]) {
             SlideMenuFocusItemSet(&g_sPeriodMenu, ui32Idx);
 
             //
@@ -655,8 +630,7 @@ MenuGetDefaultState(tConfigState *psState)
     //
     // Set default values for all the menu items
     //
-    if(psState)
-    {
+    if(psState) {
         psState->bSleep = false;
         psState->ui8Storage = CONFIG_STORAGE_NONE;
         psState->ui16SelectedMask = 0;
@@ -692,8 +666,7 @@ MenuInit(void (*pfnActive)(tWidget *, tSlideMenuItem *, bool))
     //
     // Initialize each of the text fields with a "blank" indication.
     //
-    for(ui32Idx = 0; ui32Idx < NUM_LOG_ITEMS; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < NUM_LOG_ITEMS; ui32Idx++) {
         usnprintf(g_pcTextFields[ui32Idx], TEXT_FIELD_LENGTH, "----");
     }
 

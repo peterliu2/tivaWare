@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -143,15 +143,12 @@ static char g_cCmdBuf[CMD_BUF_SIZE];
 //*****************************************************************************
 void BQ27510G3AppCallback(void* pvCallbackData, uint_fast8_t ui8Status)
 {
-    if(ui8Status == I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status == I2CM_STATUS_SUCCESS) {
         //
         // If I2C transaction is successful, set data ready flag.
         //
         g_vui8DataFlag = 1;
-    }
-    else
-    {
+    } else {
         //
         // If I2C transaction fails, set error flag.
         //
@@ -204,12 +201,12 @@ LEDBlinkIntHandler(void)
     // Case statements for thermometer pattern
     //
     LEDWrite(CLP_D1 | CLP_D2 | CLP_D3| CLP_D4,
-       ui32LEDState == 0 ? CLP_D1 :                                     \
-       ui32LEDState == CLP_D1 ? (CLP_D1 | CLP_D2) :                     \
-       ui32LEDState == (CLP_D1 | CLP_D2) ? (CLP_D1 | CLP_D2 | CLP_D3) : \
-       ui32LEDState == (CLP_D1 | CLP_D2 | CLP_D3) ?                     \
-                                (CLP_D1 | CLP_D2 | CLP_D3 | CLP_D4) :   \
-       ui32LEDState == (CLP_D1 | CLP_D2 | CLP_D3 | CLP_D4) ? 0 : CLP_D1);
+             ui32LEDState == 0 ? CLP_D1 :                                     \
+             ui32LEDState == CLP_D1 ? (CLP_D1 | CLP_D2) :                     \
+             ui32LEDState == (CLP_D1 | CLP_D2) ? (CLP_D1 | CLP_D2 | CLP_D3) : \
+             ui32LEDState == (CLP_D1 | CLP_D2 | CLP_D3) ?                     \
+             (CLP_D1 | CLP_D2 | CLP_D3 | CLP_D4) :   \
+             ui32LEDState == (CLP_D1 | CLP_D2 | CLP_D3 | CLP_D4) ? 0 : CLP_D1);
 
 }
 
@@ -227,8 +224,7 @@ BQ27510G3AppI2CWait(void)
     // Put the processor to sleep while we wait for the I2C driver to
     // indicate that the transaction is complete.
     //
-    while((g_vui8DataFlag == 0) && (g_vui8ErrorFlag ==0))
-    {
+    while((g_vui8DataFlag == 0) && (g_vui8ErrorFlag ==0)) {
         //
         // Wait for I2C Transactions to complete.
         //
@@ -237,8 +233,7 @@ BQ27510G3AppI2CWait(void)
     //
     // If an error occurred call the error handler immediately.
     //
-    if(g_vui8ErrorFlag)
-    {
+    if(g_vui8ErrorFlag) {
         UARTprintf("\033[31;1m");
         UARTprintf("I2C Error!\n\n");
         UARTprintf("Please ensure FuelTank BP is installed correctly\n");
@@ -273,8 +268,7 @@ CheckForUserCommands(void)
     //
     // Peek to see if a full command is ready for processing.
     //
-    if(UARTPeek('\r') == -1)
-    {
+    if(UARTPeek('\r') == -1) {
         //
         // If not, return so other functions get a chance to run.
         //
@@ -285,8 +279,7 @@ CheckForUserCommands(void)
     // If we do have commands, process them immediately in the order they were
     // received.
     //
-    while(UARTPeek('\r') != -1)
-    {
+    while(UARTPeek('\r') != -1) {
         //
         // Get a user command back.
         //
@@ -300,16 +293,14 @@ CheckForUserCommands(void)
         //
         // Handle the case of bad command.
         //
-        if(iStatus == CMDLINE_BAD_CMD)
-        {
+        if(iStatus == CMDLINE_BAD_CMD) {
             UARTprintf("Bad command! Type 'h' for help!\n");
         }
 
         //
         // Handle the case of too many arguments.
         //
-        else if(iStatus == CMDLINE_TOO_MANY_ARGS)
-        {
+        else if(iStatus == CMDLINE_TOO_MANY_ARGS) {
             UARTprintf("Too many arguments for command processor!\n");
         }
     }
@@ -336,15 +327,13 @@ Cmd_temp(int argc, char *argv[])
 
     UARTprintf("\nPolling Temperature, press any key to stop\n\n");
 
-    while(1)
-    {
-    	//
+    while(1) {
+        //
         // Detect if any key has been pressed.
         //
-        if(UARTRxBytesAvail() > 0)
-        {
-        	UARTFlushRx();
-        	break;
+        if(UARTRxBytesAvail() > 0) {
+            UARTFlushRx();
+            break;
         }
 
         //
@@ -361,8 +350,7 @@ Cmd_temp(int argc, char *argv[])
         //
         // If initial read is not successful, exit w/o trying other reads.
         //
-        if(ui8Status != 0)
-        {
+        if(ui8Status != 0) {
             return(0);
         }
 
@@ -370,7 +358,7 @@ Cmd_temp(int argc, char *argv[])
         // Call routine to retrieve data in float format.
         //
         BQ27510G3DataTemperatureInternalGetFloat(&g_sBQ27510G3Inst,
-                                                 &fTemperature);
+                &fTemperature);
 
         //
         // Convert the temperature to an integer part and fraction part for
@@ -379,8 +367,7 @@ Cmd_temp(int argc, char *argv[])
         i32IntegerPart = (int32_t) fTemperature;
         i32FractionPart =(int32_t) (fTemperature * 1000.0f);
         i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-        if(i32FractionPart < 0)
-        {
+        if(i32FractionPart < 0) {
             i32FractionPart *= -1;
         }
 
@@ -388,7 +375,7 @@ Cmd_temp(int argc, char *argv[])
         // Print temperature with one digit of decimal precision.
         //
         UARTprintf("Current Temperature: \t%3d.%01d C\t\t", i32IntegerPart,
-                i32FractionPart);
+                   i32FractionPart);
 
         //
         // Print new line.
@@ -426,15 +413,13 @@ Cmd_volt(int argc, char *argv[])
 
     UARTprintf("\nPolling battery voltage, press any key to stop\n\n");
 
-    while(1)
-    {
-    	//
+    while(1) {
+        //
         // Detect if any key has been pressed.
         //
-        if(UARTRxBytesAvail() > 0)
-        {
-        	UARTFlushRx();
-        	break;
+        if(UARTRxBytesAvail() > 0) {
+            UARTFlushRx();
+            break;
         }
 
         //
@@ -451,8 +436,7 @@ Cmd_volt(int argc, char *argv[])
         //
         // If initial read is not successful, exit w/o trying other reads.
         //
-        if(ui8Status != 0)
-        {
+        if(ui8Status != 0) {
             return(0);
         }
 
@@ -468,8 +452,7 @@ Cmd_volt(int argc, char *argv[])
         i32IntegerPart = (int32_t) fData;
         i32FractionPart =(int32_t) (fData * 1000.0f);
         i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-        if(i32FractionPart < 0)
-        {
+        if(i32FractionPart < 0) {
             i32FractionPart *= -1;
         }
 
@@ -477,7 +460,7 @@ Cmd_volt(int argc, char *argv[])
         // Print voltage with one digit of decimal precision.
         //
         UARTprintf("Battery Voltage: \t%3d.%01d V\t\t", i32IntegerPart,
-                i32FractionPart);
+                   i32FractionPart);
 
         //
         // Print new line.
@@ -514,15 +497,13 @@ Cmd_current(int argc, char *argv[])
 
     UARTprintf("\nPolling battery current, press any key to stop\n\n");
 
-    while(1)
-    {
-    	//
+    while(1) {
+        //
         // Detect if any key has been pressed.
         //
-        if(UARTRxBytesAvail() > 0)
-        {
-        	UARTFlushRx();
-        	break;
+        if(UARTRxBytesAvail() > 0) {
+            UARTFlushRx();
+            break;
         }
 
         //
@@ -539,8 +520,7 @@ Cmd_current(int argc, char *argv[])
         //
         // If initial read is not successful, exit w/o trying other reads.
         //
-        if(ui8Status != 0)
-        {
+        if(ui8Status != 0) {
             return(0);
         }
 
@@ -557,8 +537,7 @@ Cmd_current(int argc, char *argv[])
         i32IntegerPart = (int32_t) fData;
         i32FractionPart =(int32_t) (fData * 1000.0f);
         i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-        if(i32FractionPart < 0)
-        {
+        if(i32FractionPart < 0) {
             i32FractionPart *= -1;
         }
 
@@ -566,7 +545,7 @@ Cmd_current(int argc, char *argv[])
         // Print voltage with one digit of decimal precision.
         //
         UARTprintf("Battery Current: \t%3d.%01d mA\t\t", i32IntegerPart,
-                i32FractionPart);
+                   i32FractionPart);
 
         //
         // Print new line.
@@ -603,15 +582,13 @@ Cmd_charge(int argc, char *argv[])
 
     UARTprintf("\nPolling remaining charge, press any key to stop\n\n");
 
-    while(1)
-    {
-    	//
+    while(1) {
+        //
         // Detect if any key has been pressed.
         //
-        if(UARTRxBytesAvail() > 0)
-        {
-        	UARTFlushRx();
-        	break;
+        if(UARTRxBytesAvail() > 0) {
+            UARTFlushRx();
+            break;
         }
 
         //
@@ -628,8 +605,7 @@ Cmd_charge(int argc, char *argv[])
         //
         // If initial read is not successful, exit w/o trying other reads.
         //
-        if(ui8Status != 0)
-        {
+        if(ui8Status != 0) {
             return(0);
         }
 
@@ -645,8 +621,7 @@ Cmd_charge(int argc, char *argv[])
         i32IntegerPart = (int32_t) fData;
         i32FractionPart =(int32_t) (fData * 1000.0f);
         i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-        if(i32FractionPart < 0)
-        {
+        if(i32FractionPart < 0) {
             i32FractionPart *= -1;
         }
 
@@ -654,7 +629,7 @@ Cmd_charge(int argc, char *argv[])
         // Print SoC with one digit of decimal precision.
         //
         UARTprintf("State of Charge: \t%3d.%01d %%\t\t", i32IntegerPart,
-                i32FractionPart);
+                   i32FractionPart);
 
         //
         // Print new line.
@@ -702,8 +677,7 @@ Cmd_health(int argc, char *argv[])
     //
     // If initial read is not successful, exit w/o trying other reads.
     //
-    if(ui8Status != 0)
-    {
+    if(ui8Status != 0) {
         return(0);
     }
 
@@ -719,8 +693,7 @@ Cmd_health(int argc, char *argv[])
     i32IntegerPart = (int32_t) fData;
     i32FractionPart =(int32_t) (fData * 1000.0f);
     i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-    if(i32FractionPart < 0)
-    {
+    if(i32FractionPart < 0) {
         i32FractionPart *= -1;
     }
 
@@ -728,7 +701,7 @@ Cmd_health(int argc, char *argv[])
     // Print health with one digit of decimal precision.
     //
     UARTprintf("State of Health: \t%3d.%01d %%\t\t", i32IntegerPart,
-            i32FractionPart);
+               i32FractionPart);
 
     //
     // Print new line.
@@ -770,8 +743,7 @@ Cmd_status(int argc, char *argv[])
     //
     // If initial read is not successful, exit w/o trying other reads.
     //
-    if(ui8Status != 0)
-    {
+    if(ui8Status != 0) {
         return(0);
     }
 
@@ -792,8 +764,7 @@ Cmd_status(int argc, char *argv[])
     i32IntegerPart = (int32_t) fData;
     i32FractionPart =(int32_t) (fData * 1000.0f);
     i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-    if(i32FractionPart < 0)
-    {
+    if(i32FractionPart < 0) {
         i32FractionPart *= -1;
     }
 
@@ -801,7 +772,7 @@ Cmd_status(int argc, char *argv[])
     // Print capacity with 1 digits of decimal precision.
     //
     UARTprintf("Battery Capacity: \t%3d.%01d mAH\t\t", i32IntegerPart,
-            i32FractionPart);
+               i32FractionPart);
 
     //
     // Print new line.
@@ -825,8 +796,7 @@ Cmd_status(int argc, char *argv[])
     i32IntegerPart = (int32_t) fData;
     i32FractionPart =(int32_t) (fData * 1000.0f);
     i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-    if(i32FractionPart < 0)
-    {
+    if(i32FractionPart < 0) {
         i32FractionPart *= -1;
     }
 
@@ -834,7 +804,7 @@ Cmd_status(int argc, char *argv[])
     // Print data with one digit of decimal precision.
     //
     UARTprintf("Remaining Capacity: \t%3d.%01d mAH\t\t", i32IntegerPart,
-            i32FractionPart);
+               i32FractionPart);
 
     //
     // Print new line.
@@ -857,8 +827,7 @@ Cmd_status(int argc, char *argv[])
     i32IntegerPart = (int32_t) fData;
     i32FractionPart =(int32_t) (fData * 1000.0f);
     i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-    if(i32FractionPart < 0)
-    {
+    if(i32FractionPart < 0) {
         i32FractionPart *= -1;
     }
 
@@ -866,7 +835,7 @@ Cmd_status(int argc, char *argv[])
     // Print data with 1 digit of decimal precision.
     //
     UARTprintf("Battery Voltage: \t%3d.%01d V\t\t", i32IntegerPart,
-            i32FractionPart);
+               i32FractionPart);
 
     //
     // Print new line.
@@ -889,8 +858,7 @@ Cmd_status(int argc, char *argv[])
     i32IntegerPart = (int32_t) fData;
     i32FractionPart =(int32_t) (fData * 1000.0f);
     i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-    if(i32FractionPart < 0)
-    {
+    if(i32FractionPart < 0) {
         i32FractionPart *= -1;
     }
 
@@ -898,7 +866,7 @@ Cmd_status(int argc, char *argv[])
     // Print temperature with one digits of decimal precision.
     //
     UARTprintf("Internal Temperature: \t%3d.%01d C\t\t", i32IntegerPart,
-            i32FractionPart);
+               i32FractionPart);
 
     //
     // Print new line.
@@ -921,8 +889,7 @@ Cmd_status(int argc, char *argv[])
     i32IntegerPart = (int32_t) fData;
     i32FractionPart =(int32_t) (fData * 1000.0f);
     i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-    if(i32FractionPart < 0)
-    {
+    if(i32FractionPart < 0) {
         i32FractionPart *= -1;
     }
 
@@ -930,7 +897,7 @@ Cmd_status(int argc, char *argv[])
     // Print data with one digit of decimal precision.
     //
     UARTprintf("State of Charge: \t%3d.%01d %%\t\t", i32IntegerPart,
-            i32FractionPart);
+               i32FractionPart);
 
     //
     // Print new line.
@@ -953,8 +920,7 @@ Cmd_status(int argc, char *argv[])
     i32IntegerPart = (int32_t) fData;
     i32FractionPart =(int32_t) (fData * 1000.0f);
     i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-    if(i32FractionPart < 0)
-    {
+    if(i32FractionPart < 0) {
         i32FractionPart *= -1;
     }
 
@@ -962,7 +928,7 @@ Cmd_status(int argc, char *argv[])
     // Print data with one digit of decimal precision.
     //
     UARTprintf("State of Health: \t%3d.%01d %%\t\t", i32IntegerPart,
-            i32FractionPart);
+               i32FractionPart);
 
     //
     // Print new line.
@@ -986,8 +952,7 @@ Cmd_status(int argc, char *argv[])
     i32IntegerPart = (int32_t) fData;
     i32FractionPart =(int32_t) (fData * 1000.0f);
     i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-    if(i32FractionPart < 0)
-    {
+    if(i32FractionPart < 0) {
         i32FractionPart *= -1;
     }
 
@@ -997,7 +962,7 @@ Cmd_status(int argc, char *argv[])
     // Print data with one digit of decimal precision.
     //
     UARTprintf("Average Current: \t%3d.%01d mA\t\t", i32IntegerPart,
-            i32FractionPart);
+               i32FractionPart);
 
     //
     // Print new line.
@@ -1020,8 +985,7 @@ Cmd_status(int argc, char *argv[])
     i32IntegerPart = (int32_t) fData;
     i32FractionPart =(int32_t) (fData * 1000.0f);
     i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-    if(i32FractionPart < 0)
-    {
+    if(i32FractionPart < 0) {
         i32FractionPart *= -1;
     }
 
@@ -1051,24 +1015,18 @@ Cmd_status(int argc, char *argv[])
     i32IntegerPart = (int32_t) fData;
     i32FractionPart =(int32_t) (fData * 1000.0f);
     i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-    if(i32FractionPart < 0)
-    {
+    if(i32FractionPart < 0) {
         i32FractionPart *= -1;
     }
 
     //
     // Print data with one digit of decimal precision.
     //
-    if(i32IntegerPart > 60)
-    {
+    if(i32IntegerPart > 60) {
         UARTprintf("Time Until Empty: \t%3d hrs\t\t", i32IntegerPart/60);
-    }
-    else if (i32IntegerPart == -1)
-    {
+    } else if (i32IntegerPart == -1) {
         UARTprintf("Time Until Empty: \t   NA\t\t");
-    }
-    else
-    {
+    } else {
         UARTprintf("Time Until Empty: \t%3d min\t\t", i32IntegerPart);
     }
 
@@ -1077,12 +1035,9 @@ Cmd_status(int argc, char *argv[])
     //
     UARTprintf("\n\n");
 
-    if(i32Current > 0)
-    {
+    if(i32Current > 0) {
         UARTprintf("The battery is charging!\r\n");
-    }
-    else
-    {
+    } else {
         UARTprintf("The battery is discharging!\r\n");
     }
     //
@@ -1117,8 +1072,7 @@ Cmd_help(int argc, char *argv[])
     // Enter a loop to read each entry from the command table.  The
     // end of the table has been reached when the command name is NULL.
     //
-    while(pEntry->pcCmd)
-    {
+    while(pEntry->pcCmd) {
         //
         // Print the command name and the brief description.
         //
@@ -1142,8 +1096,7 @@ Cmd_help(int argc, char *argv[])
 // and brief description.
 //
 //*****************************************************************************
-tCmdLineEntry g_psCmdTable[] =
-{
+tCmdLineEntry g_psCmdTable[] = {
     { "help",        Cmd_help, "      : Display list of commands" },
     { "h",           Cmd_help, "         : alias for help" },
     { "?",           Cmd_help, "         : alias for help" },
@@ -1182,8 +1135,8 @@ main(void)
     // Configure the system frequency.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Configure the device pins.
@@ -1292,7 +1245,7 @@ main(void)
     // Initialize the BQ27510G3.
     //
     BQ27510G3Init(&g_sBQ27510G3Inst, &g_sI2CInst, BQ27510G3_I2C_ADDRESS,
-            BQ27510G3AppCallback, &g_sBQ27510G3Inst);
+                  BQ27510G3AppCallback, &g_sBQ27510G3Inst);
 
     //
     // Wait for initialization callback to indicate reset request is complete.
@@ -1303,8 +1256,7 @@ main(void)
     // Begin the data collection and printing.
     // Loop Forever.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Infinite loop to process user commands from prompt
         //

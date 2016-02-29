@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2009-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Graphics Library.
 //
 //*****************************************************************************
@@ -81,17 +81,16 @@ ImageButtonPaint(tWidget *psWidget)
     // Compute the center of the image button.
     //
     i32X = (psWidget->sPosition.i16XMin +
-          ((psWidget->sPosition.i16XMax -
-            psWidget->sPosition.i16XMin + 1) / 2));
+            ((psWidget->sPosition.i16XMax -
+              psWidget->sPosition.i16XMin + 1) / 2));
     i32Y = (psWidget->sPosition.i16YMin +
-          ((psWidget->sPosition.i16YMax -
-            psWidget->sPosition.i16YMin + 1) / 2));
+            ((psWidget->sPosition.i16YMax -
+              psWidget->sPosition.i16YMin + 1) / 2));
 
     //
     // Do we need to fill the widget background with a color?
     //
-    if(psPush->ui32Style & IB_STYLE_FILL)
-    {
+    if(psPush->ui32Style & IB_STYLE_FILL) {
         //
         // Yes. Set the appropriate color depending upon whether or not
         // the widget is currently pressed.
@@ -116,13 +115,12 @@ ImageButtonPaint(tWidget *psWidget)
     //
     // Do we need to draw the background image?
     //
-    if(!(psPush->ui32Style & IB_STYLE_IMAGE_OFF))
-    {
+    if(!(psPush->ui32Style & IB_STYLE_IMAGE_OFF)) {
         //
         // Get the background image to be drawn.
         //
         pui8Image = ((psPush->ui32Style & IB_STYLE_PRESSED) ?
-                    psPush->pui8PressImage : psPush->pui8Image);
+                     psPush->pui8PressImage : psPush->pui8Image);
 
         //
         // Draw the image centered in the image button.
@@ -142,8 +140,7 @@ ImageButtonPaint(tWidget *psWidget)
     // top of the button, applying any offset defined if the button is
     // currently pressed.
     //
-    if(psPush->pui8KeycapImage && !(psPush->ui32Style & IB_STYLE_KEYCAP_OFF))
-    {
+    if(psPush->pui8KeycapImage && !(psPush->ui32Style & IB_STYLE_KEYCAP_OFF)) {
         //
         // Draw the keycap image.
         //
@@ -155,8 +152,7 @@ ImageButtonPaint(tWidget *psWidget)
     //
     // See if the button text style is selected.
     //
-    if(psPush->ui32Style & IB_STYLE_TEXT)
-    {
+    if(psPush->ui32Style & IB_STYLE_TEXT) {
         //
         // Draw the text centered in the middle of the button with offset
         // applied if the button is currently pressed.
@@ -206,8 +202,7 @@ ImageButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
     //
     // See if this is a pointer up message.
     //
-    if(ui32Msg == WIDGET_MSG_PTR_UP)
-    {
+    if(ui32Msg == WIDGET_MSG_PTR_UP) {
         //
         // Indicate that this image button is no longer pressed.
         //
@@ -223,8 +218,7 @@ ImageButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
         // release notify button, call the notification function here.
         //
         if(GrRectContainsPoint(&psWidget->sPosition, i32X, i32Y) &&
-           (psPush->ui32Style & IB_STYLE_RELEASE_NOTIFY) && psPush->pfnOnClick)
-        {
+                (psPush->ui32Style & IB_STYLE_RELEASE_NOTIFY) && psPush->pfnOnClick) {
             psPush->pfnOnClick(psWidget);
         }
     }
@@ -232,13 +226,11 @@ ImageButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
     //
     // See if the given coordinates are within the extents of the image button.
     //
-    if(GrRectContainsPoint(&psWidget->sPosition, i32X, i32Y))
-    {
+    if(GrRectContainsPoint(&psWidget->sPosition, i32X, i32Y)) {
         //
         // See if this is a pointer down message.
         //
-        if(ui32Msg == WIDGET_MSG_PTR_DOWN)
-        {
+        if(ui32Msg == WIDGET_MSG_PTR_DOWN) {
             //
             // Indicate that this image button is pressed.
             //
@@ -253,36 +245,31 @@ ImageButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
         //
         // See if there is an OnClick callback for this widget.
         //
-        if(psPush->pfnOnClick)
-        {
+        if(psPush->pfnOnClick) {
             //
             // If the pointer was just pressed then call the callback.
             //
             if((ui32Msg == WIDGET_MSG_PTR_DOWN) &&
-               !(psPush->ui32Style & IB_STYLE_RELEASE_NOTIFY))
-            {
+                    !(psPush->ui32Style & IB_STYLE_RELEASE_NOTIFY)) {
                 psPush->pfnOnClick(psWidget);
             }
 
             //
             // See if auto-repeat is enabled for this widget.
             //
-            if(psPush->ui32Style & IB_STYLE_AUTO_REPEAT)
-            {
+            if(psPush->ui32Style & IB_STYLE_AUTO_REPEAT) {
                 //
                 // If the pointer was just pressed, reset the auto-repeat
                 // count.
                 //
-                if(ui32Msg == WIDGET_MSG_PTR_DOWN)
-                {
+                if(ui32Msg == WIDGET_MSG_PTR_DOWN) {
                     psPush->ui32AutoRepeatCount = 0;
                 }
 
                 //
                 // See if the pointer was moved.
                 //
-                else if(ui32Msg == WIDGET_MSG_PTR_MOVE)
-                {
+                else if(ui32Msg == WIDGET_MSG_PTR_MOVE) {
                     //
                     // Increment the auto-repeat count.
                     //
@@ -294,11 +281,10 @@ ImageButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
                     // call the callback.
                     //
                     if((psPush->ui32AutoRepeatCount >=
-                        psPush->ui16AutoRepeatDelay) &&
-                       (((psPush->ui32AutoRepeatCount -
-                          psPush->ui16AutoRepeatDelay) %
-                         psPush->ui16AutoRepeatRate) == 0))
-                    {
+                            psPush->ui16AutoRepeatDelay) &&
+                            (((psPush->ui32AutoRepeatCount -
+                               psPush->ui16AutoRepeatDelay) %
+                              psPush->ui16AutoRepeatRate) == 0)) {
                         psPush->pfnOnClick(psWidget);
                     }
                 }
@@ -347,13 +333,11 @@ ImageButtonMsgProc(tWidget *psWidget, uint32_t ui32Msg,
     //
     // Determine which message is being sent.
     //
-    switch(ui32Msg)
-    {
+    switch(ui32Msg) {
         //
         // The widget paint request has been sent.
         //
-        case WIDGET_MSG_PAINT:
-        {
+        case WIDGET_MSG_PAINT: {
             //
             // Handle the widget paint request.
             //
@@ -371,8 +355,7 @@ ImageButtonMsgProc(tWidget *psWidget, uint32_t ui32Msg,
         //
         case WIDGET_MSG_PTR_DOWN:
         case WIDGET_MSG_PTR_MOVE:
-        case WIDGET_MSG_PTR_UP:
-        {
+        case WIDGET_MSG_PTR_UP: {
             //
             // Handle the pointer request, returning the appropriate value.
             //
@@ -383,8 +366,7 @@ ImageButtonMsgProc(tWidget *psWidget, uint32_t ui32Msg,
         //
         // An unknown request has been sent.
         //
-        default:
-        {
+        default: {
             //
             // Let the default message handler process this message.
             //
@@ -429,8 +411,7 @@ ImageButtonInit(tImageButtonWidget *psWidget, const tDisplay *psDisplay,
     //
     // Clear out the widget structure.
     //
-    for(ui32Idx = 0; ui32Idx < sizeof(tImageButtonWidget); ui32Idx += 4)
-    {
+    for(ui32Idx = 0; ui32Idx < sizeof(tImageButtonWidget); ui32Idx += 4) {
         ((uint32_t *)psWidget)[ui32Idx / 4] = 0;
     }
 

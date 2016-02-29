@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C123GXL Firmware Package.
 //
 //*****************************************************************************
@@ -101,18 +101,15 @@ LEDTask(void *pvParameters)
     //
     // Loop forever.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Read the next message, if available on queue.
         //
-        if(xQueueReceive(g_pLEDQueue, &i8Message, 0) == pdPASS)
-        {
+        if(xQueueReceive(g_pLEDQueue, &i8Message, 0) == pdPASS) {
             //
             // If left button, update to next LED.
             //
-            if(i8Message == LEFT_BUTTON)
-            {
+            if(i8Message == LEFT_BUTTON) {
                 //
                 // Update the LED buffer to turn off the currently working.
                 //
@@ -121,8 +118,7 @@ LEDTask(void *pvParameters)
                 //
                 // Update the index to next LED
                 g_ui8ColorsIndx++;
-                if(g_ui8ColorsIndx > 2)
-                {
+                if(g_ui8ColorsIndx > 2) {
                     g_ui8ColorsIndx = 0;
                 }
 
@@ -148,11 +144,9 @@ LEDTask(void *pvParameters)
             //
             // If right button, update delay time between toggles of led.
             //
-            if(i8Message == RIGHT_BUTTON)
-            {
+            if(i8Message == RIGHT_BUTTON) {
                 ui32LEDToggleDelay *= 2;
-                if(ui32LEDToggleDelay > 1000)
-                {
+                if(ui32LEDToggleDelay > 1000) {
                     ui32LEDToggleDelay = LED_TOGGLE_DELAY / 2;
                 }
 
@@ -225,8 +219,7 @@ LEDTaskInit(void)
     // Create the LED task.
     //
     if(xTaskCreate(LEDTask, (const portCHAR *)"LED", LEDTASKSTACKSIZE, NULL,
-                   tskIDLE_PRIORITY + PRIORITY_LED_TASK, NULL) != pdTRUE)
-    {
+                   tskIDLE_PRIORITY + PRIORITY_LED_TASK, NULL) != pdTRUE) {
         return(1);
     }
 

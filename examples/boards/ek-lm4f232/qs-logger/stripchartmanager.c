@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-LM4F232 Firmware Package.
 //
 //*****************************************************************************
@@ -57,14 +57,12 @@
 // for each data series.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     int16_t i16Min;
     int16_t i16Max;
 } tDisplayScaling;
 
-tDisplayScaling g_psScaling[] =
-{
+tDisplayScaling g_psScaling[] = {
     { 0, 20000 },                             // analog channel inputs,
     { 0, 20000 },                             // 0-20V (20000 mV)
     { 0, 20000 },
@@ -75,7 +73,7 @@ tDisplayScaling g_psScaling[] =
     { 0, 500 },                               // temperature, 0 - 50C (units of
     { 0, 500 },                               // 1/10C)
     { 0, 400 },                               // current, 0 - 40mA (units of
-                                              // 100uA)
+    // 100uA)
 };
 
 //*****************************************************************************
@@ -95,8 +93,7 @@ tDisplayScaling g_psScaling[] =
 // added to the strip chart for each item that is selected for logging.
 //
 //*****************************************************************************
-static tStripChartSeries g_psSeries[] =
-{
+static tStripChartSeries g_psSeries[] = {
     { 0, "CH0", 0x000040, 1, 1, 0, 0 },
     { 0, "CH1", ClrLime, 1, 1, 0, 0 },
     { 0, "CH2", ClrAqua, 1, 1, 0, 0 },
@@ -116,8 +113,7 @@ static tStripChartSeries g_psSeries[] =
 // Defines the X-axis for the strip chart.
 //
 //*****************************************************************************
-static tStripChartAxis g_sAxisX =
-{
+static tStripChartAxis g_sAxisX = {
     "X-AXIS",   // title of axis
     0,          // label for minimum of axis
     0,          // label for maximum of axis
@@ -131,8 +127,7 @@ static tStripChartAxis g_sAxisX =
 // Defines the Y-axis for the strip chart.
 //
 //*****************************************************************************
-static tStripChartAxis g_sAxisY =
-{
+static tStripChartAxis g_sAxisY = {
     0,          // title of the axis
     0,          // label for minimum of axis
     0,          // label for maximum of axis
@@ -208,10 +203,8 @@ StripChartMgrConfigure(uint32_t ui32SelectedMask)
     //
     g_ui32SelectedCount = 0;
     ui32Idx = ui32SelectedMask;
-    while(ui32Idx)
-    {
-        if(ui32Idx & 1)
-        {
+    while(ui32Idx) {
+        if(ui32Idx & 1) {
             g_ui32SelectedCount++;
         }
         ui32Idx >>= 1;
@@ -232,13 +225,11 @@ StripChartMgrConfigure(uint32_t ui32SelectedMask)
     // them to the strip chart.
     //
     ui32ItemIdx = 0;
-    for(ui32Idx = 0; ui32Idx < MAX_NUM_SERIES; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < MAX_NUM_SERIES; ui32Idx++) {
         //
         // Check to see if this series is selected
         //
-        if((1 << ui32Idx) & ui32SelectedMask)
-        {
+        if((1 << ui32Idx) & ui32SelectedMask) {
             //
             // Get a pointer to this series.
             //
@@ -312,8 +303,7 @@ ScaleDataToPixelY(int16_t i16Data, int16_t i16Min, int16_t i16Max)
     // bogus Y pixel value when the return value is converted to a smaller
     // data type.
     //
-    if((i32Y < 0) || (i32Y > 63))
-    {
+    if((i32Y < 0) || (i32Y > 63)) {
         i32Y = 64;
     }
 
@@ -344,8 +334,7 @@ StripChartMgrAddItems(int16_t *pi16DataItems)
     //
     // Check for valid input data pointer
     //
-    if(!pi16DataItems)
-    {
+    if(!pi16DataItems) {
         return;
     }
 
@@ -354,8 +343,7 @@ StripChartMgrAddItems(int16_t *pi16DataItems)
     // the items need to "slide down" and new data added to the end of the
     // buffer.
     //
-    if(g_ui32ItemCount == SERIES_LENGTH)
-    {
+    if(g_ui32ItemCount == SERIES_LENGTH) {
         memmove(&g_pui8SeriesData[0], &g_pui8SeriesData[g_ui32SelectedCount],
                 SERIES_LENGTH * g_ui32SelectedCount);
 
@@ -364,17 +352,15 @@ StripChartMgrAddItems(int16_t *pi16DataItems)
         // buffer.
         //
         pui8NewData = &g_pui8SeriesData[(SERIES_LENGTH - 1) *
-                      g_ui32SelectedCount];
-    }
-    else
-    {
+                                        g_ui32SelectedCount];
+    } else {
 
         //
         // Otherwise, the series data buffer is less than full so compute the
         // correct location in the buffer for the new data to be added.
         //
         pui8NewData = &g_pui8SeriesData[g_ui32ItemCount *
-                                          g_ui32SelectedCount];
+                                        g_ui32SelectedCount];
 
         //
         // Increment the number of items that have been added to the strip
@@ -386,8 +372,7 @@ StripChartMgrAddItems(int16_t *pi16DataItems)
         // Since the count of data items has changed, it must be updated for
         // each series.
         //
-        for(ui32Idx = 0; ui32Idx < MAX_NUM_SERIES; ui32Idx++)
-        {
+        for(ui32Idx = 0; ui32Idx < MAX_NUM_SERIES; ui32Idx++) {
             g_psSeries[ui32Idx].ui16NumItems = g_ui32ItemCount;
         }
     }
@@ -397,19 +382,17 @@ StripChartMgrAddItems(int16_t *pi16DataItems)
     // to a scaled Y pixel value.
     //
     ui32Idx = 0;
-    while(ui32SelectedMask)
-    {
+    while(ui32SelectedMask) {
         //
         // Is this data item being added to the chart?
         //
-        if(ui32SelectedMask & 1)
-        {
+        if(ui32SelectedMask & 1) {
             //
             // Scale the data item and add it to the series buffer
             //
             *pui8NewData = ScaleDataToPixelY(*pi16DataItems,
-                                               g_psScaling[ui32Idx].i16Min,
-                                               g_psScaling[ui32Idx].i16Max);
+                                             g_psScaling[ui32Idx].i16Min,
+                                             g_psScaling[ui32Idx].i16Max);
 
             //
             // Increment the from/to pointers

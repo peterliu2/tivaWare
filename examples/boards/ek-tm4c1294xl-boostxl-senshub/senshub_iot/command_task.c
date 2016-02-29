@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -92,8 +92,7 @@ extern uint32_t g_ui32SysClock;
 // brief description.
 //
 //*****************************************************************************
-tCmdLineEntry g_psCmdTable[] =
-{
+tCmdLineEntry g_psCmdTable[] = {
     { "help",     Cmd_help,     ": Display list of commands" },
     { "h",        Cmd_help,     ": alias for help" },
     { "?",        Cmd_help,     ": alias for help" },
@@ -101,8 +100,10 @@ tCmdLineEntry g_psCmdTable[] =
     { "activate", Cmd_activate, ": Get a CIK from exosite"},
     { "clear",    Cmd_clear,    ": Clear the display "},
     { "proxy",    Cmd_proxy,    ": Set or disable a HTTP proxy server." },
-    { "connect",  Cmd_connect,  ": Tries to establish a connection with"
-                                " exosite."},
+    {
+        "connect",  Cmd_connect,  ": Tries to establish a connection with"
+        " exosite."
+    },
     { "sync",    Cmd_sync,      ": Syncronize data with exosite now." },
     { 0, 0, 0 }
 };
@@ -181,8 +182,7 @@ Cmd_help(int argc, char *argv[])
     // Enter a loop to read each entry from the command table.  The end of the
     // table has been reached when the command name is NULL.
     //
-    while(pEntry->pcCmd)
-    {
+    while(pEntry->pcCmd) {
         //
         // Print the command name and the brief description.
         //
@@ -331,7 +331,7 @@ Cmd_connect(int argc, char *argv[])
     sRequest.ui32Request = CLOUD_REQUEST_START;
     usprintf(sRequest.pcBuf, "START REQUEST");
     xQueueSendToBack(g_xCloudTaskRequestQueue, (void *) &sRequest,
-                         portMAX_DELAY);
+                     portMAX_DELAY);
 
     return 0;
 }
@@ -351,8 +351,7 @@ Cmd_proxy(int argc, char *argv[])
     //
     // Check the number of arguments.
     //
-    if((argc == 2) && (ustrcmp("off", argv[1]) == 0 ))
-    {
+    if((argc == 2) && (ustrcmp("off", argv[1]) == 0 )) {
         //
         // Set the type of request.
         //
@@ -368,11 +367,9 @@ Cmd_proxy(int argc, char *argv[])
         // Send the request message.
         //
         xQueueSendToBack(g_xCloudTaskRequestQueue, (void *) &sRequest,
-                             portMAX_DELAY);
+                         portMAX_DELAY);
 
-    }
-    else if(argc == 3)
-    {
+    } else if(argc == 3) {
         //
         // Set the type of request.
         //
@@ -389,11 +386,9 @@ Cmd_proxy(int argc, char *argv[])
         // Send the request message.
         //
         xQueueSendToBack(g_xCloudTaskRequestQueue, (void *) &sRequest,
-                             portMAX_DELAY);
+                         portMAX_DELAY);
 
-    }
-    else
-    {
+    } else {
         UARTprintf("\nProxy configuration help:\n");
         UARTprintf("    The proxy command changes the proxy behavior of this "
                    "board.\n");
@@ -449,8 +444,7 @@ CommandTask(void *pvParameters)
     //
     xLastWakeTime = xTaskGetTickCount();
 
-    while(1)
-    {
+    while(1) {
 
         //
         // Wait for the required amount of time to check back.
@@ -476,8 +470,7 @@ CommandTask(void *pvParameters)
         //
         vPortExitCritical();
 
-        if(i32CarriageReturnPosition != (-1))
-        {
+        if(i32CarriageReturnPosition != (-1)) {
             //
             // Get the command and pass it to the command interpreter.
             //
@@ -496,24 +489,21 @@ CommandTask(void *pvParameters)
             //
             // Handle the case of bad command.
             //
-            if(iStatus == CMDLINE_BAD_CMD)
-            {
+            if(iStatus == CMDLINE_BAD_CMD) {
                 UARTprintf("Bad command!\n");
             }
 
             //
             // Handle the case of too many arguments.
             //
-            else if(iStatus == CMDLINE_TOO_MANY_ARGS)
-            {
+            else if(iStatus == CMDLINE_TOO_MANY_ARGS) {
                 UARTprintf("Too many arguments for command processor!\n");
             }
 
             //
             // Handle the case of too few arguments.
             //
-            else if(iStatus == CMDLINE_TOO_FEW_ARGS)
-            {
+            else if(iStatus == CMDLINE_TOO_FEW_ARGS) {
                 UARTprintf("Too few arguments for command processor!\n");
             }
 
@@ -559,8 +549,7 @@ uint32_t CommandTaskInit(void)
     //
     if(xTaskCreate(CommandTask, (const portCHAR *)"Command",
                    COMMAND_TASK_STACK_SIZE, NULL, tskIDLE_PRIORITY +
-                   PRIORITY_COMMAND_TASK, g_xCommandHandle) != pdTRUE)
-    {
+                   PRIORITY_COMMAND_TASK, g_xCommandHandle) != pdTRUE) {
         //
         // Task creation failed.
         //
@@ -570,8 +559,7 @@ uint32_t CommandTaskInit(void)
     //
     // Check if queue creation and semaphore was successful.
     //
-    if(g_xUARTSemaphore == NULL)
-    {
+    if(g_xUARTSemaphore == NULL) {
         //
         // queue was not created successfully.
         //

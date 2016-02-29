@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -155,8 +155,7 @@ typedef struct tUSBHostDevice tUSBHostDevice;
 //! find a USB class driver once a USB device is enumerated.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The interface class that this device class driver supports.
     //
@@ -215,8 +214,8 @@ extern uint32_t USBHCDPowerConfigSet(uint32_t ui32Index,
                                      uint32_t ui32Config);
 extern uint32_t USBHCDPowerAutomatic(uint32_t ui32Index);
 extern void USBHCDRegisterDrivers(uint32_t ui32Index,
-                            const tUSBHostClassDriver * const *ppsHClassDrvrs,
-                            uint32_t ui32NumDrivers);
+                                  const tUSBHostClassDriver * const *ppsHClassDrvrs,
+                                  uint32_t ui32NumDrivers);
 extern void USBHCDTerm(uint32_t ui32Index);
 extern void USBHCDSetConfig(uint32_t ui32Index, uint32_t ui32Device,
                             uint32_t ui32Configuration);
@@ -232,10 +231,10 @@ extern uint32_t USBHCDPipeAlloc(uint32_t ui32Index,
                                 tUSBHostDevice *psDevice,
                                 tHCDPipeCallback pfnCallback);
 extern uint32_t USBHCDPipeAllocSize(uint32_t ui32Index,
-                                     uint32_t ui32EndpointType,
-                                     tUSBHostDevice *psDevice,
-                                     uint32_t ui32FIFOSize,
-                                     tHCDPipeCallback pfnCallback);
+                                    uint32_t ui32EndpointType,
+                                    tUSBHostDevice *psDevice,
+                                    uint32_t ui32FIFOSize,
+                                    tHCDPipeCallback pfnCallback);
 extern uint32_t USBHCDPipeConfig(uint32_t ui32Pipe, uint32_t ui32MaxPayload,
                                  uint32_t ui32Interval,
                                  uint32_t ui32TargetEndpoint);
@@ -249,12 +248,12 @@ extern uint32_t USBHCDPipeSchedule(uint32_t ui32Pipe, uint8_t *pui8Data,
 extern uint32_t USBHCDPipeTransferSizeGet(uint32_t ui32Pipe);
 extern void USBHCDPipeDataAck(uint32_t ui32Pipe);
 extern uint32_t USBHCDPipeReadNonBlocking(uint32_t ui32Pipe, uint8_t *pui8Data,
-                                          uint32_t ui32Size);
+        uint32_t ui32Size);
 extern uint32_t USBHCDStringDescriptorGet(tUSBHostDevice *psDevice,
-                                          uint8_t *pui8Buffer,
-                                          uint32_t ui32Size,
-                                          uint32_t ui32LangID,
-                                          uint32_t ui32StringIndex);
+        uint8_t *pui8Buffer,
+        uint32_t ui32Size,
+        uint32_t ui32LangID,
+        uint32_t ui32StringIndex);
 extern uint32_t USBHCDControlTransfer(uint32_t ui32Index,
                                       tUSBRequest *psSetupPacket,
                                       tUSBHostDevice *psDevice,

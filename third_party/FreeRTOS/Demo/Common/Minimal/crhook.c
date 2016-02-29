@@ -68,7 +68,7 @@
 */
 
 /*
- * This demo file demonstrates how to send data between an ISR and a 
+ * This demo file demonstrates how to send data between an ISR and a
  * co-routine.  A tick hook function is used to periodically pass data between
  * the RTOS tick and a set of 'hook' co-routines.
  *
@@ -76,17 +76,17 @@
  * to wait for a character to be received on a queue from the tick ISR, checks
  * to ensure the character received was that expected, then sends the number
  * back to the tick ISR on a different queue.
- * 
- * The tick ISR checks the numbers received back from the 'hook' co-routines 
+ *
+ * The tick ISR checks the numbers received back from the 'hook' co-routines
  * matches the number previously sent.
  *
  * If at any time a queue function returns unexpectedly, or an incorrect value
- * is received either by the tick hook or a co-routine then an error is 
+ * is received either by the tick hook or a co-routine then an error is
  * latched.
  *
- * This demo relies on each 'hook' co-routine to execute between each 
- * hookTICK_CALLS_BEFORE_POST tick interrupts.  This and the heavy use of 
- * queues from within an interrupt may result in an error being detected on 
+ * This demo relies on each 'hook' co-routine to execute between each
+ * hookTICK_CALLS_BEFORE_POST tick interrupts.  This and the heavy use of
+ * queues from within an interrupt may result in an error being detected on
  * slower targets simply due to timing.
  */
 
@@ -101,7 +101,7 @@
 /* The number of 'hook' co-routines that are to be created. */
 #define hookNUM_HOOK_CO_ROUTINES        ( 4 )
 
-/* The number of times the tick hook should be called before a character is 
+/* The number of times the tick hook should be called before a character is
 posted to the 'hook' co-routines. */
 #define hookTICK_CALLS_BEFORE_POST      ( 500 )
 
@@ -124,7 +124,7 @@ static void prvHookCoRoutine( CoRoutineHandle_t xHandle, UBaseType_t uxIndex );
 
 /*
  * The tick hook function.  This receives a number from each 'hook' co-routine
- * then sends a number to each co-routine.  An error is flagged if a send or 
+ * then sends a number to each co-routine.  An error is flagged if a send or
  * receive fails, or an unexpected number is received.
  */
 void vApplicationTickHook( void );
@@ -148,126 +148,110 @@ static BaseType_t xCoRoutineErrorDetected = pdFALSE;
 
 void vStartHookCoRoutines( void )
 {
-UBaseType_t uxIndex, uxValueToPost = 0;
+    UBaseType_t uxIndex, uxValueToPost = 0;
 
-	for( uxIndex = 0; uxIndex < hookNUM_HOOK_CO_ROUTINES; uxIndex++ )
-	{
-		/* Create a queue to transmit to and receive from each 'hook' 
-		co-routine. */
-		xHookRxQueues[ uxIndex ] = xQueueCreate( hookHOOK_QUEUE_LENGTH, sizeof( UBaseType_t ) );
-		xHookTxQueues[ uxIndex ] = xQueueCreate( hookHOOK_QUEUE_LENGTH, sizeof( UBaseType_t ) );
+    for( uxIndex = 0; uxIndex < hookNUM_HOOK_CO_ROUTINES; uxIndex++ ) {
+        /* Create a queue to transmit to and receive from each 'hook'
+        co-routine. */
+        xHookRxQueues[ uxIndex ] = xQueueCreate( hookHOOK_QUEUE_LENGTH, sizeof( UBaseType_t ) );
+        xHookTxQueues[ uxIndex ] = xQueueCreate( hookHOOK_QUEUE_LENGTH, sizeof( UBaseType_t ) );
 
-		/* To start things off the tick hook function expects the queue it 
-		uses to receive data to contain a value.  */
-		xQueueSend( xHookRxQueues[ uxIndex ], &uxValueToPost, hookNO_BLOCK_TIME );
+        /* To start things off the tick hook function expects the queue it
+        uses to receive data to contain a value.  */
+        xQueueSend( xHookRxQueues[ uxIndex ], &uxValueToPost, hookNO_BLOCK_TIME );
 
-		/* Create the 'hook' co-routine itself. */
-		xCoRoutineCreate( prvHookCoRoutine, mainHOOK_CR_PRIORITY, uxIndex );
-	}
+        /* Create the 'hook' co-routine itself. */
+        xCoRoutineCreate( prvHookCoRoutine, mainHOOK_CR_PRIORITY, uxIndex );
+    }
 }
 /*-----------------------------------------------------------*/
 
 static UBaseType_t uxCallCounter = 0, uxNumberToPost = 0;
 void vApplicationTickHook( void )
 {
-UBaseType_t uxReceivedNumber;
-BaseType_t xIndex, xCoRoutineWoken;
+    UBaseType_t uxReceivedNumber;
+    BaseType_t xIndex, xCoRoutineWoken;
 
-	/* Is it time to talk to the 'hook' co-routines again? */
-	uxCallCounter++;
-	if( uxCallCounter >= hookTICK_CALLS_BEFORE_POST )
-	{
-		uxCallCounter = 0;
+    /* Is it time to talk to the 'hook' co-routines again? */
+    uxCallCounter++;
+    if( uxCallCounter >= hookTICK_CALLS_BEFORE_POST ) {
+        uxCallCounter = 0;
 
-		for( xIndex = 0; xIndex < hookNUM_HOOK_CO_ROUTINES; xIndex++ )
-		{
-			xCoRoutineWoken = pdFALSE;
-			if( crQUEUE_RECEIVE_FROM_ISR( xHookRxQueues[ xIndex ], &uxReceivedNumber, &xCoRoutineWoken ) != pdPASS )
-			{
-				/* There is no reason why we would not expect the queue to 
-				contain a value. */
-				xCoRoutineErrorDetected = pdTRUE;
-			}
-			else
-			{
-				/* Each queue used to receive data from the 'hook' co-routines 
-				should contain the number we last posted to the same co-routine. */
-				if( uxReceivedNumber != uxNumberToPost )
-				{
-					xCoRoutineErrorDetected = pdTRUE;
-				}
+        for( xIndex = 0; xIndex < hookNUM_HOOK_CO_ROUTINES; xIndex++ ) {
+            xCoRoutineWoken = pdFALSE;
+            if( crQUEUE_RECEIVE_FROM_ISR( xHookRxQueues[ xIndex ], &uxReceivedNumber, &xCoRoutineWoken ) != pdPASS ) {
+                /* There is no reason why we would not expect the queue to
+                contain a value. */
+                xCoRoutineErrorDetected = pdTRUE;
+            } else {
+                /* Each queue used to receive data from the 'hook' co-routines
+                should contain the number we last posted to the same co-routine. */
+                if( uxReceivedNumber != uxNumberToPost ) {
+                    xCoRoutineErrorDetected = pdTRUE;
+                }
 
-				/* Nothing should be blocked waiting to post to the queue. */
-				if( xCoRoutineWoken != pdFALSE )
-				{
-					xCoRoutineErrorDetected = pdTRUE;
-				}
-			}
-		}
+                /* Nothing should be blocked waiting to post to the queue. */
+                if( xCoRoutineWoken != pdFALSE ) {
+                    xCoRoutineErrorDetected = pdTRUE;
+                }
+            }
+        }
 
-		/* Start the next cycle by posting the next number onto each Tx queue. */
-		uxNumberToPost++;
+        /* Start the next cycle by posting the next number onto each Tx queue. */
+        uxNumberToPost++;
 
-		for( xIndex = 0; xIndex < hookNUM_HOOK_CO_ROUTINES; xIndex++ )
-		{
-			if( crQUEUE_SEND_FROM_ISR( xHookTxQueues[ xIndex ], &uxNumberToPost, pdFALSE ) != pdTRUE )
-			{
-				/* Posting to the queue should have woken the co-routine that 
-				was blocked on the queue. */
-				xCoRoutineErrorDetected = pdTRUE;
-			}
-		}
-	}
+        for( xIndex = 0; xIndex < hookNUM_HOOK_CO_ROUTINES; xIndex++ ) {
+            if( crQUEUE_SEND_FROM_ISR( xHookTxQueues[ xIndex ], &uxNumberToPost, pdFALSE ) != pdTRUE ) {
+                /* Posting to the queue should have woken the co-routine that
+                was blocked on the queue. */
+                xCoRoutineErrorDetected = pdTRUE;
+            }
+        }
+    }
 }
 /*-----------------------------------------------------------*/
 
 static void prvHookCoRoutine( CoRoutineHandle_t xHandle, UBaseType_t uxIndex )
 {
-static UBaseType_t uxReceivedValue[ hookNUM_HOOK_CO_ROUTINES ];
-BaseType_t xResult;
+    static UBaseType_t uxReceivedValue[ hookNUM_HOOK_CO_ROUTINES ];
+    BaseType_t xResult;
 
-	/* Each co-routine MUST start with a call to crSTART(); */
-	crSTART( xHandle );
+    /* Each co-routine MUST start with a call to crSTART(); */
+    crSTART( xHandle );
 
-	for( ;; )
-	{
-		/* Wait to receive a value from the tick hook. */
-		xResult = pdFAIL;
-		crQUEUE_RECEIVE( xHandle, xHookTxQueues[ uxIndex ], &( uxReceivedValue[ uxIndex ] ), portMAX_DELAY, &xResult );
+    for( ;; ) {
+        /* Wait to receive a value from the tick hook. */
+        xResult = pdFAIL;
+        crQUEUE_RECEIVE( xHandle, xHookTxQueues[ uxIndex ], &( uxReceivedValue[ uxIndex ] ), portMAX_DELAY, &xResult );
 
-		/* There is no reason why we should not have received something on
-		the queue. */
-		if( xResult != pdPASS )
-		{
-			xCoRoutineErrorDetected = pdTRUE;
-		}
+        /* There is no reason why we should not have received something on
+        the queue. */
+        if( xResult != pdPASS ) {
+            xCoRoutineErrorDetected = pdTRUE;
+        }
 
-		/* Send the same number back to the idle hook so it can verify it. */
-		xResult = pdFAIL;
-		crQUEUE_SEND( xHandle, xHookRxQueues[ uxIndex ], &( uxReceivedValue[ uxIndex ] ), hookNO_BLOCK_TIME, &xResult );
-		if( xResult != pdPASS )
-		{
-			/* There is no reason why we should not have been able to post to 
-			the queue. */
-			xCoRoutineErrorDetected = pdTRUE;
-		}
-	}
+        /* Send the same number back to the idle hook so it can verify it. */
+        xResult = pdFAIL;
+        crQUEUE_SEND( xHandle, xHookRxQueues[ uxIndex ], &( uxReceivedValue[ uxIndex ] ), hookNO_BLOCK_TIME, &xResult );
+        if( xResult != pdPASS ) {
+            /* There is no reason why we should not have been able to post to
+            the queue. */
+            xCoRoutineErrorDetected = pdTRUE;
+        }
+    }
 
-	/* Each co-routine MUST end with a call to crEND(). */
-	crEND();
+    /* Each co-routine MUST end with a call to crEND(). */
+    crEND();
 }
 /*-----------------------------------------------------------*/
 
 BaseType_t xAreHookCoRoutinesStillRunning( void )
 {
-	if( xCoRoutineErrorDetected )
-	{
-		return pdFALSE;
-	}
-	else
-	{
-		return pdTRUE;
-	}
+    if( xCoRoutineErrorDetected ) {
+        return pdFALSE;
+    } else {
+        return pdTRUE;
+    }
 }
 
 

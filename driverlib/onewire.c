@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -174,8 +174,8 @@ OneWireBusStatus(uint32_t ui32Base)
     // Return the status bits from control and status register.
     //
     return(HWREG(ui32Base + ONEWIRE_O_CS) & (ONEWIRE_CS_BUSY |
-                                             ONEWIRE_CS_NOATR |
-                                             ONEWIRE_CS_STUCK));
+            ONEWIRE_CS_NOATR |
+            ONEWIRE_CS_STUCK));
 }
 
 //*****************************************************************************
@@ -205,8 +205,7 @@ OneWireDataGet(uint32_t ui32Base, uint32_t *pui32Data)
     //
     // Wait for any active operations to complete.
     //
-    while(HWREG(ui32Base + ONEWIRE_O_CS) & ONEWIRE_CS_BUSY)
-    {
+    while(HWREG(ui32Base + ONEWIRE_O_CS) & ONEWIRE_CS_BUSY) {
     }
 
     //
@@ -245,8 +244,7 @@ OneWireDataGetNonBlocking(uint32_t ui32Base, uint32_t *pui32Data)
     //
     // If the bus is busy, return without reading.
     //
-    if(HWREG(ui32Base + ONEWIRE_O_CS) & ONEWIRE_CS_BUSY)
-    {
+    if(HWREG(ui32Base + ONEWIRE_O_CS) & ONEWIRE_CS_BUSY) {
         return(false);
     }
 
@@ -419,12 +417,9 @@ OneWireIntStatus(uint32_t ui32Base, bool bMasked)
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return(HWREG(ui32Base + ONEWIRE_O_MIS));
-    }
-    else
-    {
+    } else {
         return(HWREG(ui32Base + ONEWIRE_O_RIS));
     }
 }
@@ -454,8 +449,7 @@ _OneWireIntNumberGet(uint32_t ui32Base)
     //
     // Find the valid interrupt number for the 1-Wire module.
     //
-    if(CLASS_IS_TM4C129)
-    {
+    if(CLASS_IS_TM4C129) {
         ui32Int = INT_ONEWIRE0_TM4C129;
     }
 
@@ -655,13 +649,11 @@ OneWireDMAEnable(uint32_t ui32Base, uint32_t ui32DMAFlags)
     // scatter-gather operations.
     //
     if((ui32DMAFlags & (ONEWIRE_DMA_DMAOP_RDSNG | ONEWIRE_DMA_DMAOP_RDMUL)) &&
-       !(ui32DMAFlags & ONEWIRE_DMA_SG))
-    {
+            !(ui32DMAFlags & ONEWIRE_DMA_SG)) {
         //
         // Workaround for Snowflake DMA receive trigger errata.
         //
-        if(CLASS_IS_TM4C129)
-        {
+        if(CLASS_IS_TM4C129) {
             SysCtlDelay(9);
         }
 
@@ -729,8 +721,7 @@ OneWireTransaction(uint32_t ui32Base, uint32_t ui32OpMode, uint32_t ui32Data,
     //
     // set up for a read or write transaction.
     //
-    if(ui32Transaction & (ONEWIRE_CS_OP_WR | ONEWIRE_CS_OP_RD))
-    {
+    if(ui32Transaction & (ONEWIRE_CS_OP_WR | ONEWIRE_CS_OP_RD)) {
         //
         // Configure the 1-Wire module for the transaction size.  This is
         // specified as 1-4 bytes and the specific bit size for the last
@@ -744,8 +735,7 @@ OneWireTransaction(uint32_t ui32Base, uint32_t ui32OpMode, uint32_t ui32Data,
         //
         // Write specific setup.
         //
-        if(ui32Transaction & ONEWIRE_CS_OP_WR)
-        {
+        if(ui32Transaction & ONEWIRE_CS_OP_WR) {
             //
             // Load the data into the write register.
             //

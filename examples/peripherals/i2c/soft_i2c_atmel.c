@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -188,13 +188,11 @@ SoftI2CCallback(void)
     //
     // Determine what to do based on the current state.
     //
-    switch(g_ui32State)
-    {
+    switch(g_ui32State) {
         //
         // The idle state.
         //
-        case STATE_IDLE:
-        {
+        case STATE_IDLE: {
             //
             // There is nothing to be done.
             //
@@ -204,8 +202,7 @@ SoftI2CCallback(void)
         //
         // The state for the middle of a burst write.
         //
-        case STATE_WRITE_NEXT:
-        {
+        case STATE_WRITE_NEXT: {
             //
             // Write the next data byte.
             //
@@ -221,8 +218,7 @@ SoftI2CCallback(void)
             // If there is one byte left, set the next state to the final write
             // state.
             //
-            if(g_ui32Count == 1)
-            {
+            if(g_ui32Count == 1) {
                 g_ui32State = STATE_WRITE_FINAL;
             }
 
@@ -235,8 +231,7 @@ SoftI2CCallback(void)
         //
         // The state for the final write of a burst sequence.
         //
-        case STATE_WRITE_FINAL:
-        {
+        case STATE_WRITE_FINAL: {
             //
             // Write the final data byte.
             //
@@ -262,13 +257,11 @@ SoftI2CCallback(void)
         //
         // Wait for an ACK on the read after a write.
         //
-        case STATE_WAIT_ACK:
-        {
+        case STATE_WAIT_ACK: {
             //
             // See if there was an error on the previously issued read.
             //
-            if(SoftI2CErr(&g_sI2C) == SOFTI2C_ERR_NONE)
-            {
+            if(SoftI2CErr(&g_sI2C) == SOFTI2C_ERR_NONE) {
                 //
                 // Read the byte received.
                 //
@@ -294,8 +287,7 @@ SoftI2CCallback(void)
         // Send a read request, looking for the ACK to indicate that the write
         // is done.
         //
-        case STATE_SEND_ACK:
-        {
+        case STATE_SEND_ACK: {
             //
             // Put the I2C master into receive mode.
             //
@@ -320,8 +312,7 @@ SoftI2CCallback(void)
         //
         // The state for a single byte read.
         //
-        case STATE_READ_ONE:
-        {
+        case STATE_READ_ONE: {
             //
             // Put the SoftI2C module into receive mode.
             //
@@ -346,8 +337,7 @@ SoftI2CCallback(void)
         //
         // The state for the start of a burst read.
         //
-        case STATE_READ_FIRST:
-        {
+        case STATE_READ_FIRST: {
             //
             // Put the SoftI2C module into receive mode.
             //
@@ -372,8 +362,7 @@ SoftI2CCallback(void)
         //
         // The state for the middle of a burst read.
         //
-        case STATE_READ_NEXT:
-        {
+        case STATE_READ_NEXT: {
             //
             // Read the received character.
             //
@@ -389,8 +378,7 @@ SoftI2CCallback(void)
             // If there are two characters left to be read, make the next
             // state be the end of burst read state.
             //
-            if(g_ui32Count == 2)
-            {
+            if(g_ui32Count == 2) {
                 g_ui32State = STATE_READ_FINAL;
             }
 
@@ -403,8 +391,7 @@ SoftI2CCallback(void)
         //
         // The state for the end of a burst read.
         //
-        case STATE_READ_FINAL:
-        {
+        case STATE_READ_FINAL: {
             //
             // Read the received character.
             //
@@ -430,8 +417,7 @@ SoftI2CCallback(void)
         //
         // This state is for the final read of a single or burst read.
         //
-        case STATE_READ_WAIT:
-        {
+        case STATE_READ_WAIT: {
             //
             // Read the received character.
             //
@@ -469,12 +455,9 @@ AtmelWrite(uint8_t *pui8Data, uint32_t ui32Offset, uint32_t ui32Count)
     // Set the next state of the callback state machine based on the number of
     // bytes to write.
     //
-    if(ui32Count != 1)
-    {
+    if(ui32Count != 1) {
         g_ui32State = STATE_WRITE_NEXT;
-    }
-    else
-    {
+    } else {
         g_ui32State = STATE_WRITE_FINAL;
     }
 
@@ -496,8 +479,7 @@ AtmelWrite(uint8_t *pui8Data, uint32_t ui32Offset, uint32_t ui32Count)
     //
     // Wait until the SoftI2C callback state machine is idle.
     //
-    while(g_ui32State != STATE_IDLE)
-    {
+    while(g_ui32State != STATE_IDLE) {
     }
 }
 
@@ -519,12 +501,9 @@ AtmelRead(uint8_t *pui8Data, uint32_t ui32Offset, uint32_t ui32Count)
     // Set the next state of the callback state machine based on the number of
     // bytes to read.
     //
-    if(ui32Count == 1)
-    {
+    if(ui32Count == 1) {
         g_ui32State = STATE_READ_ONE;
-    }
-    else
-    {
+    } else {
         g_ui32State = STATE_READ_FIRST;
     }
 
@@ -546,8 +525,7 @@ AtmelRead(uint8_t *pui8Data, uint32_t ui32Offset, uint32_t ui32Count)
     //
     // Wait until the SoftI2C callback state machine is idle.
     //
-    while(g_ui32State != STATE_IDLE)
-    {
+    while(g_ui32State != STATE_IDLE) {
     }
 }
 
@@ -679,8 +657,7 @@ main(void)
     // device.
     //
     UARTprintf("Write:");
-    for(ui32Idx = 0; ui32Idx < 16; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < 16; ui32Idx++) {
         pui8Data[ui32Idx] = ui32Idx;
         UARTprintf(" %02x", pui8Data[ui32Idx]);
     }
@@ -692,8 +669,7 @@ main(void)
     //
     AtmelRead(pui8Data, 0, 16);
     UARTprintf("Read :");
-    for(ui32Idx = 0; ui32Idx < 16; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < 16; ui32Idx++) {
         UARTprintf(" %02x", pui8Data[ui32Idx]);
     }
     UARTprintf("\n");

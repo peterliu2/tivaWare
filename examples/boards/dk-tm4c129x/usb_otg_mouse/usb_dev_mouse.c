@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -180,13 +180,11 @@ uint32_t
 MouseHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
              void *pvMsgData)
 {
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // The USB host has connected to and configured the device.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             UARTprintf("Host connected.\n");
             g_iMouseState = eMouseStateIdle;
             g_bConnected = true;
@@ -196,8 +194,7 @@ MouseHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // The USB host has disconnected from the device.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             UARTprintf("Host disconnected.\n");
             g_bConnected = false;
             g_iMouseState = eMouseStateUnconfigured;
@@ -207,8 +204,7 @@ MouseHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // A report was sent to the host. We are now free to send another.
         //
-        case USB_EVENT_TX_COMPLETE:
-        {
+        case USB_EVENT_TX_COMPLETE: {
             g_iMouseState = eMouseStateIdle;
             break;
         }
@@ -240,14 +236,12 @@ WaitForSendIdle(uint32_t ui32TimeoutTicks)
     ui32Start = g_ui32SysTickCount;
     ui32Elapsed = 0;
 
-    while(ui32Elapsed < ui32TimeoutTicks)
-    {
+    while(ui32Elapsed < ui32TimeoutTicks) {
         //
         // Is the mouse is idle or we have disconnected, return immediately.
         //
         if((g_iMouseState == eMouseStateIdle) ||
-           (g_iMouseState == eMouseStateUnconfigured))
-        {
+                (g_iMouseState == eMouseStateUnconfigured)) {
             return(true);
         }
 
@@ -259,7 +253,7 @@ WaitForSendIdle(uint32_t ui32TimeoutTicks)
         //
         ui32Now = g_ui32SysTickCount;
         ui32Elapsed = (ui32Start < ui32Now) ? (ui32Now - ui32Start) :
-                           (((uint32_t)0xFFFFFFFF - ui32Start) + ui32Now + 1);
+                      (((uint32_t)0xFFFFFFFF - ui32Start) + ui32Now + 1);
     }
 
     //
@@ -311,15 +305,14 @@ TouchEventHandler(void)
     // Get the current state of the select button.
     //
     bBtnPressed = (ROM_GPIOPinRead(SEL_BTN_PORT, SEL_BTN_PIN) & SEL_BTN_PIN) ?
-                   false : true;
+                  false : true;
 
     //
     // Is someone pressing the screen or has the button changed state?  If so,
     // we determine how far they have dragged their finger/stylus and use this
     // to calculate mouse position changes to send to the host.
     //
-    if(g_bScreenPressed || (bBtnPressed != g_bButtonPressed))
-    {
+    if(g_bScreenPressed || (bBtnPressed != g_bButtonPressed)) {
         //
         // Calculate how far we moved since the last time we checked.  This
         // rather odd layout prevents a compiler warning about undefined order
@@ -339,8 +332,7 @@ TouchEventHandler(void)
         //
         // Was there any movement or change in button state?
         //
-        if(i32DeltaX || i32DeltaY || (bBtnPressed != g_bButtonPressed))
-        {
+        if(i32DeltaX || i32DeltaY || (bBtnPressed != g_bButtonPressed)) {
             //
             // Yes - send a report back to the host after clipping the deltas
             // to the maximum we can support.
@@ -360,15 +352,14 @@ TouchEventHandler(void)
             //
             g_iMouseState = eMouseStateSend;
             ui32Retcode = USBDHIDMouseStateChange((void *)&g_sMouseDevice,
-                                                (char)i32DeltaX, (char)i32DeltaY,
-                                                (bBtnPressed ?
-                                                 MOUSE_REPORT_BUTTON_1 : 0));
+                                                  (char)i32DeltaX, (char)i32DeltaY,
+                                                  (bBtnPressed ?
+                                                   MOUSE_REPORT_BUTTON_1 : 0));
 
             //
             // Did we schedule the report for transmission?
             //
-            if(ui32Retcode == MOUSE_SUCCESS)
-            {
+            if(ui32Retcode == MOUSE_SUCCESS) {
                 //
                 // Wait for the host to acknowledge the transmission if all went
                 // well.
@@ -378,8 +369,7 @@ TouchEventHandler(void)
                 //
                 // Did we time out waiting for the packet to be sent?
                 //
-                if (!bSuccess)
-                {
+                if (!bSuccess) {
                     //
                     // Yes - assume the host disconnected and go back to
                     // waiting for a new connection.
@@ -387,9 +377,7 @@ TouchEventHandler(void)
                     UARTprintf("Send timed out!\n");
                     g_bConnected = 0;
                 }
-            }
-            else
-            {
+            } else {
                 //
                 // An error was reported when trying to send the report. This
                 // may be due to host disconnection but could also be due to a
@@ -416,8 +404,7 @@ TouchEventHandler(void)
 int32_t
 DeviceMouseTouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
 {
-    switch(ui32Message)
-    {
+    switch(ui32Message) {
         //
         // The touchscreen has been pressed.  Remember where we are so that
         // we can determine how far the pointer moves later.
@@ -490,16 +477,14 @@ DeviceMain(void)
 {
     bool bRetcode;
 
-    if(g_iMouseState == eMouseStateUnconfigured)
-    {
+    if(g_iMouseState == eMouseStateUnconfigured) {
         return;
     }
 
     //
     // If it is time to check the touchscreen state then do so.
     //
-    if(g_ui32Commands & UPDATE_TICK_EVENT)
-    {
+    if(g_ui32Commands & UPDATE_TICK_EVENT) {
         g_ui32Commands &= ~UPDATE_TICK_EVENT;
         TouchEventHandler();
 
@@ -513,8 +498,7 @@ DeviceMain(void)
         // If we timed out, assume the host disconnected and start looking
         // for a new connection.
         //
-        if(!bRetcode)
-        {
+        if(!bRetcode) {
             g_iMouseState = eMouseStateUnconfigured;
         }
     }
@@ -534,12 +518,9 @@ GetTickms(void)
     ui32RetVal = g_ui32SysTickCount;
     ui32Saved = ui32RetVal;
 
-    if(ui32Saved > g_ui32LastTick)
-    {
+    if(ui32Saved > g_ui32LastTick) {
         ui32RetVal = ui32Saved - g_ui32LastTick;
-    }
-    else
-    {
+    } else {
         ui32RetVal = g_ui32LastTick - ui32Saved;
     }
 

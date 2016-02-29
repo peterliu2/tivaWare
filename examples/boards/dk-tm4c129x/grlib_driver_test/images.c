@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -30,8 +30,7 @@
 // The image of the TI logo.
 //
 //*****************************************************************************
-const unsigned char g_pucLogo[] =
-{
+const unsigned char g_pucLogo[] = {
     IMAGE_FMT_4BPP_COMP,
     80, 0,
     75, 0,
@@ -155,8 +154,7 @@ const unsigned char g_pucLogo[] =
     0x07, 0x07, 0x07, 0xf0, 0x07, 0x07, 0x07, 0x07,
 };
 
-const unsigned char g_pucTest32x32x1Comp[] =
-{
+const unsigned char g_pucTest32x32x1Comp[] = {
     IMAGE_FMT_1BPP_COMP,
     32, 0,
     32, 0,
@@ -174,8 +172,7 @@ const unsigned char g_pucTest32x32x1Comp[] =
     0xfc, 0x00, 0x00, 0x00, 0x00,
 };
 
-const unsigned char g_pucTest32x32x1Raw[] =
-{
+const unsigned char g_pucTest32x32x1Raw[] = {
     IMAGE_FMT_1BPP_UNCOMP,
     32, 0,
     32, 0,
@@ -193,8 +190,7 @@ const unsigned char g_pucTest32x32x1Raw[] =
     0x3f, 0xff, 0xff, 0xfc, 0x00, 0x00, 0x00, 0x00,
 };
 
-const unsigned char g_pucTest32x32x4Comp[] =
-{
+const unsigned char g_pucTest32x32x4Comp[] = {
     IMAGE_FMT_4BPP_COMP,
     32, 0,
     32, 0,
@@ -222,8 +218,7 @@ const unsigned char g_pucTest32x32x4Comp[] =
     0x00, 0x00, 0x00, 0xe9, 0xd4, 0xa3,
 };
 
-const unsigned char g_pucTest32x32x4Raw[] =
-{
+const unsigned char g_pucTest32x32x4Raw[] = {
     IMAGE_FMT_4BPP_UNCOMP,
     32, 0,
     32, 0,
@@ -269,8 +264,7 @@ const unsigned char g_pucTest32x32x4Raw[] =
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-const unsigned char g_pucTest32x32x8Comp[] =
-{
+const unsigned char g_pucTest32x32x8Comp[] = {
     IMAGE_FMT_8BPP_COMP,
     32, 0,
     32, 0,
@@ -390,8 +384,7 @@ const unsigned char g_pucTest32x32x8Comp[] =
     0x19,
 };
 
-const unsigned char g_pucTest32x32x8Raw[] =
-{
+const unsigned char g_pucTest32x32x8Raw[] = {
     IMAGE_FMT_8BPP_UNCOMP,
     32, 0,
     32, 0,

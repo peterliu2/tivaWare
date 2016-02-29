@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2005-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -58,7 +58,7 @@
 #define PWM_O_ENUPD             0x00000028  // PWM Enable Update
 #define PWM_O_0_CTL             0x00000040  // PWM0 Control
 #define PWM_O_0_INTEN           0x00000044  // PWM0 Interrupt and Trigger
-                                            // Enable
+// Enable
 #define PWM_O_0_RIS             0x00000048  // PWM0 Raw Interrupt Status
 #define PWM_O_0_ISC             0x0000004C  // PWM0 Interrupt Status and Clear
 #define PWM_O_0_LOAD            0x00000050  // PWM0 Load
@@ -70,13 +70,13 @@
 #define PWM_O_0_DBCTL           0x00000068  // PWM0 Dead-Band Control
 #define PWM_O_0_DBRISE          0x0000006C  // PWM0 Dead-Band Rising-Edge Delay
 #define PWM_O_0_DBFALL          0x00000070  // PWM0 Dead-Band
-                                            // Falling-Edge-Delay
+// Falling-Edge-Delay
 #define PWM_O_0_FLTSRC0         0x00000074  // PWM0 Fault Source 0
 #define PWM_O_0_FLTSRC1         0x00000078  // PWM0 Fault Source 1
 #define PWM_O_0_MINFLTPER       0x0000007C  // PWM0 Minimum Fault Period
 #define PWM_O_1_CTL             0x00000080  // PWM1 Control
 #define PWM_O_1_INTEN           0x00000084  // PWM1 Interrupt and Trigger
-                                            // Enable
+// Enable
 #define PWM_O_1_RIS             0x00000088  // PWM1 Raw Interrupt Status
 #define PWM_O_1_ISC             0x0000008C  // PWM1 Interrupt Status and Clear
 #define PWM_O_1_LOAD            0x00000090  // PWM1 Load
@@ -88,13 +88,13 @@
 #define PWM_O_1_DBCTL           0x000000A8  // PWM1 Dead-Band Control
 #define PWM_O_1_DBRISE          0x000000AC  // PWM1 Dead-Band Rising-Edge Delay
 #define PWM_O_1_DBFALL          0x000000B0  // PWM1 Dead-Band
-                                            // Falling-Edge-Delay
+// Falling-Edge-Delay
 #define PWM_O_1_FLTSRC0         0x000000B4  // PWM1 Fault Source 0
 #define PWM_O_1_FLTSRC1         0x000000B8  // PWM1 Fault Source 1
 #define PWM_O_1_MINFLTPER       0x000000BC  // PWM1 Minimum Fault Period
 #define PWM_O_2_CTL             0x000000C0  // PWM2 Control
 #define PWM_O_2_INTEN           0x000000C4  // PWM2 Interrupt and Trigger
-                                            // Enable
+// Enable
 #define PWM_O_2_RIS             0x000000C8  // PWM2 Raw Interrupt Status
 #define PWM_O_2_ISC             0x000000CC  // PWM2 Interrupt Status and Clear
 #define PWM_O_2_LOAD            0x000000D0  // PWM2 Load
@@ -106,13 +106,13 @@
 #define PWM_O_2_DBCTL           0x000000E8  // PWM2 Dead-Band Control
 #define PWM_O_2_DBRISE          0x000000EC  // PWM2 Dead-Band Rising-Edge Delay
 #define PWM_O_2_DBFALL          0x000000F0  // PWM2 Dead-Band
-                                            // Falling-Edge-Delay
+// Falling-Edge-Delay
 #define PWM_O_2_FLTSRC0         0x000000F4  // PWM2 Fault Source 0
 #define PWM_O_2_FLTSRC1         0x000000F8  // PWM2 Fault Source 1
 #define PWM_O_2_MINFLTPER       0x000000FC  // PWM2 Minimum Fault Period
 #define PWM_O_3_CTL             0x00000100  // PWM3 Control
 #define PWM_O_3_INTEN           0x00000104  // PWM3 Interrupt and Trigger
-                                            // Enable
+// Enable
 #define PWM_O_3_RIS             0x00000108  // PWM3 Raw Interrupt Status
 #define PWM_O_3_ISC             0x0000010C  // PWM3 Interrupt Status and Clear
 #define PWM_O_3_LOAD            0x00000110  // PWM3 Load
@@ -124,7 +124,7 @@
 #define PWM_O_3_DBCTL           0x00000128  // PWM3 Dead-Band Control
 #define PWM_O_3_DBRISE          0x0000012C  // PWM3 Dead-Band Rising-Edge Delay
 #define PWM_O_3_DBFALL          0x00000130  // PWM3 Dead-Band
-                                            // Falling-Edge-Delay
+// Falling-Edge-Delay
 #define PWM_O_3_FLTSRC0         0x00000134  // PWM3 Fault Source 0
 #define PWM_O_3_FLTSRC1         0x00000138  // PWM3 Fault Source 1
 #define PWM_O_3_MINFLTPER       0x0000013C  // PWM3 Minimum Fault Period
@@ -350,21 +350,21 @@
 //
 //*****************************************************************************
 #define PWM_0_INTEN_TRCMPBD     0x00002000  // Trigger for Counter=PWMnCMPB
-                                            // Down
+// Down
 #define PWM_0_INTEN_TRCMPBU     0x00001000  // Trigger for Counter=PWMnCMPB Up
 #define PWM_0_INTEN_TRCMPAD     0x00000800  // Trigger for Counter=PWMnCMPA
-                                            // Down
+// Down
 #define PWM_0_INTEN_TRCMPAU     0x00000400  // Trigger for Counter=PWMnCMPA Up
 #define PWM_0_INTEN_TRCNTLOAD   0x00000200  // Trigger for Counter=PWMnLOAD
 #define PWM_0_INTEN_TRCNTZERO   0x00000100  // Trigger for Counter=0
 #define PWM_0_INTEN_INTCMPBD    0x00000020  // Interrupt for Counter=PWMnCMPB
-                                            // Down
+// Down
 #define PWM_0_INTEN_INTCMPBU    0x00000010  // Interrupt for Counter=PWMnCMPB
-                                            // Up
+// Up
 #define PWM_0_INTEN_INTCMPAD    0x00000008  // Interrupt for Counter=PWMnCMPA
-                                            // Down
+// Down
 #define PWM_0_INTEN_INTCMPAU    0x00000004  // Interrupt for Counter=PWMnCMPA
-                                            // Up
+// Up
 #define PWM_0_INTEN_INTCNTLOAD  0x00000002  // Interrupt for Counter=PWMnLOAD
 #define PWM_0_INTEN_INTCNTZERO  0x00000001  // Interrupt for Counter=0
 
@@ -374,10 +374,10 @@
 //
 //*****************************************************************************
 #define PWM_0_RIS_INTCMPBD      0x00000020  // Comparator B Down Interrupt
-                                            // Status
+// Status
 #define PWM_0_RIS_INTCMPBU      0x00000010  // Comparator B Up Interrupt Status
 #define PWM_0_RIS_INTCMPAD      0x00000008  // Comparator A Down Interrupt
-                                            // Status
+// Status
 #define PWM_0_RIS_INTCMPAU      0x00000004  // Comparator A Up Interrupt Status
 #define PWM_0_RIS_INTCNTLOAD    0x00000002  // Counter=Load Interrupt Status
 #define PWM_0_RIS_INTCNTZERO    0x00000001  // Counter=0 Interrupt Status
@@ -613,21 +613,21 @@
 //
 //*****************************************************************************
 #define PWM_1_INTEN_TRCMPBD     0x00002000  // Trigger for Counter=PWMnCMPB
-                                            // Down
+// Down
 #define PWM_1_INTEN_TRCMPBU     0x00001000  // Trigger for Counter=PWMnCMPB Up
 #define PWM_1_INTEN_TRCMPAD     0x00000800  // Trigger for Counter=PWMnCMPA
-                                            // Down
+// Down
 #define PWM_1_INTEN_TRCMPAU     0x00000400  // Trigger for Counter=PWMnCMPA Up
 #define PWM_1_INTEN_TRCNTLOAD   0x00000200  // Trigger for Counter=PWMnLOAD
 #define PWM_1_INTEN_TRCNTZERO   0x00000100  // Trigger for Counter=0
 #define PWM_1_INTEN_INTCMPBD    0x00000020  // Interrupt for Counter=PWMnCMPB
-                                            // Down
+// Down
 #define PWM_1_INTEN_INTCMPBU    0x00000010  // Interrupt for Counter=PWMnCMPB
-                                            // Up
+// Up
 #define PWM_1_INTEN_INTCMPAD    0x00000008  // Interrupt for Counter=PWMnCMPA
-                                            // Down
+// Down
 #define PWM_1_INTEN_INTCMPAU    0x00000004  // Interrupt for Counter=PWMnCMPA
-                                            // Up
+// Up
 #define PWM_1_INTEN_INTCNTLOAD  0x00000002  // Interrupt for Counter=PWMnLOAD
 #define PWM_1_INTEN_INTCNTZERO  0x00000001  // Interrupt for Counter=0
 
@@ -637,10 +637,10 @@
 //
 //*****************************************************************************
 #define PWM_1_RIS_INTCMPBD      0x00000020  // Comparator B Down Interrupt
-                                            // Status
+// Status
 #define PWM_1_RIS_INTCMPBU      0x00000010  // Comparator B Up Interrupt Status
 #define PWM_1_RIS_INTCMPAD      0x00000008  // Comparator A Down Interrupt
-                                            // Status
+// Status
 #define PWM_1_RIS_INTCMPAU      0x00000004  // Comparator A Up Interrupt Status
 #define PWM_1_RIS_INTCNTLOAD    0x00000002  // Counter=Load Interrupt Status
 #define PWM_1_RIS_INTCNTZERO    0x00000001  // Counter=0 Interrupt Status
@@ -880,21 +880,21 @@
 //
 //*****************************************************************************
 #define PWM_2_INTEN_TRCMPBD     0x00002000  // Trigger for Counter=PWMnCMPB
-                                            // Down
+// Down
 #define PWM_2_INTEN_TRCMPBU     0x00001000  // Trigger for Counter=PWMnCMPB Up
 #define PWM_2_INTEN_TRCMPAD     0x00000800  // Trigger for Counter=PWMnCMPA
-                                            // Down
+// Down
 #define PWM_2_INTEN_TRCMPAU     0x00000400  // Trigger for Counter=PWMnCMPA Up
 #define PWM_2_INTEN_TRCNTLOAD   0x00000200  // Trigger for Counter=PWMnLOAD
 #define PWM_2_INTEN_TRCNTZERO   0x00000100  // Trigger for Counter=0
 #define PWM_2_INTEN_INTCMPBD    0x00000020  // Interrupt for Counter=PWMnCMPB
-                                            // Down
+// Down
 #define PWM_2_INTEN_INTCMPBU    0x00000010  // Interrupt for Counter=PWMnCMPB
-                                            // Up
+// Up
 #define PWM_2_INTEN_INTCMPAD    0x00000008  // Interrupt for Counter=PWMnCMPA
-                                            // Down
+// Down
 #define PWM_2_INTEN_INTCMPAU    0x00000004  // Interrupt for Counter=PWMnCMPA
-                                            // Up
+// Up
 #define PWM_2_INTEN_INTCNTLOAD  0x00000002  // Interrupt for Counter=PWMnLOAD
 #define PWM_2_INTEN_INTCNTZERO  0x00000001  // Interrupt for Counter=0
 
@@ -904,10 +904,10 @@
 //
 //*****************************************************************************
 #define PWM_2_RIS_INTCMPBD      0x00000020  // Comparator B Down Interrupt
-                                            // Status
+// Status
 #define PWM_2_RIS_INTCMPBU      0x00000010  // Comparator B Up Interrupt Status
 #define PWM_2_RIS_INTCMPAD      0x00000008  // Comparator A Down Interrupt
-                                            // Status
+// Status
 #define PWM_2_RIS_INTCMPAU      0x00000004  // Comparator A Up Interrupt Status
 #define PWM_2_RIS_INTCNTLOAD    0x00000002  // Counter=Load Interrupt Status
 #define PWM_2_RIS_INTCNTZERO    0x00000001  // Counter=0 Interrupt Status
@@ -1147,21 +1147,21 @@
 //
 //*****************************************************************************
 #define PWM_3_INTEN_TRCMPBD     0x00002000  // Trigger for Counter=PWMnCMPB
-                                            // Down
+// Down
 #define PWM_3_INTEN_TRCMPBU     0x00001000  // Trigger for Counter=PWMnCMPB Up
 #define PWM_3_INTEN_TRCMPAD     0x00000800  // Trigger for Counter=PWMnCMPA
-                                            // Down
+// Down
 #define PWM_3_INTEN_TRCMPAU     0x00000400  // Trigger for Counter=PWMnCMPA Up
 #define PWM_3_INTEN_TRCNTLOAD   0x00000200  // Trigger for Counter=PWMnLOAD
 #define PWM_3_INTEN_TRCNTZERO   0x00000100  // Trigger for Counter=0
 #define PWM_3_INTEN_INTCMPBD    0x00000020  // Interrupt for Counter=PWMnCMPB
-                                            // Down
+// Down
 #define PWM_3_INTEN_INTCMPBU    0x00000010  // Interrupt for Counter=PWMnCMPB
-                                            // Up
+// Up
 #define PWM_3_INTEN_INTCMPAD    0x00000008  // Interrupt for Counter=PWMnCMPA
-                                            // Down
+// Down
 #define PWM_3_INTEN_INTCMPAU    0x00000004  // Interrupt for Counter=PWMnCMPA
-                                            // Up
+// Up
 #define PWM_3_INTEN_INTCNTLOAD  0x00000002  // Interrupt for Counter=PWMnLOAD
 #define PWM_3_INTEN_INTCNTZERO  0x00000001  // Interrupt for Counter=0
 
@@ -1171,10 +1171,10 @@
 //
 //*****************************************************************************
 #define PWM_3_RIS_INTCMPBD      0x00000020  // Comparator B Down Interrupt
-                                            // Status
+// Status
 #define PWM_3_RIS_INTCMPBU      0x00000010  // Comparator B Up Interrupt Status
 #define PWM_3_RIS_INTCMPAD      0x00000008  // Comparator A Down Interrupt
-                                            // Status
+// Status
 #define PWM_3_RIS_INTCMPAU      0x00000004  // Comparator A Up Interrupt Status
 #define PWM_3_RIS_INTCNTLOAD    0x00000002  // Counter=Load Interrupt Status
 #define PWM_3_RIS_INTCNTZERO    0x00000001  // Counter=0 Interrupt Status
@@ -1611,21 +1611,21 @@
 //
 //*****************************************************************************
 #define PWM_X_INTEN_TRCMPBD     0x00002000  // Trigger for Counter=PWMnCMPB
-                                            // Down
+// Down
 #define PWM_X_INTEN_TRCMPBU     0x00001000  // Trigger for Counter=PWMnCMPB Up
 #define PWM_X_INTEN_TRCMPAD     0x00000800  // Trigger for Counter=PWMnCMPA
-                                            // Down
+// Down
 #define PWM_X_INTEN_TRCMPAU     0x00000400  // Trigger for Counter=PWMnCMPA Up
 #define PWM_X_INTEN_TRCNTLOAD   0x00000200  // Trigger for Counter=PWMnLOAD
 #define PWM_X_INTEN_TRCNTZERO   0x00000100  // Trigger for Counter=0
 #define PWM_X_INTEN_INTCMPBD    0x00000020  // Interrupt for Counter=PWMnCMPB
-                                            // Down
+// Down
 #define PWM_X_INTEN_INTCMPBU    0x00000010  // Interrupt for Counter=PWMnCMPB
-                                            // Up
+// Up
 #define PWM_X_INTEN_INTCMPAD    0x00000008  // Interrupt for Counter=PWMnCMPA
-                                            // Down
+// Down
 #define PWM_X_INTEN_INTCMPAU    0x00000004  // Interrupt for Counter=PWMnCMPA
-                                            // Up
+// Up
 #define PWM_X_INTEN_INTCNTLOAD  0x00000002  // Interrupt for Counter=PWMnLOAD
 #define PWM_X_INTEN_INTCNTZERO  0x00000001  // Interrupt for Counter=0
 
@@ -1635,10 +1635,10 @@
 //
 //*****************************************************************************
 #define PWM_X_RIS_INTCMPBD      0x00000020  // Comparator B Down Interrupt
-                                            // Status
+// Status
 #define PWM_X_RIS_INTCMPBU      0x00000010  // Comparator B Up Interrupt Status
 #define PWM_X_RIS_INTCMPAD      0x00000008  // Comparator A Down Interrupt
-                                            // Status
+// Status
 #define PWM_X_RIS_INTCMPAU      0x00000004  // Comparator A Up Interrupt Status
 #define PWM_X_RIS_INTCNTLOAD    0x00000002  // Counter=Load Interrupt Status
 #define PWM_X_RIS_INTCNTZERO    0x00000001  // Counter=0 Interrupt Status

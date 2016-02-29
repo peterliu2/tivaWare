@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2006-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Utility Library.
 //
 //*****************************************************************************
@@ -39,8 +39,7 @@
 // in 0.16 fixed point notation.
 //
 //*****************************************************************************
-static const uint16_t g_pui16FixedSineTable[] =
-{
+static const uint16_t g_pui16FixedSineTable[] = {
     0x0000, 0x0324, 0x0648, 0x096C, 0x0C8F, 0x0FB2, 0x12D5, 0x15F6, 0x1917,
     0x1C37, 0x1F56, 0x2273, 0x2590, 0x28AA, 0x2BC4, 0x2EDB, 0x31F1, 0x3505,
     0x3817, 0x3B26, 0x3E33, 0x413E, 0x4447, 0x474D, 0x4A50, 0x4D50, 0x504D,
@@ -94,8 +93,7 @@ sine(uint32_t ui32Angle)
     // these cases, the sine value is decreasing from one instead of increasing
     // from zero.  The indexing into the table needs to be reversed.
     //
-    if(ui32Angle & 0x40000000)
-    {
+    if(ui32Angle & 0x40000000) {
         ui32Idx = 256 - ui32Idx;
     }
 
@@ -108,12 +106,9 @@ sine(uint32_t ui32Angle)
     // If bit 31 is set, the angle is between 180 and 360.  In this case, the
     // sine value is negative; otherwise it is positive.
     //
-    if(ui32Angle & 0x80000000)
-    {
+    if(ui32Angle & 0x80000000) {
         return(0 - ui32Idx);
-    }
-    else
-    {
+    } else {
         return(ui32Idx);
     }
 }

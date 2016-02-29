@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C123GXL Firmware Package.
 //
 //*****************************************************************************
@@ -92,7 +92,8 @@ static volatile uint32_t ui32HibModeEntryCount;
 //
 //*****************************************************************************
 static float fManualColors[7] = {0.0f, .214f, .428f, .642f, .856f, 1.07f,
-                                 1.284f};
+                                 1.284f
+                                };
 
 //*****************************************************************************
 //
@@ -142,126 +143,109 @@ AppButtonHandler(void)
     //
     // Switch statement to adjust the color wheel position based on buttons
     //
-    switch(g_sAppState.ui32Buttons & ALL_BUTTONS)
-    {
+    switch(g_sAppState.ui32Buttons & ALL_BUTTONS) {
 
-    case LEFT_BUTTON:
+        case LEFT_BUTTON:
 
-        //
-        // Check if the button has been held int32_t enough to peform another
-        // color wheel increment.
-        //
-        if((ui32TickCounter % APP_BUTTON_POLL_DIVIDER) == 0)
-        {
             //
-            // Perform the increment and index wrap around.
+            // Check if the button has been held int32_t enough to peform another
+            // color wheel increment.
             //
-            g_sAppState.ui32ManualIndex++;
-            if(g_sAppState.ui32ManualIndex >= APP_NUM_MANUAL_COLORS)
-            {
-                g_sAppState.ui32ManualIndex = 0;
-            }
-            g_sAppState.fColorWheelPos = APP_PI *
-                                      fManualColors[g_sAppState.ui32ManualIndex];
-        }
-
-        //
-        // Reset some state counts and system mode so that we know the user
-        // is present and actively engaging with the application.
-        //
-        ui32HibModeEntryCount = 0;
-        g_sAppState.ui32ModeTimer = 0;
-        g_sAppState.ui32Mode = APP_MODE_NORMAL;
-        break;
-
-    case RIGHT_BUTTON:
-
-        //
-        // Check if the button has been held int32_t enough to perform another
-        // color wheel decrement.
-        //
-        if((ui32TickCounter % APP_BUTTON_POLL_DIVIDER) == 0)
-        {
-            //
-            // Perform the decrement and index wrap around.
-            //
-            if(g_sAppState.ui32ManualIndex == 0)
-            {
+            if((ui32TickCounter % APP_BUTTON_POLL_DIVIDER) == 0) {
                 //
-                // set to one greater than the last color so that we decrement
-                // back into range with next instruction.
+                // Perform the increment and index wrap around.
                 //
-                g_sAppState.ui32ManualIndex = APP_NUM_MANUAL_COLORS;
+                g_sAppState.ui32ManualIndex++;
+                if(g_sAppState.ui32ManualIndex >= APP_NUM_MANUAL_COLORS) {
+                    g_sAppState.ui32ManualIndex = 0;
+                }
+                g_sAppState.fColorWheelPos = APP_PI *
+                                             fManualColors[g_sAppState.ui32ManualIndex];
             }
-            g_sAppState.ui32ManualIndex--;
-            g_sAppState.fColorWheelPos = APP_PI *
-                                      fManualColors[g_sAppState.ui32ManualIndex];
-        }
-        //
-        // Reset some state counts and system mode so that we know the user
-        // is present and actively engaging with the application.
-        //
-        ui32HibModeEntryCount = 0;
-        g_sAppState.ui32ModeTimer = 0;
-        g_sAppState.ui32Mode = APP_MODE_NORMAL;
-        break;
 
-    case ALL_BUTTONS:
-
-        //
-        // Both buttons for longer than debounce time will cause hibernation
-        //
-        if(ui32HibModeEntryCount < APP_HIB_BUTTON_DEBOUNCE)
-        {
-            ui32HibModeEntryCount++;
-            g_sAppState.ui32Mode = APP_MODE_NORMAL;
-        }
-        else
-        {
-            g_sAppState.ui32Mode = APP_MODE_HIB;
-        }
-        g_sAppState.ui32ModeTimer = 0;
-        break;
-
-    default:
-        if(g_sAppState.ui32Mode == APP_MODE_HIB_FLASH)
-        {
             //
-            // Waking from hibernate RTC just do a quick flash then back to
-            // hibernation.
-            //
-            if(ui32HibModeEntryCount < APP_HIB_FLASH_DURATION)
-            {
-                ui32HibModeEntryCount++;
-            }
-            else
-            {
-                g_sAppState.ui32Mode = APP_MODE_HIB;
-            }
-        }
-        else
-        {
-            //
-            // Normal or remote mode and no user action will cause transition
-            // to automatic scrolling mode.
+            // Reset some state counts and system mode so that we know the user
+            // is present and actively engaging with the application.
             //
             ui32HibModeEntryCount = 0;
-            if(g_sAppState.ui32ModeTimer < APP_AUTO_MODE_TIMEOUT)
-            {
-                g_sAppState.ui32ModeTimer++;
-            }
-            else
-            {
-                g_sAppState.ui32Mode = APP_MODE_AUTO;
-            }
+            g_sAppState.ui32ModeTimer = 0;
+            g_sAppState.ui32Mode = APP_MODE_NORMAL;
+            break;
+
+        case RIGHT_BUTTON:
 
             //
-            // reset the tick counter when no buttons are pressed
-            // this makes the first button reaction speed quicker
+            // Check if the button has been held int32_t enough to perform another
+            // color wheel decrement.
             //
-            ui32TickCounter = APP_BUTTON_POLL_DIVIDER - 1;
-        }
-        break;
+            if((ui32TickCounter % APP_BUTTON_POLL_DIVIDER) == 0) {
+                //
+                // Perform the decrement and index wrap around.
+                //
+                if(g_sAppState.ui32ManualIndex == 0) {
+                    //
+                    // set to one greater than the last color so that we decrement
+                    // back into range with next instruction.
+                    //
+                    g_sAppState.ui32ManualIndex = APP_NUM_MANUAL_COLORS;
+                }
+                g_sAppState.ui32ManualIndex--;
+                g_sAppState.fColorWheelPos = APP_PI *
+                                             fManualColors[g_sAppState.ui32ManualIndex];
+            }
+            //
+            // Reset some state counts and system mode so that we know the user
+            // is present and actively engaging with the application.
+            //
+            ui32HibModeEntryCount = 0;
+            g_sAppState.ui32ModeTimer = 0;
+            g_sAppState.ui32Mode = APP_MODE_NORMAL;
+            break;
+
+        case ALL_BUTTONS:
+
+            //
+            // Both buttons for longer than debounce time will cause hibernation
+            //
+            if(ui32HibModeEntryCount < APP_HIB_BUTTON_DEBOUNCE) {
+                ui32HibModeEntryCount++;
+                g_sAppState.ui32Mode = APP_MODE_NORMAL;
+            } else {
+                g_sAppState.ui32Mode = APP_MODE_HIB;
+            }
+            g_sAppState.ui32ModeTimer = 0;
+            break;
+
+        default:
+            if(g_sAppState.ui32Mode == APP_MODE_HIB_FLASH) {
+                //
+                // Waking from hibernate RTC just do a quick flash then back to
+                // hibernation.
+                //
+                if(ui32HibModeEntryCount < APP_HIB_FLASH_DURATION) {
+                    ui32HibModeEntryCount++;
+                } else {
+                    g_sAppState.ui32Mode = APP_MODE_HIB;
+                }
+            } else {
+                //
+                // Normal or remote mode and no user action will cause transition
+                // to automatic scrolling mode.
+                //
+                ui32HibModeEntryCount = 0;
+                if(g_sAppState.ui32ModeTimer < APP_AUTO_MODE_TIMEOUT) {
+                    g_sAppState.ui32ModeTimer++;
+                } else {
+                    g_sAppState.ui32Mode = APP_MODE_AUTO;
+                }
+
+                //
+                // reset the tick counter when no buttons are pressed
+                // this makes the first button reaction speed quicker
+                //
+                ui32TickCounter = APP_BUTTON_POLL_DIVIDER - 1;
+            }
+            break;
     }
 }
 
@@ -290,8 +274,7 @@ AppRainbow(uint32_t ui32ForceUpdate)
     fCurPos = g_sAppState.fColorWheelPos;
 
 
-    if((fCurPos != fPrevPos) || ui32ForceUpdate)
-    {
+    if((fCurPos != fPrevPos) || ui32ForceUpdate) {
         //
         // Preserve the new color wheel position
         //
@@ -301,12 +284,9 @@ AppRainbow(uint32_t ui32ForceUpdate)
         // Adjust the BLUE value based on the control state
         //
         fTemp = 65535.0f * sinf(fCurPos);
-        if(fTemp < 0)
-        {
+        if(fTemp < 0) {
             pui32Colors[GREEN] = 0;
-        }
-        else
-        {
+        } else {
             pui32Colors[GREEN] = (uint32_t) fTemp;
         }
 
@@ -315,12 +295,9 @@ AppRainbow(uint32_t ui32ForceUpdate)
         // Adjust the RED value based on the control state
         //
         fTemp = 65535.0f * sinf(fCurPos - APP_PI / 2.0f);
-        if(fTemp < 0)
-        {
+        if(fTemp < 0) {
             pui32Colors[BLUE] = 0;
-        }
-        else
-        {
+        } else {
             pui32Colors[BLUE] = (uint32_t) fTemp;
         }
 
@@ -328,20 +305,14 @@ AppRainbow(uint32_t ui32ForceUpdate)
         //
         // Adjust the GREEN value based on the control state
         //
-        if(fCurPos < APP_PI)
-        {
+        if(fCurPos < APP_PI) {
             fTemp = 65535.0f * sinf(fCurPos + APP_PI * 0.5f);
-        }
-        else
-        {
+        } else {
             fTemp = 65535.0f * sinf(fCurPos + APP_PI);
         }
-        if(fTemp < 0)
-        {
+        if(fTemp < 0) {
             pui32Colors[RED] = 0;
-        }
-        else
-        {
+        } else {
             pui32Colors[RED] = (uint32_t) fTemp;
         }
 
@@ -375,20 +346,17 @@ SysTickIntHandler(void)
     // Auto increment the color wheel if in the AUTO mode. AUTO mode is when
     // device is active but user interaction has timed out.
     //
-    if(g_sAppState.ui32Mode == APP_MODE_AUTO)
-    {
+    if(g_sAppState.ui32Mode == APP_MODE_AUTO) {
         g_sAppState.fColorWheelPos += APP_AUTO_COLOR_STEP;
     }
 
     //
     // Provide wrap around of the control variable from 0 to 1.5 times PI
     //
-    if(g_sAppState.fColorWheelPos > (APP_PI * 1.5f))
-    {
+    if(g_sAppState.fColorWheelPos > (APP_PI * 1.5f)) {
         g_sAppState.fColorWheelPos = 0.0f;
     }
-    if(x < 0.0f)
-    {
+    if(x < 0.0f) {
         g_sAppState.fColorWheelPos = APP_PI * 1.5f;
     }
 
@@ -444,8 +412,7 @@ AppHibernateEnter(void)
     //
     // Wait for wake button to be released prior to going into hibernate
     //
-    while(g_sAppState.ui32Buttons & RIGHT_BUTTON)
-    {
+    while(g_sAppState.ui32Buttons & RIGHT_BUTTON) {
         //
         //Delay for about 300 clock ticks to allow time for interrupts to
         //sense that button is released
@@ -548,10 +515,8 @@ main(void)
     //
     ui32ResetCause = SysCtlResetCauseGet();
     SysCtlResetCauseClear(ui32ResetCause);
-    if(ui32ResetCause == SYSCTL_CAUSE_POR)
-    {
-        if(HibernateIsActive())
-        {
+    if(ui32ResetCause == SYSCTL_CAUSE_POR) {
+        if(HibernateIsActive()) {
             //
             // Read the status bits to see what caused the wake.
             //
@@ -561,8 +526,7 @@ main(void)
             //
             // Wake was due to the push button.
             //
-            if(ui32Status & HIBERNATE_INT_PIN_WAKE)
-            {
+            if(ui32Status & HIBERNATE_INT_PIN_WAKE) {
                 UARTprintf("Hibernate Wake Pin Wake Event\n");
                 UARTprintf("> ");
 
@@ -578,8 +542,7 @@ main(void)
             //
             // Wake was due to RTC match
             //
-            else if(ui32Status & HIBERNATE_INT_RTC_MATCH_0)
-            {
+            else if(ui32Status & HIBERNATE_INT_RTC_MATCH_0) {
                 UARTprintf("Hibernate RTC Wake Event\n");
                 UARTprintf("> ");
                 //
@@ -587,13 +550,12 @@ main(void)
                 // hibernate memory. Set ui32Mode to briefly flash the RGB.
                 //
                 HibernateDataGet((uint32_t*) &g_sAppState,
-                                sizeof(tAppState) / 4 + 1);
+                                 sizeof(tAppState) / 4 + 1);
                 g_sAppState.ui32Mode = APP_MODE_HIB_FLASH;
             }
         }
 
-        else
-        {
+        else {
             //
             // Reset was do to a cold first time power up.
             //
@@ -605,9 +567,7 @@ main(void)
             g_sAppState.fIntensity = APP_INTENSITY_DEFAULT;
             g_sAppState.ui32Buttons = 0;
         }
-    }
-    else
-    {
+    } else {
         //
         // External Pin reset or other reset event occured.
         //
@@ -622,7 +582,7 @@ main(void)
         g_sAppState.fIntensity = APP_INTENSITY_DEFAULT;
         g_sAppState.ui32Buttons = 0;
 
-    //
+        //
         // colors get a default initialization later when we call AppRainbow.
         //
     }
@@ -658,8 +618,7 @@ main(void)
     //
     // spin forever and wait for carriage returns or state changes.
     //
-    while(1)
-    {
+    while(1) {
 
         UARTprintf("\n>");
 
@@ -667,8 +626,7 @@ main(void)
         //
         // Peek to see if a full command is ready for processing
         //
-        while(UARTPeek('\r') == -1)
-        {
+        while(UARTPeek('\r') == -1) {
             //
             // millisecond delay.  A SysCtlSleep() here would also be OK.
             //
@@ -678,8 +636,7 @@ main(void)
             // Check for change of mode and enter hibernate if requested.
             // all other mode changes handled in interrupt context.
             //
-            if(g_sAppState.ui32Mode == APP_MODE_HIB)
-            {
+            if(g_sAppState.ui32Mode == APP_MODE_HIB) {
                 AppHibernateEnter();
             }
         }
@@ -698,16 +655,14 @@ main(void)
         //
         // Handle the case of bad command.
         //
-        if(i32CommandStatus == CMDLINE_BAD_CMD)
-        {
+        if(i32CommandStatus == CMDLINE_BAD_CMD) {
             UARTprintf("Bad command!\n");
         }
 
         //
         // Handle the case of too many arguments.
         //
-        else if(i32CommandStatus == CMDLINE_TOO_MANY_ARGS)
-        {
+        else if(i32CommandStatus == CMDLINE_TOO_MANY_ARGS) {
             UARTprintf("Too many arguments for command processor!\n");
         }
     }

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -175,13 +175,11 @@ CANInit(void)
     //
     // Loop through to program all 32 message objects
     //
-    for(iMsg = 1; iMsg <= 32; iMsg++)
-    {
+    for(iMsg = 1; iMsg <= 32; iMsg++) {
         //
         // Wait for busy bit to clear.
         //
-        while(CANRegRead(CAN0_BASE + CAN_O_IF1CRQ) & CAN_IF1CRQ_BUSY)
-        {
+        while(CANRegRead(CAN0_BASE + CAN_O_IF1CRQ) & CAN_IF1CRQ_BUSY) {
         }
 
         //
@@ -228,8 +226,7 @@ CANMessageSetRx(void)
     //
     // Wait for busy bit to clear
     //
-    while(CANRegRead(CAN0_BASE + CAN_O_IF1CRQ) & CAN_IF1CRQ_BUSY)
-    {
+    while(CANRegRead(CAN0_BASE + CAN_O_IF1CRQ) & CAN_IF1CRQ_BUSY) {
     }
 
     //
@@ -343,8 +340,7 @@ CANMessageGetRx(uint8_t *pui8Data, uint32_t *pui32MsgID)
     //
     // Wait for busy bit to clear
     //
-    while(CANRegRead(CAN0_BASE + CAN_O_IF2CRQ) & CAN_IF1CRQ_BUSY)
-    {
+    while(CANRegRead(CAN0_BASE + CAN_O_IF2CRQ) & CAN_IF1CRQ_BUSY) {
     }
 
     //
@@ -363,8 +359,7 @@ CANMessageGetRx(uint8_t *pui8Data, uint32_t *pui32MsgID)
     // See if there is new data available.
     //
     if((ui16MsgCtrl & (CAN_IF1MCTL_NEWDAT | CAN_IF1MCTL_MSGLST)) ==
-       CAN_IF1MCTL_NEWDAT)
-    {
+            CAN_IF1MCTL_NEWDAT) {
         //
         // Get the amount of data needed to be read.
         //
@@ -394,12 +389,9 @@ CANMessageGetRx(uint8_t *pui8Data, uint32_t *pui32MsgID)
         //
         // Wait for busy bit to clear
         //
-        while(CANRegRead(CAN0_BASE + CAN_O_IF2CRQ) & CAN_IF2CRQ_BUSY)
-        {
+        while(CANRegRead(CAN0_BASE + CAN_O_IF2CRQ) & CAN_IF2CRQ_BUSY) {
         }
-    }
-    else
-    {
+    } else {
         //
         // Data was lost so inform the caller.
         //
@@ -437,8 +429,7 @@ CANMessageSetTx(uint32_t ui32Id, const uint8_t *pui8Data, uint32_t ui32Size)
     //
     // Wait for busy bit to clear
     //
-    while(CANRegRead(CAN0_BASE + CAN_O_IF1CRQ) & CAN_IF1CRQ_BUSY)
-    {
+    while(CANRegRead(CAN0_BASE + CAN_O_IF1CRQ) & CAN_IF1CRQ_BUSY) {
     }
 
     //
@@ -527,8 +518,7 @@ ConfigureCANInterface(uint32_t ui32SetTiming)
     // If a device identifier was specified then this was due to an update from
     // a running CAN application so don't change the CAN bit timing.
     //
-    if(ui32SetTiming != 0)
-    {
+    if(ui32SetTiming != 0) {
         //
         // Set the bit fields of the bit timing register according to the
         // parms.
@@ -576,26 +566,21 @@ PacketRead(uint8_t *pui8Data, uint32_t *pui32Size)
     // If no interface has been determined then wait for either CAN or UART
     // data until either responds.
     //
-    if(g_ui32Interface == IFACE_UNKNOWN)
-    {
+    if(g_ui32Interface == IFACE_UNKNOWN) {
         //
         // Wait for CAN or UART data.
         //
         while((CANRegRead(CAN0_BASE + CAN_O_NWDA1) == 0) &&
-              ((HWREG(UART0_BASE + UART_O_FR) & UART_FR_RXFE) == UART_FR_RXFE))
-        {
+                ((HWREG(UART0_BASE + UART_O_FR) & UART_FR_RXFE) == UART_FR_RXFE)) {
         }
 
         //
         // If the UART FIFO was empty then the loop exited due to a CAN
         // message.
         //
-        if((HWREG(UART0_BASE + UART_O_FR) & UART_FR_RXFE) == UART_FR_RXFE)
-        {
+        if((HWREG(UART0_BASE + UART_O_FR) & UART_FR_RXFE) == UART_FR_RXFE) {
             g_ui32Interface = IFACE_CAN;
-        }
-        else
-        {
+        } else {
             //
             // The UART FIFO was not empty so the UART interface was used.
             //
@@ -606,14 +591,12 @@ PacketRead(uint8_t *pui8Data, uint32_t *pui32Size)
     //
     // Read a data packet from the CAN controller.
     //
-    if(g_ui32Interface == IFACE_CAN)
-    {
+    if(g_ui32Interface == IFACE_CAN) {
 #endif
         //
         // Wait until a packet has been received.
         //
-        while(CANRegRead(CAN0_BASE + CAN_O_NWDA1) == 0)
-        {
+        while(CANRegRead(CAN0_BASE + CAN_O_NWDA1) == 0) {
         }
 
         //
@@ -621,21 +604,17 @@ PacketRead(uint8_t *pui8Data, uint32_t *pui32Size)
         //
         *pui32Size = CANMessageGetRx(pui8Data, &ui32MsgID);
 #ifdef CAN_UART_BRIDGE
-    }
-    else
-    {
+    } else {
         //
         // Read a data packet from the UART controller.
         //
         ui32Mode = 0;
 
-        while(1)
-        {
+        while(1) {
             //
             // Wait until a char is available.
             //
-            while(HWREG(UART0_BASE + UART_O_FR) & UART_FR_RXFE)
-            {
+            while(HWREG(UART0_BASE + UART_O_FR) & UART_FR_RXFE) {
             }
 
             //
@@ -643,59 +622,39 @@ PacketRead(uint8_t *pui8Data, uint32_t *pui32Size)
             //
             ui32Char = HWREG(UART0_BASE + UART_O_DR);
 
-            if(ui32Char == 0xff)
-            {
+            if(ui32Char == 0xff) {
                 ui32Mode = 1;
                 ui32Length = 0;
-            }
-            else if(ui32Mode == 1)
-            {
-                if(ui32Char > 12)
-                {
+            } else if(ui32Mode == 1) {
+                if(ui32Char > 12) {
                     ui32Mode = 0;
-                }
-                else
-                {
+                } else {
                     ui32Size = ui32Char;
                     ui32Mode = 2;
                 }
-            }
-            else if(ui32Mode == 3)
-            {
-                if(ui32Char == 0xfe)
-                {
+            } else if(ui32Mode == 3) {
+                if(ui32Char == 0xfe) {
                     pui8Buffer[ui32Length++] = 0xff;
                     ui32Mode = 2;
-                }
-                else if(ui32Char == 0xfd)
-                {
+                } else if(ui32Char == 0xfd) {
                     pui8Buffer[ui32Length++] = 0xfe;
                     ui32Mode = 2;
-                }
-                else
-                {
+                } else {
                     ui32Mode = 0;
                 }
-            }
-            else if(ui32Mode == 2)
-            {
-                if(ui32Char == 0xfe)
-                {
+            } else if(ui32Mode == 2) {
+                if(ui32Char == 0xfe) {
                     ui32Mode = 3;
-                }
-                else
-                {
+                } else {
                     pui8Buffer[ui32Length++] = ui32Char;
                 }
             }
 
-            if((ui32Length == ui32Size) && (ui32Mode == 2))
-            {
+            if((ui32Length == ui32Size) && (ui32Mode == 2)) {
                 ui32MsgID = *(uint32_t *)pui8Buffer;
 
                 if((ui32MsgID & (CAN_MSGID_MFR_M | CAN_MSGID_DTYPE_M)) ==
-                   LM_API_UPD)
-                {
+                        LM_API_UPD) {
                     *(uint32_t *)pui8Data =
                         *(uint32_t *)(pui8Buffer + 4);
                     *(uint32_t *)(pui8Data + 4) =
@@ -727,8 +686,7 @@ UARTBridgeWrite(uint32_t ui32Char)
     //
     // See if the character being sent is 0xff.
     //
-    if(ui32Char == 0xff)
-    {
+    if(ui32Char == 0xff) {
         //
         // Send 0xfe 0xfe, the escaped version of 0xff.  A sign extended
         // version of 0xfe is used to avoid the check below for 0xfe, thereby
@@ -742,8 +700,7 @@ UARTBridgeWrite(uint32_t ui32Char)
     //
     // Otherwise, see if the character being sent is 0xfe.
     //
-    else if(ui32Char == 0xfe)
-    {
+    else if(ui32Char == 0xfe) {
         //
         // Send 0xfe 0xfd, the escaped version of 0xfe.  A sign extended
         // version of 0xfe is used to avoid the check above for 0xfe, thereby
@@ -757,13 +714,11 @@ UARTBridgeWrite(uint32_t ui32Char)
     //
     // Otherwise, simply send this character.
     //
-    else
-    {
+    else {
         //
         // Wait until space is available in the UART transmit FIFO.
         //
-        while(HWREG(UART0_BASE + UART_O_FR) & UART_FR_TXFF)
-        {
+        while(HWREG(UART0_BASE + UART_O_FR) & UART_FR_TXFF) {
         }
 
         //
@@ -788,30 +743,25 @@ PacketWrite(uint32_t ui32Id, const uint8_t *pui8Data, uint32_t ui32Size)
     //
     // Check if the boot loader is in CAN mode.
     //
-    if(g_ui32Interface == IFACE_CAN)
-    {
+    if(g_ui32Interface == IFACE_CAN) {
 #endif
         //
         // Wait until the previous packet has been sent, providing a time out so
         // that the boot loader does not hang here.
         //
         for(ui32Idx = 1000;
-            (ui32Idx != 0) && (CANRegRead(CAN0_BASE + CAN_O_TXRQ1) != 0);
-            ui32Idx--)
-        {
+                (ui32Idx != 0) && (CANRegRead(CAN0_BASE + CAN_O_TXRQ1) != 0);
+                ui32Idx--) {
         }
 
         //
         // If the previous packet was sent, then send this packet.
         //
-        if(ui32Idx != 0)
-        {
+        if(ui32Idx != 0) {
             CANMessageSetTx(ui32Id, pui8Data, ui32Size);
         }
 #ifdef CAN_UART_BRIDGE
-    }
-    else
-    {
+    } else {
         //
         // The boot loader is in UART modes so write the packet using the UART
         // functions.  Write the start pattern followed by the size, and the ID.
@@ -826,8 +776,7 @@ PacketWrite(uint32_t ui32Id, const uint8_t *pui8Data, uint32_t ui32Size)
         //
         // Now write out the remaining data bytes.
         //
-        while(ui32Size--)
-        {
+        while(ui32Size--) {
             UARTBridgeWrite(*pui8Data++);
         }
     }
@@ -859,8 +808,7 @@ UpdaterCAN(void)
     // Check the application is valid and check the pin to see if an update is
     // being requested.
     //
-    if(g_ui32Forced == 1)
-    {
+    if(g_ui32Forced == 1) {
         //
         // Send out the CAN request.
         //
@@ -888,7 +836,7 @@ UpdaterCAN(void)
         //
 #ifdef CAN_UART_BRIDGE
         if((CANRegRead(CAN0_BASE + CAN_O_NWDA1) == 0) &&
-           ((HWREG(UART0_BASE + UART_O_FR) & UART_FR_RXFE) == UART_FR_RXFE))
+                ((HWREG(UART0_BASE + UART_O_FR) & UART_FR_RXFE) == UART_FR_RXFE))
 #else
         if(CANRegRead(CAN0_BASE + CAN_O_NWDA1) == 0)
 #endif
@@ -904,8 +852,7 @@ UpdaterCAN(void)
     //
     // Loop forever processing packets.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Read the next packet.
         //
@@ -916,13 +863,11 @@ UpdaterCAN(void)
         // Handle this packet.
         //
         ui8Status = CAN_CMD_SUCCESS;
-        switch(ui32Cmd)
-        {
+        switch(ui32Cmd) {
             //
             // This is an update request packet.
             //
-            case LM_API_UPD_REQUEST:
-            {
+            case LM_API_UPD_REQUEST: {
                 //
                 // This packet is ignored (other than generating an ACK).
                 //
@@ -932,8 +877,7 @@ UpdaterCAN(void)
             //
             // This is a ping packet.
             //
-            case LM_API_UPD_PING:
-            {
+            case LM_API_UPD_PING: {
                 //
                 // This packet is ignored (other than generating an ACK).
                 //
@@ -943,8 +887,7 @@ UpdaterCAN(void)
             //
             // This is a reset packet.
             //
-            case LM_API_UPD_RESET:
-            {
+            case LM_API_UPD_RESET: {
                 //
                 // Perform a software reset request.  This will cause the
                 // microcontroller to reset; no further code will be executed.
@@ -956,22 +899,19 @@ UpdaterCAN(void)
                 // The microcontroller should have reset, so this should never
                 // be reached.  Just in case, loop forever.
                 //
-                while(1)
-                {
+                while(1) {
                 }
             }
 
             //
             // This is a data packet.
             //
-            case LM_API_UPD_SEND_DATA:
-            {
+            case LM_API_UPD_SEND_DATA: {
                 //
                 // If this is overwriting the boot loader then the application
                 // has already been erased so now erase the boot loader.
                 //
-                if(g_ui32TransferAddress == 0)
-                {
+                if(g_ui32TransferAddress == 0) {
                     //
                     // Clear the flash access interrupt.
                     //
@@ -981,8 +921,7 @@ UpdaterCAN(void)
                     // Erase the application before the boot loader.
                     //
                     for(ui32Temp = 0; ui32Temp < APP_START_ADDRESS;
-                        ui32Temp += FLASH_PAGE_SIZE)
-                    {
+                            ui32Temp += FLASH_PAGE_SIZE) {
                         //
                         // Erase this block.
                         //
@@ -992,8 +931,7 @@ UpdaterCAN(void)
                     //
                     // Return an error if an access violation occurred.
                     //
-                    if(BL_FLASH_ERROR_FN_HOOK())
-                    {
+                    if(BL_FLASH_ERROR_FN_HOOK()) {
                         //
                         // Setting g_ui32TransferSize to zero makes
                         // COMMAND_SEND_DATA fail to accept any more data.
@@ -1010,8 +948,7 @@ UpdaterCAN(void)
                 //
                 // Check if there are any more bytes to receive.
                 //
-                if(g_ui32TransferSize >= ui32Bytes)
-                {
+                if(g_ui32TransferSize >= ui32Bytes) {
                     //
                     // Decrypt the data if required.
                     //
@@ -1027,15 +964,12 @@ UpdaterCAN(void)
                     //
                     // Skip the first transfer.
                     //
-                    if(g_ui32StartSize == g_ui32TransferSize)
-                    {
+                    if(g_ui32StartSize == g_ui32TransferSize) {
                         g_ui32StartValues[0] =
                             *((uint32_t *)&g_pui8CommandBuffer[0]);
                         g_ui32StartValues[1] =
                             *((uint32_t *)&g_pui8CommandBuffer[4]);
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Loop over the words to program.
                         //
@@ -1047,15 +981,12 @@ UpdaterCAN(void)
                     //
                     // Return an error if an access violation occurred.
                     //
-                    if(BL_FLASH_ERROR_FN_HOOK())
-                    {
+                    if(BL_FLASH_ERROR_FN_HOOK()) {
                         //
                         // Indicate that the flash programming failed.
                         //
                         ui8Status = CAN_CMD_FAIL;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Now update the address to program.
                         //
@@ -1072,9 +1003,7 @@ UpdaterCAN(void)
                                             g_ui32StartSize);
 #endif
                     }
-                }
-                else
-                {
+                } else {
                     //
                     // This indicates that too much data is being sent to the
                     // device.
@@ -1086,8 +1015,7 @@ UpdaterCAN(void)
                 // If the last expected bytes were received then write out the
                 // first two words of the image to allow it to boot.
                 //
-                if(g_ui32TransferSize == 0)
-                {
+                if(g_ui32TransferSize == 0) {
                     //
                     // Loop over the words to program.
                     //
@@ -1109,8 +1037,7 @@ UpdaterCAN(void)
             //
             // This is a start download packet.
             //
-            case LM_API_UPD_DOWNLOAD:
-            {
+            case LM_API_UPD_DOWNLOAD: {
                 //
                 // Get the application address and size from the packet data.
                 //
@@ -1124,8 +1051,7 @@ UpdaterCAN(void)
                 // Check for a valid starting address and image size.
                 //
                 if(!BL_FLASH_AD_CHECK_FN_HOOK(g_ui32TransferAddress,
-                                              g_ui32TransferSize))
-                {
+                                              g_ui32TransferSize)) {
                     //
                     // Set the code to an error to indicate that the last
                     // command failed.  This informs the updater program
@@ -1146,8 +1072,7 @@ UpdaterCAN(void)
 #ifdef FLASH_CODE_PROTECTION
                 ui32FlashSize = BL_FLASH_SIZE_FN_HOOK();
 #ifdef FLASH_RSVD_SPACE
-                if((ui32FlashSize - FLASH_RSVD_SPACE) != g_ui32TransferAddress)
-                {
+                if((ui32FlashSize - FLASH_RSVD_SPACE) != g_ui32TransferAddress) {
                     ui32FlashSize -= FLASH_RSVD_SPACE;
                 }
 #endif
@@ -1165,8 +1090,7 @@ UpdaterCAN(void)
                 // image.
                 //
                 for(ui32Temp = g_ui32TransferAddress; ui32Temp < ui32FlashSize;
-                    ui32Temp += FLASH_PAGE_SIZE)
-                {
+                        ui32Temp += FLASH_PAGE_SIZE) {
                     //
                     // Erase this block.
                     //
@@ -1176,16 +1100,14 @@ UpdaterCAN(void)
                 //
                 // Return an error if an access violation occurred.
                 //
-                if(BL_FLASH_ERROR_FN_HOOK())
-                {
+                if(BL_FLASH_ERROR_FN_HOOK()) {
                     ui8Status = CAN_CMD_FAIL;
                 }
 
                 //
                 // See if the command was successful.
                 //
-                if(ui8Status != CAN_CMD_SUCCESS)
-                {
+                if(ui8Status != CAN_CMD_SUCCESS) {
                     //
                     // Setting g_ui32TransferSize to zero makes
                     // COMMAND_SEND_DATA fail to accept any data.
@@ -1193,8 +1115,7 @@ UpdaterCAN(void)
                     g_ui32TransferSize = 0;
                 }
 #ifdef BL_START_FN_HOOK
-                else
-                {
+                else {
                     //
                     // If a start signal hook function has been provided, call
                     // it here since we are about to start a new download.
@@ -1209,8 +1130,7 @@ UpdaterCAN(void)
             //
             // This is an unknown packet.
             //
-            default:
-            {
+            default: {
                 //
                 // Set the status to indicate a failure.
                 //
@@ -1324,13 +1244,10 @@ ConfigureCAN(void)
     // and clock the processor from it. Check for whether the Oscillator range
     // has to be set and wait states need to be updated
     //
-    if(CRYSTAL_FREQ >= 10000000)
-    {
+    if(CRYSTAL_FREQ >= 10000000) {
         HWREG(SYSCTL_MOSCCTL) |= (SYSCTL_MOSCCTL_OSCRNG);
         HWREG(SYSCTL_MOSCCTL) &= ~(SYSCTL_MOSCCTL_PWRDN | SYSCTL_MOSCCTL_NOXTAL);
-    }
-    else
-    {
+    } else {
         HWREG(SYSCTL_MOSCCTL) &= ~(SYSCTL_MOSCCTL_PWRDN | SYSCTL_MOSCCTL_NOXTAL);
     }
 
@@ -1339,16 +1256,13 @@ ConfigureCAN(void)
     //
     Delay(524288);
 
-    if(CRYSTAL_FREQ > 16000000)
-    {
-    	HWREG(SYSCTL_MEMTIM0)  = (SYSCTL_MEMTIM0_FBCHT_1_5 | (1 << SYSCTL_MEMTIM0_FWS_S) |
-                				  SYSCTL_MEMTIM0_EBCHT_1_5 | (1 << SYSCTL_MEMTIM0_EWS_S) |
-                				  SYSCTL_MEMTIM0_MB1);
-    	HWREG(SYSCTL_RSCLKCFG) = (SYSCTL_RSCLKCFG_MEMTIMU | SYSCTL_RSCLKCFG_OSCSRC_MOSC);
-    }
-    else
-    {
-    	HWREG(SYSCTL_RSCLKCFG) = (SYSCTL_RSCLKCFG_OSCSRC_MOSC);
+    if(CRYSTAL_FREQ > 16000000) {
+        HWREG(SYSCTL_MEMTIM0)  = (SYSCTL_MEMTIM0_FBCHT_1_5 | (1 << SYSCTL_MEMTIM0_FWS_S) |
+                                  SYSCTL_MEMTIM0_EBCHT_1_5 | (1 << SYSCTL_MEMTIM0_EWS_S) |
+                                  SYSCTL_MEMTIM0_MB1);
+        HWREG(SYSCTL_RSCLKCFG) = (SYSCTL_RSCLKCFG_MEMTIMU | SYSCTL_RSCLKCFG_OSCSRC_MOSC);
+    } else {
+        HWREG(SYSCTL_RSCLKCFG) = (SYSCTL_RSCLKCFG_OSCSRC_MOSC);
     }
 #else
     //

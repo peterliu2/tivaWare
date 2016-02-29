@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2007-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Utility Library.
 //
 //*****************************************************************************
@@ -50,8 +50,7 @@
 // may be used.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // The index of the file system containing this file.
     //
@@ -118,8 +117,7 @@ fs_find_mount_index(const char *pcName, char **ppcFSFilename)
     // must start with a '/' character and must contain at least one more
     // '/'.
     //
-    if(pcName[0] == '/')
-    {
+    if(pcName[0] == '/') {
         //
         // The string starts with a '/'.  Does it contain a second one?
         //
@@ -128,16 +126,13 @@ fs_find_mount_index(const char *pcName, char **ppcFSFilename)
         //
         // Did we find another forward slash character?
         //
-        if(pcSlash)
-        {
+        if(pcSlash) {
             //
             // Yes - the mount point name is between the start of the
             // string and the slash we just found.  How long is this string?
             //
             iLenDirName = (int)(pcSlash - (pcName + 1));
-        }
-        else
-        {
+        } else {
             //
             // The mount point name is the whole string.
             //
@@ -148,13 +143,11 @@ fs_find_mount_index(const char *pcName, char **ppcFSFilename)
         //
         // Now figure out which, if any, of the mount points this matches.
         //
-        for(ui32Loop = 0; ui32Loop < g_ui32NumMountPoints; ui32Loop++)
-        {
+        for(ui32Loop = 0; ui32Loop < g_ui32NumMountPoints; ui32Loop++) {
             //
             // Skip the default mount point if found.
             //
-            if(!g_psMountPoints[ui32Loop].pcNamePrefix)
-            {
+            if(!g_psMountPoints[ui32Loop].pcNamePrefix) {
                 continue;
             }
 
@@ -167,14 +160,12 @@ fs_find_mount_index(const char *pcName, char **ppcFSFilename)
             // Does the mount point name match the directory name extracted
             // from the passed pcName?
             //
-            if(iLenMountName == iLenDirName)
-            {
+            if(iLenMountName == iLenDirName) {
                 //
                 // The lengths match but are the strings the same?
                 //
                 if(!ustrncmp(g_psMountPoints[ui32Loop].pcNamePrefix,
-                             pcName + 1, iLenDirName))
-                {
+                             pcName + 1, iLenDirName)) {
                     //
                     // Yes - we have a match.  Set the stripped filename to
                     // the second '/' and return the mount point index.
@@ -251,8 +242,7 @@ fs_init(fs_mount_data *psMountPoints, uint32_t ui32NumMountPoints)
     //
     // Remember the mount point information we have been given.
     //
-    if(psMountPoints && ui32NumMountPoints)
-    {
+    if(psMountPoints && ui32NumMountPoints) {
         //
         // Remember the information passed.
         //
@@ -265,31 +255,26 @@ fs_init(fs_mount_data *psMountPoints, uint32_t ui32NumMountPoints)
         // default mount point (if any) is.
         //
         g_bFatFsEnabled = false;
-        for(ui32Loop = 0; ui32Loop < g_ui32NumMountPoints; ui32Loop++)
-        {
+        for(ui32Loop = 0; ui32Loop < g_ui32NumMountPoints; ui32Loop++) {
             //
             // If the pui8FSImage field of a mount point structure is NULL,
             // this implies that we are using the FAT file system for that
             // node.
             //
-            if(!g_psMountPoints[ui32Loop].pui8FSImage)
-            {
+            if(!g_psMountPoints[ui32Loop].pui8FSImage) {
                 g_bFatFsEnabled = true;
             }
 
             //
             // Does this entry describe the default mount point?
             //
-            if(g_psMountPoints[ui32Loop].pcNamePrefix == NULL)
-            {
+            if(g_psMountPoints[ui32Loop].pcNamePrefix == NULL) {
                 g_ui32DefaultMountIndex = ui32Loop;
             }
         }
 
         return(true);
-    }
-    else
-    {
+    } else {
         //
         // Return an error due to being passed a bad parameter.
         //
@@ -325,8 +310,7 @@ fs_tick(uint32_t ui32TickMS)
     //
     // Check if the file system has been enabled yet.
     //
-    if(!g_bFatFsEnabled)
-    {
+    if(!g_bFatFsEnabled) {
         return;
     }
 
@@ -338,8 +322,7 @@ fs_tick(uint32_t ui32TickMS)
     //
     // Check to see if the FAT FS tick needs to run.
     //
-    if(ui32TickCounter >= 10)
-    {
+    if(ui32TickCounter >= 10) {
         ui32TickCounter = 0;
         disk_timerproc();
     }
@@ -374,8 +357,7 @@ fs_open(const char *pcName)
     // Allocate memory for the file system structure.
     //
     psFile = mem_malloc(sizeof(struct fs_file));
-    if(NULL == psFile)
-    {
+    if(NULL == psFile) {
         return(NULL);
     }
 
@@ -385,8 +367,7 @@ fs_open(const char *pcName)
     psFile->pextension = mem_malloc(sizeof(fs_wrapper_data));
     psWrapper = (fs_wrapper_data *)psFile->pextension;
 
-    if(NULL == psWrapper)
-    {
+    if(NULL == psWrapper) {
         return(NULL);
     }
 
@@ -394,8 +375,7 @@ fs_open(const char *pcName)
     // Find which mount point we need to use to satisfy this file open request.
     //
     psWrapper->ui32MountIndex = fs_find_mount_index(pcName, &pcFSFilename);
-    if(psWrapper->ui32MountIndex == BAD_MOUNT_INDEX)
-    {
+    if(psWrapper->ui32MountIndex == BAD_MOUNT_INDEX) {
         //
         // We can't map the mount index so return an error.
         //
@@ -408,17 +388,15 @@ fs_open(const char *pcName)
     // Enable access to the physical medium if we have been provided with
     // a callback for this.
     //
-    if(g_psMountPoints[psWrapper->ui32MountIndex].pfnEnable)
-    {
+    if(g_psMountPoints[psWrapper->ui32MountIndex].pfnEnable) {
         g_psMountPoints[psWrapper->ui32MountIndex].
-            pfnEnable(psWrapper->ui32MountIndex);
+        pfnEnable(psWrapper->ui32MountIndex);
     }
 
     //
     // Are we opening a file on an internal file system image?
     //
-    if(g_psMountPoints[psWrapper->ui32MountIndex].pui8FSImage)
-    {
+    if(g_psMountPoints[psWrapper->ui32MountIndex].pui8FSImage) {
         //
         // Initialize the file system tree pointer to the root of the linked
         // list for this mount point's file system image.
@@ -429,8 +407,7 @@ fs_open(const char *pcName)
         //
         // Which type of file system are we dealing with?
         //
-        if(psTree->next == FILE_SYSTEM_MARKER)
-        {
+        if(psTree->next == FILE_SYSTEM_MARKER) {
             //
             // If we found the marker, this is a position independent file
             // system image.  Remember this and fix up the pointer to the
@@ -449,16 +426,14 @@ fs_open(const char *pcName)
         // Begin processing the linked list, looking for the requested file
         // name.
         //
-        while(NULL != psTree)
-        {
+        while(NULL != psTree) {
             //
             // Compare the requested file "name" to the file name in the
             // current node.
             //
             if(ustrncmp(pcFSFilename,
                         FS_POINTER(psTree, psTree->name, bPosInd),
-                        psTree->len) == 0)
-            {
+                        psTree->len) == 0) {
                 //
                 // Fill in the data pointer and length values from the
                 // linked list node.
@@ -497,22 +472,18 @@ fs_open(const char *pcName)
             // the "next" field does indicate that this is the last file so we
             // can use that info to force the loop to exit at the end.
             //
-            if(psTree->next == 0)
-            {
+            if(psTree->next == 0) {
                 psTree = NULL;
-            }
-            else
-            {
+            } else {
                 psTree = (struct fsdata_file *)FS_POINTER(psTree, psTree->next,
-                                                          bPosInd);
+                         bPosInd);
 
                 //
                 // If this is a position independent file system image, we can
                 // also check that the new node is within the image.  If it
                 // isn't, the image is corrupted to stop the search.
                 //
-                if(bPosInd && (psTree >= psEnd))
-                {
+                if(bPosInd && (psTree >= psEnd)) {
                     psTree = NULL;
                 }
             }
@@ -522,15 +493,12 @@ fs_open(const char *pcName)
         // If we didn't find the file, ptTee will be NULL.  Make sure we
         // return a NULL pointer if this happens.
         //
-        if(NULL == psTree)
-        {
+        if(NULL == psTree) {
             mem_free(psFile->pextension);
             mem_free(psFile);
             psFile = NULL;
         }
-    }
-    else
-    {
+    } else {
         //
         // This file is on the FAT file system.
         //
@@ -539,22 +507,18 @@ fs_open(const char *pcName)
         // Allocate memory for the Fat File system handle.
         //
         psWrapper->psFATFile = mem_malloc(sizeof(FIL));
-        if(NULL == psWrapper->psFATFile)
-        {
+        if(NULL == psWrapper->psFATFile) {
             mem_free(psFile->pextension);
             mem_free(psFile);
             psFile = NULL;
-        }
-        else
-        {
+        } else {
             //
             // Reformat the filename to start with the FAT logical drive
             // number.
             //
             ui32Length = ustrlen(pcFSFilename) + 16;
             pcFilename = mem_malloc(ui32Length);
-            if(!pcFilename)
-            {
+            if(!pcFilename) {
                 //
                 // Can't allocate temporary storage for the reformatted
                 // filename!
@@ -563,9 +527,7 @@ fs_open(const char *pcName)
                 mem_free(psFile->pextension);
                 mem_free(psFile);
                 psFile = NULL;
-            }
-            else
-            {
+            } else {
                 usnprintf(pcFilename, ui32Length, "%d:%s",
                           g_psMountPoints[psWrapper->ui32MountIndex].
                           ui32DriveNum, pcFSFilename);
@@ -582,8 +544,7 @@ fs_open(const char *pcName)
                 //
                 // Did we open the file correctly?
                 //
-                if(FR_OK == fresult)
-                {
+                if(FR_OK == fresult) {
                     //
                     // Yes - fill in the file structure to indicate that a
                     // FAT file is in use.
@@ -591,9 +552,7 @@ fs_open(const char *pcName)
                     psFile->data = NULL;
                     psFile->len = 0;
                     psFile->index = 0;
-                }
-                else
-                {
+                } else {
                     //
                     // If we get here, we failed to find the file on the FAT
                     // file system so free up the FAT handle/object.
@@ -611,10 +570,9 @@ fs_open(const char *pcName)
     // Disable access to the physical medium if we have been provided with
     // a callback for this.
     //
-    if(g_psMountPoints[psWrapper->ui32MountIndex].pfnDisable)
-    {
+    if(g_psMountPoints[psWrapper->ui32MountIndex].pfnDisable) {
         g_psMountPoints[psWrapper->ui32MountIndex].
-            pfnDisable(psWrapper->ui32MountIndex);
+        pfnDisable(psWrapper->ui32MountIndex);
     }
 
     return(psFile);
@@ -643,8 +601,7 @@ fs_close(struct fs_file *phFile)
     //
     // If a Fat file was opened, free its object.
     //
-    if(psWrapper->psFATFile)
-    {
+    if(psWrapper->psFATFile) {
         //
         // Close the file.
         //
@@ -699,17 +656,15 @@ fs_read(struct fs_file *phFile, char *pcBuffer, int iCount)
     // Call the application's enable function for this physical medium (if
     // an enable function has been provided).
     //
-    if(g_psMountPoints[psWrapper->ui32MountIndex].pfnEnable)
-    {
+    if(g_psMountPoints[psWrapper->ui32MountIndex].pfnEnable) {
         g_psMountPoints[psWrapper->ui32MountIndex].
-            pfnEnable(psWrapper->ui32MountIndex);
+        pfnEnable(psWrapper->ui32MountIndex);
     }
 
     //
     // Check to see if a Fat File was opened and process it.
     //
-    if(psWrapper->psFATFile)
-    {
+    if(psWrapper->psFATFile) {
         uint32_t ui32BytesRead;
         FRESULT fresult;
 
@@ -718,23 +673,17 @@ fs_read(struct fs_file *phFile, char *pcBuffer, int iCount)
         //
         fresult = f_read(psWrapper->psFATFile, pcBuffer, iCount,
                          (UINT*)&ui32BytesRead);
-        if((fresult != FR_OK) || (ui32BytesRead == 0))
-        {
+        if((fresult != FR_OK) || (ui32BytesRead == 0)) {
             iRetcode = -1;
-        }
-        else
-        {
+        } else {
             iRetcode = (int)ui32BytesRead;
         }
-    }
-    else
-    {
+    } else {
         //
         // We are reading a file from a file system image.  Check to see if
         // more data is available.
         //
-        if(phFile->len == phFile->index)
-        {
+        if(phFile->len == phFile->index) {
             //
             // There is no remaining data.  Return a -1 for EOF indication.
             //
@@ -746,8 +695,7 @@ fs_read(struct fs_file *phFile, char *pcBuffer, int iCount)
         // parameter or the available data in the file system buffer.
         //
         iAvailable = phFile->len - phFile->index;
-        if(iAvailable > iCount)
-        {
+        if(iAvailable > iCount) {
             iAvailable = iCount;
         }
 
@@ -767,10 +715,9 @@ fs_read(struct fs_file *phFile, char *pcBuffer, int iCount)
     // Call the application's disable function now that we have finished
     // accessing the file.
     //
-    if(g_psMountPoints[psWrapper->ui32MountIndex].pfnDisable)
-    {
+    if(g_psMountPoints[psWrapper->ui32MountIndex].pfnDisable) {
         g_psMountPoints[psWrapper->ui32MountIndex].
-            pfnDisable(psWrapper->ui32MountIndex);
+        pfnDisable(psWrapper->ui32MountIndex);
     }
 
     //
@@ -813,8 +760,7 @@ fs_map_path(const char *pcPath, char *pcMapped, int iLen)
     //
     // If no mount points have been defined, return an error.
     //
-    if(!g_psMountPoints)
-    {
+    if(!g_psMountPoints) {
         return(false);
     }
 
@@ -828,8 +774,7 @@ fs_map_path(const char *pcPath, char *pcMapped, int iLen)
     // point that is not in the FAT file system, return an error.
     //
     if((ui32MountIndex == BAD_MOUNT_INDEX) ||
-       (g_psMountPoints[ui32MountIndex].pui8FSImage))
-    {
+            (g_psMountPoints[ui32MountIndex].pui8FSImage)) {
         //
         // We can't map the mount index so return an error.
         //

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C123GXL Firmware Package.
 //
 //*****************************************************************************
@@ -73,8 +73,7 @@ SwitchTask(void *pvParameters)
     //
     // Loop forever.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Poll the debounced state of the buttons.
         //
@@ -83,18 +82,15 @@ SwitchTask(void *pvParameters)
         //
         // Check if previous debounced state is equal to the current state.
         //
-        if(ui8CurButtonState != ui8PrevButtonState)
-        {
+        if(ui8CurButtonState != ui8PrevButtonState) {
             ui8PrevButtonState = ui8CurButtonState;
 
             //
             // Check to make sure the change in state is due to button press
             // and not due to button release.
             //
-            if((ui8CurButtonState & ALL_BUTTONS) != 0)
-            {
-                if((ui8CurButtonState & ALL_BUTTONS) == LEFT_BUTTON)
-                {
+            if((ui8CurButtonState & ALL_BUTTONS) != 0) {
+                if((ui8CurButtonState & ALL_BUTTONS) == LEFT_BUTTON) {
                     ui8Message = LEFT_BUTTON;
 
                     //
@@ -103,9 +99,7 @@ SwitchTask(void *pvParameters)
                     xSemaphoreTake(g_pUARTSemaphore, portMAX_DELAY);
                     UARTprintf("Left Button is pressed.\n");
                     xSemaphoreGive(g_pUARTSemaphore);
-                }
-                else if((ui8CurButtonState & ALL_BUTTONS) == RIGHT_BUTTON)
-                {
+                } else if((ui8CurButtonState & ALL_BUTTONS) == RIGHT_BUTTON) {
                     ui8Message = RIGHT_BUTTON;
 
                     //
@@ -120,15 +114,13 @@ SwitchTask(void *pvParameters)
                 // Pass the value of the button pressed to LEDTask.
                 //
                 if(xQueueSend(g_pLEDQueue, &ui8Message, portMAX_DELAY) !=
-                   pdPASS)
-                {
+                        pdPASS) {
                     //
                     // Error. The queue should never be full. If so print the
                     // error message on UART and wait for ever.
                     //
                     UARTprintf("\nQueue full. This should never happen.\n");
-                    while(1)
-                    {
+                    while(1) {
                     }
                 }
             }
@@ -165,8 +157,7 @@ SwitchTaskInit(void)
     //
     if(xTaskCreate(SwitchTask, (const portCHAR *)"Switch",
                    SWITCHTASKSTACKSIZE, NULL, tskIDLE_PRIORITY +
-                   PRIORITY_SWITCH_TASK, NULL) != pdTRUE)
-    {
+                   PRIORITY_SWITCH_TASK, NULL) != pdTRUE) {
         return(1);
     }
 

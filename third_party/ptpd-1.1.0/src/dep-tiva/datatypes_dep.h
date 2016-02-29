@@ -13,12 +13,12 @@ typedef unsigned short UInteger16;
 typedef unsigned int UInteger32;
 
 typedef struct {
-  Integer32  nsec_prev, y;
+    Integer32  nsec_prev, y;
 } offset_from_master_filter;
 
 typedef struct {
-  Integer32  nsec_prev, y;
-  Integer32  s_exp;
+    Integer32  nsec_prev, y;
+    Integer32  s_exp;
 } one_way_delay_filter;
 
 typedef struct {
@@ -29,14 +29,14 @@ typedef struct {
 } BufQueue;
 
 typedef struct {
-  Integer32 multicastAddr;
-  Integer32 unicastAddr;
-  void      *eventPcb;
-  void      *generalPcb;
-  BufQueue  eventQ;
-  BufQueue  generalQ;
-  void      *eventTxBuf;
-  void      *generalTxBuf;
+    Integer32 multicastAddr;
+    Integer32 unicastAddr;
+    void      *eventPcb;
+    void      *generalPcb;
+    BufQueue  eventQ;
+    BufQueue  generalQ;
+    void      *eventTxBuf;
+    void      *generalTxBuf;
 } NetPath;
 
 #endif

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -42,8 +42,7 @@ extern "C" {
 // Error codes returned by various API functions.
 //
 //****************************************************************************
-typedef enum
-{
+typedef enum {
     DFU_ERR_VERIFY_FAIL     = -14,
     DFU_ERR_CANT_VERIFY     = -13,
     DFU_ERR_DNLOAD_FAIL     = -12,
@@ -69,24 +68,23 @@ tLMDFUErr;
 // queried by calling LMDFUGetStatus().
 //
 //*****************************************************************************
-typedef enum
-{
-   STATUS_OK = 0,
-   STATUS_ERR_TARGET,
-   STATUS_ERR_FILE,
-   STATUS_ERR_WRITE,
-   STATUS_ERR_ERASE,
-   STATUS_ERR_CHECK_ERASED,
-   STATUS_ERR_PROG,
-   STATUS_ERR_VERIFY,
-   STATUS_ERR_ADDRESS,
-   STATUS_ERR_NOTDONE,
-   STATUS_ERR_FIRMWARE,
-   STATUS_ERR_VENDOR,
-   STATUS_ERR_USBR,
-   STATUS_ERR_POR,
-   STATUS_ERR_UNKNOWN,
-   STATUS_ERR_STALLEDPKT
+typedef enum {
+    STATUS_OK = 0,
+    STATUS_ERR_TARGET,
+    STATUS_ERR_FILE,
+    STATUS_ERR_WRITE,
+    STATUS_ERR_ERASE,
+    STATUS_ERR_CHECK_ERASED,
+    STATUS_ERR_PROG,
+    STATUS_ERR_VERIFY,
+    STATUS_ERR_ADDRESS,
+    STATUS_ERR_NOTDONE,
+    STATUS_ERR_FIRMWARE,
+    STATUS_ERR_VENDOR,
+    STATUS_ERR_USBR,
+    STATUS_ERR_POR,
+    STATUS_ERR_UNKNOWN,
+    STATUS_ERR_STALLEDPKT
 }
 tDFUStatus;
 
@@ -108,8 +106,7 @@ tDFUStatus;
 // Device information as returned by LMDFUDeviceOpen().
 //
 //****************************************************************************
-typedef struct
-{
+typedef struct {
     unsigned short usVID;
     unsigned short usPID;
     unsigned short usDevice;
@@ -134,16 +131,15 @@ tLMDFUDeviceInfo;
 // DFU parameter information returned by LMDFUParamsGet().
 //
 //****************************************************************************
-typedef struct
-{
+typedef struct {
     unsigned short usFlashBlockSize;  // The size of a flash block in bytes.
     unsigned short usNumFlashBlocks;  // The number of blocks of flash in the
-                                      // device.  Total flash size is
-                                      // usNumFlashBlocks * usFlashBlockSize.
+    // device.  Total flash size is
+    // usNumFlashBlocks * usFlashBlockSize.
     unsigned long ulFlashTop;         // Address 1 byte above the highest
-                                      // location the boot loader can access.
+    // location the boot loader can access.
     unsigned long ulAppStartAddr;     // Lowest address the boot loader can
-                                      // write or erase.
+    // write or erase.
 }
 tLMDFUParams;
 
@@ -220,14 +216,14 @@ tLMDFUErr __stdcall LMDFUDeviceOpen(int iDeviceIndex,
                                     tLMDFUHandle *phHandle);
 tLMDFUErr __stdcall LMDFUDeviceClose(tLMDFUHandle hHandle, bool bReset);
 tLMDFUErr __stdcall LMDFUDeviceStringGet(tLMDFUHandle hHandle,
-                                         unsigned char ucStringIndex,
-                                         unsigned short usLanguageID,
-                                         char *pcString,
-                                         unsigned short *pusStringLen);
+        unsigned char ucStringIndex,
+        unsigned short usLanguageID,
+        char *pcString,
+        unsigned short *pusStringLen);
 tLMDFUErr __stdcall LMDFUDeviceASCIIStringGet(tLMDFUHandle hHandle,
-                                              unsigned char ucStringIndex,
-                                              char *pcString,
-                                              unsigned short *pusStringLen);
+        unsigned char ucStringIndex,
+        char *pcString,
+        unsigned short *pusStringLen);
 tLMDFUErr __stdcall LMDFUParamsGet(tLMDFUHandle hHandle,
                                    tLMDFUParams *psParams);
 tLMDFUErr __stdcall LMDFUIsValidImage(tLMDFUHandle hHandle,
@@ -266,52 +262,52 @@ char * __stdcall LMDFUErrorStringGet(tLMDFUErr eError);
 //****************************************************************************
 typedef tLMDFUErr (__stdcall *tLMDFUInit)(void);
 typedef tLMDFUErr (__stdcall *tLMDFUDeviceOpen)(int iDeviceIndex,
-                                                tLMDFUDeviceInfo *psDevInfo,
-                                                tLMDFUHandle *phHandle);
+        tLMDFUDeviceInfo *psDevInfo,
+        tLMDFUHandle *phHandle);
 typedef tLMDFUErr (__stdcall *tLMDFUDeviceClose)(tLMDFUHandle hHandle,
-                                                 bool bReset);
+        bool bReset);
 typedef tLMDFUErr (__stdcall *tLMDFUDeviceStringGet)(tLMDFUHandle hHandle,
-                                                  unsigned char ucStringIndex,
-                                                  unsigned short usLanguageID,
-                                                  char *pcString,
-                                                  unsigned short *pusStringLen);
+        unsigned char ucStringIndex,
+        unsigned short usLanguageID,
+        char *pcString,
+        unsigned short *pusStringLen);
 typedef tLMDFUErr (__stdcall *tLMDFUDeviceASCIIStringGet)(tLMDFUHandle hHandle,
-                                                  unsigned char ucStringIndex,
-                                                  char *pcString,
-                                                  unsigned short *pusStringLen);
+        unsigned char ucStringIndex,
+        char *pcString,
+        unsigned short *pusStringLen);
 typedef tLMDFUErr (__stdcall *tLMDFUParamsGet)(tLMDFUHandle hHandle,
-                                               tLMDFUParams *psParams);
+        tLMDFUParams *psParams);
 typedef tLMDFUErr (__stdcall *tLMDFUIsValidImage)(tLMDFUHandle hHandle,
-                                                  unsigned char *pcDFUImage,
-                                                  unsigned long ulImageLen,
-                                                  bool *pbTivaFormat);
+        unsigned char *pcDFUImage,
+        unsigned long ulImageLen,
+        bool *pbTivaFormat);
 typedef tLMDFUErr (__stdcall *tLMDFUDownload)(tLMDFUHandle hHandle,
-                                              unsigned char *pcDFUImage,
-                                              unsigned long ulImageLen,
-                                              bool bVerify,
-                                              bool bIgnoreIDs,
-                                              HWND hwndNotify);
+        unsigned char *pcDFUImage,
+        unsigned long ulImageLen,
+        bool bVerify,
+        bool bIgnoreIDs,
+        HWND hwndNotify);
 typedef tLMDFUErr (__stdcall *tLMDFUDownloadBin)(tLMDFUHandle hHandle,
-                                                 unsigned char *pcBinaryImage,
-                                                 unsigned long ulImageLen,
-                                                 unsigned long ulStartAddr,
-                                                 bool bVerify,
-                                                 HWND hwndNotify);
+        unsigned char *pcBinaryImage,
+        unsigned long ulImageLen,
+        unsigned long ulStartAddr,
+        bool bVerify,
+        HWND hwndNotify);
 typedef tLMDFUErr (__stdcall *tLMDFUErase)(tLMDFUHandle hHandle,
-                                           unsigned long ulStartAddr,
-                                           unsigned long ulEraseLen,
-                                           bool bVerify,
-                                           HWND hwndNotify);
+        unsigned long ulStartAddr,
+        unsigned long ulEraseLen,
+        bool bVerify,
+        HWND hwndNotify);
 typedef tLMDFUErr (__stdcall *tLMDFUBlankCheck)(tLMDFUHandle hHandle,
-                                                unsigned long ulStartAddr,
-                                                unsigned long ulLen);
+        unsigned long ulStartAddr,
+        unsigned long ulLen);
 typedef tLMDFUErr (__stdcall *tLMDFUUpload)(tLMDFUHandle hHandle,
-                                            unsigned char *pcBuffer,
-                                            unsigned long ulStartAddr,
-                                            unsigned long ulImageLen,
-                                            bool bRaw, HWND hwndNotify);
+        unsigned char *pcBuffer,
+        unsigned long ulStartAddr,
+        unsigned long ulImageLen,
+        bool bRaw, HWND hwndNotify);
 typedef tLMDFUErr (__stdcall *tLMDFUStatusGet)(tLMDFUHandle hHandle,
-                                               tDFUStatus *pStatus);
+        tDFUStatus *pStatus);
 typedef char * (__stdcall *tLMDFUErrorStringGet)(tLMDFUErr eError);
 typedef tLMDFUErr (__stdcall *tLMDFUModeSwitch)(tLMDFUHandle hHandle);
 

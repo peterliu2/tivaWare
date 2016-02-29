@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -57,10 +57,8 @@ Reflect(uint32_t ui32Ref, uint8_t ui8Ch)
     //
     // Swap bit 0 for bit 7, bit 1 for bit 6, etc.
     //
-    for(i16Loop = 1; i16Loop < (ui8Ch + 1); i16Loop++)
-    {
-        if(ui32Ref & 1)
-        {
+    for(i16Loop = 1; i16Loop < (ui8Ch + 1); i16Loop++) {
+        if(ui32Ref & 1) {
             ui32Value |= 1 << (ui8Ch - i16Loop);
         }
         ui32Ref >>= 1;
@@ -89,17 +87,15 @@ InitCRC32Table(void)
     //
     ui32Polynomial = 0x04c11db7;
 
-    for(i16Loop = 0; i16Loop <= 0xFF; i16Loop++)
-    {
+    for(i16Loop = 0; i16Loop <= 0xFF; i16Loop++) {
         g_pui32CRC32Table[i16Loop]=Reflect(i16Loop, 8) << 24;
-          for (i16Bit = 0; i16Bit < 8; i16Bit++)
-          {
-              g_pui32CRC32Table[i16Loop] = ((g_pui32CRC32Table[i16Loop] << 1) ^
-                                            (g_pui32CRC32Table[i16Loop] &
-                                             ((uint32_t)1 << 31) ?
-                                             ui32Polynomial : 0));
-          }
-          g_pui32CRC32Table[i16Loop] = Reflect(g_pui32CRC32Table[i16Loop], 32);
+        for (i16Bit = 0; i16Bit < 8; i16Bit++) {
+            g_pui32CRC32Table[i16Loop] = ((g_pui32CRC32Table[i16Loop] << 1) ^
+                                          (g_pui32CRC32Table[i16Loop] &
+                                           ((uint32_t)1 << 31) ?
+                                           ui32Polynomial : 0));
+        }
+        g_pui32CRC32Table[i16Loop] = Reflect(g_pui32CRC32Table[i16Loop], 32);
     }
 }
 
@@ -126,8 +122,7 @@ CalculateCRC32(uint8_t *pui8Data, uint32_t ui32Length, uint32_t ui32CRC)
     // Perform the algorithm on each byte in the supplied buffer using the
     // lookup table values calculated in InitCRC32Table().
     //
-    while(ui32Count--)
-    {
+    while(ui32Count--) {
         ui8Char = *pui8Buffer++;
         ui32CRC = (ui32CRC >> 8) ^ g_pui32CRC32Table[(ui32CRC & 0xFF) ^
                   ui8Char];
@@ -166,16 +161,13 @@ CheckImageCRC32(uint32_t *pui32Image)
     // Determine the size of flash (giving an upper bound for the image
     // size).
     //
-    if(CLASS_IS_TM4C129)
-    {
+    if(CLASS_IS_TM4C129) {
         //
         // Get the flash size from the FLASH_PP register.
         //
         ui32FlashSize = ((2048 * ((HWREG(FLASH_PP) & FLASH_PP_SIZE_M) + 1)) -
                          APP_START_ADDRESS);
-    }
-    else
-    {
+    } else {
         //
         // Compute the size of the flash.
         //
@@ -189,22 +181,19 @@ CheckImageCRC32(uint32_t *pui32Image)
     // IC-specific vectors, we only need to search 257 words into memory before
     // giving up.
     //
-    for(ui32Loop = 0; ui32Loop < 257; ui32Loop++)
-    {
+    for(ui32Loop = 0; ui32Loop < 257; ui32Loop++) {
         //
         // Have we found the header marker words?
         //
         if((pui32Image[ui32Loop] == 0xFF01FF02) &&
-           (pui32Image[ui32Loop + 1] == 0xFF03FF04))
-        {
+                (pui32Image[ui32Loop + 1] == 0xFF03FF04)) {
             //
             // Yes.  Check to see if the length field is 0xFFFFFFFF.  This
             // likely indicates that the image has not been processed by the
             // binpack tool which adds the length and CRC information to the
             // image header.
             //
-            if(pui32Image[ui32Loop + 2] == 0xFFFFFFFF)
-            {
+            if(pui32Image[ui32Loop + 2] == 0xFFFFFFFF) {
                 //
                 // The header reports an image size of 0 so we can't go on and
                 // check the CRC.
@@ -220,9 +209,8 @@ CheckImageCRC32(uint32_t *pui32Image)
             // scanned through.
             //
             if((pui32Image[ui32Loop + 2] > ui32FlashSize) ||
-               (pui32Image[ui32Loop + 2] <
-                ((ui32Loop + 4) * sizeof(uint32_t))))
-            {
+                    (pui32Image[ui32Loop + 2] <
+                     ((ui32Loop + 4) * sizeof(uint32_t)))) {
                 //
                 // The header reports an image size that is larger than the
                 // available flash so this is obviously incorrect.  Fail the
@@ -241,19 +229,16 @@ CheckImageCRC32(uint32_t *pui32Image)
             ui32CRC = CalculateCRC32((uint8_t *)&pui32Image[ui32Loop + 4],
                                      (pui32Image[ui32Loop + 2] -
                                       ((ui32Loop + 4) * sizeof(uint32_t))),
-                                      ui32CRC);
+                                     ui32CRC);
             ui32CRC ^= 0xffffffff;
 
             //
             // Determine whether the calculated CRC matches the value stored
             // in the image information header.
             //
-            if(ui32CRC == pui32Image[ui32Loop + 3])
-            {
+            if(ui32CRC == pui32Image[ui32Loop + 3]) {
                 return(CHECK_CRC_OK);
-            }
-            else
-            {
+            } else {
                 return(CHECK_CRC_BAD_CRC);
             }
         }

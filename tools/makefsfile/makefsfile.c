@@ -9,20 +9,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -36,8 +36,7 @@
 #include <errno.h>
 #include <sys/stat.h>
 
-typedef struct _tFileInfo_
-{
+typedef struct _tFileInfo_ {
     struct _tFileInfo_ *psNext;
     char *pszFileName;
     char *pszStructName;
@@ -72,13 +71,12 @@ long g_lFileSizeOffset = 0;
 FILE *g_fhOutput = NULL;
 tFileInfo g_sFileHead = { NULL, NULL, NULL, 0 };
 
-char *g_pszDefaultExcludeList[] =
-{
-   ".svn",
-   "CVS",
-   "thumbs.db",
-   "filelist.txt",
-   "dirlist.txt"
+char *g_pszDefaultExcludeList[] = {
+    ".svn",
+    "CVS",
+    "thumbs.db",
+    "filelist.txt",
+    "dirlist.txt"
 };
 
 #define NUM_EXCLUDE_STRINGS (sizeof(g_pszDefaultExcludeList) / sizeof(char *))
@@ -104,26 +102,30 @@ int g_iDirCount = 0;
 // HTTP header strings for various filename extensions.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     char *pszExtension;
     char *pszHTTPHeader;
 }
 tHTTPHeader;
 
-tHTTPHeader g_sHTTPHeaders[] =
-{
+tHTTPHeader g_sHTTPHeaders[] = {
     { "html",  "Content-type: text/html\r\n" },
     { "htm",   "Content-type: text/html\r\n" },
-    { "shtml", "Content-type: text/html\r\n"
-               "Expires: Fri, 10 Apr 2008 14:00:00 GMT\r\n"
-               "Pragma: no-cache\r\n"},
-    { "shtm",  "Content-type: text/html\r\n"
-               "Expires: Fri, 10 Apr 2008 14:00:00 GMT\r\n"
-               "Pragma: no-cache\r\n"},
-    { "ssi",   "Content-type: text/html\r\n"
-               "Expires: Fri, 10 Apr 2008 14:00:00 GMT\r\n"
-               "Pragma: no-cache\r\n"},
+    {
+        "shtml", "Content-type: text/html\r\n"
+        "Expires: Fri, 10 Apr 2008 14:00:00 GMT\r\n"
+        "Pragma: no-cache\r\n"
+    },
+    {
+        "shtm",  "Content-type: text/html\r\n"
+        "Expires: Fri, 10 Apr 2008 14:00:00 GMT\r\n"
+        "Pragma: no-cache\r\n"
+    },
+    {
+        "ssi",   "Content-type: text/html\r\n"
+        "Expires: Fri, 10 Apr 2008 14:00:00 GMT\r\n"
+        "Pragma: no-cache\r\n"
+    },
     { "gif",   "Content-type: image/gif\r\n" },
     { "png",   "Content-type: image/png\r\n" },
     { "jpg",   "Content-type: image/jpeg\r\n" },
@@ -134,9 +136,11 @@ tHTTPHeader g_sHTTPHeaders[] =
     { "swf",   "Content-type: application/x-shockwave-flash\r\n" },
     { "ram",   "Content-type: audio/x-pn-realaudio\r\n" },
     { "css",   "Content-type: text/css\r\n" },
-    { "xml",   "Content-type: text/xml\r\n"
-               "Expires: Fri, 10 Apr 2008 14:00:00 GMT\r\n"
-               "Pragma: no-cache\r\n"},
+    {
+        "xml",   "Content-type: text/xml\r\n"
+        "Expires: Fri, 10 Apr 2008 14:00:00 GMT\r\n"
+        "Pragma: no-cache\r\n"
+    },
     { "txt",   "Content-type: text/plain\r\n" }
 };
 
@@ -177,8 +181,7 @@ ShowHelp(void)
     //
     // Only print help if we are not in quiet mode.
     //
-    if(g_bQuiet)
-    {
+    if(g_bQuiet) {
         return;
     }
 
@@ -238,8 +241,7 @@ PopulateExcludeList(char *pszFile)
     //
     fhExclude = fopen(pszFile, "rb");
 
-    if(!fhExclude)
-    {
+    if(!fhExclude) {
         return(false);
     }
 
@@ -255,8 +257,7 @@ PopulateExcludeList(char *pszFile)
     // Allocate a block of memory to hold the strings.
     //
     g_pszUserExcludeStrings = malloc(lSize);
-    if(!g_pszUserExcludeStrings)
-    {
+    if(!g_pszUserExcludeStrings) {
         return(false);
     }
 
@@ -273,8 +274,7 @@ PopulateExcludeList(char *pszFile)
     //
     // Did we read everything we expected?
     //
-    if(lRead != lSize)
-    {
+    if(lRead != lSize) {
         //
         // No - we didn't read the expected number of bytes.
         //
@@ -291,10 +291,8 @@ PopulateExcludeList(char *pszFile)
     bLastWasZero = true;
     g_ulNumUserExcludeFiles = 0;
 
-    for(lLoop = 0; lLoop < lSize; lLoop++)
-    {
-        switch(g_pszUserExcludeStrings[lLoop])
-        {
+    for(lLoop = 0; lLoop < lSize; lLoop++) {
+        switch(g_pszUserExcludeStrings[lLoop]) {
             case '\r':
                 //
                 // Do nothing - we throw away all '\r' characters.
@@ -306,8 +304,7 @@ PopulateExcludeList(char *pszFile)
                 // Substitute a '\n' with '\0' unless we just inserted a 0
                 // in which case we skip the character.
                 //
-                if(!bLastWasZero)
-                {
+                if(!bLastWasZero) {
                     g_ulNumUserExcludeFiles++;
                     *pszDest++ = '\0';
                     bLastWasZero = true;
@@ -315,8 +312,7 @@ PopulateExcludeList(char *pszFile)
                 break;
 
             case '\0':
-                if(!bLastWasZero)
-                {
+                if(!bLastWasZero) {
                     g_ulNumUserExcludeFiles++;
                     *pszDest++ = g_pszUserExcludeStrings[lLoop];
                     bLastWasZero = true;
@@ -350,26 +346,21 @@ DumpExcludeList(void)
     //
     // Dump the exclude list contents.
     //
-    if(g_pszExclude)
-    {
+    if(g_pszExclude) {
         //
         // We are using a user-supplied exclude list.  Dump this.
         //
         pszDest = g_pszUserExcludeStrings;
 
-        for(lLoop = 0; lLoop < g_ulNumUserExcludeFiles; lLoop++)
-        {
+        for(lLoop = 0; lLoop < g_ulNumUserExcludeFiles; lLoop++) {
             printf("  %s\n", pszDest);
             pszDest += (strlen(pszDest) + 1);
         }
-    }
-    else
-    {
+    } else {
         //
         // We are using the default internal exclude list. Dump this.
         //
-        for(lLoop = 0; lLoop < NUM_EXCLUDE_STRINGS; lLoop++)
-        {
+        for(lLoop = 0; lLoop < NUM_EXCLUDE_STRINGS; lLoop++) {
             printf("  %s\n", g_pszDefaultExcludeList[lLoop]);
         }
     }
@@ -399,34 +390,28 @@ ParseCommandLine(int argc, char *argv[])
     bShowHelp = false;
     bExcludeOK = true;
 
-    while(1)
-    {
+    while(1) {
         //
         // Get the next command line parameter.
         //
         iRetcode = getopt(argc, argv, "i:o:x:hv?qrbf");
 
-        if(iRetcode == -1)
-        {
+        if(iRetcode == -1) {
             break;
         }
 
-        switch(iRetcode)
-        {
-            case 'i':
-            {
+        switch(iRetcode) {
+            case 'i': {
                 g_pszInputDir = optarg;
                 break;
             }
 
-            case 'o':
-            {
+            case 'o': {
                 g_pszOutput = optarg;
                 break;
             }
 
-            case 'x':
-            {
+            case 'x': {
                 g_pszExclude = optarg;
 
                 //
@@ -434,51 +419,43 @@ ParseCommandLine(int argc, char *argv[])
                 // file.
                 //
                 bExcludeOK = PopulateExcludeList(g_pszExclude);
-                if(!bExcludeOK)
-                {
+                if(!bExcludeOK) {
                     bShowHelp = true;
                 }
                 break;
             }
 
-            case 'f':
-            {
+            case 'f': {
                 g_bSingleFile = true;
                 break;
             }
 
-            case 'h':
-            {
+            case 'h': {
                 g_bExcludeHeaders = true;
                 break;
             }
 
-            case 'b':
-            {
+            case 'b': {
                 g_bBinaryOutput = true;
                 break;
             }
 
-            case 'v':
-            {
+            case 'v': {
                 g_bVerbose = true;
                 break;
             }
 
-            case 'q':
-            {
+            case 'q': {
                 g_bQuiet = true;
                 break;
             }
 
-            case 'r':
-            {
+            case 'r': {
                 g_bOverwrite = true;
                 break;
             }
 
-            case '?':
-            {
+            case '?': {
                 bShowHelp = true;
                 break;
             }
@@ -488,20 +465,17 @@ ParseCommandLine(int argc, char *argv[])
     //
     // Show the welcome banner unless we have been told to be quiet.
     //
-    if(!g_bQuiet)
-    {
+    if(!g_bQuiet) {
         PrintWelcome();
     }
 
-    if(bShowHelp || (g_pszInputDir == NULL))
-    {
+    if(bShowHelp || (g_pszInputDir == NULL)) {
         ShowHelp();
 
         //
         // Was there a problem with the exclude file?
         //
-        if(bExcludeOK == false)
-        {
+        if(bExcludeOK == false) {
             printf("\nThere was a problem reading exclude file %s.\n",
                    g_pszExclude);
         }
@@ -509,8 +483,7 @@ ParseCommandLine(int argc, char *argv[])
         //
         // Make sure we were given an input file.
         //
-        if(g_pszInputDir == NULL)
-        {
+        if(g_pszInputDir == NULL) {
             printf("\nAn input directory must be specified using the -i "
                    "parameter.\n");
         }
@@ -535,8 +508,7 @@ ParseCommandLine(int argc, char *argv[])
 void
 DumpCommandLineParameters(void)
 {
-    if(!g_bQuiet && g_bVerbose)
-    {
+    if(!g_bQuiet && g_bVerbose) {
         printf("Input %s   %s\n", g_bSingleFile ? "file:     " : "directory:",
                g_pszInputDir);
         printf("Output file:       %s\n", g_pszOutput);
@@ -544,15 +516,12 @@ DumpCommandLineParameters(void)
                ((g_bBinaryOutput && !g_bSingleFile)? "Binary" : "ASCII C"));
         printf("Overwrite output?: %s\n", g_bOverwrite ? "Yes" : "No");
 
-        if(!g_bSingleFile)
-        {
+        if(!g_bSingleFile) {
             printf("Exclude headers?:  %s\n", g_bExcludeHeaders ? "Yes" : "No");
             printf("Exclude file:      %s\n\n", (g_pszExclude == NULL) ? "None" :
-                                              g_pszExclude);
+                   g_pszExclude);
             DumpExcludeList();
-        }
-        else
-        {
+        } else {
             printf("\n");
         }
     }
@@ -575,12 +544,10 @@ OpenOutputFile(char *szFile)
     // First check to see if the file already exists unless we are to overwrite
     // it automatically.
     //
-    if(!g_bOverwrite)
-    {
+    if(!g_bOverwrite) {
         fhOut = fopen(szFile, "r");
 
-        if(fhOut)
-        {
+        if(fhOut) {
             //
             // Close the file.
             //
@@ -590,21 +557,17 @@ OpenOutputFile(char *szFile)
             // If we are not running quietly, prompt the user as to what they
             // want to do.
             //
-            if(!g_bQuiet)
-            {
+            if(!g_bQuiet) {
                 printf("File %s exists. Overwrite? ", szFile);
                 iResponse = getc(stdin);
-                if((iResponse != 'y') && (iResponse != 'Y'))
-                {
+                if((iResponse != 'y') && (iResponse != 'Y')) {
                     //
                     // The user didn't respond with 'y' or 'Y' so return an
                     // error and don't overwrite the file.
                     //
                     return(NULL);
                 }
-            }
-            else
-            {
+            } else {
                 //
                 // In quiet mode but -r has not been specified so don't
                 // overwrite.
@@ -618,8 +581,7 @@ OpenOutputFile(char *szFile)
     // If we get here, it is safe to open and, possibly, overwrite the output
     // file.
     //
-    if(g_bVerbose)
-    {
+    if(g_bVerbose) {
         printf("Opening output file %s\n", szFile);
     }
 
@@ -629,10 +591,8 @@ OpenOutputFile(char *szFile)
     //
     fhOut = fopen(szFile, g_bBinaryOutput ? "wb" : "w");
 
-    if(fhOut)
-    {
-        if(g_bBinaryOutput)
-        {
+    if(fhOut) {
+        if(g_bBinaryOutput) {
             //
             // Write the marker word "FIMG" at the beginning of the output
             // file so that the parser knows this is a position-independent
@@ -658,9 +618,7 @@ OpenOutputFile(char *szFile)
             // we have already written.
             //
             g_ulTotalSize = 8;
-        }
-        else
-        {
+        } else {
             //
             // We are writing an ASCII C output file so add a header to
             // describe what the file contains.
@@ -702,39 +660,32 @@ IncludeThisFile(char *pszFile)
     // If the file exclude list has not been overridden, check the filename
     // against our default list.
     //
-    if(g_pszExclude == NULL)
-    {
+    if(g_pszExclude == NULL) {
         //
         // Look at each of the default exclude strings in turn.
         //
-        for(iLoop = 0; iLoop < NUM_EXCLUDE_STRINGS; iLoop++)
-        {
+        for(iLoop = 0; iLoop < NUM_EXCLUDE_STRINGS; iLoop++) {
             //
             // Does this file name match the exclude list entry?
             //
-            if(!strcmp(pszFile, g_pszDefaultExcludeList[iLoop]))
-            {
+            if(!strcmp(pszFile, g_pszDefaultExcludeList[iLoop])) {
                 //
                 // Yes - this file is to be excluded.
                 //
                 return(false);
             }
         }
-    }
-    else
-    {
+    } else {
         //
         // Search the user exclude list rather than the default internal one.
         //
         pszString = g_pszUserExcludeStrings;
 
-        for(iLoop = 0; iLoop < g_ulNumUserExcludeFiles; iLoop++)
-        {
+        for(iLoop = 0; iLoop < g_ulNumUserExcludeFiles; iLoop++) {
             //
             // Does this file name match the exclude list entry?
             //
-            if(!strcmp(pszFile, pszString))
-            {
+            if(!strcmp(pszFile, pszString)) {
                 //
                 // Yes - this file is to be excluded.
                 //
@@ -774,12 +725,9 @@ GetHTTPHeaders(char *pszDest, int iDestLen, char *pszFile)
     //
     // Is this a normal file or our special-case 404 file?
     //
-    if(strstr(pszFile, "404"))
-    {
+    if(strstr(pszFile, "404")) {
         snprintf(pszDest, iLen, "HTTP/1.0 404 File not found\r\n");
-    }
-    else
-    {
+    } else {
         snprintf(pszDest, iLen, "HTTP/1.0 200 OK\r\n");
     }
 
@@ -792,13 +740,11 @@ GetHTTPHeaders(char *pszDest, int iDestLen, char *pszFile)
     //
     // Was the buffer too small?
     //
-    if(iLen <= 0)
-    {
+    if(iLen <= 0) {
         //
         // Yes - fail the call.
         //
-        if(!g_bQuiet)
-        {
+        if(!g_bQuiet) {
             printf("%d byte HTTP header buffer exhausted after line 1!\n",
                    iDestLen);
             printf("Current header is\n%s\n", pszDest);
@@ -822,13 +768,11 @@ GetHTTPHeaders(char *pszDest, int iDestLen, char *pszFile)
     //
     // Was the buffer too small?
     //
-    if(iLen <= 0)
-    {
+    if(iLen <= 0) {
         //
         // Yes - fail the call.
         //
-        if(!g_bQuiet)
-        {
+        if(!g_bQuiet) {
             printf("HTTP header buffer exhausted after server ID!\n");
         }
 
@@ -841,14 +785,12 @@ GetHTTPHeaders(char *pszDest, int iDestLen, char *pszFile)
     //
     pszExt = NULL;
     pszWork = strchr(pszFile, '.');
-    while(pszWork)
-    {
+    while(pszWork) {
         pszExt = pszWork + 1;
         pszWork = strchr(pszExt, '.');
     }
 
-    if(g_bVerbose)
-    {
+    if(g_bVerbose) {
         printf("File extension is %s.\n", pszExt);
     }
 
@@ -860,16 +802,13 @@ GetHTTPHeaders(char *pszDest, int iDestLen, char *pszFile)
     //
     // Now determine the content type and any content-specific headers
     //
-    for(iLoop = 0; (iLoop < NUM_HTTP_HEADERS) && pszExt; iLoop++)
-    {
+    for(iLoop = 0; (iLoop < NUM_HTTP_HEADERS) && pszExt; iLoop++) {
         //
         // Have we found a matching extension?
         //
-        if(!strcmp(g_sHTTPHeaders[iLoop].pszExtension, pszExt))
-        {
+        if(!strcmp(g_sHTTPHeaders[iLoop].pszExtension, pszExt)) {
             pszWork = g_sHTTPHeaders[iLoop].pszHTTPHeader;
-            if(g_bVerbose)
-            {
+            if(g_bVerbose) {
                 printf("File extension found. Header is:\n%s\n", pszWork);
             }
             break;
@@ -879,15 +818,13 @@ GetHTTPHeaders(char *pszDest, int iDestLen, char *pszFile)
     //
     // Did we find a matching extension?
     //
-    if(!pszWork)
-    {
+    if(!pszWork) {
         //
         // No - use the default, plain text file type.
         //
         pszWork = DEFAULT_HTTP_HEADER;
 
-        if(g_bVerbose)
-        {
+        if(g_bVerbose) {
             printf("Using default HTTP header for extension %s\n", pszExt);
         }
 
@@ -907,8 +844,7 @@ GetHTTPHeaders(char *pszDest, int iDestLen, char *pszFile)
     //
     // Was the buffer too small?
     //
-    if(iLen <= 0)
-    {
+    if(iLen <= 0) {
         //
         // Yes - fail the call.
         //
@@ -937,8 +873,7 @@ DumpHexToOutput(FILE *fhOutput, char *pcData, long lSize)
     //
     // Are we outputing in ASCII format?
     //
-    if(!g_bBinaryOutput)
-    {
+    if(!g_bBinaryOutput) {
         //
         // Yes - ASCII output so indent the start of the first line.
         //
@@ -947,8 +882,7 @@ DumpHexToOutput(FILE *fhOutput, char *pcData, long lSize)
         //
         // Dump the bytes one at a time.
         //
-        for(lLoop = 0; lLoop < lSize; lLoop++)
-        {
+        for(lLoop = 0; lLoop < lSize; lLoop++) {
             //
             // Dump a character in 0xZZ format.
             //
@@ -958,16 +892,14 @@ DumpHexToOutput(FILE *fhOutput, char *pcData, long lSize)
             //
             // Exit the loop if we failed to write to the output.
             //
-            if(!iRetcode)
-            {
+            if(!iRetcode) {
                 break;
             }
 
             //
             // Take a new line after every 8 characters.
             //
-            if((lLoop % 8) == 7)
-            {
+            if((lLoop % 8) == 7) {
                 fprintf(fhOutput, "\n   ");
             }
         }
@@ -976,9 +908,7 @@ DumpHexToOutput(FILE *fhOutput, char *pcData, long lSize)
         // End the final line.
         //
         fprintf(fhOutput, "\n");
-    }
-    else
-    {
+    } else {
         //
         // We are outputing binary so merely write the input data directly
         // to the output file.
@@ -1052,8 +982,7 @@ DumpFileContents(FILE *fhOutput, char *pszFile, tFileInfo *pFileInfo,
     //
     // Get the HTTP headers if necessary.
     //
-    if(!bNoHeaders)
-    {
+    if(!bNoHeaders) {
         //
         // Get the HTTP headers appropriate for this file type.
         //
@@ -1063,17 +992,13 @@ DumpFileContents(FILE *fhOutput, char *pszFile, tFileInfo *pFileInfo,
         //
         // Did we get the headers successfully?
         //
-        if(!bRetcode)
-        {
-            if(g_bVerbose)
-            {
+        if(!bRetcode) {
+            if(g_bVerbose) {
                 printf("Failure determining HTTP headers!\n");
             }
             return(false);
         }
-    }
-    else
-    {
+    } else {
         //
         // No HTTP headers.
         //
@@ -1083,10 +1008,8 @@ DumpFileContents(FILE *fhOutput, char *pszFile, tFileInfo *pFileInfo,
     //
     // Open the file for binary read operations.
     fhFile = fopen(pszFile, "rb");
-    if(!fhFile)
-    {
-        if(g_bVerbose)
-        {
+    if(!fhFile) {
+        if(g_bVerbose) {
             printf("Can't open file %s!\n", pszFile);
         }
         return(false);
@@ -1102,10 +1025,8 @@ DumpFileContents(FILE *fhOutput, char *pszFile, tFileInfo *pFileInfo,
     //
     // Zero length files are a problem.
     //
-    if(pFileInfo->lFileSize == 0)
-    {
-        if(g_bVerbose)
-        {
+    if(pFileInfo->lFileSize == 0) {
+        if(g_bVerbose) {
             printf("Zero length file!\n");
         }
 
@@ -1116,10 +1037,8 @@ DumpFileContents(FILE *fhOutput, char *pszFile, tFileInfo *pFileInfo,
     // Allocate a buffer for the file data.
     //
     pcFileBuffer = malloc(pFileInfo->lFileSize);
-    if(!pcFileBuffer)
-    {
-        if(g_bVerbose)
-        {
+    if(!pcFileBuffer) {
+        if(g_bVerbose) {
             printf("Can't allocate file read buffer!\n");
         }
         return(false);
@@ -1138,13 +1057,11 @@ DumpFileContents(FILE *fhOutput, char *pszFile, tFileInfo *pFileInfo,
     //
     // Did we read everything we expected?
     //
-    if(lRead != pFileInfo->lFileSize)
-    {
+    if(lRead != pFileInfo->lFileSize) {
         //
         // There was a problem reading the file.
         //
-        if(g_bVerbose)
-        {
+        if(g_bVerbose) {
             printf("Read %ld bytes but expected %ld!\n", lRead,
                    pFileInfo->lFileSize);
         }
@@ -1157,14 +1074,11 @@ DumpFileContents(FILE *fhOutput, char *pszFile, tFileInfo *pFileInfo,
     // Output the structure definition and header comment if we are
     // generating ASCII output.
     //
-    if(!g_bBinaryOutput || g_bSingleFile)
-    {
+    if(!g_bBinaryOutput || g_bSingleFile) {
         fprintf(fhOutput, "static const uint8_t data%s[] =\n{\n",
                 pFileInfo->pszStructName);
         fprintf(fhOutput, "    /* %s */\n", pFileInfo->pszFileName);
-    }
-    else
-    {
+    } else {
         //
         // We remember the current file pointer so that we can go back
         // and fix up the last offset once we have finished processing all
@@ -1179,9 +1093,9 @@ DumpFileContents(FILE *fhOutput, char *pszFile, tFileInfo *pFileInfo,
         // directory tree.
         //
         WriteLittleEndianDWORD(fhOutput, (17 +
-                               strlen(pFileInfo->pszFileName) +
-                               strlen(pcHTTPHeaders) +
-                               pFileInfo->lFileSize));
+                                          strlen(pFileInfo->pszFileName) +
+                                          strlen(pcHTTPHeaders) +
+                                          pFileInfo->lFileSize));
 
         //
         // Write the offset to the filename string.  The filename starts
@@ -1196,7 +1110,7 @@ DumpFileContents(FILE *fhOutput, char *pszFile, tFileInfo *pFileInfo,
         // its terminating 0.
         //
         WriteLittleEndianDWORD(fhOutput, (17 +
-                               strlen(pFileInfo->pszFileName)));
+                                          strlen(pFileInfo->pszFileName)));
 
         //
         // Write the size of the data.  This does not include the filename,
@@ -1210,15 +1124,12 @@ DumpFileContents(FILE *fhOutput, char *pszFile, tFileInfo *pFileInfo,
     // Dump the filename to the output.  Note that the "+ 1" here ensures
     // that we also dump the terminating zero character.
     //
-    if(!g_bSingleFile)
-    {
+    if(!g_bSingleFile) {
         bRetcode = DumpHexToOutput(fhOutput, pFileInfo->pszFileName,
                                    strlen(pFileInfo->pszFileName) + 1);
 
-        if(!bRetcode)
-        {
-            if(g_bVerbose)
-            {
+        if(!bRetcode) {
+            if(g_bVerbose) {
                 printf("Failed to write filename to output!\n");
             }
             free(pcFileBuffer);
@@ -1229,15 +1140,12 @@ DumpFileContents(FILE *fhOutput, char *pszFile, tFileInfo *pFileInfo,
         // If required, dump the HTTP headers to the output.  In this case, we don't
         // want the terminating zero character.
         //
-        if(!bNoHeaders)
-        {
+        if(!bNoHeaders) {
             bRetcode = DumpHexToOutput(fhOutput, pcHTTPHeaders,
                                        strlen(pcHTTPHeaders));
 
-            if(!bRetcode)
-            {
-                if(g_bVerbose)
-                {
+            if(!bRetcode) {
+                if(g_bVerbose) {
                     printf("Failed to write HTTP headers to output!\n");
                 }
                 free(pcFileBuffer);
@@ -1255,8 +1163,7 @@ DumpFileContents(FILE *fhOutput, char *pszFile, tFileInfo *pFileInfo,
     // Update the file size to include the headers that we may have appended
     // at the beginning.
     //
-    if(!bNoHeaders)
-    {
+    if(!bNoHeaders) {
         pFileInfo->lFileSize += strlen(pcHTTPHeaders);
     }
 
@@ -1268,8 +1175,7 @@ DumpFileContents(FILE *fhOutput, char *pszFile, tFileInfo *pFileInfo,
     //
     // Close the file data structure if outputing ASCII.
     //
-    if(!g_bBinaryOutput || g_bSingleFile)
-    {
+    if(!g_bBinaryOutput || g_bSingleFile) {
         fprintf(fhOutput, "};\n\n");
     }
 
@@ -1298,19 +1204,16 @@ FilterFilename(char *pszDest, char *pszSrc)
     // Loop through each character in the filename.  Make sure we include the
     // terminating zero.
     //
-    for(iLoop = 0; iLoop < (strlen(pszSrc) + 1); iLoop++)
-    {
+    for(iLoop = 0; iLoop < (strlen(pszSrc) + 1); iLoop++) {
         //
         // Check this character against each of the character in our token
         // string.
         //
-        for(iToken = 0; iToken < iNumTokens; iToken++)
-        {
+        for(iToken = 0; iToken < iNumTokens; iToken++) {
             //
             // Does this source character match the token character?
             //
-            if(pszSrc[iLoop] == pcToken[iToken])
-            {
+            if(pszSrc[iLoop] == pcToken[iToken]) {
                 //
                 // Yes - replace it with an underscore and exit the loop.
                 //
@@ -1323,8 +1226,7 @@ FilterFilename(char *pszDest, char *pszSrc)
         // If we drop out at the end of the inner loop, we didn't find a token
         // so copy the character from the source to the destination unmodified.
         //
-        if(iToken == iNumTokens)
-        {
+        if(iToken == iNumTokens) {
             pszDest[iLoop] = pszSrc[iLoop];
         }
     }
@@ -1347,8 +1249,7 @@ ProcessSingleFile(char *pszFile, char *pszRootDir)
     //
     // Tell the user what we are up to.
     //
-    if(g_bVerbose)
-    {
+    if(g_bVerbose) {
         printf("Processing %s...\n", pszFile);
     }
 
@@ -1357,16 +1258,12 @@ ProcessSingleFile(char *pszFile, char *pszRootDir)
     // new file system. This means removing the pszRootDir substring from the
     // start of pszFile.
     //
-    if(!strncmp(pszFile, pszRootDir, strlen(pszRootDir)))
-    {
+    if(!strncmp(pszFile, pszRootDir, strlen(pszRootDir))) {
         pszFSFileName = pszFile + strlen(pszRootDir);
-        if(g_bVerbose)
-        {
+        if(g_bVerbose) {
             printf("Final filename is %s\n", pszFSFileName);
         }
-    }
-    else
-    {
+    } else {
         //
         // Weird - the root directory doesn't appear in the passed filename.
         //
@@ -1378,10 +1275,8 @@ ProcessSingleFile(char *pszFile, char *pszRootDir)
     //
     pFileInfo = malloc(sizeof(tFileInfo));
 
-    if(!pFileInfo)
-    {
-        if(g_bVerbose)
-        {
+    if(!pFileInfo) {
+        if(g_bVerbose) {
             printf("Can't allocate memory to store file information!\n");
         }
         return(false);
@@ -1397,10 +1292,8 @@ ProcessSingleFile(char *pszFile, char *pszRootDir)
     //
     // Make sure we got the required memory.
     //
-    if(!pFileInfo->pszFileName || !pFileInfo->pszStructName)
-    {
-        if(g_bVerbose)
-        {
+    if(!pFileInfo->pszFileName || !pFileInfo->pszStructName) {
+        if(g_bVerbose) {
             free(pFileInfo);
             printf("Can't allocate memory to store filename information!\n");
         }
@@ -1418,8 +1311,7 @@ ProcessSingleFile(char *pszFile, char *pszRootDir)
     //
     FilterFilename(pFileInfo->pszStructName, pszFSFileName);
 
-    if(g_bVerbose)
-    {
+    if(g_bVerbose) {
         printf("Filtered filename is %s\n", pFileInfo->pszStructName);
     }
 
@@ -1432,17 +1324,14 @@ ProcessSingleFile(char *pszFile, char *pszRootDir)
     //
     // Was there a problem?
     //
-    if(!bRetcode)
-    {
+    if(!bRetcode) {
         //
         // Yes - free the memory we allocated.
         //
         free(pFileInfo->pszFileName);
         free(pFileInfo->pszStructName);
         free(pFileInfo);
-    }
-    else
-    {
+    } else {
         //
         // The file was dumped successfully so link its information into the
         // list for later use in building the directory.
@@ -1481,8 +1370,7 @@ ProcessFilesInDirectory(char *pszDir)
     //
     g_iDirCount++;
 
-    if(g_bVerbose)
-    {
+    if(g_bVerbose) {
         printf("Changing to directory %s\n", pszDir);
     }
 
@@ -1494,18 +1382,15 @@ ProcessFilesInDirectory(char *pszDir)
     //
     // Read and process each entry in the directory
     //
-    while((psDirEntry = readdir(hDir)) != NULL)
-    {
+    while((psDirEntry = readdir(hDir)) != NULL) {
         //
         // Ignore "." and ".." directories and any file which is listed
         // in the exclude list.
         //
         if(!strcmp(psDirEntry->d_name, ".")  ||
-           !strcmp(psDirEntry->d_name, "..") ||
-           !IncludeThisFile(psDirEntry->d_name))
-        {
-            if(g_bVerbose)
-            {
+                !strcmp(psDirEntry->d_name, "..") ||
+                !IncludeThisFile(psDirEntry->d_name)) {
+            if(g_bVerbose) {
                 printf("Excluding %s\n", psDirEntry->d_name);
             }
             continue;
@@ -1518,21 +1403,17 @@ ProcessFilesInDirectory(char *pszDir)
         snprintf(szPath, FILENAME_MAX, "%s/%s",pszDir, psDirEntry->d_name);
         iRetcode = stat(szPath, &sFileInfo);
 
-        if(iRetcode == 0)
-        {
+        if(iRetcode == 0) {
             //
             // Is this a directory?
             //
-            if(S_ISDIR(sFileInfo.st_mode))
-            {
+            if(S_ISDIR(sFileInfo.st_mode)) {
                 //
                 // Yes - make a recursive call to this function to process the
                 // new directory.
                 //
                 bRetcode = ProcessFilesInDirectory(szPath);
-            }
-            else
-            {
+            } else {
                 //
                 // It's a file so go ahead and process it.
                 //
@@ -1542,17 +1423,13 @@ ProcessFilesInDirectory(char *pszDir)
             //
             // If something went wrong, return an error.
             //
-            if(!bRetcode)
-            {
-                if(g_bVerbose)
-                {
+            if(!bRetcode) {
+                if(g_bVerbose) {
                     printf("Error reported processing %s\n", szPath);
                 }
                 break;
             }
-        }
-        else
-        {
+        } else {
             printf("Can't get file info for %s! Returned %d. Errno %d\n",
                    szPath, iRetcode, errno);
             bRetcode = false;
@@ -1583,8 +1460,7 @@ main(int argc, char *argv[])
     bool bRetcode;
 
     iRetcode = ParseCommandLine(argc, argv);
-    if(!iRetcode)
-    {
+    if(!iRetcode) {
         return(1);
     }
 
@@ -1597,10 +1473,8 @@ main(int argc, char *argv[])
     // Open the output file for writing in ASCII mode.
     //
     g_fhOutput = OpenOutputFile(g_pszOutput);
-    if(!g_fhOutput)
-    {
-        if(g_pszUserExcludeStrings)
-        {
+    if(!g_fhOutput) {
+        if(g_pszUserExcludeStrings) {
             free(g_pszUserExcludeStrings);
         }
         return(2);
@@ -1612,8 +1486,7 @@ main(int argc, char *argv[])
     // spending any more time mucking with "od" and regular expressions to
     // generate a C array containing a single binary file.
     //
-    if(g_bSingleFile)
-    {
+    if(g_bSingleFile) {
         tFileInfo FileInfo;
 
         FileInfo.pszStructName = "File";
@@ -1624,9 +1497,7 @@ main(int argc, char *argv[])
         g_iDirCount = 1;
         g_ulTotalSize = FileInfo.lFileSize;
         iRetcode = (bRetcode ? 0 : 1);
-    }
-    else
-    {
+    } else {
         //
         // Start the (recursive) process of processing the files.
         //
@@ -1636,8 +1507,7 @@ main(int argc, char *argv[])
         // If we processed all the files successfully and are outputing ASCII,
         // we have some more to do.
         //
-        if(bRetcode)
-        {
+        if(bRetcode) {
             //
             // If we are outputing binary, the whole output is now complete aside
             // from patching the final "pNext" offset in the file. If generating
@@ -1658,8 +1528,7 @@ main(int argc, char *argv[])
             // Walk through the information we gathered on each file and output
             // the relevant structure definition.
             //
-            while(g_sFileHead.psNext)
-            {
+            while(g_sFileHead.psNext) {
                 //
                 // Increment our file counter.
                 //
@@ -1673,8 +1542,7 @@ main(int argc, char *argv[])
                 //
                 // If outputing ASCII, dump the file descriptor for this file.
                 //
-                if(!g_bBinaryOutput)
-                {
+                if(!g_bBinaryOutput) {
                     //
                     // What is the size of the filename string embedded in the file
                     // data?
@@ -1687,9 +1555,9 @@ main(int argc, char *argv[])
                             "{\n\t{\n\t\t%s%s,\n\t\tdata%s,\n\t\tdata%s + %ld,\n\t\tsizeof(data%s) - %ld\n\t}\n};\n\n",
                             (pszPrevious ? "file" : ""),
                             (pszPrevious ? pszPrevious : "NULL"),
-                             pFileInfo->pszStructName,
-                             pFileInfo->pszStructName, lSize,
-                             pFileInfo->pszStructName, lSize);
+                            pFileInfo->pszStructName,
+                            pFileInfo->pszStructName, lSize,
+                            pFileInfo->pszStructName, lSize);
 
                     //
                     // Update the binary size.
@@ -1700,8 +1568,7 @@ main(int argc, char *argv[])
                 //
                 // Free the previous filename string if one exists.
                 //
-                if(pszPrevious)
-                {
+                if(pszPrevious) {
                     free(pszPrevious);
                 }
 
@@ -1720,8 +1587,7 @@ main(int argc, char *argv[])
                 // one additional line to finish things off before we
                 // free the file info structure.
                 //
-                if((pFileInfo->psNext == NULL) && !g_bBinaryOutput)
-                {
+                if((pFileInfo->psNext == NULL) && !g_bBinaryOutput) {
                     fprintf(g_fhOutput, "#define FS_ROOT file%s\n\n",
                             pFileInfo->pszStructName);
                 }
@@ -1738,8 +1604,7 @@ main(int argc, char *argv[])
             //
             // Free the final previous filename string if one exists.
             //
-            if(pszPrevious)
-            {
+            if(pszPrevious) {
                 free(pszPrevious);
             }
 
@@ -1747,13 +1612,10 @@ main(int argc, char *argv[])
             // All files have been processed so now finish things off with the
             // #define which indicates the number of files.
             //
-            if(!g_bBinaryOutput)
-            {
+            if(!g_bBinaryOutput) {
                 iRetcode = fprintf(g_fhOutput, "#define FS_NUMFILES %d\n\n",
                                    iFileCount);
-            }
-            else
-            {
+            } else {
                 //
                 // In binary mode, we need to patch the offset of the last file
                 // descriptor written to the output to mark it as the last file
@@ -1772,8 +1634,7 @@ main(int argc, char *argv[])
                 // We also need to add the final binary size to the file system
                 // header.
                 //
-                if(iRetcode)
-                {
+                if(iRetcode) {
                     fseek(g_fhOutput, g_lFileSizeOffset, SEEK_SET);
                     iRetcode = (int)WriteLittleEndianDWORD(g_fhOutput,
                                                            g_ulTotalSize);
@@ -1791,23 +1652,18 @@ main(int argc, char *argv[])
             // last one will also fail so we don't need to check on every call.
             // Valid? Let's see...
             //
-            if(!iRetcode)
-            {
+            if(!iRetcode) {
                 //
                 // Set a non-zero application return code to indicate a failure.
                 //
                 iRetcode = 4;
-            }
-            else
-            {
+            } else {
                 //
                 // Set the final application return code to 0 to indicate success.
                 //
                 iRetcode = 0;
             }
-        }
-        else
-        {
+        } else {
             //
             // Set an error return code since we didn't complete the file
             // processing successfully.
@@ -1823,27 +1679,22 @@ main(int argc, char *argv[])
     //
     // Free the user exclude list if one exists.
     //
-    if(g_pszUserExcludeStrings)
-    {
+    if(g_pszUserExcludeStrings) {
         free(g_pszUserExcludeStrings);
     }
 
     //
     // Tell the user what happened.
     //
-    if(!g_bQuiet)
-    {
-        if(iRetcode == 0)
-        {
+    if(!g_bQuiet) {
+        if(iRetcode == 0) {
             printf("Completed successfully. "
                    "%d files from %d director%s processed.\n"
                    "Binary size %ld (0x%08lx) bytes\n",
                    iFileCount, g_iDirCount,
                    ((g_iDirCount == 1) ? "y" : "ies"), g_ulTotalSize,
                    g_ulTotalSize);
-        }
-        else
-        {
+        } else {
             printf("An error (%d) occured while processing files!\n",
                    iRetcode);
         }

@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2005-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -58,10 +58,10 @@ extern "C"
 //*****************************************************************************
 #define TIMER_CFG_ONE_SHOT       0x00000021  // Full-width one-shot timer
 #define TIMER_CFG_ONE_SHOT_UP    0x00000031  // Full-width one-shot up-count
-                                            // timer
+// timer
 #define TIMER_CFG_PERIODIC       0x00000022  // Full-width periodic timer
 #define TIMER_CFG_PERIODIC_UP    0x00000032  // Full-width periodic up-count
-                                            // timer
+// timer
 #define TIMER_CFG_RTC            0x01000000  // Full-width RTC timer
 #define TIMER_CFG_SPLIT_PAIR     0x04000000  // Two half-width timers
 #define TIMER_CFG_A_ONE_SHOT     0x00000021  // Timer A one-shot timer
@@ -83,37 +83,37 @@ extern "C"
 #define TIMER_CFG_B_CAP_TIME_UP  0x00001700  // Timer B event up-count timer
 #define TIMER_CFG_B_PWM          0x00000A00  // Timer B PWM output
 #define TIMER_CFG_A_ACT_TOINTD   0x00010000  // Timer A compare action disable
-                                             // time-out interrupt.
+// time-out interrupt.
 #define TIMER_CFG_A_ACT_NONE     0x00000000  // Timer A compare action none.
 #define TIMER_CFG_A_ACT_TOGGLE   0x00020000  // Timer A compare action toggle.
 #define TIMER_CFG_A_ACT_CLRTO    0x00040000  // Timer A compare action CCP
-                                             // clear on time-out.
+// clear on time-out.
 #define TIMER_CFG_A_ACT_SETTO    0x00060000  // Timer A compare action CCP set
-                                             // on time-out.
+// on time-out.
 #define TIMER_CFG_A_ACT_SETTOGTO 0x00080000  // Timer A compare action set CCP
-                                             // toggle on time-out.
+// toggle on time-out.
 #define TIMER_CFG_A_ACT_CLRTOGTO 0x000A0000  // Timer A compare action clear
-                                             // CCP toggle on time-out.
+// CCP toggle on time-out.
 #define TIMER_CFG_A_ACT_SETCLRTO 0x000C0000  // Timer A compare action set CCP
-                                             // clear on time-out.
+// clear on time-out.
 #define TIMER_CFG_A_ACT_CLRSETTO 0x000E0000  // Timer A compare action clear
-                                             // CCP set on time-out.
+// CCP set on time-out.
 #define TIMER_CFG_B_ACT_TOINTD   0x00100000  // Timer B compare action disable
-                                             // time-out interrupt.
+// time-out interrupt.
 #define TIMER_CFG_B_ACT_NONE     0x00000000  // Timer A compare action none.
 #define TIMER_CFG_B_ACT_TOGGLE   0x00200000  // Timer A compare action toggle.
 #define TIMER_CFG_B_ACT_CLRTO    0x00400000  // Timer A compare action CCP
-                                             // clear on time-out.
+// clear on time-out.
 #define TIMER_CFG_B_ACT_SETTO    0x00600000  // Timer A compare action CCP set
-                                             // on time-out.
+// on time-out.
 #define TIMER_CFG_B_ACT_SETTOGTO 0x00800000  // Timer A compare action set CCP
-                                             // toggle on time-out.
+// toggle on time-out.
 #define TIMER_CFG_B_ACT_CLRTOGTO 0x00A00000  // Timer A compare action clear
-                                             // CCP toggle on time-out.
+// CCP toggle on time-out.
 #define TIMER_CFG_B_ACT_SETCLRTO 0x00C00000  // Timer A compare action set CCP
-                                             // clear on time-out.
+// clear on time-out.
 #define TIMER_CFG_B_ACT_CLRSETTO 0x0000E000  // Timer A compare action clear
-                                             // CCP set on time-out.
+// CCP set on time-out.
 
 //*****************************************************************************
 //

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -119,8 +119,7 @@ static uint32_t g_ui32PowerConfig = USBHCD_VBUS_AUTO_HIGH;
 // The states for endpoint 0 during enumeration.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     //
     // The USB device is waiting on a request from the host controller on
     // endpoint 0.
@@ -174,8 +173,7 @@ tEP0State;
 // This structure holds the full state for the device enumeration.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // This is the pointer to the current data being sent out or received
     // on endpoint 0.
@@ -215,8 +213,7 @@ tHostState;
 // This variable holds the current state of endpoint 0.
 //
 //*****************************************************************************
-static volatile tHostState g_sUSBHEP0State =
-{
+static volatile tHostState g_sUSBHEP0State = {
     0,                          // pui8Data
     0,                          // ui32BytesRemaining
     0,                          // ui32DataSize
@@ -263,8 +260,7 @@ static void *g_ppvDriverInstance[MAX_USB_DEVICES + 1];
 // that is attached to a device.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // The current address for this pipe.
     //
@@ -361,8 +357,7 @@ tUSBHCDPipe;
 // The internal state of the device.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     eHCDDevDisconnected,
     eHCDDevConnected,
     eHCDDevConnectedHub,
@@ -379,7 +374,7 @@ typedef enum
 tUSBHDeviceState;
 
 static void ProcessUSBDeviceStateMachine(tUSBHDeviceState iOldState,
-                                         uint32_t ui32DevIndex);
+        uint32_t ui32DevIndex);
 
 //*****************************************************************************
 //
@@ -445,8 +440,7 @@ static void ProcessUSBDeviceStateMachine(tUSBHDeviceState iOldState,
 // This structure holds the state information for a given host controller.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint32_t ui32USBBase;
 
     tUSBHCDPipe sUSBControlPipe;
@@ -548,15 +542,13 @@ ConfigDescAlloc(tUSBHostDevice *psDevice, uint32_t ui32Size)
     uint32_t ui32Idx, ui32BlockSize, ui32PoolSize;
     uint8_t *pui8Pool;
 
-    if(g_sUSBHCD.psUSBDevice[0].psConfigDescriptor == 0)
-    {
+    if(g_sUSBHCD.psUSBDevice[0].psConfigDescriptor == 0) {
         //
         // 32 bit align the allocation.
         //
         ui32Size = (ui32Size + 3) & ~3;
 
-        if(g_sUSBHCD.ui32PoolSize < ui32Size)
-        {
+        if(g_sUSBHCD.ui32PoolSize < ui32Size) {
             return(0);
         }
 
@@ -577,13 +569,12 @@ ConfigDescAlloc(tUSBHostDevice *psDevice, uint32_t ui32Size)
         // sure that each block is a multiple of 4 bytes.
         //
         ui32BlockSize = (ui32PoolSize / MAX_USB_DEVICES) & ~3;
-        for(ui32Idx = 1; ui32Idx < MAX_USB_DEVICES; ui32Idx++)
-        {
+        for(ui32Idx = 1; ui32Idx < MAX_USB_DEVICES; ui32Idx++) {
             g_sUSBHCD.psUSBDevice[ui32Idx].psConfigDescriptor =
-                        (tConfigDescriptor *)(pui8Pool +
-                                              (ui32Idx * ui32BlockSize));
+                (tConfigDescriptor *)(pui8Pool +
+                                      (ui32Idx * ui32BlockSize));
             g_sUSBHCD.psUSBDevice[ui32Idx].ui32ConfigDescriptorSize =
-                            ui32BlockSize;
+                ui32BlockSize;
         }
     }
     return(ui32Size);
@@ -603,12 +594,10 @@ ConfigDescFree(tUSBHostDevice *psDevice)
     //
     // If this is the root device then deallocate.
     //
-    if(&g_sUSBHCD.psUSBDevice[0] == psDevice)
-    {
-        for(ui32Idx = 0; ui32Idx < MAX_USB_DEVICES; ui32Idx++)
-        {
+    if(&g_sUSBHCD.psUSBDevice[0] == psDevice) {
+        for(ui32Idx = 0; ui32Idx < MAX_USB_DEVICES; ui32Idx++) {
             g_sUSBHCD.psUSBDevice[ui32Idx].ui32Flags &=
-                                                    ~USBHDEV_FLAG_ALLOCATED;
+                ~USBHDEV_FLAG_ALLOCATED;
             g_sUSBHCD.psUSBDevice[ui32Idx].psConfigDescriptor = 0;
             g_sUSBHCD.psUSBDevice[ui32Idx].ui32ConfigDescriptorSize = 0;
         }
@@ -634,8 +623,7 @@ HCDInstanceToDevIndex(uint32_t ui32Instance)
     //
     // If the above math went negative or is too large just return 0xff.
     //
-    if(ui32DevIndex > MAX_USB_DEVICES)
-    {
+    if(ui32DevIndex > MAX_USB_DEVICES) {
         ui32DevIndex = 0xff;
     }
 
@@ -662,45 +650,36 @@ GetEventFlag(uint32_t ui32Event)
     //
     // Search for a valid event flag for the requested event.
     //
-    switch(ui32Event)
-    {
-        case USB_EVENT_SOF:
-        {
+    switch(ui32Event) {
+        case USB_EVENT_SOF: {
             ui32EventFlag |= USBHCD_EVFLAG_SOF;
             break;
         }
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             ui32EventFlag |= USBHCD_EVFLAG_CONNECT;
             break;
         }
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             ui32EventFlag |= USBHCD_EVFLAG_DISCNCT;
             break;
         }
-        case USB_EVENT_UNKNOWN_CONNECTED:
-        {
+        case USB_EVENT_UNKNOWN_CONNECTED: {
             ui32EventFlag |= USBHCD_EVFLAG_UNKCNCT;
             break;
         }
-        case USB_EVENT_POWER_FAULT:
-        {
+        case USB_EVENT_POWER_FAULT: {
             ui32EventFlag |= USBHCD_EVFLAG_PWRFAULT;
             break;
         }
-        case USB_EVENT_POWER_DISABLE:
-        {
+        case USB_EVENT_POWER_DISABLE: {
             ui32EventFlag |= USBHCD_EVFLAG_PWRDIS;
             break;
         }
-        case USB_EVENT_POWER_ENABLE:
-        {
+        case USB_EVENT_POWER_ENABLE: {
             ui32EventFlag |= USBHCD_EVFLAG_PWREN;
             break;
         }
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -752,8 +731,7 @@ USBHCDEventEnable(uint32_t ui32Index, void *pvEventDriver, uint32_t ui32Event)
     //
     // Check if there was an event flag for the corresponding event.
     //
-    if(ui32EventFlag)
-    {
+    if(ui32EventFlag) {
         //
         // Set the enable for this event.
         //
@@ -813,8 +791,7 @@ USBHCDEventDisable(uint32_t ui32Index, void *pvEventDriver, uint32_t ui32Event)
     //
     // Check if there was an event flag for the corresponding event.
     //
-    if(ui32EventFlag)
-    {
+    if(ui32EventFlag) {
         //
         // Clear the enable for this event.
         //
@@ -880,15 +857,12 @@ FIFOFree(tUSBHCDPipe *psUSBPipe)
     //
     // Determine which 32 bit word to access based on the size.
     //
-    if(psUSBPipe->ui8FIFOSize > USB_FIFO_SZ_64)
-    {
+    if(psUSBPipe->ui8FIFOSize > USB_FIFO_SZ_64) {
         //
         // If the FIFO size is greater than 64 then use the upper 32 bits.
         //
         g_pui32Alloc[1] &= ~ui32Mask;
-    }
-    else
-    {
+    } else {
         //
         // If the FIFO size is less than or equal to 64 then use the lower
         // 32 bits.
@@ -922,12 +896,9 @@ FIFOAlloc(tUSBHCDPipe *psUSBPipe, uint32_t ui32Size)
     // Save which 32 bit value to access, the upper is for blocks greater
     // than 64 and the lower is for block 64 or less.
     //
-    if(ui32Size > 64)
-    {
+    if(ui32Size > 64) {
         ui32Index = 1;
-    }
-    else
-    {
+    } else {
         ui32Index = 0;
     }
 
@@ -957,19 +928,16 @@ FIFOAlloc(tUSBHCDPipe *psUSBPipe, uint32_t ui32Size)
     // Scan through 32 bits looking for a memory block large enough to fill
     // the request.
     //
-    while(ui16FIFOAddr <= 32)
-    {
+    while(ui16FIFOAddr <= 32) {
         //
         // If the pattern is zero then it is a possible match.
         //
-        if((g_pui32Alloc[ui32Index] & ui32Blocks) == 0)
-        {
+        if((g_pui32Alloc[ui32Index] & ui32Blocks) == 0) {
             //
             // If the size is large enough then save it and break out of the
             // loop.
             //
-            if(ui32BlockSize >= ui32Size)
-            {
+            if(ui32BlockSize >= ui32Size) {
                 //
                 // Mark the memory as allocated.
                 //
@@ -993,9 +961,7 @@ FIFOAlloc(tUSBHCDPipe *psUSBPipe, uint32_t ui32Size)
             //
             ui32BlockSize <<= 1;
 
-        }
-        else
-        {
+        } else {
             //
             // Need to start over looking because the last allocation match
             // failed, so reset the bit offset to the current location and the
@@ -1026,15 +992,12 @@ FIFOAlloc(tUSBHCDPipe *psUSBPipe, uint32_t ui32Size)
     //
     // If there was no block large enough then fail this call.
     //
-    if(ui16FIFOAddr > 32)
-    {
+    if(ui16FIFOAddr > 32) {
         ui32BlockSize = 0;
         psUSBPipe->ui16FIFOAddr = 0;
         psUSBPipe->ui8FIFOBitOffset = 0;
         psUSBPipe->ui8FIFOSize = 0;
-    }
-    else
-    {
+    } else {
         //
         // Calculate the offset in the FIFO.
         //
@@ -1044,8 +1007,7 @@ FIFOAlloc(tUSBHCDPipe *psUSBPipe, uint32_t ui32Size)
         // Sizes greater than 64 are allocated in the second half of the FIFO
         // memory space.
         //
-        if(ui32Size > 64)
-        {
+        if(ui32Size > 64) {
             ui32Temp += 2048;
         }
 
@@ -1127,23 +1089,19 @@ USBHCDPipeAllocSize(uint32_t ui32Index, uint32_t ui32EndpointType,
     //
     // Find a USB pipe that is free.
     //
-    for(i32Idx = 0; i32Idx < MAX_NUM_PIPES; i32Idx++)
-    {
+    for(i32Idx = 0; i32Idx < MAX_NUM_PIPES; i32Idx++) {
         //
         // Handle OUT Pipes.
         //
-        if(ui32EndpointType & EP_PIPE_TYPE_OUT)
-        {
+        if(ui32EndpointType & EP_PIPE_TYPE_OUT) {
             //
             // A zero address indicates free.
             //
-            if(g_sUSBHCD.psUSBOUTPipes[i32Idx].psDevice == 0)
-            {
+            if(g_sUSBHCD.psUSBOUTPipes[i32Idx].psDevice == 0) {
                 //
                 // Set up uDMA for the pipe.
                 //
-                if(ui32EndpointType & EP_PIPE_USE_UDMA)
-                {
+                if(ui32EndpointType & EP_PIPE_USE_UDMA) {
                     //
                     // Allocate a DMA channel to the endpoint.
                     //
@@ -1158,8 +1116,7 @@ USBHCDPipeAllocSize(uint32_t ui32Index, uint32_t ui32EndpointType,
                     // If no DMA channel was available then just disable DMA
                     // on this pipe.
                     //
-                    if(g_sUSBHCD.psUSBOUTPipes[i32Idx].ui8DMAChannel == 0)
-                    {
+                    if(g_sUSBHCD.psUSBOUTPipes[i32Idx].ui8DMAChannel == 0) {
                         ui32EndpointType &= ~EP_PIPE_USE_UDMA;
                     }
                 }
@@ -1194,16 +1151,15 @@ USBHCDPipeAllocSize(uint32_t ui32Index, uint32_t ui32EndpointType,
                 //
                 // Allocate space in the FIFO for this endpoint.
                 //
-                if(FIFOAlloc(&g_sUSBHCD.psUSBOUTPipes[i32Idx], ui32Size) != 0)
-                {
+                if(FIFOAlloc(&g_sUSBHCD.psUSBOUTPipes[i32Idx], ui32Size) != 0) {
                     //
                     // Configure the FIFO.
                     //
                     MAP_USBFIFOConfigSet(USB0_BASE,
-                                IndexToUSBEP(i32Idx + 1),
-                                g_sUSBHCD.psUSBOUTPipes[i32Idx].ui16FIFOAddr,
-                                g_sUSBHCD.psUSBOUTPipes[i32Idx].ui8FIFOSize,
-                                USB_EP_HOST_OUT);
+                                         IndexToUSBEP(i32Idx + 1),
+                                         g_sUSBHCD.psUSBOUTPipes[i32Idx].ui16FIFOAddr,
+                                         g_sUSBHCD.psUSBOUTPipes[i32Idx].ui8FIFOSize,
+                                         USB_EP_HOST_OUT);
                 }
 
                 //
@@ -1225,34 +1181,30 @@ USBHCDPipeAllocSize(uint32_t ui32Index, uint32_t ui32EndpointType,
         //
         // Handle IN Pipes.
         //
-        else if(ui32EndpointType & EP_PIPE_TYPE_IN)
-        {
+        else if(ui32EndpointType & EP_PIPE_TYPE_IN) {
             //
             // A zero address indicates free.
             //
-            if(g_sUSBHCD.psUSBINPipes[i32Idx].psDevice == 0)
-            {
+            if(g_sUSBHCD.psUSBINPipes[i32Idx].psDevice == 0) {
                 //
                 // Set up uDMA for the pipe.
                 //
-                if(ui32EndpointType & EP_PIPE_USE_UDMA)
-                {
+                if(ui32EndpointType & EP_PIPE_USE_UDMA) {
                     //
                     // Allocate a DMA channel to the endpoint.
                     //
                     g_sUSBHCD.psUSBINPipes[i32Idx].ui8DMAChannel =
-                            USBLibDMAChannelAllocate(g_sUSBHCD.psDMAInstance,
-                                                     IndexToUSBEP(i32Idx + 1),
-                                                     ui32Size,
-                                                     USB_DMA_EP_RX |
-                                                     USB_DMA_EP_HOST);
+                        USBLibDMAChannelAllocate(g_sUSBHCD.psDMAInstance,
+                                                 IndexToUSBEP(i32Idx + 1),
+                                                 ui32Size,
+                                                 USB_DMA_EP_RX |
+                                                 USB_DMA_EP_HOST);
 
                     //
                     // If no DMA channel was available then just disable DMA
                     // on this pipe.
                     //
-                    if(g_sUSBHCD.psUSBINPipes[i32Idx].ui8DMAChannel == 0)
-                    {
+                    if(g_sUSBHCD.psUSBINPipes[i32Idx].ui8DMAChannel == 0) {
                         ui32EndpointType &= ~EP_PIPE_USE_UDMA;
                     }
                 }
@@ -1282,16 +1234,15 @@ USBHCDPipeAllocSize(uint32_t ui32Index, uint32_t ui32EndpointType,
                 //
                 // Allocate space in the FIFO for this endpoint.
                 //
-                if(FIFOAlloc(&g_sUSBHCD.psUSBINPipes[i32Idx], ui32Size) != 0)
-                {
+                if(FIFOAlloc(&g_sUSBHCD.psUSBINPipes[i32Idx], ui32Size) != 0) {
                     //
                     // Configure the FIFO.
                     //
                     MAP_USBFIFOConfigSet(USB0_BASE,
-                                IndexToUSBEP(i32Idx + 1),
-                                g_sUSBHCD.psUSBINPipes[i32Idx].ui16FIFOAddr,
-                                g_sUSBHCD.psUSBINPipes[i32Idx].ui8FIFOSize,
-                                USB_EP_HOST_IN);
+                                         IndexToUSBEP(i32Idx + 1),
+                                         g_sUSBHCD.psUSBINPipes[i32Idx].ui16FIFOAddr,
+                                         g_sUSBHCD.psUSBINPipes[i32Idx].ui8FIFOSize,
+                                         USB_EP_HOST_IN);
                 }
 
                 //
@@ -1321,8 +1272,7 @@ USBHCDPipeAllocSize(uint32_t ui32Index, uint32_t ui32EndpointType,
     //
     // Did not find a free pipe.
     //
-    if(i32Idx == MAX_NUM_PIPES)
-    {
+    if(i32Idx == MAX_NUM_PIPES) {
         return(0);
     }
 
@@ -1413,41 +1363,33 @@ USBHCDPipeConfig(uint32_t ui32Pipe, uint32_t ui32MaxPayload,
     //
     // Set the direction.
     //
-    if(ui32Pipe & EP_PIPE_TYPE_OUT)
-    {
+    if(ui32Pipe & EP_PIPE_TYPE_OUT) {
         //
         // Set the mode for this endpoint.
         //
-        if(g_sUSBHCD.psUSBOUTPipes[ui32Index].ui32Type & EP_PIPE_TYPE_BULK)
-        {
+        if(g_sUSBHCD.psUSBOUTPipes[ui32Index].ui32Type & EP_PIPE_TYPE_BULK) {
             ui32Flags = USB_EP_MODE_BULK;
-        }
-        else if(g_sUSBHCD.psUSBOUTPipes[ui32Index].ui32Type &
-                EP_PIPE_TYPE_INTR)
-        {
+        } else if(g_sUSBHCD.psUSBOUTPipes[ui32Index].ui32Type &
+                  EP_PIPE_TYPE_INTR) {
             ui32Flags = USB_EP_MODE_INT;
-        }
-        else if(g_sUSBHCD.psUSBOUTPipes[ui32Index].ui32Type &
-                EP_PIPE_TYPE_ISOC)
-        {
+        } else if(g_sUSBHCD.psUSBOUTPipes[ui32Index].ui32Type &
+                  EP_PIPE_TYPE_ISOC) {
             ui32Flags = USB_EP_MODE_ISOC;
-        }
-        else
-        {
+        } else {
             ui32Flags = USB_EP_MODE_CTRL;
         }
 
         ui32Flags |= USB_EP_HOST_OUT;
 
         g_sUSBHCD.psUSBOUTPipes[ui32Index].ui8EPNumber =
-                                                (uint8_t)ui32TargetEndpoint;
+            (uint8_t)ui32TargetEndpoint;
 
         //
         // Save the interval and the next tick to trigger a scheduler event.
         //
         g_sUSBHCD.psUSBOUTPipes[ui32Index].ui32Interval = ui32Interval;
         g_sUSBHCD.psUSBOUTPipes[ui32Index].ui32NextEventTick =
-                                            ui32Interval + g_ui32CurrentTick;
+            ui32Interval + g_ui32CurrentTick;
 
         //
         // Set the device speed.
@@ -1457,43 +1399,33 @@ USBHCDPipeConfig(uint32_t ui32Pipe, uint32_t ui32MaxPayload,
         //
         // Set up the appropriate flags if uDMA is used.
         //
-        if(ui32Pipe & EP_PIPE_USE_UDMA)
-        {
+        if(ui32Pipe & EP_PIPE_USE_UDMA) {
             ui32Flags |= USB_EP_DMA_MODE_0 | USB_EP_AUTO_SET;
         }
-    }
-    else
-    {
+    } else {
         //
         // Set the mode for this endpoint.
         //
-        if(g_sUSBHCD.psUSBINPipes[ui32Index].ui32Type & EP_PIPE_TYPE_BULK)
-        {
+        if(g_sUSBHCD.psUSBINPipes[ui32Index].ui32Type & EP_PIPE_TYPE_BULK) {
             ui32Flags = USB_EP_MODE_BULK;
-        }
-        else if(g_sUSBHCD.psUSBINPipes[ui32Index].ui32Type & EP_PIPE_TYPE_INTR)
-        {
+        } else if(g_sUSBHCD.psUSBINPipes[ui32Index].ui32Type & EP_PIPE_TYPE_INTR) {
             ui32Flags = USB_EP_MODE_INT;
-        }
-        else if(g_sUSBHCD.psUSBINPipes[ui32Index].ui32Type & EP_PIPE_TYPE_ISOC)
-        {
+        } else if(g_sUSBHCD.psUSBINPipes[ui32Index].ui32Type & EP_PIPE_TYPE_ISOC) {
             ui32Flags = USB_EP_MODE_ISOC;
-        }
-        else
-        {
+        } else {
             ui32Flags = USB_EP_MODE_CTRL;
         }
         ui32Flags |= USB_EP_HOST_IN;
 
         g_sUSBHCD.psUSBINPipes[ui32Index].ui8EPNumber =
-                                                (uint8_t)ui32TargetEndpoint;
+            (uint8_t)ui32TargetEndpoint;
 
         //
         // Save the interval and the next tick to trigger a scheduler event.
         //
         g_sUSBHCD.psUSBINPipes[ui32Index].ui32Interval = ui32Interval;
         g_sUSBHCD.psUSBINPipes[ui32Index].ui32NextEventTick =
-                                            ui32Interval + g_ui32CurrentTick;
+            ui32Interval + g_ui32CurrentTick;
 
         //
         // Set the device speed.
@@ -1502,8 +1434,7 @@ USBHCDPipeConfig(uint32_t ui32Pipe, uint32_t ui32MaxPayload,
         //
         // Set up the appropriate flags if uDMA is used.
         //
-        if(ui32Pipe & EP_PIPE_USE_UDMA)
-        {
+        if(ui32Pipe & EP_PIPE_USE_UDMA) {
             ui32Flags |= USB_EP_DMA_MODE_1 | USB_EP_AUTO_CLEAR |
                          USB_EP_AUTO_REQUEST;
         }
@@ -1594,14 +1525,12 @@ USBHCDPipeWrite(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
     //
     // Send all of the requested data.
     //
-    while(ui32RemainingBytes != 0)
-    {
+    while(ui32RemainingBytes != 0) {
         //
         // If uDMA is not enabled for this pipe, or if the uDMA workaround
         // is applied, then don't use uDMA for this transfer.
         //
-        if(ui32Pipe & EP_PIPE_USE_UDMA)
-        {
+        if(ui32Pipe & EP_PIPE_USE_UDMA) {
             //
             // Disable the USB interrupt.
             //
@@ -1611,23 +1540,17 @@ USBHCDPipeWrite(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
             // Start the DMA transfer.
             //
             if(USBLibDMATransfer(g_sUSBHCD.psDMAInstance,
-                            g_sUSBHCD.psUSBOUTPipes[ui32PipeIdx].ui8DMAChannel,
-                            pui8Data, ui32RemainingBytes) != 0)
-            {
-                if(ui32RemainingBytes < 64)
-                {
+                                 g_sUSBHCD.psUSBOUTPipes[ui32PipeIdx].ui8DMAChannel,
+                                 pui8Data, ui32RemainingBytes) != 0) {
+                if(ui32RemainingBytes < 64) {
                     g_sUSBHCD.psUSBOUTPipes[ui32PipeIdx].iState =
-                                                            ePipeWriteDMASend;
-                }
-                else if((ui32RemainingBytes % 64) == 0)
-                {
+                        ePipeWriteDMASend;
+                } else if((ui32RemainingBytes % 64) == 0) {
                     g_sUSBHCD.psUSBOUTPipes[ui32PipeIdx].iState =
-                                                                ePipeWriteDMA;
-                }
-                else
-                {
+                        ePipeWriteDMA;
+                } else {
                     g_sUSBHCD.psUSBOUTPipes[ui32PipeIdx].iState =
-                                                        ePipeWriteDMASend;
+                        ePipeWriteDMASend;
                 }
 
                 bUseDMA = true;
@@ -1639,17 +1562,13 @@ USBHCDPipeWrite(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
             OS_INT_ENABLE(g_sUSBHCD.ui32IntNum);
         }
 
-        if(bUseDMA == false)
-        {
+        if(bUseDMA == false) {
             //
             // Only send 64 bytes at a time if not using DMA.
             //
-            if(ui32ByteToSend > 64)
-            {
+            if(ui32ByteToSend > 64) {
                 ui32ByteToSend = 64;
-            }
-            else
-            {
+            } else {
                 //
                 // Send the requested number of bytes.
                 //
@@ -1682,15 +1601,13 @@ USBHCDPipeWrite(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
         //
         // Wait for a status change.
         //
-        while(1)
-        {
+        while(1) {
             //
             // If an error event occurs then exit out of the loop.
             //
             if(g_sUSBHCD.ui32IntEvents & (INT_EVENT_DISCONNECT |
                                           INT_EVENT_VBUS_ERR |
-                                          INT_EVENT_POWER_FAULT))
-            {
+                                          INT_EVENT_POWER_FAULT)) {
                 //
                 // Set the pipe state to error.
                 //
@@ -1708,8 +1625,7 @@ USBHCDPipeWrite(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
             // continue.
             //
             else if(g_sUSBHCD.psUSBOUTPipes[ui32PipeIdx].iState ==
-                    ePipeDataSent)
-            {
+                    ePipeDataSent) {
                 //
                 // Decrement the remaining data and advance the pointer.
                 //
@@ -1720,15 +1636,12 @@ USBHCDPipeWrite(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
                 // If there are less than 64 bytes to send then this is the
                 // last of the data to go out.
                 //
-                if(ui32RemainingBytes < 64)
-                {
+                if(ui32RemainingBytes < 64) {
                     ui32ByteToSend = ui32RemainingBytes;
                 }
                 break;
-            }
-            else if(g_sUSBHCD.psUSBOUTPipes[ui32PipeIdx].iState ==
-                    ePipeStalled)
-            {
+            } else if(g_sUSBHCD.psUSBOUTPipes[ui32PipeIdx].iState ==
+                      ePipeStalled) {
                 //
                 // Zero out the size so that the caller knows that no data was
                 // written.
@@ -1743,13 +1656,12 @@ USBHCDPipeWrite(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
                 //
                 // If DMA is being used, then disable the channel.
                 //
-                if(bUseDMA == true)
-                {
+                if(bUseDMA == true) {
                     //
                     // Disable the DMA channel.
                     //
                     USBLibDMAChannelDisable(g_sUSBHCD.psDMAInstance,
-                        g_sUSBHCD.psUSBOUTPipes[ui32PipeIdx].ui8DMAChannel);
+                                            g_sUSBHCD.psUSBOUTPipes[ui32PipeIdx].ui8DMAChannel);
                 }
 
                 //
@@ -1764,9 +1676,7 @@ USBHCDPipeWrite(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
                 // out.
                 //
                 break;
-            }
-            else if(g_sUSBHCD.psUSBOUTPipes[ui32PipeIdx].iState == ePipeError)
-            {
+            } else if(g_sUSBHCD.psUSBOUTPipes[ui32PipeIdx].iState == ePipeError) {
                 //
                 // An error occurred so stop this transaction and set the
                 // number of bytes to zero.
@@ -1825,30 +1735,26 @@ USBHCDPipeSchedule(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
     //
     ui32Endpoint = IndexToUSBEP((EP_PIPE_IDX_M & ui32Pipe) + 1);
 
-    if(ui32Pipe & EP_PIPE_TYPE_OUT)
-    {
+    if(ui32Pipe & EP_PIPE_TYPE_OUT) {
         //
         // Check if uDMA is enabled on this pipe.
         //
-        if(ui32Pipe & EP_PIPE_USE_UDMA)
-        {
+        if(ui32Pipe & EP_PIPE_USE_UDMA) {
             //
             // Start a write request.
             //
             g_sUSBHCD.psUSBOUTPipes[EP_PIPE_IDX_M & ui32Pipe].iState =
-                                                            ePipeWriteDMASend;
+                ePipeWriteDMASend;
 
             USBLibDMATransfer(g_sUSBHCD.psDMAInstance,
-                            g_sUSBHCD.psUSBOUTPipes[ui32PipeIdx].ui8DMAChannel,
-                            pui8Data, ui32Size);
-        }
-        else
-        {
+                              g_sUSBHCD.psUSBOUTPipes[ui32PipeIdx].ui8DMAChannel,
+                              pui8Data, ui32Size);
+        } else {
             //
             // Start a write request.
             //
             g_sUSBHCD.psUSBOUTPipes[EP_PIPE_IDX_M & ui32Pipe].iState =
-                                                                ePipeWriting;
+                ePipeWriting;
 
             //
             // Put the data in the buffer.
@@ -1861,20 +1767,17 @@ USBHCDPipeSchedule(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
             //
             MAP_USBEndpointDataSend(USB0_BASE, ui32Endpoint, USB_TRANS_OUT);
         }
-    }
-    else
-    {
+    } else {
         //
         // If uDMA is not enabled for this pipe, or if the uDMA workaround
         // is applied, then do not use uDMA for this transfer.
         //
-        if((ui32Pipe & EP_PIPE_USE_UDMA) == 0)
-        {
+        if((ui32Pipe & EP_PIPE_USE_UDMA) == 0) {
             //
             // Start a read request.
             //
             g_sUSBHCD.psUSBINPipes[EP_PIPE_IDX_M & ui32Pipe].iState =
-                                                                ePipeReading;
+                ePipeReading;
 
             //
             // Disable uDMA on the endpoint
@@ -1885,14 +1788,13 @@ USBHCDPipeSchedule(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
         // Otherwise, uDMA should be used for this transfer, so set up
         // the uDMA channel in advance of triggering the IN request.
         //
-        else
-        {
+        else {
             g_sUSBHCD.psUSBINPipes[EP_PIPE_IDX_M & ui32Pipe].iState =
-                                                                ePipeReadDMA;
+                ePipeReadDMA;
 
             USBLibDMATransfer(g_sUSBHCD.psDMAInstance,
-                            g_sUSBHCD.psUSBINPipes[ui32PipeIdx].ui8DMAChannel,
-                            pui8Data, ui32Size);
+                              g_sUSBHCD.psUSBINPipes[ui32PipeIdx].ui8DMAChannel,
+                              pui8Data, ui32Size);
         }
 
         //
@@ -2059,8 +1961,7 @@ USBHCDPipeRead(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
     //
     // Continue until all data requested has been received.
     //
-    while(ui32RemainingBytes != 0)
-    {
+    while(ui32RemainingBytes != 0) {
         //
         // Start a read request.
         //
@@ -2070,23 +1971,19 @@ USBHCDPipeRead(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
         // Try the DMA transfer should be used for this transfer, so set up
         // the uDMA channel in advance of triggering the IN request.
         //
-        if(ui32Pipe & EP_PIPE_USE_UDMA)
-        {
+        if(ui32Pipe & EP_PIPE_USE_UDMA) {
             //
             // Disable the USB interrupt.
             //
             OS_INT_DISABLE(g_sUSBHCD.ui32IntNum);
 
             if(USBLibDMATransfer(g_sUSBHCD.psDMAInstance,
-                            g_sUSBHCD.psUSBINPipes[ui32PipeIdx].ui8DMAChannel,
-                            pui8Data, ui32Size) != 0)
-            {
+                                 g_sUSBHCD.psUSBINPipes[ui32PipeIdx].ui8DMAChannel,
+                                 pui8Data, ui32Size) != 0) {
                 g_sUSBHCD.psUSBINPipes[ui32PipeIdx].iState = ePipeReadDMA;
 
                 ui32BytesRead = ui32Size;
-            }
-            else
-            {
+            } else {
                 bUseDMA = false;
             }
 
@@ -2099,8 +1996,7 @@ USBHCDPipeRead(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
         //
         // If unable to use DMA then get ready to transfer without DMA.
         //
-        if(bUseDMA == false)
-        {
+        if(bUseDMA == false) {
             //
             // Disable uDMA on the endpoint
             //
@@ -2111,7 +2007,7 @@ USBHCDPipeRead(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
             //
             g_sUSBHCD.psUSBINPipes[ui32PipeIdx].pui8ReadPtr = pui8Data;
             g_sUSBHCD.psUSBINPipes[ui32PipeIdx].ui32ReadSize =
-                        (ui32RemainingBytes < 64) ? ui32RemainingBytes : 64;
+                (ui32RemainingBytes < 64) ? ui32RemainingBytes : 64;
         }
 
         //
@@ -2122,13 +2018,11 @@ USBHCDPipeRead(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
         //
         // Wait for a status change.
         //
-        while(1)
-        {
+        while(1) {
             //
             // Check if the device stalled the request.
             //
-            if(g_sUSBHCD.psUSBINPipes[ui32PipeIdx].iState == ePipeStalled)
-            {
+            if(g_sUSBHCD.psUSBINPipes[ui32PipeIdx].iState == ePipeStalled) {
                 //
                 // Zero out the size so that the caller knows that no data was
                 // read.
@@ -2143,11 +2037,10 @@ USBHCDPipeRead(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
                 //
                 // If DMA is being used, then disable the channel.
                 //
-                if(bUseDMA == true)
-                {
+                if(bUseDMA == true) {
                     USBLibDMAChannelDisable(
-                            g_sUSBHCD.psDMAInstance,
-                            g_sUSBHCD.psUSBINPipes[ui32PipeIdx].ui8DMAChannel);
+                        g_sUSBHCD.psDMAInstance,
+                        g_sUSBHCD.psUSBINPipes[ui32PipeIdx].ui8DMAChannel);
                 }
 
                 //
@@ -2169,13 +2062,12 @@ USBHCDPipeRead(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
             //
             if(g_sUSBHCD.ui32IntEvents & (INT_EVENT_DISCONNECT |
                                           INT_EVENT_VBUS_ERR |
-                                          INT_EVENT_POWER_FAULT))
-            {
+                                          INT_EVENT_POWER_FAULT)) {
                 //
                 // Set the pipe state to error.
                 //
                 g_sUSBHCD.psUSBINPipes[ui32PipeIdx].iState = ePipeError;
-				
+
                 //
                 // Needs to be set to exit out of large while loop.
                 //
@@ -2187,19 +2079,17 @@ USBHCDPipeRead(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
             //
             // If data is ready then return it.
             //
-            if(g_sUSBHCD.psUSBINPipes[ui32PipeIdx].iState == ePipeDataReady)
-            {
+            if(g_sUSBHCD.psUSBINPipes[ui32PipeIdx].iState == ePipeDataReady) {
                 //
                 // If not using DMA then read the data from the USB.  Otherwise
                 // the data will already be in the buffer.
                 //
-                if(bUseDMA == false)
-                {
+                if(bUseDMA == false) {
                     //
                     // Compute bytes to transfer and set up transfer
                     //
                     ui32BytesRead =
-                            ui32RemainingBytes > 64 ? 64 : ui32RemainingBytes;
+                        ui32RemainingBytes > 64 ? 64 : ui32RemainingBytes;
 
                     //
                     // Acknowledge that the data was read from the endpoint.
@@ -2216,17 +2106,14 @@ USBHCDPipeRead(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
                 // If there were less than 64 bytes read, then this was a short
                 // packet and no more data will be returned.
                 //
-                if(ui32BytesRead < 64)
-                {
+                if(ui32BytesRead < 64) {
                     //
                     // Subtract off the bytes that were not received and exit
                     // the loop.
                     //
                     ui32Size = ui32Size - ui32RemainingBytes;
                     break;
-                }
-                else
-                {
+                } else {
                     //
                     // Move the buffer ahead to receive more data into the
                     // buffer.
@@ -2234,9 +2121,7 @@ USBHCDPipeRead(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
                     pui8Data += 64;
                 }
                 break;
-            }
-            else if(g_sUSBHCD.psUSBINPipes[ui32PipeIdx].iState == ePipeError)
-            {
+            } else if(g_sUSBHCD.psUSBINPipes[ui32PipeIdx].iState == ePipeError) {
                 //
                 // An error occurred so stop this transaction and set the
                 // number of bytes to zero.
@@ -2245,13 +2130,11 @@ USBHCDPipeRead(uint32_t ui32Pipe, uint8_t *pui8Data, uint32_t ui32Size)
                 ui32RemainingBytes = 0;
 
                 break;
-            }
-            else if((g_sUSBHCD.psUSBINPipes[ui32PipeIdx].iState ==
-                     ePipeReadDMAWait) &&
-                    (USBLibDMAChannelStatus(g_sUSBHCD.psDMAInstance,
-                        g_sUSBHCD.psUSBINPipes[ui32PipeIdx].ui8DMAChannel) &
-                     USBLIBSTATUS_DMA_COMPLETE))
-            {
+            } else if((g_sUSBHCD.psUSBINPipes[ui32PipeIdx].iState ==
+                       ePipeReadDMAWait) &&
+                      (USBLibDMAChannelStatus(g_sUSBHCD.psDMAInstance,
+                                              g_sUSBHCD.psUSBINPipes[ui32PipeIdx].ui8DMAChannel) &
+                       USBLIBSTATUS_DMA_COMPLETE)) {
                 break;
             }
         }
@@ -2289,8 +2172,7 @@ USBHCDPipeFree(uint32_t ui32Pipe)
     //
     ui32Index = (ui32Pipe & EP_PIPE_IDX_M);
 
-    if(ui32Pipe & EP_PIPE_TYPE_OUT)
-    {
+    if(ui32Pipe & EP_PIPE_TYPE_OUT) {
         //
         // Clear the address and type for this endpoint to free it up.
         //
@@ -2302,26 +2184,24 @@ USBHCDPipeFree(uint32_t ui32Pipe)
         // Check if this pipe has allocated a DMA channel.
         //
         if(g_sUSBHCD.psUSBOUTPipes[ui32Index].ui8DMAChannel !=
-           USBHCD_DMA_UNUSED)
-        {
+                USBHCD_DMA_UNUSED) {
             //
             // Release the DMA channel associated with this endpoint.
             //
             USBLibDMAChannelRelease(g_sUSBHCD.psDMAInstance,
-                    g_sUSBHCD.psUSBOUTPipes[ui32Index].ui8DMAChannel);
+                                    g_sUSBHCD.psUSBOUTPipes[ui32Index].ui8DMAChannel);
 
             //
             // Clear out the current channel in use by this pipe.
             //
             g_sUSBHCD.psUSBOUTPipes[ui32Index].ui8DMAChannel =
-                                                            USBHCD_DMA_UNUSED;
+                USBHCD_DMA_UNUSED;
         }
 
         //
         // Free up the FIFO memory used by this endpoint.
         //
-        if(g_sUSBHCD.psUSBOUTPipes[ui32Index].ui8FIFOSize)
-        {
+        if(g_sUSBHCD.psUSBOUTPipes[ui32Index].ui8FIFOSize) {
             FIFOFree(&g_sUSBHCD.psUSBOUTPipes[ui32Index]);
         }
 
@@ -2337,9 +2217,7 @@ USBHCDPipeFree(uint32_t ui32Pipe)
         //
         USBHostHubAddrSet(USB0_BASE, IndexToUSBEP(ui32Index + 1),
                           0, (USB_EP_HOST_OUT | USB_EP_SPEED_LOW));
-    }
-    else if(ui32Pipe & EP_PIPE_TYPE_IN)
-    {
+    } else if(ui32Pipe & EP_PIPE_TYPE_IN) {
         //
         // Clear the address and type for this endpoint to free it up.
         //
@@ -2351,26 +2229,24 @@ USBHCDPipeFree(uint32_t ui32Pipe)
         // Check if this pipe has allocated a DMA channel.
         //
         if(g_sUSBHCD.psUSBINPipes[ui32Index].ui8DMAChannel !=
-           USBHCD_DMA_UNUSED)
-        {
+                USBHCD_DMA_UNUSED) {
             //
             // Release the DMA channel associated with this endpoint.
             //
             USBLibDMAChannelRelease(g_sUSBHCD.psDMAInstance,
-                    g_sUSBHCD.psUSBINPipes[ui32Index].ui8DMAChannel);
+                                    g_sUSBHCD.psUSBINPipes[ui32Index].ui8DMAChannel);
 
             //
             // Clear out the current channel in use by this pipe.
             //
             g_sUSBHCD.psUSBINPipes[ui32Index].ui8DMAChannel =
-                                                            USBHCD_DMA_UNUSED;
+                USBHCD_DMA_UNUSED;
         }
 
         //
         // Free up the FIFO memory used by this endpoint.
         //
-        if(g_sUSBHCD.psUSBINPipes[ui32Pipe & EP_PIPE_IDX_M].ui8FIFOSize)
-        {
+        if(g_sUSBHCD.psUSBINPipes[ui32Pipe & EP_PIPE_IDX_M].ui8FIFOSize) {
             FIFOFree(&g_sUSBHCD.psUSBINPipes[ui32Pipe & EP_PIPE_IDX_M]);
         }
 
@@ -2442,16 +2318,14 @@ USBHCDInitInternal(uint32_t ui32Index, void *pvPool, uint32_t ui32PoolSize)
     //
     // These devices have a different USB interrupt number.
     //
-    if(CLASS_IS_TM4C129)
-    {
+    if(CLASS_IS_TM4C129) {
         g_sUSBHCD.ui32IntNum = INT_USB0_TM4C129;
     }
 
     //
     // All Pipes are unused at start.
     //
-    for(i32Idx = 0; i32Idx < MAX_NUM_PIPES; i32Idx++)
-    {
+    for(i32Idx = 0; i32Idx < MAX_NUM_PIPES; i32Idx++) {
         g_sUSBHCD.psUSBINPipes[i32Idx].psDevice = 0;
         g_sUSBHCD.psUSBINPipes[i32Idx].ui32Type = USBHCD_PIPE_UNUSED;
         g_sUSBHCD.psUSBINPipes[i32Idx].ui8DMAChannel = USBHCD_DMA_UNUSED;
@@ -2474,8 +2348,7 @@ USBHCDInitInternal(uint32_t ui32Index, void *pvPool, uint32_t ui32PoolSize)
     //
     // Initialized the device structures.
     //
-    for(i32Idx = 0; i32Idx <= MAX_USB_DEVICES; i32Idx++)
-    {
+    for(i32Idx = 0; i32Idx <= MAX_USB_DEVICES; i32Idx++) {
         //
         // Clear the configuration descriptor and state.
         //
@@ -2541,8 +2414,7 @@ USBHCDInitInternal(uint32_t ui32Index, void *pvPool, uint32_t ui32PoolSize)
     // Only do hardware update if the stack is in Host mode, do not touch the
     // hardware for OTG mode operation.
     //
-    if((g_iUSBMode == eUSBModeHost) || (g_iUSBMode == eUSBModeForceHost))
-    {
+    if((g_iUSBMode == eUSBModeHost) || (g_iUSBMode == eUSBModeForceHost)) {
         //
         // Configure the End point 0.
         //
@@ -2554,15 +2426,15 @@ USBHCDInitInternal(uint32_t ui32Index, void *pvPool, uint32_t ui32PoolSize)
         // Enable USB Interrupts.
         //
         MAP_USBIntEnableControl(USB0_BASE, USB_INTCTRL_RESET |
-                                           USB_INTCTRL_DISCONNECT |
-                                           USB_INTCTRL_SOF |
-                                           USB_INTCTRL_SESSION |
-                                           USB_INTCTRL_BABBLE |
-                                           USB_INTCTRL_CONNECT |
-                                           USB_INTCTRL_RESUME |
-                                           USB_INTCTRL_SUSPEND |
-                                           USB_INTCTRL_VBUS_ERR |
-                                           USB_INTCTRL_POWER_FAULT);
+                                USB_INTCTRL_DISCONNECT |
+                                USB_INTCTRL_SOF |
+                                USB_INTCTRL_SESSION |
+                                USB_INTCTRL_BABBLE |
+                                USB_INTCTRL_CONNECT |
+                                USB_INTCTRL_RESUME |
+                                USB_INTCTRL_SUSPEND |
+                                USB_INTCTRL_VBUS_ERR |
+                                USB_INTCTRL_POWER_FAULT);
 
         MAP_USBIntEnableEndpoint(USB0_BASE, USB_INTEP_ALL);
 
@@ -2591,15 +2463,11 @@ USBHCDInitInternal(uint32_t ui32Index, void *pvPool, uint32_t ui32PoolSize)
     //
     // Configure LPM if it is enabled.
     //
-    if(g_sUSBHCD.ui32Features & USBLIB_FEATURE_LPM_EN)
-    {
-        if(g_sUSBHCD.ui32Features & USBLIB_FEATURE_LPM_RMT_WAKE)
-        {
+    if(g_sUSBHCD.ui32Features & USBLIB_FEATURE_LPM_EN) {
+        if(g_sUSBHCD.ui32Features & USBLIB_FEATURE_LPM_RMT_WAKE) {
             USBHostLPMConfig(USB0_BASE, g_sUSBHCD.ui32LPMHIRD,
                              USB_DEV_LPM_LS_L1 | USB_DEV_LPM_LS_RMTWAKE);
-        }
-        else
-        {
+        } else {
             USBHostLPMConfig(USB0_BASE, g_sUSBHCD.ui32LPMHIRD,
                              USB_DEV_LPM_LS_L1);
         }
@@ -2609,8 +2477,8 @@ USBHCDInitInternal(uint32_t ui32Index, void *pvPool, uint32_t ui32PoolSize)
         // devices that do not support LPM.
         //
         USBLPMIntEnable(USB0_BASE, USB_INTLPM_ERROR | USB_INTLPM_RESUME |
-                                   USB_INTLPM_INCOMPLETE | USB_INTLPM_ACK |
-                                   USB_INTLPM_NYET | USB_INTLPM_STALL);
+                        USB_INTLPM_INCOMPLETE | USB_INTLPM_ACK |
+                        USB_INTLPM_NYET | USB_INTLPM_STALL);
     }
 }
 
@@ -2742,8 +2610,7 @@ USBHCDPowerConfigSet(uint32_t ui32Index, uint32_t ui32Config)
     // If there is an automatic disable power action specified then set the
     // polarity of the signal to match EPEN.
     //
-    if(g_ui32PowerConfig & USBHCD_FAULT_VBUS_DIS)
-    {
+    if(g_ui32PowerConfig & USBHCD_FAULT_VBUS_DIS) {
         //
         // Insure that the assumption below is true.
         //
@@ -2755,13 +2622,10 @@ USBHCDPowerConfigSet(uint32_t ui32Index, uint32_t ui32Config)
         // USBHCD_VBUS_AUTO_LOW and USBHCD_VBUS_AUTO_HIGH being that bit
         // one is set when EPEN is active high.
         //
-        if(g_ui32PowerConfig & 1)
-        {
+        if(g_ui32PowerConfig & 1) {
             g_ui32PowerConfig |= USB_HOST_PWRFLT_EP_LOW;
             ui32Config |= USB_HOST_PWRFLT_EP_LOW;
-        }
-        else
-        {
+        } else {
             g_ui32PowerConfig |= USB_HOST_PWRFLT_EP_HIGH;
             ui32Config |= USB_HOST_PWRFLT_EP_HIGH;
         }
@@ -2775,8 +2639,7 @@ USBHCDPowerConfigSet(uint32_t ui32Index, uint32_t ui32Config)
     //
     // If not in manual mode then just turn on power.
     //
-    if((g_ui32PowerConfig & USBHCD_VBUS_MANUAL) == 0)
-    {
+    if((g_ui32PowerConfig & USBHCD_VBUS_MANUAL) == 0) {
         //
         // Power the USB bus.
         //
@@ -2810,8 +2673,7 @@ USBHCDPowerAutomatic(uint32_t ui32Index)
     //
     // Check if the controller is automatically applying power or not.
     //
-    if(g_ui32PowerConfig & USBHCD_VBUS_MANUAL)
-    {
+    if(g_ui32PowerConfig & USBHCD_VBUS_MANUAL) {
         return(0);
     }
     return(1);
@@ -2875,8 +2737,7 @@ USBHCDInit(uint32_t ui32Index, void *pvPool, uint32_t ui32PoolSize)
     //
     // If the mode was not set then default to eUSBModeHost.
     //
-    if(g_iUSBMode == eUSBModeNone)
-    {
+    if(g_iUSBMode == eUSBModeNone) {
         g_iUSBMode = eUSBModeHost;
     }
 
@@ -2898,33 +2759,24 @@ USBHCDInit(uint32_t ui32Index, void *pvPool, uint32_t ui32PoolSize)
     //
     // Set the PLL to USB clock divider.
     //
-    if(g_ui32PLLDiv == 0)
-    {
+    if(g_ui32PLLDiv == 0) {
         USBClockEnable(USB0_BASE, g_ui32PLLDiv, USB_CLOCK_EXTERNAL);
-    }
-    else
-    {
+    } else {
         USBClockEnable(USB0_BASE, g_ui32PLLDiv, USB_CLOCK_INTERNAL);
     }
 
     //
     // Configure ULPI support.
     //
-    if(g_ui32ULPISupport != USBLIB_FEATURE_ULPI_NONE)
-    {
+    if(g_ui32ULPISupport != USBLIB_FEATURE_ULPI_NONE) {
         USBULPIEnable(USB0_BASE);
 
-        if(g_ui32ULPISupport & USBLIB_FEATURE_ULPI_HS)
-        {
+        if(g_ui32ULPISupport & USBLIB_FEATURE_ULPI_HS) {
             ULPIConfigSet(USB0_BASE, ULPI_CFG_HS);
-        }
-        else
-        {
+        } else {
             ULPIConfigSet(USB0_BASE, ULPI_CFG_FS);
         }
-    }
-    else
-    {
+    } else {
         USBULPIDisable(USB0_BASE);
     }
 
@@ -2933,8 +2785,7 @@ USBHCDInit(uint32_t ui32Index, void *pvPool, uint32_t ui32PoolSize)
     // host mode.  If the mode is actually eUSBModeHost, this will be switched
     // off when ID pin detection is complete and the ID is no longer in use.
     //
-    if(g_iUSBMode != eUSBModeOTG)
-    {
+    if(g_iUSBMode != eUSBModeOTG) {
         //
         // Force Host mode on devices that support force host mode.
         //
@@ -2954,11 +2805,9 @@ USBHCDInit(uint32_t ui32Index, void *pvPool, uint32_t ui32PoolSize)
     //
     // Search through the Host Class driver list for the devices class.
     //
-    for(i32Driver = 0; i32Driver < g_sUSBHCD.ui32NumClassDrivers; i32Driver++)
-    {
+    for(i32Driver = 0; i32Driver < g_sUSBHCD.ui32NumClassDrivers; i32Driver++) {
         if(g_sUSBHCD.ppsClassDrivers[i32Driver]->ui32InterfaceClass ==
-           USB_CLASS_EVENTS)
-        {
+                USB_CLASS_EVENTS) {
             //
             // Event driver was found so remember it.
             //
@@ -2970,14 +2819,10 @@ USBHCDInit(uint32_t ui32Index, void *pvPool, uint32_t ui32PoolSize)
     // Get the number of ticks per millisecond, this is only used by blocking
     // delays using the SysCtlDelay() function.
     //
-    if(g_ui32Tickms == 0)
-    {
-        if(CLASS_IS_TM4C129)
-        {
+    if(g_ui32Tickms == 0) {
+        if(CLASS_IS_TM4C129) {
             g_ui32Tickms = 120000000 / 3000;
-        }
-        else
-        {
+        } else {
             g_ui32Tickms = 80000000 / 3000;
         }
     }
@@ -3061,8 +2906,7 @@ USBHCDTerm(uint32_t ui32Index)
     //
     // Set the host controller state back to it's initial values.
     //
-    for(i32Idx = 0; i32Idx < MAX_NUM_PIPES; i32Idx++)
-    {
+    for(i32Idx = 0; i32Idx < MAX_NUM_PIPES; i32Idx++) {
         g_sUSBHCD.psUSBINPipes[i32Idx].ui32Type = USBHCD_PIPE_UNUSED;
         g_sUSBHCD.psUSBOUTPipes[i32Idx].ui32Type = USBHCD_PIPE_UNUSED;
     }
@@ -3235,8 +3079,7 @@ USBHCDGetConfigDescriptor(uint32_t ui32Index, tUSBHostDevice *psDevice)
     // Only ask for the configuration header first to see how big the
     // whole thing is.
     //
-    if(!psDevice->bConfigRead)
-    {
+    if(!psDevice->bConfigRead) {
         //
         // Only request the space available.
         //
@@ -3256,8 +3099,7 @@ USBHCDGetConfigDescriptor(uint32_t ui32Index, tUSBHostDevice *psDevice)
     // If the Configuration header was successfully returned then get the
     // full configuration descriptor.
     //
-    if(ui32Bytes == sizeof(tConfigDescriptor))
-    {
+    if(ui32Bytes == sizeof(tConfigDescriptor)) {
         //
         // Save the total size and request the full configuration descriptor.
         //
@@ -3266,16 +3108,14 @@ USBHCDGetConfigDescriptor(uint32_t ui32Index, tUSBHostDevice *psDevice)
         //
         // Not enough space to hold this configuration descriptor.
         //
-        if(ConfigDescAlloc(psDevice, sConfigDescriptor.wTotalLength) == 0)
-        {
+        if(ConfigDescAlloc(psDevice, sConfigDescriptor.wTotalLength) == 0) {
             return(0);
         }
 
         //
         // Don't allow the buffer to be larger than was allocated.
         //
-        if(sSetupPacket.wLength > psDevice->ui32ConfigDescriptorSize)
-        {
+        if(sSetupPacket.wLength > psDevice->ui32ConfigDescriptorSize) {
             return(0);
         }
 
@@ -3291,8 +3131,7 @@ USBHCDGetConfigDescriptor(uint32_t ui32Index, tUSBHostDevice *psDevice)
         //
         // If we read the descriptor, remember the fact.
         //
-        if(ui32Bytes)
-        {
+        if(ui32Bytes) {
             psDevice->bConfigRead = true;
         }
     }
@@ -3356,8 +3195,7 @@ USBHCDGetDeviceDescriptor(uint32_t ui32Index, tUSBHostDevice *psDevice)
     //
     // Discover the max packet size for endpoint 0.
     //
-    if(psDevice->sDeviceDescriptor.bMaxPacketSize0 == 0)
-    {
+    if(psDevice->sDeviceDescriptor.bMaxPacketSize0 == 0) {
         //
         // Put the setup packet in the buffer.
         //
@@ -3371,8 +3209,7 @@ USBHCDGetDeviceDescriptor(uint32_t ui32Index, tUSBHostDevice *psDevice)
     // Now get the full descriptor now that the actual maximum packet size
     // is known.
     //
-    if(ui32Bytes < sizeof(tDeviceDescriptor))
-    {
+    if(ui32Bytes < sizeof(tDeviceDescriptor)) {
         sSetupPacket.wLength = (uint16_t)sizeof(tDeviceDescriptor);
 
         ui32Bytes =
@@ -3438,7 +3275,7 @@ USBHCDStringDescriptorGet(tUSBHostDevice *psDevice, uint8_t *pui8Buffer,
     // Request for a string descriptor.
     //
     sSetupPacket.wValue = (USB_DTYPE_STRING << 8) |
-                         (uint16_t)ui32StringIndex;
+                          (uint16_t)ui32StringIndex;
 
     //
     // Set the language ID.
@@ -3573,13 +3410,10 @@ USBHCDClearFeature(uint32_t ui32DevAddress, uint32_t ui32Pipe,
     //
     // Set the endpoint to access.
     //
-    if(ui32Pipe & EP_PIPE_TYPE_IN)
-    {
+    if(ui32Pipe & EP_PIPE_TYPE_IN) {
         sSetupPacket.wIndex = g_sUSBHCD.psUSBINPipes[ui32Index].ui8EPNumber |
                               0x80;
-    }
-    else
-    {
+    } else {
         sSetupPacket.wIndex = g_sUSBHCD.psUSBOUTPipes[ui32Index].ui8EPNumber;
     }
 
@@ -3598,14 +3432,11 @@ USBHCDClearFeature(uint32_t ui32DevAddress, uint32_t ui32Pipe,
     //
     // Set the endpoint to access.
     //
-    if(ui32Pipe & EP_PIPE_TYPE_IN)
-    {
+    if(ui32Pipe & EP_PIPE_TYPE_IN) {
         MAP_USBEndpointDataToggleClear(USB0_BASE,
                                        IndexToUSBEP(ui32Index + 1),
                                        USB_EP_HOST_IN);
-    }
-    else
-    {
+    } else {
         MAP_USBEndpointDataToggleClear(USB0_BASE,
                                        IndexToUSBEP(ui32Index + 1),
                                        USB_EP_HOST_OUT);
@@ -3764,13 +3595,11 @@ USBHostCheckPipes(void)
 
     g_ui32CurrentTick++;
 
-    for(i32Idx = 0; i32Idx < g_sUSBHCD.ui32NumEndpoints; i32Idx++)
-    {
+    for(i32Idx = 0; i32Idx < g_sUSBHCD.ui32NumEndpoints; i32Idx++) {
         //
         // Skip unused pipes.
         //
-        if(g_sUSBHCD.psUSBINPipes[i32Idx].ui32Type == USBHCD_PIPE_UNUSED)
-        {
+        if(g_sUSBHCD.psUSBINPipes[i32Idx].ui32Type == USBHCD_PIPE_UNUSED) {
             continue;
         }
 
@@ -3778,9 +3607,8 @@ USBHostCheckPipes(void)
         // If the tick has expired and it has an interval then update it.
         //
         if((g_sUSBHCD.psUSBINPipes[i32Idx].ui32Interval != 0) &&
-           (g_sUSBHCD.psUSBINPipes[i32Idx].ui32NextEventTick ==
-            g_ui32CurrentTick))
-        {
+                (g_sUSBHCD.psUSBINPipes[i32Idx].ui32NextEventTick ==
+                 g_ui32CurrentTick)) {
             //
             // Schedule the next event.
             //
@@ -3792,11 +3620,10 @@ USBHostCheckPipes(void)
             // level drivers know that a new transfer can be scheduled.
             //
             if((g_sUSBHCD.psUSBINPipes[i32Idx].iState == ePipeIdle) &&
-               (g_sUSBHCD.psUSBINPipes[i32Idx].pfnCallback))
-            {
+                    (g_sUSBHCD.psUSBINPipes[i32Idx].pfnCallback)) {
                 g_sUSBHCD.psUSBINPipes[i32Idx].pfnCallback(
-                                                        IN_PIPE_HANDLE(i32Idx),
-                                                        USB_EVENT_SCHEDULER);
+                    IN_PIPE_HANDLE(i32Idx),
+                    USB_EVENT_SCHEDULER);
             }
         }
     }
@@ -3836,8 +3663,7 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     //
     g_sUSBHCD.psUSBDevice[0].ui32Flags |= USBHDEV_FLAG_NOTIFYINT;
 
-    if(ui32Status & USB_INTCTRL_SOF)
-    {
+    if(ui32Status & USB_INTCTRL_SOF) {
         //
         // Indicate that a start of frame has occurred.
         //
@@ -3847,8 +3673,7 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     //
     // A power fault has occurred so notify the application.
     //
-    if(ui32Status & USB_INTCTRL_POWER_FAULT)
-    {
+    if(ui32Status & USB_INTCTRL_POWER_FAULT) {
         //
         // Indicate that a power fault has occurred.
         //
@@ -3871,8 +3696,7 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     // In the event of a USB VBUS error, end the session and remove power to
     // the device.
     //
-    if(ui32Status & USB_INTCTRL_VBUS_ERR)
-    {
+    if(ui32Status & USB_INTCTRL_VBUS_ERR) {
         //
         // Set the VBUS error event.  We deliberately clear all other events
         // since this one means anything else that is outstanding is
@@ -3885,22 +3709,19 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     //
     // Received a reset from the host.
     //
-    if(ui32Status & USB_INTCTRL_BABBLE)
-    {
+    if(ui32Status & USB_INTCTRL_BABBLE) {
     }
 
     //
     // Suspend was signaled on the bus.
     //
-    if(ui32Status & USB_INTCTRL_SUSPEND)
-    {
+    if(ui32Status & USB_INTCTRL_SUSPEND) {
     }
 
     //
     // Start the session.
     //
-    if(ui32Status & USB_INTCTRL_SESSION)
-    {
+    if(ui32Status & USB_INTCTRL_SESSION) {
         //
         // Power the USB bus.
         //
@@ -3912,15 +3733,13 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     //
     // Resume was signaled on the bus.
     //
-    if(ui32Status & USB_INTCTRL_RESUME)
-    {
+    if(ui32Status & USB_INTCTRL_RESUME) {
     }
 
     //
     // Device connected so tell the main routine to issue a reset.
     //
-    if(ui32Status & USB_INTCTRL_CONNECT)
-    {
+    if(ui32Status & USB_INTCTRL_CONNECT) {
         //
         // Set the connect flag and clear disconnect if it happens to be set.
         //
@@ -3937,14 +3756,12 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     // Handle the ID detection so that the ID pin can be used as a
     // GPIO in eUSBModeHost.
     //
-    if(ui32Status & USB_INTCTRL_MODE_DETECT)
-    {
+    if(ui32Status & USB_INTCTRL_MODE_DETECT) {
         //
         // If in eUSBModeHost mode then switch back to OTG detection
         // so that VBUS can be monitored but free up the ID pin.
         //
-        if(g_iUSBMode == eUSBModeHost)
-        {
+        if(g_iUSBMode == eUSBModeHost) {
             USBOTGMode(USB0_BASE);
         }
     }
@@ -3952,8 +3769,7 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     //
     // Device was unplugged.
     //
-    if(ui32Status & USB_INTCTRL_DISCONNECT)
-    {
+    if(ui32Status & USB_INTCTRL_DISCONNECT) {
         //
         // Set the disconnect flag and clear connect if it happens to be set.
         //
@@ -3964,8 +3780,7 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     //
     // Start of Frame was received.
     //
-    if(ui32Status & USB_INTCTRL_SOF)
-    {
+    if(ui32Status & USB_INTCTRL_SOF) {
         //
         // Increment the global Start of Frame counter.
         //
@@ -3979,8 +3794,7 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
         //
         // Have we counted enough SOFs to allow us to call the tick function?
         //
-        if(ui32SOFDivide == USB_SOF_TICK_DIVIDE)
-        {
+        if(ui32SOFDivide == USB_SOF_TICK_DIVIDE) {
             //
             // Yes - reset the divider and call the SOF tick handler.
             //
@@ -3994,8 +3808,7 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     //
     ui32Status = USBLPMIntStatus(USB0_BASE);
 
-    if(ui32Status)
-    {
+    if(ui32Status) {
         //
         // Set the LPM interrupt event and clear the pending event.
         //
@@ -4006,14 +3819,12 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
         // Anything other than and acknowledge means that the transfer
         // was not complete for some reason.
         //
-        for(ui32Idx = 0; ui32Idx < (MAX_USB_DEVICES + 1); ui32Idx++)
-        {
+        for(ui32Idx = 0; ui32Idx < (MAX_USB_DEVICES + 1); ui32Idx++) {
             if((ui32Status != USB_INTLPM_ACK) &&
-               (g_sUSBHCD.psUSBDevice[ui32Idx].ui32Flags &
-                USBHDEV_FLAG_LPMPEND))
-            {
+                    (g_sUSBHCD.psUSBDevice[ui32Idx].ui32Flags &
+                     USBHDEV_FLAG_LPMPEND)) {
                 g_sUSBHCD.psUSBDevice[ui32Idx].ui32Flags |=
-                                                        USBHDEV_FLAG_LPMERROR;
+                    USBHDEV_FLAG_LPMERROR;
             }
             g_sUSBHCD.psUSBDevice[ui32Idx].ui32Flags &= ~USBHDEV_FLAG_LPMPEND;
         }
@@ -4024,25 +3835,21 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     //
     ui32DMAIntStatus = USBLibDMAIntStatus(g_sUSBHCD.psDMAInstance);
 
-    if(ui32DMAIntStatus)
-    {
+    if(ui32DMAIntStatus) {
         //
         // Handle any DMA interrupt processing.
         //
         USBLibDMAIntHandler(g_sUSBHCD.psDMAInstance, ui32DMAIntStatus);
 
-        for(ui32Idx = 0; ui32Idx < MAX_NUM_PIPES; ui32Idx++)
-        {
+        for(ui32Idx = 0; ui32Idx < MAX_NUM_PIPES; ui32Idx++) {
             if((g_sUSBHCD.psUSBINPipes[ui32Idx].iState == ePipeReadDMAWait) ||
-               (g_sUSBHCD.psUSBINPipes[ui32Idx].iState == ePipeReadDMA))
-            {
+                    (g_sUSBHCD.psUSBINPipes[ui32Idx].iState == ePipeReadDMA)) {
                 //
                 // If the DMA channel transfer is complete, send an ack.
                 //
                 if(USBLibDMAChannelStatus(g_sUSBHCD.psDMAInstance,
-                       g_sUSBHCD.psUSBINPipes[ui32Idx].ui8DMAChannel) ==
-                   USBLIBSTATUS_DMA_COMPLETE)
-                {
+                                          g_sUSBHCD.psUSBINPipes[ui32Idx].ui8DMAChannel) ==
+                        USBLIBSTATUS_DMA_COMPLETE) {
                     //
                     // Acknowledge the IN request.
                     //
@@ -4058,8 +3865,7 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
                     //
                     // Only call a handler if one is present.
                     //
-                    if(g_sUSBHCD.psUSBINPipes[ui32Idx].pfnCallback)
-                    {
+                    if(g_sUSBHCD.psUSBINPipes[ui32Idx].pfnCallback) {
                         g_sUSBHCD.psUSBINPipes[ui32Idx].pfnCallback(
                             IN_PIPE_HANDLE(ui32Idx), USB_EVENT_RX_AVAILABLE);
                     }
@@ -4069,20 +3875,17 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
                     // driver that an interrupt occurred.
                     //
                     g_sUSBHCD.psUSBINPipes[ui32Idx].psDevice->ui32Flags |=
-                                                    USBHDEV_FLAG_NOTIFYINT;
+                        USBHDEV_FLAG_NOTIFYINT;
                 }
-            }
-            else if(g_sUSBHCD.psUSBOUTPipes[ui32Idx].iState ==
-                    ePipeWriteDMASend)
-            {
+            } else if(g_sUSBHCD.psUSBOUTPipes[ui32Idx].iState ==
+                      ePipeWriteDMASend) {
                 //
                 // If the uDMA channel transfer is complete, then tell
                 // the USB controller to go ahead and send the data
                 //
                 if(USBLibDMAChannelStatus(g_sUSBHCD.psDMAInstance,
-                       g_sUSBHCD.psUSBOUTPipes[ui32Idx].ui8DMAChannel) &
-                   USBLIBSTATUS_DMA_COMPLETE)
-                {
+                                          g_sUSBHCD.psUSBOUTPipes[ui32Idx].ui8DMAChannel) &
+                        USBLIBSTATUS_DMA_COMPLETE) {
                     MAP_USBEndpointDataSend(USB0_BASE,
                                             IndexToUSBEP(ui32Idx + 1),
                                             USB_TRANS_OUT);
@@ -4091,11 +3894,9 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
                     // Now waiting on the final endpoint interrupt.
                     //
                     g_sUSBHCD.psUSBOUTPipes[ui32Idx].iState =
-                                                            ePipeWriteDMAWait;
+                        ePipeWriteDMAWait;
                 }
-            }
-            else if(g_sUSBHCD.psUSBOUTPipes[ui32Idx].iState == ePipeWriteDMA)
-            {
+            } else if(g_sUSBHCD.psUSBOUTPipes[ui32Idx].iState == ePipeWriteDMA) {
                 //
                 // Data was transmitted successfully.
                 //
@@ -4104,14 +3905,13 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
                 //
                 // Only call a handler if one is present.
                 //
-                if(g_sUSBHCD.psUSBOUTPipes[ui32Idx].pfnCallback)
-                {
+                if(g_sUSBHCD.psUSBOUTPipes[ui32Idx].pfnCallback) {
                     //
                     // Notify the pipe that its last transaction was completed.
                     //
                     g_sUSBHCD.psUSBOUTPipes[ui32Idx].pfnCallback(
-                            OUT_PIPE_HANDLE(ui32Idx),
-                            USB_EVENT_TX_COMPLETE);
+                        OUT_PIPE_HANDLE(ui32Idx),
+                        USB_EVENT_TX_COMPLETE);
                 }
             }
         }
@@ -4125,16 +3925,14 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     //
     // Handle end point 0 interrupts.
     //
-    if(ui32Status & USB_INTEP_0)
-    {
+    if(ui32Status & USB_INTEP_0) {
         //
         // Indicate that a start of frame has occurred.
         //
         g_sUSBHCD.ui32IntEvents |= INT_EVENT_ENUM;
     }
 
-    for(ui32Idx = 0; ui32Idx < MAX_NUM_PIPES; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < MAX_NUM_PIPES; ui32Idx++) {
         //
         // Check the next pipe, the first time through this will clear out
         // any interrupts dealing with endpoint zero since it was handled
@@ -4145,16 +3943,14 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
         //
         // Break out if there are no more pending interrupts.
         //
-        if(ui32Status == 0)
-        {
+        if(ui32Status == 0) {
             break;
         }
 
         //
         // Check the status of the receive(IN) pipes.
         //
-        if(ui32Status & 0x10000)
-        {
+        if(ui32Status & 0x10000) {
             //
             // Clear the status flag for the IN Pipe.
             //
@@ -4164,13 +3960,12 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
             // Read the status of the endpoint connected to this pipe.
             //
             ui32EPStatus = MAP_USBEndpointStatus(USB0_BASE,
-                                               IndexToUSBEP(ui32Idx + 1));
+                                                 IndexToUSBEP(ui32Idx + 1));
 
             //
             // Check if the device stalled the request.
             //
-            if(ui32EPStatus & USB_HOST_IN_STALL)
-            {
+            if(ui32EPStatus & USB_HOST_IN_STALL) {
                 //
                 // Clear the stall condition on this endpoint pipe.
                 //
@@ -4186,15 +3981,12 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
                 //
                 // Notify the pipe that it was stalled.
                 //
-                if(g_sUSBHCD.psUSBINPipes[ui32Idx].pfnCallback)
-                {
+                if(g_sUSBHCD.psUSBINPipes[ui32Idx].pfnCallback) {
                     g_sUSBHCD.psUSBINPipes[ui32Idx].pfnCallback(
-                                                    IN_PIPE_HANDLE(ui32Idx),
-                                                    USB_EVENT_STALL);
+                        IN_PIPE_HANDLE(ui32Idx),
+                        USB_EVENT_STALL);
                 }
-            }
-            else if(ui32EPStatus & USB_HOST_IN_ERROR)
-            {
+            } else if(ui32EPStatus & USB_HOST_IN_ERROR) {
                 //
                 // We can no longer communicate with this device for some
                 // reason.  It may have been disconnected from a hub, for
@@ -4212,18 +4004,16 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
                 //
                 // Notify the pipe that it was stalled.
                 //
-                if(g_sUSBHCD.psUSBINPipes[ui32Idx].pfnCallback)
-                {
+                if(g_sUSBHCD.psUSBINPipes[ui32Idx].pfnCallback) {
                     g_sUSBHCD.psUSBINPipes[ui32Idx].pfnCallback(
-                                                    IN_PIPE_HANDLE(ui32Idx),
-                                                    USB_EVENT_ERROR);
+                        IN_PIPE_HANDLE(ui32Idx),
+                        USB_EVENT_ERROR);
                 }
             }
             //
             // Handle the case where the pipe is reading a single packet.
             //
-            else if(g_sUSBHCD.psUSBINPipes[ui32Idx].iState == ePipeReadDMA)
-            {
+            else if(g_sUSBHCD.psUSBINPipes[ui32Idx].iState == ePipeReadDMA) {
                 void *pvAddr;
 
                 //
@@ -4232,45 +4022,40 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
                 g_sUSBHCD.psUSBINPipes[ui32Idx].iState = ePipeReadDMAWait;
 
                 pvAddr = USBLibDMAAddrGet(g_sUSBHCD.psDMAInstance,
-                                g_sUSBHCD.psUSBINPipes[ui32Idx].ui8DMAChannel);
+                                          g_sUSBHCD.psUSBINPipes[ui32Idx].ui8DMAChannel);
 
                 //
                 // Save the amount of data available.
                 //
                 g_sUSBHCD.psUSBINPipes[ui32Idx].ui32DataRead =
-                            USBEndpointDataAvail(USB0_BASE,
-                                                 IndexToUSBEP(ui32Idx + 1));
+                    USBEndpointDataAvail(USB0_BASE,
+                                         IndexToUSBEP(ui32Idx + 1));
 
                 //
                 // Only request what is available.
                 //
                 if(g_sUSBHCD.psUSBINPipes[ui32Idx].ui32DataRead <=
-                   g_sUSBHCD.psUSBINPipes[ui32Idx].ui32ReadSize)
-                {
+                        g_sUSBHCD.psUSBINPipes[ui32Idx].ui32ReadSize) {
                     //
                     // Reset the transfer size.
                     //
                     USBLibDMATransfer(g_sUSBHCD.psDMAInstance,
-                                 g_sUSBHCD.psUSBINPipes[ui32Idx].ui8DMAChannel,
-                                 pvAddr,
-                                 g_sUSBHCD.psUSBINPipes[ui32Idx].ui32DataRead);
-                }
-                else
-                {
+                                      g_sUSBHCD.psUSBINPipes[ui32Idx].ui8DMAChannel,
+                                      pvAddr,
+                                      g_sUSBHCD.psUSBINPipes[ui32Idx].ui32DataRead);
+                } else {
                     //
                     // The transfer size did not change, this leaves some
                     // data in the FIFO.
                     //
                     g_sUSBHCD.psUSBINPipes[ui32Idx].ui32DataRead =
-                            g_sUSBHCD.psUSBINPipes[ui32Idx].ui32ReadSize;
+                        g_sUSBHCD.psUSBINPipes[ui32Idx].ui32ReadSize;
                 }
 
                 USBLibDMAChannelEnable(
-                        g_sUSBHCD.psDMAInstance,
-                        g_sUSBHCD.psUSBINPipes[ui32Idx].ui8DMAChannel);
-            }
-            else if(g_sUSBHCD.psUSBINPipes[ui32Idx].iState == ePipeReading)
-            {
+                    g_sUSBHCD.psDMAInstance,
+                    g_sUSBHCD.psUSBINPipes[ui32Idx].ui8DMAChannel);
+            } else if(g_sUSBHCD.psUSBINPipes[ui32Idx].iState == ePipeReading) {
                 //
                 // Data is available.
                 //
@@ -4281,24 +4066,22 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
                 // buffer provided by the caller to USBHCDPipeRead() or
                 // USBHCDPipeSchedule() if a buffer was provided already.
                 //
-                if(g_sUSBHCD.psUSBINPipes[ui32Idx].pui8ReadPtr)
-                {
+                if(g_sUSBHCD.psUSBINPipes[ui32Idx].pui8ReadPtr) {
                     g_sUSBHCD.psUSBINPipes[ui32Idx].ui32DataRead =
-                                g_sUSBHCD.psUSBINPipes[ui32Idx].ui32ReadSize;
+                        g_sUSBHCD.psUSBINPipes[ui32Idx].ui32ReadSize;
 
                     USBEndpointDataGet(USB0_BASE, IndexToUSBEP(ui32Idx + 1),
-                                g_sUSBHCD.psUSBINPipes[ui32Idx].pui8ReadPtr,
-                                &g_sUSBHCD.psUSBINPipes[ui32Idx].ui32DataRead);
+                                       g_sUSBHCD.psUSBINPipes[ui32Idx].pui8ReadPtr,
+                                       &g_sUSBHCD.psUSBINPipes[ui32Idx].ui32DataRead);
                 }
 
                 //
                 // Notify the pipe that its last transaction was completed.
                 //
-                if(g_sUSBHCD.psUSBINPipes[ui32Idx].pfnCallback)
-                {
+                if(g_sUSBHCD.psUSBINPipes[ui32Idx].pfnCallback) {
                     g_sUSBHCD.psUSBINPipes[ui32Idx].pfnCallback(
-                                                    IN_PIPE_HANDLE(ui32Idx),
-                                                    USB_EVENT_RX_AVAILABLE);
+                        IN_PIPE_HANDLE(ui32Idx),
+                        USB_EVENT_RX_AVAILABLE);
                 }
 
             }
@@ -4308,25 +4091,23 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
             // driver that an interrupt occurred.
             //
             g_sUSBHCD.psUSBINPipes[ui32Idx].psDevice->ui32Flags |=
-                                                    USBHDEV_FLAG_NOTIFYINT;
+                USBHDEV_FLAG_NOTIFYINT;
         }
 
         //
         // Check the status of the transmit(OUT) pipes.
         //
-        if(ui32Status & 1)
-        {
+        if(ui32Status & 1) {
             //
             // Read the status of the endpoint connected to this pipe.
             //
             ui32EPStatus = MAP_USBEndpointStatus(USB0_BASE,
-                                               IndexToUSBEP(ui32Idx + 1));
+                                                 IndexToUSBEP(ui32Idx + 1));
 
             //
             // Check if the device stalled the request.
             //
-            if(ui32EPStatus & USB_HOST_OUT_STALL)
-            {
+            if(ui32EPStatus & USB_HOST_OUT_STALL) {
                 //
                 // Clear the stall condition on this endpoint pipe.
                 //
@@ -4342,18 +4123,15 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
                 //
                 // Only call a handler if one is present.
                 //
-                if(g_sUSBHCD.psUSBOUTPipes[ui32Idx].pfnCallback)
-                {
+                if(g_sUSBHCD.psUSBOUTPipes[ui32Idx].pfnCallback) {
                     //
                     // Notify the pipe that it was stalled.
                     //
                     g_sUSBHCD.psUSBOUTPipes[ui32Idx].pfnCallback(
-                            OUT_PIPE_HANDLE(ui32Idx),
-                            USB_EVENT_STALL);
+                        OUT_PIPE_HANDLE(ui32Idx),
+                        USB_EVENT_STALL);
                 }
-            }
-            else if(ui32EPStatus & USB_HOST_OUT_ERROR)
-            {
+            } else if(ui32EPStatus & USB_HOST_OUT_ERROR) {
                 //
                 // Clear the error condition on this endpoint pipe.
                 //
@@ -4369,21 +4147,18 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
                 //
                 // Only call a handler if one is present.
                 //
-                if(g_sUSBHCD.psUSBOUTPipes[ui32Idx].pfnCallback)
-                {
+                if(g_sUSBHCD.psUSBOUTPipes[ui32Idx].pfnCallback) {
                     //
                     // Notify the pipe that had an error.
                     //
                     g_sUSBHCD.psUSBOUTPipes[ui32Idx].pfnCallback(
-                            OUT_PIPE_HANDLE(ui32Idx),
-                            USB_EVENT_ERROR);
+                        OUT_PIPE_HANDLE(ui32Idx),
+                        USB_EVENT_ERROR);
                 }
-            }
-            else if((g_sUSBHCD.psUSBOUTPipes[ui32Idx].iState ==
-                     ePipeWriting) ||
-                    (g_sUSBHCD.psUSBOUTPipes[ui32Idx].iState ==
-                     ePipeWriteDMAWait))
-            {
+            } else if((g_sUSBHCD.psUSBOUTPipes[ui32Idx].iState ==
+                       ePipeWriting) ||
+                      (g_sUSBHCD.psUSBOUTPipes[ui32Idx].iState ==
+                       ePipeWriteDMAWait)) {
                 //
                 // Data was transmitted successfully.
                 //
@@ -4392,14 +4167,13 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
                 //
                 // Only call a handler if one is present.
                 //
-                if(g_sUSBHCD.psUSBOUTPipes[ui32Idx].pfnCallback)
-                {
+                if(g_sUSBHCD.psUSBOUTPipes[ui32Idx].pfnCallback) {
                     //
                     // Notify the pipe that its last transaction was completed.
                     //
                     g_sUSBHCD.psUSBOUTPipes[ui32Idx].pfnCallback(
-                            OUT_PIPE_HANDLE(ui32Idx),
-                            USB_EVENT_TX_COMPLETE);
+                        OUT_PIPE_HANDLE(ui32Idx),
+                        USB_EVENT_TX_COMPLETE);
                 }
             }
 
@@ -4413,10 +4187,9 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
             // Remember that we need to notify this device's class
             // driver that an interrupt occurred.
             //
-            if(g_sUSBHCD.psUSBOUTPipes[ui32Idx].psDevice)
-            {
+            if(g_sUSBHCD.psUSBOUTPipes[ui32Idx].psDevice) {
                 g_sUSBHCD.psUSBINPipes[ui32Idx].psDevice->ui32Flags |=
-                                                    USBHDEV_FLAG_NOTIFYINT;
+                    USBHDEV_FLAG_NOTIFYINT;
             }
         }
     }
@@ -4425,8 +4198,7 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     // Send back notifications to any class driver whose endpoint required
     // service during the handler.
     //
-    for(ui32DevIndex = 0; ui32DevIndex <= MAX_USB_DEVICES; ui32DevIndex++)
-    {
+    for(ui32DevIndex = 0; ui32DevIndex <= MAX_USB_DEVICES; ui32DevIndex++) {
         //
         // Which class driver does this device use?
         //
@@ -4437,15 +4209,14 @@ USBHostIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
         // and the class driver has an interrupt callback...
         //
         if((i32ClassDrvr >= 0) &&
-           (g_sUSBHCD.psUSBDevice[ui32DevIndex].ui32Flags &
-            USBHDEV_FLAG_NOTIFYINT) &&
-           (g_sUSBHCD.ppsClassDrivers[i32ClassDrvr]->pfnIntHandler))
-        {
+                (g_sUSBHCD.psUSBDevice[ui32DevIndex].ui32Flags &
+                 USBHDEV_FLAG_NOTIFYINT) &&
+                (g_sUSBHCD.ppsClassDrivers[i32ClassDrvr]->pfnIntHandler)) {
             //
             // ...call the class driver's interrupt notification callback.
             //
             g_sUSBHCD.ppsClassDrivers[i32ClassDrvr]->pfnIntHandler(
-                                            g_ppvDriverInstance[ui32DevIndex]);
+                g_ppvDriverInstance[ui32DevIndex]);
         }
     }
 }
@@ -4506,9 +4277,9 @@ USBHCDOpenDriver(uint32_t ui32Index, uint32_t ui32DeviceNum)
     // Get the interface descriptor.
     //
     psInterface = USBDescGetInterface(
-                    g_sUSBHCD.psUSBDevice[ui32DeviceNum].psConfigDescriptor,
-                    g_sUSBHCD.psUSBDevice[ui32DeviceNum].ui32Interface,
-                    USB_DESC_ANY);
+                      g_sUSBHCD.psUSBDevice[ui32DeviceNum].psConfigDescriptor,
+                      g_sUSBHCD.psUSBDevice[ui32DeviceNum].ui32Interface,
+                      USB_DESC_ANY);
 
     //
     // Read the interface class.
@@ -4518,28 +4289,25 @@ USBHCDOpenDriver(uint32_t ui32Index, uint32_t ui32DeviceNum)
     //
     // Search through the Host Class driver list for the devices class.
     //
-    for(i32Driver = 0; i32Driver < g_sUSBHCD.ui32NumClassDrivers; i32Driver++)
-    {
+    for(i32Driver = 0; i32Driver < g_sUSBHCD.ui32NumClassDrivers; i32Driver++) {
         //
         // If a driver was found call the open for this driver and save which
         // driver is in use.
         //
         if(g_sUSBHCD.ppsClassDrivers[i32Driver]->ui32InterfaceClass ==
-           ui32Class)
-        {
+                ui32Class) {
             //
             // Call the open function for the class driver.
             //
             g_ppvDriverInstance[ui32DeviceNum] =
-                    g_sUSBHCD.ppsClassDrivers[i32Driver]->pfnOpen(
-                            &g_sUSBHCD.psUSBDevice[ui32DeviceNum]);
+                g_sUSBHCD.ppsClassDrivers[i32Driver]->pfnOpen(
+                    &g_sUSBHCD.psUSBDevice[ui32DeviceNum]);
 
             //
             // If the driver was successfully loaded then break out of the
             // loop.
             //
-            if(g_ppvDriverInstance[ui32DeviceNum] != 0)
-            {
+            if(g_ppvDriverInstance[ui32DeviceNum] != 0) {
                 break;
             }
         }
@@ -4549,8 +4317,7 @@ USBHCDOpenDriver(uint32_t ui32Index, uint32_t ui32DeviceNum)
     // If no drivers were found then return -1 to indicate an invalid
     // driver instance.
     //
-    if(i32Driver == g_sUSBHCD.ui32NumClassDrivers)
-    {
+    if(i32Driver == g_sUSBHCD.ui32NumClassDrivers) {
         //
         // Send an unknown connection event.
         //
@@ -4560,9 +4327,7 @@ USBHCDOpenDriver(uint32_t ui32Index, uint32_t ui32DeviceNum)
         // Indicate that no driver was found.
         //
         i32Driver = -1;
-    }
-    else
-    {
+    } else {
         //
         // If the connect event is enabled then send the event.
         //
@@ -4597,11 +4362,10 @@ InternalUSBHCDSendEvent(uint32_t ui32Index, tEventInfo *psEvent,
     // Make sure that an event driver has been registered.
     //
     if((g_sUSBHCD.i32EventDriver != -1) &&
-       (g_sUSBHCD.ppsClassDrivers[g_sUSBHCD.i32EventDriver]->pfnIntHandler) &&
-       (g_sUSBHCD.ui32EventEnables & ui32EvFlag))
-    {
+            (g_sUSBHCD.ppsClassDrivers[g_sUSBHCD.i32EventDriver]->pfnIntHandler) &&
+            (g_sUSBHCD.ui32EventEnables & ui32EvFlag)) {
         g_sUSBHCD.ppsClassDrivers[g_sUSBHCD.i32EventDriver]->pfnIntHandler(
-                                                                    psEvent);
+            psEvent);
     }
 }
 
@@ -4666,13 +4430,12 @@ USBHCDDeviceDisconnected(uint32_t ui32Index, uint32_t ui32DevIndex)
     //
     // If this was an active driver then close it out.
     //
-    if(g_pi32USBHActiveDriver[ui32DevIndex] >= 0)
-    {
+    if(g_pi32USBHActiveDriver[ui32DevIndex] >= 0) {
         //
         // Call the driver Close entry point.
         //
         g_sUSBHCD.ppsClassDrivers[g_pi32USBHActiveDriver[ui32DevIndex]]->
-            pfnClose(g_ppvDriverInstance[ui32DevIndex]);
+        pfnClose(g_ppvDriverInstance[ui32DevIndex]);
 
         //
         // No active driver now present.
@@ -4689,8 +4452,7 @@ USBHCDDeviceDisconnected(uint32_t ui32Index, uint32_t ui32DevIndex)
     // We only do this if the disconnected device
     // was attached directly to us (device index 0).
     //
-    if((ui32DevIndex == 0) && (g_iUSBMode == eUSBModeOTG))
-    {
+    if((ui32DevIndex == 0) && (g_iUSBMode == eUSBModeOTG)) {
         OTGDeviceDisconnect(0);
     }
 }
@@ -4725,15 +4487,13 @@ USBHCDMain(void)
     //
     // Fix up the state if any important interrupt events occurred.
     //
-    if(g_sUSBHCD.ui32IntEvents)
-    {
+    if(g_sUSBHCD.ui32IntEvents) {
         //
         // Disable the USB interrupt.
         //
         OS_INT_DISABLE(g_sUSBHCD.ui32IntNum);
 
-        if(g_sUSBHCD.ui32IntEvents & INT_EVENT_POWER_FAULT)
-        {
+        if(g_sUSBHCD.ui32IntEvents & INT_EVENT_POWER_FAULT) {
             //
             // A power fault has occurred so notify the application if there
             // is an event handler and the event has been enabled.
@@ -4743,33 +4503,25 @@ USBHCDMain(void)
             InternalUSBHCDSendEvent(0, &sEvent, USBHCD_EVFLAG_PWRFAULT);
 
             g_sUSBHCD.piDeviceState[0] = eHCDPowerFault;
-        }
-        else if(g_sUSBHCD.ui32IntEvents & INT_EVENT_VBUS_ERR)
-        {
+        } else if(g_sUSBHCD.ui32IntEvents & INT_EVENT_VBUS_ERR) {
             //
             // A VBUS error has occurred.  This event trumps connect and
             // disconnect since it will cause a controller reset.
             //
             g_sUSBHCD.piDeviceState[0] = eHCDVBUSError;
-        }
-        else
-        {
+        } else {
             //
             // Has a device connected?
             //
-            if(g_sUSBHCD.ui32IntEvents & INT_EVENT_CONNECT)
-            {
+            if(g_sUSBHCD.ui32IntEvents & INT_EVENT_CONNECT) {
                 g_sUSBHCD.piDeviceState[0] = eHCDDevReset;
                 g_sUSBHCD.psUSBDevice[0].ui8Hub = 0;
                 g_sUSBHCD.psUSBDevice[0].ui8HubPort = 0;
-            }
-            else
-            {
+            } else {
                 //
                 // Has a device disconnected?
                 //
-                if(g_sUSBHCD.ui32IntEvents & INT_EVENT_DISCONNECT)
-                {
+                if(g_sUSBHCD.ui32IntEvents & INT_EVENT_DISCONNECT) {
                     g_sUSBHCD.piDeviceState[0] = eHCDDevDisconnected;
                 }
             }
@@ -4777,8 +4529,7 @@ USBHCDMain(void)
             //
             // Handle the start of frame event
             //
-            if(g_sUSBHCD.ui32IntEvents & INT_EVENT_SOF)
-            {
+            if(g_sUSBHCD.ui32IntEvents & INT_EVENT_SOF) {
                 //
                 // If the connect event is enabled then send the event.
                 //
@@ -4798,27 +4549,24 @@ USBHCDMain(void)
             //
             // Handle LPM interrupt events.
             //
-            if(g_sUSBHCD.ui32IntEvents & INT_EVENT_LPM)
-            {
+            if(g_sUSBHCD.ui32IntEvents & INT_EVENT_LPM) {
                 //
                 // There should be a pending LPM request.
                 //
                 ASSERT((g_sUSBHCD.ui32IntEvents & INT_EVENT_LPM_PEND) != 0);
 
-                for(i32Dev = 0; i32Dev < MAX_USB_DEVICES + 1; i32Dev++)
-                {
+                for(i32Dev = 0; i32Dev < MAX_USB_DEVICES + 1; i32Dev++) {
                     //
                     // Find the device with the pending LPM request.
                     //
                     if(g_sUSBHCD.psUSBDevice[i32Dev].ui32Flags &
-                       USBHDEV_FLAG_LPMPEND)
-                    {
+                            USBHDEV_FLAG_LPMPEND) {
                         //
                         // Clear the pending event at the device level, this
                         // leaves the error set if it was already set.
                         //
                         g_sUSBHCD.psUSBDevice[i32Dev].ui32Flags &=
-                                                    ~USBHDEV_FLAG_LPMPEND;
+                            ~USBHDEV_FLAG_LPMPEND;
 
                         //
                         // Clear the pending request and event at the host
@@ -4847,15 +4595,13 @@ USBHCDMain(void)
     // condition for this loop is correct since we support (MAX_USB_DEVICES+1)
     // devices (the hub counts as one).
     //
-    for(i32Dev = 0; i32Dev <= MAX_USB_DEVICES; i32Dev++)
-    {
+    for(i32Dev = 0; i32Dev <= MAX_USB_DEVICES; i32Dev++) {
         //
         // If this is not the first device (i.e. the one directly connected to
         // the host controller) then set the old state to the current state
         // since we won't have mucked with it in any of the previous code.
         //
-        if(i32Dev != 0)
-        {
+        if(i32Dev != 0) {
             iOldState = g_sUSBHCD.piDeviceState[i32Dev];
         }
 
@@ -4870,22 +4616,19 @@ static void
 ProcessUSBDeviceStateMachine(tUSBHDeviceState iOldState,
                              uint32_t ui32DevIndex)
 {
-    switch(g_sUSBHCD.piDeviceState[ui32DevIndex])
-    {
+    switch(g_sUSBHCD.piDeviceState[ui32DevIndex]) {
         //
         // There was a power fault condition so shut down and wait for the
         // application to re-initialized the system.
         //
-        case eHCDPowerFault:
-        {
+        case eHCDPowerFault: {
             break;
         }
 
         //
         // There was a VBUS error so handle it.
         //
-        case eHCDVBUSError:
-        {
+        case eHCDVBUSError: {
             //
             // Disable USB interrupts.
             //
@@ -4895,8 +4638,7 @@ ProcessUSBDeviceStateMachine(tUSBHDeviceState iOldState,
             // If there was a device in any state of connection then indicate
             // that it has been disconnected.
             //
-            if((iOldState != eHCDIdle) && (iOldState != eHCDPowerFault))
-            {
+            if((iOldState != eHCDIdle) && (iOldState != eHCDPowerFault)) {
                 //
                 // Handle device disconnect.
                 //
@@ -4923,10 +4665,8 @@ ProcessUSBDeviceStateMachine(tUSBHDeviceState iOldState,
         //
         // Trigger a reset to the connected device.
         //
-        case eHCDDevReset:
-        {
-            if(!ui32DevIndex)
-            {
+        case eHCDDevReset: {
+            if(!ui32DevIndex) {
                 //
                 // Trigger a Reset.  This is only ever done for devices
                 // attached directly to the controller.
@@ -4953,15 +4693,13 @@ ProcessUSBDeviceStateMachine(tUSBHDeviceState iOldState,
         // the device.
         //
         case eHCDDevConnected:
-        case eHCDDevConnectedHub:
-        {
+        case eHCDDevConnectedHub: {
             //
             // First check if we have read the device descriptor at all
             // before proceeding.
             //
             if(g_sUSBHCD.psUSBDevice[ui32DevIndex].sDeviceDescriptor.bLength ==
-               0)
-            {
+                    0) {
                 //
                 // Initialize a request for the device descriptor.
                 //
@@ -4972,38 +4710,32 @@ ProcessUSBDeviceStateMachine(tUSBHDeviceState iOldState,
                 // Hub enumeration has already set the speed so do not
                 // override the setting here.
                 //
-                if(g_sUSBHCD.piDeviceState[ui32DevIndex] == eHCDDevConnected)
-                {
+                if(g_sUSBHCD.piDeviceState[ui32DevIndex] == eHCDDevConnected) {
                     //
                     // Remember the speed of this device to ensure endpoints
                     // are properly configured.
                     //
-                    switch(USBHostSpeedGet(USB0_BASE))
-                    {
-                        case USB_HIGH_SPEED:
-                        {
+                    switch(USBHostSpeedGet(USB0_BASE)) {
+                        case USB_HIGH_SPEED: {
                             g_sUSBHCD.psUSBDevice[ui32DevIndex].ui32Speed =
-                                                            USB_EP_SPEED_HIGH;
+                                USB_EP_SPEED_HIGH;
                             break;
                         }
-                        case USB_FULL_SPEED:
-                        {
+                        case USB_FULL_SPEED: {
                             g_sUSBHCD.psUSBDevice[ui32DevIndex].ui32Speed =
-                                                            USB_EP_SPEED_FULL;
+                                USB_EP_SPEED_FULL;
                             break;
                         }
-                        default:
-                        {
+                        default: {
                             g_sUSBHCD.psUSBDevice[ui32DevIndex].ui32Speed =
-                                                            USB_EP_SPEED_LOW;
+                                USB_EP_SPEED_LOW;
                             break;
                         }
                     }
                 }
 
                 if(USBHCDGetDeviceDescriptor(0,
-                        &g_sUSBHCD.psUSBDevice[ui32DevIndex]) == 0)
-                {
+                                             &g_sUSBHCD.psUSBDevice[ui32DevIndex]) == 0) {
                     //
                     // If the device descriptor cannot be read then the device
                     // will be treated as unknown.
@@ -5025,8 +4757,7 @@ ProcessUSBDeviceStateMachine(tUSBHDeviceState iOldState,
                     // driver that we experienced an error enumerating the
                     // device.
                     //
-                    if(g_sUSBHCD.psUSBDevice[ui32DevIndex].ui8Hub)
-                    {
+                    if(g_sUSBHCD.psUSBDevice[ui32DevIndex].ui8Hub) {
                         USBHHubEnumerationError(
                             g_sUSBHCD.psUSBDevice[ui32DevIndex].ui8Hub,
                             g_sUSBHCD.psUSBDevice[ui32DevIndex].ui8HubPort);
@@ -5037,8 +4768,7 @@ ProcessUSBDeviceStateMachine(tUSBHDeviceState iOldState,
             // If we have the device descriptor then move on to setting
             // the address of the device.
             //
-            else if(g_sUSBHCD.psUSBDevice[ui32DevIndex].ui32Address == 0)
-            {
+            else if(g_sUSBHCD.psUSBDevice[ui32DevIndex].ui32Address == 0) {
                 DEBUG_OUTPUT("Connection %d - setting address %d\n",
                              ui32DevIndex, ui32DevIndex + 1);
 
@@ -5051,7 +4781,7 @@ ProcessUSBDeviceStateMachine(tUSBHDeviceState iOldState,
                 // Save the address.
                 //
                 g_sUSBHCD.psUSBDevice[ui32DevIndex].ui32Address =
-                                                            (ui32DevIndex + 1);
+                    (ui32DevIndex + 1);
 
                 //
                 // Move on to the addressed state.
@@ -5060,13 +4790,11 @@ ProcessUSBDeviceStateMachine(tUSBHDeviceState iOldState,
             }
             break;
         }
-        case eHCDDevAddressed:
-        {
+        case eHCDDevAddressed: {
             //
             // First check if we have read the configuration descriptor.
             //
-            if(!g_sUSBHCD.psUSBDevice[ui32DevIndex].bConfigRead)
-            {
+            if(!g_sUSBHCD.psUSBDevice[ui32DevIndex].bConfigRead) {
                 DEBUG_OUTPUT("Connection %d - getting config descriptor\n",
                              ui32DevIndex);
 
@@ -5074,8 +4802,7 @@ ProcessUSBDeviceStateMachine(tUSBHDeviceState iOldState,
                 // Initialize a request for the configuration descriptor.
                 //
                 if(USBHCDGetConfigDescriptor(0,
-                                    &g_sUSBHCD.psUSBDevice[ui32DevIndex]) == 0)
-                {
+                                             &g_sUSBHCD.psUSBDevice[ui32DevIndex]) == 0) {
                     //
                     // If the device descriptor cannot be read then the device
                     // will be treated as unknown.
@@ -5097,8 +4824,7 @@ ProcessUSBDeviceStateMachine(tUSBHDeviceState iOldState,
                     // driver that we experienced an error enumerating the
                     // device.
                     //
-                    if(g_sUSBHCD.psUSBDevice[ui32DevIndex].ui8Hub)
-                    {
+                    if(g_sUSBHCD.psUSBDevice[ui32DevIndex].ui8Hub) {
                         USBHHubEnumerationError(
                             g_sUSBHCD.psUSBDevice[ui32DevIndex].ui8Hub,
                             g_sUSBHCD.psUSBDevice[ui32DevIndex].ui8HubPort);
@@ -5109,8 +4835,7 @@ ProcessUSBDeviceStateMachine(tUSBHDeviceState iOldState,
             // Now have addressed and received the device configuration,
             // so get ready to set the device configuration.
             //
-            else
-            {
+            else {
                 DEBUG_OUTPUT("Connection %d - setting configuration.\n",
                              ui32DevIndex);
 
@@ -5119,7 +4844,7 @@ ProcessUSBDeviceStateMachine(tUSBHDeviceState iOldState,
                 // configuration.
                 //
                 USBHCDSetConfig(0,
-                            (uint32_t)&g_sUSBHCD.psUSBDevice[ui32DevIndex], 1);
+                                (uint32_t)&g_sUSBHCD.psUSBDevice[ui32DevIndex], 1);
 
                 //
                 // Move on to the configured state.
@@ -5130,17 +4855,16 @@ ProcessUSBDeviceStateMachine(tUSBHDeviceState iOldState,
                 // Open the driver for the device.
                 //
                 g_pi32USBHActiveDriver[ui32DevIndex] = USBHCDOpenDriver(0,
-                                                                ui32DevIndex);
+                                                       ui32DevIndex);
 
                 //
                 // If the device is connected via a hub, tell the hub
                 // driver that enumeration is complete.
                 //
-                if(g_sUSBHCD.psUSBDevice[ui32DevIndex].ui8Hub)
-                {
+                if(g_sUSBHCD.psUSBDevice[ui32DevIndex].ui8Hub) {
                     USBHHubEnumerationComplete(
-                            g_sUSBHCD.psUSBDevice[ui32DevIndex].ui8Hub,
-                            g_sUSBHCD.psUSBDevice[ui32DevIndex].ui8HubPort);
+                        g_sUSBHCD.psUSBDevice[ui32DevIndex].ui8Hub,
+                        g_sUSBHCD.psUSBDevice[ui32DevIndex].ui8HubPort);
                 }
             }
             break;
@@ -5148,23 +4872,20 @@ ProcessUSBDeviceStateMachine(tUSBHDeviceState iOldState,
         //
         // The device was making a request and is now complete.
         //
-        case eHCDDevRequest:
-        {
+        case eHCDDevRequest: {
             g_sUSBHCD.piDeviceState[ui32DevIndex] = eHCDDevConnected;
             break;
         }
         //
         // The strings are currently not accessed.
         //
-        case eHCDDevGetStrings:
-        {
+        case eHCDDevGetStrings: {
             break;
         }
         //
         // Basically Idle at this point.
         //
-        case eHCDDevDisconnected:
-        {
+        case eHCDDevDisconnected: {
             DEBUG_OUTPUT("Connection %d - disconnected.\n",
                          ui32DevIndex);
 
@@ -5184,16 +4905,14 @@ ProcessUSBDeviceStateMachine(tUSBHDeviceState iOldState,
         // Connection and enumeration is complete so allow this function
         // to exit.
         //
-        case eHCDDevConfigured:
-        {
+        case eHCDDevConfigured: {
             break;
         }
 
         //
         // Poorly behaving device are in limbo in this state until removed.
         //
-        case eHCDDevError:
-        {
+        case eHCDDevError: {
             DEBUG_OUTPUT("Connection %d - Error!\n", ui32DevIndex);
 
             //
@@ -5201,15 +4920,13 @@ ProcessUSBDeviceStateMachine(tUSBHDeviceState iOldState,
             // it until it is removed.  If the device is connected to a hub,
             // we just leave it in the error state until it is removed.
             //
-            if(ui32DevIndex == 0)
-            {
+            if(ui32DevIndex == 0) {
                 g_sUSBHCD.ui32IntEvents |= INT_EVENT_DISCONNECT;
                 g_sUSBHCD.piDeviceState[ui32DevIndex] = eHCDIdle;
             }
             break;
         }
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -5289,24 +5006,18 @@ USBHCDControlTransfer(uint32_t ui32Index, tUSBRequest *psSetupPacket,
     //
     // If this is an IN request, change to that state.
     //
-    if(psSetupPacket->bmRequestType & USB_RTYPE_DIR_IN)
-    {
+    if(psSetupPacket->bmRequestType & USB_RTYPE_DIR_IN) {
         g_sUSBHEP0State.iState = eEP0StateSetupIN;
-    }
-    else
-    {
+    } else {
         //
         // If there is no data then this is not an OUT request.
         //
-        if(ui32Size != 0)
-        {
+        if(ui32Size != 0) {
             //
             // Since there is data, this is an OUT request.
             //
             g_sUSBHEP0State.iState = eEP0StateSetupOUT;
-        }
-        else
-        {
+        } else {
             //
             // Otherwise this request has no data and just a status phase.
             //
@@ -5317,13 +5028,10 @@ USBHCDControlTransfer(uint32_t ui32Index, tUSBRequest *psSetupPacket,
     //
     // Make sure we are talking to the correct device.
     //
-    if(psDevice->ui8Hub == 0)
-    {
+    if(psDevice->ui8Hub == 0) {
         USBHostHubAddrSet(USB0_BASE, USB_EP_0, 0,
                           USB_EP_HOST_OUT | psDevice->ui32Speed);
-    }
-    else
-    {
+    } else {
         USBHostHubAddrSet(USB0_BASE, USB_EP_0,
                           (psDevice->ui8Hub | (psDevice->ui8HubPort << 8)),
                           USB_EP_HOST_OUT | psDevice->ui32Speed);
@@ -5337,13 +5045,11 @@ USBHCDControlTransfer(uint32_t ui32Index, tUSBRequest *psSetupPacket,
     //
     // Block until endpoint 0 returns to the IDLE state.
     //
-    while(g_sUSBHEP0State.iState != eEP0StateIdle)
-    {
+    while(g_sUSBHEP0State.iState != eEP0StateIdle) {
         OS_INT_DISABLE(g_sUSBHCD.ui32IntNum);
 
         if((g_sUSBHCD.ui32IntEvents & (INT_EVENT_ENUM | INT_EVENT_SOF)) ==
-           (INT_EVENT_ENUM | INT_EVENT_SOF))
-        {
+                (INT_EVENT_ENUM | INT_EVENT_SOF)) {
             g_sUSBHCD.ui32IntEvents &= ~(INT_EVENT_ENUM | INT_EVENT_SOF);
 
             USBHCDEnumHandler();
@@ -5351,8 +5057,7 @@ USBHCDControlTransfer(uint32_t ui32Index, tUSBRequest *psSetupPacket,
 
         OS_INT_ENABLE(g_sUSBHCD.ui32IntNum);
 
-        if(g_sUSBHEP0State.iState == eEP0StateError)
-        {
+        if(g_sUSBHEP0State.iState == eEP0StateError) {
             return(0xffffffff);
         }
 
@@ -5361,8 +5066,7 @@ USBHCDControlTransfer(uint32_t ui32Index, tUSBRequest *psSetupPacket,
         // that no bytes were transferred.
         //
         if(g_sUSBHCD.ui32IntEvents & (INT_EVENT_VBUS_ERR |
-                                      INT_EVENT_DISCONNECT))
-        {
+                                      INT_EVENT_DISCONNECT)) {
             return(0xffffffff);
         }
     }
@@ -5414,16 +5118,14 @@ USBHCDHubDeviceConnected(uint32_t ui32Index, uint8_t ui8Hub,
     //
     // Look for a free slot in the device table.
     //
-    for(ui32DevIndex = 1; ui32DevIndex <= MAX_USB_DEVICES; ui32DevIndex++)
-    {
+    for(ui32DevIndex = 1; ui32DevIndex <= MAX_USB_DEVICES; ui32DevIndex++) {
         if((g_sUSBHCD.psUSBDevice[ui32DevIndex].ui32Flags &
-            USBHDEV_FLAG_ALLOCATED) == 0)
-        {
+                USBHDEV_FLAG_ALLOCATED) == 0) {
             //
             // We found one. Set the state to ensure that it gets enumerated.
             //
             g_sUSBHCD.psUSBDevice[ui32DevIndex].ui32Flags =
-                                                        USBHDEV_FLAG_ALLOCATED;
+                USBHDEV_FLAG_ALLOCATED;
             g_sUSBHCD.psUSBDevice[ui32DevIndex].psConfigDescriptor->bLength = 0;
             g_sUSBHCD.psUSBDevice[ui32DevIndex].ui8Hub = ui8Hub;
             g_sUSBHCD.psUSBDevice[ui32DevIndex].ui8HubPort = ui8Port;
@@ -5470,8 +5172,8 @@ USBHCDHubDeviceDisconnected(uint32_t ui32Index, uint32_t ui32DevIndex)
     ASSERT(ui32DevIndex && (ui32DevIndex <= MAX_USB_DEVICES));
 
     DEBUG_OUTPUT("Disconnection from hub %d, port %d, device %d\n",
-            g_sUSBHCD.psUSBDevice[ui32DevIndex].ui8Hub,
-            g_sUSBHCD.psUSBDevice[ui32DevIndex].ui8HubPort, ui32DevIndex);
+                 g_sUSBHCD.psUSBDevice[ui32DevIndex].ui8Hub,
+                 g_sUSBHCD.psUSBDevice[ui32DevIndex].ui8HubPort, ui32DevIndex);
 
     //
     // Set the device state to ensure that USBHCDMain cleans it up.
@@ -5500,8 +5202,7 @@ USBHCDEnumHandler(void)
     //
     // If there was an error then go to the error state.
     //
-    if(ui32EPStatus == USB_HOST_EP0_ERROR)
-    {
+    if(ui32EPStatus == USB_HOST_EP0_ERROR) {
         //
         // Clear this status indicating that the status packet was
         // received.
@@ -5518,19 +5219,16 @@ USBHCDEnumHandler(void)
         return;
     }
 
-    switch(g_sUSBHEP0State.iState)
-    {
+    switch(g_sUSBHEP0State.iState) {
         //
         // Handle the status state, this is a transitory state from
         // USB_STATE_TX or USB_STATE_RX back to USB_STATE_IDLE.
         //
-        case eEP0StateStatus:
-        {
+        case eEP0StateStatus: {
             //
             // Handle the case of a received status packet.
             //
-            if(ui32EPStatus & (USB_HOST_EP0_RXPKTRDY | USB_HOST_EP0_STATUS))
-            {
+            if(ui32EPStatus & (USB_HOST_EP0_RXPKTRDY | USB_HOST_EP0_STATUS)) {
                 //
                 // Clear this status indicating that the status packet was
                 // received.
@@ -5551,8 +5249,7 @@ USBHCDEnumHandler(void)
         //
         // This state triggers a STATUS IN request from the device.
         //
-        case eEP0StateStatusIN:
-        {
+        case eEP0StateStatusIN: {
             //
             // Generate an IN request from the device.
             //
@@ -5569,8 +5266,7 @@ USBHCDEnumHandler(void)
         //
         // In the IDLE state the code is waiting to receive data from the host.
         //
-        case eEP0StateIdle:
-        {
+        case eEP0StateIdle: {
             break;
         }
 
@@ -5578,8 +5274,7 @@ USBHCDEnumHandler(void)
         // Data is still being sent to the host so handle this in the
         // EP0StateTx() function.
         //
-        case eEP0StateSetupOUT:
-        {
+        case eEP0StateSetupOUT: {
             //
             // Send remaining data if necessary.
             //
@@ -5592,8 +5287,7 @@ USBHCDEnumHandler(void)
         // Handle the receive state for commands that are receiving data on
         // endpoint 0.
         //
-        case eEP0StateSetupIN:
-        {
+        case eEP0StateSetupIN: {
             //
             // Generate a new IN request to the device.
             //
@@ -5611,21 +5305,19 @@ USBHCDEnumHandler(void)
         // The endpoint remains in this state until all requested data has
         // been received.
         //
-        case eEP0StateRx:
-        {
+        case eEP0StateRx: {
             //
             // There was a stall on endpoint 0 so go back to the idle state
             // as this command has been terminated.
             //
-            if(ui32EPStatus & USB_HOST_EP0_RX_STALL)
-            {
+            if(ui32EPStatus & USB_HOST_EP0_RX_STALL) {
                 g_sUSBHEP0State.iState = eEP0StateIdle;
 
                 //
                 // Clear the stalled state on endpoint 0.
                 //
                 MAP_USBHostEndpointStatusClear(USB0_BASE, USB_EP_0,
-                                           ui32EPStatus & USB_HOST_IN_STATUS);
+                                               ui32EPStatus & USB_HOST_IN_STATUS);
                 break;
             }
 
@@ -5633,16 +5325,14 @@ USBHCDEnumHandler(void)
             // Set the number of bytes to get out of this next packet.
             //
             ui32DataSize = g_sUSBHEP0State.ui32BytesRemaining;
-            if(ui32DataSize > g_sUSBHEP0State.ui32MaxPacketSize)
-            {
+            if(ui32DataSize > g_sUSBHEP0State.ui32MaxPacketSize) {
                 //
                 // Don't send more than EP0_MAX_PACKET_SIZE bytes.
                 //
                 ui32DataSize = MAX_PACKET_SIZE_EP0;
             }
 
-            if(ui32DataSize != 0)
-            {
+            if(ui32DataSize != 0) {
                 //
                 // Get the data from the USB controller end point 0.
                 //
@@ -5675,8 +5365,7 @@ USBHCDEnumHandler(void)
             // needs to be null packet sent before this transfer is complete.
             //
             if((ui32DataSize < g_sUSBHEP0State.ui32MaxPacketSize) ||
-               (g_sUSBHEP0State.ui32BytesRemaining == 0))
-            {
+                    (g_sUSBHEP0State.ui32BytesRemaining == 0)) {
                 //
                 // Return to the idle state.
                 //
@@ -5692,9 +5381,7 @@ USBHCDEnumHandler(void)
                 // received.
                 //
                 MAP_USBEndpointDataSend(USB0_BASE, USB_EP_0, USB_TRANS_STATUS);
-            }
-            else
-            {
+            } else {
                 //
                 // Request more data.
                 //
@@ -5707,8 +5394,7 @@ USBHCDEnumHandler(void)
         // The device stalled endpoint zero so check if the stall needs to be
         // cleared once it has been successfully sent.
         //
-        case eEP0StateStall:
-        {
+        case eEP0StateStall: {
             //
             // Reset the global end point 0 state to IDLE.
             //
@@ -5720,8 +5406,7 @@ USBHCDEnumHandler(void)
         //
         // Halt on an unknown state, but only in DEBUG builds.
         //
-        default:
-        {
+        default: {
             ASSERT(0);
             break;
         }
@@ -5754,8 +5439,7 @@ USBHCDEP0StateTx(void)
     //
     // Limit individual transfers to 64 bytes.
     //
-    if(ui32NumBytes > 64)
-    {
+    if(ui32NumBytes > 64) {
         ui32NumBytes = 64;
     }
 
@@ -5779,17 +5463,14 @@ USBHCDEP0StateTx(void)
     //
     // If this is exactly 64 then don't set the last packet yet.
     //
-    if(ui32NumBytes == 64)
-    {
+    if(ui32NumBytes == 64) {
         //
         // There is more data to send or exactly 64 bytes were sent, this
         // means that there is either more data coming or a null packet needs
         // to be sent to complete the transaction.
         //
         MAP_USBEndpointDataSend(USB0_BASE, USB_EP_0, USB_TRANS_OUT);
-    }
-    else
-    {
+    } else {
         //
         // Send the last bit of data.
         //
@@ -5824,8 +5505,7 @@ USBHCDDevHubPort(uint32_t ui32Instance)
 
     ui32DevIndex = HCDInstanceToDevIndex(ui32Instance);
 
-    if(ui32DevIndex == 0xff)
-    {
+    if(ui32DevIndex == 0xff) {
         return(ui32DevIndex);
     }
 
@@ -5855,8 +5535,7 @@ USBHCDDevAddress(uint32_t ui32Instance)
 
     ui32DevIndex = HCDInstanceToDevIndex(ui32Instance);
 
-    if(ui32DevIndex == 0xff)
-    {
+    if(ui32DevIndex == 0xff) {
         return(ui32DevIndex);
     }
 
@@ -5894,8 +5573,7 @@ USBHCDDevClass(uint32_t ui32Instance, uint32_t ui32Interface)
     //
     // If the instance was not valid return an undefined class.
     //
-    if(ui32DevIndex == 0xff)
-    {
+    if(ui32DevIndex == 0xff) {
         return(USB_CLASS_DEVICE);
     }
 
@@ -5903,15 +5581,14 @@ USBHCDDevClass(uint32_t ui32Instance, uint32_t ui32Interface)
     // Get the interface descriptor.
     //
     psInterface = USBDescGetInterface(
-                        g_sUSBHCD.psUSBDevice[ui32DevIndex].psConfigDescriptor,
-                        g_sUSBHCD.psUSBDevice[ui32DevIndex].ui32Interface,
-                        ui32Interface);
+                      g_sUSBHCD.psUSBDevice[ui32DevIndex].psConfigDescriptor,
+                      g_sUSBHCD.psUSBDevice[ui32DevIndex].ui32Interface,
+                      ui32Interface);
 
     //
     // Make sure that the interface requested actually exists.
     //
-    if(psInterface)
-    {
+    if(psInterface) {
         //
         // Return the interface class.
         //
@@ -5955,8 +5632,7 @@ USBHCDDevSubClass(uint32_t ui32Instance, uint32_t ui32Interface)
     //
     // If the instance was not valid return an undefined subclass.
     //
-    if(ui32DevIndex == 0xff)
-    {
+    if(ui32DevIndex == 0xff) {
         return(USB_SUBCLASS_UNDEFINED);
     }
 
@@ -5964,15 +5640,14 @@ USBHCDDevSubClass(uint32_t ui32Instance, uint32_t ui32Interface)
     // Get the interface descriptor.
     //
     psInterface = USBDescGetInterface(
-                        g_sUSBHCD.psUSBDevice[ui32DevIndex].psConfigDescriptor,
-                        g_sUSBHCD.psUSBDevice[ui32DevIndex].ui32Interface,
-                        ui32Interface);
+                      g_sUSBHCD.psUSBDevice[ui32DevIndex].psConfigDescriptor,
+                      g_sUSBHCD.psUSBDevice[ui32DevIndex].ui32Interface,
+                      ui32Interface);
 
     //
     // Make sure that the interface requested actually exists.
     //
-    if(psInterface)
-    {
+    if(psInterface) {
         //
         // Return the interface subclass.
         //
@@ -6015,8 +5690,7 @@ USBHCDDevProtocol(uint32_t ui32Instance, uint32_t ui32Interface)
     //
     // If the instance was not valid return an undefined protocol.
     //
-    if(ui32DevIndex == 0xff)
-    {
+    if(ui32DevIndex == 0xff) {
         return(USB_PROTOCOL_UNDEFINED);
     }
 
@@ -6024,15 +5698,14 @@ USBHCDDevProtocol(uint32_t ui32Instance, uint32_t ui32Interface)
     // Get the interface descriptor.
     //
     psInterface = USBDescGetInterface(
-                        g_sUSBHCD.psUSBDevice[ui32DevIndex].psConfigDescriptor,
-                        g_sUSBHCD.psUSBDevice[ui32DevIndex].ui32Interface,
-                        ui32Interface);
+                      g_sUSBHCD.psUSBDevice[ui32DevIndex].psConfigDescriptor,
+                      g_sUSBHCD.psUSBDevice[ui32DevIndex].ui32Interface,
+                      ui32Interface);
 
     //
     // Make sure that the interface requested actually exists.
     //
-    if(psInterface)
-    {
+    if(psInterface) {
         //
         // Return the interface protocol.
         //
@@ -6071,48 +5744,37 @@ USBHCDFeatureSet(uint32_t ui32Index, uint32_t ui32Feature,
 
     bRetCode = true;
 
-    switch(ui32Feature)
-    {
-        case USBLIB_FEATURE_CPUCLK:
-        {
+    switch(ui32Feature) {
+        case USBLIB_FEATURE_CPUCLK: {
             //
             // Set the ticks per millisecond.
             //
             g_ui32Tickms = (*(uint32_t *)pvFeature / 3000);
             break;
         }
-        case USBLIB_FEATURE_LPM:
-        {
+        case USBLIB_FEATURE_LPM: {
             psLPMFeature = (tLPMFeature *)pvFeature;
 
-            if(psLPMFeature->ui32Features & USBLIB_FEATURE_LPM_EN)
-            {
+            if(psLPMFeature->ui32Features & USBLIB_FEATURE_LPM_EN) {
                 g_sUSBHCD.ui32Features |= USBLIB_FEATURE_LPM_EN;
 
-                if(psLPMFeature->ui32Features & USBLIB_FEATURE_LPM_RMT_WAKE)
-                {
+                if(psLPMFeature->ui32Features & USBLIB_FEATURE_LPM_RMT_WAKE) {
                     g_sUSBHCD.ui32Features |= USBLIB_FEATURE_LPM_RMT_WAKE;
                 }
                 g_sUSBHCD.ui32LPMHIRD = psLPMFeature->ui32HIRD;
-            }
-            else
-            {
+            } else {
                 psLPMFeature->ui32Features &= ~USBLIB_FEATURE_LPM_EN;
             }
             break;
         }
-        case USBLIB_FEATURE_USBPLL:
-        {
+        case USBLIB_FEATURE_USBPLL: {
             //
             // If the PLL rate is not evenly divisible by 60MHz then
             // do not set it.
             //
-            if((*(uint32_t *)pvFeature % 60000000) != 0)
-            {
+            if((*(uint32_t *)pvFeature % 60000000) != 0) {
                 bRetCode = false;
-            }
-            else
-            {
+            } else {
                 //
                 // Save the new PLL rate.
                 //
@@ -6120,8 +5782,7 @@ USBHCDFeatureSet(uint32_t ui32Index, uint32_t ui32Feature,
             }
             break;
         }
-        case USBLIB_FEATURE_USBULPI:
-        {
+        case USBLIB_FEATURE_USBULPI: {
             //
             // Save the ULPI support level.
             //
@@ -6129,8 +5790,7 @@ USBHCDFeatureSet(uint32_t ui32Index, uint32_t ui32Feature,
 
             break;
         }
-        default:
-        {
+        default: {
             bRetCode = false;
             break;
         }
@@ -6176,15 +5836,12 @@ USBHCDLPMStatus(tUSBHostDevice *psDevice)
     //
     ui32Ret = USBHCD_LPM_AVAIL;
 
-    if(psDevice->ui32Flags & USBHDEV_FLAG_LPMERROR)
-    {
+    if(psDevice->ui32Flags & USBHDEV_FLAG_LPMERROR) {
         //
         // An error occurred after the last call to send an LPM command.
         //
         ui32Ret = USBHCD_LPM_ERROR;
-    }
-    else if(psDevice->ui32Flags & USBHDEV_FLAG_LPMPEND)
-    {
+    } else if(psDevice->ui32Flags & USBHDEV_FLAG_LPMPEND) {
         //
         // Still have a pending transfer.
         //
@@ -6221,42 +5878,39 @@ USBHCDLPMSleep(tUSBHostDevice *psDevice)
 
     ASSERT(psDevice != 0);
 
-     //
-     // Disable the USB interrupt.
-     //
-     OS_INT_DISABLE(g_sUSBHCD.ui32IntNum);
+    //
+    // Disable the USB interrupt.
+    //
+    OS_INT_DISABLE(g_sUSBHCD.ui32IntNum);
 
-     //
-     // If there is no current LPM pending then send the request.
-     //
-     if((g_sUSBHCD.ui32IntEvents & INT_EVENT_LPM_PEND) ||
-        (psDevice->ui32Flags & USBHDEV_FLAG_LPMPEND))
-     {
-         ui32Ret = USBHCD_LPM_PENDING;
-     }
-     else
-     {
-         //
-         // New pending LPM transfer at the host controller level.
-         //
-         g_sUSBHCD.ui32IntEvents |= INT_EVENT_LPM_PEND;
+    //
+    // If there is no current LPM pending then send the request.
+    //
+    if((g_sUSBHCD.ui32IntEvents & INT_EVENT_LPM_PEND) ||
+            (psDevice->ui32Flags & USBHDEV_FLAG_LPMPEND)) {
+        ui32Ret = USBHCD_LPM_PENDING;
+    } else {
+        //
+        // New pending LPM transfer at the host controller level.
+        //
+        g_sUSBHCD.ui32IntEvents |= INT_EVENT_LPM_PEND;
 
-         //
-         // New pending request and clear any previous error for this
-         // device in case it was already set.
-         //
-         psDevice->ui32Flags |= USBHDEV_FLAG_LPMPEND;
-         psDevice->ui32Flags &= ~USBHDEV_FLAG_LPMERROR;
+        //
+        // New pending request and clear any previous error for this
+        // device in case it was already set.
+        //
+        psDevice->ui32Flags |= USBHDEV_FLAG_LPMPEND;
+        psDevice->ui32Flags &= ~USBHDEV_FLAG_LPMERROR;
 
-         USBHostLPMSend(USB0_BASE, psDevice->ui32Address, USB_EP_0);
+        USBHostLPMSend(USB0_BASE, psDevice->ui32Address, USB_EP_0);
 
-         ui32Ret = USBHCD_LPM_AVAIL;
-     }
+        ui32Ret = USBHCD_LPM_AVAIL;
+    }
 
-     //
-     // Disable the USB interrupt.
-     //
-     OS_INT_ENABLE(g_sUSBHCD.ui32IntNum);
+    //
+    // Disable the USB interrupt.
+    //
+    OS_INT_ENABLE(g_sUSBHCD.ui32IntNum);
 
     return(ui32Ret);
 }

@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -53,8 +53,7 @@ extern "C"
 // here for memory allocation purposes.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     //
     // Not yet configured.
     //
@@ -80,8 +79,7 @@ tGamepadState;
 // not be used by applications and is only here for memory allocation purposes.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // This is needed for the lower level HID driver.
     //
@@ -105,8 +103,7 @@ typedef struct
 //! for the HID game device.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The vendor ID that this device is to present in the device descriptor.
     //
@@ -216,8 +213,7 @@ tUSBDHIDGamepadDevice;
 //! function to send gamepad updates to the host.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! Signed 8-bit value (-128 to 127).
     //
@@ -246,14 +242,14 @@ PACKED tGamepadReport;
 //
 //*****************************************************************************
 extern tUSBDHIDGamepadDevice *USBDHIDGamepadInit(uint32_t ui32Index,
-                                        tUSBDHIDGamepadDevice *psHIDGamepad);
+        tUSBDHIDGamepadDevice *psHIDGamepad);
 extern tUSBDHIDGamepadDevice *USBDHIDGamepadCompositeInit(uint32_t ui32Index,
-                                         tUSBDHIDGamepadDevice *psHIDGamepad,
-                                         tCompositeEntry *psCompEntry);
+        tUSBDHIDGamepadDevice *psHIDGamepad,
+        tCompositeEntry *psCompEntry);
 extern void USBDHIDGamepadTerm(tUSBDHIDGamepadDevice *psCompEntry);
 
 extern uint32_t USBDHIDGamepadSendReport(tUSBDHIDGamepadDevice *psHIDGamepad,
-                                         void *pvReport, uint32_t ui32Size);
+        void *pvReport, uint32_t ui32Size);
 
 //*****************************************************************************
 //

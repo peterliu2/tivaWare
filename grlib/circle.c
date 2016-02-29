@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2007-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Graphics Library.
 //
 //*****************************************************************************
@@ -74,8 +74,7 @@ GrCircleDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
     // Loop until the A delta is greater than the B delta, meaning that the
     // entire circle has been drawn.
     //
-    while(i32A <= i32B)
-    {
+    while(i32A <= i32B) {
         //
         // Determine the row when subtracting the A delta.
         //
@@ -85,8 +84,7 @@ GrCircleDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
         // See if this row is within the clipping region.
         //
         if((i32Y1 >= pContext->sClipRegion.i16YMin) &&
-           (i32Y1 <= pContext->sClipRegion.i16YMax))
-        {
+                (i32Y1 <= pContext->sClipRegion.i16YMax)) {
             //
             // Determine the column when subtracting the B delta.
             //
@@ -97,8 +95,7 @@ GrCircleDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
             // at that position.
             //
             if((i32X1 >= pContext->sClipRegion.i16XMin) &&
-               (i32X1 <= pContext->sClipRegion.i16XMax))
-            {
+                    (i32X1 <= pContext->sClipRegion.i16XMax)) {
                 GrPixelDraw(pContext, i32X1, i32Y1);
             }
 
@@ -112,8 +109,7 @@ GrCircleDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
             // at that position.
             //
             if((i32X1 >= pContext->sClipRegion.i16XMin) &&
-               (i32X1 <= pContext->sClipRegion.i16XMax))
-            {
+                    (i32X1 <= pContext->sClipRegion.i16XMax)) {
                 GrPixelDraw(pContext, i32X1, i32Y1);
             }
         }
@@ -129,9 +125,8 @@ GrCircleDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
         // subtracted).
         //
         if((i32Y1 >= pContext->sClipRegion.i16YMin) &&
-           (i32Y1 <= pContext->sClipRegion.i16YMax) &&
-           (i32A != 0))
-        {
+                (i32Y1 <= pContext->sClipRegion.i16YMax) &&
+                (i32A != 0)) {
             //
             // Determine the column when subtracting the B delta.
             //
@@ -142,8 +137,7 @@ GrCircleDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
             // at that position.
             //
             if((i32X1 >= pContext->sClipRegion.i16XMin) &&
-               (i32X1 <= pContext->sClipRegion.i16XMax))
-            {
+                    (i32X1 <= pContext->sClipRegion.i16XMax)) {
                 GrPixelDraw(pContext, i32X1, i32Y1);
             }
 
@@ -157,8 +151,7 @@ GrCircleDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
             // at that position.
             //
             if((i32X1 >= pContext->sClipRegion.i16XMin) &&
-               (i32X1 <= pContext->sClipRegion.i16XMax))
-            {
+                    (i32X1 <= pContext->sClipRegion.i16XMax)) {
                 GrPixelDraw(pContext, i32X1, i32Y1);
             }
         }
@@ -167,8 +160,7 @@ GrCircleDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
         // Only draw the complementary pixels if the A and B deltas are
         // different (otherwise, they describe the same set of pixels).
         //
-        if(i32A != i32B)
-        {
+        if(i32A != i32B) {
             //
             // Determine the row when subtracting the B delta.
             //
@@ -178,8 +170,7 @@ GrCircleDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
             // See if this row is within the clipping region.
             //
             if((i32Y1 >= pContext->sClipRegion.i16YMin) &&
-               (i32Y1 <= pContext->sClipRegion.i16YMax))
-            {
+                    (i32Y1 <= pContext->sClipRegion.i16YMax)) {
                 //
                 // Determine the column when subtracting the a delta.
                 //
@@ -190,8 +181,7 @@ GrCircleDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
                 // pixel at that position.
                 //
                 if((i32X1 >= pContext->sClipRegion.i16XMin) &&
-                   (i32X1 <= pContext->sClipRegion.i16XMax))
-                {
+                        (i32X1 <= pContext->sClipRegion.i16XMax)) {
                     GrPixelDraw(pContext, i32X1, i32Y1);
                 }
 
@@ -199,8 +189,7 @@ GrCircleDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
                 // Only draw the mirrored pixel if the A delta is non-zero
                 // (otherwise, it will be the same pixel).
                 //
-                if(i32A != 0)
-                {
+                if(i32A != 0) {
                     //
                     // Determine the column when adding the A delta.
                     //
@@ -211,8 +200,7 @@ GrCircleDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
                     // a pixel at that position.
                     //
                     if((i32X1 >= pContext->sClipRegion.i16XMin) &&
-                       (i32X1 <= pContext->sClipRegion.i16XMax))
-                    {
+                            (i32X1 <= pContext->sClipRegion.i16XMax)) {
                         GrPixelDraw(pContext, i32X1, i32Y1);
                     }
                 }
@@ -227,8 +215,7 @@ GrCircleDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
             // See if this row is within the clipping region.
             //
             if((i32Y1 >= pContext->sClipRegion.i16YMin) &&
-               (i32Y1 <= pContext->sClipRegion.i16YMax))
-            {
+                    (i32Y1 <= pContext->sClipRegion.i16YMax)) {
                 //
                 // Determine the column when subtracting the A delta.
                 //
@@ -239,8 +226,7 @@ GrCircleDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
                 // pixel at that position.
                 //
                 if((i32X1 >= pContext->sClipRegion.i16XMin) &&
-                   (i32X1 <= pContext->sClipRegion.i16XMax))
-                {
+                        (i32X1 <= pContext->sClipRegion.i16XMax)) {
                     GrPixelDraw(pContext, i32X1, i32Y1);
                 }
 
@@ -248,8 +234,7 @@ GrCircleDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
                 // Only draw the mirrored pixel if the A delta is non-zero
                 // (otherwise, it will be the same pixel).
                 //
-                if(i32A != 0)
-                {
+                if(i32A != 0) {
                     //
                     // Determine the column when adding the A delta.
                     //
@@ -260,8 +245,7 @@ GrCircleDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
                     // a pixel at that position.
                     //
                     if((i32X1 >= pContext->sClipRegion.i16XMin) &&
-                       (i32X1 <= pContext->sClipRegion.i16XMax))
-                    {
+                            (i32X1 <= pContext->sClipRegion.i16XMax)) {
                         GrPixelDraw(pContext, i32X1, i32Y1);
                     }
                 }
@@ -271,16 +255,13 @@ GrCircleDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
         //
         // See if the error term is negative.
         //
-        if(i32D < 0)
-        {
+        if(i32D < 0) {
             //
             // Since the error term is negative, adjust it based on a move in
             // only the A delta.
             //
             i32D += (4 * i32A) + 6;
-        }
-        else
-        {
+        } else {
             //
             // Since the error term is non-negative, adjust it based on a move
             // in both the A and B deltas.
@@ -340,8 +321,7 @@ GrCircleFill(const tContext *pContext, int32_t i32X, int32_t i32Y,
     // Loop until the A delta is greater than the B delta, meaning that the
     // entire circle has been filled.
     //
-    while(i32A <= i32B)
-    {
+    while(i32A <= i32B) {
         //
         // Determine the row when subtracting the A delta.
         //
@@ -351,16 +331,14 @@ GrCircleFill(const tContext *pContext, int32_t i32X, int32_t i32Y,
         // See if this row is within the clipping region.
         //
         if((i32Y1 >= pContext->sClipRegion.i16YMin) &&
-           (i32Y1 <= pContext->sClipRegion.i16YMax))
-        {
+                (i32Y1 <= pContext->sClipRegion.i16YMax)) {
             //
             // Determine the column when subtracting the B delta, and move it
             // to the left edge of the clipping region if it is to the left of
             // the clipping region.
             //
             i32X1 = i32X - i32B;
-            if(i32X1 < pContext->sClipRegion.i16XMin)
-            {
+            if(i32X1 < pContext->sClipRegion.i16XMin) {
                 i32X1 = pContext->sClipRegion.i16XMin;
             }
 
@@ -370,8 +348,7 @@ GrCircleFill(const tContext *pContext, int32_t i32X, int32_t i32Y,
             // clipping region.
             //
             i32X2 = i32X + i32B;
-            if(i32X2 > pContext->sClipRegion.i16XMax)
-            {
+            if(i32X2 > pContext->sClipRegion.i16XMax) {
                 i32X2 = pContext->sClipRegion.i16XMax;
             }
 
@@ -379,8 +356,7 @@ GrCircleFill(const tContext *pContext, int32_t i32X, int32_t i32Y,
             // Draw a horizontal line if this portion of the circle is within
             // the clipping region.
             //
-            if(i32X1 <= i32X2)
-            {
+            if(i32X1 <= i32X2) {
                 GrLineDrawH(pContext, i32X1, i32X2, i32Y1);
             }
         }
@@ -395,17 +371,15 @@ GrCircleFill(const tContext *pContext, int32_t i32X, int32_t i32Y,
         // not zero (otherwise, this describes the same row of the circle).
         //
         if((i32Y1 >= pContext->sClipRegion.i16YMin) &&
-           (i32Y1 <= pContext->sClipRegion.i16YMax) &&
-           (i32A != 0))
-        {
+                (i32Y1 <= pContext->sClipRegion.i16YMax) &&
+                (i32A != 0)) {
             //
             // Determine the column when subtracting the B delta, and move it
             // to the left edge of the clipping region if it is to the left of
             // the clipping region.
             //
             i32X1 = i32X - i32B;
-            if(i32X1 < pContext->sClipRegion.i16XMin)
-            {
+            if(i32X1 < pContext->sClipRegion.i16XMin) {
                 i32X1 = pContext->sClipRegion.i16XMin;
             }
 
@@ -415,8 +389,7 @@ GrCircleFill(const tContext *pContext, int32_t i32X, int32_t i32Y,
             // clipping region.
             //
             i32X2 = i32X + i32B;
-            if(i32X2 > pContext->sClipRegion.i16XMax)
-            {
+            if(i32X2 > pContext->sClipRegion.i16XMax) {
                 i32X2 = pContext->sClipRegion.i16XMax;
             }
 
@@ -424,8 +397,7 @@ GrCircleFill(const tContext *pContext, int32_t i32X, int32_t i32Y,
             // Draw a horizontal line if this portion of the circle is within
             // the clipping region.
             //
-            if(i32X1 <= i32X2)
-            {
+            if(i32X1 <= i32X2) {
                 GrLineDrawH(pContext, i32X1, i32X2, i32Y1);
             }
         }
@@ -435,8 +407,7 @@ GrCircleFill(const tContext *pContext, int32_t i32X, int32_t i32Y,
         // and the A and B delta are different (otherwise, they describe the
         // same set of pixels).
         //
-        if((i32D >= 0) && (i32A != i32B))
-        {
+        if((i32D >= 0) && (i32A != i32B)) {
             //
             // Determine the row when subtracting the B delta.
             //
@@ -446,16 +417,14 @@ GrCircleFill(const tContext *pContext, int32_t i32X, int32_t i32Y,
             // See if this row is within the clipping region.
             //
             if((i32Y1 >= pContext->sClipRegion.i16YMin) &&
-               (i32Y1 <= pContext->sClipRegion.i16YMax))
-            {
+                    (i32Y1 <= pContext->sClipRegion.i16YMax)) {
                 //
                 // Determine the column when subtracting the A delta, and move
                 // it to the left edge of the clipping regino if it is to the
                 // left of the clipping region.
                 //
                 i32X1 = i32X - i32A;
-                if(i32X1 < pContext->sClipRegion.i16XMin)
-                {
+                if(i32X1 < pContext->sClipRegion.i16XMin) {
                     i32X1 = pContext->sClipRegion.i16XMin;
                 }
 
@@ -465,8 +434,7 @@ GrCircleFill(const tContext *pContext, int32_t i32X, int32_t i32Y,
                 // of the clipping region.
                 //
                 i32X2 = i32X + i32A;
-                if(i32X2 > pContext->sClipRegion.i16XMax)
-                {
+                if(i32X2 > pContext->sClipRegion.i16XMax) {
                     i32X2 = pContext->sClipRegion.i16XMax;
                 }
 
@@ -474,8 +442,7 @@ GrCircleFill(const tContext *pContext, int32_t i32X, int32_t i32Y,
                 // Draw a horizontal line if this portion of the circle is
                 // within the clipping region.
                 //
-                if(i32X1 <= i32X2)
-                {
+                if(i32X1 <= i32X2) {
                     GrLineDrawH(pContext, i32X1, i32X2, i32Y1);
                 }
             }
@@ -489,16 +456,14 @@ GrCircleFill(const tContext *pContext, int32_t i32X, int32_t i32Y,
             // See if this row is within the clipping region.
             //
             if((i32Y1 >= pContext->sClipRegion.i16YMin) &&
-               (i32Y1 <= pContext->sClipRegion.i16YMax))
-            {
+                    (i32Y1 <= pContext->sClipRegion.i16YMax)) {
                 //
                 // Determine the column when subtracting the A delta, and move
                 // it to the left edge of the clipping region if it is to the
                 // left of the clipping region.
                 //
                 i32X1 = i32X - i32A;
-                if(i32X1 < pContext->sClipRegion.i16XMin)
-                {
+                if(i32X1 < pContext->sClipRegion.i16XMin) {
                     i32X1 = pContext->sClipRegion.i16XMin;
                 }
 
@@ -508,8 +473,7 @@ GrCircleFill(const tContext *pContext, int32_t i32X, int32_t i32Y,
                 // of the clipping region.
                 //
                 i32X2 = i32X + i32A;
-                if(i32X2 > pContext->sClipRegion.i16XMax)
-                {
+                if(i32X2 > pContext->sClipRegion.i16XMax) {
                     i32X2 = pContext->sClipRegion.i16XMax;
                 }
 
@@ -517,8 +481,7 @@ GrCircleFill(const tContext *pContext, int32_t i32X, int32_t i32Y,
                 // Draw a horizontal line if this portion of the circle is
                 // within the clipping region.
                 //
-                if(i32X1 <= i32X2)
-                {
+                if(i32X1 <= i32X2) {
                     GrLineDrawH(pContext, i32X1, i32X2, i32Y1);
                 }
             }
@@ -527,16 +490,13 @@ GrCircleFill(const tContext *pContext, int32_t i32X, int32_t i32Y,
         //
         // See if the error term is negative.
         //
-        if(i32D < 0)
-        {
+        if(i32D < 0) {
             //
             // Since the error term is negative, adjust it based on a move in
             // only the A delta.
             //
             i32D += (4 * i32A) + 6;
-        }
-        else
-        {
+        } else {
             //
             // Since the error term is non-negative, adjust it based on a move
             // in both the A and B deltas.

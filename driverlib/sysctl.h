@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2005-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -182,7 +182,7 @@ extern "C"
 #define SYSCTL_CAUSE_WDOG0      0x00000008  // Watchdog 0 reset
 #ifndef DEPRECATED
 #define SYSCTL_CAUSE_WDOG       SYSCTL_CAUSE_WDOG0
-                                            // Watchdog reset(Deprecated)
+// Watchdog reset(Deprecated)
 #endif
 #define SYSCTL_CAUSE_BOR        0x00000004  // Brown-out reset
 #define SYSCTL_CAUSE_POR        0x00000002  // Power on reset
@@ -491,9 +491,9 @@ extern "C"
 //
 //*****************************************************************************
 #define SYSCTL_LDO_SLEEP        0x00000200  // LDO in sleep mode
-                                            // (Deep Sleep Only)
+// (Deep Sleep Only)
 #define SYSCTL_TEMP_LOW_POWER   0x00000100  // Temp sensor in low power mode
-                                            // (Deep Sleep Only)
+// (Deep Sleep Only)
 #define SYSCTL_FLASH_NORMAL     0x00000000  // Flash in normal mode
 #define SYSCTL_FLASH_LOW_POWER  0x00000020  // Flash in low power mode
 #define SYSCTL_SRAM_NORMAL      0x00000000  // SRAM in normal mode
@@ -620,7 +620,7 @@ extern void SysCtlClockSet(uint32_t ui32Config);
 extern uint32_t SysCtlClockGet(void);
 extern void SysCtlDeepSleepClockSet(uint32_t ui32Config);
 extern void SysCtlDeepSleepClockConfigSet(uint32_t ui32Div,
-                                          uint32_t ui32Config);
+        uint32_t ui32Config);
 extern void SysCtlPWMClockSet(uint32_t ui32Config);
 extern uint32_t SysCtlPWMClockGet(void);
 extern void SysCtlIOSCVerificationSet(bool bEnable);

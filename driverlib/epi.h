@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -333,10 +333,9 @@ extern "C"
 inline void
 EPIWorkaroundWordWrite(uint32_t *pui32Addr, uint32_t ui32Value)
 {
-  uint32_t ui32Scratch;
+    uint32_t ui32Scratch;
 
-    __asm
-    {
+    __asm {
         //
         // Add a NOP to ensure we don’t have a flash read immediately before
         // the EPI read.
@@ -359,10 +358,9 @@ EPIWorkaroundWordWrite(uint32_t *pui32Addr, uint32_t ui32Value)
 inline uint32_t
 EPIWorkaroundWordRead(uint32_t *pui32Addr)
 {
-  uint32_t ui32Value, ui32Scratch;
+    uint32_t ui32Value, ui32Scratch;
 
-    __asm
-    {
+    __asm {
         //
         // Add a NOP to ensure we don’t have a flash read immediately before
         // the EPI read.
@@ -389,8 +387,7 @@ EPIWorkaroundHWordWrite(uint16_t *pui16Addr, uint16_t ui16Value)
 {
     uint32_t ui32Scratch;
 
-    __asm
-    {
+    __asm {
         //
         // Add a NOP to ensure we don’t have a flash read immediately before
         // the EPI read.
@@ -416,8 +413,7 @@ EPIWorkaroundHWordRead(uint16_t *pui16Addr)
     uint32_t ui32Scratch;
     uint16_t ui16Value;
 
-    __asm
-    {
+    __asm {
         //
         // Add a NOP to ensure we don’t have a flash read immediately before
         // the EPI read.
@@ -442,10 +438,9 @@ EPIWorkaroundHWordRead(uint16_t *pui16Addr)
 inline void
 EPIWorkaroundByteWrite(uint8_t *pui8Addr, uint8_t ui8Value)
 {
-  uint32_t ui32Scratch;
+    uint32_t ui32Scratch;
 
-    __asm
-    {
+    __asm {
         //
         // Add a NOP to ensure we don’t have a flash read immediately before
         // the EPI read.
@@ -471,8 +466,7 @@ EPIWorkaroundByteRead(uint8_t *pui8Addr)
     uint32_t ui32Scratch;
     uint8_t ui8Value;
 
-    __asm
-    {
+    __asm {
         //
         // Add a NOP to ensure we don’t have a flash read immediately before
         // the EPI read.
@@ -531,9 +525,9 @@ EPIWorkaroundWordWrite(uint32_t *pui32Addr, uint32_t ui32Value)
         "    NOP\n"
         "    STR %[value],[%[addr]]\n"
         "    LDR %[scratch],[sp]\n"
-         :  [scratch] "=r" (ui32Scratch)
-         :  [addr] "r" (pui32Addr), [value] "r" (ui32Value)
-     );
+        :  [scratch] "=r" (ui32Scratch)
+        :  [addr] "r" (pui32Addr), [value] "r" (ui32Value)
+    );
 
     //
     // Keep the compiler from generating a warning.
@@ -559,9 +553,9 @@ EPIWorkaroundWordRead(uint32_t *pui32Addr)
         "    NOP\n"
         "    LDR %[ret],[%[addr]]\n"
         "    LDR %[scratch],[sp]\n"
-         : [ret] "=r" (ui32Data),
-           [scratch] "=r" (ui32Scratch)
-         : [addr] "r" (pui32Addr)
+        : [ret] "=r" (ui32Data),
+        [scratch] "=r" (ui32Scratch)
+        : [addr] "r" (pui32Addr)
     );
 
 
@@ -586,9 +580,9 @@ EPIWorkaroundHWordWrite(uint16_t *pui16Addr, uint16_t ui16Value)
         "    NOP\n"
         "    STRH %[value],[%[addr]]\n"
         "    LDR %[scratch],[sp]\n"
-         :  [scratch] "=r" (ui32Scratch)
-         :  [addr] "r" (pui16Addr), [value] "r" (ui16Value)
-     );
+        :  [scratch] "=r" (ui32Scratch)
+        :  [addr] "r" (pui16Addr), [value] "r" (ui16Value)
+    );
 
 
     //
@@ -616,9 +610,9 @@ EPIWorkaroundHWordRead(uint16_t *pui16Addr)
         "    NOP\n"
         "    LDRH %[ret],[%[addr]]\n"
         "    LDR %[scratch],[sp]\n"
-         : [ret] "=r" (ui16Data),
-           [scratch] "=r" (ui32Scratch)
-         : [addr] "r" (pui16Addr)
+        : [ret] "=r" (ui16Data),
+        [scratch] "=r" (ui32Scratch)
+        : [addr] "r" (pui16Addr)
     );
 
     //
@@ -642,9 +636,9 @@ EPIWorkaroundByteWrite(uint8_t *pui8Addr, uint8_t ui8Value)
         "    NOP\n"
         "    STRB %[value],[%[addr]]\n"
         "    LDR %[scratch],[sp]\n"
-         :  [scratch] "=r" (ui32Scratch)
-         :  [addr] "r" (pui8Addr), [value] "r" (ui8Value)
-     );
+        :  [scratch] "=r" (ui32Scratch)
+        :  [addr] "r" (pui8Addr), [value] "r" (ui8Value)
+    );
 
     //
     // Keep the compiler from generating a warning.
@@ -671,9 +665,9 @@ EPIWorkaroundByteRead(uint8_t *pui8Addr)
         "    NOP\n"
         "    LDRB %[ret],[%[addr]]\n"
         "    LDR %[scratch],[sp]\n"
-         : [ret] "=r" (ui8Data),
-           [scratch] "=r" (ui32Scratch)
-         : [addr] "r" (pui8Addr)
+        : [ret] "=r" (ui8Data),
+        [scratch] "=r" (ui32Scratch)
+        : [addr] "r" (pui8Addr)
     );
 
     //
@@ -702,9 +696,9 @@ extern void EPIConfigHB8Set(uint32_t ui32Base, uint32_t ui32Config,
 extern void EPIConfigHB16Set(uint32_t ui32Base, uint32_t ui32Config,
                              uint32_t ui32MaxWait);
 extern void EPIConfigHB8CSSet(uint32_t ui32Base, uint32_t ui32CS,
-                               uint32_t ui32Config);
+                              uint32_t ui32Config);
 extern void EPIConfigHB16CSSet(uint32_t ui32Base, uint32_t ui32CS,
-                                uint32_t ui32Config);
+                               uint32_t ui32Config);
 extern void EPIConfigHB8TimingSet(uint32_t ui32Base, uint32_t ui32CS,
                                   uint32_t ui32Config);
 extern void EPIConfigHB16TimingSet(uint32_t ui32Base, uint32_t ui32CS,
@@ -713,8 +707,8 @@ extern void EPIPSRAMConfigRegSet(uint32_t ui32Base, uint32_t ui32CS,
                                  uint32_t ui32CR);
 extern void EPIPSRAMConfigRegRead(uint32_t ui32Base, uint32_t ui32CS);
 extern bool EPIPSRAMConfigRegGetNonBlocking(uint32_t ui32Base,
-                                                uint32_t ui32CS,
-                                                uint32_t *pui32CR);
+        uint32_t ui32CS,
+        uint32_t *pui32CR);
 extern uint32_t EPIPSRAMConfigRegGet(uint32_t ui32Base, uint32_t ui32CS);
 extern void EPIConfigSDRAMSet(uint32_t ui32Base, uint32_t ui32Config,
                               uint32_t ui32Refresh);

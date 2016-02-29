@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -90,8 +90,7 @@
 // address.
 //
 //*****************************************************************************
-const int32_t g_ppi32CirclePos[][2] =
-{
+const int32_t g_ppi32CirclePos[][2] = {
     {
         12, 0
     },
@@ -124,8 +123,7 @@ const int32_t g_ppi32CirclePos[][2] =
 // address.
 //
 //*****************************************************************************
-const uint32_t g_pui32CircleColor[] =
-{
+const uint32_t g_pui32CircleColor[] = {
     0x111111,
     0x333333,
     0x555555,
@@ -224,8 +222,7 @@ lwIPHostTimerHandler(void)
     //
     // See if the IP address has changed.
     //
-    if(ui32NewIPAddress != g_ui32IPAddress)
-    {
+    if(ui32NewIPAddress != g_ui32IPAddress) {
         //
         // Clear the display.
         //
@@ -240,25 +237,20 @@ lwIPHostTimerHandler(void)
         //
         // See if there is an IP address assigned.
         //
-        if(ui32NewIPAddress == 0xffffffff)
-        {
+        if(ui32NewIPAddress == 0xffffffff) {
             //
             // Indicate that there is no link.
             //
             GrStringDrawCentered(&g_sContext, "Waiting for link", -1,
                                  ui32Width / 2, (ui32Height / 2) - 18, false);
-        }
-        else if(ui32NewIPAddress == 0)
-        {
+        } else if(ui32NewIPAddress == 0) {
             //
             // There is no IP address, so indicate that the DHCP process is
             // running.
             //
             GrStringDrawCentered(&g_sContext, "Waiting for IP address", -1,
                                  ui32Width / 2, (ui32Height / 2) - 18, false);
-        }
-        else
-        {
+        } else {
             //
             // Display the new IP address information.
             //
@@ -286,19 +278,17 @@ lwIPHostTimerHandler(void)
     //
     // If there is not an IP address, draw the animated circle.
     //
-    if((ui32NewIPAddress == 0) || (ui32NewIPAddress == 0xffffffff))
-    {
+    if((ui32NewIPAddress == 0) || (ui32NewIPAddress == 0xffffffff)) {
         //
         // Loop through the circles in the animation.
         //
-        for(ui32Idx = 0; ui32Idx < 8; ui32Idx++)
-        {
+        for(ui32Idx = 0; ui32Idx < 8; ui32Idx++) {
             //
             // Draw this circle.
             //
             GrContextForegroundSet(&g_sContext,
                                    g_pui32CircleColor[(g_ui32ColorIdx +
-                                                       ui32Idx) & 7]);
+                                           ui32Idx) & 7]);
             GrCircleFill(&g_sContext,
                          (ui32Width / 2) + g_ppi32CirclePos[ui32Idx][0],
                          (ui32Height / 2) + g_ppi32CirclePos[ui32Idx][1] + 24,
@@ -346,8 +336,8 @@ main(void)
     // Run from the PLL at 120 MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Configure the device pins.
@@ -387,8 +377,7 @@ main(void)
     // USER0 and USER1 registers.
     //
     ROM_FlashUserGet(&ui32User0, &ui32User1);
-    if((ui32User0 == 0xffffffff) || (ui32User1 == 0xffffffff))
-    {
+    if((ui32User0 == 0xffffffff) || (ui32User1 == 0xffffffff)) {
         //
         // We should never get here.  This is an error if the MAC address has
         // not been programmed into the device.  Exit the program.
@@ -402,8 +391,7 @@ main(void)
                              GrContextDpyWidthGet(&g_sContext) / 2,
                              (GrContextDpyHeightGet(&g_sContext) / 2) + 16,
                              false);
-        while(1)
-        {
+        while(1) {
         }
     }
 
@@ -449,7 +437,6 @@ main(void)
     //
     // Loop forever.  All the work is done in interrupt handlers.
     //
-    while(1)
-    {
+    while(1) {
     }
 }

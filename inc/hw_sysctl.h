@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2005-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -64,48 +64,48 @@
 #define SYSCTL_RIS              0x400FE050  // Raw Interrupt Status
 #define SYSCTL_IMC              0x400FE054  // Interrupt Mask Control
 #define SYSCTL_MISC             0x400FE058  // Masked Interrupt Status and
-                                            // Clear
+// Clear
 #define SYSCTL_RESC             0x400FE05C  // Reset Cause
 #define SYSCTL_PWRTC            0x400FE060  // Power-Temperature Cause
 #define SYSCTL_RCC              0x400FE060  // Run-Mode Clock Configuration
 #define SYSCTL_NMIC             0x400FE064  // NMI Cause Register
 #define SYSCTL_GPIOHBCTL        0x400FE06C  // GPIO High-Performance Bus
-                                            // Control
+// Control
 #define SYSCTL_RCC2             0x400FE070  // Run-Mode Clock Configuration 2
 #define SYSCTL_MOSCCTL          0x400FE07C  // Main Oscillator Control
 #define SYSCTL_RSCLKCFG         0x400FE0B0  // Run and Sleep Mode Configuration
-                                            // Register
+// Register
 #define SYSCTL_MEMTIM0          0x400FE0C0  // Memory Timing Parameter Register
-                                            // 0 for Main Flash and EEPROM
+// 0 for Main Flash and EEPROM
 #define SYSCTL_RCGC0            0x400FE100  // Run Mode Clock Gating Control
-                                            // Register 0
+// Register 0
 #define SYSCTL_RCGC1            0x400FE104  // Run Mode Clock Gating Control
-                                            // Register 1
+// Register 1
 #define SYSCTL_RCGC2            0x400FE108  // Run Mode Clock Gating Control
-                                            // Register 2
+// Register 2
 #define SYSCTL_SCGC0            0x400FE110  // Sleep Mode Clock Gating Control
-                                            // Register 0
+// Register 0
 #define SYSCTL_SCGC1            0x400FE114  // Sleep Mode Clock Gating Control
-                                            // Register 1
+// Register 1
 #define SYSCTL_SCGC2            0x400FE118  // Sleep Mode Clock Gating Control
-                                            // Register 2
+// Register 2
 #define SYSCTL_DCGC0            0x400FE120  // Deep Sleep Mode Clock Gating
-                                            // Control Register 0
+// Control Register 0
 #define SYSCTL_DCGC1            0x400FE124  // Deep-Sleep Mode Clock Gating
-                                            // Control Register 1
+// Control Register 1
 #define SYSCTL_DCGC2            0x400FE128  // Deep Sleep Mode Clock Gating
-                                            // Control Register 2
+// Control Register 2
 #define SYSCTL_ALTCLKCFG        0x400FE138  // Alternate Clock Configuration
 #define SYSCTL_DSLPCLKCFG       0x400FE144  // Deep Sleep Clock Configuration
 #define SYSCTL_DSCLKCFG         0x400FE144  // Deep Sleep Clock Configuration
-                                            // Register
+// Register
 #define SYSCTL_DIVSCLK          0x400FE148  // Divisor and Source Clock
-                                            // Configuration
+// Configuration
 #define SYSCTL_SYSPROP          0x400FE14C  // System Properties
 #define SYSCTL_PIOSCCAL         0x400FE150  // Precision Internal Oscillator
-                                            // Calibration
+// Calibration
 #define SYSCTL_PIOSCSTAT        0x400FE154  // Precision Internal Oscillator
-                                            // Statistics
+// Statistics
 #define SYSCTL_PLLFREQ0         0x400FE160  // PLL Frequency 0
 #define SYSCTL_PLLFREQ1         0x400FE164  // PLL Frequency 1
 #define SYSCTL_PLLSTAT          0x400FE168  // PLL Status
@@ -121,307 +121,307 @@
 #define SYSCTL_USBMPC           0x400FE284  // USB Memory Power Control
 #define SYSCTL_EMACPDS          0x400FE288  // Ethernet MAC Power Domain Status
 #define SYSCTL_EMACMPC          0x400FE28C  // Ethernet MAC Memory Power
-                                            // Control
+// Control
 #define SYSCTL_LCDMPC           0x400FE294  // LCD Memory Power Control
 #define SYSCTL_PPWD             0x400FE300  // Watchdog Timer Peripheral
-                                            // Present
+// Present
 #define SYSCTL_PPTIMER          0x400FE304  // 16/32-Bit General-Purpose Timer
-                                            // Peripheral Present
+// Peripheral Present
 #define SYSCTL_PPGPIO           0x400FE308  // General-Purpose Input/Output
-                                            // Peripheral Present
+// Peripheral Present
 #define SYSCTL_PPDMA            0x400FE30C  // Micro Direct Memory Access
-                                            // Peripheral Present
+// Peripheral Present
 #define SYSCTL_PPEPI            0x400FE310  // EPI Peripheral Present
 #define SYSCTL_PPHIB            0x400FE314  // Hibernation Peripheral Present
 #define SYSCTL_PPUART           0x400FE318  // Universal Asynchronous
-                                            // Receiver/Transmitter Peripheral
-                                            // Present
+// Receiver/Transmitter Peripheral
+// Present
 #define SYSCTL_PPSSI            0x400FE31C  // Synchronous Serial Interface
-                                            // Peripheral Present
+// Peripheral Present
 #define SYSCTL_PPI2C            0x400FE320  // Inter-Integrated Circuit
-                                            // Peripheral Present
+// Peripheral Present
 #define SYSCTL_PPUSB            0x400FE328  // Universal Serial Bus Peripheral
-                                            // Present
+// Present
 #define SYSCTL_PPEPHY           0x400FE330  // Ethernet PHY Peripheral Present
 #define SYSCTL_PPCAN            0x400FE334  // Controller Area Network
-                                            // Peripheral Present
+// Peripheral Present
 #define SYSCTL_PPADC            0x400FE338  // Analog-to-Digital Converter
-                                            // Peripheral Present
+// Peripheral Present
 #define SYSCTL_PPACMP           0x400FE33C  // Analog Comparator Peripheral
-                                            // Present
+// Present
 #define SYSCTL_PPPWM            0x400FE340  // Pulse Width Modulator Peripheral
-                                            // Present
+// Present
 #define SYSCTL_PPQEI            0x400FE344  // Quadrature Encoder Interface
-                                            // Peripheral Present
+// Peripheral Present
 #define SYSCTL_PPLPC            0x400FE348  // Low Pin Count Interface
-                                            // Peripheral Present
+// Peripheral Present
 #define SYSCTL_PPPECI           0x400FE350  // Platform Environment Control
-                                            // Interface Peripheral Present
+// Interface Peripheral Present
 #define SYSCTL_PPFAN            0x400FE354  // Fan Control Peripheral Present
 #define SYSCTL_PPEEPROM         0x400FE358  // EEPROM Peripheral Present
 #define SYSCTL_PPWTIMER         0x400FE35C  // 32/64-Bit Wide General-Purpose
-                                            // Timer Peripheral Present
+// Timer Peripheral Present
 #define SYSCTL_PPRTS            0x400FE370  // Remote Temperature Sensor
-                                            // Peripheral Present
+// Peripheral Present
 #define SYSCTL_PPCCM            0x400FE374  // CRC and Cryptographic Modules
-                                            // Peripheral Present
+// Peripheral Present
 #define SYSCTL_PPLCD            0x400FE390  // LCD Peripheral Present
 #define SYSCTL_PPOWIRE          0x400FE398  // 1-Wire Peripheral Present
 #define SYSCTL_PPEMAC           0x400FE39C  // Ethernet MAC Peripheral Present
 #define SYSCTL_PPHIM            0x400FE3A4  // Human Interface Master
-                                            // Peripheral Present
+// Peripheral Present
 #define SYSCTL_SRWD             0x400FE500  // Watchdog Timer Software Reset
 #define SYSCTL_SRTIMER          0x400FE504  // 16/32-Bit General-Purpose Timer
-                                            // Software Reset
+// Software Reset
 #define SYSCTL_SRGPIO           0x400FE508  // General-Purpose Input/Output
-                                            // Software Reset
+// Software Reset
 #define SYSCTL_SRDMA            0x400FE50C  // Micro Direct Memory Access
-                                            // Software Reset
+// Software Reset
 #define SYSCTL_SREPI            0x400FE510  // EPI Software Reset
 #define SYSCTL_SRHIB            0x400FE514  // Hibernation Software Reset
 #define SYSCTL_SRUART           0x400FE518  // Universal Asynchronous
-                                            // Receiver/Transmitter Software
-                                            // Reset
+// Receiver/Transmitter Software
+// Reset
 #define SYSCTL_SRSSI            0x400FE51C  // Synchronous Serial Interface
-                                            // Software Reset
+// Software Reset
 #define SYSCTL_SRI2C            0x400FE520  // Inter-Integrated Circuit
-                                            // Software Reset
+// Software Reset
 #define SYSCTL_SRUSB            0x400FE528  // Universal Serial Bus Software
-                                            // Reset
+// Reset
 #define SYSCTL_SREPHY           0x400FE530  // Ethernet PHY Software Reset
 #define SYSCTL_SRCAN            0x400FE534  // Controller Area Network Software
-                                            // Reset
+// Reset
 #define SYSCTL_SRADC            0x400FE538  // Analog-to-Digital Converter
-                                            // Software Reset
+// Software Reset
 #define SYSCTL_SRACMP           0x400FE53C  // Analog Comparator Software Reset
 #define SYSCTL_SRPWM            0x400FE540  // Pulse Width Modulator Software
-                                            // Reset
+// Reset
 #define SYSCTL_SRQEI            0x400FE544  // Quadrature Encoder Interface
-                                            // Software Reset
+// Software Reset
 #define SYSCTL_SREEPROM         0x400FE558  // EEPROM Software Reset
 #define SYSCTL_SRWTIMER         0x400FE55C  // 32/64-Bit Wide General-Purpose
-                                            // Timer Software Reset
+// Timer Software Reset
 #define SYSCTL_SRCCM            0x400FE574  // CRC and Cryptographic Modules
-                                            // Software Reset
+// Software Reset
 #define SYSCTL_SRLCD            0x400FE590  // LCD Controller Software Reset
 #define SYSCTL_SROWIRE          0x400FE598  // 1-Wire Software Reset
 #define SYSCTL_SREMAC           0x400FE59C  // Ethernet MAC Software Reset
 #define SYSCTL_RCGCWD           0x400FE600  // Watchdog Timer Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCTIMER        0x400FE604  // 16/32-Bit General-Purpose Timer
-                                            // Run Mode Clock Gating Control
+// Run Mode Clock Gating Control
 #define SYSCTL_RCGCGPIO         0x400FE608  // General-Purpose Input/Output Run
-                                            // Mode Clock Gating Control
+// Mode Clock Gating Control
 #define SYSCTL_RCGCDMA          0x400FE60C  // Micro Direct Memory Access Run
-                                            // Mode Clock Gating Control
+// Mode Clock Gating Control
 #define SYSCTL_RCGCEPI          0x400FE610  // EPI Run Mode Clock Gating
-                                            // Control
+// Control
 #define SYSCTL_RCGCHIB          0x400FE614  // Hibernation Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCUART         0x400FE618  // Universal Asynchronous
-                                            // Receiver/Transmitter Run Mode
-                                            // Clock Gating Control
+// Receiver/Transmitter Run Mode
+// Clock Gating Control
 #define SYSCTL_RCGCSSI          0x400FE61C  // Synchronous Serial Interface Run
-                                            // Mode Clock Gating Control
+// Mode Clock Gating Control
 #define SYSCTL_RCGCI2C          0x400FE620  // Inter-Integrated Circuit Run
-                                            // Mode Clock Gating Control
+// Mode Clock Gating Control
 #define SYSCTL_RCGCUSB          0x400FE628  // Universal Serial Bus Run Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_RCGCEPHY         0x400FE630  // Ethernet PHY Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCCAN          0x400FE634  // Controller Area Network Run Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_RCGCADC          0x400FE638  // Analog-to-Digital Converter Run
-                                            // Mode Clock Gating Control
+// Mode Clock Gating Control
 #define SYSCTL_RCGCACMP         0x400FE63C  // Analog Comparator Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCPWM          0x400FE640  // Pulse Width Modulator Run Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_RCGCQEI          0x400FE644  // Quadrature Encoder Interface Run
-                                            // Mode Clock Gating Control
+// Mode Clock Gating Control
 #define SYSCTL_RCGCEEPROM       0x400FE658  // EEPROM Run Mode Clock Gating
-                                            // Control
+// Control
 #define SYSCTL_RCGCWTIMER       0x400FE65C  // 32/64-Bit Wide General-Purpose
-                                            // Timer Run Mode Clock Gating
-                                            // Control
+// Timer Run Mode Clock Gating
+// Control
 #define SYSCTL_RCGCCCM          0x400FE674  // CRC and Cryptographic Modules
-                                            // Run Mode Clock Gating Control
+// Run Mode Clock Gating Control
 #define SYSCTL_RCGCLCD          0x400FE690  // LCD Controller Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCOWIRE        0x400FE698  // 1-Wire Run Mode Clock Gating
-                                            // Control
+// Control
 #define SYSCTL_RCGCEMAC         0x400FE69C  // Ethernet MAC Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCWD           0x400FE700  // Watchdog Timer Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCTIMER        0x400FE704  // 16/32-Bit General-Purpose Timer
-                                            // Sleep Mode Clock Gating Control
+// Sleep Mode Clock Gating Control
 #define SYSCTL_SCGCGPIO         0x400FE708  // General-Purpose Input/Output
-                                            // Sleep Mode Clock Gating Control
+// Sleep Mode Clock Gating Control
 #define SYSCTL_SCGCDMA          0x400FE70C  // Micro Direct Memory Access Sleep
-                                            // Mode Clock Gating Control
+// Mode Clock Gating Control
 #define SYSCTL_SCGCEPI          0x400FE710  // EPI Sleep Mode Clock Gating
-                                            // Control
+// Control
 #define SYSCTL_SCGCHIB          0x400FE714  // Hibernation Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCUART         0x400FE718  // Universal Asynchronous
-                                            // Receiver/Transmitter Sleep Mode
-                                            // Clock Gating Control
+// Receiver/Transmitter Sleep Mode
+// Clock Gating Control
 #define SYSCTL_SCGCSSI          0x400FE71C  // Synchronous Serial Interface
-                                            // Sleep Mode Clock Gating Control
+// Sleep Mode Clock Gating Control
 #define SYSCTL_SCGCI2C          0x400FE720  // Inter-Integrated Circuit Sleep
-                                            // Mode Clock Gating Control
+// Mode Clock Gating Control
 #define SYSCTL_SCGCUSB          0x400FE728  // Universal Serial Bus Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_SCGCEPHY         0x400FE730  // Ethernet PHY Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCCAN          0x400FE734  // Controller Area Network Sleep
-                                            // Mode Clock Gating Control
+// Mode Clock Gating Control
 #define SYSCTL_SCGCADC          0x400FE738  // Analog-to-Digital Converter
-                                            // Sleep Mode Clock Gating Control
+// Sleep Mode Clock Gating Control
 #define SYSCTL_SCGCACMP         0x400FE73C  // Analog Comparator Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_SCGCPWM          0x400FE740  // Pulse Width Modulator Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_SCGCQEI          0x400FE744  // Quadrature Encoder Interface
-                                            // Sleep Mode Clock Gating Control
+// Sleep Mode Clock Gating Control
 #define SYSCTL_SCGCEEPROM       0x400FE758  // EEPROM Sleep Mode Clock Gating
-                                            // Control
+// Control
 #define SYSCTL_SCGCWTIMER       0x400FE75C  // 32/64-Bit Wide General-Purpose
-                                            // Timer Sleep Mode Clock Gating
-                                            // Control
+// Timer Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCCCM          0x400FE774  // CRC and Cryptographic Modules
-                                            // Sleep Mode Clock Gating Control
+// Sleep Mode Clock Gating Control
 #define SYSCTL_SCGCLCD          0x400FE790  // LCD Controller Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCOWIRE        0x400FE798  // 1-Wire Sleep Mode Clock Gating
-                                            // Control
+// Control
 #define SYSCTL_SCGCEMAC         0x400FE79C  // Ethernet MAC Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_DCGCWD           0x400FE800  // Watchdog Timer Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCTIMER        0x400FE804  // 16/32-Bit General-Purpose Timer
-                                            // Deep-Sleep Mode Clock Gating
-                                            // Control
+// Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCGPIO         0x400FE808  // General-Purpose Input/Output
-                                            // Deep-Sleep Mode Clock Gating
-                                            // Control
+// Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCDMA          0x400FE80C  // Micro Direct Memory Access
-                                            // Deep-Sleep Mode Clock Gating
-                                            // Control
+// Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCEPI          0x400FE810  // EPI Deep-Sleep Mode Clock Gating
-                                            // Control
+// Control
 #define SYSCTL_DCGCHIB          0x400FE814  // Hibernation Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCUART         0x400FE818  // Universal Asynchronous
-                                            // Receiver/Transmitter Deep-Sleep
-                                            // Mode Clock Gating Control
+// Receiver/Transmitter Deep-Sleep
+// Mode Clock Gating Control
 #define SYSCTL_DCGCSSI          0x400FE81C  // Synchronous Serial Interface
-                                            // Deep-Sleep Mode Clock Gating
-                                            // Control
+// Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCI2C          0x400FE820  // Inter-Integrated Circuit
-                                            // Deep-Sleep Mode Clock Gating
-                                            // Control
+// Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCUSB          0x400FE828  // Universal Serial Bus Deep-Sleep
-                                            // Mode Clock Gating Control
+// Mode Clock Gating Control
 #define SYSCTL_DCGCEPHY         0x400FE830  // Ethernet PHY Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCCAN          0x400FE834  // Controller Area Network
-                                            // Deep-Sleep Mode Clock Gating
-                                            // Control
+// Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCADC          0x400FE838  // Analog-to-Digital Converter
-                                            // Deep-Sleep Mode Clock Gating
-                                            // Control
+// Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCACMP         0x400FE83C  // Analog Comparator Deep-Sleep
-                                            // Mode Clock Gating Control
+// Mode Clock Gating Control
 #define SYSCTL_DCGCPWM          0x400FE840  // Pulse Width Modulator Deep-Sleep
-                                            // Mode Clock Gating Control
+// Mode Clock Gating Control
 #define SYSCTL_DCGCQEI          0x400FE844  // Quadrature Encoder Interface
-                                            // Deep-Sleep Mode Clock Gating
-                                            // Control
+// Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCEEPROM       0x400FE858  // EEPROM Deep-Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_DCGCWTIMER       0x400FE85C  // 32/64-Bit Wide General-Purpose
-                                            // Timer Deep-Sleep Mode Clock
-                                            // Gating Control
+// Timer Deep-Sleep Mode Clock
+// Gating Control
 #define SYSCTL_DCGCCCM          0x400FE874  // CRC and Cryptographic Modules
-                                            // Deep-Sleep Mode Clock Gating
-                                            // Control
+// Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCLCD          0x400FE890  // LCD Controller Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCOWIRE        0x400FE898  // 1-Wire Deep-Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_DCGCEMAC         0x400FE89C  // Ethernet MAC Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_PCWD             0x400FE900  // Watchdog Timer Power Control
 #define SYSCTL_PCTIMER          0x400FE904  // 16/32-Bit General-Purpose Timer
-                                            // Power Control
+// Power Control
 #define SYSCTL_PCGPIO           0x400FE908  // General-Purpose Input/Output
-                                            // Power Control
+// Power Control
 #define SYSCTL_PCDMA            0x400FE90C  // Micro Direct Memory Access Power
-                                            // Control
+// Control
 #define SYSCTL_PCEPI            0x400FE910  // External Peripheral Interface
-                                            // Power Control
+// Power Control
 #define SYSCTL_PCHIB            0x400FE914  // Hibernation Power Control
 #define SYSCTL_PCUART           0x400FE918  // Universal Asynchronous
-                                            // Receiver/Transmitter Power
-                                            // Control
+// Receiver/Transmitter Power
+// Control
 #define SYSCTL_PCSSI            0x400FE91C  // Synchronous Serial Interface
-                                            // Power Control
+// Power Control
 #define SYSCTL_PCI2C            0x400FE920  // Inter-Integrated Circuit Power
-                                            // Control
+// Control
 #define SYSCTL_PCUSB            0x400FE928  // Universal Serial Bus Power
-                                            // Control
+// Control
 #define SYSCTL_PCEPHY           0x400FE930  // Ethernet PHY Power Control
 #define SYSCTL_PCCAN            0x400FE934  // Controller Area Network Power
-                                            // Control
+// Control
 #define SYSCTL_PCADC            0x400FE938  // Analog-to-Digital Converter
-                                            // Power Control
+// Power Control
 #define SYSCTL_PCACMP           0x400FE93C  // Analog Comparator Power Control
 #define SYSCTL_PCPWM            0x400FE940  // Pulse Width Modulator Power
-                                            // Control
+// Control
 #define SYSCTL_PCQEI            0x400FE944  // Quadrature Encoder Interface
-                                            // Power Control
+// Power Control
 #define SYSCTL_PCEEPROM         0x400FE958  // EEPROM Power Control
 #define SYSCTL_PCCCM            0x400FE974  // CRC and Cryptographic Modules
-                                            // Power Control
+// Power Control
 #define SYSCTL_PCLCD            0x400FE990  // LCD Controller Power Control
 #define SYSCTL_PCOWIRE          0x400FE998  // 1-Wire Power Control
 #define SYSCTL_PCEMAC           0x400FE99C  // Ethernet MAC Power Control
 #define SYSCTL_PRWD             0x400FEA00  // Watchdog Timer Peripheral Ready
 #define SYSCTL_PRTIMER          0x400FEA04  // 16/32-Bit General-Purpose Timer
-                                            // Peripheral Ready
+// Peripheral Ready
 #define SYSCTL_PRGPIO           0x400FEA08  // General-Purpose Input/Output
-                                            // Peripheral Ready
+// Peripheral Ready
 #define SYSCTL_PRDMA            0x400FEA0C  // Micro Direct Memory Access
-                                            // Peripheral Ready
+// Peripheral Ready
 #define SYSCTL_PREPI            0x400FEA10  // EPI Peripheral Ready
 #define SYSCTL_PRHIB            0x400FEA14  // Hibernation Peripheral Ready
 #define SYSCTL_PRUART           0x400FEA18  // Universal Asynchronous
-                                            // Receiver/Transmitter Peripheral
-                                            // Ready
+// Receiver/Transmitter Peripheral
+// Ready
 #define SYSCTL_PRSSI            0x400FEA1C  // Synchronous Serial Interface
-                                            // Peripheral Ready
+// Peripheral Ready
 #define SYSCTL_PRI2C            0x400FEA20  // Inter-Integrated Circuit
-                                            // Peripheral Ready
+// Peripheral Ready
 #define SYSCTL_PRUSB            0x400FEA28  // Universal Serial Bus Peripheral
-                                            // Ready
+// Ready
 #define SYSCTL_PREPHY           0x400FEA30  // Ethernet PHY Peripheral Ready
 #define SYSCTL_PRCAN            0x400FEA34  // Controller Area Network
-                                            // Peripheral Ready
+// Peripheral Ready
 #define SYSCTL_PRADC            0x400FEA38  // Analog-to-Digital Converter
-                                            // Peripheral Ready
+// Peripheral Ready
 #define SYSCTL_PRACMP           0x400FEA3C  // Analog Comparator Peripheral
-                                            // Ready
+// Ready
 #define SYSCTL_PRPWM            0x400FEA40  // Pulse Width Modulator Peripheral
-                                            // Ready
+// Ready
 #define SYSCTL_PRQEI            0x400FEA44  // Quadrature Encoder Interface
-                                            // Peripheral Ready
+// Peripheral Ready
 #define SYSCTL_PREEPROM         0x400FEA58  // EEPROM Peripheral Ready
 #define SYSCTL_PRWTIMER         0x400FEA5C  // 32/64-Bit Wide General-Purpose
-                                            // Timer Peripheral Ready
+// Timer Peripheral Ready
 #define SYSCTL_PRCCM            0x400FEA74  // CRC and Cryptographic Modules
-                                            // Peripheral Ready
+// Peripheral Ready
 #define SYSCTL_PRLCD            0x400FEA90  // LCD Controller Peripheral Ready
 #define SYSCTL_PROWIRE          0x400FEA98  // 1-Wire Peripheral Ready
 #define SYSCTL_PREMAC           0x400FEA9C  // Ethernet MAC Peripheral Ready
@@ -430,7 +430,7 @@
 #define SYSCTL_UNIQUEID2        0x400FEF28  // Unique ID 2
 #define SYSCTL_UNIQUEID3        0x400FEF2C  // Unique ID 3
 #define SYSCTL_CCMCGREQ         0x44030204  // Cryptographic Modules Clock
-                                            // Gating Request
+// Gating Request
 
 //*****************************************************************************
 //
@@ -439,23 +439,23 @@
 //*****************************************************************************
 #define SYSCTL_DID0_VER_M       0x70000000  // DID0 Version
 #define SYSCTL_DID0_VER_1       0x10000000  // Second version of the DID0
-                                            // register format.
+// register format.
 #define SYSCTL_DID0_CLASS_M     0x00FF0000  // Device Class
 #define SYSCTL_DID0_CLASS_TM4C123                                             \
                                 0x00050000  // Tiva TM4C123x and TM4E123x
-                                            // microcontrollers
+// microcontrollers
 #define SYSCTL_DID0_CLASS_TM4C129                                             \
                                 0x000A0000  // Tiva(TM) TM4C129-class
-                                            // microcontrollers
+// microcontrollers
 #define SYSCTL_DID0_MAJ_M       0x0000FF00  // Major Revision
 #define SYSCTL_DID0_MAJ_REVA    0x00000000  // Revision A (initial device)
 #define SYSCTL_DID0_MAJ_REVB    0x00000100  // Revision B (first base layer
-                                            // revision)
+// revision)
 #define SYSCTL_DID0_MAJ_REVC    0x00000200  // Revision C (second base layer
-                                            // revision)
+// revision)
 #define SYSCTL_DID0_MIN_M       0x000000FF  // Minor Revision
 #define SYSCTL_DID0_MIN_0       0x00000000  // Initial device, or a major
-                                            // revision update
+// revision update
 #define SYSCTL_DID0_MIN_1       0x00000001  // First metal layer change
 #define SYSCTL_DID0_MIN_2       0x00000002  // Second metal layer change
 
@@ -620,9 +620,9 @@
 #define SYSCTL_DID1_TEMP_I      0x00000020  // Industrial temperature range
 #define SYSCTL_DID1_TEMP_E      0x00000040  // Extended temperature range
 #define SYSCTL_DID1_TEMP_IE     0x00000060  // Available in both industrial
-                                            // temperature range (-40C to 85C)
-                                            // and extended temperature range
-                                            // (-40C to 105C) devices. See
+// temperature range (-40C to 85C)
+// and extended temperature range
+// (-40C to 105C) devices. See
 #define SYSCTL_DID1_PKG_M       0x00000018  // Package Type
 #define SYSCTL_DID1_PKG_QFP     0x00000008  // QFP package
 #define SYSCTL_DID1_PKG_BGA     0x00000010  // BGA package
@@ -671,15 +671,15 @@
 #define SYSCTL_DC1_ADC0         0x00010000  // ADC Module 0 Present
 #define SYSCTL_DC1_MINSYSDIV_M  0x0000F000  // System Clock Divider
 #define SYSCTL_DC1_MINSYSDIV_80 0x00002000  // Specifies an 80-MHz CPU clock
-                                            // with a PLL divider of 2.5
+// with a PLL divider of 2.5
 #define SYSCTL_DC1_MINSYSDIV_50 0x00003000  // Specifies a 50-MHz CPU clock
-                                            // with a PLL divider of 4
+// with a PLL divider of 4
 #define SYSCTL_DC1_MINSYSDIV_40 0x00004000  // Specifies a 40-MHz CPU clock
-                                            // with a PLL divider of 5
+// with a PLL divider of 5
 #define SYSCTL_DC1_MINSYSDIV_25 0x00007000  // Specifies a 25-MHz clock with a
-                                            // PLL divider of 8
+// PLL divider of 8
 #define SYSCTL_DC1_MINSYSDIV_20 0x00009000  // Specifies a 20-MHz clock with a
-                                            // PLL divider of 10
+// PLL divider of 10
 #define SYSCTL_DC1_ADC1SPD_M    0x00000C00  // Max ADC1 Speed
 #define SYSCTL_DC1_ADC1SPD_125K 0x00000000  // 125K samples/second
 #define SYSCTL_DC1_ADC1SPD_250K 0x00000400  // 250K samples/second
@@ -916,7 +916,7 @@
                                 0x00000300  // Reset
 #define SYSCTL_PTBOCTL_VDD_UBOR_M                                             \
                                 0x00000003  // VDD (VDDS) under BOR Event
-                                            // Action
+// Action
 #define SYSCTL_PTBOCTL_VDD_UBOR_NONE                                          \
                                 0x00000000  // No Action
 #define SYSCTL_PTBOCTL_VDD_UBOR_SYSINT                                        \
@@ -985,20 +985,20 @@
 //
 //*****************************************************************************
 #define SYSCTL_RIS_BOR0RIS      0x00000800  // VDD under BOR0 Raw Interrupt
-                                            // Status
+// Status
 #define SYSCTL_RIS_VDDARIS      0x00000400  // VDDA Power OK Event Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define SYSCTL_RIS_MOSCPUPRIS   0x00000100  // MOSC Power Up Raw Interrupt
-                                            // Status
+// Status
 #define SYSCTL_RIS_USBPLLLRIS   0x00000080  // USB PLL Lock Raw Interrupt
-                                            // Status
+// Status
 #define SYSCTL_RIS_PLLLRIS      0x00000040  // PLL Lock Raw Interrupt Status
 #define SYSCTL_RIS_MOFRIS       0x00000008  // Main Oscillator Failure Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define SYSCTL_RIS_BOR1RIS      0x00000002  // VDD under BOR1 Raw Interrupt
-                                            // Status
+// Status
 #define SYSCTL_RIS_BORRIS       0x00000002  // Brown-Out Reset Raw Interrupt
-                                            // Status
+// Status
 
 //*****************************************************************************
 //
@@ -1011,7 +1011,7 @@
 #define SYSCTL_IMC_USBPLLLIM    0x00000080  // USB PLL Lock Interrupt Mask
 #define SYSCTL_IMC_PLLLIM       0x00000040  // PLL Lock Interrupt Mask
 #define SYSCTL_IMC_MOFIM        0x00000008  // Main Oscillator Failure
-                                            // Interrupt Mask
+// Interrupt Mask
 #define SYSCTL_IMC_BORIM        0x00000002  // Brown-Out Reset Interrupt Mask
 #define SYSCTL_IMC_BOR1IM       0x00000002  // VDD under BOR1 Interrupt Mask
 
@@ -1021,19 +1021,19 @@
 //
 //*****************************************************************************
 #define SYSCTL_MISC_BOR0MIS     0x00000800  // VDD under BOR0 Masked Interrupt
-                                            // Status
+// Status
 #define SYSCTL_MISC_VDDAMIS     0x00000400  // VDDA Power OK Masked Interrupt
-                                            // Status
+// Status
 #define SYSCTL_MISC_MOSCPUPMIS  0x00000100  // MOSC Power Up Masked Interrupt
-                                            // Status
+// Status
 #define SYSCTL_MISC_USBPLLLMIS  0x00000080  // USB PLL Lock Masked Interrupt
-                                            // Status
+// Status
 #define SYSCTL_MISC_PLLLMIS     0x00000040  // PLL Lock Masked Interrupt Status
 #define SYSCTL_MISC_MOFMIS      0x00000008  // Main Oscillator Failure Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define SYSCTL_MISC_BORMIS      0x00000002  // BOR Masked Interrupt Status
 #define SYSCTL_MISC_BOR1MIS     0x00000002  // VDD under BOR1 Masked Interrupt
-                                            // Status
+// Status
 
 //*****************************************************************************
 //
@@ -1125,23 +1125,23 @@
 //
 //*****************************************************************************
 #define SYSCTL_GPIOHBCTL_PORTJ  0x00000100  // Port J Advanced High-Performance
-                                            // Bus
+// Bus
 #define SYSCTL_GPIOHBCTL_PORTH  0x00000080  // Port H Advanced High-Performance
-                                            // Bus
+// Bus
 #define SYSCTL_GPIOHBCTL_PORTG  0x00000040  // Port G Advanced High-Performance
-                                            // Bus
+// Bus
 #define SYSCTL_GPIOHBCTL_PORTF  0x00000020  // Port F Advanced High-Performance
-                                            // Bus
+// Bus
 #define SYSCTL_GPIOHBCTL_PORTE  0x00000010  // Port E Advanced High-Performance
-                                            // Bus
+// Bus
 #define SYSCTL_GPIOHBCTL_PORTD  0x00000008  // Port D Advanced High-Performance
-                                            // Bus
+// Bus
 #define SYSCTL_GPIOHBCTL_PORTC  0x00000004  // Port C Advanced High-Performance
-                                            // Bus
+// Bus
 #define SYSCTL_GPIOHBCTL_PORTB  0x00000002  // Port B Advanced High-Performance
-                                            // Bus
+// Bus
 #define SYSCTL_GPIOHBCTL_PORTA  0x00000001  // Port A Advanced High-Performance
-                                            // Bus
+// Bus
 
 //*****************************************************************************
 //
@@ -1150,7 +1150,7 @@
 //*****************************************************************************
 #define SYSCTL_RCC2_USERCC2     0x80000000  // Use RCC2
 #define SYSCTL_RCC2_DIV400      0x40000000  // Divide PLL as 400 MHz vs. 200
-                                            // MHz
+// MHz
 #define SYSCTL_RCC2_SYSDIV2_M   0x1F800000  // System Clock Divisor 2
 #define SYSCTL_RCC2_SYSDIV2LSB  0x00400000  // Additional LSB for SYSDIV2
 #define SYSCTL_RCC2_USBPWRDN    0x00004000  // Power-Down USB PLL
@@ -1191,7 +1191,7 @@
                                 0x00000000  // PIOSC is PLL input clock source
 #define SYSCTL_RSCLKCFG_PLLSRC_MOSC                                           \
                                 0x03000000  // MOSC is the PLL input clock
-                                            // source
+// source
 #define SYSCTL_RSCLKCFG_OSCSRC_M                                              \
                                 0x00F00000  // Oscillator Source
 #define SYSCTL_RSCLKCFG_OSCSRC_PIOSC                                          \
@@ -1202,7 +1202,7 @@
                                 0x00300000  // MOSC is oscillator source
 #define SYSCTL_RSCLKCFG_OSCSRC_RTC                                            \
                                 0x00400000  // Hibernation Module RTC
-                                            // Oscillator (RTCOSC)
+// Oscillator (RTCOSC)
 #define SYSCTL_RSCLKCFG_OSYSDIV_M                                             \
                                 0x000FFC00  // Oscillator System Clock Divisor
 #define SYSCTL_RSCLKCFG_PSYSDIV_M                                             \
@@ -1443,10 +1443,10 @@
                                 0x00000000  // PIOSC
 #define SYSCTL_ALTCLKCFG_ALTCLK_RTCOSC                                        \
                                 0x00000003  // Hibernation Module Real-time
-                                            // clock output (RTCOSC)
+// clock output (RTCOSC)
 #define SYSCTL_ALTCLKCFG_ALTCLK_LFIOSC                                        \
                                 0x00000004  // Low-frequency internal
-                                            // oscillator (LFIOSC)
+// oscillator (LFIOSC)
 
 //*****************************************************************************
 //
@@ -1530,11 +1530,11 @@
 #define SYSCTL_PIOSCSTAT_DT_M   0x007F0000  // Default Trim Value
 #define SYSCTL_PIOSCSTAT_CR_M   0x00000300  // Calibration Result
 #define SYSCTL_PIOSCSTAT_CRNONE 0x00000000  // Calibration has not been
-                                            // attempted
+// attempted
 #define SYSCTL_PIOSCSTAT_CRPASS 0x00000100  // The last calibration operation
-                                            // completed to meet 1% accuracy
+// completed to meet 1% accuracy
 #define SYSCTL_PIOSCSTAT_CRFAIL 0x00000200  // The last calibration operation
-                                            // failed to meet 1% accuracy
+// failed to meet 1% accuracy
 #define SYSCTL_PIOSCSTAT_CT_M   0x0000007F  // Calibration Trim Value
 #define SYSCTL_PIOSCSTAT_DT_S   16
 #define SYSCTL_PIOSCSTAT_CT_S   0
@@ -1641,7 +1641,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_NVMSTAT_FWB      0x00000001  // 32 Word Flash Write Buffer
-                                            // Available
+// Available
 
 //*****************************************************************************
 //
@@ -1705,46 +1705,46 @@
                                 0x000000C0  // Watchdog 1 Reset Operation
 #define SYSCTL_RESBEHAVCTL_WDOG1_SYSRST                                       \
                                 0x00000080  // Watchdog 1 issues a system
-                                            // reset. The application starts
-                                            // within 10 us
+// reset. The application starts
+// within 10 us
 #define SYSCTL_RESBEHAVCTL_WDOG1_POR                                          \
                                 0x000000C0  // Watchdog 1 issues a simulated
-                                            // POR sequence. Application starts
-                                            // less than 500 us after
-                                            // deassertion (Default)
+// POR sequence. Application starts
+// less than 500 us after
+// deassertion (Default)
 #define SYSCTL_RESBEHAVCTL_WDOG0_M                                            \
                                 0x00000030  // Watchdog 0 Reset Operation
 #define SYSCTL_RESBEHAVCTL_WDOG0_SYSRST                                       \
                                 0x00000020  // Watchdog 0 issues a system
-                                            // reset. The application starts
-                                            // within 10 us
+// reset. The application starts
+// within 10 us
 #define SYSCTL_RESBEHAVCTL_WDOG0_POR                                          \
                                 0x00000030  // Watchdog 0 issues a simulated
-                                            // POR sequence. Application starts
-                                            // less than 500 us after
-                                            // deassertion (Default)
+// POR sequence. Application starts
+// less than 500 us after
+// deassertion (Default)
 #define SYSCTL_RESBEHAVCTL_BOR_M                                              \
                                 0x0000000C  // BOR Reset operation
 #define SYSCTL_RESBEHAVCTL_BOR_SYSRST                                         \
                                 0x00000008  // Brown Out Reset issues system
-                                            // reset. The application starts
-                                            // within 10 us
+// reset. The application starts
+// within 10 us
 #define SYSCTL_RESBEHAVCTL_BOR_POR                                            \
                                 0x0000000C  // Brown Out Reset issues a
-                                            // simulated POR sequence. The
-                                            // application starts less than 500
-                                            // us after deassertion (Default)
+// simulated POR sequence. The
+// application starts less than 500
+// us after deassertion (Default)
 #define SYSCTL_RESBEHAVCTL_EXTRES_M                                           \
                                 0x00000003  // External RST Pin Operation
 #define SYSCTL_RESBEHAVCTL_EXTRES_SYSRST                                      \
                                 0x00000002  // External RST assertion issues a
-                                            // system reset. The application
-                                            // starts within 10 us
+// system reset. The application
+// starts within 10 us
 #define SYSCTL_RESBEHAVCTL_EXTRES_POR                                         \
                                 0x00000003  // External RST assertion issues a
-                                            // simulated POR sequence.
-                                            // Application starts less than 500
-                                            // us after deassertion (Default)
+// simulated POR sequence.
+// Application starts less than 500
+// us after deassertion (Default)
 
 //*****************************************************************************
 //
@@ -1839,21 +1839,21 @@
 //
 //*****************************************************************************
 #define SYSCTL_PPTIMER_P7       0x00000080  // 16/32-Bit General-Purpose Timer
-                                            // 7 Present
+// 7 Present
 #define SYSCTL_PPTIMER_P6       0x00000040  // 16/32-Bit General-Purpose Timer
-                                            // 6 Present
+// 6 Present
 #define SYSCTL_PPTIMER_P5       0x00000020  // 16/32-Bit General-Purpose Timer
-                                            // 5 Present
+// 5 Present
 #define SYSCTL_PPTIMER_P4       0x00000010  // 16/32-Bit General-Purpose Timer
-                                            // 4 Present
+// 4 Present
 #define SYSCTL_PPTIMER_P3       0x00000008  // 16/32-Bit General-Purpose Timer
-                                            // 3 Present
+// 3 Present
 #define SYSCTL_PPTIMER_P2       0x00000004  // 16/32-Bit General-Purpose Timer
-                                            // 2 Present
+// 2 Present
 #define SYSCTL_PPTIMER_P1       0x00000002  // 16/32-Bit General-Purpose Timer
-                                            // 1 Present
+// 1 Present
 #define SYSCTL_PPTIMER_P0       0x00000001  // 16/32-Bit General-Purpose Timer
-                                            // 0 Present
+// 0 Present
 
 //*****************************************************************************
 //
@@ -2029,17 +2029,17 @@
 //
 //*****************************************************************************
 #define SYSCTL_PPWTIMER_P5      0x00000020  // 32/64-Bit Wide General-Purpose
-                                            // Timer 5 Present
+// Timer 5 Present
 #define SYSCTL_PPWTIMER_P4      0x00000010  // 32/64-Bit Wide General-Purpose
-                                            // Timer 4 Present
+// Timer 4 Present
 #define SYSCTL_PPWTIMER_P3      0x00000008  // 32/64-Bit Wide General-Purpose
-                                            // Timer 3 Present
+// Timer 3 Present
 #define SYSCTL_PPWTIMER_P2      0x00000004  // 32/64-Bit Wide General-Purpose
-                                            // Timer 2 Present
+// Timer 2 Present
 #define SYSCTL_PPWTIMER_P1      0x00000002  // 32/64-Bit Wide General-Purpose
-                                            // Timer 1 Present
+// Timer 1 Present
 #define SYSCTL_PPWTIMER_P0      0x00000001  // 32/64-Bit Wide General-Purpose
-                                            // Timer 0 Present
+// Timer 0 Present
 
 //*****************************************************************************
 //
@@ -2054,7 +2054,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_PPCCM_P0         0x00000001  // CRC and Cryptographic Modules
-                                            // Present
+// Present
 
 //*****************************************************************************
 //
@@ -2076,7 +2076,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_PPEMAC_P0        0x00000001  // Ethernet Controller Module
-                                            // Present
+// Present
 
 //*****************************************************************************
 //
@@ -2099,21 +2099,21 @@
 //
 //*****************************************************************************
 #define SYSCTL_SRTIMER_R7       0x00000080  // 16/32-Bit General-Purpose Timer
-                                            // 7 Software Reset
+// 7 Software Reset
 #define SYSCTL_SRTIMER_R6       0x00000040  // 16/32-Bit General-Purpose Timer
-                                            // 6 Software Reset
+// 6 Software Reset
 #define SYSCTL_SRTIMER_R5       0x00000020  // 16/32-Bit General-Purpose Timer
-                                            // 5 Software Reset
+// 5 Software Reset
 #define SYSCTL_SRTIMER_R4       0x00000010  // 16/32-Bit General-Purpose Timer
-                                            // 4 Software Reset
+// 4 Software Reset
 #define SYSCTL_SRTIMER_R3       0x00000008  // 16/32-Bit General-Purpose Timer
-                                            // 3 Software Reset
+// 3 Software Reset
 #define SYSCTL_SRTIMER_R2       0x00000004  // 16/32-Bit General-Purpose Timer
-                                            // 2 Software Reset
+// 2 Software Reset
 #define SYSCTL_SRTIMER_R1       0x00000002  // 16/32-Bit General-Purpose Timer
-                                            // 1 Software Reset
+// 1 Software Reset
 #define SYSCTL_SRTIMER_R0       0x00000001  // 16/32-Bit General-Purpose Timer
-                                            // 0 Software Reset
+// 0 Software Reset
 
 //*****************************************************************************
 //
@@ -2159,7 +2159,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_SRHIB_R0         0x00000001  // Hibernation Module Software
-                                            // Reset
+// Reset
 
 //*****************************************************************************
 //
@@ -2214,7 +2214,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_SREPHY_R0        0x00000001  // Ethernet PHY Module Software
-                                            // Reset
+// Reset
 
 //*****************************************************************************
 //
@@ -2238,7 +2238,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_SRACMP_R0        0x00000001  // Analog Comparator Module 0
-                                            // Software Reset
+// Software Reset
 
 //*****************************************************************************
 //
@@ -2271,17 +2271,17 @@
 //
 //*****************************************************************************
 #define SYSCTL_SRWTIMER_R5      0x00000020  // 32/64-Bit Wide General-Purpose
-                                            // Timer 5 Software Reset
+// Timer 5 Software Reset
 #define SYSCTL_SRWTIMER_R4      0x00000010  // 32/64-Bit Wide General-Purpose
-                                            // Timer 4 Software Reset
+// Timer 4 Software Reset
 #define SYSCTL_SRWTIMER_R3      0x00000008  // 32/64-Bit Wide General-Purpose
-                                            // Timer 3 Software Reset
+// Timer 3 Software Reset
 #define SYSCTL_SRWTIMER_R2      0x00000004  // 32/64-Bit Wide General-Purpose
-                                            // Timer 2 Software Reset
+// Timer 2 Software Reset
 #define SYSCTL_SRWTIMER_R1      0x00000002  // 32/64-Bit Wide General-Purpose
-                                            // Timer 1 Software Reset
+// Timer 1 Software Reset
 #define SYSCTL_SRWTIMER_R0      0x00000001  // 32/64-Bit Wide General-Purpose
-                                            // Timer 0 Software Reset
+// Timer 0 Software Reset
 
 //*****************************************************************************
 //
@@ -2289,7 +2289,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_SRCCM_R0         0x00000001  // CRC and Cryptographic Modules
-                                            // Software Reset
+// Software Reset
 
 //*****************************************************************************
 //
@@ -2311,7 +2311,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_SREMAC_R0        0x00000001  // Ethernet Controller MAC Module 0
-                                            // Software Reset
+// Software Reset
 
 //*****************************************************************************
 //
@@ -2319,9 +2319,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCWD_R1        0x00000002  // Watchdog Timer 1 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCWD_R0        0x00000001  // Watchdog Timer 0 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2330,21 +2330,21 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCTIMER_R7     0x00000080  // 16/32-Bit General-Purpose Timer
-                                            // 7 Run Mode Clock Gating Control
+// 7 Run Mode Clock Gating Control
 #define SYSCTL_RCGCTIMER_R6     0x00000040  // 16/32-Bit General-Purpose Timer
-                                            // 6 Run Mode Clock Gating Control
+// 6 Run Mode Clock Gating Control
 #define SYSCTL_RCGCTIMER_R5     0x00000020  // 16/32-Bit General-Purpose Timer
-                                            // 5 Run Mode Clock Gating Control
+// 5 Run Mode Clock Gating Control
 #define SYSCTL_RCGCTIMER_R4     0x00000010  // 16/32-Bit General-Purpose Timer
-                                            // 4 Run Mode Clock Gating Control
+// 4 Run Mode Clock Gating Control
 #define SYSCTL_RCGCTIMER_R3     0x00000008  // 16/32-Bit General-Purpose Timer
-                                            // 3 Run Mode Clock Gating Control
+// 3 Run Mode Clock Gating Control
 #define SYSCTL_RCGCTIMER_R2     0x00000004  // 16/32-Bit General-Purpose Timer
-                                            // 2 Run Mode Clock Gating Control
+// 2 Run Mode Clock Gating Control
 #define SYSCTL_RCGCTIMER_R1     0x00000002  // 16/32-Bit General-Purpose Timer
-                                            // 1 Run Mode Clock Gating Control
+// 1 Run Mode Clock Gating Control
 #define SYSCTL_RCGCTIMER_R0     0x00000001  // 16/32-Bit General-Purpose Timer
-                                            // 0 Run Mode Clock Gating Control
+// 0 Run Mode Clock Gating Control
 
 //*****************************************************************************
 //
@@ -2353,41 +2353,41 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCGPIO_R17     0x00020000  // GPIO Port T Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R16     0x00010000  // GPIO Port S Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R15     0x00008000  // GPIO Port R Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R14     0x00004000  // GPIO Port Q Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R13     0x00002000  // GPIO Port P Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R12     0x00001000  // GPIO Port N Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R11     0x00000800  // GPIO Port M Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R10     0x00000400  // GPIO Port L Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R9      0x00000200  // GPIO Port K Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R8      0x00000100  // GPIO Port J Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R7      0x00000080  // GPIO Port H Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R6      0x00000040  // GPIO Port G Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R5      0x00000020  // GPIO Port F Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R4      0x00000010  // GPIO Port E Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R3      0x00000008  // GPIO Port D Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R2      0x00000004  // GPIO Port C Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R1      0x00000002  // GPIO Port B Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCGPIO_R0      0x00000001  // GPIO Port A Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2395,7 +2395,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCDMA_R0       0x00000001  // uDMA Module Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2403,7 +2403,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCEPI_R0       0x00000001  // EPI Module Run Mode Clock Gating
-                                            // Control
+// Control
 
 //*****************************************************************************
 //
@@ -2411,7 +2411,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCHIB_R0       0x00000001  // Hibernation Module Run Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -2420,21 +2420,21 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCUART_R7      0x00000080  // UART Module 7 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCUART_R6      0x00000040  // UART Module 6 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCUART_R5      0x00000020  // UART Module 5 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCUART_R4      0x00000010  // UART Module 4 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCUART_R3      0x00000008  // UART Module 3 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCUART_R2      0x00000004  // UART Module 2 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCUART_R1      0x00000002  // UART Module 1 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCUART_R0      0x00000001  // UART Module 0 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2442,13 +2442,13 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCSSI_R3       0x00000008  // SSI Module 3 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCSSI_R2       0x00000004  // SSI Module 2 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCSSI_R1       0x00000002  // SSI Module 1 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCSSI_R0       0x00000001  // SSI Module 0 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2456,25 +2456,25 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCI2C_R9       0x00000200  // I2C Module 9 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCI2C_R8       0x00000100  // I2C Module 8 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCI2C_R7       0x00000080  // I2C Module 7 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCI2C_R6       0x00000040  // I2C Module 6 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCI2C_R5       0x00000020  // I2C Module 5 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCI2C_R4       0x00000010  // I2C Module 4 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCI2C_R3       0x00000008  // I2C Module 3 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCI2C_R2       0x00000004  // I2C Module 2 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCI2C_R1       0x00000002  // I2C Module 1 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCI2C_R0       0x00000001  // I2C Module 0 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2482,7 +2482,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCUSB_R0       0x00000001  // USB Module Run Mode Clock Gating
-                                            // Control
+// Control
 
 //*****************************************************************************
 //
@@ -2491,7 +2491,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCEPHY_R0      0x00000001  // Ethernet PHY Module Run Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -2499,9 +2499,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCCAN_R1       0x00000002  // CAN Module 1 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCCAN_R0       0x00000001  // CAN Module 0 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2509,9 +2509,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCADC_R1       0x00000002  // ADC Module 1 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCADC_R0       0x00000001  // ADC Module 0 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2520,7 +2520,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCACMP_R0      0x00000001  // Analog Comparator Module 0 Run
-                                            // Mode Clock Gating Control
+// Mode Clock Gating Control
 
 //*****************************************************************************
 //
@@ -2528,9 +2528,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCPWM_R1       0x00000002  // PWM Module 1 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCPWM_R0       0x00000001  // PWM Module 0 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2538,9 +2538,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCQEI_R1       0x00000002  // QEI Module 1 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_RCGCQEI_R0       0x00000001  // QEI Module 0 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2549,7 +2549,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCEEPROM_R0    0x00000001  // EEPROM Module Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2558,23 +2558,23 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCWTIMER_R5    0x00000020  // 32/64-Bit Wide General-Purpose
-                                            // Timer 5 Run Mode Clock Gating
-                                            // Control
+// Timer 5 Run Mode Clock Gating
+// Control
 #define SYSCTL_RCGCWTIMER_R4    0x00000010  // 32/64-Bit Wide General-Purpose
-                                            // Timer 4 Run Mode Clock Gating
-                                            // Control
+// Timer 4 Run Mode Clock Gating
+// Control
 #define SYSCTL_RCGCWTIMER_R3    0x00000008  // 32/64-Bit Wide General-Purpose
-                                            // Timer 3 Run Mode Clock Gating
-                                            // Control
+// Timer 3 Run Mode Clock Gating
+// Control
 #define SYSCTL_RCGCWTIMER_R2    0x00000004  // 32/64-Bit Wide General-Purpose
-                                            // Timer 2 Run Mode Clock Gating
-                                            // Control
+// Timer 2 Run Mode Clock Gating
+// Control
 #define SYSCTL_RCGCWTIMER_R1    0x00000002  // 32/64-Bit Wide General-Purpose
-                                            // Timer 1 Run Mode Clock Gating
-                                            // Control
+// Timer 1 Run Mode Clock Gating
+// Control
 #define SYSCTL_RCGCWTIMER_R0    0x00000001  // 32/64-Bit Wide General-Purpose
-                                            // Timer 0 Run Mode Clock Gating
-                                            // Control
+// Timer 0 Run Mode Clock Gating
+// Control
 
 //*****************************************************************************
 //
@@ -2582,7 +2582,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCCCM_R0       0x00000001  // CRC and Cryptographic Modules
-                                            // Run Mode Clock Gating Control
+// Run Mode Clock Gating Control
 
 //*****************************************************************************
 //
@@ -2590,7 +2590,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCLCD_R0       0x00000001  // LCD Controller Module 0 Run Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -2599,7 +2599,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCOWIRE_R0     0x00000001  // 1-Wire Module 0 Run Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2608,7 +2608,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_RCGCEMAC_R0      0x00000001  // Ethernet MAC Module 0 Run Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -2616,9 +2616,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCWD_S1        0x00000002  // Watchdog Timer 1 Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_SCGCWD_S0        0x00000001  // Watchdog Timer 0 Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -2627,29 +2627,29 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCTIMER_S7     0x00000080  // 16/32-Bit General-Purpose Timer
-                                            // 7 Sleep Mode Clock Gating
-                                            // Control
+// 7 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCTIMER_S6     0x00000040  // 16/32-Bit General-Purpose Timer
-                                            // 6 Sleep Mode Clock Gating
-                                            // Control
+// 6 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCTIMER_S5     0x00000020  // 16/32-Bit General-Purpose Timer
-                                            // 5 Sleep Mode Clock Gating
-                                            // Control
+// 5 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCTIMER_S4     0x00000010  // 16/32-Bit General-Purpose Timer
-                                            // 4 Sleep Mode Clock Gating
-                                            // Control
+// 4 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCTIMER_S3     0x00000008  // 16/32-Bit General-Purpose Timer
-                                            // 3 Sleep Mode Clock Gating
-                                            // Control
+// 3 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCTIMER_S2     0x00000004  // 16/32-Bit General-Purpose Timer
-                                            // 2 Sleep Mode Clock Gating
-                                            // Control
+// 2 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCTIMER_S1     0x00000002  // 16/32-Bit General-Purpose Timer
-                                            // 1 Sleep Mode Clock Gating
-                                            // Control
+// 1 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCTIMER_S0     0x00000001  // 16/32-Bit General-Purpose Timer
-                                            // 0 Sleep Mode Clock Gating
-                                            // Control
+// 0 Sleep Mode Clock Gating
+// Control
 
 //*****************************************************************************
 //
@@ -2658,41 +2658,41 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCGPIO_S17     0x00020000  // GPIO Port T Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S16     0x00010000  // GPIO Port S Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S15     0x00008000  // GPIO Port R Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S14     0x00004000  // GPIO Port Q Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S13     0x00002000  // GPIO Port P Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S12     0x00001000  // GPIO Port N Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S11     0x00000800  // GPIO Port M Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S10     0x00000400  // GPIO Port L Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S9      0x00000200  // GPIO Port K Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S8      0x00000100  // GPIO Port J Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S7      0x00000080  // GPIO Port H Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S6      0x00000040  // GPIO Port G Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S5      0x00000020  // GPIO Port F Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S4      0x00000010  // GPIO Port E Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S3      0x00000008  // GPIO Port D Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S2      0x00000004  // GPIO Port C Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S1      0x00000002  // GPIO Port B Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCGPIO_S0      0x00000001  // GPIO Port A Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2700,7 +2700,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCDMA_S0       0x00000001  // uDMA Module Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2708,7 +2708,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCEPI_S0       0x00000001  // EPI Module Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2716,7 +2716,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCHIB_S0       0x00000001  // Hibernation Module Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -2725,21 +2725,21 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCUART_S7      0x00000080  // UART Module 7 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCUART_S6      0x00000040  // UART Module 6 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCUART_S5      0x00000020  // UART Module 5 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCUART_S4      0x00000010  // UART Module 4 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCUART_S3      0x00000008  // UART Module 3 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCUART_S2      0x00000004  // UART Module 2 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCUART_S1      0x00000002  // UART Module 1 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCUART_S0      0x00000001  // UART Module 0 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2747,13 +2747,13 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCSSI_S3       0x00000008  // SSI Module 3 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCSSI_S2       0x00000004  // SSI Module 2 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCSSI_S1       0x00000002  // SSI Module 1 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCSSI_S0       0x00000001  // SSI Module 0 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2761,25 +2761,25 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCI2C_S9       0x00000200  // I2C Module 9 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCI2C_S8       0x00000100  // I2C Module 8 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCI2C_S7       0x00000080  // I2C Module 7 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCI2C_S6       0x00000040  // I2C Module 6 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCI2C_S5       0x00000020  // I2C Module 5 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCI2C_S4       0x00000010  // I2C Module 4 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCI2C_S3       0x00000008  // I2C Module 3 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCI2C_S2       0x00000004  // I2C Module 2 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCI2C_S1       0x00000002  // I2C Module 1 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCI2C_S0       0x00000001  // I2C Module 0 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2787,7 +2787,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCUSB_S0       0x00000001  // USB Module Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2796,7 +2796,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCEPHY_S0      0x00000001  // PHY Module Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2804,9 +2804,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCCAN_S1       0x00000002  // CAN Module 1 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCCAN_S0       0x00000001  // CAN Module 0 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2814,9 +2814,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCADC_S1       0x00000002  // ADC Module 1 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCADC_S0       0x00000001  // ADC Module 0 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2825,7 +2825,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCACMP_S0      0x00000001  // Analog Comparator Module 0 Sleep
-                                            // Mode Clock Gating Control
+// Mode Clock Gating Control
 
 //*****************************************************************************
 //
@@ -2833,9 +2833,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCPWM_S1       0x00000002  // PWM Module 1 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCPWM_S0       0x00000001  // PWM Module 0 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2843,9 +2843,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCQEI_S1       0x00000002  // QEI Module 1 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 #define SYSCTL_SCGCQEI_S0       0x00000001  // QEI Module 0 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2854,7 +2854,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCEEPROM_S0    0x00000001  // EEPROM Module Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2863,23 +2863,23 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCWTIMER_S5    0x00000020  // 32/64-Bit Wide General-Purpose
-                                            // Timer 5 Sleep Mode Clock Gating
-                                            // Control
+// Timer 5 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCWTIMER_S4    0x00000010  // 32/64-Bit Wide General-Purpose
-                                            // Timer 4 Sleep Mode Clock Gating
-                                            // Control
+// Timer 4 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCWTIMER_S3    0x00000008  // 32/64-Bit Wide General-Purpose
-                                            // Timer 3 Sleep Mode Clock Gating
-                                            // Control
+// Timer 3 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCWTIMER_S2    0x00000004  // 32/64-Bit Wide General-Purpose
-                                            // Timer 2 Sleep Mode Clock Gating
-                                            // Control
+// Timer 2 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCWTIMER_S1    0x00000002  // 32/64-Bit Wide General-Purpose
-                                            // Timer 1 Sleep Mode Clock Gating
-                                            // Control
+// Timer 1 Sleep Mode Clock Gating
+// Control
 #define SYSCTL_SCGCWTIMER_S0    0x00000001  // 32/64-Bit Wide General-Purpose
-                                            // Timer 0 Sleep Mode Clock Gating
-                                            // Control
+// Timer 0 Sleep Mode Clock Gating
+// Control
 
 //*****************************************************************************
 //
@@ -2887,7 +2887,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCCCM_S0       0x00000001  // CRC and Cryptographic Modules
-                                            // Sleep Mode Clock Gating Control
+// Sleep Mode Clock Gating Control
 
 //*****************************************************************************
 //
@@ -2895,7 +2895,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCLCD_S0       0x00000001  // LCD Controller Module 0 Sleep
-                                            // Mode Clock Gating Control
+// Mode Clock Gating Control
 
 //*****************************************************************************
 //
@@ -2904,7 +2904,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCOWIRE_S0     0x00000001  // 1-Wire Module 0 Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -2913,7 +2913,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_SCGCEMAC_S0      0x00000001  // Ethernet MAC Module 0 Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -2921,9 +2921,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCWD_D1        0x00000002  // Watchdog Timer 1 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCWD_D0        0x00000001  // Watchdog Timer 0 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -2932,29 +2932,29 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCTIMER_D7     0x00000080  // 16/32-Bit General-Purpose Timer
-                                            // 7 Deep-Sleep Mode Clock Gating
-                                            // Control
+// 7 Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCTIMER_D6     0x00000040  // 16/32-Bit General-Purpose Timer
-                                            // 6 Deep-Sleep Mode Clock Gating
-                                            // Control
+// 6 Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCTIMER_D5     0x00000020  // 16/32-Bit General-Purpose Timer
-                                            // 5 Deep-Sleep Mode Clock Gating
-                                            // Control
+// 5 Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCTIMER_D4     0x00000010  // 16/32-Bit General-Purpose Timer
-                                            // 4 Deep-Sleep Mode Clock Gating
-                                            // Control
+// 4 Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCTIMER_D3     0x00000008  // 16/32-Bit General-Purpose Timer
-                                            // 3 Deep-Sleep Mode Clock Gating
-                                            // Control
+// 3 Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCTIMER_D2     0x00000004  // 16/32-Bit General-Purpose Timer
-                                            // 2 Deep-Sleep Mode Clock Gating
-                                            // Control
+// 2 Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCTIMER_D1     0x00000002  // 16/32-Bit General-Purpose Timer
-                                            // 1 Deep-Sleep Mode Clock Gating
-                                            // Control
+// 1 Deep-Sleep Mode Clock Gating
+// Control
 #define SYSCTL_DCGCTIMER_D0     0x00000001  // 16/32-Bit General-Purpose Timer
-                                            // 0 Deep-Sleep Mode Clock Gating
-                                            // Control
+// 0 Deep-Sleep Mode Clock Gating
+// Control
 
 //*****************************************************************************
 //
@@ -2963,41 +2963,41 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCGPIO_D17     0x00020000  // GPIO Port T Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D16     0x00010000  // GPIO Port S Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D15     0x00008000  // GPIO Port R Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D14     0x00004000  // GPIO Port Q Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D13     0x00002000  // GPIO Port P Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D12     0x00001000  // GPIO Port N Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D11     0x00000800  // GPIO Port M Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D10     0x00000400  // GPIO Port L Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D9      0x00000200  // GPIO Port K Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D8      0x00000100  // GPIO Port J Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D7      0x00000080  // GPIO Port H Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D6      0x00000040  // GPIO Port G Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D5      0x00000020  // GPIO Port F Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D4      0x00000010  // GPIO Port E Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D3      0x00000008  // GPIO Port D Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D2      0x00000004  // GPIO Port C Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D1      0x00000002  // GPIO Port B Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCGPIO_D0      0x00000001  // GPIO Port A Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -3005,7 +3005,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCDMA_D0       0x00000001  // uDMA Module Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -3013,7 +3013,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCEPI_D0       0x00000001  // EPI Module Deep-Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -3021,7 +3021,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCHIB_D0       0x00000001  // Hibernation Module Deep-Sleep
-                                            // Mode Clock Gating Control
+// Mode Clock Gating Control
 
 //*****************************************************************************
 //
@@ -3030,21 +3030,21 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCUART_D7      0x00000080  // UART Module 7 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCUART_D6      0x00000040  // UART Module 6 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCUART_D5      0x00000020  // UART Module 5 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCUART_D4      0x00000010  // UART Module 4 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCUART_D3      0x00000008  // UART Module 3 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCUART_D2      0x00000004  // UART Module 2 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCUART_D1      0x00000002  // UART Module 1 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCUART_D0      0x00000001  // UART Module 0 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -3052,13 +3052,13 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCSSI_D3       0x00000008  // SSI Module 3 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCSSI_D2       0x00000004  // SSI Module 2 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCSSI_D1       0x00000002  // SSI Module 1 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCSSI_D0       0x00000001  // SSI Module 0 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -3066,25 +3066,25 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCI2C_D9       0x00000200  // I2C Module 9 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCI2C_D8       0x00000100  // I2C Module 8 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCI2C_D7       0x00000080  // I2C Module 7 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCI2C_D6       0x00000040  // I2C Module 6 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCI2C_D5       0x00000020  // I2C Module 5 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCI2C_D4       0x00000010  // I2C Module 4 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCI2C_D3       0x00000008  // I2C Module 3 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCI2C_D2       0x00000004  // I2C Module 2 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCI2C_D1       0x00000002  // I2C Module 1 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCI2C_D0       0x00000001  // I2C Module 0 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -3092,7 +3092,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCUSB_D0       0x00000001  // USB Module Deep-Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -3101,7 +3101,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCEPHY_D0      0x00000001  // PHY Module Deep-Sleep Mode Clock
-                                            // Gating Control
+// Gating Control
 
 //*****************************************************************************
 //
@@ -3109,9 +3109,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCCAN_D1       0x00000002  // CAN Module 1 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCCAN_D0       0x00000001  // CAN Module 0 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -3119,9 +3119,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCADC_D1       0x00000002  // ADC Module 1 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCADC_D0       0x00000001  // ADC Module 0 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -3130,8 +3130,8 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCACMP_D0      0x00000001  // Analog Comparator Module 0
-                                            // Deep-Sleep Mode Clock Gating
-                                            // Control
+// Deep-Sleep Mode Clock Gating
+// Control
 
 //*****************************************************************************
 //
@@ -3139,9 +3139,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCPWM_D1       0x00000002  // PWM Module 1 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCPWM_D0       0x00000001  // PWM Module 0 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -3149,9 +3149,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCQEI_D1       0x00000002  // QEI Module 1 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 #define SYSCTL_DCGCQEI_D0       0x00000001  // QEI Module 0 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -3160,7 +3160,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCEEPROM_D0    0x00000001  // EEPROM Module Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -3169,23 +3169,23 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCWTIMER_D5    0x00000020  // 32/64-Bit Wide General-Purpose
-                                            // Timer 5 Deep-Sleep Mode Clock
-                                            // Gating Control
+// Timer 5 Deep-Sleep Mode Clock
+// Gating Control
 #define SYSCTL_DCGCWTIMER_D4    0x00000010  // 32/64-Bit Wide General-Purpose
-                                            // Timer 4 Deep-Sleep Mode Clock
-                                            // Gating Control
+// Timer 4 Deep-Sleep Mode Clock
+// Gating Control
 #define SYSCTL_DCGCWTIMER_D3    0x00000008  // 32/64-Bit Wide General-Purpose
-                                            // Timer 3 Deep-Sleep Mode Clock
-                                            // Gating Control
+// Timer 3 Deep-Sleep Mode Clock
+// Gating Control
 #define SYSCTL_DCGCWTIMER_D2    0x00000004  // 32/64-Bit Wide General-Purpose
-                                            // Timer 2 Deep-Sleep Mode Clock
-                                            // Gating Control
+// Timer 2 Deep-Sleep Mode Clock
+// Gating Control
 #define SYSCTL_DCGCWTIMER_D1    0x00000002  // 32/64-Bit Wide General-Purpose
-                                            // Timer 1 Deep-Sleep Mode Clock
-                                            // Gating Control
+// Timer 1 Deep-Sleep Mode Clock
+// Gating Control
 #define SYSCTL_DCGCWTIMER_D0    0x00000001  // 32/64-Bit Wide General-Purpose
-                                            // Timer 0 Deep-Sleep Mode Clock
-                                            // Gating Control
+// Timer 0 Deep-Sleep Mode Clock
+// Gating Control
 
 //*****************************************************************************
 //
@@ -3193,8 +3193,8 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCCCM_D0       0x00000001  // CRC and Cryptographic Modules
-                                            // Deep-Sleep Mode Clock Gating
-                                            // Control
+// Deep-Sleep Mode Clock Gating
+// Control
 
 //*****************************************************************************
 //
@@ -3202,8 +3202,8 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCLCD_D0       0x00000001  // LCD Controller Module 0
-                                            // Deep-Sleep Mode Clock Gating
-                                            // Control
+// Deep-Sleep Mode Clock Gating
+// Control
 
 //*****************************************************************************
 //
@@ -3212,7 +3212,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCOWIRE_D0     0x00000001  // 1-Wire Module 0 Deep-Sleep Mode
-                                            // Clock Gating Control
+// Clock Gating Control
 
 //*****************************************************************************
 //
@@ -3221,7 +3221,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_DCGCEMAC_D0      0x00000001  // Ethernet MAC Module 0 Deep-Sleep
-                                            // Mode Clock Gating Control
+// Mode Clock Gating Control
 
 //*****************************************************************************
 //
@@ -3237,21 +3237,21 @@
 //
 //*****************************************************************************
 #define SYSCTL_PCTIMER_P7       0x00000080  // General-Purpose Timer 7 Power
-                                            // Control
+// Control
 #define SYSCTL_PCTIMER_P6       0x00000040  // General-Purpose Timer 6 Power
-                                            // Control
+// Control
 #define SYSCTL_PCTIMER_P5       0x00000020  // General-Purpose Timer 5 Power
-                                            // Control
+// Control
 #define SYSCTL_PCTIMER_P4       0x00000010  // General-Purpose Timer 4 Power
-                                            // Control
+// Control
 #define SYSCTL_PCTIMER_P3       0x00000008  // General-Purpose Timer 3 Power
-                                            // Control
+// Control
 #define SYSCTL_PCTIMER_P2       0x00000004  // General-Purpose Timer 2 Power
-                                            // Control
+// Control
 #define SYSCTL_PCTIMER_P1       0x00000002  // General-Purpose Timer 1 Power
-                                            // Control
+// Control
 #define SYSCTL_PCTIMER_P0       0x00000001  // General-Purpose Timer 0 Power
-                                            // Control
+// Control
 
 //*****************************************************************************
 //
@@ -3351,7 +3351,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_PCEPHY_P0        0x00000001  // Ethernet PHY Module Power
-                                            // Control
+// Control
 
 //*****************************************************************************
 //
@@ -3375,7 +3375,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_PCACMP_P0        0x00000001  // Analog Comparator Module 0 Power
-                                            // Control
+// Control
 
 //*****************************************************************************
 //
@@ -3405,7 +3405,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_PCCCM_P0         0x00000001  // CRC and Cryptographic Modules
-                                            // Power Control
+// Power Control
 
 //*****************************************************************************
 //
@@ -3413,7 +3413,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_PCLCD_P0         0x00000001  // LCD Controller Module 0 Power
-                                            // Control
+// Control
 
 //*****************************************************************************
 //
@@ -3428,7 +3428,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_PCEMAC_P0        0x00000001  // Ethernet MAC Module 0 Power
-                                            // Control
+// Control
 
 //*****************************************************************************
 //
@@ -3436,9 +3436,9 @@
 //
 //*****************************************************************************
 #define SYSCTL_PRWD_R1          0x00000002  // Watchdog Timer 1 Peripheral
-                                            // Ready
+// Ready
 #define SYSCTL_PRWD_R0          0x00000001  // Watchdog Timer 0 Peripheral
-                                            // Ready
+// Ready
 
 //*****************************************************************************
 //
@@ -3446,21 +3446,21 @@
 //
 //*****************************************************************************
 #define SYSCTL_PRTIMER_R7       0x00000080  // 16/32-Bit General-Purpose Timer
-                                            // 7 Peripheral Ready
+// 7 Peripheral Ready
 #define SYSCTL_PRTIMER_R6       0x00000040  // 16/32-Bit General-Purpose Timer
-                                            // 6 Peripheral Ready
+// 6 Peripheral Ready
 #define SYSCTL_PRTIMER_R5       0x00000020  // 16/32-Bit General-Purpose Timer
-                                            // 5 Peripheral Ready
+// 5 Peripheral Ready
 #define SYSCTL_PRTIMER_R4       0x00000010  // 16/32-Bit General-Purpose Timer
-                                            // 4 Peripheral Ready
+// 4 Peripheral Ready
 #define SYSCTL_PRTIMER_R3       0x00000008  // 16/32-Bit General-Purpose Timer
-                                            // 3 Peripheral Ready
+// 3 Peripheral Ready
 #define SYSCTL_PRTIMER_R2       0x00000004  // 16/32-Bit General-Purpose Timer
-                                            // 2 Peripheral Ready
+// 2 Peripheral Ready
 #define SYSCTL_PRTIMER_R1       0x00000002  // 16/32-Bit General-Purpose Timer
-                                            // 1 Peripheral Ready
+// 1 Peripheral Ready
 #define SYSCTL_PRTIMER_R0       0x00000001  // 16/32-Bit General-Purpose Timer
-                                            // 0 Peripheral Ready
+// 0 Peripheral Ready
 
 //*****************************************************************************
 //
@@ -3506,7 +3506,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_PRHIB_R0         0x00000001  // Hibernation Module Peripheral
-                                            // Ready
+// Ready
 
 //*****************************************************************************
 //
@@ -3561,7 +3561,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_PREPHY_R0        0x00000001  // Ethernet PHY Module Peripheral
-                                            // Ready
+// Ready
 
 //*****************************************************************************
 //
@@ -3585,7 +3585,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_PRACMP_R0        0x00000001  // Analog Comparator Module 0
-                                            // Peripheral Ready
+// Peripheral Ready
 
 //*****************************************************************************
 //
@@ -3618,17 +3618,17 @@
 //
 //*****************************************************************************
 #define SYSCTL_PRWTIMER_R5      0x00000020  // 32/64-Bit Wide General-Purpose
-                                            // Timer 5 Peripheral Ready
+// Timer 5 Peripheral Ready
 #define SYSCTL_PRWTIMER_R4      0x00000010  // 32/64-Bit Wide General-Purpose
-                                            // Timer 4 Peripheral Ready
+// Timer 4 Peripheral Ready
 #define SYSCTL_PRWTIMER_R3      0x00000008  // 32/64-Bit Wide General-Purpose
-                                            // Timer 3 Peripheral Ready
+// Timer 3 Peripheral Ready
 #define SYSCTL_PRWTIMER_R2      0x00000004  // 32/64-Bit Wide General-Purpose
-                                            // Timer 2 Peripheral Ready
+// Timer 2 Peripheral Ready
 #define SYSCTL_PRWTIMER_R1      0x00000002  // 32/64-Bit Wide General-Purpose
-                                            // Timer 1 Peripheral Ready
+// Timer 1 Peripheral Ready
 #define SYSCTL_PRWTIMER_R0      0x00000001  // 32/64-Bit Wide General-Purpose
-                                            // Timer 0 Peripheral Ready
+// Timer 0 Peripheral Ready
 
 //*****************************************************************************
 //
@@ -3636,7 +3636,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_PRCCM_R0         0x00000001  // CRC and Cryptographic Modules
-                                            // Peripheral Ready
+// Peripheral Ready
 
 //*****************************************************************************
 //
@@ -3644,7 +3644,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_PRLCD_R0         0x00000001  // LCD Controller Module 0
-                                            // Peripheral Ready
+// Peripheral Ready
 
 //*****************************************************************************
 //
@@ -3659,7 +3659,7 @@
 //
 //*****************************************************************************
 #define SYSCTL_PREMAC_R0        0x00000001  // Ethernet MAC Module 0 Peripheral
-                                            // Ready
+// Ready
 
 //*****************************************************************************
 //
@@ -3722,10 +3722,10 @@
 //*****************************************************************************
 #define SYSCTL_DID0_CLASS_BLIZZARD                                            \
                                 0x00050000  // Tiva(TM) C Series TM4C123-class
-                                            // microcontrollers
+// microcontrollers
 #define SYSCTL_DID0_CLASS_SNOWFLAKE                                           \
                                 0x000A0000  // Tiva(TM) C Series TM4C129-class
-                                            // microcontrollers
+// microcontrollers
 
 //*****************************************************************************
 //

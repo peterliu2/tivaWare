@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2014-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -83,19 +83,15 @@ NPI_MsgRxCallback(uint32_t ui32Command0)
     //
     // Check the command type
     //
-    if((ui32Command0 & RPC_CMD_TYPE_MASK) == RPC_CMD_AREQ)
-    {
+    if((ui32Command0 & RPC_CMD_TYPE_MASK) == RPC_CMD_AREQ) {
         //
         // An asynchronous message was received so call the upper RTI layer
         // callback function if there is one.
         //
-        if(g_pfnRTIRxCallback)
-        {
+        if(g_pfnRTIRxCallback) {
             g_pfnRTIRxCallback(0);
         }
-    }
-    else
-    {
+    } else {
         //
         // A synchronous message was received set the flag to indicate this.
         //
@@ -132,8 +128,7 @@ NPI_ErrCallback(uint32_t ui32Error)
     // Increment the error index variable. and wrap it back to zero as needed.
     //
     ui32Index++;
-    if(ui32Index >= 128)
-    {
+    if(ui32Index >= 128) {
         ui32Index = 0;
     }
 
@@ -212,8 +207,7 @@ NPI_MsgWrap(tRemoTIMsg* psMsg)
     // XOR each byte of the data payload of the message into the last byte of
     // the payload which is the frame check.
     //
-    for(ui32Index = 0; ui32Index < psMsg->ui8Length; ui32Index++)
-    {
+    for(ui32Index = 0; ui32Index < psMsg->ui8Length; ui32Index++) {
         //
         // Sequentially XOR each payload byte into the last byte of the
         // message.
@@ -323,25 +317,23 @@ NPI_SendSynchData(tRemoTIMsg *psMsg)
     // Send the msg and wait for a response to come back
     //
     RemoTIUARTPutMsg(pui8Buf, psMsg->ui8Length + 5);
-    do
-    {
+    do {
         //
         // Delay about 10 milliseconds waiting for the response.
         //
         SysCtlDelay(g_ui32SysClock / (100 * 3));
         ui32Ticks++;
 
-    //
-    // Continue waiting for the response until it comes in or we hit the
-    // timeout limit.
-    //
-    }while((!g_vbSyncResponse) && (ui32Ticks < NPI_SYNC_MSG_TIMEOUT));
+        //
+        // Continue waiting for the response until it comes in or we hit the
+        // timeout limit.
+        //
+    } while((!g_vbSyncResponse) && (ui32Ticks < NPI_SYNC_MSG_TIMEOUT));
 
     //
     //Return failure if we had a timeout
     //
-    if((ui32Ticks >= NPI_SYNC_MSG_TIMEOUT) || (!g_vbSyncResponse))
-    {
+    if((ui32Ticks >= NPI_SYNC_MSG_TIMEOUT) || (!g_vbSyncResponse)) {
         return(false);
     }
 

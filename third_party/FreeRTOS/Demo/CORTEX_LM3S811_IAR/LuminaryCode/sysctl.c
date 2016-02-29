@@ -50,8 +50,7 @@
 //
 //*****************************************************************************
 #if defined(GROUP_puldcregs) || defined(BUILD_ALL)
-const unsigned long g_pulDCRegs[] =
-{
+const unsigned long g_pulDCRegs[] = {
     SYSCTL_DC1,
     SYSCTL_DC2,
     SYSCTL_DC4,
@@ -69,8 +68,7 @@ extern const unsigned long g_pulDCRegs[];
 //
 //*****************************************************************************
 #if defined(GROUP_pulsrcrregs) || defined(BUILD_ALL)
-const unsigned long g_pulSRCRRegs[] =
-{
+const unsigned long g_pulSRCRRegs[] = {
     SYSCTL_SRCR0,
     SYSCTL_SRCR1,
     SYSCTL_SRCR2
@@ -87,8 +85,7 @@ extern const unsigned long g_pulSRCRRegs[];
 //
 //*****************************************************************************
 #if defined(GROUP_pulrcgcregs) || defined(BUILD_ALL)
-const unsigned long g_pulRCGCRegs[] =
-{
+const unsigned long g_pulRCGCRegs[] = {
     SYSCTL_RCGC0,
     SYSCTL_RCGC1,
     SYSCTL_RCGC2
@@ -105,8 +102,7 @@ extern const unsigned long g_pulRCGCRegs[];
 //
 //*****************************************************************************
 #if defined(GROUP_pulscgcregs) || defined(BUILD_ALL)
-const unsigned long g_pulSCGCRegs[] =
-{
+const unsigned long g_pulSCGCRegs[] = {
     SYSCTL_SCGC0,
     SYSCTL_SCGC1,
     SYSCTL_SCGC2
@@ -123,8 +119,7 @@ extern const unsigned long g_pulSCGCRegs[];
 //
 //*****************************************************************************
 #if defined(GROUP_pulDCGCregs) || defined(BUILD_ALL)
-const unsigned long g_pulDCGCRegs[] =
-{
+const unsigned long g_pulDCGCRegs[] = {
     SYSCTL_DCGC0,
     SYSCTL_DCGC1,
     SYSCTL_DCGC2
@@ -139,8 +134,7 @@ extern const unsigned long g_pulDCGCRegs[];
 //
 //*****************************************************************************
 #if defined(GROUP_pulxtals) || defined(BUILD_ALL)
-const unsigned long g_pulXtals[] =
-{
+const unsigned long g_pulXtals[] = {
     3579545,
     3686400,
     4000000,
@@ -266,12 +260,9 @@ SysCtlPinPresent(unsigned long ulPin)
     //
     // Determine if this pin is present.
     //
-    if(HWREG(SYSCTL_DC3) & ulPin)
-    {
+    if(HWREG(SYSCTL_DC3) & ulPin) {
         return(true);
-    }
-    else
-    {
+    } else {
         return(false);
     }
 }
@@ -334,12 +325,9 @@ SysCtlPeripheralPresent(unsigned long ulPeripheral)
     //
     // Read the correct DC register and determine if this peripheral exists.
     //
-    if(HWREG(g_pulDCRegs[ulPeripheral >> 28]) & ulPeripheral & 0x0fffffff)
-    {
+    if(HWREG(g_pulDCRegs[ulPeripheral >> 28]) & ulPeripheral & 0x0fffffff) {
         return(true);
-    }
-    else
-    {
+    } else {
         return(false);
     }
 }
@@ -401,12 +389,11 @@ SysCtlPeripheralReset(unsigned long ulPeripheral)
     // Put the peripheral into the reset state.
     //
     HWREG(g_pulSRCRRegs[ulPeripheral >> 28]) |= ulPeripheral & 0x0fffffff;
-    
+
     //
     // Delay for a little bit.
     //
-    for(ulDelay = 0; ulDelay < 16; ulDelay++)
-    {
+    for(ulDelay = 0; ulDelay < 16; ulDelay++) {
     }
 
     //
@@ -811,12 +798,9 @@ SysCtlPeripheralClockGating(tBoolean bEnable)
     //
     // Enable peripheral clock gating as requested.
     //
-    if(bEnable)
-    {
+    if(bEnable) {
         HWREG(SYSCTL_RCC) |= SYSCTL_RCC_ACG;
-    }
-    else
-    {
+    } else {
         HWREG(SYSCTL_RCC) &= ~(SYSCTL_RCC_ACG);
     }
 }
@@ -998,12 +982,9 @@ SysCtlIntStatus(tBoolean bMasked)
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return(HWREG(SYSCTL_MISC));
-    }
-    else
-    {
+    } else {
         return(HWREG(SYSCTL_RIS));
     }
 }
@@ -1133,8 +1114,7 @@ SysCtlReset(void)
     // The device should have reset, so this should never be reached.  Just in
     // case, loop forever.
     //
-    while(1)
-    {
+    while(1) {
     }
 }
 #endif
@@ -1404,8 +1384,7 @@ SysCtlClockSet(unsigned long ulConfig)
     // Wait for a bit so that new crystal value and oscillator source can take
     // effect.  One of the oscillators may need to be started as well.
     //
-    for(ulDelay = 0; ulDelay < 16; ulDelay++)
-    {
+    for(ulDelay = 0; ulDelay < 16; ulDelay++) {
     }
 
     //
@@ -1429,15 +1408,12 @@ SysCtlClockSet(unsigned long ulConfig)
     //
     // See if the PLL output is being used to clock the system.
     //
-    if(!(ulConfig & SYSCTL_RCC_BYPASS))
-    {
+    if(!(ulConfig & SYSCTL_RCC_BYPASS)) {
         //
         // Wait until the PLL has locked.
         //
-        for(ulDelay = 32768; ulDelay > 0; ulDelay--)
-        {
-            if(HWREG(SYSCTL_RIS) & SYSCTL_INT_PLL_LOCK)
-            {
+        for(ulDelay = 32768; ulDelay > 0; ulDelay--) {
+            if(HWREG(SYSCTL_RIS) & SYSCTL_INT_PLL_LOCK) {
                 break;
             }
         }
@@ -1456,8 +1432,7 @@ SysCtlClockSet(unsigned long ulConfig)
     //
     // Delay for a little bit so that the system divider takes effect.
     //
-    for(ulDelay = 0; ulDelay < 16; ulDelay++)
-    {
+    for(ulDelay = 0; ulDelay < 16; ulDelay++) {
     }
 }
 #endif
@@ -1493,14 +1468,12 @@ SysCtlClockGet(void)
     //
     // Get the base clock rate.
     //
-    switch(ulRCC & SYSCTL_RCC_OSCSRC_MASK)
-    {
+    switch(ulRCC & SYSCTL_RCC_OSCSRC_MASK) {
         //
         // The main oscillator is the clock source.  Determine its rate from
         // the crystal setting field.
         //
-        case SYSCTL_RCC_OSCSRC_MAIN:
-        {
+        case SYSCTL_RCC_OSCSRC_MAIN: {
             ulClk = g_pulXtals[((ulRCC & SYSCTL_RCC_XTAL_MASK) >>
                                 SYSCTL_RCC_XTAL_SHIFT) -
                                (SYSCTL_RCC_XTAL_3_57MHZ >>
@@ -1512,8 +1485,7 @@ SysCtlClockGet(void)
         // The internal oscillator is the source clock.  This is not an
         // accurate clock (it is +/- 50%); what is used is the nominal.
         //
-        case SYSCTL_RCC_OSCSRC_INT:
-        {
+        case SYSCTL_RCC_OSCSRC_INT: {
             ulClk = 15000000;
             break;
         }
@@ -1523,8 +1495,7 @@ SysCtlClockGet(void)
         // is not an accurate clock (it is +/- 50%); what is used is the
         // nominal.
         //
-        case SYSCTL_RCC_OSCSRC_INT4:
-        {
+        case SYSCTL_RCC_OSCSRC_INT4: {
             ulClk = 15000000 / 4;
             break;
         }
@@ -1533,8 +1504,7 @@ SysCtlClockGet(void)
         // An unknown setting, so return a zero clock (i.e. an unknown clock
         // rate).
         //
-        default:
-        {
+        default: {
             return(0);
         }
     }
@@ -1542,8 +1512,7 @@ SysCtlClockGet(void)
     //
     // See if the PLL is being used.
     //
-    if(!(ulRCC & SYSCTL_RCC_BYPASS))
-    {
+    if(!(ulRCC & SYSCTL_RCC_BYPASS)) {
         //
         // Get the PLL configuration.
         //
@@ -1560,16 +1529,14 @@ SysCtlClockGet(void)
         //
         // See if the optional output divide by 2 is being used.
         //
-        if(ulPLL & SYSCTL_PLLCFG_OD_2)
-        {
+        if(ulPLL & SYSCTL_PLLCFG_OD_2) {
             ulClk /= 2;
         }
 
         //
         // See if the optional output divide by 4 is being used.
         //
-        if(ulPLL & SYSCTL_PLLCFG_OD_4)
-        {
+        if(ulPLL & SYSCTL_PLLCFG_OD_4) {
             ulClk /= 4;
         }
     }
@@ -1577,8 +1544,7 @@ SysCtlClockGet(void)
     //
     // See if the system divider is being used.
     //
-    if(ulRCC & SYSCTL_RCC_USE_SYSDIV)
-    {
+    if(ulRCC & SYSCTL_RCC_USE_SYSDIV) {
         //
         // Adjust the clock rate by the system clock divider.
         //
@@ -1770,12 +1736,9 @@ SysCtlIOSCVerificationSet(tBoolean bEnable)
     // Enable or disable the internal oscillator verification timer as
     // requested.
     //
-    if(bEnable)
-    {
+    if(bEnable) {
         HWREG(SYSCTL_RCC) |= SYSCTL_RCC_IOSCVER;
-    }
-    else
-    {
+    } else {
         HWREG(SYSCTL_RCC) &= ~(SYSCTL_RCC_IOSCVER);
     }
 }
@@ -1807,12 +1770,9 @@ SysCtlMOSCVerificationSet(tBoolean bEnable)
     //
     // Enable or disable the main oscillator verification timer as requested.
     //
-    if(bEnable)
-    {
+    if(bEnable) {
         HWREG(SYSCTL_RCC) |= SYSCTL_RCC_MOSCVER;
-    }
-    else
-    {
+    } else {
         HWREG(SYSCTL_RCC) &= ~(SYSCTL_RCC_MOSCVER);
     }
 }
@@ -1843,12 +1803,9 @@ SysCtlPLLVerificationSet(tBoolean bEnable)
     //
     // Enable or disable the PLL verification timer as requested.
     //
-    if(bEnable)
-    {
+    if(bEnable) {
         HWREG(SYSCTL_RCC) |= SYSCTL_RCC_PLLVER;
-    }
-    else
-    {
+    } else {
         HWREG(SYSCTL_RCC) &= ~(SYSCTL_RCC_PLLVER);
     }
 }

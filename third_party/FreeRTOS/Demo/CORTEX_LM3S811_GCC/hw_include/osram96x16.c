@@ -57,8 +57,7 @@
 // the top row in the LSB and the bottom row in the MSB.
 //
 //*****************************************************************************
-static const unsigned char g_pucFont[95][5] =
-{
+static const unsigned char g_pucFont[95][5] = {
     { 0x00, 0x00, 0x00, 0x00, 0x00 }, // " "
     { 0x00, 0x00, 0x4f, 0x00, 0x00 }, // !
     { 0x00, 0x07, 0x00, 0x07, 0x00 }, // "
@@ -163,8 +162,7 @@ static const unsigned char g_pucFont[95][5] =
 // bytes in the I2C transfer, followed by that many bytes of command data.
 //
 //*****************************************************************************
-static const unsigned char g_pucOSRAMInit[] =
-{
+static const unsigned char g_pucOSRAMInit[] = {
     //
     // Turn off the panel
     //
@@ -372,8 +370,7 @@ OSRAMWriteByte(unsigned char ucChar)
     //
     // Wait until the current byte has been transferred.
     //
-    while(I2CMasterIntStatus(I2C_MASTER_BASE, false) == 0)
-    {
+    while(I2CMasterIntStatus(I2C_MASTER_BASE, false) == 0) {
     }
 
     //
@@ -414,13 +411,11 @@ OSRAMWriteArray(const unsigned char *pucBuffer, unsigned long ulCount)
     //
     // Loop while there are more bytes left to be transferred.
     //
-    while(ulCount != 0)
-    {
+    while(ulCount != 0) {
         //
         // Wait until the current byte has been transferred.
         //
-        while(I2CMasterIntStatus(I2C_MASTER_BASE, false) == 0)
-        {
+        while(I2CMasterIntStatus(I2C_MASTER_BASE, false) == 0) {
         }
 
         //
@@ -464,8 +459,7 @@ OSRAMWriteFinal(unsigned char ucChar)
     //
     // Wait until the current byte has been transferred.
     //
-    while(I2CMasterIntStatus(I2C_MASTER_BASE, false) == 0)
-    {
+    while(I2CMasterIntStatus(I2C_MASTER_BASE, false) == 0) {
     }
 
     //
@@ -486,8 +480,7 @@ OSRAMWriteFinal(unsigned char ucChar)
     //
     // Wait until the final byte has been transferred.
     //
-    while(I2CMasterIntStatus(I2C_MASTER_BASE, false) == 0)
-    {
+    while(I2CMasterIntStatus(I2C_MASTER_BASE, false) == 0) {
     }
 
     //
@@ -513,12 +506,10 @@ OSRAMWriteFinal(unsigned char ucChar)
 void
 OSRAMClear(void)
 {
-    static const unsigned char pucRow1[] =
-    {
+    static const unsigned char pucRow1[] = {
         0xb0, 0x80, 0x04, 0x80, 0x12, 0x40
     };
-    static const unsigned char pucRow2[] =
-    {
+    static const unsigned char pucRow2[] = {
         0xb1, 0x80, 0x04, 0x80, 0x12, 0x40
     };
     unsigned long ulIdx;
@@ -532,8 +523,7 @@ OSRAMClear(void)
     //
     // Fill this row with zeros.
     //
-    for(ulIdx = 0; ulIdx < 95; ulIdx++)
-    {
+    for(ulIdx = 0; ulIdx < 95; ulIdx++) {
         OSRAMWriteByte(0x00);
     }
     OSRAMWriteFinal(0x00);
@@ -547,8 +537,7 @@ OSRAMClear(void)
     //
     // Fill this row with zeros.
     //
-    for(ulIdx = 0; ulIdx < 95; ulIdx++)
-    {
+    for(ulIdx = 0; ulIdx < 95; ulIdx++) {
         OSRAMWriteByte(0x00);
     }
     OSRAMWriteFinal(0x00);
@@ -606,14 +595,12 @@ OSRAMStringDraw(const char *pcStr, unsigned long ulX, unsigned long ulY)
     //
     // Loop while there are more characters in the string.
     //
-    while(*pcStr != 0)
-    {
+    while(*pcStr != 0) {
         //
         // See if there is enough space on the display for this entire
         // character.
         //
-        if(ulX <= 90)
-        {
+        if(ulX <= 90) {
             //
             // Write the contents of this character to the display.
             //
@@ -624,8 +611,7 @@ OSRAMStringDraw(const char *pcStr, unsigned long ulX, unsigned long ulY)
             // right edge has been reached or because there are no more
             // characters).
             //
-            if((ulX == 90) || (pcStr[1] == 0))
-            {
+            if((ulX == 90) || (pcStr[1] == 0)) {
                 //
                 // Write the final column of the display.
                 //
@@ -641,9 +627,7 @@ OSRAMStringDraw(const char *pcStr, unsigned long ulX, unsigned long ulY)
             // Write the inter-character padding column.
             //
             OSRAMWriteByte(0x00);
-        }
-        else
-        {
+        } else {
             //
             // Write the portion of the character that will fit onto the
             // display.
@@ -754,8 +738,7 @@ OSRAMImageDraw(const unsigned char *pucImage, unsigned long ulX,
     //
     // Loop while there are more rows to display.
     //
-    while(ulHeight--)
-    {
+    while(ulHeight--) {
         //
         // Write the starting address within this row.
         //
@@ -886,8 +869,7 @@ OSRAMInit(tBoolean bFast)
     // sequence doing a single I2C transfer for each command.
     //
     for(ulIdx = 0; ulIdx < sizeof(g_pucOSRAMInit);
-        ulIdx += g_pucOSRAMInit[ulIdx] + 1)
-    {
+            ulIdx += g_pucOSRAMInit[ulIdx] + 1) {
         //
         // Send this command.
         //
@@ -926,8 +908,7 @@ OSRAMDisplayOn(void)
     // sequence doing a single I2C transfer for each command.
     //
     for(ulIdx = 0; ulIdx < sizeof(g_pucOSRAMInit);
-        ulIdx += g_pucOSRAMInit[ulIdx] + 1)
-    {
+            ulIdx += g_pucOSRAMInit[ulIdx] + 1) {
         //
         // Send this command.
         //

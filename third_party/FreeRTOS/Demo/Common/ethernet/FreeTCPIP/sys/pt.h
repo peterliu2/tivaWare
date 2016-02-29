@@ -50,9 +50,8 @@
 
 #include "sys/lc.h"
 
-struct pt
-{
-	lc_t	lc;
+struct pt {
+    lc_t	lc;
 };
 
 #define PT_WAITING	0
@@ -174,12 +173,12 @@ struct pt
  * \hideinitializer
  */
 #define PT_WAIT_WHILE( pt, cond )	PT_WAIT_UNTIL( (pt), !(cond) )
-	/** @} */
+/** @} */
 
-	/**
- * \name Hierarchical protothreads
- * @{
- */
+/**
+* \name Hierarchical protothreads
+* @{
+*/
 
 /**
  * Block and wait until a child protothread completes.
@@ -218,12 +217,12 @@ struct pt
 		PT_WAIT_THREAD( (pt), (thread) ); \
 	} while( 0 )
 
-		/** @} */
+/** @} */
 
-		/**
- * \name Exiting and restarting
- * @{
- */
+/**
+* \name Exiting and restarting
+* @{
+*/
 
 /**
  * Restart the protothread.
@@ -259,12 +258,12 @@ struct pt
 		PT_INIT( pt );	  \
 		return PT_EXITED; \
 	} while( 0 )
-				/** @} */
+/** @} */
 
-				/**
- * \name Calling a protothread
- * @{
- */
+/**
+* \name Calling a protothread
+* @{
+*/
 
 /**
  * Schedule a protothread.
@@ -279,12 +278,12 @@ struct pt
  * \hideinitializer
  */
 #define PT_SCHEDULE( f )	( (f) < PT_EXITED )
-				/** @} */
+/** @} */
 
-				/**
- * \name Yielding from a protothread
- * @{
- */
+/**
+* \name Yielding from a protothread
+* @{
+*/
 
 /**
  * Yield from the current protothread.
@@ -328,8 +327,7 @@ struct pt
 			return PT_YIELDED;				  \
 		}									  \
 	} while( 0 )
-						/** @} */
+/** @} */
 #endif /* __PT_H__ */
 
-						/** @} */
-						
+/** @} */

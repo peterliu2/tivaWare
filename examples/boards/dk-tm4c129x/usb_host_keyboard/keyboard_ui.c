@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -99,18 +99,17 @@ DrawPrompt(void)
 
     g_ppcLines[g_ui32CurrentLine][0] = '>';
 
-    for(i32Idx = 1; i32Idx < MAX_COLUMNS - 1; i32Idx++)
-    {
+    for(i32Idx = 1; i32Idx < MAX_COLUMNS - 1; i32Idx++) {
         g_ppcLines[g_ui32CurrentLine][i32Idx] = ' ';
     }
     g_ppcLines[g_ui32CurrentLine][i32Idx] = 0;
 
     GrStringDraw(&g_sContext, g_ppcLines[g_ui32CurrentLine], MAX_COLUMNS,
-              DISPLAY_TEXT_BORDER_H +
-              (GrFontMaxWidthGet(g_psFontFixed6x8) * g_ui32Column),
-              DISPLAY_BANNER_HEIGHT + DISPLAY_TEXT_BORDER +
-              (g_ui32EntryLine * GrFontHeightGet(g_psFontFixed6x8)),
-              true);
+                 DISPLAY_TEXT_BORDER_H +
+                 (GrFontMaxWidthGet(g_psFontFixed6x8) * g_ui32Column),
+                 DISPLAY_BANNER_HEIGHT + DISPLAY_TEXT_BORDER +
+                 (g_ui32EntryLine * GrFontHeightGet(g_psFontFixed6x8)),
+                 true);
 
     g_ui32Column = 2;
 }
@@ -192,15 +191,12 @@ ScrollText(void)
     //
     // Skip the oldest entry in the circular list.
     //
-    if(g_ui32CurrentLine == (MAX_LINES - 1))
-    {
+    if(g_ui32CurrentLine == (MAX_LINES - 1)) {
         //
         // If at the end of the list wrap to entry 1.
         //
         ui32Start = 1;
-    }
-    else
-    {
+    } else {
         //
         // The oldest is 1 in front of the most recent.
         //
@@ -210,8 +206,7 @@ ScrollText(void)
     //
     // Print lines from the current position down first.
     //
-    for(i32Idx = ui32Start; i32Idx < MAX_LINES; i32Idx++)
-    {
+    for(i32Idx = ui32Start; i32Idx < MAX_LINES; i32Idx++) {
         GrStringDraw(&g_sContext, g_ppcLines[i32Idx],
                      strlen(g_ppcLines[i32Idx]), DISPLAY_TEXT_BORDER_H,
                      DISPLAY_BANNER_HEIGHT + DISPLAY_TEXT_BORDER +
@@ -224,10 +219,8 @@ ScrollText(void)
     // If not the special case of the last line where everything has already
     // printed, print the remaining lines.
     //
-    if(g_ui32CurrentLine != (MAX_LINES - 1))
-    {
-        for(i32Idx = 0; i32Idx <= g_ui32CurrentLine; i32Idx++)
-        {
+    if(g_ui32CurrentLine != (MAX_LINES - 1)) {
+        for(i32Idx = 0; i32Idx <= g_ui32CurrentLine; i32Idx++) {
             GrStringDraw(&g_sContext, g_ppcLines[i32Idx],
                          strlen(g_ppcLines[i32Idx]),
                          DISPLAY_TEXT_BORDER_H,
@@ -270,27 +263,24 @@ UIPrintChar(const char cChar)
     //
     // Allow new lines to cause the column to go back to zero.
     //
-    if(cChar != '\n')
-    {
+    if(cChar != '\n') {
         //
         // Handle when receiving a backspace character.
         //
-        if(cChar != ASCII_BACKSPACE)
-        {
+        if(cChar != ASCII_BACKSPACE) {
             //
             // This is not a backspace so print the character to the screen.
             //
             GrStringDraw(&g_sContext, &cChar, 1,
-                       DISPLAY_TEXT_BORDER_H +
-                       (GrFontMaxWidthGet(g_psFontFixed6x8) * g_ui32Column),
-                       DISPLAY_BANNER_HEIGHT + DISPLAY_TEXT_BORDER +
-                       (g_ui32EntryLine * GrFontHeightGet(g_psFontFixed6x8)),
-                       1);
+                         DISPLAY_TEXT_BORDER_H +
+                         (GrFontMaxWidthGet(g_psFontFixed6x8) * g_ui32Column),
+                         DISPLAY_BANNER_HEIGHT + DISPLAY_TEXT_BORDER +
+                         (g_ui32EntryLine * GrFontHeightGet(g_psFontFixed6x8)),
+                         1);
 
             g_ppcLines[g_ui32CurrentLine][g_ui32Column] = cChar;
 
-            if(g_ui32Column < g_ui32CharsPerLine)
-            {
+            if(g_ui32Column < g_ui32CharsPerLine) {
                 //
                 // No line wrap yet so move one column over.
                 //
@@ -298,20 +288,16 @@ UIPrintChar(const char cChar)
 
                 bNewLine = false;
             }
-        }
-        else
-        {
+        } else {
             //
             // We got a backspace.  If we are at the top left of the screen,
             // return since we don't need to do anything.
             //
-            if(g_ui32Column || g_ui32EntryLine)
-            {
+            if(g_ui32Column || g_ui32EntryLine) {
                 //
                 // Adjust the cursor position to erase the last character.
                 //
-                if(g_ui32Column > 2)
-                {
+                if(g_ui32Column > 2) {
                     g_ui32Column--;
                 }
 
@@ -320,11 +306,11 @@ UIPrintChar(const char cChar)
                 // the cursor again.
                 //
                 GrStringDraw(&g_sContext, " ", 1,
-                          DISPLAY_TEXT_BORDER_H +
-                          (GrFontMaxWidthGet(g_psFontFixed6x8) * g_ui32Column),
-                          DISPLAY_BANNER_HEIGHT + DISPLAY_TEXT_BORDER +
-                          (g_ui32EntryLine * GrFontHeightGet(g_psFontFixed6x8)),
-                          true);
+                             DISPLAY_TEXT_BORDER_H +
+                             (GrFontMaxWidthGet(g_psFontFixed6x8) * g_ui32Column),
+                             DISPLAY_BANNER_HEIGHT + DISPLAY_TEXT_BORDER +
+                             (g_ui32EntryLine * GrFontHeightGet(g_psFontFixed6x8)),
+                             true);
 
                 g_ppcLines[g_ui32CurrentLine][g_ui32Column] = ' ';
             }
@@ -336,16 +322,12 @@ UIPrintChar(const char cChar)
     //
     // .
     //
-    if(bNewLine)
-    {
+    if(bNewLine) {
         g_ui32Column = 0;
 
-        if(g_ui32EntryLine < (MAX_LINES - 1))
-        {
+        if(g_ui32EntryLine < (MAX_LINES - 1)) {
             g_ui32EntryLine++;
-        }
-        else
-        {
+        } else {
             ScrollText();
         }
 
@@ -354,35 +336,30 @@ UIPrintChar(const char cChar)
         //
         // The line has gone past the end so go back to the first line.
         //
-        if(g_ui32CurrentLine >= MAX_LINES)
-        {
+        if(g_ui32CurrentLine >= MAX_LINES) {
             g_ui32CurrentLine = 0;
         }
 
         //
         // Add a prompt to the new line.
         //
-        if(cChar == '\n')
-        {
+        if(cChar == '\n') {
             DrawPrompt();
-        }
-        else
-        {
+        } else {
             //
             // Clear out the current line.
             //
-            for(i32Idx = 0; i32Idx < MAX_COLUMNS - 1; i32Idx++)
-            {
+            for(i32Idx = 0; i32Idx < MAX_COLUMNS - 1; i32Idx++) {
                 g_ppcLines[g_ui32CurrentLine][i32Idx] = ' ';
             }
             g_ppcLines[g_ui32CurrentLine][i32Idx] = 0;
 
             GrStringDraw(&g_sContext, g_ppcLines[g_ui32CurrentLine],
-                     strlen(g_ppcLines[g_ui32CurrentLine]),
-                     DISPLAY_TEXT_BORDER_H,
-                     DISPLAY_BANNER_HEIGHT + DISPLAY_TEXT_BORDER +
-                     (g_ui32EntryLine * GrFontHeightGet(g_psFontFixed6x8)),
-                     1);
+                         strlen(g_ppcLines[g_ui32CurrentLine]),
+                         DISPLAY_TEXT_BORDER_H,
+                         DISPLAY_BANNER_HEIGHT + DISPLAY_TEXT_BORDER +
+                         (g_ui32EntryLine * GrFontHeightGet(g_psFontFixed6x8)),
+                         1);
         }
     }
 }
@@ -400,13 +377,10 @@ UpdateStatusBox(const tRectangle *psRect, const char *pcString, bool bActive)
     //
     // Change the status box to green for active devices.
     //
-    if(bActive)
-    {
+    if(bActive) {
         GrContextForegroundSet(&g_sContext, ClrOrange);
         ui32TextColor = ClrBlack;
-    }
-    else
-    {
+    } else {
         GrContextForegroundSet(&g_sContext, ClrBlack);
         ui32TextColor = ClrWhite;
     }
@@ -435,8 +409,8 @@ UpdateStatusBox(const tRectangle *psRect, const char *pcString, bool bActive)
     // Unknown device is currently connected.
     //
     GrStringDrawCentered(&g_sContext, pcString, -1,
-                   psRect->i16XMin + ((psRect->i16XMax - psRect->i16XMin) / 2),
-                   psRect->i16YMin + (BUTTON_HEIGHT / 2), false);
+                         psRect->i16XMin + ((psRect->i16XMax - psRect->i16XMin) / 2),
+                         psRect->i16YMin + (BUTTON_HEIGHT / 2), false);
 
 }
 
@@ -450,8 +424,7 @@ void
 UIUpdateStatus(void)
 {
     uint8_t ui8DevClass, ui8DevProtocol;
-    static const tRectangle psRect[4] =
-    {
+    static const tRectangle psRect[4] = {
         {
             DISPLAY_TEXT_BORDER_H,       240 - 10 - BUTTON_HEIGHT,
             DISPLAY_TEXT_BORDER_H + 124, 240 - 10
@@ -481,96 +454,69 @@ UIUpdateStatus(void)
     //
     ui8DevProtocol = USB_HID_PROTOCOL_NONE;
 
-    if(g_sStatus.bConnected)
-    {
+    if(g_sStatus.bConnected) {
         ui8DevClass = USBHCDDevClass(g_sStatus.ui32Instance, 0);
         ui8DevProtocol = USBHCDDevProtocol(g_sStatus.ui32Instance, 0);
 
-        if(ui8DevClass == USB_CLASS_HID)
-        {
-            if(ui8DevProtocol == USB_HID_PROTOCOL_MOUSE)
-            {
+        if(ui8DevClass == USB_CLASS_HID) {
+            if(ui8DevProtocol == USB_HID_PROTOCOL_MOUSE) {
                 //
                 // Mouse is currently connected.
                 //
                 UpdateStatusBox(&psRect[0], "Mouse", true);
-            }
-            else if(ui8DevProtocol == USB_HID_PROTOCOL_KEYB)
-            {
+            } else if(ui8DevProtocol == USB_HID_PROTOCOL_KEYB) {
                 //
                 // Keyboard is currently connected.
                 //
                 UpdateStatusBox(&psRect[0], "Keyboard", true);
-            }
-            else
-            {
+            } else {
                 //
                 // Unknown device is currently connected.
                 //
                 UpdateStatusBox(&psRect[0], "Unknown", true);
             }
-        }
-        else if(ui8DevClass == USB_CLASS_MASS_STORAGE)
-        {
+        } else if(ui8DevClass == USB_CLASS_MASS_STORAGE) {
             //
             // MSC device is currently connected.
             //
             UpdateStatusBox(&psRect[0], "Mass Storage", true);
-        }
-        else if(ui8DevClass == USB_CLASS_HUB)
-        {
+        } else if(ui8DevClass == USB_CLASS_HUB) {
             //
             // MSC device is currently connected.
             //
             UpdateStatusBox(&psRect[0], "Hub", true);
-        }
-        else
-        {
+        } else {
             //
             // Unknown device is currently connected.
             //
             UpdateStatusBox(&psRect[0], "Unknown", true);
         }
-    }
-    else
-    {
+    } else {
         //
         // Unknown device is currently connected.
         //
         UpdateStatusBox(&psRect[0], "No Device", false);
     }
 
-    if(ui8DevProtocol == USB_HID_PROTOCOL_KEYB)
-    {
-        if(g_sStatus.ui32Modifiers & HID_KEYB_CAPS_LOCK)
-        {
+    if(ui8DevProtocol == USB_HID_PROTOCOL_KEYB) {
+        if(g_sStatus.ui32Modifiers & HID_KEYB_CAPS_LOCK) {
             UpdateStatusBox(&psRect[1], "CAPS", true);
-        }
-        else
-        {
+        } else {
             UpdateStatusBox(&psRect[1], "caps", false);
         }
 
-        if(g_sStatus.ui32Modifiers & HID_KEYB_SCROLL_LOCK)
-        {
+        if(g_sStatus.ui32Modifiers & HID_KEYB_SCROLL_LOCK) {
             UpdateStatusBox(&psRect[2], "SCROLL", true);
-        }
-        else
-        {
+        } else {
             UpdateStatusBox(&psRect[2], "scroll", false);
         }
 
-        if(g_sStatus.ui32Modifiers & HID_KEYB_NUM_LOCK)
-        {
+        if(g_sStatus.ui32Modifiers & HID_KEYB_NUM_LOCK) {
             UpdateStatusBox(&psRect[3], "NUM", true);
-        }
-        else
-        {
+        } else {
             UpdateStatusBox(&psRect[3], "num", false);
         }
-    }
-    else
-    {
+    } else {
         UpdateStatusBox(&psRect[1], "caps", false);
         UpdateStatusBox(&psRect[2], "scroll", false);
         UpdateStatusBox(&psRect[3], "num", false);

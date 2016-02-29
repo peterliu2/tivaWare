@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -118,12 +118,10 @@ volatile unsigned long g_vui8IntensityFlag;
 // creates a +/- 1% hysteresis band between range adjustments.
 //
 //*****************************************************************************
-const float g_fThresholdHigh[4] =
-{
+const float g_fThresholdHigh[4] = {
     810.0f, 3240.0f, 12960.0f, 64000.0f
 };
-const float g_fThresholdLow[4] =
-{
+const float g_fThresholdLow[4] = {
     0.0f, 760.0f, 3040.0f, 12160.0f
 };
 
@@ -158,8 +156,7 @@ ISL29023AppCallback(void *pvCallbackData, uint_fast8_t ui8Status)
     // If the transaction succeeded set the data flag to indicate to
     // application that this transaction is complete and data may be ready.
     //
-    if(ui8Status == I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status == I2CM_STATUS_SUCCESS) {
         g_vui8DataFlag = 1;
     }
 
@@ -211,8 +208,7 @@ GPIOPortEIntHandler(void)
     //
     GPIOIntClear(GPIO_PORTE_BASE, ulStatus);
 
-    if(ulStatus & GPIO_PIN_5)
-    {
+    if(ulStatus & GPIO_PIN_5) {
         //
         // ISL29023 has indicated that the light level has crossed outside of
         // the intensity threshold levels set in INT_LT and INT_HT registers.
@@ -279,8 +275,7 @@ ISL29023AppErrorHandler(char *pcFilename, uint_fast32_t ui32Line)
     // Go to sleep wait for interventions.  A more robust application could
     // attempt corrective actions here.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Toggle LED 4 to indicate the error.
         //
@@ -307,8 +302,7 @@ ISL29023AppI2CWait(char *pcFilename, uint_fast32_t ui32Line)
     // Put the processor to sleep while we wait for the I2C driver to
     // indicate that the transaction is complete.
     //
-    while((g_vui8DataFlag == 0) && (g_vui8ErrorFlag == 0))
-    {
+    while((g_vui8DataFlag == 0) && (g_vui8ErrorFlag == 0)) {
         //
         // Do Nothing
         //
@@ -317,8 +311,7 @@ ISL29023AppI2CWait(char *pcFilename, uint_fast32_t ui32Line)
     //
     // If an error occurred call the error handler immediately.
     //
-    if(g_vui8ErrorFlag)
-    {
+    if(g_vui8ErrorFlag) {
         ISL29023AppErrorHandler(pcFilename, ui32Line);
     }
 
@@ -352,14 +345,12 @@ ISL29023AppAdjustRange(tISL29023 *pInst)
     //
     // Check if we crossed the upper threshold.
     //
-    if(fAmbient > g_fThresholdHigh[g_sISL29023Inst.ui8Range])
-    {
+    if(fAmbient > g_fThresholdHigh[g_sISL29023Inst.ui8Range]) {
         //
         // The current intensity is over our threshold so adjsut the range
         // accordingly
         //
-        if(g_sISL29023Inst.ui8Range < ISL29023_CMD_II_RANGE_64K)
-        {
+        if(g_sISL29023Inst.ui8Range < ISL29023_CMD_II_RANGE_64K) {
             ui8NewRange = g_sISL29023Inst.ui8Range + 1;
         }
     }
@@ -367,14 +358,12 @@ ISL29023AppAdjustRange(tISL29023 *pInst)
     //
     // Check if we crossed the lower threshold
     //
-    if(fAmbient < g_fThresholdLow[g_sISL29023Inst.ui8Range])
-    {
+    if(fAmbient < g_fThresholdLow[g_sISL29023Inst.ui8Range]) {
         //
         // If possible go to the next lower range setting and reconfig the
         // thresholds.
         //
-        if(g_sISL29023Inst.ui8Range > ISL29023_CMD_II_RANGE_1K)
-        {
+        if(g_sISL29023Inst.ui8Range > ISL29023_CMD_II_RANGE_1K) {
             ui8NewRange = g_sISL29023Inst.ui8Range - 1;
         }
     }
@@ -382,8 +371,7 @@ ISL29023AppAdjustRange(tISL29023 *pInst)
     //
     // If the desired range value changed then send the new range to the sensor
     //
-    if(ui8NewRange != g_sISL29023Inst.ui8Range)
-    {
+    if(ui8NewRange != g_sISL29023Inst.ui8Range) {
         ISL29023ReadModifyWrite(&g_sISL29023Inst, ISL29023_O_CMD_II,
                                 ~ISL29023_CMD_II_RANGE_M, ui8NewRange,
                                 ISL29023AppCallback, &g_sISL29023Inst);
@@ -442,8 +430,8 @@ main(void)
     // Configure the system frequency.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Configure the device pins for this board.
@@ -605,8 +593,7 @@ main(void)
     //
     // Loop Forever
     //
-    while(1)
-    {
+    while(1) {
         //
         // Sleep while we wait to save power.
         //
@@ -615,8 +602,7 @@ main(void)
         //
         // Wait for the DataFlag which is set when a DataRead is complete.
         // DataRead is started in the SysTick Interrupt Handler.
-        if(g_vui8DataFlag)
-        {
+        if(g_vui8DataFlag) {
             g_vui8DataFlag = 0;
 
             //
@@ -630,8 +616,7 @@ main(void)
             i32IntegerPart = (int32_t)fAmbient;
             i32FractionPart = (int32_t)(fAmbient * 1000.0f);
             i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-            if(i32FractionPart < 0)
-            {
+            if(i32FractionPart < 0) {
                 i32FractionPart *= -1;
             }
 
@@ -645,8 +630,7 @@ main(void)
             // Check if the intensity of light has crossed a threshold. If so
             // then adjust range of sensor readings to track intensity.
             //
-            if(g_vui8IntensityFlag)
-            {
+            if(g_vui8IntensityFlag) {
                 //
                 // Disable the low priority interrupts leaving only the I2C
                 // interrupt enabled.

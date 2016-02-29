@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -55,8 +55,7 @@
 // be able to patch some values in it based on client requirements.
 //
 //*****************************************************************************
-static uint8_t g_pui8KeybDescriptor[] =
-{
+static uint8_t g_pui8KeybDescriptor[] = {
     //
     // Configuration descriptor header.
     //
@@ -64,10 +63,10 @@ static uint8_t g_pui8KeybDescriptor[] =
     USB_DTYPE_CONFIGURATION,    // Type of this descriptor.
     USBShort(34),               // The total size of this full structure.
     1,                          // The number of interfaces in this
-                                // configuration.
+    // configuration.
     1,                          // The unique value for this configuration.
     5,                          // The string identifier that describes this
-                                // configuration.
+    // configuration.
     USB_CONF_ATTR_SELF_PWR,     // Bus Powered, Self Powered, remote wake up.
     250,                        // The maximum power in 2mA increments.
 };
@@ -78,8 +77,7 @@ static uint8_t g_pui8KeybDescriptor[] =
 // don't need to modify anything in it at runtime.
 //
 //*****************************************************************************
-static uint8_t g_pui8HIDInterface[HIDINTERFACE_SIZE] =
-{
+static uint8_t g_pui8HIDInterface[HIDINTERFACE_SIZE] = {
     //
     // HID Device Class Interface Descriptor.
     //
@@ -88,16 +86,15 @@ static uint8_t g_pui8HIDInterface[HIDINTERFACE_SIZE] =
     0,                          // The index for this interface.
     0,                          // The alternate setting for this interface.
     1,                          // The number of endpoints used by this
-                                // interface.
+    // interface.
     USB_CLASS_HID,              // The interface class
     USB_HID_SCLASS_BOOT,        // The interface sub-class.
     USB_HID_PROTOCOL_KEYB,      // The interface protocol for the sub-class
-                                // specified above.
+    // specified above.
     4,                          // The string index for this interface.
 };
 
-static const uint8_t g_pui8HIDInEndpoint[HIDINENDPOINT_SIZE] =
-{
+static const uint8_t g_pui8HIDInEndpoint[HIDINENDPOINT_SIZE] = {
     //
     // Interrupt IN endpoint descriptor
     //
@@ -106,12 +103,11 @@ static const uint8_t g_pui8HIDInEndpoint[HIDINENDPOINT_SIZE] =
     USB_EP_DESC_IN | USBEPToIndex(USB_EP_1),
     USB_EP_ATTR_INT,            // Endpoint is an interrupt endpoint.
     USBShort(USBFIFOSizeToBytes(USB_FIFO_SZ_64)),
-                                // The maximum packet size.
+    // The maximum packet size.
     16,                         // The polling interval for this endpoint.
 };
 
-static const uint8_t g_pui8HIDOutEndpoint[HIDOUTENDPOINT_SIZE] =
-{
+static const uint8_t g_pui8HIDOutEndpoint[HIDOUTENDPOINT_SIZE] = {
     //
     // Interrupt OUT endpoint descriptor
     //
@@ -120,7 +116,7 @@ static const uint8_t g_pui8HIDOutEndpoint[HIDOUTENDPOINT_SIZE] =
     USB_EP_DESC_OUT | USBEPToIndex(USB_EP_2),
     USB_EP_ATTR_INT,            // Endpoint is an interrupt endpoint.
     USBShort(USBFIFOSizeToBytes(USB_FIFO_SZ_64)),
-                                // The maximum packet size.
+    // The maximum packet size.
     16,                         // The polling interval for this endpoint.
 };
 
@@ -130,62 +126,61 @@ static const uint8_t g_pui8HIDOutEndpoint[HIDOUTENDPOINT_SIZE] =
 // to the host.
 //
 //*****************************************************************************
-static const uint8_t g_pui8KeybReportDescriptor[] =
-{
+static const uint8_t g_pui8KeybReportDescriptor[] = {
     UsagePage(USB_HID_GENERIC_DESKTOP),
     Usage(USB_HID_KEYBOARD),
     Collection(USB_HID_APPLICATION),
 
-        //
-        // Modifier keys.
-        // 8 - 1 bit values indicating the modifier keys (ctrl, shift...)
-        //
-        ReportSize(1),
-        ReportCount(8),
-        UsagePage(USB_HID_USAGE_KEYCODES),
-        UsageMinimum(224),
-        UsageMaximum(231),
-        LogicalMinimum(0),
-        LogicalMaximum(1),
-        Input(USB_HID_INPUT_DATA | USB_HID_INPUT_VARIABLE | USB_HID_INPUT_ABS),
+    //
+    // Modifier keys.
+    // 8 - 1 bit values indicating the modifier keys (ctrl, shift...)
+    //
+    ReportSize(1),
+    ReportCount(8),
+    UsagePage(USB_HID_USAGE_KEYCODES),
+    UsageMinimum(224),
+    UsageMaximum(231),
+    LogicalMinimum(0),
+    LogicalMaximum(1),
+    Input(USB_HID_INPUT_DATA | USB_HID_INPUT_VARIABLE | USB_HID_INPUT_ABS),
 
-        //
-        // One byte of rsvd data required by HID spec.
-        //
-        ReportCount(1),
-        ReportSize(8),
-        Input(USB_HID_INPUT_CONSTANT),
+    //
+    // One byte of rsvd data required by HID spec.
+    //
+    ReportCount(1),
+    ReportSize(8),
+    Input(USB_HID_INPUT_CONSTANT),
 
-        //
-        // Keyboard LEDs.
-        // 5 - 1 bit values.
-        //
-        ReportCount(5),
-        ReportSize(1),
-        UsagePage(USB_HID_USAGE_LEDS),
-        UsageMinimum(1),
-        UsageMaximum(5),
-        Output(USB_HID_OUTPUT_DATA | USB_HID_OUTPUT_VARIABLE |
-               USB_HID_OUTPUT_ABS),
-        //
-        // 1 - 3 bit value to pad out to a full byte.
-        //
-        ReportCount(1),
-        ReportSize(3),
-        Output(USB_HID_OUTPUT_CONSTANT), //LED report padding
+    //
+    // Keyboard LEDs.
+    // 5 - 1 bit values.
+    //
+    ReportCount(5),
+    ReportSize(1),
+    UsagePage(USB_HID_USAGE_LEDS),
+    UsageMinimum(1),
+    UsageMaximum(5),
+    Output(USB_HID_OUTPUT_DATA | USB_HID_OUTPUT_VARIABLE |
+    USB_HID_OUTPUT_ABS),
+    //
+    // 1 - 3 bit value to pad out to a full byte.
+    //
+    ReportCount(1),
+    ReportSize(3),
+    Output(USB_HID_OUTPUT_CONSTANT), //LED report padding
 
-        //
-        // The Key buffer.
-        // 6 - 8 bit values to store the current key state.
-        //
-        ReportCount(6),
-        ReportSize(8),
-        LogicalMinimum(0),
-        LogicalMaximum(101),
-        UsagePage(USB_HID_USAGE_KEYCODES),
-        UsageMinimum (0),
-        UsageMaximum (101),
-        Input(USB_HID_INPUT_DATA | USB_HID_INPUT_ARRAY),
+    //
+    // The Key buffer.
+    // 6 - 8 bit values to store the current key state.
+    //
+    ReportCount(6),
+    ReportSize(8),
+    LogicalMinimum(0),
+    LogicalMaximum(101),
+    UsagePage(USB_HID_USAGE_KEYCODES),
+    UsageMinimum (0),
+    UsageMaximum (101),
+    Input(USB_HID_INPUT_DATA | USB_HID_INPUT_ARRAY),
     EndCollection
 };
 
@@ -194,8 +189,7 @@ static const uint8_t g_pui8KeybReportDescriptor[] =
 // The HID descriptor for the keyboard device.
 //
 //*****************************************************************************
-static const tHIDDescriptor g_sKeybHIDDescriptor =
-{
+static const tHIDDescriptor g_sKeybHIDDescriptor = {
     9,                              // bLength
     USB_HID_DTYPE_HID,              // bDescriptorType
     0x111,                          // bcdHID (version 1.11 compliant)
@@ -205,7 +199,7 @@ static const tHIDDescriptor g_sKeybHIDDescriptor =
         {
             USB_HID_DTYPE_REPORT,   // Report descriptor
             sizeof(g_pui8KeybReportDescriptor)
-                                    // Size of report descriptor
+            // Size of report descriptor
         }
     }
 };
@@ -223,26 +217,22 @@ static const tHIDDescriptor g_sKeybHIDDescriptor =
 // 5.  The optional interrupt OUT endpoint descriptor (FLASH).
 //
 //*****************************************************************************
-static const tConfigSection g_sHIDConfigSection =
-{
+static const tConfigSection g_sHIDConfigSection = {
     sizeof(g_pui8KeybDescriptor),
     g_pui8KeybDescriptor
 };
 
-static const tConfigSection g_sHIDInterfaceSection =
-{
+static const tConfigSection g_sHIDInterfaceSection = {
     sizeof(g_pui8HIDInterface),
     g_pui8HIDInterface
 };
 
-static const tConfigSection g_sHIDInEndpointSection =
-{
+static const tConfigSection g_sHIDInEndpointSection = {
     sizeof(g_pui8HIDInEndpoint),
     g_pui8HIDInEndpoint
 };
 
-static const tConfigSection g_sHIDOutEndpointSection =
-{
+static const tConfigSection g_sHIDOutEndpointSection = {
     sizeof(g_pui8HIDOutEndpoint),
     g_pui8HIDOutEndpoint
 };
@@ -252,10 +242,9 @@ static const tConfigSection g_sHIDOutEndpointSection =
 // Place holder for the user's HID descriptor block.
 //
 //*****************************************************************************
-static tConfigSection g_sHIDDescriptorSection =
-{
-   sizeof(g_sKeybHIDDescriptor),
-   (const uint8_t *)&g_sKeybHIDDescriptor
+static tConfigSection g_sHIDDescriptorSection = {
+    sizeof(g_sKeybHIDDescriptor),
+    (const uint8_t *)&g_sKeybHIDDescriptor
 };
 
 //*****************************************************************************
@@ -264,8 +253,7 @@ static tConfigSection g_sHIDDescriptorSection =
 // single, complete HID configuration descriptor.
 //
 //*****************************************************************************
-static const tConfigSection *g_psHIDSections[] =
-{
+static const tConfigSection *g_psHIDSections[] = {
     &g_sHIDConfigSection,
     &g_sHIDInterfaceSection,
     &g_sHIDDescriptorSection,
@@ -285,8 +273,7 @@ static const tConfigSection *g_psHIDSections[] =
 // client supplied initialization parameters.
 //
 //*****************************************************************************
-static tConfigHeader g_sHIDConfigHeader =
-{
+static tConfigHeader g_sHIDConfigHeader = {
     NUM_HID_SECTIONS,
     g_psHIDSections
 };
@@ -296,8 +283,7 @@ static tConfigHeader g_sHIDConfigHeader =
 // Configuration Descriptor.
 //
 //*****************************************************************************
-static const tConfigHeader * const g_ppsHIDConfigDescriptors[] =
-{
+static const tConfigHeader * const g_ppsHIDConfigDescriptors[] = {
     &g_sHIDConfigHeader
 };
 
@@ -307,8 +293,7 @@ static const tConfigHeader * const g_ppsHIDConfigDescriptors[] =
 // single report descriptor.
 //
 //*****************************************************************************
-static const uint8_t * const g_pui8KeybClassDescriptors[] =
-{
+static const uint8_t * const g_pui8KeybClassDescriptors[] = {
     g_pui8KeybReportDescriptor
 };
 
@@ -361,13 +346,11 @@ HIDKeyboardRxHandler(void *pvKeyboardDevice, uint32_t ui32Event,
     //
     // Which event were we sent?
     //
-    switch (ui32Event)
-    {
+    switch (ui32Event) {
         //
         // The host has connected to us and configured the device.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             psInst->ui8USBConfigured = true;
 
             //
@@ -382,8 +365,7 @@ HIDKeyboardRxHandler(void *pvKeyboardDevice, uint32_t ui32Event,
         //
         // The host has disconnected from us.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             psInst->ui8USBConfigured = false;
 
             //
@@ -401,8 +383,7 @@ HIDKeyboardRxHandler(void *pvKeyboardDevice, uint32_t ui32Event,
         // is asking for the latest version to transmit.
         //
         case USBD_HID_EVENT_IDLE_TIMEOUT:
-        case USBD_HID_EVENT_GET_REPORT:
-        {
+        case USBD_HID_EVENT_GET_REPORT: {
             //
             // We only support a single input report so we don't need to check
             // the ui32MsgValue parameter in this case.  Set the report pointer
@@ -416,8 +397,7 @@ HIDKeyboardRxHandler(void *pvKeyboardDevice, uint32_t ui32Event,
         // The device class driver has completed sending a report to the
         // host in response to a Get_Report request.
         //
-        case USBD_HID_EVENT_REPORT_SENT:
-        {
+        case USBD_HID_EVENT_REPORT_SENT: {
             //
             // We have nothing to do here.
             //
@@ -429,22 +409,18 @@ HIDKeyboardRxHandler(void *pvKeyboardDevice, uint32_t ui32Event,
         // must return a pointer to a buffer large enough to receive the
         // report into.
         //
-        case USBD_HID_EVENT_GET_REPORT_BUFFER:
-        {
+        case USBD_HID_EVENT_GET_REPORT_BUFFER: {
             //
             // Are we being asked for a report that is shorter than the storage
             // we have set aside for this?  The only output report we define is
             // 8 bits long so we really expect to see a length of 1 passed.
             //
-            if((uint32_t)pvMsgData == KEYB_OUT_REPORT_SIZE )
-            {
+            if((uint32_t)pvMsgData == KEYB_OUT_REPORT_SIZE ) {
                 //
                 // Yes - return our pointer.
                 //
                 return((uint32_t)psInst->pui8DataBuffer);
-            }
-            else
-            {
+            } else {
                 //
                 // We are being passed a report that is longer than the
                 // only report we expect so return NULL.  This causes the
@@ -459,13 +435,11 @@ HIDKeyboardRxHandler(void *pvKeyboardDevice, uint32_t ui32Event,
         // Feature report and that the report is now in the buffer we provided
         // on the previous USBD_HID_EVENT_GET_REPORT_BUFFER callback.
         //
-        case USBD_HID_EVENT_SET_REPORT:
-        {
+        case USBD_HID_EVENT_SET_REPORT: {
             //
             // Inform the application if the keyboard LEDs have changed.
             //
-            if(psInst->ui8LEDStates != psInst->pui8DataBuffer[0])
-            {
+            if(psInst->ui8LEDStates != psInst->pui8DataBuffer[0]) {
                 //
                 // Note the new LED states.
                 //
@@ -475,10 +449,10 @@ HIDKeyboardRxHandler(void *pvKeyboardDevice, uint32_t ui32Event,
                 // Pass the information on to the client.
                 //
                 psKeyboardDevice->pfnCallback(
-                                            psKeyboardDevice->pvCBData,
-                                            USBD_HID_KEYB_EVENT_SET_LEDS,
-                                            psInst->pui8DataBuffer[0],
-                                            (void *)0);
+                    psKeyboardDevice->pvCBData,
+                    USBD_HID_KEYB_EVENT_SET_LEDS,
+                    psInst->pui8DataBuffer[0],
+                    (void *)0);
             }
             break;
         }
@@ -487,8 +461,7 @@ HIDKeyboardRxHandler(void *pvKeyboardDevice, uint32_t ui32Event,
         // The host is asking us to set either boot or report protocol (not
         // that it makes any difference to this particular mouse).
         //
-        case USBD_HID_EVENT_SET_PROTOCOL:
-        {
+        case USBD_HID_EVENT_SET_PROTOCOL: {
             psInst->ui8Protocol = ui32MsgData;
             break;
         }
@@ -497,8 +470,7 @@ HIDKeyboardRxHandler(void *pvKeyboardDevice, uint32_t ui32Event,
         // The host is asking us to tell it which protocol we are currently
         // using, boot or request.
         //
-        case USBD_HID_EVENT_GET_PROTOCOL:
-        {
+        case USBD_HID_EVENT_GET_PROTOCOL: {
             return(psInst->ui8Protocol);
         }
 
@@ -510,18 +482,16 @@ HIDKeyboardRxHandler(void *pvKeyboardDevice, uint32_t ui32Event,
         case USB_EVENT_RESUME:
         case USB_EVENT_LPM_RESUME:
         case USB_EVENT_LPM_SLEEP:
-        case USB_EVENT_LPM_ERROR:
-        {
+        case USB_EVENT_LPM_ERROR: {
             return(psKeyboardDevice->pfnCallback(
-                                         psKeyboardDevice->pvCBData,
-                                         ui32Event, ui32MsgData, pvMsgData));
+                       psKeyboardDevice->pvCBData,
+                       ui32Event, ui32MsgData, pvMsgData));
         }
 
         //
         // We ignore all other events.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -570,37 +540,31 @@ HIDKeyboardTxHandler(void *pvKeyboardDevice, uint32_t ui32Event,
     //
     // Which event were we sent?
     //
-    switch (ui32Event)
-    {
+    switch (ui32Event) {
         //
         // A report transmitted via the interrupt IN endpoint was acknowledged
         // by the host.
         //
-        case USB_EVENT_TX_COMPLETE:
-        {
+        case USB_EVENT_TX_COMPLETE: {
             //
             // Do we have any pending changes needing transmitted?
             //
-            if(psInst->bChangeMade)
-            {
+            if(psInst->bChangeMade) {
                 //
                 // Yes - go ahead and send another report immediately.
                 //
                 ui32Count = USBDHIDReportWrite((void *)psHIDDevice,
-                                             psInst->pui8Report,
-                                             KEYB_IN_REPORT_SIZE, true);
+                                               psInst->pui8Report,
+                                               KEYB_IN_REPORT_SIZE, true);
 
                 //
                 // If we scheduled the report for transmission, clear the
                 // change flag.
                 //
-                if(ui32Count != 0)
-                {
+                if(ui32Count != 0) {
                     psInst->bChangeMade = false;
                 }
-            }
-            else
-            {
+            } else {
                 //
                 // Our last transmission is complete and we have nothing more
                 // to send.
@@ -622,8 +586,7 @@ HIDKeyboardTxHandler(void *pvKeyboardDevice, uint32_t ui32Event,
         // We ignore all other events related to transmission of reports via
         // the interrupt IN endpoint.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -665,14 +628,12 @@ AddKeyToPressedList(tHIDKeyboardInstance *psInst, uint8_t ui8UsageCode)
     // Look through the list of existing pressed keys to see if the new one
     // is already there.
     //
-    for(ui32Loop = 0; ui32Loop < (uint32_t)psInst->ui8KeyCount; ui32Loop++)
-    {
+    for(ui32Loop = 0; ui32Loop < (uint32_t)psInst->ui8KeyCount; ui32Loop++) {
         //
         // Is this key already included in the list of keys in the pressed
         // state?
         //
-        if(ui8UsageCode == psInst->pui8KeysPressed[ui32Loop])
-        {
+        if(ui8UsageCode == psInst->pui8KeysPressed[ui32Loop]) {
             //
             // Yes - drop out.
             //
@@ -684,19 +645,15 @@ AddKeyToPressedList(tHIDKeyboardInstance *psInst, uint8_t ui8UsageCode)
     // If we exited the loop at the end of the existing key presses, this
     // key does not exist already so add it if space exists.
     //
-    if(ui32Loop >= psInst->ui8KeyCount)
-    {
-        if(psInst->ui8KeyCount < KEYB_MAX_CHARS_PER_REPORT)
-        {
+    if(ui32Loop >= psInst->ui8KeyCount) {
+        if(psInst->ui8KeyCount < KEYB_MAX_CHARS_PER_REPORT) {
             //
             // We have room so store the new key press in the list.
             //
             psInst->pui8KeysPressed[psInst->ui8KeyCount] = ui8UsageCode;
             psInst->ui8KeyCount++;
             bRetcode = true;
-        }
-        else
-        {
+        } else {
             //
             // We have no room for the new key - declare a rollover error.
             //
@@ -740,10 +697,8 @@ RemoveKeyFromPressedList(tHIDKeyboardInstance *psInst,
     //
     // Find the usage code in the current list.
     //
-    for(ui32Loop = 0; ui32Loop < KEYB_MAX_CHARS_PER_REPORT; ui32Loop++)
-    {
-        if(psInst->pui8KeysPressed[ui32Loop] == ui8UsageCode)
-        {
+    for(ui32Loop = 0; ui32Loop < KEYB_MAX_CHARS_PER_REPORT; ui32Loop++) {
+        if(psInst->pui8KeysPressed[ui32Loop] == ui8UsageCode) {
             ui32Pos = ui32Loop;
             break;
         }
@@ -753,8 +708,7 @@ RemoveKeyFromPressedList(tHIDKeyboardInstance *psInst,
     // If we dropped out at the end of the loop, we could not find the code so
     // just return false.
     //
-    if(ui32Loop == KEYB_MAX_CHARS_PER_REPORT)
-    {
+    if(ui32Loop == KEYB_MAX_CHARS_PER_REPORT) {
         return(false);
     }
 
@@ -763,10 +717,9 @@ RemoveKeyFromPressedList(tHIDKeyboardInstance *psInst,
     // down one position to fill the gap left by removing it.
     //
     for(ui32Loop = (ui32Pos + 1); ui32Loop < KEYB_MAX_CHARS_PER_REPORT;
-        ui32Loop++)
-    {
+            ui32Loop++) {
         psInst->pui8KeysPressed[ui32Loop - 1] =
-                                        psInst->pui8KeysPressed[ui32Loop];
+            psInst->pui8KeysPressed[ui32Loop];
     }
 
     //
@@ -774,7 +727,7 @@ RemoveKeyFromPressedList(tHIDKeyboardInstance *psInst,
     // array.
     //
     psInst->pui8KeysPressed[KEYB_MAX_CHARS_PER_REPORT - 1] =
-                                                    HID_KEYB_USAGE_RESERVED;
+        HID_KEYB_USAGE_RESERVED;
     psInst->ui8KeyCount--;
 
     //
@@ -846,8 +799,7 @@ USBDHIDKeyboardInit(uint32_t ui32Index, tUSBDHIDKeyboardDevice *psHIDKbDevice)
     // If we initialized the HID layer successfully, pass our device pointer
     // back as the return code, otherwise return NULL to indicate an error.
     //
-    if(pvRetcode)
-    {
+    if(pvRetcode) {
         //
         // Initialize the lower layer HID driver and pass it the various
         // structures and descriptors necessary to declare that we are a
@@ -856,9 +808,7 @@ USBDHIDKeyboardInit(uint32_t ui32Index, tUSBDHIDKeyboardDevice *psHIDKbDevice)
         pvRetcode = USBDHIDInit(ui32Index, psHIDDevice);
 
         return((void *)psHIDKbDevice);
-    }
-    else
-    {
+    } else {
         return((void *)0);
     }
 }
@@ -917,8 +867,7 @@ USBDHIDKeyboardCompositeInit(uint32_t ui32Index,
     psInst->sReportIdle.ui16TimeTillNextmS = 0;
     psInst->ui8LEDStates = 0;
     psInst->ui8KeyCount = 0;
-    for(ui32Loop = 0; ui32Loop < KEYB_MAX_CHARS_PER_REPORT; ui32Loop++)
-    {
+    for(ui32Loop = 0; ui32Loop < KEYB_MAX_CHARS_PER_REPORT; ui32Loop++) {
         psInst->pui8KeysPressed[ui32Loop] = HID_KEYB_USAGE_RESERVED;
     }
 
@@ -947,12 +896,12 @@ USBDHIDKeyboardCompositeInit(uint32_t ui32Index,
     psHIDDevice->pvTxCBData = (void *)psHIDKbDevice;
     psHIDDevice->bUseOutEndpoint = false,
 
-    psHIDDevice->psHIDDescriptor = &g_sKeybHIDDescriptor;
+                 psHIDDevice->psHIDDescriptor = &g_sKeybHIDDescriptor;
     psHIDDevice->ppui8ClassDescriptors = g_pui8KeybClassDescriptors;
     psHIDDevice->ppui8StringDescriptors =
-                                        psHIDKbDevice->ppui8StringDescriptors;
+        psHIDKbDevice->ppui8StringDescriptors;
     psHIDDevice->ui32NumStringDescriptors =
-                                        psHIDKbDevice->ui32NumStringDescriptors;
+        psHIDKbDevice->ui32NumStringDescriptors;
     psHIDDevice->ppsConfigDescriptor = g_ppsHIDConfigDescriptors;
 
     psHIDDevice->psReportIdle = &psInst->sReportIdle;
@@ -1133,21 +1082,17 @@ USBDHIDKeyboardKeyStateChange(void *pvKeyboardDevice, uint8_t ui8Modifiers,
     // Were we passed a usage code for a new key press or release or was
     // this call just telling us about a modifier change?
     //
-    if(ui8UsageCode != HID_KEYB_USAGE_RESERVED)
-    {
+    if(ui8UsageCode != HID_KEYB_USAGE_RESERVED) {
         //
         // Has a key been pressed or released?
         //
-        if(bPress)
-        {
+        if(bPress) {
             //
             // A key has been pressed - add it to the list if there is space an
             // and the key is not already in the list.
             //
             bRetcode = AddKeyToPressedList(psInst, ui8UsageCode);
-        }
-        else
-        {
+        } else {
             //
             // A key has been released - remove it from the list.
             //
@@ -1158,8 +1103,7 @@ USBDHIDKeyboardKeyStateChange(void *pvKeyboardDevice, uint8_t ui8Modifiers,
             // wasn't, the list has not changes so merely exit at this point
             // without sending anything to the host.
             //
-            if(!bRetcode)
-            {
+            if(!bRetcode) {
                 return(KEYB_ERR_NOT_FOUND);
             }
         }
@@ -1169,10 +1113,9 @@ USBDHIDKeyboardKeyStateChange(void *pvKeyboardDevice, uint8_t ui8Modifiers,
         // and got a bad return code indicating a roll over error, we need to
         // send a roll over report
         //
-        for(ui32Loop = 0; ui32Loop < KEYB_MAX_CHARS_PER_REPORT; ui32Loop++)
-        {
+        for(ui32Loop = 0; ui32Loop < KEYB_MAX_CHARS_PER_REPORT; ui32Loop++) {
             psInst->pui8Report[2 + ui32Loop] = (bRetcode ?
-                psInst->pui8KeysPressed[ui32Loop] : HID_KEYB_USAGE_ROLLOVER);
+                                                psInst->pui8KeysPressed[ui32Loop] : HID_KEYB_USAGE_ROLLOVER);
         }
     }
 
@@ -1180,16 +1123,14 @@ USBDHIDKeyboardKeyStateChange(void *pvKeyboardDevice, uint8_t ui8Modifiers,
     // If we are not configured, return an error here before trying to send
     // anything.
     //
-    if(!psInst->ui8USBConfigured)
-    {
+    if(!psInst->ui8USBConfigured) {
         return(KEYB_ERR_NOT_CONFIGURED);
     }
 
     //
     // Only send a report if the transmitter is currently free.
     //
-    if(USBDHIDTxPacketAvailable((void *)psHIDDevice))
-    {
+    if(USBDHIDTxPacketAvailable((void *)psHIDDevice)) {
         //
         // Send the report to the host.
         //
@@ -1201,16 +1142,13 @@ USBDHIDKeyboardKeyStateChange(void *pvKeyboardDevice, uint8_t ui8Modifiers,
         //
         // Did we schedule a packet for transmission correctly?
         //
-        if(!ui32Count)
-        {
+        if(!ui32Count) {
             //
             // No - report the error to the caller.
             //
             return(KEYB_ERR_TX_ERROR);
         }
-    }
-    else
-    {
+    } else {
         //
         // We can't send the report immediately so mark the instance so that
         // it is sent next time the transmitter is free.

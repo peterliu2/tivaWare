@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -40,8 +40,7 @@
 // Range setting to floating point range value lookup table
 //
 //*****************************************************************************
-const float g_fRangeLookup[4] =
-{
+const float g_fRangeLookup[4] = {
     1000.0,
     4000.0,
     16000.0,
@@ -53,8 +52,7 @@ const float g_fRangeLookup[4] =
 // Resolution setting to floating point resolution value lookup table
 //
 //*****************************************************************************
-const float g_fResolutionLookup[4] =
-{
+const float g_fResolutionLookup[4] = {
     65536.0,
     4096.0,
     256.0,
@@ -68,8 +66,7 @@ const float g_fResolutionLookup[4] =
 // However, Beta changes with resolution and background IR conditions.
 //
 //*****************************************************************************
-const float g_fBetaLookup[4] =
-{
+const float g_fBetaLookup[4] = {
     95.238,
     23.810,
     5.952,
@@ -110,16 +107,14 @@ ISL29023Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     // to the idle state (which will also result in a callback to propagate the
     // error).
     //
-    if(ui8Status != I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status != I2CM_STATUS_SUCCESS) {
         psInst->ui8State = ISL29023_STATE_IDLE;
     }
 
     //
     // Determine the current state of the ISL29023 state machine.
     //
-    switch(psInst->ui8State)
-    {
+    switch(psInst->ui8State) {
         //
         // All states that trivially transition to IDLE, and all unknown
         // states.
@@ -127,8 +122,7 @@ ISL29023Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         case ISL29023_STATE_INIT:
         case ISL29023_STATE_READ:
         case ISL29023_STATE_READ_DATA:
-        default:
-        {
+        default: {
             //
             // A register operation is complete.  Return to IDLE state
             // the value read from the register is in the pui8Data buffer and
@@ -142,8 +136,7 @@ ISL29023Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // A write to the ISL29023 control and config registers is complete.
         //
-        case ISL29023_STATE_WRITE:
-        {
+        case ISL29023_STATE_WRITE: {
             //
             // Set the range and resolution to the new values.  If the register
             // was not modified, the values will be the same so this has no
@@ -166,16 +159,14 @@ ISL29023Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // A read modify write operation has just completed.
         //
-        case ISL29023_STATE_RMW:
-        {
+        case ISL29023_STATE_RMW: {
             //
             // Check if the register that was written contained the range or
             // resolution data that we need to track.
             //
             pui8Data = psInst->uCommand.sReadModifyWriteState.pui8Buffer;
             if((pui8Data[0] == ISL29023_O_CMD_II) &&
-               (ui8Status == I2CM_STATUS_SUCCESS))
-            {
+                    (ui8Status == I2CM_STATUS_SUCCESS)) {
                 //
                 // Store the latest range and resolution settings
                 //
@@ -201,8 +192,7 @@ ISL29023Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if the state machine is now idle and there is a callback function.
     //
-    if((psInst->ui8State == ISL29023_STATE_IDLE) && psInst->pfnCallback)
-    {
+    if((psInst->ui8State == ISL29023_STATE_IDLE) && psInst->pfnCallback) {
         //
         // Call the application-supplied callback function.
         //
@@ -259,8 +249,7 @@ ISL29023Init(tISL29023 *psInst, tI2CMInstance *psI2CInst,
     psInst->pui8Data[0] = ISL29023_O_CMD_I;
     psInst->pui8Data[1] = ISL29023_CMD_I_OP_MODE_POWER_DOWN;
     if(I2CMWrite(psInst->psI2CInst, psInst->ui8Addr, psInst->pui8Data, 2,
-                 ISL29023Callback, psInst) == 0)
-    {
+                 ISL29023Callback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -304,8 +293,7 @@ ISL29023Read(tISL29023 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     // Return a failure if the ISL29023 driver is not idle (in other words,
     // there is already an outstanding request to the ISL29023).
     //
-    if(psInst->ui8State != ISL29023_STATE_IDLE)
-    {
+    if(psInst->ui8State != ISL29023_STATE_IDLE) {
         return(0);
     }
     //
@@ -329,8 +317,7 @@ ISL29023Read(tISL29023 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     //
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
                 psInst->uCommand.pui8Buffer, 1, pui8Data, ui16Count,
-                ISL29023Callback, psInst) == 0)
-    {
+                ISL29023Callback, psInst) == 0) {
         psInst->ui8State = ISL29023_STATE_IDLE;
         return(0);
     }
@@ -368,8 +355,7 @@ ISL29023Write(tISL29023 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     // Return a failure if the ISL29023 driver is not idle (in other words,
     // there is already an outstanding request to the ISL29023).
     //
-    if(psInst->ui8State != ISL29023_STATE_IDLE)
-    {
+    if(psInst->ui8State != ISL29023_STATE_IDLE) {
         return(0);
     }
 
@@ -383,8 +369,7 @@ ISL29023Write(tISL29023 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     // See if the CMD_II register is being written.
     //
     if((ui8Reg <= ISL29023_O_CMD_II) &&
-       ((ui8Reg + ui16Count) > ISL29023_O_CMD_II))
-    {
+            ((ui8Reg + ui16Count) > ISL29023_O_CMD_II)) {
         //
         // Extract the range and resolution from the CMD_II register value.
         //
@@ -406,8 +391,7 @@ ISL29023Write(tISL29023 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     //
     if(I2CMWrite8(&(psInst->uCommand.sWriteState), psInst->psI2CInst,
                   psInst->ui8Addr, ui8Reg, pui8Data, ui16Count,
-                  ISL29023Callback, psInst) == 0)
-    {
+                  ISL29023Callback, psInst) == 0) {
         //
         // I2C write failed, move to idle state and return the failure.
         //
@@ -453,8 +437,7 @@ ISL29023ReadModifyWrite(tISL29023 *psInst, uint_fast8_t ui8Reg,
     //
     // Return a failure if the ISL29023 driver is not in the idle state.
     //
-    if(psInst->ui8State != ISL29023_STATE_IDLE)
-    {
+    if(psInst->ui8State != ISL29023_STATE_IDLE) {
         return(0);
     }
 
@@ -474,8 +457,7 @@ ISL29023ReadModifyWrite(tISL29023 *psInst, uint_fast8_t ui8Reg,
     //
     if(I2CMReadModifyWrite8(&(psInst->uCommand.sReadModifyWriteState),
                             psInst->psI2CInst, psInst->ui8Addr, ui8Reg,
-                            ui8Mask, ui8Value, ISL29023Callback, psInst) == 0)
-    {
+                            ui8Mask, ui8Value, ISL29023Callback, psInst) == 0) {
         //
         // The I2C read-modify-write failed, so move to the idle state and
         // return a failure.
@@ -519,8 +501,7 @@ ISL29023DataRead(tISL29023 *psInst, tSensorCallback *pfnCallback,
     // Return a failure if the ISL29023 driver is not idle (in other words,
     // there is already an outstanding request to the ISL29023).
     //
-    if(psInst->ui8State != ISL29023_STATE_IDLE)
-    {
+    if(psInst->ui8State != ISL29023_STATE_IDLE) {
         return(0);
     }
 
@@ -538,8 +519,7 @@ ISL29023DataRead(tISL29023 *psInst, tSensorCallback *pfnCallback,
     psInst->uCommand.pui8Buffer[0] = ISL29023_O_DATA_OUT_LSB;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
                 psInst->uCommand.pui8Buffer, 1, psInst->pui8Data, 2,
-                ISL29023Callback, psInst) == 0)
-    {
+                ISL29023Callback, psInst) == 0) {
         //
         // The I2C read failed, so move to the idle state and return a failure.
         //

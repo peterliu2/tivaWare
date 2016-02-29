@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -72,8 +72,7 @@
 // and multiplying by 9.81 (1 g = 9.81 m/s^2).
 //
 //*****************************************************************************
-static const float g_fMPU9150AccelFactors[] =
-{
+static const float g_fMPU9150AccelFactors[] = {
     0.0005985482,                           // Range = +/- 2 g (16384 lsb/g)
     0.0011970964,                           // Range = +/- 4 g (8192 lsb/g)
     0.0023941928,                           // Range = +/- 8 g (4096 lsb/g)
@@ -90,8 +89,7 @@ static const float g_fMPU9150AccelFactors[] =
 // 0.0174532925 radians).
 //
 //*****************************************************************************
-static const float g_fMPU9150GyroFactors[] =
-{
+static const float g_fMPU9150GyroFactors[] = {
     1.3323124e-4,                           // Range = +/- 250 dps (131.0)
     2.6646248e-4,                           // Range = +/- 500 dps (65.5)
     5.3211258e-4,                           // Range = +/- 1000 dps (32.8)
@@ -124,22 +122,20 @@ MPU9150Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // If the I2C master driver encountered a failure, force the state machine
     // to the idle state (which will also result in a callback to propagate the
-    // error). Except in the case that we are in the reset wait state and the 
-    // error is an address NACK.  This error is handled by the reset wait 
+    // error). Except in the case that we are in the reset wait state and the
+    // error is an address NACK.  This error is handled by the reset wait
     // state.
     //
-    if((ui8Status != I2CM_STATUS_SUCCESS) && 
-       !((ui8Status == I2CM_STATUS_ADDR_NACK) &&
-         (psInst->ui8State == MPU9150_STATE_INIT_RESET_WAIT)))
-    {
+    if((ui8Status != I2CM_STATUS_SUCCESS) &&
+            !((ui8Status == I2CM_STATUS_ADDR_NACK) &&
+              (psInst->ui8State == MPU9150_STATE_INIT_RESET_WAIT))) {
         psInst->ui8State = MPU9150_STATE_IDLE;
     }
 
     //
     // Determine the current state of the MPU9150 state machine.
     //
-    switch(psInst->ui8State)
-    {
+    switch(psInst->ui8State) {
         //
         // All states that trivially transition to IDLE, and all unknown
         // states.
@@ -147,8 +143,7 @@ MPU9150Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         case MPU9150_STATE_READ:
         case MPU9150_STATE_LAST:
         case MPU9150_STATE_RD_DATA:
-        default:
-        {
+        default: {
             //
             // The state machine is now idle.
             //
@@ -163,8 +158,7 @@ MPU9150Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // MPU9150 Device reset was issued
         //
-        case MPU9150_STATE_INIT_RESET:
-        {
+        case MPU9150_STATE_INIT_RESET: {
             //
             // Issue a read of the status register to confirm reset is done.
             //
@@ -180,19 +174,17 @@ MPU9150Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // Status register was read, check if reset is done before proceeding.
         //
-        case MPU9150_STATE_INIT_RESET_WAIT:
-        {
+        case MPU9150_STATE_INIT_RESET_WAIT: {
             //
             // Check the value read back from status to determine if device
             // is still in reset or if it is ready.  Reset state for this
-            // register is 0x40, which has sleep bit set. Device may also 
+            // register is 0x40, which has sleep bit set. Device may also
             // respond with an address NACK during very early stages of the
-            // its internal reset.  Keep polling until we verify device is 
+            // its internal reset.  Keep polling until we verify device is
             // ready.
             //
-            if((psInst->pui8Data[0] != MPU9150_PWR_MGMT_1_SLEEP) || 
-               (ui8Status == I2CM_STATUS_ADDR_NACK))
-            {
+            if((psInst->pui8Data[0] != MPU9150_PWR_MGMT_1_SLEEP) ||
+                    (ui8Status == I2CM_STATUS_ADDR_NACK)) {
                 //
                 // Device still in reset so begin polling this register.
                 //
@@ -204,9 +196,7 @@ MPU9150Callback(void *pvCallbackData, uint_fast8_t ui8Status)
                 //
                 // Intentionally stay in this state to create polling effect.
                 //
-            }
-            else
-            {
+            } else {
                 //
                 // Device is out of reset, bring it out of sleep mode.
                 //
@@ -228,8 +218,7 @@ MPU9150Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // Reset complete now take device out of sleep mode.
         //
-        case MPU9150_STATE_INIT_PWR_MGMT:
-        {
+        case MPU9150_STATE_INIT_PWR_MGMT: {
             psInst->uCommand.pui8Buffer[0] = MPU9150_O_USER_CTRL;
             psInst->uCommand.pui8Buffer[1] = MPU9150_USER_CTRL_I2C_MST_EN;
             I2CMWrite(psInst->psI2CInst, psInst->ui8Addr,
@@ -248,8 +237,7 @@ MPU9150Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // Change to power mode complete, device is ready for configuration.
         //
-        case MPU9150_STATE_INIT_USER_CTRL:
-        {
+        case MPU9150_STATE_INIT_USER_CTRL: {
             //
             // Load index 0 with the sample rate register number.
             //
@@ -273,8 +261,7 @@ MPU9150Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // Sensor configuration is complete.
         //
-        case MPU9150_STATE_INIT_SAMPLE_RATE_CFG:
-        {
+        case MPU9150_STATE_INIT_SAMPLE_RATE_CFG: {
             //
             // Write the I2C Master delay control so we only sample the AK
             // every 5th time that we sample accel/gyro.  Delay Count itself
@@ -299,8 +286,7 @@ MPU9150Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // Master slave delay configuration complete.
         //
-        case MPU9150_STATE_INIT_I2C_SLAVE_DLY:
-        {
+        case MPU9150_STATE_INIT_I2C_SLAVE_DLY: {
             //
             // Write the configuration for I2C master control clock 400khz
             // and wait for external sensor before asserting data ready
@@ -331,8 +317,7 @@ MPU9150Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // I2C slave 0 init complete.
         //
-        case MPU9150_STATE_INIT_I2C_SLAVE_0:
-        {
+        case MPU9150_STATE_INIT_I2C_SLAVE_0: {
             //
             // Write the configuration for I2C Slave 4 transaction to AK8975
             // 0x0c is the AK8975 address on i2c bus.
@@ -363,8 +348,7 @@ MPU9150Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // A write just completed
         //
-        case MPU9150_STATE_WRITE:
-        {
+        case MPU9150_STATE_WRITE: {
             //
             // Set the accelerometer and gyroscope ranges to the new values.
             // If the register was not modified, the values will be the same so
@@ -387,20 +371,17 @@ MPU9150Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // A read-modify-write just completed
         //
-        case MPU9150_STATE_RMW:
-        {
+        case MPU9150_STATE_RMW: {
             //
             // See if the PWR_MGMT_1 register was just modified.
             //
             if(psInst->uCommand.sReadModifyWriteState.pui8Buffer[0] ==
-               MPU9150_O_PWR_MGMT_1)
-            {
+                    MPU9150_O_PWR_MGMT_1) {
                 //
                 // See if a soft reset has been issued.
                 //
                 if(psInst->uCommand.sReadModifyWriteState.pui8Buffer[1] &
-                   MPU9150_PWR_MGMT_1_DEVICE_RESET)
-                {
+                        MPU9150_PWR_MGMT_1_DEVICE_RESET) {
                     //
                     // Default range setting is +/- 2 g
                     //
@@ -419,8 +400,7 @@ MPU9150Callback(void *pvCallbackData, uint_fast8_t ui8Status)
             // See if the GYRO_CONFIG register was just modified.
             //
             if(psInst->uCommand.sReadModifyWriteState.pui8Buffer[0] ==
-               MPU9150_O_GYRO_CONFIG)
-            {
+                    MPU9150_O_GYRO_CONFIG) {
                 //
                 // Extract the FS_SEL from the GYRO_CONFIG register value.
                 //
@@ -434,8 +414,7 @@ MPU9150Callback(void *pvCallbackData, uint_fast8_t ui8Status)
             // See if the ACCEL_CONFIG register was just modified.
             //
             if(psInst->uCommand.sReadModifyWriteState.pui8Buffer[0] ==
-               MPU9150_O_ACCEL_CONFIG)
-            {
+                    MPU9150_O_ACCEL_CONFIG) {
                 //
                 // Extract the FS_SEL from the ACCEL_CONFIG register value.
                 //
@@ -460,8 +439,7 @@ MPU9150Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if the state machine is now idle and there is a callback function.
     //
-    if((psInst->ui8State == MPU9150_STATE_IDLE) && psInst->pfnCallback)
-    {
+    if((psInst->ui8State == MPU9150_STATE_IDLE) && psInst->pfnCallback) {
         //
         // Call the application-supplied callback function.
         //
@@ -530,8 +508,7 @@ MPU9150Init(tMPU9150 *psInst, tI2CMInstance *psI2CInst,
     psInst->uCommand.pui8Buffer[0] = MPU9150_O_PWR_MGMT_1;
     psInst->uCommand.pui8Buffer[1] = MPU9150_PWR_MGMT_1_DEVICE_RESET;
     if(I2CMWrite(psInst->psI2CInst, psInst->ui8Addr,
-                 psInst->uCommand.pui8Buffer, 2, MPU9150Callback, psInst) == 0)
-    {
+                 psInst->uCommand.pui8Buffer, 2, MPU9150Callback, psInst) == 0) {
         psInst->ui8State = MPU9150_STATE_IDLE;
         return(0);
     }
@@ -590,8 +567,7 @@ MPU9150Read(tMPU9150 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     // Return a failure if the MPU9150 driver is not idle (in other words,
     // there is already an outstanding request to the MPU9150).
     //
-    if(psInst->ui8State != MPU9150_STATE_IDLE)
-    {
+    if(psInst->ui8State != MPU9150_STATE_IDLE) {
         return(0);
     }
 
@@ -612,8 +588,7 @@ MPU9150Read(tMPU9150 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     psInst->uCommand.pui8Buffer[0] = ui8Reg;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
                 psInst->uCommand.pui8Buffer, 1, pui8Data, ui16Count,
-                MPU9150Callback, psInst) == 0)
-    {
+                MPU9150Callback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -658,8 +633,7 @@ MPU9150Write(tMPU9150 *psInst, uint_fast8_t ui8Reg, const uint8_t *pui8Data,
     // Return a failure if the MPU9150 driver is not idle (in other words,
     // there is already an outstanding request to the MPU9150).
     //
-    if(psInst->ui8State != MPU9150_STATE_IDLE)
-    {
+    if(psInst->ui8State != MPU9150_STATE_IDLE) {
         return(0);
     }
 
@@ -673,14 +647,12 @@ MPU9150Write(tMPU9150 *psInst, uint_fast8_t ui8Reg, const uint8_t *pui8Data,
     // See if the PWR_MGMT_1 register is being written.
     //
     if((ui8Reg <= MPU9150_O_PWR_MGMT_1) &&
-       ((ui8Reg + ui16Count) > MPU9150_O_PWR_MGMT_1))
-    {
+            ((ui8Reg + ui16Count) > MPU9150_O_PWR_MGMT_1)) {
         //
         // See if a soft reset is being requested.
         //
         if(pui8Data[ui8Reg - MPU9150_O_PWR_MGMT_1] &
-           MPU9150_PWR_MGMT_1_DEVICE_RESET)
-        {
+                MPU9150_PWR_MGMT_1_DEVICE_RESET) {
             //
             // Default range setting is +/- 2 g.
             //
@@ -697,8 +669,7 @@ MPU9150Write(tMPU9150 *psInst, uint_fast8_t ui8Reg, const uint8_t *pui8Data,
     // See if the GYRO_CONFIG register is being written.
     //
     if((ui8Reg <= MPU9150_O_GYRO_CONFIG) &&
-       ((ui8Reg + ui16Count) > MPU9150_O_GYRO_CONFIG))
-    {
+            ((ui8Reg + ui16Count) > MPU9150_O_GYRO_CONFIG)) {
         //
         // Extract the FS_SEL from the GYRO_CONFIG register value.
         //
@@ -711,8 +682,7 @@ MPU9150Write(tMPU9150 *psInst, uint_fast8_t ui8Reg, const uint8_t *pui8Data,
     // See if the ACCEL_CONFIG register is being written.
     //
     if((ui8Reg <= MPU9150_O_ACCEL_CONFIG) &&
-       ((ui8Reg + ui16Count) > MPU9150_O_ACCEL_CONFIG))
-    {
+            ((ui8Reg + ui16Count) > MPU9150_O_ACCEL_CONFIG)) {
         //
         // Extract the AFS_SEL from the ACCEL_CONFIG register value.
         //
@@ -732,8 +702,7 @@ MPU9150Write(tMPU9150 *psInst, uint_fast8_t ui8Reg, const uint8_t *pui8Data,
     //
     if(I2CMWrite8(&(psInst->uCommand.sWriteState), psInst->psI2CInst,
                   psInst->ui8Addr, ui8Reg, pui8Data, ui16Count,
-                  MPU9150Callback, psInst) == 0)
-    {
+                  MPU9150Callback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -781,8 +750,7 @@ MPU9150ReadModifyWrite(tMPU9150 *psInst, uint_fast8_t ui8Reg,
     // Return a failure if the MPU9150 driver is not idle (in other words,
     // there is already an outstanding request to the MPU9150).
     //
-    if(psInst->ui8State != MPU9150_STATE_IDLE)
-    {
+    if(psInst->ui8State != MPU9150_STATE_IDLE) {
         return(0);
     }
 
@@ -802,8 +770,7 @@ MPU9150ReadModifyWrite(tMPU9150 *psInst, uint_fast8_t ui8Reg,
     //
     if(I2CMReadModifyWrite8(&(psInst->uCommand.sReadModifyWriteState),
                             psInst->psI2CInst, psInst->ui8Addr, ui8Reg,
-                            ui8Mask, ui8Value, MPU9150Callback, psInst) == 0)
-    {
+                            ui8Mask, ui8Value, MPU9150Callback, psInst) == 0) {
         //
         // The I2C read-modify-write failed, so move to the idle state and
         // return a failure.
@@ -850,8 +817,7 @@ MPU9150DataRead(tMPU9150 *psInst, tSensorCallback *pfnCallback,
     // Return a failure if the MPU9150 driver is not idle (in other words,
     // there is already an outstanding request to the MPU9150).
     //
-    if(psInst->ui8State != MPU9150_STATE_IDLE)
-    {
+    if(psInst->ui8State != MPU9150_STATE_IDLE) {
         return(0);
     }
 
@@ -875,8 +841,7 @@ MPU9150DataRead(tMPU9150 *psInst, tSensorCallback *pfnCallback,
     psInst->uCommand.pui8Buffer[0] = MPU9150_O_ACCEL_XOUT_H;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
                 psInst->uCommand.pui8Buffer, 1, psInst->pui8Data, 22,
-                MPU9150Callback, psInst) == 0)
-    {
+                MPU9150Callback, psInst) == 0) {
         //
         // The I2C read failed, so move to the idle state and return a failure.
         //
@@ -916,16 +881,13 @@ MPU9150DataAccelGetRaw(tMPU9150 *psInst, uint_fast16_t *pui16AccelX,
     //
     // Return the raw accelerometer values.
     //
-    if(pui16AccelX)
-    {
+    if(pui16AccelX) {
         *pui16AccelX = (psInst->pui8Data[0] << 8) | psInst->pui8Data[1];
     }
-    if(pui16AccelY)
-    {
+    if(pui16AccelY) {
         *pui16AccelY = (psInst->pui8Data[2] << 8) | psInst->pui8Data[3];
     }
-    if(pui16AccelZ)
-    {
+    if(pui16AccelZ) {
         *pui16AccelZ = (psInst->pui8Data[4] << 8) | psInst->pui8Data[5];
     }
 }
@@ -963,18 +925,15 @@ MPU9150DataAccelGetFloat(tMPU9150 *psInst, float *pfAccelX, float *pfAccelY,
     //
     // Convert the accelerometer values into m/sec^2
     //
-    if(pfAccelX)
-    {
+    if(pfAccelX) {
         *pfAccelX = ((float)(int16_t)((psInst->pui8Data[0] << 8) |
                                       psInst->pui8Data[1]) * fFactor);
     }
-    if(pfAccelY)
-    {
+    if(pfAccelY) {
         *pfAccelY = ((float)(int16_t)((psInst->pui8Data[2] << 8) |
                                       psInst->pui8Data[3]) * fFactor);
     }
-    if(pfAccelZ)
-    {
+    if(pfAccelZ) {
         *pfAccelZ = ((float)(int16_t)((psInst->pui8Data[4] << 8) |
                                       psInst->pui8Data[5]) * fFactor);
     }
@@ -1006,16 +965,13 @@ MPU9150DataGyroGetRaw(tMPU9150 *psInst, uint_fast16_t *pui16GyroX,
     //
     // Return the raw gyroscope values.
     //
-    if(pui16GyroX)
-    {
+    if(pui16GyroX) {
         *pui16GyroX = (psInst->pui8Data[8] << 8) | psInst->pui8Data[9];
     }
-    if(pui16GyroY)
-    {
+    if(pui16GyroY) {
         *pui16GyroY = (psInst->pui8Data[10] << 8) | psInst->pui8Data[11];
     }
-    if(pui16GyroZ)
-    {
+    if(pui16GyroZ) {
         *pui16GyroZ = (psInst->pui8Data[12] << 8) | psInst->pui8Data[13];
     }
 }
@@ -1054,24 +1010,21 @@ MPU9150DataGyroGetFloat(tMPU9150 *psInst, float *pfGyroX, float *pfGyroY,
     //
     // Convert the gyroscope values into rad/sec
     //
-    if(pfGyroX)
-    {
+    if(pfGyroX) {
         i16Temp = (int16_t)psInst->pui8Data[8];
         i16Temp <<= 8;
         i16Temp += psInst->pui8Data[9];
         *pfGyroX = (float)i16Temp;
         *pfGyroX *= fFactor;
     }
-    if(pfGyroY)
-    {
+    if(pfGyroY) {
         i16Temp = (int16_t)psInst->pui8Data[10];
         i16Temp <<= 8;
         i16Temp += psInst->pui8Data[11];
         *pfGyroY = (float)i16Temp;
         *pfGyroY *= fFactor;
     }
-    if(pfGyroZ)
-    {
+    if(pfGyroZ) {
         i16Temp = (int16_t)psInst->pui8Data[12];
         i16Temp <<= 8;
         i16Temp += psInst->pui8Data[13];
@@ -1111,16 +1064,13 @@ MPU9150DataMagnetoGetRaw(tMPU9150 *psInst, uint_fast16_t *pui16MagnetoX,
     //
     // Return the raw magnetometer values.
     //
-    if(pui16MagnetoX)
-    {
+    if(pui16MagnetoX) {
         *pui16MagnetoX = (pui8ExtSensData[2] << 8) | pui8ExtSensData[1];
     }
-    if(pui16MagnetoY)
-    {
+    if(pui16MagnetoY) {
         *pui16MagnetoY = (pui8ExtSensData[4] << 8) | pui8ExtSensData[3];
     }
-    if(pui16MagnetoZ)
-    {
+    if(pui16MagnetoZ) {
         *pui16MagnetoZ = (pui8ExtSensData[6] << 8) | pui8ExtSensData[5];
     }
 }
@@ -1155,18 +1105,15 @@ MPU9150DataMagnetoGetFloat(tMPU9150 *psInst, float *pfMagnetoX,
     //
     // Convert the magnetometer values into floating-point tesla values.
     //
-    if(pfMagnetoX)
-    {
+    if(pfMagnetoX) {
         *pfMagnetoX = (float)pi16Data[0];
         *pfMagnetoX *= CONVERT_TO_TESLA;
     }
-    if(pfMagnetoY)
-    {
+    if(pfMagnetoY) {
         *pfMagnetoY = (float)pi16Data[1];
         *pfMagnetoY *= CONVERT_TO_TESLA;
     }
-    if(pfMagnetoZ)
-    {
+    if(pfMagnetoZ) {
         *pfMagnetoZ = (float)pi16Data[2];
         *pfMagnetoZ *= CONVERT_TO_TESLA;
     }

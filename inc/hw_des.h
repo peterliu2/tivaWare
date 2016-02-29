@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -122,7 +122,7 @@
 //
 //*****************************************************************************
 #define DES_IV_L_M              0xFFFFFFFF  // Initialization vector for CBC,
-                                            // CFB modes (LSW)
+// CFB modes (LSW)
 #define DES_IV_L_S              0
 
 //*****************************************************************************
@@ -131,7 +131,7 @@
 //
 //*****************************************************************************
 #define DES_IV_H_M              0xFFFFFFFF  // Initialization vector for CBC,
-                                            // CFB modes (MSW)
+// CFB modes (MSW)
 #define DES_IV_H_S              0
 
 //*****************************************************************************
@@ -140,22 +140,22 @@
 //
 //*****************************************************************************
 #define DES_CTRL_CONTEXT        0x80000000  // If 1, this read-only status bit
-                                            // indicates that the context data
-                                            // registers can be overwritten and
-                                            // the host is permitted to write
-                                            // the next context
+// indicates that the context data
+// registers can be overwritten and
+// the host is permitted to write
+// the next context
 #define DES_CTRL_MODE_M         0x00000030  // Select CBC, ECB or CFB mode0x0:
-                                            // ECB mode0x1: CBC mode0x2: CFB
-                                            // mode0x3: reserved
+// ECB mode0x1: CBC mode0x2: CFB
+// mode0x3: reserved
 #define DES_CTRL_TDES           0x00000008  // Select DES or triple DES
-                                            // encryption/decryption
+// encryption/decryption
 #define DES_CTRL_DIRECTION      0x00000004  // Select encryption/decryption
-                                            // 0x0: decryption is selected0x1:
-                                            // Encryption is selected
+// 0x0: decryption is selected0x1:
+// Encryption is selected
 #define DES_CTRL_INPUT_READY    0x00000002  // When 1, ready to encrypt/decrypt
-                                            // data
+// data
 #define DES_CTRL_OUTPUT_READY   0x00000001  // When 1, Data decrypted/encrypted
-                                            // ready
+// ready
 #define DES_CTRL_MODE_S         4
 
 //*****************************************************************************
@@ -164,7 +164,7 @@
 //
 //*****************************************************************************
 #define DES_LENGTH_M            0xFFFFFFFF  // Cryptographic data length in
-                                            // bytes for all modes
+// bytes for all modes
 #define DES_LENGTH_S            0
 
 //*****************************************************************************
@@ -173,7 +173,7 @@
 //
 //*****************************************************************************
 #define DES_DATA_L_M            0xFFFFFFFF  // Data for encryption/decryption,
-                                            // LSW
+// LSW
 #define DES_DATA_L_S            0
 
 //*****************************************************************************
@@ -182,7 +182,7 @@
 //
 //*****************************************************************************
 #define DES_DATA_H_M            0xFFFFFFFF  // Data for encryption/decryption,
-                                            // MSW
+// MSW
 #define DES_DATA_H_S            0
 
 //*****************************************************************************
@@ -225,14 +225,14 @@
 //
 //*****************************************************************************
 #define DES_IRQSTATUS_DATA_OUT  0x00000004  // This bit indicates data output
-                                            // interrupt is active and triggers
-                                            // the interrupt output
+// interrupt is active and triggers
+// the interrupt output
 #define DES_IRQSTATUS_DATA_IN   0x00000002  // This bit indicates data input
-                                            // interrupt is active and triggers
-                                            // the interrupt output
+// interrupt is active and triggers
+// the interrupt output
 #define DES_IRQSTATUS_CONTEX_IN 0x00000001  // This bit indicates context
-                                            // interrupt is active and triggers
-                                            // the interrupt output
+// interrupt is active and triggers
+// the interrupt output
 
 //*****************************************************************************
 //
@@ -242,12 +242,12 @@
 //*****************************************************************************
 #define DES_IRQENABLE_M_DATA_OUT                                              \
                                 0x00000004  // If this bit is set to 1 the data
-                                            // output interrupt is enabled
+// output interrupt is enabled
 #define DES_IRQENABLE_M_DATA_IN 0x00000002  // If this bit is set to 1 the data
-                                            // input interrupt is enabled
+// input interrupt is enabled
 #define DES_IRQENABLE_M_CONTEX_IN                                             \
                                 0x00000001  // If this bit is set to 1 the
-                                            // context interrupt is enabled
+// context interrupt is enabled
 
 //*****************************************************************************
 //
@@ -256,11 +256,11 @@
 //
 //*****************************************************************************
 #define DES_DIRTYBITS_S_DIRTY   0x00000002  // This bit is set to 1 by the
-                                            // module if any of the DES_*
-                                            // registers is written
+// module if any of the DES_*
+// registers is written
 #define DES_DIRTYBITS_S_ACCESS  0x00000001  // This bit is set to 1 by the
-                                            // module if any of the DES_*
-                                            // registers is read
+// module if any of the DES_*
+// registers is read
 
 //*****************************************************************************
 //
@@ -270,7 +270,7 @@
 #define DES_DMAIM_DOUT          0x00000004  // Data Out DMA Done Interrupt Mask
 #define DES_DMAIM_DIN           0x00000002  // Data In DMA Done Interrupt Mask
 #define DES_DMAIM_CIN           0x00000001  // Context In DMA Done Interrupt
-                                            // Mask
+// Mask
 
 //*****************************************************************************
 //
@@ -278,11 +278,11 @@
 //
 //*****************************************************************************
 #define DES_DMARIS_DOUT         0x00000004  // Data Out DMA Done Raw Interrupt
-                                            // Status
+// Status
 #define DES_DMARIS_DIN          0x00000002  // Data In DMA Done Raw Interrupt
-                                            // Status
+// Status
 #define DES_DMARIS_CIN          0x00000001  // Context In DMA Done Raw
-                                            // Interrupt Status
+// Interrupt Status
 
 //*****************************************************************************
 //
@@ -290,11 +290,11 @@
 //
 //*****************************************************************************
 #define DES_DMAMIS_DOUT         0x00000004  // Data Out DMA Done Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define DES_DMAMIS_DIN          0x00000002  // Data In DMA Done Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define DES_DMAMIS_CIN          0x00000001  // Context In DMA Done Raw
-                                            // Interrupt Status
+// Interrupt Status
 
 //*****************************************************************************
 //
@@ -302,9 +302,9 @@
 //
 //*****************************************************************************
 #define DES_DMAIC_DOUT          0x00000004  // Data Out DMA Done Interrupt
-                                            // Clear
+// Clear
 #define DES_DMAIC_DIN           0x00000002  // Data In DMA Done Interrupt Clear
 #define DES_DMAIC_CIN           0x00000001  // Context In DMA Done Raw
-                                            // Interrupt Status
+// Interrupt Status
 
 #endif // __HW_DES_H__

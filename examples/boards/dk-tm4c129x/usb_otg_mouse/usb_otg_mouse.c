@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -135,22 +135,17 @@ ModeCallback(uint32_t ui32Index, tUSBMode iMode)
     //
     g_iCurrentMode = iMode;
 
-    switch(iMode)
-    {
-        case eUSBModeHost:
-        {
+    switch(iMode) {
+        case eUSBModeHost: {
             break;
         }
-        case eUSBModeDevice:
-        {
+        case eUSBModeDevice: {
             break;
         }
-        case eUSBModeNone:
-        {
+        case eUSBModeNone: {
             break;
         }
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -200,8 +195,8 @@ main(void)
     // Run from the PLL at 120 MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Configure the device pins.
@@ -263,8 +258,7 @@ main(void)
     //
     // Loop forever.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Tell the OTG library code how much time has passed in milliseconds
         // since the last call.
@@ -274,8 +268,7 @@ main(void)
         //
         // Handle deferred state change.
         //
-        if(g_ui32NewState)
-        {
+        if(g_ui32NewState) {
             g_ui32NewState =0;
 
             //
@@ -286,36 +279,28 @@ main(void)
             //
             // Update the status bar with the new mode.
             //
-            switch(g_iCurrentMode)
-            {
-                case eUSBModeHost:
-                {
+            switch(g_iCurrentMode) {
+                case eUSBModeHost: {
                     UpdateStatus("Host Mode", 0, true);
                     break;
                 }
-                case eUSBModeDevice:
-                {
+                case eUSBModeDevice: {
                     UpdateStatus("Device Mode", 0, true);
                     break;
                 }
-                case eUSBModeNone:
-                {
+                case eUSBModeNone: {
                     UpdateStatus("Idle Mode\n", 0, true);
                     break;
                 }
-                default:
-                {
+                default: {
                     break;
                 }
             }
         }
 
-        if(g_iCurrentMode == eUSBModeDevice)
-        {
+        if(g_iCurrentMode == eUSBModeDevice) {
             DeviceMain();
-        }
-        else if(g_iCurrentMode == eUSBModeHost)
-        {
+        } else if(g_iCurrentMode == eUSBModeHost) {
             HostMain();
         }
     }

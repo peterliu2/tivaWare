@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C123GXL Firmware Package.
 //
 //*****************************************************************************
@@ -99,16 +99,15 @@ uint8_t g_ui8LinkDestIndex;
 // Link States.
 //
 //*****************************************************************************
-enum
-{
-  LINK_STATE_INIT,
-  LINK_STATE_READY,
-  LINK_STATE_PAIR,
-  LINK_STATE_NDATA,
-  LINK_STATE_UNPAIR,
-  LINK_STATE_TEST,
-  LINK_STATE_TEST_COMPLETED,
-  LINK_STATE_OAD
+enum {
+    LINK_STATE_INIT,
+    LINK_STATE_READY,
+    LINK_STATE_PAIR,
+    LINK_STATE_NDATA,
+    LINK_STATE_UNPAIR,
+    LINK_STATE_TEST,
+    LINK_STATE_TEST_COMPLETED,
+    LINK_STATE_OAD
 };
 
 //*****************************************************************************
@@ -126,11 +125,10 @@ bool g_bPressed;
 // List of implemented device types.
 //
 //*****************************************************************************
-const uint8_t pui8DevList[RTI_MAX_NUM_DEV_TYPES] =
-{
-  RTI_DEVICE_REMOTE_CONTROL,
-  RTI_DEVICE_RESERVED_INVALID,
-  RTI_DEVICE_RESERVED_INVALID
+const uint8_t pui8DevList[RTI_MAX_NUM_DEV_TYPES] = {
+    RTI_DEVICE_REMOTE_CONTROL,
+    RTI_DEVICE_RESERVED_INVALID,
+    RTI_DEVICE_RESERVED_INVALID
 };
 
 //*****************************************************************************
@@ -138,8 +136,7 @@ const uint8_t pui8DevList[RTI_MAX_NUM_DEV_TYPES] =
 // List of implemented profiles.
 //
 //*****************************************************************************
-const uint8_t pui8ProfileList[RTI_MAX_NUM_PROFILE_IDS] =
-{
+const uint8_t pui8ProfileList[RTI_MAX_NUM_PROFILE_IDS] = {
     RTI_PROFILE_ZRC, RTI_PROFILE_ZID, 0, 0, 0, 0, 0
 };
 
@@ -148,8 +145,7 @@ const uint8_t pui8ProfileList[RTI_MAX_NUM_PROFILE_IDS] =
 // List of possible target types.
 //
 //*****************************************************************************
-const unsigned char pucTargetList[RTI_MAX_NUM_SUPPORTED_TGT_TYPES] =
-{
+const unsigned char pucTargetList[RTI_MAX_NUM_SUPPORTED_TGT_TYPES] = {
     RTI_DEVICE_TELEVISION,
     RTI_DEVICE_VIDEO_PLAYER_RECORDER,
     RTI_DEVICE_SET_TOP_BOX,
@@ -216,13 +212,11 @@ ZIDConfigParams(void)
     // Button state at system reset will determine how we restore or clear
     // the RNP state and pairing information.
     //
-    switch(g_ui8Buttons & ALL_BUTTONS)
-    {
+    switch(g_ui8Buttons & ALL_BUTTONS) {
         //
         // Right button is pressed at startup.
         //
-        case RIGHT_BUTTON:
-        {
+        case RIGHT_BUTTON: {
             //
             // Set ui8 to completely clear all configuration and state data
             // from the RNP.
@@ -234,8 +228,7 @@ ZIDConfigParams(void)
         //
         // Left button is pressed at startup
         //
-        case LEFT_BUTTON:
-        {
+        case LEFT_BUTTON: {
             //
             // Clear just the state information. Configuration is kept.
             //
@@ -247,8 +240,7 @@ ZIDConfigParams(void)
         // some other button or lack of button press operation was present at
         // startup.
         //
-        default:
-        {
+        default: {
             //
             // Restore all state and configuration
             //
@@ -262,8 +254,7 @@ ZIDConfigParams(void)
     // button status.
     //
     ui8Status = RTI_WriteItem(RTI_CP_ITEM_STARTUP_CTRL, 1, pui8Value);
-    if(ui8Status != RTI_SUCCESS)
-    {
+    if(ui8Status != RTI_SUCCESS) {
     }
 
     //
@@ -271,13 +262,11 @@ ZIDConfigParams(void)
     // restore the previous state then we need to re-configure the RNP.
     // If we are set to RESTORE then we can skip this configuration section.
     //
-    if((ui8Status == RTI_SUCCESS)  && (pui8Value[0] != eRTI_RESTORE_STATE))
-    {
+    if((ui8Status == RTI_SUCCESS)  && (pui8Value[0] != eRTI_RESTORE_STATE)) {
         ui8Status = RTI_WriteItem(RTI_CP_ITEM_NODE_SUPPORTED_TGT_TYPES,
-                                 RTI_MAX_NUM_SUPPORTED_TGT_TYPES,
-                                 pucTargetList);
-        if(ui8Status != RTI_SUCCESS)
-        {
+                                  RTI_MAX_NUM_SUPPORTED_TGT_TYPES,
+                                  pucTargetList);
+        if(ui8Status != RTI_SUCCESS) {
         }
 
         //
@@ -287,26 +276,23 @@ ZIDConfigParams(void)
         //
         ui8Tmp = 0x22;
         ui8Status = RTI_WriteItem( RTI_CP_ITEM_APPL_CAPABILITIES, 1, &ui8Tmp);
-        if (ui8Status != RTI_SUCCESS)
-        {
+        if (ui8Status != RTI_SUCCESS) {
         }
 
         //
         // Write the list of supported device types to the RNP
         //
         ui8Status = RTI_WriteItem(RTI_CP_ITEM_APPL_DEV_TYPE_LIST,
-                                 RTI_MAX_NUM_DEV_TYPES, pui8DevList);
-        if(ui8Status != RTI_SUCCESS)
-        {
+                                  RTI_MAX_NUM_DEV_TYPES, pui8DevList);
+        if(ui8Status != RTI_SUCCESS) {
         }
 
         //
         // Write the list of supported profiles to the RNP.
         //
         ui8Status = RTI_WriteItem(RTI_CP_ITEM_APPL_PROFILE_ID_LIST,
-                                 RTI_MAX_NUM_PROFILE_IDS, pui8ProfileList);
-        if(ui8Status != RTI_SUCCESS)
-        {
+                                  RTI_MAX_NUM_PROFILE_IDS, pui8ProfileList);
+        if(ui8Status != RTI_SUCCESS) {
         }
 
         //
@@ -315,8 +301,7 @@ ZIDConfigParams(void)
         //
         ui8Tmp = 0x07;
         ui8Status = RTI_WriteItem(RTI_CP_ITEM_NODE_CAPABILITIES, 1, &ui8Tmp);
-        if(ui8Status != RTI_SUCCESS)
-        {
+        if(ui8Status != RTI_SUCCESS) {
         }
 
         //
@@ -325,17 +310,15 @@ ZIDConfigParams(void)
         pui8Value[0] = (uint8_t) (RTI_VENDOR_TEXAS_INSTRUMENTS & 0xFF);
         pui8Value[1] = (uint8_t) (RTI_VENDOR_TEXAS_INSTRUMENTS >> 8);
         ui8Status = RTI_WriteItem(RTI_CP_ITEM_VENDOR_ID, 2, pui8Value);
-        if(ui8Status != RTI_SUCCESS)
-        {
+        if(ui8Status != RTI_SUCCESS) {
         }
 
         //
         // Write the string version of vendor name to the RNP.
         //
         ui8Status = RTI_WriteItem(RTI_CP_ITEM_VENDOR_NAME,
-                                 sizeof(pui8VendorName), pui8VendorName);
-        if(ui8Status != RTI_SUCCESS)
-        {
+                                  sizeof(pui8VendorName), pui8VendorName);
+        if(ui8Status != RTI_SUCCESS) {
         }
 
         //
@@ -344,9 +327,8 @@ ZIDConfigParams(void)
         pui8Value[0] = (uint8_t) (1000 & 0xFF);
         pui8Value[1] = (uint8_t) (1000 >> 8);
         ui8Status = RTI_WriteItem(RTI_CP_ITEM_STDBY_DEFAULT_DUTY_CYCLE, 2,
-                                 pui8Value);
-        if(ui8Status != RTI_SUCCESS)
-        {
+                                  pui8Value);
+        if(ui8Status != RTI_SUCCESS) {
         }
     }
 }
@@ -366,12 +348,9 @@ ZIDSendMouseReport(uint8_t ui8MouseButtons, int8_t i8DeltaX,
     //
     // Set reliable control pipe mode for mouse clicks.
     //
-    if(ui8MouseButtons == 0)
-    {
+    if(ui8MouseButtons == 0) {
         ui8TXOptions = ZID_TX_OPTIONS_INTERRUPT_PIPE;
-    }
-    else
-    {
+    } else {
         ui8TXOptions = ZID_TX_OPTIONS_CONTROL_PIPE;
     }
 
@@ -425,9 +404,9 @@ ZIDSendKeyboardReport(tZIDKeyboardData *psKeys)
     //
     g_vui8LinkState = LINK_STATE_NDATA;
     RTI_SendDataReq(g_ui8LinkDestIndex, RTI_PROFILE_ZID,
-                   RTI_VENDOR_TEXAS_INSTRUMENTS, ui8TXOptions,
-                   ZID_KEYBOARD_REPORT_LENGTH + 2,
-                   (uint8_t *) &sZIDReport);
+                    RTI_VENDOR_TEXAS_INSTRUMENTS, ui8TXOptions,
+                    ZID_KEYBOARD_REPORT_LENGTH + 2,
+                    (uint8_t *) &sZIDReport);
 }
 
 //*****************************************************************************
@@ -457,22 +436,21 @@ ZIDSelectInitialTargetDevice(void)
     // Read the number of active pairing entries.
     //
     ui8ReadStatus = RTI_ReadItemEx(RTI_PROFILE_RTI,
-                                  RTI_SA_ITEM_PT_NUMBER_OF_ACTIVE_ENTRIES, 1,
-                                  &ui8ActiveEntries);
+                                   RTI_SA_ITEM_PT_NUMBER_OF_ACTIVE_ENTRIES, 1,
+                                   &ui8ActiveEntries);
 
     //
     // Determine if read was successful and their are active pairing entries
     // present.
     //
-    if((ui8ReadStatus == RTI_SUCCESS) && (ui8ActiveEntries != 0))
-    {
+    if((ui8ReadStatus == RTI_SUCCESS) && (ui8ActiveEntries != 0)) {
         //
         // Set the Current LinkDestIndex to the most recent active entry.
         //
         g_ui8LinkDestIndex = ui8ActiveEntries - 1;
         g_vui8LinkState = LINK_STATE_READY;
         RTI_WriteItemEx(RTI_PROFILE_RTI, RTI_SA_ITEM_PT_CURRENT_ENTRY_INDEX, 1,
-                            &g_ui8LinkDestIndex);
+                        &g_ui8LinkDestIndex);
     }
     return(g_ui8LinkDestIndex);
 }
@@ -510,8 +488,7 @@ RTI_InitCnf(uint8_t ui8Status)
     //
     // Verify return status.
     //
-    if (ui8Status == RTI_SUCCESS)
-    {
+    if (ui8Status == RTI_SUCCESS) {
         //
         // Make sure startup control is now set back to RESTORE mode.
         //
@@ -524,15 +501,13 @@ RTI_InitCnf(uint8_t ui8Status)
         ui8Status = RTI_ReadItemEx(RTI_PROFILE_RTI,
                                    RTI_CONST_ITEM_MAX_PAIRING_TABLE_ENTRIES,
                                    1, &ui8MaxEntries);
-        if(ui8Status != RTI_SUCCESS)
-        {
+        if(ui8Status != RTI_SUCCESS) {
         }
 
         //
         // Verify that read was successful.
         //
-        if(ui8Status == RTI_SUCCESS)
-        {
+        if(ui8Status == RTI_SUCCESS) {
             //
             // Select initial target device type currently, this routine finds
             // the first pairing entry index, if one exists. If a valid entry
@@ -541,8 +516,7 @@ RTI_InitCnf(uint8_t ui8Status)
             // active pairing entry.
             //
             ui8DestIndex = ZIDSelectInitialTargetDevice();
-            if(ui8DestIndex == RTI_INVALID_PAIRING_REF)
-            {
+            if(ui8DestIndex == RTI_INVALID_PAIRING_REF) {
                 //
                 // A valid pairing index was not found.
                 // Delay briefly so we don't overrun the RPI buffers.
@@ -560,9 +534,7 @@ RTI_InitCnf(uint8_t ui8Status)
                 //
                 g_vui8LinkState = LINK_STATE_PAIR;
                 g_ui32RGBLPRFBlinkCounter = g_ui32SysTickCount;
-            }
-            else
-            {
+            } else {
                 //
                 // Turn on the LED to show we paired and ready.
                 //
@@ -589,8 +561,7 @@ RTI_PairCnf(uint8_t ui8Status, uint8_t ui8DestIndex,
     //
     // Determine if the Pair attempt was successful.
     //
-    if(ui8Status == RTI_SUCCESS)
-    {
+    if(ui8Status == RTI_SUCCESS) {
         //
         // Save the destination index we got back from our successful pairing.
         // Write that value back to the RNP so it knows this is the current
@@ -606,9 +577,7 @@ RTI_PairCnf(uint8_t ui8Status, uint8_t ui8DestIndex,
         //
         g_pui32RGBColors[GREEN] = 0x4000;
         RGBColorSet(g_pui32RGBColors);
-    }
-    else
-    {
+    } else {
         //
         // Turn off the LED to show pairing failed.
         //
@@ -633,8 +602,7 @@ RTI_PairAbortCnf(uint8_t ui8Status)
     //
     // Reset the link state.
     //
-    if (LINK_STATE_PAIR == g_vui8LinkState)
-    {
+    if (LINK_STATE_PAIR == g_vui8LinkState) {
         g_vui8LinkState = LINK_STATE_READY;
     }
 }
@@ -703,8 +671,7 @@ RTI_SendDataCnf(uint8_t ui8Status)
     //
     // Set the link state to ready.
     //
-    if (g_vui8LinkState == LINK_STATE_NDATA)
-    {
+    if (g_vui8LinkState == LINK_STATE_NDATA) {
         g_vui8LinkState = LINK_STATE_READY;
     }
 
@@ -761,8 +728,7 @@ RTI_DisableSleepCnf(uint8_t ui8Status)
     // RNP is now awake, if we don't have a pairing link then start the pair
     // process.
     //
-    if(g_ui8LinkDestIndex == RTI_INVALID_PAIRING_REF)
-    {
+    if(g_ui8LinkDestIndex == RTI_INVALID_PAIRING_REF) {
         RTI_PairReq();
     }
 }
@@ -783,8 +749,7 @@ RTI_ReceiveDataInd(uint8_t ui8SrcIndex, uint8_t ui8ProfileId,
     //
     // Verify the profile ID.
     //
-    if (ui8ProfileId == RTI_PROFILE_ZID)
-    {
+    if (ui8ProfileId == RTI_PROFILE_ZID) {
         //
         // What is the command coming from the RNP.?
         //
@@ -793,8 +758,7 @@ RTI_ReceiveDataInd(uint8_t ui8SrcIndex, uint8_t ui8ProfileId,
         //
         // If this is a get report command then process it.
         //
-        if (ui8Command == ZID_CMD_GET_REPORT)
-        {
+        if (ui8Command == ZID_CMD_GET_REPORT) {
             //
             // parses the pui8Data into a mouse or keyboard report from the
             // RNP.
@@ -848,10 +812,8 @@ RTI_AsynchMsgProcess(void)
     //
     RemoTIUARTGetMsg((uint8_t *) &sMsg, NPI_MAX_DATA_LEN);
 
-    if ((sMsg.ui8SubSystem & 0x1F) == RPC_SYS_RCAF)
-    {
-        switch((unsigned long) sMsg.ui8CommandID)
-        {
+    if ((sMsg.ui8SubSystem & 0x1F) == RPC_SYS_RCAF) {
+        switch((unsigned long) sMsg.ui8CommandID) {
             case RTIS_CMD_ID_RTI_INIT_CNF:
                 RTI_InitCnf(sMsg.pui8Data[0]);
                 break;
@@ -961,8 +923,7 @@ LPRFMain(void)
     // First determine if we need to process a asynchronous message, such as
     // a send data confirmation or pairing confirmation.
     //
-    while(HWREGBITW(&g_ui32Events, LPRF_EVENT) != 0)
-    {
+    while(HWREGBITW(&g_ui32Events, LPRF_EVENT) != 0) {
         //
         // Processes the message and calls the appropriate RTI callback.
         //
@@ -971,19 +932,16 @@ LPRFMain(void)
         //
         // Clear the event flag.
         //
-        if(RemoTIUARTGetRxMsgCount() == 0)
-        {
+        if(RemoTIUARTGetRxMsgCount() == 0) {
             HWREGBITW(&g_ui32Events, LPRF_EVENT) = 0;
         }
     }
 
-    if(g_vui8LinkState == LINK_STATE_PAIR)
-    {
+    if(g_vui8LinkState == LINK_STATE_PAIR) {
         //
         // Pairing in process so do a steady quick blink of the LED.
         //
-        if(g_ui32SysTickCount > (g_ui32RGBLPRFBlinkCounter + 20))
-        {
+        if(g_ui32SysTickCount > (g_ui32RGBLPRFBlinkCounter + 20)) {
             //
             // 20 ticks have expired since we last toggled so turn off the
             // LED and reset the counter.
@@ -991,9 +949,7 @@ LPRFMain(void)
             g_ui32RGBLPRFBlinkCounter = g_ui32SysTickCount;
             g_pui32RGBColors[GREEN] = 0;
             RGBColorSet(g_pui32RGBColors);
-        }
-        else if(g_ui32SysTickCount == (g_ui32RGBLPRFBlinkCounter + 10))
-        {
+        } else if(g_ui32SysTickCount == (g_ui32RGBLPRFBlinkCounter + 10)) {
             //
             // 10 ticks have expired since the last counter reset.  turn
             // on the RED LED.
@@ -1001,28 +957,22 @@ LPRFMain(void)
             g_pui32RGBColors[GREEN] = 0x4000;
             RGBColorSet(g_pui32RGBColors);
         }
-    }
-    else if((g_vui8LinkState == LINK_STATE_READY) &&
-            (HWREGBITW(&g_ui32USBFlags, FLAG_CONNECTED) == 0))
-    {
+    } else if((g_vui8LinkState == LINK_STATE_READY) &&
+              (HWREGBITW(&g_ui32USBFlags, FLAG_CONNECTED) == 0)) {
         //
         // Link is ready and USB is NOT connected so we can send mouse or
         // keyboard data. Get the desired mouse behaviors from the Motion
         // system.
         //
         bSendIt = MotionMouseGet(&i8DeltaX, &i8DeltaY, &ui8Buttons);
-        if((g_ui8Buttons & ALL_BUTTONS) != (g_ui8LPRFButtonsPrev))
-        {
+        if((g_ui8Buttons & ALL_BUTTONS) != (g_ui8LPRFButtonsPrev)) {
             bButtonChange = true;
             g_ui8LPRFButtonsPrev = (g_ui8Buttons & ALL_BUTTONS);
-        }
-        else
-        {
+        } else {
             bButtonChange = false;
         }
 
-        if(bSendIt || bButtonChange)
-        {
+        if(bSendIt || bButtonChange) {
             //
             // Override the motion button action locally.  Motion currently
             // does not implement button behavior.
@@ -1046,8 +996,7 @@ LPRFMain(void)
         // Check if i had previously pressed some keyboard keys.  If not look
         // for new keys. If keyboard is pressed send the key release.
         //
-        if(!g_bPressed)
-        {
+        if(!g_bPressed) {
             //
             // Keyboard not already pressed. Get the Keyboard behaviors from
             // the motion system.
@@ -1060,8 +1009,7 @@ LPRFMain(void)
             // If motion has something new then send it over the air and set
             // the flag to indicate a key is pressed.
             //
-            if(bSendIt)
-            {
+            if(bSendIt) {
                 //
                 // Turn off the LED to show we are sending data
                 //
@@ -1074,9 +1022,7 @@ LPRFMain(void)
                 ZIDSendKeyboardReport(&g_sZIDKeys);
                 g_bPressed = true;
             }
-        }
-        else
-        {
+        } else {
             //
             // Clear the pressed flag to show we have complete this key press
             // and release cycle.
@@ -1087,8 +1033,7 @@ LPRFMain(void)
             // A modifier key may have been pressed.  If hold is set then leave
             // the key in the report.  If hold is false clear the key.
             //
-            if(!g_bModifierHold)
-            {
+            if(!g_bModifierHold) {
                 g_sZIDKeys.ui8Modifiers = 0;
                 bSendIt = true;
             }
@@ -1097,8 +1042,7 @@ LPRFMain(void)
             // A usage key may have been pressed.  If hold is set then leave
             // the key in the report.  If hold is false clear the key.
             //
-            if(!g_bKeyHold)
-            {
+            if(!g_bKeyHold) {
                 g_sZIDKeys.pui8Keys[0] = 0;
                 bSendIt = true;
             }
@@ -1106,8 +1050,7 @@ LPRFMain(void)
             //
             // If the report changed then send it.
             //
-            if(bSendIt)
-            {
+            if(bSendIt) {
                 //
                 // Turn off the LED to show we are ready to sending data
                 //

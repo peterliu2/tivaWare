@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -67,16 +67,14 @@ TMP100Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     // to the idle state (which will also result in a callback to propagate the
     // error).
     //
-    if(ui8Status != I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status != I2CM_STATUS_SUCCESS) {
         psInst->ui8State = TMP100_STATE_IDLE;
     }
 
     //
     // Determine the current state of the TMP100 state machine.
     //
-    switch(psInst->ui8State)
-    {
+    switch(psInst->ui8State) {
         //
         // All states that trivially transition to IDLE, and all unknown
         // states.
@@ -85,8 +83,7 @@ TMP100Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         case TMP100_STATE_READ:
         case TMP100_STATE_WRITE:
         case TMP100_STATE_RMW:
-        default:
-        {
+        default: {
             //
             // The state machine is now idle.
             //
@@ -102,8 +99,7 @@ TMP100Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if the state machine is now idle and there is a callback function.
     //
-    if((psInst->ui8State == TMP100_STATE_IDLE) && psInst->pfnCallback)
-    {
+    if((psInst->ui8State == TMP100_STATE_IDLE) && psInst->pfnCallback) {
         //
         // Call the application-supplied callback function.
         //
@@ -157,8 +153,7 @@ TMP100Init(tTMP100 *psInst, tI2CMInstance *psI2CInst, uint_fast8_t ui8I2CAddr,
     // Write the reset bit and issue a callback when finished.
     //
     if(I2CMWrite(psInst->psI2CInst, ui8I2CAddr, psInst->pui8Data, 2,
-                 TMP100Callback, psInst) == 0)
-    {
+                 TMP100Callback, psInst) == 0) {
         //
         // I2CMWrite failed so reset TMP100 state and return zero to indicate
         // failure.
@@ -205,8 +200,7 @@ TMP100Read(tTMP100 *psInst, uint_fast8_t ui8Reg, uint16_t *pui16Data,
     // Return a failure if the TMP100 driver is not idle (in other words, there
     // is already an outstanding request to the TMP100).
     //
-    if(psInst->ui8State != TMP100_STATE_IDLE)
-    {
+    if(psInst->ui8State != TMP100_STATE_IDLE) {
         return(0);
     }
 
@@ -224,8 +218,7 @@ TMP100Read(tTMP100 *psInst, uint_fast8_t ui8Reg, uint16_t *pui16Data,
     //
     // Read the requested registers from the TMP100.
     //
-    if(ui8Reg == TMP100_O_CONFIG)
-    {
+    if(ui8Reg == TMP100_O_CONFIG) {
         //
         // The configuration register is only one byte, so only a single byte
         // read is necessary and no endian swapping is required.
@@ -233,8 +226,7 @@ TMP100Read(tTMP100 *psInst, uint_fast8_t ui8Reg, uint16_t *pui16Data,
         psInst->uCommand.pui8Buffer[0] = ui8Reg;
         if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
                     psInst->uCommand.pui8Buffer, 1, (uint8_t *)pui16Data, 1,
-                    TMP100Callback, psInst) == 0)
-        {
+                    TMP100Callback, psInst) == 0) {
             //
             // The I2C write failed, so move to the idle state and return a
             // failure.
@@ -242,17 +234,14 @@ TMP100Read(tTMP100 *psInst, uint_fast8_t ui8Reg, uint16_t *pui16Data,
             psInst->ui8State = TMP100_STATE_IDLE;
             return(0);
         }
-    }
-    else
-    {
+    } else {
         //
         // This is one of the temperature registers, which are 16-bit
         // big-endian registers.
         //
         if(I2CMRead16BE(&(psInst->uCommand.sReadState), psInst->psI2CInst,
                         psInst->ui8Addr, ui8Reg, pui16Data, ui16Count,
-                        TMP100Callback, psInst) == 0)
-        {
+                        TMP100Callback, psInst) == 0) {
             //
             // The I2C write failed, so move to the idle state and return a
             // failure.
@@ -301,8 +290,7 @@ TMP100Write(tTMP100 *psInst, uint_fast8_t ui8Reg, const uint16_t *pui16Data,
     // Return a failure if the TMP100 driver is not idle (in other words, there
     // is already an outstanding request to the TMP100).
     //
-    if(psInst->ui8State != TMP100_STATE_IDLE)
-    {
+    if(psInst->ui8State != TMP100_STATE_IDLE) {
         return(0);
     }
 
@@ -320,8 +308,7 @@ TMP100Write(tTMP100 *psInst, uint_fast8_t ui8Reg, const uint16_t *pui16Data,
     //
     // Write the requested registers to the TMP100.
     //
-    if(ui8Reg == TMP100_O_CONFIG)
-    {
+    if(ui8Reg == TMP100_O_CONFIG) {
         //
         // The configuration register is only one byte, so only a single byte
         // write is necessary and no endian swapping is required.
@@ -330,8 +317,7 @@ TMP100Write(tTMP100 *psInst, uint_fast8_t ui8Reg, const uint16_t *pui16Data,
         psInst->uCommand.pui8Buffer[1] = *pui16Data & 0xff;
         if(I2CMWrite(psInst->psI2CInst, psInst->ui8Addr,
                      psInst->uCommand.pui8Buffer, 2, TMP100Callback,
-                     psInst) == 0)
-        {
+                     psInst) == 0) {
             //
             // The I2C write failed, so move to the idle state and return a
             // failure.
@@ -339,17 +325,14 @@ TMP100Write(tTMP100 *psInst, uint_fast8_t ui8Reg, const uint16_t *pui16Data,
             psInst->ui8State = TMP100_STATE_IDLE;
             return(0);
         }
-    }
-    else
-    {
+    } else {
         //
         // This is one of the temperature registers, which are 16-bit
         // big-endian registers.
         //
         if(I2CMWrite16BE(&(psInst->uCommand.sWriteState), psInst->psI2CInst,
                          psInst->ui8Addr, ui8Reg, pui16Data, ui16Count,
-                         TMP100Callback, psInst) == 0)
-        {
+                         TMP100Callback, psInst) == 0) {
             //
             // The I2C write failed, so move to the idle state and return a
             // failure.
@@ -398,8 +381,7 @@ TMP100ReadModifyWrite(tTMP100 *psInst, uint_fast8_t ui8Reg,
     // Return a failure if the TMP100 driver is not idle (in other words, there
     // is already an outstanding request to the TMP100).
     //
-    if(psInst->ui8State != TMP100_STATE_IDLE)
-    {
+    if(psInst->ui8State != TMP100_STATE_IDLE) {
         return(0);
     }
 
@@ -417,8 +399,7 @@ TMP100ReadModifyWrite(tTMP100 *psInst, uint_fast8_t ui8Reg,
     //
     // Submit the read-modify-write request to the TMP100.
     //
-    if(ui8Reg == TMP100_O_CONFIG)
-    {
+    if(ui8Reg == TMP100_O_CONFIG) {
         //
         // The configuration register is only one byte, so only a single byte
         // read-modify-write is necessary and no endian swapping is required.
@@ -426,8 +407,7 @@ TMP100ReadModifyWrite(tTMP100 *psInst, uint_fast8_t ui8Reg,
         if(I2CMReadModifyWrite8(&(psInst->uCommand.sReadModifyWriteState8),
                                 psInst->psI2CInst, psInst->ui8Addr, ui8Reg,
                                 ui16Mask & 0xff, ui16Value & 0xff,
-                                TMP100Callback, psInst) == 0)
-        {
+                                TMP100Callback, psInst) == 0) {
             //
             // The I2C read-modify-write failed, so move to the idle state and
             // return a failure.
@@ -435,9 +415,7 @@ TMP100ReadModifyWrite(tTMP100 *psInst, uint_fast8_t ui8Reg,
             psInst->ui8State = TMP100_STATE_IDLE;
             return(0);
         }
-    }
-    else
-    {
+    } else {
         //
         // This is one of the temperature registers, which are 16-bit
         // big-endian registers.
@@ -445,8 +423,7 @@ TMP100ReadModifyWrite(tTMP100 *psInst, uint_fast8_t ui8Reg,
         if(I2CMReadModifyWrite16BE(&(psInst->uCommand.sReadModifyWriteState16),
                                    psInst->psI2CInst, psInst->ui8Addr, ui8Reg,
                                    ui16Mask, ui16Value, TMP100Callback,
-                                   psInst) == 0)
-        {
+                                   psInst) == 0) {
             //
             // The I2C read-modify-write failed, so move to the idle state and
             // return a failure.
@@ -489,8 +466,7 @@ TMP100DataRead(tTMP100 *psInst, tSensorCallback *pfnCallback,
     // Return a failure if the TMP100 driver is not idle (in other words, there
     // is already an outstanding request to the TMP100).
     //
-    if(psInst->ui8State != TMP100_STATE_IDLE)
-    {
+    if(psInst->ui8State != TMP100_STATE_IDLE) {
         return(0);
     }
 
@@ -511,8 +487,7 @@ TMP100DataRead(tTMP100 *psInst, tSensorCallback *pfnCallback,
     psInst->uCommand.pui8Buffer[0] = TMP100_O_TEMP;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
                 psInst->uCommand.pui8Buffer, 1, psInst->pui8Data, 2,
-                TMP100Callback, psInst) == 0)
-    {
+                TMP100Callback, psInst) == 0) {
         //
         // The I2C read failed, so move to the idle state and return a failure.
         //

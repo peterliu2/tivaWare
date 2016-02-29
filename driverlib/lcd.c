@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -332,12 +332,9 @@ LCDIDDTimingSet(uint32_t ui32Base, uint32_t ui32CS,
     //
     // Write the appropriate LCD LIDD CS configuration register.
     //
-    if(!ui32CS)
-    {
+    if(!ui32CS) {
         HWREG(ui32Base + LCD_O_LIDDCS0CFG) = ui32Val;
-    }
-    else
-    {
+    } else {
         HWREG(ui32Base + LCD_O_LIDDCS1CFG) = ui32Val;
     }
 }
@@ -747,15 +744,12 @@ LCDIDDDMAWrite(uint32_t ui32Base, uint32_t ui32CS, const uint32_t *pui32Data,
     //
     // Tell the controller which CS to use for the DMA transaction.
     //
-    if(!ui32CS)
-    {
+    if(!ui32CS) {
         //
         // Use CS0.
         //
         HWREG(ui32Base + LCD_O_LIDDCTL) &= ~LCD_LIDDCTL_DMACS;
-    }
-    else
-    {
+    } else {
         //
         // Use CS1.
         //
@@ -1392,30 +1386,25 @@ LCDRasterPaletteSet(uint32_t ui32Base, uint32_t ui32Type, uint32_t *pui32Addr,
     //
     // Are we converting the palette color format?
     //
-    if(ui32Type & LCD_PALETTE_SRC_24BIT)
-    {
+    if(ui32Type & LCD_PALETTE_SRC_24BIT) {
         //
         // Yes - loop through each of the supplied 24-bit colors converting
         // and storing each.
         //
         ui32Loop = 0;
-        while(ui32Count)
-        {
+        while(ui32Count) {
             pui16Pal[ui32Start + ui32Loop] =
                 PAL_FROM_RGB(pui32SrcColors[ui32Loop]);
             ui32Loop++;
             ui32Count--;
         }
-    }
-    else
-    {
+    } else {
         //
         // No - loop through the supplied 12-bit colors storing each.
         //
 
         pui16Src = (uint16_t *)pui32SrcColors;
-        while(ui32Count)
-        {
+        while(ui32Count) {
             pui16Pal[ui32Start] = pui16Src[ui32Start];
             ui32Start++;
             ui32Count--;
@@ -1487,17 +1476,14 @@ LCDRasterFrameBufferSet(uint32_t ui32Base, uint8_t ui8Buffer,
     //
     // Are we setting the values for frame buffer 0?
     //
-    if(!ui8Buffer)
-    {
+    if(!ui8Buffer) {
         //
         // Yes - set the registers for frame buffer 0.
         //
         HWREG(ui32Base + LCD_O_DMABAFB0) = (uint32_t)pui32Addr;
         HWREG(ui32Base + LCD_O_DMACAFB0) = (uint32_t)pui32Addr +
                                            ui32NumBytes - 4;
-    }
-    else
-    {
+    } else {
         //
         // No - set the registers for frame buffer 1.
         //
@@ -1647,15 +1633,12 @@ LCDIntStatus(uint32_t ui32Base, bool bMasked)
     //
     // Were we asked for the masked or raw interrupt status?
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         //
         // Return the masked interrupt status.
         //
         return(HWREG(ui32Base + LCD_O_MISCLR));
-    }
-    else
-    {
+    } else {
         //
         // Return the raw interrupts status.
         //

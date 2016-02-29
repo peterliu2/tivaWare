@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C123G Firmware Package.
 //
 //*****************************************************************************
@@ -86,8 +86,7 @@ static char g_pcBuf[40];
 // Text that will be displayed if there is an error.
 //
 //*****************************************************************************
-static char *g_pcErrorText[] =
-{
+static char *g_pcErrorText[] = {
     "The controller",
     "did not enter",
     "hibernate mode.",
@@ -125,8 +124,7 @@ void
 SysTickWait(uint32_t ui32Ticks)
 {
     ui32Ticks += g_ui32SysTickCount;
-    while(g_ui32SysTickCount <= ui32Ticks)
-    {
+    while(g_ui32SysTickCount <= ui32Ticks) {
     }
 }
 
@@ -154,8 +152,7 @@ SysTickHandler(void)
     //
     // See if the select button was just pressed.
     //
-    if(BUTTON_PRESSED(SELECT_BUTTON, ui8Data, ui8Delta))
-    {
+    if(BUTTON_PRESSED(SELECT_BUTTON, ui8Data, ui8Delta)) {
         //
         // Set a flag to indicate that the select button was just pressed.
         //
@@ -165,8 +162,7 @@ SysTickHandler(void)
     //
     // Else, see if the select button was just released.
     //
-    if(BUTTON_RELEASED(SELECT_BUTTON, ui8Data, ui8Delta))
-    {
+    if(BUTTON_RELEASED(SELECT_BUTTON, ui8Data, ui8Delta)) {
         //
         // Clear the button pressed flag.
         //
@@ -306,8 +302,7 @@ main(void)
     // Check to see if Hibernation module is already active, which could mean
     // that the processor is waking from a hibernation.
     //
-    if(HibernateIsActive())
-    {
+    if(HibernateIsActive()) {
         //
         // Read the status bits to see what caused the wake.
         //
@@ -317,8 +312,7 @@ main(void)
         //
         // Wake was due to the push button.
         //
-        if(ui32Status & HIBERNATE_INT_PIN_WAKE)
-        {
+        if(ui32Status & HIBERNATE_INT_PIN_WAKE) {
             GrStringDrawCentered(&sContext, "BUTTON", -1,
                                  GrContextDpyWidthGet(&sContext) / 2,
                                  Row(3) + 4, true);
@@ -327,8 +321,7 @@ main(void)
         //
         // Wake was due to RTC match
         //
-        else if(ui32Status & HIBERNATE_INT_RTC_MATCH_0)
-        {
+        else if(ui32Status & HIBERNATE_INT_RTC_MATCH_0) {
             GrStringDrawCentered(&sContext, "TIMEOUT", -1,
                                  GrContextDpyWidthGet(&sContext) / 2,
                                  Row(3) + 4, true);
@@ -338,8 +331,7 @@ main(void)
         // Wake is due to neither button nor RTC, so it must have been a hard
         // reset.
         //
-        else
-        {
+        else {
             GrStringDrawCentered(&sContext, "RESET", -1,
                                  GrContextDpyWidthGet(&sContext) / 2,
                                  Row(3) + 4, true);
@@ -349,8 +341,7 @@ main(void)
         // If the wake is due to button or RTC, then read the first location
         // from the battery backed memory, as the hibernation count.
         //
-        if(ui32Status & (HIBERNATE_INT_PIN_WAKE | HIBERNATE_INT_RTC_MATCH_0))
-        {
+        if(ui32Status & (HIBERNATE_INT_PIN_WAKE | HIBERNATE_INT_RTC_MATCH_0)) {
             HibernateDataGet(&ui32HibernateCount, 1);
         }
     }
@@ -365,8 +356,7 @@ main(void)
     //
     // If the wake was not due to button or RTC match, then it was a reset.
     //
-    if(!(ui32Status & (HIBERNATE_INT_PIN_WAKE | HIBERNATE_INT_RTC_MATCH_0)))
-    {
+    if(!(ui32Status & (HIBERNATE_INT_PIN_WAKE | HIBERNATE_INT_RTC_MATCH_0))) {
         //
         // Configure the module clock source.
         //
@@ -426,8 +416,7 @@ main(void)
     //
     // Wait for user to press the button.
     //
-    while(!bSelectPressed)
-    {
+    while(!bSelectPressed) {
         //
         // Wait a bit before looping again.
         //
@@ -453,8 +442,7 @@ main(void)
     //
     // Wait for user to release the button.
     //
-    while(bSelectPressed)
-    {
+    while(bSelectPressed) {
     }
 
     //
@@ -507,8 +495,7 @@ main(void)
     GrRectFill(&sContext, &sRect);
     GrContextForegroundSet(&sContext, ClrWhite);
     ui32Idx = 0;
-    while(g_pcErrorText[ui32Idx])
-    {
+    while(g_pcErrorText[ui32Idx]) {
         GrStringDraw(&sContext, g_pcErrorText[ui32Idx], -1, Col(0),
                      Row(ui32Idx), true);
         ui32Idx++;
@@ -518,8 +505,7 @@ main(void)
     // Wait for the user to press the button, then restart the app.
     //
     bSelectPressed = 0;
-    while(!bSelectPressed)
-    {
+    while(!bSelectPressed) {
     }
 
     //
@@ -530,7 +516,6 @@ main(void)
     //
     // Finished.
     //
-    while(1)
-    {
+    while(1) {
     }
 }

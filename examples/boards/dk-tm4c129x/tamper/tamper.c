@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -145,8 +145,7 @@ uint32_t g_ui32HourIdx, g_ui32MinIdx;
 // Lookup table to convert numerical value of a month into text.
 //
 //*****************************************************************************
-static char *g_ppcMonth[12] =
-{
+static char *g_ppcMonth[12] = {
     "Jan",
     "Feb",
     "Mar",
@@ -166,8 +165,7 @@ static char *g_ppcMonth[12] =
 // This is the image of a red LED that is turned off.
 //
 //*****************************************************************************
-const uint8_t g_pui8LightOff[] =
-{
+const uint8_t g_pui8LightOff[] = {
     IMAGE_FMT_4BPP_COMP,
     20, 0,
     20, 0,
@@ -213,8 +211,7 @@ const uint8_t g_pui8LightOff[] =
 // This is the image of a red LED that is turned on.
 //
 //*****************************************************************************
-const uint8_t g_pui8LightOn[] =
-{
+const uint8_t g_pui8LightOn[] = {
     IMAGE_FMT_4BPP_COMP,
     20, 0,
     20, 0,
@@ -285,8 +282,7 @@ char g_pcStatus[NUM_STATUS_STRINGS][MAX_STATUS_STRING_LEN];
 // Storage for the status listbox widget string table.
 //
 //*****************************************************************************
-const char *g_ppcStatusStrings[NUM_STATUS_STRINGS] =
-{
+const char *g_ppcStatusStrings[NUM_STATUS_STRINGS] = {
     g_pcStatus[0],     g_pcStatus[1],     g_pcStatus[2],     g_pcStatus[3],
     g_pcStatus[4],     g_pcStatus[5],     g_pcStatus[6],     g_pcStatus[7],
     g_pcStatus[8],     g_pcStatus[9]
@@ -398,7 +394,7 @@ ListBox(g_sStatusList, &g_sIndicatorMarker, 0, &g_sDateTimeSetBtn,
         &g_sKentec320x240x16_SSD2119,
         X_OFFSET, 90, (320-(X_OFFSET*2)), 90,
         (LISTBOX_STYLE_OUTLINE | LISTBOX_STYLE_LOCKED |
-        LISTBOX_STYLE_WRAP), ClrBlack, ClrBlack, ClrSilver, ClrSilver, ClrWhite,
+         LISTBOX_STYLE_WRAP), ClrBlack, ClrBlack, ClrSilver, ClrSilver, ClrWhite,
         g_psFontFixed6x8, g_ppcStatusStrings,  NUM_STATUS_STRINGS,
         NUM_STATUS_STRINGS, 0);
 //*****************************************************************************
@@ -442,49 +438,49 @@ RectangularButton(g_sDateTimeSetBtn, &g_sStatusList, &g_sRTC, 0,
 RectangularButton(g_sDateNextBtn, &g_sDateScreen, 0, 0,
                   &g_sKentec320x240x16_SSD2119, 240, 190, 60, 30,
                   (PB_STYLE_TEXT | PB_STYLE_FILL | PB_STYLE_OUTLINE |
-                  PB_STYLE_TEXT_OPAQUE), ClrDarkBlue, ClrBlue, 0, ClrWhite,
+                   PB_STYLE_TEXT_OPAQUE), ClrDarkBlue, ClrBlue, 0, ClrWhite,
                   g_psFontCm16, "NEXT", 0, 0, 0, 0, OnDateNextBtnPress);
 CircularButton(g_sYearDwnBtn, &g_sDateScreen, &g_sDateNextBtn, 0,
                &g_sKentec320x240x16_SSD2119, 260, 90, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
                ClrDarkBlue, ClrBlue, 0, ClrWhite, g_psFontCm20, "+", 0, 0, 100,
                10, OnYearDwnBtnPress);
 CircularButton(g_sYearUpBtn, &g_sDateScreen, &g_sYearDwnBtn, 0,
                &g_sKentec320x240x16_SSD2119, 260, 153, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
                ClrDarkBlue, ClrBlue, 0, ClrWhite, g_psFontCm20, "-", 0, 0, 100,
                10, OnYearUpBtnPress);
 Canvas(g_sYearText, &g_sDateScreen, &g_sYearUpBtn, 0,
        &g_sKentec320x240x16_SSD2119, 230, 110, 60, 25, (CANVAS_STYLE_OUTLINE |
-       CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
+               CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
        g_psFontCm16, g_pcYearBuf, 0, 0);
 CircularButton(g_sDayDwnBtn, &g_sDateScreen, &g_sYearText, 0,
                &g_sKentec320x240x16_SSD2119, 160, 90, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
                ClrDarkBlue, ClrBlue, 0, ClrWhite, g_psFontCm20, "+", 0, 0, 100,
                10, OnDayDwnBtnPress);
 CircularButton(g_sDayUpBtn, &g_sDateScreen, &g_sDayDwnBtn, 0,
                &g_sKentec320x240x16_SSD2119, 160, 153, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
                ClrDarkBlue, ClrBlue, 0, ClrWhite, g_psFontCm20, "-", 0, 0, 100,
                10, OnDayUpBtnPress);
 Canvas(g_sDayText, &g_sDateScreen, &g_sDayUpBtn, 0,
        &g_sKentec320x240x16_SSD2119, 130, 110, 60, 25, (CANVAS_STYLE_OUTLINE |
-       CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
+               CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
        g_psFontCm16, g_pcDayBuf, 0, 0);
 CircularButton(g_sMonDwnBtn, &g_sDateScreen, &g_sDayText, 0,
                &g_sKentec320x240x16_SSD2119, 60, 90, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
                ClrDarkBlue, ClrBlue, 0, ClrWhite, g_psFontCm20, "+", 0, 0, 100,
                20, OnMonDwnBtnPress);
 CircularButton(g_sMonUpBtn, &g_sDateScreen, &g_sMonDwnBtn, 0,
                &g_sKentec320x240x16_SSD2119, 60, 153, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
                ClrDarkBlue, ClrBlue, 0, ClrWhite, g_psFontCm20, "-", 0, 0, 100,
                20, OnMonUpBtnPress);
 Canvas(g_sMonText, &g_sDateScreen, &g_sMonUpBtn, 0,
        &g_sKentec320x240x16_SSD2119, 30, 110, 60, 25, (CANVAS_STYLE_OUTLINE |
-       CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
+               CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
        g_psFontCm16, g_pcMonBuf, 0, 0);
 Canvas(g_sDateScreen, WIDGET_ROOT, 0, &g_sMonText,
        &g_sKentec320x240x16_SSD2119, X_OFFSET, Y_OFFSET, (320 - X_OFFSET*2),
@@ -499,47 +495,47 @@ Canvas(g_sDateScreen, WIDGET_ROOT, 0, &g_sMonText,
 RectangularButton(g_sTimeDoneBtn, &g_sTimeScreen, 0, 0,
                   &g_sKentec320x240x16_SSD2119, 240, 190, 60, 30,
                   (PB_STYLE_TEXT | PB_STYLE_FILL | PB_STYLE_OUTLINE |
-                  PB_STYLE_TEXT_OPAQUE), ClrDarkBlue, ClrBlue, 0, ClrWhite,
+                   PB_STYLE_TEXT_OPAQUE), ClrDarkBlue, ClrBlue, 0, ClrWhite,
                   g_psFontCm16, "DONE", 0, 0, 0, 0, OnTimeDoneBtnPress);
 CircularButton(g_sAMPMDwnBtn, &g_sTimeScreen, &g_sTimeDoneBtn, 0,
                &g_sKentec320x240x16_SSD2119, 260, 90, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE), ClrDarkBlue, ClrBlue, 0,
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE), ClrDarkBlue, ClrBlue, 0,
                ClrWhite, g_psFontCm20, "+", 0, 0, 0, 0, OnAMPMBtnPress);
 CircularButton(g_sAMPMUpBtn, &g_sTimeScreen, &g_sAMPMDwnBtn, 0,
                &g_sKentec320x240x16_SSD2119, 260, 153, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE), ClrDarkBlue, ClrBlue, 0,
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE), ClrDarkBlue, ClrBlue, 0,
                ClrWhite, g_psFontCm20, "-", 0, 0, 0, 0, OnAMPMBtnPress);
 Canvas(g_sAMPMText, &g_sTimeScreen, &g_sAMPMUpBtn, 0,
        &g_sKentec320x240x16_SSD2119, 230, 110, 60, 25, (CANVAS_STYLE_OUTLINE |
-       CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
+               CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
        g_psFontCm16, g_pcAMPMBuf, 0, 0);
 CircularButton(g_sMinDwnBtn, &g_sTimeScreen, &g_sAMPMText, 0,
                &g_sKentec320x240x16_SSD2119, 160, 90, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
                ClrDarkBlue, ClrBlue, 0, ClrWhite, g_psFontCm20, "+", 0, 0, 100,
                10, OnMinDwnBtnPress);
 CircularButton(g_sMinUpBtn, &g_sTimeScreen, &g_sMinDwnBtn, 0,
                &g_sKentec320x240x16_SSD2119, 160, 153, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
                ClrDarkBlue, ClrBlue, 0, ClrWhite, g_psFontCm20, "-", 0, 0, 100,
                10, OnMinUpBtnPress);
 Canvas(g_sMinText, &g_sTimeScreen, &g_sMinUpBtn, 0,
        &g_sKentec320x240x16_SSD2119, 130, 110, 60, 25, (CANVAS_STYLE_OUTLINE |
-       CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
+               CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
        g_psFontCm16, g_pcMinBuf, 0, 0);
 CircularButton(g_sHourDwnBtn, &g_sTimeScreen, &g_sMinText, 0,
                &g_sKentec320x240x16_SSD2119, 60, 90, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
                ClrDarkBlue, ClrBlue, 0, ClrWhite, g_psFontCm20, "+", 0, 0, 100,
                20, OnHourDwnBtnPress);
 CircularButton(g_sHourUpBtn, &g_sTimeScreen, &g_sHourDwnBtn, 0,
                &g_sKentec320x240x16_SSD2119, 60, 153, 15, (PB_STYLE_TEXT |
-               PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
+                       PB_STYLE_FILL | PB_STYLE_TEXT_OPAQUE | PB_STYLE_AUTO_REPEAT),
                ClrDarkBlue, ClrBlue, 0, ClrWhite, g_psFontCm20, "-", 0, 0, 100,
                20, OnHourUpBtnPress);
 Canvas(g_sHourText, &g_sTimeScreen, &g_sHourUpBtn, 0,
        &g_sKentec320x240x16_SSD2119, 30, 110, 60, 25, (CANVAS_STYLE_OUTLINE |
-       CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
+               CANVAS_STYLE_FILL | CANVAS_STYLE_TEXT), ClrBlack, ClrWhite, ClrWhite,
        g_psFontCm16, g_pcHourBuf, 0, 0);
 Canvas(g_sTimeScreen, WIDGET_ROOT, 0, &g_sHourText,
        &g_sKentec320x240x16_SSD2119, 9, 25, (310 - 9), (230 - 25),
@@ -609,8 +605,7 @@ PrintfStatus(char *pcFormat, ...)
     // Update our string index.
     //
     g_ui32StatusStringIndex++;
-    if(g_ui32StatusStringIndex == NUM_STATUS_STRINGS)
-    {
+    if(g_ui32StatusStringIndex == NUM_STATUS_STRINGS) {
         g_ui32StatusStringIndex = 0;
     }
 
@@ -649,8 +644,7 @@ NMITamperEventHandler(void)
     //
     ui32TamperStatus = HibernateTamperStatusGet();
 
-    if(CLASS_IS_TM4C129 && REVISION_IS_A0)
-    {
+    if(CLASS_IS_TM4C129 && REVISION_IS_A0) {
         //
         // We should have got the cause of the NMI event in ui32NMIStatus.
         // But in Snowflake RA0 the NMIC register is not set correctly when an
@@ -660,8 +654,7 @@ NMITamperEventHandler(void)
         // silicon rev.
         //
         if(ui32TamperStatus & (HIBERNATE_TAMPER_STATUS_EVENT |
-                             HIBERNATE_TAMPER_STATUS_EXT_OSC_FAILED))
-        {
+                               HIBERNATE_TAMPER_STATUS_EXT_OSC_FAILED)) {
             ui32NMIStatus |= SYSCTL_NMI_TAMPER;
         }
     }
@@ -669,16 +662,14 @@ NMITamperEventHandler(void)
     //
     // Clear NMI events if SysCtlNMIStatus() returned a value.
     //
-    if(ui32NMIStatus)
-    {
+    if(ui32NMIStatus) {
         SysCtlNMIClear(ui32NMIStatus);
     }
 
     //
     // Check if NMI interrupt is due to a tamper event.
     //
-    if((ui32NMIStatus & SYSCTL_NMI_TAMPER) == 0)
-    {
+    if((ui32NMIStatus & SYSCTL_NMI_TAMPER) == 0) {
 
         //
         // Not due to tamper event.
@@ -696,8 +687,7 @@ NMITamperEventHandler(void)
     // thread, we need to OR the new event along with the old ones.
     // Otherwise, clear the variables here.
     //
-    if(g_ui32NMIEvent == 0)
-    {
+    if(g_ui32NMIEvent == 0) {
         //
         // Reset variables that used for tamper event.
         //
@@ -715,34 +705,27 @@ NMITamperEventHandler(void)
     //
     // Log the tamper event data before clearing tamper events.
     //
-    for(ui8Idx = 0; ui8Idx< 4; ui8Idx++)
-    {
+    for(ui8Idx = 0; ui8Idx< 4; ui8Idx++) {
         if(HibernateTamperEventsGet(ui8Idx,
                                     &g_ui32RTCLog[ui8Idx],
-                                    &g_ui32EventLog[ui8Idx]))
-        {
+                                    &g_ui32EventLog[ui8Idx])) {
             //
             // If the timestamp entry has zero, ignore the tamper
             // log entry, otherwise, save the event.
             //
-            if(g_ui32RTCLog[ui8Idx])
-            {
+            if(g_ui32RTCLog[ui8Idx]) {
                 //
                 // Event in this log entry, store it.
                 //
                 g_ui32TamperEventFlag |= g_ui32EventLog[ui8Idx];
                 g_ui32TamperRTCLog = g_ui32RTCLog[ui8Idx];
-            }
-            else
-            {
+            } else {
                 //
                 // Not valid event in this log entry. Done checking the logs.
                 //
                 break;
             }
-        }
-        else
-        {
+        } else {
             //
             // No event in this log entry. Done checking the logs.
             //
@@ -753,12 +736,10 @@ NMITamperEventHandler(void)
     //
     // Process external oscillator failed event.
     //
-    if(ui32TamperStatus & HIBERNATE_TAMPER_STATUS_EXT_OSC_FAILED)
-    {
+    if(ui32TamperStatus & HIBERNATE_TAMPER_STATUS_EXT_OSC_FAILED) {
         g_ui32TamperXOSCFailEvent++;
 
-        if(CLASS_IS_TM4C129 && REVISION_IS_A0)
-        {
+        if(CLASS_IS_TM4C129 && REVISION_IS_A0) {
             //
             // Snowflake A0 bug: XOSCFAIL doesn't get logged
             //
@@ -791,16 +772,13 @@ NMITamperEventHandler(void)
     // Record the index for the first empty log entry, this is the first
     // entry log we will be polling from for any new events.
     //
-    if(ui8Idx >= 4)
-    {
+    if(ui8Idx >= 4) {
         //
         // All 4 log entries have data, new event will be ORed in the last
         // entry.
         //
         ui8StartIdx = 3;
-    }
-    else
-    {
+    } else {
         ui8StartIdx = ui8Idx;
     }
 
@@ -815,8 +793,7 @@ NMITamperEventHandler(void)
     // calling HibernateTamperEventsClearNoLock().
     //
     HibernateTamperUnLock();
-    do
-    {
+    do {
 
         //
         // Clear the Tamper event.
@@ -830,33 +807,27 @@ NMITamperEventHandler(void)
         // synchronization, start polling until clear is done.
         // This will take about 92us(three clock cycles) at most.
         //
-        while(HibernateTamperStatusGet() & HIBERNATE_TAMPER_STATUS_EVENT)
-        {
+        while(HibernateTamperStatusGet() & HIBERNATE_TAMPER_STATUS_EVENT) {
 
             //
             // Clear execution isn't done yet , poll for new events.
             // If there were any new event, it will be logged starting
             // the first empty log entry.
             //
-            for(ui8Idx = ui8StartIdx; ui8Idx< 4; ui8Idx++)
-            {
+            for(ui8Idx = ui8StartIdx; ui8Idx< 4; ui8Idx++) {
                 if(HibernateTamperEventsGet(ui8Idx,
                                             &g_ui32RTCLog[ui8Idx],
-                                            &g_ui32EventLog[ui8Idx]))
-                {
+                                            &g_ui32EventLog[ui8Idx])) {
                     //
                     // If the timestamp log has zero, ignore the tamper
                     // log entry.
                     //
-                    if(g_ui32RTCLog[ui8Idx])
-                    {
+                    if(g_ui32RTCLog[ui8Idx]) {
                         //
                         // detected new event, store it.
                         //
                         g_ui32TamperEventFlag |= g_ui32EventLog[ui8Idx];
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Not valid event in this log, update the log
                         // entry index to be checked in next iteration.
@@ -870,9 +841,7 @@ NMITamperEventHandler(void)
                     // check for more event.
                     //
                     continue;
-                }
-                else
-                {
+                } else {
                     //
                     // No new event in this log, update the log
                     // entry index to be checked in next iteration.
@@ -888,23 +857,20 @@ NMITamperEventHandler(void)
             // have the same info. This is to detect the case that
             // events happen during clear execution.
             //
-            if(ui8Idx == 4)
-            {
+            if(ui8Idx == 4) {
                 //
                 // If events happens during clear
                 // execution, all four log registers will be
                 // logged with the same event, to detect this
                 // condition, we will compare with all four log data.
                 //
-                if(HibernateTamperEventsGet(0, &g_ui32RTCLog[0], &g_ui32EventLog[0]))
-                {
+                if(HibernateTamperEventsGet(0, &g_ui32RTCLog[0], &g_ui32EventLog[0])) {
                     if((g_ui32RTCLog[0] == g_ui32RTCLog[1])     &&
-                       (g_ui32EventLog[0] == g_ui32EventLog[1]) &&
-                       (g_ui32RTCLog[0] == g_ui32RTCLog[2])     &&
-                       (g_ui32EventLog[0] == g_ui32EventLog[2]) &&
-                       (g_ui32RTCLog[0] == g_ui32RTCLog[3])     &&
-                       (g_ui32EventLog[0] == g_ui32EventLog[3]))
-                    {
+                            (g_ui32EventLog[0] == g_ui32EventLog[1]) &&
+                            (g_ui32RTCLog[0] == g_ui32RTCLog[2])     &&
+                            (g_ui32EventLog[0] == g_ui32EventLog[2]) &&
+                            (g_ui32RTCLog[0] == g_ui32RTCLog[3])     &&
+                            (g_ui32EventLog[0] == g_ui32EventLog[3])) {
                         //
                         // Detected events during clear execution.
                         // Event logging takes priority, the clear
@@ -912,17 +878,14 @@ NMITamperEventHandler(void)
                         // to go back to the beginning of the loop and
                         // clear the events.
                         //
-                        if(bDetectedEventsDuringClear)
-                        {
+                        if(bDetectedEventsDuringClear) {
                             //
                             // This condition has already detected,
                             // we have cleared the event,
                             // clear the flag.
                             //
                             bDetectedEventsDuringClear = false;
-                        }
-                        else
-                        {
+                        } else {
                             // This is the first time it has been
                             // detected, set the flag.
                             //
@@ -936,9 +899,7 @@ NMITamperEventHandler(void)
                         //
                         break;
                     }
-                }
-                else
-                {
+                } else {
                     //
                     // Log 0 didn't detect any events. So this is not
                     // the case of missing events during clear
@@ -951,8 +912,7 @@ NMITamperEventHandler(void)
                 }
             }
         }
-    }
-    while(bDetectedEventsDuringClear);
+    } while(bDetectedEventsDuringClear);
 
     //
     // Lock the Tamper Control register.
@@ -995,8 +955,7 @@ HibernateIntHandler(void)
     //
     // Process the RTC match 0 interrupt
     //
-    if(ui32Status & HIBERNATE_INT_RTC_MATCH_0)
-    {
+    if(ui32Status & HIBERNATE_INT_RTC_MATCH_0) {
         g_bUpdateRTC = 1;
     }
 }
@@ -1028,8 +987,7 @@ HibernateTamperWakeUp(bool *pbWakeupFromTamper, bool *pbWakeupFromReset)
     //
     // Check the wake was due to reset.
     //
-    if(ui32TempBuf[0] & HIBERNATE_INT_RESET_WAKE)
-    {
+    if(ui32TempBuf[0] & HIBERNATE_INT_RESET_WAKE) {
         *pbWakeupFromReset = true;
         return;
     }
@@ -1046,8 +1004,7 @@ HibernateTamperWakeUp(bool *pbWakeupFromTamper, bool *pbWakeupFromReset)
     //
     // Determine if system came out of hibernation due to a tamper event.
     //
-    if(ui32TempBuf[0] == HIBERNATE_TAMPER_DATA0)
-    {
+    if(ui32TempBuf[0] == HIBERNATE_TAMPER_DATA0) {
         //
         // It is due to a tamper event.
         // Read the saved tamper event and RTC log info from the hibernate
@@ -1071,22 +1028,15 @@ HibernateTamperWakeUp(bool *pbWakeupFromTamper, bool *pbWakeupFromReset)
 void
 ConvertHourTo12Mode(uint8_t *pui8Hour, bool *pbPM)
 {
-    if(*pui8Hour == 0)
-    {
+    if(*pui8Hour == 0) {
         *pbPM = false;
         *pui8Hour += 12;
-    }
-    else if(*pui8Hour == 12)
-    {
+    } else if(*pui8Hour == 12) {
         *pbPM = true;
-    }
-    else if(*pui8Hour > 12)
-    {
+    } else if(*pui8Hour > 12) {
         *pui8Hour -= 12;
         *pbPM = true;
-    }
-    else
-    {
+    } else {
         *pbPM = false;
     }
 }
@@ -1103,30 +1053,24 @@ GetDaysInMonth(uint32_t ui32Year, uint32_t ui32Mon)
     //
     // Return the number of days based on the month.
     //
-    if(ui32Mon == 1)
-    {
+    if(ui32Mon == 1) {
         //
         // For February return the number of days based on the year being a
         // leap year or not.
         //
-        if((ui32Year % 4) == 0)
-        {
+        if((ui32Year % 4) == 0) {
             //
             // If leap year return 29.
             //
             return 29;
-        }
-        else
-        {
+        } else {
             //
             // If not leap year return 28.
             //
             return 28;
         }
-    }
-    else if((ui32Mon == 3) || (ui32Mon == 5) || (ui32Mon == 8) ||
-            (ui32Mon == 10))
-    {
+    } else if((ui32Mon == 3) || (ui32Mon == 5) || (ui32Mon == 8) ||
+              (ui32Mon == 10)) {
         //
         // For April, June, September and November return 30.
         //
@@ -1224,17 +1168,12 @@ DateTimeSet(void)
     //
     // Convert 12-hour format into 24-hour format.
     //
-    if(strcmp(g_pcAMPMBuf, "PM") == 0)
-    {
-        if(sTime.tm_hour < 12)
-        {
+    if(strcmp(g_pcAMPMBuf, "PM") == 0) {
+        if(sTime.tm_hour < 12) {
             sTime.tm_hour += 12;
         }
-    }
-    else
-    {
-        if(sTime.tm_hour > 11)
-        {
+    } else {
+        if(sTime.tm_hour > 11) {
             sTime.tm_hour -= 12;
         }
     }
@@ -1624,12 +1563,9 @@ OnAMPMBtnPress(tWidget *psWidget)
     // User wants to change AM to PM or vice versa.  Change to "PM" if "AM" and
     // vice versa.
     //
-    if(strcmp(g_pcAMPMBuf, "AM") == 0)
-    {
+    if(strcmp(g_pcAMPMBuf, "AM") == 0) {
         strcpy(g_pcAMPMBuf, "PM");
-    }
-    else
-    {
+    } else {
         strcpy(g_pcAMPMBuf, "AM");
     }
 
@@ -1726,8 +1662,7 @@ main(void)
     //
     HibernateTamperWakeUp(&bWakeFromTamper, &bWakeFromReset);
 
-    if(!bWakeFromTamper && !bWakeFromReset)
-    {
+    if(!bWakeFromTamper && !bWakeFromReset) {
         //
         // If the system didn't wake from hibernation,
         // Initialize the Hibernate module and enable the RTC/calendar mode.
@@ -1783,8 +1718,7 @@ main(void)
         // Configure the TPIO0~3 signals by enabling trigger on low,
         // weak pull-up and glitch filtering.
         //
-        for(ui32Index = 0; ui32Index < 4; ui32Index++)
-        {
+        for(ui32Index = 0; ui32Index < 4; ui32Index++) {
             HibernateTamperIOEnable(ui32Index,
                                     HIBERNATE_TAMPER_IO_TRIGGER_LOW |
                                     HIBERNATE_TAMPER_IO_WPU_ENABLED |
@@ -1800,12 +1734,9 @@ main(void)
         // Enable Tamper Module.
         //
         HibernateTamperEnable();
-    }
-    else
-    {
+    } else {
         if(bWakeFromTamper &&
-           (g_ui32TamperEventFlag & HIBERNATE_TAMPER_EVENT_EXT_OSC))
-        {
+                (g_ui32TamperEventFlag & HIBERNATE_TAMPER_EVENT_EXT_OSC)) {
             //
             // XOSCFAIL was used to trigger a tamper event, set the flag
             // g_ui32TamperXOSCFailEvent so that it will clear external
@@ -1836,8 +1767,7 @@ main(void)
     //
     // Print instruction
     //
-    if(!bWakeFromTamper && !bWakeFromReset)
-    {
+    if(!bWakeFromTamper && !bWakeFromReset) {
         PrintfStatus("Tamper Example app instruction:");
         PrintfStatus("-Ground PM4~7 to GND to trigger tamper events.");
         PrintfStatus(" Corresponding indicator above should lightup") ;
@@ -1846,9 +1776,7 @@ main(void)
         PrintfStatus("-Tap HIB button on the display to hibernate, and");
         PrintfStatus(" press RESET button or ground PM4~7 to wake up");
         PrintfStatus(" from hibernation.");
-    }
-    else
-    {
+    } else {
         PrintfStatus("Wake from %s...",
                      bWakeFromReset? "RESET":"tamper event");
     }
@@ -1862,11 +1790,9 @@ main(void)
     g_bHibernate = false;
     g_bSetDate = false;
 
-    while(1)
-    {
+    while(1) {
 
-        if( g_bMainScreen && g_bUpdateRTC )
-        {
+        if( g_bMainScreen && g_bUpdateRTC ) {
             bool bPM = false;
             uint8_t ui8Hour;
 
@@ -1878,8 +1804,8 @@ main(void)
             //
             ConvertHourTo12Mode(&ui8Hour, &bPM);
             usprintf(pcRTCBuf, " %02d/%02d/%04d %02d:%02d:%02d %s",
-                       (sTime.tm_mon+1), sTime.tm_mday, (sTime.tm_year+1900),
-                       ui8Hour, sTime.tm_min, sTime.tm_sec, (bPM?"PM":"AM") );
+                     (sTime.tm_mon+1), sTime.tm_mday, (sTime.tm_year+1900),
+                     ui8Hour, sTime.tm_min, sTime.tm_sec, (bPM?"PM":"AM") );
             CanvasTextSet(&g_sRTC, pcRTCBuf);
             WidgetPaint((tWidget *)&g_sRTC.sBase);
         }
@@ -1888,8 +1814,7 @@ main(void)
         // Check if date and time has to be written to the calendar logic of
         // hibernate module.
         //
-        if(g_bSetDate == true)
-        {
+        if(g_bSetDate == true) {
             //
             // Yes - Clear the flag to avoid unwanted writes to the calendar
             // logic.
@@ -1907,8 +1832,7 @@ main(void)
             g_bMainScreen = true;
         }
 
-        if(g_ui32NMIEvent && g_bMainScreen)
-        {
+        if(g_ui32NMIEvent && g_bMainScreen) {
             uint8_t ui8Pos= 0;
             uint8_t ui8Hour;
             bool    bPM;
@@ -1928,52 +1852,39 @@ main(void)
             //
             // Update GPIO indicator lights and status list box
             //
-            if(ui32TempBuf[0] & HIBERNATE_TAMPER_EVENT_0)
-            {
+            if(ui32TempBuf[0] & HIBERNATE_TAMPER_EVENT_0) {
                 CanvasImageSet(&g_sIndicator0,g_pui8LightOn);
                 strcpy(pcBuf, "PM7/TMPR0 ");
                 ui8Pos = 10;
-            }
-            else
-            {
+            } else {
                 CanvasImageSet(&g_sIndicator0, g_pui8LightOff);
             }
 
-            if(ui32TempBuf[0] & HIBERNATE_TAMPER_EVENT_1)
-            {
+            if(ui32TempBuf[0] & HIBERNATE_TAMPER_EVENT_1) {
                 CanvasImageSet(&g_sIndicator1, g_pui8LightOn);
                 strcpy(pcBuf + ui8Pos, "PM6/TMPR1 ");
                 ui8Pos += 10;
-            }
-            else
-            {
+            } else {
                 CanvasImageSet(&g_sIndicator1, g_pui8LightOff);
             }
 
-            if(ui32TempBuf[0] & HIBERNATE_TAMPER_EVENT_2)
-            {
+            if(ui32TempBuf[0] & HIBERNATE_TAMPER_EVENT_2) {
                 CanvasImageSet(&g_sIndicator2,g_pui8LightOn);
                 strcpy(pcBuf + ui8Pos, "PM5/TMPR2 ");
                 ui8Pos += 10;
-            }
-            else
-            {
+            } else {
                 CanvasImageSet(&g_sIndicator2, g_pui8LightOff);
             }
 
-            if(ui32TempBuf[0] & HIBERNATE_TAMPER_EVENT_3)
-            {
+            if(ui32TempBuf[0] & HIBERNATE_TAMPER_EVENT_3) {
                 CanvasImageSet(&g_sIndicator3,g_pui8LightOn);
                 strcpy(pcBuf + ui8Pos, "PM4/TMPR3 ");
                 ui8Pos += 10;
-            }
-            else
-            {
+            } else {
                 CanvasImageSet(&g_sIndicator3,g_pui8LightOff);
             }
 
-            if(ui32TempBuf[0] & HIBERNATE_TAMPER_EVENT_EXT_OSC)
-            {
+            if(ui32TempBuf[0] & HIBERNATE_TAMPER_EVENT_EXT_OSC) {
                 strcpy(pcBuf + ui8Pos, "XOSCFAIL ");
             }
 
@@ -1999,8 +1910,7 @@ main(void)
         //
         // Wait for the user to touch the display panel.
         //
-        if(g_bHibernate == true)
-        {
+        if(g_bHibernate == true) {
             //
             // Clear the flag.
             //
@@ -2041,8 +1951,7 @@ main(void)
         // If we have external oscillator failure, wait till the external
         // oscillator becomes active, then clear external oscillator failure.
         //
-        if(g_ui32TamperXOSCFailEvent)
-        {
+        if(g_ui32TamperXOSCFailEvent) {
             while(HibernateTamperExtOscValid() == 0);
             HibernateTamperExtOscRecover();
             g_ui32TamperXOSCFailEvent = 0;

@@ -6,29 +6,29 @@
 
 /* Used by SH2A port. */
 #ifdef _SH
-	#ifdef __RENESAS__
-		#pragma pack 1
-	#endif
+#ifdef __RENESAS__
+#pragma pack 1
+#endif
 #endif
 
 
 #ifdef __RX
-	#ifdef __RENESAS__
-		/* Nothing to do. */
-	#endif
+#ifdef __RENESAS__
+/* Nothing to do. */
+#endif
 #endif
 
 
 #ifdef __ICCRX__
-	#pragma pack(1)
+#pragma pack(1)
 #endif
 
 
 #ifdef __ICCARM__
-	#pragma pack(1)
+#pragma pack(1)
 #endif
 
 #ifdef __CC_ARM
-	__packed
+__packed
 #endif
 

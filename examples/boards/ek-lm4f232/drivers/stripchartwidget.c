@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-LM4F232 Firmware Package.
 //
 //*****************************************************************************
@@ -120,8 +120,7 @@ StripChartDraw(tStripChartWidget *psChartWidget, tContext *psContext)
     //
     GrContextForegroundSet(psContext, psChartWidget->ui32GridColor);
     for(i32X = psChartWidget->i32GridX; i32X < psContext->sClipRegion.i16XMax;
-        i32X += psChartWidget->psAxisX->i32GridInterval)
-    {
+            i32X += psChartWidget->psAxisX->i32GridInterval) {
         GrLineDrawV(psContext, psContext->sClipRegion.i16XMax - i32X,
                     psContext->sClipRegion.i16YMin,
                     psContext->sClipRegion.i16YMax);
@@ -131,8 +130,7 @@ StripChartDraw(tStripChartWidget *psChartWidget, tContext *psContext)
     // Draw horizontal grid lines
     //
     for(i32Ygrid = psAxisY->i32Min; i32Ygrid < psAxisY->i32Max;
-        i32Ygrid += psAxisY->i32GridInterval)
-    {
+            i32Ygrid += psAxisY->i32GridInterval) {
         i32Y = ((i32Ygrid - i32GridMin) * i32DispRange) / i32GridRange;
         i32Y = i32DispMax - i32Y;
         GrLineDrawH(psContext, psContext->sClipRegion.i16XMin,
@@ -151,8 +149,7 @@ StripChartDraw(tStripChartWidget *psChartWidget, tContext *psContext)
     // Iterate through each series to draw it
     //
     psSeries = psChartWidget->psSeries;
-    while(psSeries)
-    {
+    while(psSeries) {
         int idx = 0;
 
         //
@@ -167,8 +164,7 @@ StripChartDraw(tStripChartWidget *psChartWidget, tContext *psContext)
         // staring index (idx) for reading data needs to be adjusted to the
         // first value in the series that will be visible on the screen
         //
-        if(i32X < psContext->sClipRegion.i16XMin)
-        {
+        if(i32X < psContext->sClipRegion.i16XMin) {
             idx = psContext->sClipRegion.i16XMin - i32X;
             i32X = psContext->sClipRegion.i16XMin;
         }
@@ -182,29 +178,21 @@ StripChartDraw(tStripChartWidget *psChartWidget, tContext *psContext)
         // Scan through all possible X values, find the Y value, and draw the
         // pixel.
         //
-        for(; i32X <= psContext->sClipRegion.i16XMax; i32X++)
-        {
+        for(; i32X <= psContext->sClipRegion.i16XMax; i32X++) {
             //
             // Find the Y value at each position in the data series.  Take into
             // account the data size and the stride
             //
-            if(psSeries->ui8DataTypeSize == 1)
-            {
+            if(psSeries->ui8DataTypeSize == 1) {
                 i32Y =
                     ((int8_t *)psSeries->pvData)[idx * psSeries->ui8Stride];
-            }
-            else if(psSeries->ui8DataTypeSize == 2)
-            {
+            } else if(psSeries->ui8DataTypeSize == 2) {
                 i32Y =
                     ((int16_t *)psSeries->pvData)[idx * psSeries->ui8Stride];
-            }
-            else if(psSeries->ui8DataTypeSize == 4)
-            {
+            } else if(psSeries->ui8DataTypeSize == 4) {
                 i32Y =
                     ((int32_t *)psSeries->pvData)[idx * psSeries->ui8Stride];
-            }
-            else
-            {
+            } else {
                 //
                 // If there is an invalid data size, then just force Y value
                 // to be off the display
@@ -251,8 +239,7 @@ StripChartDraw(tStripChartWidget *psChartWidget, tContext *psContext)
     //
     // Draw the chart title, if there is one
     //
-    if(psChartWidget->pcTitle)
-    {
+    if(psChartWidget->pcTitle) {
         GrStringDrawCentered(psContext, psChartWidget->pcTitle, -1,
                              psContext->sClipRegion.i16XMax / 2,
                              GrFontHeightGet(psChartWidget->psFont), 0);
@@ -261,8 +248,7 @@ StripChartDraw(tStripChartWidget *psChartWidget, tContext *psContext)
     //
     // Draw the Y axis max label, if there is one
     //
-    if(psChartWidget->psAxisY->pcMaxLabel)
-    {
+    if(psChartWidget->psAxisY->pcMaxLabel) {
         GrStringDraw(psContext, psChartWidget->psAxisY->pcMaxLabel, -1,
                      psContext->sClipRegion.i16XMin +
                      GrFontMaxWidthGet(psChartWidget->psFont) / 2,
@@ -272,8 +258,7 @@ StripChartDraw(tStripChartWidget *psChartWidget, tContext *psContext)
     //
     // Draw the Y axis min label, if there is one
     //
-    if(psChartWidget->psAxisY->pcMinLabel)
-    {
+    if(psChartWidget->psAxisY->pcMinLabel) {
         GrStringDraw(psContext, psChartWidget->psAxisY->pcMinLabel, -1,
                      psContext->sClipRegion.i16XMin +
                      GrFontMaxWidthGet(psChartWidget->psFont) / 2,
@@ -286,8 +271,7 @@ StripChartDraw(tStripChartWidget *psChartWidget, tContext *psContext)
     //
     // Draw a label for the name of the Y axis, if there is one
     //
-    if(psChartWidget->psAxisY->pcName)
-    {
+    if(psChartWidget->psAxisY->pcName) {
         GrStringDraw(psContext, psChartWidget->psAxisY->pcName, -1,
                      psContext->sClipRegion.i16XMin + 1,
                      (psContext->sClipRegion.i16YMax / 2) -
@@ -398,17 +382,15 @@ StripChartAdvance(tStripChartWidget *psChartWidget, int32_t i32Count)
 //*****************************************************************************
 void
 StripChartSeriesAdd(tStripChartWidget *psWidget,
-                      tStripChartSeries *psNewSeries)
+                    tStripChartSeries *psNewSeries)
 {
     //
     // If there is already at least one series in this chart, then link
     // in to the existing chain.
     //
-    if(psWidget->psSeries)
-    {
+    if(psWidget->psSeries) {
         tStripChartSeries *psSeries = psWidget->psSeries;
-        while(psSeries->psNextSeries)
-        {
+        while(psSeries->psNextSeries) {
             psSeries = psSeries->psNextSeries;
         }
         psSeries->psNextSeries = psNewSeries;
@@ -418,8 +400,7 @@ StripChartSeriesAdd(tStripChartWidget *psWidget,
     // Otherwise, there is not already a series in this chart, so set this
     // new series as the first series for the chart.
     //
-    else
-    {
+    else {
         psWidget->psSeries = psNewSeries;
     }
     psNewSeries->psNextSeries = 0;
@@ -443,35 +424,29 @@ StripChartSeriesAdd(tStripChartWidget *psWidget,
 //*****************************************************************************
 void
 StripChartSeriesRemove(tStripChartWidget *psWidget,
-                         tStripChartSeries *psOldSeries)
+                       tStripChartSeries *psOldSeries)
 {
     //
     // If the series to be removed is the first one, then find the next
     // series in the chain and set it to be first.
     //
-    if(psWidget->psSeries == psOldSeries)
-    {
+    if(psWidget->psSeries == psOldSeries) {
         psWidget->psSeries = psOldSeries->psNextSeries;
     }
 
     //
     // Otherwise, scan through the chain to find the old series
     //
-    else
-    {
+    else {
         tStripChartSeries *psSeries = psWidget->psSeries;
-        while(psSeries->psNextSeries)
-        {
+        while(psSeries->psNextSeries) {
             //
             // If the old series is found, unlink it from the chain
             //
-            if(psSeries->psNextSeries == psOldSeries)
-            {
+            if(psSeries->psNextSeries == psOldSeries) {
                 psSeries->psNextSeries = psOldSeries->psNextSeries;
                 break;
-            }
-            else
-            {
+            } else {
                 psSeries = psSeries->psNextSeries;
             }
         }
@@ -515,13 +490,11 @@ StripChartMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
     //
     // Determine which message is being sent.
     //
-    switch(ui32Msg)
-    {
+    switch(ui32Msg) {
         //
         // The widget paint request has been sent.
         //
-        case WIDGET_MSG_PAINT:
-        {
+        case WIDGET_MSG_PAINT: {
             //
             // Handle the widget paint request.
             //
@@ -542,16 +515,14 @@ StripChartMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
         case WIDGET_MSG_KEY_UP:
         case WIDGET_MSG_KEY_DOWN:
         case WIDGET_MSG_KEY_LEFT:
-        case WIDGET_MSG_KEY_RIGHT:
-        {
+        case WIDGET_MSG_KEY_RIGHT: {
             return(0);
         }
 
         //
         // An unknown request has been sent.
         //
-        default:
-        {
+        default: {
             //
             // Let the default message handler process this message.
             //
@@ -591,14 +562,14 @@ StripChartMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
 //*****************************************************************************
 void
 StripChartInit(tStripChartWidget *psWidget, const tDisplay *psDisplay,
-              int32_t i32X, int32_t i32Y, int32_t i32Width, int32_t i32Height,
-              char * pcTitle, tFont *psFont,
-              uint32_t ui32BackgroundColor,
-              uint32_t ui32TextColor,
-              uint32_t ui32Y0Color,
-              uint32_t ui32GridColor,
-              tStripChartAxis *psAxisX, tStripChartAxis *psAxisY,
-              tDisplay *psOffscreenDisplay)
+               int32_t i32X, int32_t i32Y, int32_t i32Width, int32_t i32Height,
+               char * pcTitle, tFont *psFont,
+               uint32_t ui32BackgroundColor,
+               uint32_t ui32TextColor,
+               uint32_t ui32Y0Color,
+               uint32_t ui32GridColor,
+               tStripChartAxis *psAxisX, tStripChartAxis *psAxisY,
+               tDisplay *psOffscreenDisplay)
 {
     uint32_t ui32Idx;
 
@@ -614,8 +585,7 @@ StripChartInit(tStripChartWidget *psWidget, const tDisplay *psDisplay,
     //
     // Clear out the widget structure.
     //
-    for(ui32Idx = 0; ui32Idx < sizeof(tStripChartWidget); ui32Idx += 4)
-    {
+    for(ui32Idx = 0; ui32Idx < sizeof(tStripChartWidget); ui32Idx += 4) {
         ((uint32_t *)psWidget)[ui32Idx / 4] = 0;
     }
 

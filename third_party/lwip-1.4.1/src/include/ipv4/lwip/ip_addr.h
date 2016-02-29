@@ -42,7 +42,7 @@ extern "C" {
 /* This is the aligned version of ip_addr_t,
    used as local variable, on the stack, etc. */
 struct ip_addr {
-  u32_t addr;
+    u32_t addr;
 };
 
 /* This is the packed version of ip_addr_t,
@@ -52,7 +52,7 @@ struct ip_addr {
 #endif
 PACK_STRUCT_BEGIN
 struct ip_addr_packed {
-  PACK_STRUCT_FIELD(u32_t addr);
+    PACK_STRUCT_FIELD(u32_t addr);
 } PACK_STRUCT_STRUCT;
 PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES
@@ -73,7 +73,7 @@ typedef struct ip_addr_packed ip_addr_p_t;
 #endif
 PACK_STRUCT_BEGIN
 struct ip_addr2 {
-  PACK_STRUCT_FIELD(u16_t addrw[2]);
+    PACK_STRUCT_FIELD(u16_t addrw[2]);
 } PACK_STRUCT_STRUCT;
 PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES

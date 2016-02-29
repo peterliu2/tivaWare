@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Graphics Library.
 //
 //*****************************************************************************
@@ -105,8 +105,7 @@ ListBoxPaint(tWidget *psWidget)
     //
     // See if the listbox outline style is selected.
     //
-    if(pListBox->ui32Style & LISTBOX_STYLE_OUTLINE)
-    {
+    if(pListBox->ui32Style & LISTBOX_STYLE_OUTLINE) {
         //
         // Outline the listbox with the outline color.
         //
@@ -148,8 +147,7 @@ ListBoxPaint(tWidget *psWidget)
     // strings to draw.
     //
     while((sLineRect.i16YMin < sWidgetRect.i16YMax) &&
-          (ui16String < pListBox->ui16Populated))
-    {
+            (ui16String < pListBox->ui16Populated)) {
         //
         // Calculate the rectangle that will enclose this line of text.
         //
@@ -159,11 +157,11 @@ ListBoxPaint(tWidget *psWidget)
         // Set foreground and background colors appropriately.
         //
         GrContextBackgroundSet(&sCtx, ((ui16String == pListBox->i16Selected) ?
-                               pListBox->ui32SelectedBackgroundColor :
-                               pListBox->ui32BackgroundColor));
+                                       pListBox->ui32SelectedBackgroundColor :
+                                       pListBox->ui32BackgroundColor));
         GrContextForegroundSet(&sCtx, ((ui16String == pListBox->i16Selected) ?
-                               pListBox->ui32SelectedTextColor :
-                               pListBox->ui32TextColor));
+                                       pListBox->ui32SelectedTextColor :
+                                       pListBox->ui32TextColor));
 
         //
         // Draw the text.
@@ -179,8 +177,7 @@ ListBoxPaint(tWidget *psWidget)
         //
         // Do we need to clear the area to the right of the string?
         //
-        if(i32Width < (sLineRect.i16XMax - sLineRect.i16XMin + 1))
-        {
+        if(i32Width < (sLineRect.i16XMax - sLineRect.i16XMin + 1)) {
             //
             // Yes - we need to fill the right side of this string with
             // background color.
@@ -198,8 +195,7 @@ ListBoxPaint(tWidget *psWidget)
         // Move on to the next string, wrapping if necessary.
         //
         ui16String++;
-        if(ui16String == pListBox->ui16MaxEntries)
-        {
+        if(ui16String == pListBox->ui16MaxEntries) {
             ui16String = 0;
         }
         sLineRect.i16YMin += i16Height;
@@ -207,8 +203,7 @@ ListBoxPaint(tWidget *psWidget)
         //
         // If we are wrapping and got back at the oldest entry, we drop out.
         //
-        if(ui16String == pListBox->ui16OldestEntry)
-        {
+        if(ui16String == pListBox->ui16OldestEntry) {
             break;
         }
     }
@@ -216,8 +211,7 @@ ListBoxPaint(tWidget *psWidget)
     //
     // Fill the remainder of the listbox area with the background color.
     //
-    if(sLineRect.i16YMin < sWidgetRect.i16YMax)
-    {
+    if(sLineRect.i16YMin < sWidgetRect.i16YMax) {
         //
         // Determine the rectangle to be filled.
         //
@@ -252,26 +246,21 @@ ListBoxPointer(tListBoxWidget *pListBox, uint32_t ui32Msg, int32_t i32X,
 {
     int32_t i32LineNum, i32Entry, i32Visible, i32MaxUp, i32MaxDown, i32Scroll;
 
-    switch(ui32Msg)
-    {
+    switch(ui32Msg) {
         //
         // The touchscreen has been pressed.
         //
-        case WIDGET_MSG_PTR_DOWN:
-        {
+        case WIDGET_MSG_PTR_DOWN: {
             //
             // Is the pointer press within the bounds of this widget?
             //
-            if(!GrRectContainsPoint(&(pListBox->sBase.sPosition), i32X, i32Y))
-            {
+            if(!GrRectContainsPoint(&(pListBox->sBase.sPosition), i32X, i32Y)) {
                 //
                 // This is not a message for us so return 0 to indicate that
                 // we did not process it.
                 //
                 return(0);
-            }
-            else
-            {
+            } else {
                 //
                 // The pointer was pressed within this control.  Remember the Y
                 // coordinate and reset or scrolling flag.
@@ -291,8 +280,7 @@ ListBoxPointer(tListBoxWidget *pListBox, uint32_t ui32Msg, int32_t i32X,
         //
         // The touchscreen has been released.
         //
-        case WIDGET_MSG_PTR_UP:
-        {
+        case WIDGET_MSG_PTR_UP: {
             //
             // If the pointer is still within the bounds of the control and
             // we have not scrolled the contents since the last time the
@@ -303,16 +291,15 @@ ListBoxPointer(tListBoxWidget *pListBox, uint32_t ui32Msg, int32_t i32X,
             // change the selection.
             //
             if((pListBox->ui16Scrolled == 0) &&
-               !(pListBox->ui32Style & LISTBOX_STYLE_LOCKED) &&
-                GrRectContainsPoint(&(pListBox->sBase.sPosition), i32X, i32Y))
-            {
+                    !(pListBox->ui32Style & LISTBOX_STYLE_LOCKED) &&
+                    GrRectContainsPoint(&(pListBox->sBase.sPosition), i32X, i32Y)) {
                 //
                 // It seems we need to change the selected element. What is
                 // the display line number that has been clicked on?
                 //
                 i32LineNum = (i32Y -
                               (int32_t)pListBox->sBase.sPosition.i16YMin) /
-                               GrFontHeightGet(pListBox->psFont);
+                             GrFontHeightGet(pListBox->psFont);
 
                 //
                 // We now know the location of the click as a number of text
@@ -320,22 +307,19 @@ ListBoxPointer(tListBoxWidget *pListBox, uint32_t ui32Msg, int32_t i32X,
                 // entry is shown there, remembering that the index may wrap.
                 //
                 i32Entry = ((int32_t)pListBox->ui16StartEntry + i32LineNum) %
-                            pListBox->ui16MaxEntries;
+                           pListBox->ui16MaxEntries;
 
                 //
                 // If this is an unpopulated entry or the current selection,
                 // clear the selection.
                 //
                 if((i32Entry >= (int32_t)pListBox->ui16Populated) ||
-                   (i32Entry == (int32_t)pListBox->i16Selected))
-                {
+                        (i32Entry == (int32_t)pListBox->i16Selected)) {
                     //
                     // Yes - update the selection and force a repaint.
                     //
                     pListBox->i16Selected = (int16_t)0xFFFF;
-                }
-                else
-                {
+                } else {
                     //
                     // The pointer was tapped on a valid entry other than the
                     // current selection so change the selection.
@@ -351,8 +335,7 @@ ListBoxPointer(tListBoxWidget *pListBox, uint32_t ui32Msg, int32_t i32X,
                 //
                 // Tell the client that the selection changed.
                 //
-                if(pListBox->pfnOnChange)
-                {
+                if(pListBox->pfnOnChange) {
                     (pListBox->pfnOnChange)((tWidget *)pListBox,
                                             pListBox->i16Selected);
                 }
@@ -368,8 +351,7 @@ ListBoxPointer(tListBoxWidget *pListBox, uint32_t ui32Msg, int32_t i32X,
         //
         // The pointer is moving while pressed.
         //
-        case WIDGET_MSG_PTR_MOVE:
-        {
+        case WIDGET_MSG_PTR_MOVE: {
             //
             // How far has the pointer moved vertically from the point where it
             // was pressed or where we last registered a scroll?  i32LineNum
@@ -382,8 +364,7 @@ ListBoxPointer(tListBoxWidget *pListBox, uint32_t ui32Msg, int32_t i32X,
             // line of text, we need to check to see if we need to scroll the
             // list box contents.
             //
-            if(abs(i32LineNum) >= GrFontHeightGet(pListBox->psFont))
-            {
+            if(abs(i32LineNum) >= GrFontHeightGet(pListBox->psFont)) {
                 //
                 // We have to scroll if this is possible.  How many lines can
                 // be visible on the display?
@@ -396,8 +377,7 @@ ListBoxPointer(tListBoxWidget *pListBox, uint32_t ui32Msg, int32_t i32X,
                 // If we have fewer strings in the listbox than there are lines
                 // on the display, scrolling is not possible so give up now.
                 //
-                if(i32Visible > (int32_t)pListBox->ui16Populated)
-                {
+                if(i32Visible > (int32_t)pListBox->ui16Populated) {
                     return(1);
                 }
 
@@ -434,8 +414,7 @@ ListBoxPointer(tListBoxWidget *pListBox, uint32_t ui32Msg, int32_t i32X,
                 i32Scroll = min(i32Scroll, i32MaxUp);
                 i32Scroll = max(i32Scroll, i32MaxDown);
 
-                if(i32Scroll)
-                {
+                if(i32Scroll) {
                     int32_t i32Temp;
 
                     //
@@ -460,7 +439,7 @@ ListBoxPointer(tListBoxWidget *pListBox, uint32_t ui32Msg, int32_t i32X,
                     // the amount we just scrolled.
                     //
                     pListBox->i32PointerY -= (i32Scroll *
-                                            GrFontHeightGet(pListBox->psFont));
+                                              GrFontHeightGet(pListBox->psFont));
 
                     //
                     // Repaint the contents of the widget.
@@ -499,7 +478,7 @@ ListBoxPointer(tListBoxWidget *pListBox, uint32_t ui32Msg, int32_t i32X,
 //*****************************************************************************
 int32_t
 ListBoxMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
-              uint32_t ui32Param2)
+               uint32_t ui32Param2)
 {
     tListBoxWidget *pListBox;
 
@@ -516,8 +495,7 @@ ListBoxMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
     //
     // Determine which message is being sent.
     //
-    switch(ui32Msg)
-    {
+    switch(ui32Msg) {
         //
         // A pointer message has been received.
         //
@@ -530,8 +508,7 @@ ListBoxMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
         //
         // The widget paint request has been sent.
         //
-        case WIDGET_MSG_PAINT:
-        {
+        case WIDGET_MSG_PAINT: {
             //
             // Handle the widget paint request.
             //
@@ -547,8 +524,7 @@ ListBoxMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
         //
         // An unknown request has been sent.
         //
-        default:
-        {
+        default: {
             //
             // Let the default message handler process this message.
             //
@@ -597,8 +573,7 @@ ListBoxInit(tListBoxWidget *psWidget, const tDisplay *psDisplay,
     //
     // Clear out the widget structure.
     //
-    for(ui32Idx = 0; ui32Idx < sizeof(tListBoxWidget); ui32Idx += 4)
-    {
+    for(ui32Idx = 0; ui32Idx < sizeof(tListBoxWidget); ui32Idx += 4) {
         ((uint32_t *)psWidget)[ui32Idx / 4] = 0;
     }
 
@@ -675,22 +650,18 @@ int32_t ListBoxTextAdd(tListBoxWidget *pListBox, const char *pcTxt)
     //
     // Is the list box full?
     //
-    if(pListBox->ui16Populated == pListBox->ui16MaxEntries)
-    {
+    if(pListBox->ui16Populated == pListBox->ui16MaxEntries) {
         //
         // The box is already full.  If the wrap style is not set, fail
         // the call.
         //
-        if(!(pListBox->ui32Style & LISTBOX_STYLE_WRAP))
-        {
+        if(!(pListBox->ui32Style & LISTBOX_STYLE_WRAP)) {
             //
             // The listbox is full and it is not configured to wrap so we can't
             // add another string to it.
             //
             return(-1);
-        }
-        else
-        {
+        } else {
             //
             // We are wrapping so replace the oldest entry in the box.
             //
@@ -701,11 +672,9 @@ int32_t ListBoxTextAdd(tListBoxWidget *pListBox, const char *pcTxt)
             // move the start entry on by one to keep the display order
             // correct.
             //
-            if(pListBox->ui16OldestEntry == pListBox->ui16StartEntry)
-            {
+            if(pListBox->ui16OldestEntry == pListBox->ui16StartEntry) {
                 pListBox->ui16StartEntry++;
-                if(pListBox->ui16StartEntry == pListBox->ui16MaxEntries)
-                {
+                if(pListBox->ui16StartEntry == pListBox->ui16MaxEntries) {
                     pListBox->ui16StartEntry = 0;
                 }
             }
@@ -715,14 +684,11 @@ int32_t ListBoxTextAdd(tListBoxWidget *pListBox, const char *pcTxt)
             // take care to wrap if we reach the end of the string table.
             //
             pListBox->ui16OldestEntry++;
-            if(pListBox->ui16OldestEntry == pListBox->ui16MaxEntries)
-            {
+            if(pListBox->ui16OldestEntry == pListBox->ui16MaxEntries) {
                 pListBox->ui16OldestEntry = 0;
             }
         }
-    }
-    else
-    {
+    } else {
         //
         // The listbox is not full so add the new string to the first free
         // slot in the string table.

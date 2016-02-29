@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Utility Library.
 //
 //*****************************************************************************
@@ -207,8 +207,7 @@ SMBusStatusGet(tSMBus *psSMBus)
     //
     // Check to see if there is an ongoing transfer.
     //
-    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_TRANSFER_IN_PROGRESS))
-    {
+    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_TRANSFER_IN_PROGRESS)) {
         //
         // If the flag is set, return in progress status.
         //
@@ -218,8 +217,7 @@ SMBusStatusGet(tSMBus *psSMBus)
     //
     // If the transfer complete flag is cleared, transfer is done.
     //
-    else
-    {
+    else {
         //
         // If the flag isn't set, return complete status.
         //
@@ -301,13 +299,13 @@ SMBusARPUDIDPacketDecode(tSMBusUDID *pUDID, uint8_t *pui8Address,
     pUDID->ui16DeviceID = (uint16_t)((pui8Data[4] << 8) | pui8Data[5]);
     pUDID->ui16Interface = (uint16_t)((pui8Data[6] << 8) | pui8Data[7]);
     pUDID->ui16SubSystemVendorID = (uint16_t)((pui8Data[8] << 8) |
-                                              pui8Data[9]);
+                                   pui8Data[9]);
     pUDID->ui16SubSystemDeviceID = (uint16_t)((pui8Data[10] << 8) |
-                                              pui8Data[11]);
+                                   pui8Data[11]);
     pUDID->ui32VendorSpecificID = (uint32_t)((pui8Data[12] << 24) |
-                                             (pui8Data[13] << 16) |
-                                             (pui8Data[14] << 8) |
-                                             pui8Data[15]);
+                                  (pui8Data[13] << 16) |
+                                  (pui8Data[14] << 8) |
+                                  pui8Data[15]);
 
     //
     // Populate the address.
@@ -343,8 +341,7 @@ SMBusMasterQuickCommand(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the peripheral is not currently active.
     //
-    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_PERIPHERAL_BUSY);
     }
 
@@ -388,8 +385,7 @@ SMBusMasterQuickCommand(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the bus is idle.
     //
-    if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_BUS_BUSY);
     }
 
@@ -440,8 +436,7 @@ SMBusMasterHostNotify(tSMBus *psSMBus, uint8_t ui8OwnSlaveAddress,
     //
     // Make sure that the peripheral is not currently active.
     //
-    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_PERIPHERAL_BUSY);
     }
 
@@ -491,8 +486,7 @@ SMBusMasterHostNotify(tSMBus *psSMBus, uint8_t ui8OwnSlaveAddress,
     //
     // Make sure that the bus is idle.
     //
-    if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_BUS_BUSY);
     }
 
@@ -543,8 +537,7 @@ SMBusMasterByteSend(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the peripheral is not currently active.
     //
-    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_PERIPHERAL_BUSY);
     }
 
@@ -581,8 +574,7 @@ SMBusMasterByteSend(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Calculate the CRC for PEC (if used).
     //
-    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-    {
+    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
         //
         // Place the target slave address into a temporary data variable and
         // make sure the R/S bit is set to '0' for the CRC calculation.
@@ -599,8 +591,8 @@ SMBusMasterByteSend(tSMBus *psSMBus, uint8_t ui8TargetAddress,
         // Add the data to the running CRC calculation.
         //
         psSMBus->ui8CalculatedCRC = MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
-                                                  &psSMBus->pui8TxBuffer[0],
-                                                  1);
+                                    &psSMBus->pui8TxBuffer[0],
+                                    1);
 
         //
         // Update the state machine.
@@ -610,8 +602,7 @@ SMBusMasterByteSend(tSMBus *psSMBus, uint8_t ui8TargetAddress,
         //
         // Make sure that the bus is idle.
         //
-        if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase))
-        {
+        if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase)) {
             return(SMBUS_BUS_BUSY);
         }
 
@@ -620,9 +611,7 @@ SMBusMasterByteSend(tSMBus *psSMBus, uint8_t ui8TargetAddress,
         //
         MAP_I2CMasterControl(psSMBus->ui32I2CBase,
                              I2C_MASTER_CMD_BURST_SEND_START);
-    }
-    else
-    {
+    } else {
         //
         // Update the state machine.  Since it's the only byte being sent,
         // the state machine's next state is idle.
@@ -632,8 +621,7 @@ SMBusMasterByteSend(tSMBus *psSMBus, uint8_t ui8TargetAddress,
         //
         // Make sure that the bus is idle.
         //
-        if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase))
-        {
+        if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase)) {
             return(SMBUS_BUS_BUSY);
         }
 
@@ -685,8 +673,7 @@ SMBusMasterByteReceive(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the peripheral is not currently active.
     //
-    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_PERIPHERAL_BUSY);
     }
 
@@ -716,8 +703,7 @@ SMBusMasterByteReceive(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Calculate the CRC for PEC (if used).
     //
-    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-    {
+    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
         //
         // Place the target slave address into a temporary data variable and
         // set the R/S bit to '1' for the CRC calculation.
@@ -738,8 +724,7 @@ SMBusMasterByteReceive(tSMBus *psSMBus, uint8_t ui8TargetAddress,
         //
         // Make sure that the bus is idle.
         //
-        if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase))
-        {
+        if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase)) {
             return(SMBUS_BUS_BUSY);
         }
 
@@ -748,9 +733,7 @@ SMBusMasterByteReceive(tSMBus *psSMBus, uint8_t ui8TargetAddress,
         //
         MAP_I2CMasterControl(psSMBus->ui32I2CBase,
                              I2C_MASTER_CMD_BURST_RECEIVE_START);
-    }
-    else
-    {
+    } else {
         //
         // Update the state machine.
         //
@@ -759,8 +742,7 @@ SMBusMasterByteReceive(tSMBus *psSMBus, uint8_t ui8TargetAddress,
         //
         // Make sure that the bus is idle.
         //
-        if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase))
-        {
+        if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase)) {
             return(SMBUS_BUS_BUSY);
         }
 
@@ -814,16 +796,14 @@ SMBusMasterByteWordWrite(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the peripheral is not currently active.
     //
-    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_PERIPHERAL_BUSY);
     }
 
     //
     // If more than 2 bytes are requested, indicate error.
     //
-    if(ui8Size > 2)
-    {
+    if(ui8Size > 2) {
         return(SMBUS_DATA_SIZE_ERROR);
     }
 
@@ -861,8 +841,7 @@ SMBusMasterByteWordWrite(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Calculate the CRC for PEC (if used).
     //
-    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-    {
+    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
         //
         // Place the target slave address into a temporary data variable and
         // make sure the R/S bit is set to '0' for the CRC calculation.
@@ -879,35 +858,30 @@ SMBusMasterByteWordWrite(tSMBus *psSMBus, uint8_t ui8TargetAddress,
         // Add the command to the running CRC calculation.
         //
         psSMBus->ui8CalculatedCRC = MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
-                                                  &psSMBus->ui8CurrentCommand,
-                                                  1);
+                                    &psSMBus->ui8CurrentCommand,
+                                    1);
 
         //
         // Add the data array to the calculation.
         //
         psSMBus->ui8CalculatedCRC = MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
-                                                  psSMBus->pui8TxBuffer,
-                                                  psSMBus->ui8TxSize);
+                                    psSMBus->pui8TxBuffer,
+                                    psSMBus->ui8TxSize);
 
         //
         // Set the next state.
         //
         psSMBus->ui8MasterState = SMBUS_STATE_WRITE_NEXT;
-    }
-    else
-    {
+    } else {
         //
         // If only one byte to send, move to the final state.
         //
-        if(ui8Size == 1)
-        {
+        if(ui8Size == 1) {
             //
             // Set the next state.
             //
             psSMBus->ui8MasterState = SMBUS_STATE_WRITE_FINAL;
-        }
-        else
-        {
+        } else {
             //
             // Set the next state.
             //
@@ -923,8 +897,7 @@ SMBusMasterByteWordWrite(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the bus is idle.
     //
-    if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_BUS_BUSY);
     }
 
@@ -977,16 +950,14 @@ SMBusMasterByteWordRead(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the peripheral is not currently active.
     //
-    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_PERIPHERAL_BUSY);
     }
 
     //
     // If more than 2 bytes are requested, indicate error.
     //
-    if(ui8Size > 2)
-    {
+    if(ui8Size > 2) {
         return(SMBUS_DATA_SIZE_ERROR);
     }
 
@@ -1023,8 +994,7 @@ SMBusMasterByteWordRead(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Calculate the CRC for PEC (if used).
     //
-    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-    {
+    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
         //
         // Place the target slave address into a temporary data variable and
         // set the R/S bit to '1' for the CRC calculation.
@@ -1041,25 +1011,20 @@ SMBusMasterByteWordRead(tSMBus *psSMBus, uint8_t ui8TargetAddress,
         // Add the command to the running CRC calculation.
         //
         psSMBus->ui8CalculatedCRC = MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
-                                                  &psSMBus->ui8CurrentCommand,
-                                                  1);
+                                    &psSMBus->ui8CurrentCommand,
+                                    1);
 
         //
         // Update the state machine.
         //
         psSMBus->ui8MasterState = SMBUS_STATE_READ_FIRST;
-    }
-    else
-    {
+    } else {
         //
         // Update the state machine.
         //
-        if(psSMBus->ui8RxSize == 2)
-        {
+        if(psSMBus->ui8RxSize == 2) {
             psSMBus->ui8MasterState = SMBUS_STATE_READ_FIRST;
-        }
-        else
-        {
+        } else {
             psSMBus->ui8MasterState = SMBUS_STATE_READ_ONE;
         }
     }
@@ -1067,8 +1032,7 @@ SMBusMasterByteWordRead(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the bus is idle.
     //
-    if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_BUS_BUSY);
     }
 
@@ -1121,16 +1085,14 @@ SMBusMasterBlockWrite(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the peripheral is not currently active.
     //
-    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_PERIPHERAL_BUSY);
     }
 
     //
     // If more than 32 bytes are requested, indicate error.
     //
-    if(ui8Size > 32)
-    {
+    if(ui8Size > 32) {
         return(SMBUS_DATA_SIZE_ERROR);
     }
 
@@ -1166,8 +1128,7 @@ SMBusMasterBlockWrite(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Calculate the CRC for PEC (if used).
     //
-    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-    {
+    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
         //
         // Place the target slave address into a temporary data variable and
         // make sure the R/S bit is set to '0' for the CRC calculation.
@@ -1184,21 +1145,21 @@ SMBusMasterBlockWrite(tSMBus *psSMBus, uint8_t ui8TargetAddress,
         // Add the command to the running CRC calculation.
         //
         psSMBus->ui8CalculatedCRC = MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
-                                                  &psSMBus->ui8CurrentCommand,
-                                                  1);
+                                    &psSMBus->ui8CurrentCommand,
+                                    1);
 
         //
         // Add the size to the running CRC calculation.
         //
         psSMBus->ui8CalculatedCRC = MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
-                                                  &psSMBus->ui8TxSize, 1);
+                                    &psSMBus->ui8TxSize, 1);
 
         //
         // Add the data array to the calculation.
         //
         psSMBus->ui8CalculatedCRC = MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
-                                                  psSMBus->pui8TxBuffer,
-                                                  psSMBus->ui8TxSize);
+                                    psSMBus->pui8TxBuffer,
+                                    psSMBus->ui8TxSize);
     }
 
     //
@@ -1220,8 +1181,7 @@ SMBusMasterBlockWrite(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the bus is idle.
     //
-    if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_BUS_BUSY);
     }
 
@@ -1275,8 +1235,7 @@ SMBusMasterBlockRead(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the peripheral is not currently active.
     //
-    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_PERIPHERAL_BUSY);
     }
 
@@ -1323,8 +1282,7 @@ SMBusMasterBlockRead(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Calculate the CRC for PEC (if used).
     //
-    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-    {
+    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
         //
         // Place the target slave address into a temporary data variable and
         // set the R/S bit to '1' for the CRC calculation.
@@ -1341,8 +1299,8 @@ SMBusMasterBlockRead(tSMBus *psSMBus, uint8_t ui8TargetAddress,
         // Add the command to the running CRC calculation.
         //
         psSMBus->ui8CalculatedCRC = MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
-                                                  &psSMBus->ui8CurrentCommand,
-                                                  1);
+                                    &psSMBus->ui8CurrentCommand,
+                                    1);
     }
 
     //
@@ -1353,8 +1311,7 @@ SMBusMasterBlockRead(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the bus is idle.
     //
-    if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_BUS_BUSY);
     }
 
@@ -1407,8 +1364,7 @@ SMBusMasterProcessCall(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the peripheral is not currently active.
     //
-    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_PERIPHERAL_BUSY);
     }
 
@@ -1445,8 +1401,7 @@ SMBusMasterProcessCall(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Calculate the CRC for PEC (if used).
     //
-    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-    {
+    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
         //
         // Place the target slave address into a temporary data variable and
         // make sure the R/S bit is set to '0' for the CRC calculation.
@@ -1463,15 +1418,15 @@ SMBusMasterProcessCall(tSMBus *psSMBus, uint8_t ui8TargetAddress,
         // Add the command to the running CRC calculation.
         //
         psSMBus->ui8CalculatedCRC = MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
-                                                  &psSMBus->ui8CurrentCommand,
-                                                  1);
+                                    &psSMBus->ui8CurrentCommand,
+                                    1);
 
         //
         // Add the data array to the calculation.
         //
         psSMBus->ui8CalculatedCRC = MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
-                                                  psSMBus->pui8TxBuffer,
-                                                  psSMBus->ui8TxSize);
+                                    psSMBus->pui8TxBuffer,
+                                    psSMBus->ui8TxSize);
     }
 
     //
@@ -1487,8 +1442,7 @@ SMBusMasterProcessCall(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the bus is idle.
     //
-    if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_BUS_BUSY);
     }
 
@@ -1548,16 +1502,14 @@ SMBusMasterBlockProcessCall(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the peripheral is not currently active.
     //
-    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_PERIPHERAL_BUSY);
     }
 
     //
     // If more than 32 bytes are requested, indicate error.
     //
-    if(ui8TxSize > 32)
-    {
+    if(ui8TxSize > 32) {
         return(SMBUS_DATA_SIZE_ERROR);
     }
 
@@ -1588,8 +1540,7 @@ SMBusMasterBlockProcessCall(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Calculate the CRC for PEC (if used).
     //
-    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-    {
+    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
         //
         // Place the target slave address into a temporary data variable and
         // make sure the R/S bit is set to '0' for the CRC calculation.
@@ -1606,21 +1557,21 @@ SMBusMasterBlockProcessCall(tSMBus *psSMBus, uint8_t ui8TargetAddress,
         // Add the command to the running CRC calculation.
         //
         psSMBus->ui8CalculatedCRC = MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
-                                                  &psSMBus->ui8CurrentCommand,
-                                                  1);
+                                    &psSMBus->ui8CurrentCommand,
+                                    1);
 
         //
         // Add the size to the running CRC calculation.
         //
         psSMBus->ui8CalculatedCRC = MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
-                                                  &psSMBus->ui8TxSize, 1);
+                                    &psSMBus->ui8TxSize, 1);
 
         //
         // Add the data array to the calculation.
         //
         psSMBus->ui8CalculatedCRC = MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
-                                                  psSMBus->pui8TxBuffer,
-                                                  psSMBus->ui8TxSize);
+                                    psSMBus->pui8TxBuffer,
+                                    psSMBus->ui8TxSize);
     }
 
     //
@@ -1642,8 +1593,7 @@ SMBusMasterBlockProcessCall(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the bus is idle.
     //
-    if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_BUS_BUSY);
     }
 
@@ -1691,8 +1641,7 @@ SMBusMasterI2CWrite(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the peripheral is not currently active.
     //
-    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_PERIPHERAL_BUSY);
     }
 
@@ -1736,8 +1685,7 @@ SMBusMasterI2CWrite(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Choose what to do based on the transmit size.
     //
-    if(ui8Size == 1)
-    {
+    if(ui8Size == 1) {
         //
         // Update the state machine.  Since it's the only byte being sent,
         // the state machine's next state is idle.
@@ -1747,8 +1695,7 @@ SMBusMasterI2CWrite(tSMBus *psSMBus, uint8_t ui8TargetAddress,
         //
         // Make sure that the bus is idle.
         //
-        if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase))
-        {
+        if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase)) {
             return(SMBUS_BUS_BUSY);
         }
 
@@ -1756,9 +1703,7 @@ SMBusMasterI2CWrite(tSMBus *psSMBus, uint8_t ui8TargetAddress,
         // Initiate the write operation.
         //
         MAP_I2CMasterControl(psSMBus->ui32I2CBase, I2C_MASTER_CMD_SINGLE_SEND);
-    }
-    else if(ui8Size == 2)
-    {
+    } else if(ui8Size == 2) {
         //
         // If there are only 2 bytes to send just jump to the final write
         // state.
@@ -1768,8 +1713,7 @@ SMBusMasterI2CWrite(tSMBus *psSMBus, uint8_t ui8TargetAddress,
         //
         // Make sure that the bus is idle.
         //
-        if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase))
-        {
+        if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase)) {
             return(SMBUS_BUS_BUSY);
         }
 
@@ -1778,9 +1722,7 @@ SMBusMasterI2CWrite(tSMBus *psSMBus, uint8_t ui8TargetAddress,
         //
         MAP_I2CMasterControl(psSMBus->ui32I2CBase,
                              I2C_MASTER_CMD_BURST_SEND_START);
-    }
-    else
-    {
+    } else {
         //
         // Set the next state.
         //
@@ -1789,8 +1731,7 @@ SMBusMasterI2CWrite(tSMBus *psSMBus, uint8_t ui8TargetAddress,
         //
         // Make sure that the bus is idle.
         //
-        if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase))
-        {
+        if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase)) {
             return(SMBUS_BUS_BUSY);
         }
 
@@ -1840,8 +1781,7 @@ SMBusMasterI2CRead(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the peripheral is not currently active.
     //
-    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_PERIPHERAL_BUSY);
     }
 
@@ -1880,43 +1820,34 @@ SMBusMasterI2CRead(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the bus is idle.
     //
-    if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_BUS_BUSY);
     }
 
     //
     // Choose what to do based on the receive size.
     //
-    if(ui8Size == 1)
-    {
+    if(ui8Size == 1) {
         //
         // Update the state machine.
         //
         psSMBus->ui8MasterState = SMBUS_STATE_READ_WAIT;
-    }
-    else if(ui8Size == 2)
-    {
+    } else if(ui8Size == 2) {
         psSMBus->ui8MasterState = SMBUS_STATE_READ_FINAL;
-    }
-    else
-    {
+    } else {
         //
         // Set the next state.
         //
         psSMBus->ui8MasterState = SMBUS_STATE_READ_NEXT;
     }
 
-    if(ui8Size == 1)
-    {
+    if(ui8Size == 1) {
         //
         // Start the single receive.
         //
         MAP_I2CMasterControl(psSMBus->ui32I2CBase,
                              I2C_MASTER_CMD_SINGLE_RECEIVE);
-    }
-    else
-    {
+    } else {
         //
         // Start the burst receive.
         //
@@ -1968,8 +1899,7 @@ SMBusMasterI2CWriteRead(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the peripheral is not currently active.
     //
-    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_PERIPHERAL_BUSY);
     }
 
@@ -2020,27 +1950,19 @@ SMBusMasterI2CWriteRead(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Choose what to do based on the transmit size.
     //
-    if(ui8TxSize == 1)
-    {
+    if(ui8TxSize == 1) {
         //
         // Move to appropriate read state for the turn around based on
         // receive size.
         //
-        if(ui8RxSize == 1)
-        {
-           psSMBus->ui8MasterState = SMBUS_STATE_READ_ONE;
+        if(ui8RxSize == 1) {
+            psSMBus->ui8MasterState = SMBUS_STATE_READ_ONE;
+        } else {
+            psSMBus->ui8MasterState = SMBUS_STATE_READ_FIRST;
         }
-        else
-        {
-           psSMBus->ui8MasterState = SMBUS_STATE_READ_FIRST;
-        }
-    }
-    else if(ui8TxSize == 2)
-    {
+    } else if(ui8TxSize == 2) {
         psSMBus->ui8MasterState = SMBUS_STATE_WRITE_FINAL;
-    }
-    else
-    {
+    } else {
         //
         // Set the next state.
         //
@@ -2050,8 +1972,7 @@ SMBusMasterI2CWriteRead(tSMBus *psSMBus, uint8_t ui8TargetAddress,
     //
     // Make sure that the bus is idle.
     //
-    if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase))
-    {
+    if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase)) {
         return(SMBUS_BUS_BUSY);
     }
 
@@ -2309,8 +2230,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
     // Check for the timeout interrupt.  Since the peripheral will
     // automatically issue a stop, just clear the interrupt and return.
     //
-    if(ui32IntStatus & I2C_MASTER_INT_TIMEOUT)
-    {
+    if(ui32IntStatus & I2C_MASTER_INT_TIMEOUT) {
         //
         // Clear all pending interrupts and wait for the bus to become
         // free so we can issue a STOP.
@@ -2328,9 +2248,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
         // Return to caller.
         //
         return(SMBUS_TIMEOUT);
-    }
-    else
-    {
+    } else {
         //
         // Clear the data interrupt.
         //
@@ -2345,8 +2263,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
     //
     // Check for arbitration lost.
     //
-    if(ui32ErrorStatus & I2C_MCS_ARBLST)
-    {
+    if(ui32ErrorStatus & I2C_MCS_ARBLST) {
         //
         // Put the state machine back in the idle state.
         //
@@ -2366,8 +2283,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
     //
     // Check for an error.
     //
-    if(ui32ErrorStatus & I2C_MCS_ERROR)
-    {
+    if(ui32ErrorStatus & I2C_MCS_ERROR) {
         //
         // Put the state machine back in the idle state.
         //
@@ -2379,16 +2295,13 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
         // interrupt.  During the first interrupt (when the bus is busy),
         // generate the necessary STOP condition.
         //
-        if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase))
-        {
+        if(MAP_I2CMasterBusBusy(psSMBus->ui32I2CBase)) {
             //
             // Issue a STOP.
             //
             MAP_I2CMasterControl(psSMBus->ui32I2CBase,
                                  I2C_MASTER_CMD_BURST_SEND_ERROR_STOP);
-        }
-        else
-        {
+        } else {
             //
             // Clear the transfer in progress flag.
             //
@@ -2398,22 +2311,17 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
         //
         // Check for ACK errors.
         //
-        if(ui32ErrorStatus & I2C_MCS_ADRACK)
-        {
+        if(ui32ErrorStatus & I2C_MCS_ADRACK) {
             //
             // Return to caller.
             //
             return(SMBUS_ADDR_ACK_ERROR);
-        }
-        else if(ui32ErrorStatus & I2C_MCS_DATACK)
-        {
+        } else if(ui32ErrorStatus & I2C_MCS_DATACK) {
             //
             // Return to caller.
             //
             return(SMBUS_DATA_ACK_ERROR);
-        }
-        else
-        {
+        } else {
             //
             // Return to caller.  Should never get here.
             //
@@ -2424,21 +2332,18 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
     //
     // If no error conditions, determine what to do based on the state.
     //
-    switch(psSMBus->ui8MasterState)
-    {
+    switch(psSMBus->ui8MasterState) {
         //
         // The idle state.  This state should only be reached after the last
         // byte of a master transmit.
         //
-        case SMBUS_STATE_IDLE:
-        {
+        case SMBUS_STATE_IDLE: {
             //
             // If the peripheral is not busy clear the transfer in progress
             // flag.  This means that the peripheral has given up the bus,
             // most likely due to the end of a transmit operation.
             //
-            if(!MAP_I2CMasterBusy(psSMBus->ui32I2CBase))
-            {
+            if(!MAP_I2CMasterBusy(psSMBus->ui32I2CBase)) {
                 //
                 // Clear the transfer in progress flag.
                 //
@@ -2455,8 +2360,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
         // When using a block write, the transfer size must be sent before the
         // data payload.
         //
-        case SMBUS_STATE_WRITE_BLOCK_SIZE:
-        {
+        case SMBUS_STATE_WRITE_BLOCK_SIZE: {
             //
             // Write the block write size to the data register.
             //
@@ -2472,12 +2376,9 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
             // The next data byte is from the data payload.
             //
             if((psSMBus->ui8TxSize == 1) &&
-               !(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)))
-            {
+                    !(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))) {
                 psSMBus->ui8MasterState = SMBUS_STATE_WRITE_FINAL;
-            }
-            else
-            {
+            } else {
                 psSMBus->ui8MasterState = SMBUS_STATE_WRITE_NEXT;
             }
 
@@ -2489,8 +2390,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
         //
         // The state for the middle of a burst write.
         //
-        case SMBUS_STATE_WRITE_NEXT:
-        {
+        case SMBUS_STATE_WRITE_NEXT: {
             //
             // Write the next byte to the data register.
             //
@@ -2511,28 +2411,22 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
             //
             // If PEC is active and process call is not active.
             //
-            if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-            {
+            if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
                 //
                 // If a process call, there is no PEC byte on the transmit.
                 //
-                if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PROCESS_CALL))
-                {
+                if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PROCESS_CALL)) {
                     //
                     // Check to see if the TX index is equal to size minus 1.
                     //
-                    if(psSMBus->ui8TxIndex == (psSMBus->ui8TxSize - 1))
-                    {
+                    if(psSMBus->ui8TxIndex == (psSMBus->ui8TxSize - 1)) {
                         psSMBus->ui8MasterState = SMBUS_STATE_WRITE_FINAL;
                     }
-                }
-                else
-                {
+                } else {
                     //
                     // If the TX index is the same as the size, we're done.
                     //
-                    if(psSMBus->ui8TxIndex == psSMBus->ui8TxSize)
-                    {
+                    if(psSMBus->ui8TxIndex == psSMBus->ui8TxSize) {
                         psSMBus->ui8MasterState = SMBUS_STATE_WRITE_FINAL;
                     }
                 }
@@ -2542,13 +2436,11 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
             // If PEC is not used, regardless of whether this is a process
             // call.
             //
-            else
-            {
+            else {
                 //
                 // Check to see if the TX index is equal to the size minus 1.
                 //
-                if(psSMBus->ui8TxIndex == (psSMBus->ui8TxSize - 1))
-                {
+                if(psSMBus->ui8TxIndex == (psSMBus->ui8TxSize - 1)) {
                     psSMBus->ui8MasterState = SMBUS_STATE_WRITE_FINAL;
                 }
             }
@@ -2562,8 +2454,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
         //
         // The state for the final write of a burst sequence.
         //
-        case SMBUS_STATE_WRITE_FINAL:
-        {
+        case SMBUS_STATE_WRITE_FINAL: {
             //
             // Determine what data to write to the data register based
             // on the values of the PEC and process call flags.
@@ -2571,23 +2462,19 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
             //
             // If PEC is active, write the PEC byte to the data register.
             //
-            if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-            {
+            if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
                 //
                 // If a process call is active, send data, not CRC.
                 //
-                if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PROCESS_CALL))
-                {
+                if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PROCESS_CALL)) {
                     //
                     // Write the final byte from TX buffer to the data
                     // register.
                     //
                     MAP_I2CMasterDataPut(psSMBus->ui32I2CBase,
                                          psSMBus->pui8TxBuffer[psSMBus->
-                                                               ui8TxIndex++]);
-                }
-                else
-                {
+                                                 ui8TxIndex++]);
+                } else {
                     //
                     // Write the calculated CRC (PEC) byte to the data
                     // register.
@@ -2595,23 +2482,20 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
                     MAP_I2CMasterDataPut(psSMBus->ui32I2CBase,
                                          psSMBus->ui8CalculatedCRC);
                 }
-            }
-            else
-            {
+            } else {
                 //
                 // Write the final byte from TX buffer to the data register.
                 //
                 MAP_I2CMasterDataPut(psSMBus->ui32I2CBase,
                                      psSMBus->pui8TxBuffer[psSMBus->
-                                                           ui8TxIndex++]);
+                                             ui8TxIndex++]);
             }
 
             //
             // If a process call is active, send out the repeated start to
             // begin the RX portion.
             //
-            if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PROCESS_CALL))
-            {
+            if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PROCESS_CALL)) {
                 //
                 // Move to the read first "turnaround" state.
                 //
@@ -2622,9 +2506,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
                 //
                 MAP_I2CMasterControl(psSMBus->ui32I2CBase,
                                      I2C_MASTER_CMD_BURST_SEND_CONT);
-            }
-            else
-            {
+            } else {
                 //
                 // Finish the burst write.
                 //
@@ -2647,8 +2529,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
         //
         // The state for a single byte read.
         //
-        case SMBUS_STATE_READ_ONE:
-        {
+        case SMBUS_STATE_READ_ONE: {
             //
             // Put the I2C master into receive mode.
             //
@@ -2675,8 +2556,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
         //
         // The state for the start of a burst read.
         //
-        case SMBUS_STATE_READ_FIRST:
-        {
+        case SMBUS_STATE_READ_FIRST: {
             //
             // Put the I2C master into receive mode.
             //
@@ -2686,8 +2566,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
             //
             // Handle the case where PEC is used.
             //
-            if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-            {
+            if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
                 //
                 // Add the target address and R/S bit to the running CRC
                 // calculation.
@@ -2705,22 +2584,19 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
                 //
                 // Set the next state in the state machine.
                 //
-                if(psSMBus->ui8RxSize > 1)
-                {
+                if(psSMBus->ui8RxSize > 1) {
                     //
                     // If this is a block transfer, the next state is to read
                     // back the number of bytes that the slave will be sending.
                     //
-                    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_BLOCK_TRANSFER))
-                    {
+                    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_BLOCK_TRANSFER)) {
                         psSMBus->ui8MasterState = SMBUS_STATE_READ_BLOCK_SIZE;
                     }
 
                     //
                     // For every other case...
                     //
-                    else
-                    {
+                    else {
                         psSMBus->ui8MasterState = SMBUS_STATE_READ_NEXT;
                     }
                 }
@@ -2728,32 +2604,26 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
                 //
                 // If 1 byte remains, move to the final read state.
                 //
-                else
-                {
+                else {
                     psSMBus->ui8MasterState = SMBUS_STATE_READ_FINAL;
                 }
-            }
-            else
-            {
+            } else {
                 //
                 // Set the next state in the state machine.
                 //
-                if(psSMBus->ui8RxSize > 2)
-                {
+                if(psSMBus->ui8RxSize > 2) {
                     //
                     // If this is a block transfer, the next state is to read
                     // back the number of bytes that the slave will be sending.
                     //
-                    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_BLOCK_TRANSFER))
-                    {
+                    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_BLOCK_TRANSFER)) {
                         psSMBus->ui8MasterState = SMBUS_STATE_READ_BLOCK_SIZE;
                     }
 
                     //
                     // For every other case...
                     //
-                    else
-                    {
+                    else {
                         psSMBus->ui8MasterState = SMBUS_STATE_READ_NEXT;
                     }
                 }
@@ -2761,8 +2631,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
                 //
                 // If 2 bytes remain, move to the final read state.
                 //
-                else
-                {
+                else {
                     psSMBus->ui8MasterState = SMBUS_STATE_READ_FINAL;
                 }
             }
@@ -2782,8 +2651,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
         //
         // The state for the size of a block read.
         //
-        case SMBUS_STATE_READ_BLOCK_SIZE:
-        {
+        case SMBUS_STATE_READ_BLOCK_SIZE: {
             //
             // Update the RX size with the data byte.
             //
@@ -2792,8 +2660,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
             //
             // If more than 32 bytes are going to be sent, error.
             //
-            if((psSMBus->ui8RxSize > 32) || (psSMBus->ui8RxSize == 0))
-            {
+            if((psSMBus->ui8RxSize > 32) || (psSMBus->ui8RxSize == 0)) {
                 //
                 // Set the next state.
                 //
@@ -2815,8 +2682,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
             // If PEC is enabled, add the size byte to the calculation and
             // add one to the size variable to account for the extra PEC byte.
             //
-            if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-            {
+            if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
                 //
                 // Calculate the new CRC and update configuration structure.
                 //
@@ -2828,19 +2694,16 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
             //
             // Update the state machine.
             //
-            switch(psSMBus->ui8RxSize)
-            {
+            switch(psSMBus->ui8RxSize) {
                 //
                 // 1 byte remaining.
                 //
-                case 1:
-                {
+                case 1: {
                     //
                     // If only one byte remains and PEC, go to the second
                     // to last byte state.
                     //
-                    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-                    {
+                    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
                         psSMBus->ui8MasterState = SMBUS_STATE_READ_FINAL;
                     }
 
@@ -2848,8 +2711,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
                     // If only one byte remains and no PEC, end the burst
                     // transfer.
                     //
-                    else
-                    {
+                    else {
                         psSMBus->ui8MasterState = SMBUS_STATE_READ_WAIT;
                     }
 
@@ -2862,22 +2724,19 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
                 //
                 // 2 bytes remaining.
                 //
-                case 2:
-                {
+                case 2: {
                     //
                     // If two bytes and PEC remain, move to read next
                     // state.
                     //
-                    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-                    {
+                    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
                         psSMBus->ui8MasterState = SMBUS_STATE_READ_NEXT;
                     }
 
                     //
                     // If two bytes remain, move to the final read state.
                     //
-                    else
-                    {
+                    else {
                         psSMBus->ui8MasterState = SMBUS_STATE_READ_FINAL;
                     }
 
@@ -2891,8 +2750,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
                 // For every other situation (in other words, remaining bytes
                 // is greater than 2).
                 //
-                default:
-                {
+                default: {
                     //
                     // If more than 2 bytes to read, move to the next byte
                     // state.
@@ -2910,16 +2768,13 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
             // Determine how to step the I2C state machine.
             //
             if((psSMBus->ui8RxSize == 1) &&
-               !HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-            {
+                    !HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
                 //
                 // If exactly 1 byte remains, read the byte and send a STOP.
                 //
                 MAP_I2CMasterControl(psSMBus->ui32I2CBase,
                                      I2C_MASTER_CMD_BURST_SEND_FINISH);
-            }
-            else
-            {
+            } else {
                 //
                 // Otherwise, continue the burst read.
                 //
@@ -2936,13 +2791,11 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
         //
         // The state for the middle of a burst read.
         //
-        case SMBUS_STATE_READ_NEXT:
-        {
+        case SMBUS_STATE_READ_NEXT: {
             //
             // Check for a buffer overrun.
             //
-            if(psSMBus->ui8RxIndex >= psSMBus->ui8RxSize)
-            {
+            if(psSMBus->ui8RxIndex >= psSMBus->ui8RxSize) {
                 //
                 // Dummy read of data register.
                 //
@@ -2980,8 +2833,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
             //
             // If PEC is enabled, add the received byte to the calculation.
             //
-            if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-            {
+            if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
                 //
                 // Calculate the new CRC and update configuration structure.
                 //
@@ -2999,13 +2851,10 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
                 // If there is 1 byte remaining, make next state be the
                 // end of burst read state.
                 //
-                if((psSMBus->ui8RxSize - psSMBus->ui8RxIndex) == 1)
-                {
+                if((psSMBus->ui8RxSize - psSMBus->ui8RxIndex) == 1) {
                     psSMBus->ui8MasterState = SMBUS_STATE_READ_FINAL;
                 }
-            }
-            else
-            {
+            } else {
                 //
                 // Increment the receive buffer index.
                 //
@@ -3015,8 +2864,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
                 // If there are two bytes remaining, make next state be the
                 // end of burst read state.
                 //
-                if((psSMBus->ui8RxSize - psSMBus->ui8RxIndex) == 2)
-                {
+                if((psSMBus->ui8RxSize - psSMBus->ui8RxIndex) == 2) {
                     psSMBus->ui8MasterState = SMBUS_STATE_READ_FINAL;
                 }
             }
@@ -3030,13 +2878,11 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
         //
         // The state for the end of a burst read.
         //
-        case SMBUS_STATE_READ_FINAL:
-        {
+        case SMBUS_STATE_READ_FINAL: {
             //
             // Check for a buffer overrun.
             //
-            if(psSMBus->ui8RxIndex >= psSMBus->ui8RxSize)
-            {
+            if(psSMBus->ui8RxIndex >= psSMBus->ui8RxSize) {
                 //
                 // Dummy read of data register.
                 //
@@ -3079,8 +2925,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
             //
             // If PEC is enabled, add the received byte to the calculation.
             //
-            if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-            {
+            if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
                 //
                 // Calculate the new CRC and update configuration structure.
                 //
@@ -3104,8 +2949,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
         //
         // This state is for the final read of a single or burst read.
         //
-        case SMBUS_STATE_READ_WAIT:
-        {
+        case SMBUS_STATE_READ_WAIT: {
             //
             // Read the received byte.
             //
@@ -3115,13 +2959,11 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
             // If PEC is enabled, check the value that just came in to see
             // if it matches.
             //
-            if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-            {
+            if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
                 //
                 // Check for a buffer overrun.
                 //
-                if(psSMBus->ui8RxIndex > psSMBus->ui8RxSize)
-                {
+                if(psSMBus->ui8RxIndex > psSMBus->ui8RxSize) {
                     //
                     // Clear the transfer in progress flag.
                     //
@@ -3143,8 +2985,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
                 // If the CRC doesn't match, send a NACK and indicate the
                 // failure to the application.
                 //
-                if(psSMBus->ui8ReceivedCRC != psSMBus->ui8CalculatedCRC)
-                {
+                if(psSMBus->ui8ReceivedCRC != psSMBus->ui8CalculatedCRC) {
                     //
                     // Clear the transfer in progress flag.
                     //
@@ -3156,14 +2997,11 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
                     //
                     return(SMBUS_PEC_ERROR);
                 }
-            }
-            else
-            {
+            } else {
                 //
                 // Check for a buffer overrun.
                 //
-                if(psSMBus->ui8RxIndex >= psSMBus->ui8RxSize)
-                {
+                if(psSMBus->ui8RxIndex >= psSMBus->ui8RxSize) {
                     //
                     // Clear the transfer in progress flag.
                     //
@@ -3207,8 +3045,7 @@ SMBusMasterIntProcess(tSMBus *psSMBus)
         // This state is for a transaction that needed to end due to a
         // size error.
         //
-        case SMBUS_STATE_READ_ERROR_STOP:
-        {
+        case SMBUS_STATE_READ_ERROR_STOP: {
             //
             // Dummy read the received byte.
             //
@@ -3263,103 +3100,76 @@ SMBusMasterIntEnable(tSMBus *psSMBus)
     //
     // Enable the interrupt in the NVIC.
     //
-    switch(psSMBus->ui32I2CBase)
-    {
-        case I2C0_BASE:
-        {
+    switch(psSMBus->ui32I2CBase) {
+        case I2C0_BASE: {
             MAP_IntEnable(INT_I2C0);
             break;
         }
 
-        case I2C1_BASE:
-        {
+        case I2C1_BASE: {
             MAP_IntEnable(INT_I2C1);
             break;
         }
 
-        case I2C2_BASE:
-        {
-            if(CLASS_IS_TM4C123)
-            {
+        case I2C2_BASE: {
+            if(CLASS_IS_TM4C123) {
                 MAP_IntEnable(INT_I2C2_TM4C123);
-            }
-            else if(CLASS_IS_TM4C129)
-            {
+            } else if(CLASS_IS_TM4C129) {
                 MAP_IntEnable(INT_I2C2_TM4C129);
             }
             break;
         }
 
-        case I2C3_BASE:
-        {
-            if(CLASS_IS_TM4C123)
-            {
+        case I2C3_BASE: {
+            if(CLASS_IS_TM4C123) {
                 MAP_IntEnable(INT_I2C3_TM4C123);
-            }
-            else if(CLASS_IS_TM4C129)
-            {
+            } else if(CLASS_IS_TM4C129) {
                 MAP_IntEnable(INT_I2C3_TM4C129);
             }
             break;
         }
 
-        case I2C4_BASE:
-        {
-            if(CLASS_IS_TM4C123)
-            {
+        case I2C4_BASE: {
+            if(CLASS_IS_TM4C123) {
                 MAP_IntEnable(INT_I2C4_TM4C123);
-            }
-            else if(CLASS_IS_TM4C129)
-            {
+            } else if(CLASS_IS_TM4C129) {
                 MAP_IntEnable(INT_I2C4_TM4C129);
             }
             break;
         }
 
-        case I2C5_BASE:
-        {
-            if(CLASS_IS_TM4C123)
-            {
+        case I2C5_BASE: {
+            if(CLASS_IS_TM4C123) {
                 MAP_IntEnable(INT_I2C5_TM4C123);
-            }
-            else if(CLASS_IS_TM4C129)
-            {
+            } else if(CLASS_IS_TM4C129) {
                 MAP_IntEnable(INT_I2C5_TM4C129);
             }
             break;
         }
 
-        case I2C6_BASE:
-        {
-            if(CLASS_IS_TM4C129)
-            {
+        case I2C6_BASE: {
+            if(CLASS_IS_TM4C129) {
                 MAP_IntEnable(INT_I2C6_TM4C129);
             }
             break;
         }
 
-        case I2C7_BASE:
-        {
-            if(CLASS_IS_TM4C129)
-            {
+        case I2C7_BASE: {
+            if(CLASS_IS_TM4C129) {
                 MAP_IntEnable(INT_I2C7_TM4C129);
             }
             break;
         }
 
-        case I2C8_BASE:
-        {
-            if(CLASS_IS_TM4C129)
-            {
+        case I2C8_BASE: {
+            if(CLASS_IS_TM4C129) {
                 MAP_IntEnable(INT_I2C8_TM4C129);
             }
             break;
         }
 
-        case I2C9_BASE:
-        {
-            if(CLASS_IS_TM4C129)
-            {
+        case I2C9_BASE: {
+            if(CLASS_IS_TM4C129) {
                 MAP_IntEnable(INT_I2C9_TM4C129);
             }
             break;
@@ -3482,8 +3292,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
     //
     // Check for the START interrupt.
     //
-    if(ui32InterruptStatus & I2C_SLAVE_INT_START)
-    {
+    if(ui32InterruptStatus & I2C_SLAVE_INT_START) {
         //
         // Clear the interrupt.
         //
@@ -3499,8 +3308,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
     //
     // Check for the STOP interrupt.
     //
-    if(ui32InterruptStatus & I2C_SLAVE_INT_STOP)
-    {
+    if(ui32InterruptStatus & I2C_SLAVE_INT_STOP) {
         //
         // Make sure the transfer in progress flag is cleared.  In the case
         // of Quick Command, it should never be set, so this is safe.
@@ -3515,15 +3323,13 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
         //
         // Check to see if a Quick Command was sent.
         //
-        if(ui32SlaveStatus & 0x10)
-        {
+        if(ui32SlaveStatus & 0x10) {
             //
             // Make sure the TX/RX index is 0.  If not, we should not be here.
             // Other data should not have been sent or received during a Quick
             // Command.
             //
-            if((psSMBus->ui8RxIndex != 0) || (psSMBus->ui8TxIndex != 0))
-            {
+            if((psSMBus->ui8RxIndex != 0) || (psSMBus->ui8TxIndex != 0)) {
                 //
                 // Return an error.
                 //
@@ -3533,12 +3339,9 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
             //
             // Tell caller a Quick Command has occurred and the data value.
             //
-            if(ui32SlaveStatus & 0x20)
-            {
+            if(ui32SlaveStatus & 0x20) {
                 return(SMBUS_SLAVE_QCMD_1);
-            }
-            else
-            {
+            } else {
                 return(SMBUS_SLAVE_QCMD_0);
             }
         }
@@ -3557,8 +3360,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
     //
     // Check for the DATA interrupt.
     //
-    if(ui32InterruptStatus & I2C_SLAVE_INT_DATA)
-    {
+    if(ui32InterruptStatus & I2C_SLAVE_INT_DATA) {
         //
         // Clear the I2C interrupt.
         //
@@ -3567,8 +3369,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
         //
         // Make sure that at least one of the relevant status bits is set.
         //
-        if(!(ui32SlaveStatus & 0x07))
-        {
+        if(!(ui32SlaveStatus & 0x07)) {
             //
             // No status bits were set - this is bad.  Should never get here.
             //
@@ -3584,26 +3385,21 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
         //
         // Handle the request type.
         //
-        switch((ui32SlaveStatus & 0x07))
-        {
+        switch((ui32SlaveStatus & 0x07)) {
             //
             // The first byte after the slave's own address has been received.
             // This is almost always the command byte in SMBus.  The only
             // exception is when the Send Byte protocol is used by the master.
             //
-            case I2C_SLAVE_ACT_RREQ_FBR:
-            {
+            case I2C_SLAVE_ACT_RREQ_FBR: {
                 //
                 // Check which slave address was called out.  Set the active
                 // address to the matched address.
                 //
-                if(I2CSlaveStatus(psSMBus->ui32I2CBase) & I2C_SCSR_OAR2SEL)
-                {
+                if(I2CSlaveStatus(psSMBus->ui32I2CBase) & I2C_SCSR_OAR2SEL) {
                     psSMBus->ui8OwnSlaveAddress =
                         HWREG(psSMBus->ui32I2CBase + I2C_O_SOAR2) & 0x7f;
-                }
-                else
-                {
+                } else {
                     psSMBus->ui8OwnSlaveAddress =
                         HWREG(psSMBus->ui32I2CBase + I2C_O_SOAR);
                 }
@@ -3611,8 +3407,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                 //
                 // If raw I2C, data goes into buffer.
                 //
-                if(HWREGBITB(&psSMBus->ui16Flags, FLAG_RAW_I2C))
-                {
+                if(HWREGBITB(&psSMBus->ui16Flags, FLAG_RAW_I2C)) {
                     psSMBus->pui8RxBuffer[psSMBus->ui8RxIndex++] =
                         I2CSlaveDataGet(psSMBus->ui32I2CBase);
                 }
@@ -3620,8 +3415,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                 //
                 // Read the first byte into the ui8CurrentCommand member.
                 //
-                else
-                {
+                else {
                     psSMBus->ui8CurrentCommand =
                         I2CSlaveDataGet(psSMBus->ui32I2CBase);
                 }
@@ -3629,8 +3423,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                 //
                 // If PEC is enabled, add the address to the CRC calculation.
                 //
-                if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-                {
+                if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
                     //
                     // Add the address to the CRC calculation.  In this case
                     // R/S will always be 0.  Also, this is the start of the
@@ -3666,18 +3459,15 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
             //
             // A data byte other than the first data byte has been received.
             //
-            case I2C_SLAVE_ACT_RREQ:
-            {
+            case I2C_SLAVE_ACT_RREQ: {
                 //
                 // Determine what to do based on the current state.
                 //
-                switch(psSMBus->ui8SlaveState)
-                {
+                switch(psSMBus->ui8SlaveState) {
                     //
                     // Receive first post-command byte.
                     //
-                    case SMBUS_STATE_SLAVE_POST_COMMAND:
-                    {
+                    case SMBUS_STATE_SLAVE_POST_COMMAND: {
                         //
                         // Read the data into the a temporary variable.
                         //
@@ -3686,15 +3476,13 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                         //
                         // Check if this is a block transfer.
                         //
-                        if(HWREGBITB(&psSMBus->ui16Flags, FLAG_BLOCK_TRANSFER))
-                        {
+                        if(HWREGBITB(&psSMBus->ui16Flags, FLAG_BLOCK_TRANSFER)) {
                             //
                             // Make sure there is enough space in the buffer.
                             // If not, NACK.  If there is, overwrite the
                             // current size with the size sent by the master.
                             //
-                            if(ui8DataTemp > psSMBus->ui8RxSize)
-                            {
+                            if(ui8DataTemp > psSMBus->ui8RxSize) {
                                 //
                                 // Update the state machine.
                                 //
@@ -3704,9 +3492,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                                 // Indicate a size error.
                                 //
                                 return(SMBUS_DATA_SIZE_ERROR);
-                            }
-                            else
-                            {
+                            } else {
                                 //
                                 // Update the size.
                                 //
@@ -3715,15 +3501,14 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                                 //
                                 // Check to see if PEC is enabled.
                                 //
-                                if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-                                {
+                                if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
                                     //
                                     // Add the size byte to the CRC
                                     // calculation.
                                     //
                                     psSMBus->ui8CalculatedCRC =
-                                       MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
-                                                     &ui8DataTemp, 1);
+                                        MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
+                                                      &ui8DataTemp, 1);
                                 }
 
                                 //
@@ -3742,8 +3527,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                         // If there is no data to receive and no PEC, nothing
                         // to do.  Software should never get here.
                         //
-                        if(psSMBus->ui8RxIndex == psSMBus->ui8RxSize)
-                        {
+                        if(psSMBus->ui8RxIndex == psSMBus->ui8RxSize) {
                             //
                             // Update the state machine.
                             //
@@ -3753,9 +3537,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                             // Report an error.
                             //
                             return(SMBUS_SLAVE_ERROR);
-                        }
-                        else
-                        {
+                        } else {
                             //
                             // Put the data in the buffer.
                             //
@@ -3765,29 +3547,25 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                             //
                             // If this is the last data byte.
                             //
-                            if(psSMBus->ui8RxIndex == psSMBus->ui8RxSize)
-                            {
+                            if(psSMBus->ui8RxIndex == psSMBus->ui8RxSize) {
                                 //
                                 // Check for PEC usage.
                                 //
-                                if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-                                {
+                                if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
                                     //
                                     // Add the size byte to the CRC
                                     // calculation.
                                     //
                                     psSMBus->ui8CalculatedCRC =
-                                       MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
-                                                     &ui8DataTemp, 1);
+                                        MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
+                                                      &ui8DataTemp, 1);
 
                                     //
                                     // Update the state machine.
                                     //
                                     psSMBus->ui8SlaveState =
                                         SMBUS_STATE_READ_PEC;
-                                }
-                                else
-                                {
+                                } else {
                                     //
                                     // Update the state machine.
                                     //
@@ -3799,20 +3577,18 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                             //
                             // All other cases.
                             //
-                            else
-                            {
+                            else {
                                 //
                                 // Check for PEC usage.
                                 //
-                                if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-                                {
+                                if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
                                     //
                                     // Add the size byte to the CRC
                                     // calculation.
                                     //
                                     psSMBus->ui8CalculatedCRC =
-                                       MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
-                                                     &ui8DataTemp, 1);
+                                        MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
+                                                      &ui8DataTemp, 1);
                                 }
 
                                 //
@@ -3831,8 +3607,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                     //
                     // Read the next byte into the buffer.
                     //
-                    case SMBUS_STATE_READ_NEXT:
-                    {
+                    case SMBUS_STATE_READ_NEXT: {
                         //
                         // Read the data into the a temporary variable.
                         //
@@ -3842,8 +3617,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                         // If there is no data to receive and no PEC, nothing
                         // to do.  Software should never get here.
                         //
-                        if(psSMBus->ui8RxIndex == psSMBus->ui8RxSize)
-                        {
+                        if(psSMBus->ui8RxIndex == psSMBus->ui8RxSize) {
                             //
                             // Update the state machine.
                             //
@@ -3853,9 +3627,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                             // Report an error.
                             //
                             return(SMBUS_SLAVE_ERROR);
-                        }
-                        else
-                        {
+                        } else {
                             //
                             // Put the data in the buffer.
                             //
@@ -3865,38 +3637,31 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                             //
                             // If this is the last data byte.
                             //
-                            if(psSMBus->ui8RxIndex == psSMBus->ui8RxSize)
-                            {
+                            if(psSMBus->ui8RxIndex == psSMBus->ui8RxSize) {
                                 //
                                 // Check for PEC usage.
                                 //
-                                if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-                                {
+                                if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
                                     //
                                     // Add the size byte to the CRC
                                     // calculation.
                                     //
                                     psSMBus->ui8CalculatedCRC =
-                                       MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
-                                                     &ui8DataTemp, 1);
+                                        MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
+                                                      &ui8DataTemp, 1);
 
                                     //
                                     // Update the state machine.
                                     //
                                     if(HWREGBITB(&psSMBus->ui16Flags,
-                                                 FLAG_PROCESS_CALL))
-                                    {
+                                                 FLAG_PROCESS_CALL)) {
                                         psSMBus->ui8SlaveState =
                                             SMBUS_STATE_READ_DONE;
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         psSMBus->ui8SlaveState =
                                             SMBUS_STATE_READ_PEC;
                                     }
-                                }
-                                else
-                                {
+                                } else {
                                     //
                                     // Update the state machine.
                                     //
@@ -3908,20 +3673,18 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                             //
                             // All other cases.
                             //
-                            else
-                            {
+                            else {
                                 //
                                 // Check for PEC usage.
                                 //
-                                if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-                                {
+                                if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
                                     //
                                     // Add the size byte to the CRC
                                     // calculation.
                                     //
                                     psSMBus->ui8CalculatedCRC =
-                                       MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
-                                                     &ui8DataTemp, 1);
+                                        MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
+                                                      &ui8DataTemp, 1);
                                 }
 
                                 //
@@ -3937,8 +3700,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                     //
                     // Read the PEC byte and compare it.
                     //
-                    case SMBUS_STATE_READ_PEC:
-                    {
+                    case SMBUS_STATE_READ_PEC: {
                         //
                         // Read the data into the a temporary variable.
                         //
@@ -3947,8 +3709,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                         //
                         // Compare PEC.
                         //
-                        if(psSMBus->ui8CalculatedCRC != ui8DataTemp)
-                        {
+                        if(psSMBus->ui8CalculatedCRC != ui8DataTemp) {
                             //
                             // Indicate PEC error.
                             //
@@ -3967,8 +3728,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                     // No more data to receive.  If we get here, read data
                     // into a dummy variable and NACK.
                     //
-                    case SMBUS_STATE_READ_DONE:
-                    {
+                    case SMBUS_STATE_READ_DONE: {
                         //
                         // Read the data into the a temporary variable.
                         //
@@ -3991,8 +3751,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
             // The master has requested that the slave transmit data back to
             // master.
             //
-            case I2C_SLAVE_ACT_TREQ:
-            {
+            case I2C_SLAVE_ACT_TREQ: {
                 //
                 // Initialize temporary variable that stores transmit byte to
                 // 0xff.  If data is not set by another condition, the 0xff
@@ -4004,8 +3763,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                 //
                 // Determine what to do based on the current state.
                 //
-                switch(psSMBus->ui8SlaveState)
-                {
+                switch(psSMBus->ui8SlaveState) {
                     //
                     // The state machine is currently idle, or if the last
                     // state was SMBUS_STATE_SLAVE_POST_COMMAND or
@@ -4021,21 +3779,17 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                     case SMBUS_STATE_IDLE:
                     case SMBUS_STATE_SLAVE_POST_COMMAND:
                     case SMBUS_STATE_READ_NEXT:
-                    case SMBUS_STATE_READ_DONE:
-                    {
+                    case SMBUS_STATE_READ_DONE: {
                         //
                         // Check which slave address was called out.  Set the
                         // active address to the matched address.
                         //
                         if(I2CSlaveStatus(psSMBus->ui32I2CBase) &
-                           I2C_SCSR_OAR2SEL)
-                        {
+                                I2C_SCSR_OAR2SEL) {
                             psSMBus->ui8OwnSlaveAddress =
                                 (HWREG(psSMBus->ui32I2CBase + I2C_O_SOAR2) &
                                  0x7f);
-                        }
-                        else
-                        {
+                        } else {
                             psSMBus->ui8OwnSlaveAddress =
                                 HWREG(psSMBus->ui32I2CBase + I2C_O_SOAR);
                         }
@@ -4045,28 +3799,23 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                         // return not ready without writing to the data
                         // register.
                         //
-                        if(psSMBus->ui8TxSize == 0)
-                        {
+                        if(psSMBus->ui8TxSize == 0) {
                             return(SMBUS_SLAVE_NOT_READY);
                         }
 
                         //
                         // Is this a block transfer?
                         //
-                        if(HWREGBITB(&psSMBus->ui16Flags, FLAG_BLOCK_TRANSFER))
-                        {
+                        if(HWREGBITB(&psSMBus->ui16Flags, FLAG_BLOCK_TRANSFER)) {
                             //
                             // The first byte to send is the size.
                             //
                             ui8DataTemp = psSMBus->ui8TxSize;
-                        }
-                        else
-                        {
+                        } else {
                             //
                             // Is there data to send?
                             //
-                            if(psSMBus->ui8TxIndex < psSMBus->ui8TxSize)
-                            {
+                            if(psSMBus->ui8TxIndex < psSMBus->ui8TxSize) {
                                 //
                                 // Set the transmit data to the next item in
                                 // the buffer.
@@ -4074,9 +3823,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                                 ui8DataTemp =
                                     psSMBus->pui8TxBuffer[psSMBus->
                                                           ui8TxIndex++];
-                            }
-                            else
-                            {
+                            } else {
                                 //
                                 // Send 0xff per spec.
                                 //
@@ -4087,8 +3834,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                         //
                         // Check to see if PEC is required.
                         //
-                        if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-                        {
+                        if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
                             //
                             // Start calculating the CRC with the address.
                             //
@@ -4112,16 +3858,13 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                             //
                             // Move to the next state.
                             //
-                            if(psSMBus->ui8TxIndex == psSMBus->ui8TxSize)
-                            {
+                            if(psSMBus->ui8TxIndex == psSMBus->ui8TxSize) {
                                 //
                                 // Final byte is the CRC byte.
                                 //
                                 psSMBus->ui8SlaveState =
                                     SMBUS_STATE_WRITE_FINAL;
-                            }
-                            else
-                            {
+                            } else {
                                 //
                                 // All other cases, move to the next byte
                                 // state.
@@ -4129,20 +3872,16 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                                 psSMBus->ui8SlaveState =
                                     SMBUS_STATE_WRITE_NEXT;
                             }
-                        }
-                        else
-                        {
+                        } else {
                             //
                             // Move to the next state.
                             //
-                            switch(psSMBus->ui8TxSize - psSMBus->ui8TxIndex)
-                            {
+                            switch(psSMBus->ui8TxSize - psSMBus->ui8TxIndex) {
                                 //
                                 // If all of the data has been sent, move to
                                 // the done state.
                                 //
-                                case 0:
-                                {
+                                case 0: {
                                     psSMBus->ui8SlaveState =
                                         SMBUS_STATE_WRITE_DONE;
 
@@ -4152,8 +3891,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                                 //
                                 // If 1 left, move to the final byte state.
                                 //
-                                case 1:
-                                {
+                                case 1: {
                                     psSMBus->ui8SlaveState =
                                         SMBUS_STATE_WRITE_FINAL;
 
@@ -4164,8 +3902,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                                 // All other cases, move to the next byte
                                 // state.
                                 //
-                                default:
-                                {
+                                default: {
                                     psSMBus->ui8SlaveState =
                                         SMBUS_STATE_WRITE_NEXT;
 
@@ -4188,8 +3925,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                     //
                     // The first byte has already been sent, handle the rest.
                     //
-                    case SMBUS_STATE_WRITE_NEXT:
-                    {
+                    case SMBUS_STATE_WRITE_NEXT: {
                         //
                         // Set the transmit data to the next item in the
                         // buffer.
@@ -4200,8 +3936,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                         //
                         // Check to see if PEC is required.
                         //
-                        if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-                        {
+                        if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
                             //
                             // Add the byte to the CRC calculation.
                             //
@@ -4212,22 +3947,18 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                             //
                             // Check if it's time to move to the next state.
                             //
-                            if(psSMBus->ui8TxIndex == psSMBus->ui8TxSize)
-                            {
+                            if(psSMBus->ui8TxIndex == psSMBus->ui8TxSize) {
                                 //
                                 // Final byte is the CRC byte.
                                 //
                                 psSMBus->ui8SlaveState =
                                     SMBUS_STATE_WRITE_FINAL;
                             }
-                        }
-                        else
-                        {
+                        } else {
                             //
                             // Move to the next state.
                             //
-                            if((psSMBus->ui8TxSize - psSMBus->ui8TxIndex) == 1)
-                            {
+                            if((psSMBus->ui8TxSize - psSMBus->ui8TxIndex) == 1) {
                                 //
                                 // If only 1 byte remains, move to the final
                                 // state.
@@ -4251,20 +3982,16 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                     //
                     // Write the final byte, whether PEC or data.
                     //
-                    case SMBUS_STATE_WRITE_FINAL:
-                    {
+                    case SMBUS_STATE_WRITE_FINAL: {
                         //
                         // Check to see if PEC is required.
                         //
-                        if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-                        {
+                        if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
                             //
                             // Send the CRC byte.
                             //
                             ui8DataTemp = psSMBus->ui8CalculatedCRC;
-                        }
-                        else
-                        {
+                        } else {
                             //
                             // Send the last data byte.
                             //
@@ -4291,8 +4018,7 @@ SMBusSlaveIntProcess(tSMBus *psSMBus)
                     //
                     // All data has been sent, send 0xff.
                     //
-                    case SMBUS_STATE_WRITE_DONE:
-                    {
+                    case SMBUS_STATE_WRITE_DONE: {
                         //
                         // Send 0xff because there is no more data to send.
                         //
@@ -4352,36 +4078,29 @@ SMBusSlaveDataSend(tSMBus *psSMBus)
     // Check to see if the TX buffer is populated.  If not,
     // return not ready without writing to the data register.
     //
-    if(psSMBus->ui8TxSize == 0)
-    {
+    if(psSMBus->ui8TxSize == 0) {
         return(SMBUS_SLAVE_NOT_READY);
     }
 
     //
     // Is this a block transfer?
     //
-    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_BLOCK_TRANSFER))
-    {
+    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_BLOCK_TRANSFER)) {
         //
         // The first byte to send is the size.
         //
         ui8DataTemp = psSMBus->ui8TxSize;
-    }
-    else
-    {
+    } else {
         //
         // Is there data to send?
         //
-        if(psSMBus->ui8TxIndex < psSMBus->ui8TxSize)
-        {
+        if(psSMBus->ui8TxIndex < psSMBus->ui8TxSize) {
             //
             // Set the transmit data to the next item in
             // the buffer.
             //
             ui8DataTemp = psSMBus->pui8TxBuffer[psSMBus->ui8TxIndex++];
-        }
-        else
-        {
+        } else {
             //
             // Send 0xff per spec.  Should not get here.
             //
@@ -4392,8 +4111,7 @@ SMBusSlaveDataSend(tSMBus *psSMBus)
     //
     // Check to see if PEC is required.
     //
-    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC))
-    {
+    if(HWREGBITB(&psSMBus->ui16Flags, FLAG_PEC)) {
         //
         // Start calculating the CRC with the address.
         //
@@ -4403,45 +4121,38 @@ SMBusSlaveDataSend(tSMBus *psSMBus)
         // Add the address and R/S bit to the CRC.
         //
         psSMBus->ui8CalculatedCRC = MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
-                                                  &ui8CRCTemp, 1);
+                                    &ui8CRCTemp, 1);
 
         //
         // Add the data byte to the CRC calculation.
         //
         psSMBus->ui8CalculatedCRC = MAP_Crc8CCITT(psSMBus->ui8CalculatedCRC,
-                                                  &ui8DataTemp, 1);
+                                    &ui8DataTemp, 1);
 
         //
         // Move to the next state.
         //
-        if(psSMBus->ui8TxIndex == psSMBus->ui8TxSize)
-        {
+        if(psSMBus->ui8TxIndex == psSMBus->ui8TxSize) {
             //
             // Final byte is the CRC byte.
             //
             psSMBus->ui8SlaveState = SMBUS_STATE_WRITE_FINAL;
-        }
-        else
-        {
+        } else {
             //
             // All other cases, move to the next byte state.
             //
             psSMBus->ui8SlaveState = SMBUS_STATE_WRITE_NEXT;
         }
-    }
-    else
-    {
+    } else {
         //
         // Move to the next state.
         //
-        switch(psSMBus->ui8TxSize - psSMBus->ui8TxIndex)
-        {
+        switch(psSMBus->ui8TxSize - psSMBus->ui8TxIndex) {
             //
             // If all of the data has been sent, move to the
             // done state.
             //
-            case 0:
-            {
+            case 0: {
                 psSMBus->ui8SlaveState = SMBUS_STATE_WRITE_DONE;
 
                 break;
@@ -4450,8 +4161,7 @@ SMBusSlaveDataSend(tSMBus *psSMBus)
             //
             // If 1 left, move to the final byte state.
             //
-            case 1:
-            {
+            case 1: {
                 psSMBus->ui8SlaveState = SMBUS_STATE_WRITE_FINAL;
 
                 break;
@@ -4460,8 +4170,7 @@ SMBusSlaveDataSend(tSMBus *psSMBus)
             //
             // All other cases, move to the next byte state.
             //
-            default:
-            {
+            default: {
                 psSMBus->ui8SlaveState = SMBUS_STATE_WRITE_NEXT;
 
                 break;
@@ -4835,12 +4544,9 @@ SMBusSlaveACKSend(tSMBus *psSMBus, bool bACK)
     //
     // Send ACK or NACK based on the value of bACK.
     //
-    if(bACK)
-    {
+    if(bACK) {
         I2CSlaveACKValueSet(psSMBus->ui32I2CBase, true);
-    }
-    else
-    {
+    } else {
         I2CSlaveACKValueSet(psSMBus->ui32I2CBase, false);
     }
 }
@@ -4942,12 +4648,9 @@ SMBusSlaveIntAddressGet(tSMBus *psSMBus)
     //
     // Determine whether the primary or secondary address was called out.
     //
-    if(I2CSlaveStatus(psSMBus->ui32I2CBase) & I2C_SCSR_OAR2SEL)
-    {
+    if(I2CSlaveStatus(psSMBus->ui32I2CBase) & I2C_SCSR_OAR2SEL) {
         return(SMBUS_SLAVE_ADDR_SECONDARY);
-    }
-    else
-    {
+    } else {
         return(SMBUS_SLAVE_ADDR_PRIMARY);
     }
 }
@@ -4978,103 +4681,76 @@ SMBusSlaveIntEnable(tSMBus *psSMBus)
     //
     // Enable the interrupt in the NVIC.
     //
-    switch(psSMBus->ui32I2CBase)
-    {
-        case I2C0_BASE:
-        {
+    switch(psSMBus->ui32I2CBase) {
+        case I2C0_BASE: {
             MAP_IntEnable(INT_I2C0);
             break;
         }
 
-        case I2C1_BASE:
-        {
+        case I2C1_BASE: {
             MAP_IntEnable(INT_I2C1);
             break;
         }
 
-        case I2C2_BASE:
-        {
-            if(CLASS_IS_TM4C123)
-            {
+        case I2C2_BASE: {
+            if(CLASS_IS_TM4C123) {
                 MAP_IntEnable(INT_I2C2_TM4C123);
-            }
-            else if(CLASS_IS_TM4C129)
-            {
+            } else if(CLASS_IS_TM4C129) {
                 MAP_IntEnable(INT_I2C2_TM4C129);
             }
             break;
         }
 
-        case I2C3_BASE:
-        {
-            if(CLASS_IS_TM4C123)
-            {
+        case I2C3_BASE: {
+            if(CLASS_IS_TM4C123) {
                 MAP_IntEnable(INT_I2C3_TM4C123);
-            }
-            else if(CLASS_IS_TM4C129)
-            {
+            } else if(CLASS_IS_TM4C129) {
                 MAP_IntEnable(INT_I2C3_TM4C129);
             }
             break;
         }
 
-        case I2C4_BASE:
-        {
-            if(CLASS_IS_TM4C123)
-            {
+        case I2C4_BASE: {
+            if(CLASS_IS_TM4C123) {
                 MAP_IntEnable(INT_I2C4_TM4C123);
-            }
-            else if(CLASS_IS_TM4C129)
-            {
+            } else if(CLASS_IS_TM4C129) {
                 MAP_IntEnable(INT_I2C4_TM4C129);
             }
             break;
         }
 
-        case I2C5_BASE:
-        {
-            if(CLASS_IS_TM4C123)
-            {
+        case I2C5_BASE: {
+            if(CLASS_IS_TM4C123) {
                 MAP_IntEnable(INT_I2C5_TM4C123);
-            }
-            else if(CLASS_IS_TM4C129)
-            {
+            } else if(CLASS_IS_TM4C129) {
                 MAP_IntEnable(INT_I2C5_TM4C129);
             }
             break;
         }
 
-        case I2C6_BASE:
-        {
-            if(CLASS_IS_TM4C129)
-            {
+        case I2C6_BASE: {
+            if(CLASS_IS_TM4C129) {
                 MAP_IntEnable(INT_I2C6_TM4C129);
             }
             break;
         }
 
-        case I2C7_BASE:
-        {
-            if(CLASS_IS_TM4C129)
-            {
+        case I2C7_BASE: {
+            if(CLASS_IS_TM4C129) {
                 MAP_IntEnable(INT_I2C7_TM4C129);
             }
             break;
         }
 
-        case I2C8_BASE:
-        {
-            if(CLASS_IS_TM4C129)
-            {
+        case I2C8_BASE: {
+            if(CLASS_IS_TM4C129) {
                 MAP_IntEnable(INT_I2C8_TM4C129);
             }
             break;
         }
 
-        case I2C9_BASE:
-        {
-            if(CLASS_IS_TM4C129)
-            {
+        case I2C9_BASE: {
+            if(CLASS_IS_TM4C129) {
                 MAP_IntEnable(INT_I2C9_TM4C129);
             }
             break;

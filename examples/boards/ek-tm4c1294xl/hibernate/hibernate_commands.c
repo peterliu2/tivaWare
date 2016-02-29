@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -66,13 +66,14 @@ extern void DateTimeSet(void);
 // is used by the cmdline module.
 //
 //*****************************************************************************
-tCmdLineEntry g_psCmdTable[] =
-{
+tCmdLineEntry g_psCmdTable[] = {
     {"help",   CMD_help,   " : Display list of commands." },
     {"hib",    CMD_hib,    " : Place system into hibernate mode."},
     {"date",   CMD_date,   " : Set Date \"DD/MM/YYYY\"."},
-    {"time12", CMD_time12, " : Set Time 12HR style \"HH:MM:XX\" "
-                           "XX = AM or PM"},
+    {
+        "time12", CMD_time12, " : Set Time 12HR style \"HH:MM:XX\" "
+        "XX = AM or PM"
+    },
     {"time24", CMD_time24, " : Set Time 24HR style \"HH:MM\"."},
     {"cls",    CMD_cls,    " : Clear the terminal screen"},
     { 0, 0, 0 }
@@ -125,11 +126,10 @@ CMD_help(int argc, char **argv)
     //
     // Display strings until we run out of them.
     //
-    while(g_psCmdTable[i32Index].pcCmd)
-    {
-      UARTprintf("%17s %s\n", g_psCmdTable[i32Index].pcCmd,
-                 g_psCmdTable[i32Index].pcHelp);
-      i32Index++;
+    while(g_psCmdTable[i32Index].pcCmd) {
+        UARTprintf("%17s %s\n", g_psCmdTable[i32Index].pcCmd,
+                   g_psCmdTable[i32Index].pcHelp);
+        i32Index++;
     }
 
     //
@@ -179,12 +179,10 @@ CMD_date(int argc, char **argv)
     //
     // Check the argument count and return errors for too many or too few.
     //
-    if(argc == 1)
-    {
+    if(argc == 1) {
         return(CMDLINE_TOO_FEW_ARGS);
     }
-    if(argc > 2)
-    {
+    if(argc > 2) {
         return(CMDLINE_TOO_MANY_ARGS);
     }
 
@@ -199,8 +197,7 @@ CMD_date(int argc, char **argv)
     // Perform the conversions to a time struct and store in the hibernate
     // module after doing a minimal amount of validation.
     //
-    if((g_ui32DayIdx > 31) || (g_ui32MonthIdx > 11))
-    {
+    if((g_ui32DayIdx > 31) || (g_ui32MonthIdx > 11)) {
         return(CMDLINE_INVALID_ARG);
     }
 
@@ -225,12 +222,10 @@ CMD_time12(int argc, char **argv)
     //
     // Check the argument count and return errors for too many or too few.
     //
-    if(argc == 1)
-    {
+    if(argc == 1) {
         return(CMDLINE_TOO_FEW_ARGS);
     }
-    if(argc > 2)
-    {
+    if(argc > 2) {
         return(CMDLINE_TOO_MANY_ARGS);
     }
 
@@ -244,17 +239,12 @@ CMD_time12(int argc, char **argv)
     // Accomodate the PM vs AM modification.  All times are stored internally
     // as 24 hour format.
     //
-    if(ustrncmp(pcNext + 1, "PM", 2) == 0)
-    {
-        if(g_ui32HourIdx < 12)
-        {
+    if(ustrncmp(pcNext + 1, "PM", 2) == 0) {
+        if(g_ui32HourIdx < 12) {
             g_ui32HourIdx += 12;
         }
-    }
-    else
-    {
-        if(g_ui32HourIdx > 11)
-        {
+    } else {
+        if(g_ui32HourIdx > 11) {
             g_ui32HourIdx -= 12;
         }
     }
@@ -263,8 +253,7 @@ CMD_time12(int argc, char **argv)
     // Perform the conversions to a time struct and store in the hibernate
     // module.  Also do some minimal checking on the input data.
     //
-    if((g_ui32HourIdx < 24) && (g_ui32MinIdx < 60))
-    {
+    if((g_ui32HourIdx < 24) && (g_ui32MinIdx < 60)) {
         DateTimeSet();
     }
 
@@ -286,12 +275,10 @@ CMD_time24(int argc, char **argv)
     //
     // Check the argument count and return errors for too many or too few.
     //
-    if(argc == 1)
-    {
+    if(argc == 1) {
         return(CMDLINE_TOO_FEW_ARGS);
     }
-    if(argc > 2)
-    {
+    if(argc > 2) {
         return(CMDLINE_TOO_MANY_ARGS);
     }
 
@@ -305,8 +292,7 @@ CMD_time24(int argc, char **argv)
     // Perform the conversions to a time struct and store in the hibernate
     // module.  Also do some minimal checking on the input data.
     //
-    if((g_ui32HourIdx < 24) && (g_ui32MinIdx < 60))
-    {
+    if((g_ui32HourIdx < 24) && (g_ui32MinIdx < 60)) {
         DateTimeSet();
     }
 

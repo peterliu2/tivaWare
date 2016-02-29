@@ -77,11 +77,11 @@
 volatile enum
 {
     STATE_NOT_CONNECTED,
-        STATE_NEW_CONNECTION,
-        STATE_CONNECTED_IDLE,
-        STATE_WAIT_DATA,
-        STATE_UPDATE_CITY,
-        STATE_WAIT_NICE,
+    STATE_NEW_CONNECTION,
+    STATE_CONNECTED_IDLE,
+    STATE_WAIT_DATA,
+    STATE_UPDATE_CITY,
+    STATE_WAIT_NICE,
 }
 g_iState = STATE_NOT_CONNECTED;
 
@@ -175,8 +175,7 @@ uint32_t g_UpdateUART = 1;
 // The defaults for the flash and application settings.
 //
 //*****************************************************************************
-static const sParameters g_sDefaultParams =
-{
+static const sParameters g_sDefaultParams = {
     0,
     {"Custom City Name"},
     {"your.proxy.com"},
@@ -196,8 +195,7 @@ sParameters g_sConfig;
 // The state of each city panel.
 //
 //*****************************************************************************
-struct
-{
+struct {
     //
     // The last update time for this city.
     //
@@ -223,8 +221,7 @@ g_psCityInfo[NUM_CITIES];
 //
 // The list of city names.
 //
-static const char *g_ppcCityNames[NUM_CITIES - 1] =
-{
+static const char *g_ppcCityNames[NUM_CITIES - 1] = {
     "Austin, TX",
     "Beijing, China",
     "Berlin, Germany",
@@ -322,8 +319,7 @@ TempCtoF(int32_t i32Temp)
     //
     // Only convert if measurements are not in Celsius.
     //
-    if(g_sConfig.bCelsius == false)
-    {
+    if(g_sConfig.bCelsius == false) {
         i32Temp = ((i32Temp * 9) / 5) + 32;
     }
 
@@ -353,15 +349,13 @@ ResetCity(uint32_t ui32Idx)
     //
     // Make sure to copy the name into the string for a custom city.
     //
-    if(ui32Idx == NUM_CITIES - 1)
-    {
+    if(ui32Idx == NUM_CITIES - 1) {
         //
         // Custom city is in another list.
         //
         g_psCityInfo[ui32Idx].pcName = g_sConfig.pcCustomCity;
 
-        if(g_ui32CityActive == ui32Idx)
-        {
+        if(g_ui32CityActive == ui32Idx) {
             //
             // Update the custom city name.
             //
@@ -371,13 +365,10 @@ ResetCity(uint32_t ui32Idx)
         //
         // The custom city only needs an update if enabled.
         //
-        if(g_sConfig.bCustomEnabled)
-        {
+        if(g_sConfig.bCustomEnabled) {
             g_psCityInfo[ui32Idx].bNeedsUpdate = true;
         }
-    }
-    else
-    {
+    } else {
         g_psCityInfo[ui32Idx].pcName = g_ppcCityNames[ui32Idx];
         g_psCityInfo[ui32Idx].bNeedsUpdate = true;
     }
@@ -393,14 +384,11 @@ UpdateIPAddress(char *pcAddr, uint32_t ipAddr)
 {
     uint8_t *pui8Temp = (uint8_t *)&ipAddr;
 
-    if(ipAddr == 0)
-    {
+    if(ipAddr == 0) {
         ustrncpy(pcAddr, "IP: ---.---.---.---", sizeof(g_pcIPAddr));
-    }
-    else
-    {
+    } else {
         usprintf(pcAddr,"IP: %d.%d.%d.%d", pui8Temp[0], pui8Temp[1],
-                pui8Temp[2], pui8Temp[3]);
+                 pui8Temp[2], pui8Temp[3]);
     }
 }
 
@@ -415,8 +403,7 @@ ProxyEnable(void)
     //
     // If a city was waiting to be updated then reset its data.
     //
-    if(g_iState != STATE_CONNECTED_IDLE)
-    {
+    if(g_iState != STATE_CONNECTED_IDLE) {
         ResetCity(g_ui32CityUpdating);
     }
 
@@ -428,8 +415,7 @@ ProxyEnable(void)
     //
     // Toggle the proxy setting.
     //
-    if(!g_sConfig.bProxyEnabled)
-    {
+    if(!g_sConfig.bProxyEnabled) {
         //
         // Reset the IP address on the screen and disable the proxy which
         // resets the network interface and starts DHCP again.
@@ -437,9 +423,7 @@ ProxyEnable(void)
         UpdateIPAddress(g_pcIPAddr, 0);
         EthClientProxySet(0);
 
-    }
-    else
-    {
+    } else {
         //
         // Enable the proxy which resets the network interface and starts DHCP
         // again.
@@ -471,12 +455,9 @@ UpdateCity(uint32_t ui32Idx, bool bDraw)
     //
     bIntDisabled = IntMasterDisable();
 
-    if(g_sConfig.bCelsius)
-    {
+    if(g_sConfig.bCelsius) {
         cUnits = 'C';
-    }
-    else
-    {
+    } else {
         cUnits = 'F';
     }
 
@@ -488,34 +469,26 @@ UpdateCity(uint32_t ui32Idx, bool bDraw)
     //
     // Check if the humidity value is valid.
     //
-    if(g_psCityInfo[ui32Idx].sReport.i32Humidity == INVALID_INT)
-    {
+    if(g_psCityInfo[ui32Idx].sReport.i32Humidity == INVALID_INT) {
         usprintf(g_pcHumidity, "Humidity: --");
-    }
-    else
-    {
+    } else {
         usprintf(g_pcHumidity, "Humidity: %d",
-                g_psCityInfo[ui32Idx].sReport.i32Humidity);
+                 g_psCityInfo[ui32Idx].sReport.i32Humidity);
     }
 
     //
     // Copy the updated description.
     //
-    if(g_psCityInfo[ui32Idx].sReport.pcDescription)
-    {
+    if(g_psCityInfo[ui32Idx].sReport.pcDescription) {
         ustrncpy(g_pcStatus, g_psCityInfo[ui32Idx].sReport.pcDescription,
-                sizeof(g_pcStatus));
-    }
-    else if((g_ui32CityUpdating == g_ui32CityActive) &&
-            (g_iState != STATE_NOT_CONNECTED))
-    {
+                 sizeof(g_pcStatus));
+    } else if((g_ui32CityUpdating == g_ui32CityActive) &&
+              (g_iState != STATE_NOT_CONNECTED)) {
         //
         // Waiting on data for this city.
         //
         ustrncpy(g_pcStatus, g_pcWaitData, sizeof(g_pcStatus));
-    }
-    else
-    {
+    } else {
         //
         // No current status.
         //
@@ -526,27 +499,23 @@ UpdateCity(uint32_t ui32Idx, bool bDraw)
     //
     // Check if the temperature value is valid.
     //
-    if(g_psCityInfo[ui32Idx].sReport.i32Temp == INVALID_INT)
-    {
+    if(g_psCityInfo[ui32Idx].sReport.i32Temp == INVALID_INT) {
         usprintf(g_pcTemp, "--%c", cUnits);
         usprintf(g_pcTempHighLow, "--/--%c",
-                TempCtoF(g_psCityInfo[ui32Idx].sReport.i32TempHigh),
-                TempCtoF(g_psCityInfo[ui32Idx].sReport.i32TempLow), cUnits);
-    }
-    else
-    {
+                 TempCtoF(g_psCityInfo[ui32Idx].sReport.i32TempHigh),
+                 TempCtoF(g_psCityInfo[ui32Idx].sReport.i32TempLow), cUnits);
+    } else {
         usprintf(g_pcTemp, "%d%c",
-                TempCtoF(g_psCityInfo[ui32Idx].sReport.i32Temp), cUnits);
+                 TempCtoF(g_psCityInfo[ui32Idx].sReport.i32Temp), cUnits);
         usprintf(g_pcTempHighLow, "%d/%d%c",
-                TempCtoF(g_psCityInfo[ui32Idx].sReport.i32TempHigh),
-                TempCtoF(g_psCityInfo[ui32Idx].sReport.i32TempLow), cUnits);
+                 TempCtoF(g_psCityInfo[ui32Idx].sReport.i32TempHigh),
+                 TempCtoF(g_psCityInfo[ui32Idx].sReport.i32TempLow), cUnits);
     }
 
     //
     // Update the information if requested.
     //
-    if(bDraw)
-    {
+    if(bDraw) {
         UARTprintf((const char *)&g_pcCity);
         UARTprintf("\n\tStatus: ");
         UARTprintf((const char *)&g_pcStatus);
@@ -558,8 +527,7 @@ UpdateCity(uint32_t ui32Idx, bool bDraw)
         UARTprintf((const char *)&g_pcTempHighLow);
     }
 
-    if(bIntDisabled == false)
-    {
+    if(bIntDisabled == false) {
         IntMasterEnable();
     }
 }
@@ -577,8 +545,8 @@ UpdateMACAddr(void)
     EthClientMACAddrGet(pui8MACAddr);
 
     usprintf(g_pcMACAddr, "MAC: %02x:%02x:%02x:%02x:%02x:%02x",
-            pui8MACAddr[0], pui8MACAddr[1], pui8MACAddr[2], pui8MACAddr[3],
-            pui8MACAddr[4], pui8MACAddr[5]);
+             pui8MACAddr[0], pui8MACAddr[1], pui8MACAddr[2], pui8MACAddr[3],
+             pui8MACAddr[4], pui8MACAddr[5]);
 }
 
 //*****************************************************************************
@@ -595,7 +563,7 @@ PrintIPAddress(char *pcAddr, uint32_t ipaddr)
     // Convert the IP Address into a string.
     //
     UARTprintf("%d.%d.%d.%d\n", pui8Temp[0], pui8Temp[1], pui8Temp[2],
-            pui8Temp[3]);
+               pui8Temp[3]);
 }
 
 //*****************************************************************************
@@ -612,8 +580,7 @@ CheckForUserCommands(void)
     //
     // Peek to see if a full command is ready for processing
     //
-    if(UARTPeek('\r') == -1)
-    {
+    if(UARTPeek('\r') == -1) {
         //
         // If not, return so other functions get a chance to run.
         //
@@ -624,8 +591,7 @@ CheckForUserCommands(void)
     // If we do have commands, process them immediately in the order they were
     // received.
     //
-    while(UARTPeek('\r') != -1)
-    {
+    while(UARTPeek('\r') != -1) {
         //
         // Indicate we are processing a command.
         //
@@ -644,16 +610,14 @@ CheckForUserCommands(void)
         //
         // Handle the case of bad command.
         //
-        if(iStatus == CMDLINE_BAD_CMD)
-        {
+        if(iStatus == CMDLINE_BAD_CMD) {
             UARTprintf("Bad command!\n");
         }
 
         //
         // Handle the case of too many arguments.
         //
-        else if(iStatus == CMDLINE_TOO_MANY_ARGS)
-        {
+        else if(iStatus == CMDLINE_TOO_MANY_ARGS) {
             UARTprintf("Too many arguments for command processor!\n");
         }
     }
@@ -679,8 +643,7 @@ UpdateUART(uint32_t ui32City)
     //
     // See if the user has hit 'ENTER'
     //
-    if(UARTPeek('\r') != -1 && g_ui32ShowCities)
-    {
+    if(UARTPeek('\r') != -1 && g_ui32ShowCities) {
         //
         // Get a user command back
         //
@@ -705,8 +668,7 @@ UpdateUART(uint32_t ui32City)
     //
     // If the IP changed, reassign.
     //
-    if (g_ui32IPaddr != ui32IPaddr)
-    {
+    if (g_ui32IPaddr != ui32IPaddr) {
         //
         // Reassign the global IP to the current.
         //
@@ -721,8 +683,7 @@ UpdateUART(uint32_t ui32City)
     //
     // Check if we should scroll the cities.
     //
-    if (g_ui32UARTDelay == 0 && g_ui32ShowCities)
-    {
+    if (g_ui32UARTDelay == 0 && g_ui32ShowCities) {
         //
         // Clear the terminal.  Print the banner and IP place holder.
         //
@@ -747,13 +708,11 @@ UpdateUART(uint32_t ui32City)
         //
         UARTprintf("\n__________________________\n\nUpdating:");
 
-        if (g_ui32Cycles >= UPDATE_CYCLES)
-        {
+        if (g_ui32Cycles >= UPDATE_CYCLES) {
             //
             // Reset the cities so that they update.
             //
-            for(ui32Idx = 0; ui32Idx < NUM_CITIES; ui32Idx++)
-            {
+            for(ui32Idx = 0; ui32Idx < NUM_CITIES; ui32Idx++) {
                 ResetCity(ui32Idx);
             }
 
@@ -768,8 +727,7 @@ UpdateUART(uint32_t ui32City)
         //
         g_ui32UARTDelay = CYCLE_DELAY;
 
-        if (ui32IPaddr != 0 && ui32IPaddr != 0xffffffff)
-        {
+        if (ui32IPaddr != 0 && ui32IPaddr != 0xffffffff) {
             //
             // Increment the display city.
             //
@@ -779,36 +737,31 @@ UpdateUART(uint32_t ui32City)
             // Check if the current city index is at the end.
             //
             if ((g_ui32CityActive >= NUM_CITIES - 1 &&
-                        g_sDefaultParams.bCustomEnabled == false) ||
+                    g_sDefaultParams.bCustomEnabled == false) ||
                     (g_ui32CityActive >= NUM_CITIES &&
-                     g_sDefaultParams.bCustomEnabled == true))
-            {
+                     g_sDefaultParams.bCustomEnabled == true)) {
                 g_ui32CityActive = 0;
                 g_ui32Cycles++;
             }
         }
 
         g_UpdateUART = 0;
-    }
-    else if (g_ui32UARTDelay == 0 && (ui32IPaddr == 0 ||
-                ui32IPaddr == 0xffffffff))
-    {
+    } else if (g_ui32UARTDelay == 0 && (ui32IPaddr == 0 ||
+                                        ui32IPaddr == 0xffffffff)) {
         //
         // Reset the delay.
         //
         g_ui32UARTDelay = CYCLE_DELAY;
     }
 
-    else if (g_ui32UARTDelay > 0)
-    {
+    else if (g_ui32UARTDelay > 0) {
         g_ui32UARTDelay--;
     }
 
     //
     // Check if we need to update the UART with the standard text.
     //
-    if (g_UpdateUART && !g_ui32ShowCities && !g_ui32ProcessingCmds)
-    {
+    if (g_UpdateUART && !g_ui32ShowCities && !g_ui32ProcessingCmds) {
         //
         // Clear the terminal.  Print the banner and IP place holder.
         //
@@ -832,8 +785,7 @@ UpdateUART(uint32_t ui32City)
     //
     // If we are not scrolling. Check for commands.
     //
-    if (!g_ui32ShowCities)
-    {
+    if (!g_ui32ShowCities) {
         //
         // Check for user commands.
         //
@@ -850,8 +802,7 @@ void
 WeatherEvent(uint32_t ui32Event, void* pvData, uint32_t ui32Param)
 {
 
-    if(ui32Event == ETH_EVENT_RECEIVE)
-    {
+    if(ui32Event == ETH_EVENT_RECEIVE) {
         //
         // Let the main loop update the city.
         //
@@ -859,16 +810,11 @@ WeatherEvent(uint32_t ui32Event, void* pvData, uint32_t ui32Param)
 
         g_psCityInfo[g_ui32CityUpdating].ui32LastUpdate =
             g_psCityInfo[g_ui32CityUpdating].sReport.ui32Time;
-    }
-    else if(ui32Event == ETH_EVENT_INVALID_REQ)
-    {
+    } else if(ui32Event == ETH_EVENT_INVALID_REQ) {
         g_psCityInfo[g_ui32CityUpdating].sReport.pcDescription = g_pcNotFound;
         g_iState = STATE_UPDATE_CITY;
-    }
-    else if(ui32Event == ETH_EVENT_CLOSE)
-    {
-        if(g_iState == STATE_WAIT_DATA)
-        {
+    } else if(ui32Event == ETH_EVENT_CLOSE) {
+        if(g_iState == STATE_WAIT_DATA) {
             g_psCityInfo[g_ui32CityUpdating].sReport.pcDescription =
                 g_pcServerBusy;
 
@@ -880,8 +826,7 @@ WeatherEvent(uint32_t ui32Event, void* pvData, uint32_t ui32Param)
     // If the update indicated no time, then just set the time to a value
     // to indicate that at least the update occurred.
     //
-    if(g_psCityInfo[g_ui32CityUpdating].ui32LastUpdate == 0)
-    {
+    if(g_psCityInfo[g_ui32CityUpdating].ui32LastUpdate == 0) {
         //
         // Failed to update for some reason.
         //
@@ -905,8 +850,7 @@ SysTickIntHandler(void)
     //
     // Handle the delay between accesses to the weather server.
     //
-    if(g_ui32Delay != 0)
-    {
+    if(g_ui32Delay != 0) {
         g_ui32Delay--;
     }
 }
@@ -919,22 +863,18 @@ SysTickIntHandler(void)
 void
 EnetEvents(uint32_t ui32Event, void *pvData, uint32_t ui32Param)
 {
-    if(ui32Event == ETH_EVENT_CONNECT)
-    {
+    if(ui32Event == ETH_EVENT_CONNECT) {
         g_iState = STATE_NEW_CONNECTION;
 
         //
         // Update the string version of the address.
         //
         UpdateIPAddress(g_pcIPAddr, EthClientAddrGet());
-    }
-    else if(ui32Event == ETH_EVENT_DISCONNECT)
-    {
+    } else if(ui32Event == ETH_EVENT_DISCONNECT) {
         //
         // If a city was waiting to be updated then reset its data.
         //
-        if(g_iState != STATE_CONNECTED_IDLE)
-        {
+        if(g_iState != STATE_CONNECTED_IDLE) {
             ResetCity(g_ui32CityUpdating);
         }
 
@@ -955,8 +895,7 @@ EnetEvents(uint32_t ui32Event, void *pvData, uint32_t ui32Param)
 int
 main(void)
 {
-    enum
-    {
+    enum {
         eRequestIdle,
         eRequestUpdate,
         eRequestForecast,
@@ -980,9 +919,9 @@ main(void)
     // Run from the PLL at 120 MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                SYSCTL_OSC_MAIN |
-                SYSCTL_USE_PLL |
-                SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN |
+                                            SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Configure the device pins.
@@ -1010,20 +949,16 @@ main(void)
     //
     // Use the defaults if no settings were found.
     //
-    if(pParams == 0)
-    {
+    if(pParams == 0) {
         g_sConfig = g_sDefaultParams;
-    }
-    else
-    {
+    } else {
         g_sConfig = *pParams;
     }
 
     //
     // Initialize all of the cities.
     //
-    for(i32City = 0; i32City < NUM_CITIES; i32City++)
-    {
+    for(i32City = 0; i32City < NUM_CITIES; i32City++) {
         ResetCity(i32City);
     }
 
@@ -1048,13 +983,10 @@ main(void)
     IntPrioritySet(INT_EMAC0, ETHERNET_INT_PRIORITY);
     IntPrioritySet(FAULT_SYSTICK, SYSTICK_INT_PRIORITY);
 
-    if(g_sConfig.bProxyEnabled)
-    {
+    if(g_sConfig.bProxyEnabled) {
         EthClientProxySet(g_sConfig.pcProxy);
         EthClientInit(EnetEvents);
-    }
-    else
-    {
+    } else {
         EthClientProxySet(0);
         EthClientInit(EnetEvents);
     }
@@ -1080,41 +1012,31 @@ main(void)
     //
     // Loop forever.  All the work is done in interrupt handlers.
     //
-    while(1)
-    {
-        if(g_iState == STATE_NEW_CONNECTION)
-        {
+    while(1) {
+        if(g_iState == STATE_NEW_CONNECTION) {
             iRequest = eRequestIdle;
 
             g_iState = STATE_CONNECTED_IDLE;
-        }
-        else if(g_iState == STATE_CONNECTED_IDLE)
-        {
-            if(iRequest == eRequestIdle)
-            {
+        } else if(g_iState == STATE_CONNECTED_IDLE) {
+            if(iRequest == eRequestIdle) {
                 //
                 // If this city needs updating then start an update.
                 //
                 if((g_psCityInfo[g_ui32CityUpdating].bNeedsUpdate) &&
                         ((g_ui32CityUpdating < NUM_CITIES - 1) ||
-                         (g_sConfig.bCustomEnabled == true)))
-                {
+                         (g_sConfig.bCustomEnabled == true))) {
                     iRequest = eRequestUpdate;
                 }
 
-                if(iRequest != eRequestUpdate)
-                {
+                if(iRequest != eRequestUpdate) {
                     //
                     // If the custom city is enabled and it needs updating,
                     // then update it first.
                     //
                     if((g_psCityInfo[NUM_CITIES - 1].bNeedsUpdate) &&
-                            (g_sConfig.bCustomEnabled == true))
-                    {
+                            (g_sConfig.bCustomEnabled == true)) {
                         g_ui32CityUpdating = NUM_CITIES - 1;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Move on to the next city to see if it needs to be
                         // updated on the next pass.
@@ -1122,20 +1044,16 @@ main(void)
                         g_ui32CityUpdating++;
                     }
 
-                    if(g_ui32CityUpdating >= NUM_CITIES)
-                    {
+                    if(g_ui32CityUpdating >= NUM_CITIES) {
                         g_ui32CityUpdating = 0;
                     }
                 }
-            }
-            else if(iRequest == eRequestUpdate)
-            {
+            } else if(iRequest == eRequestUpdate) {
                 //
                 // Print the current city being updated.
                 //
-                if (g_ui32ShowCities)
-                {
-                    UARTprintf("\n\t%s", 
+                if (g_ui32ShowCities) {
+                    UARTprintf("\n\t%s",
                                g_psCityInfo[g_ui32CityUpdating].pcName);
                 }
 
@@ -1147,14 +1065,12 @@ main(void)
                 g_ui32Delay = 1000;
 
                 WeatherForecast(iWSrcOpenWeatherMap,
-                        g_psCityInfo[g_ui32CityUpdating].pcName,
-                        &g_psCityInfo[g_ui32CityUpdating].sReport,
-                        WeatherEvent);
+                                g_psCityInfo[g_ui32CityUpdating].pcName,
+                                &g_psCityInfo[g_ui32CityUpdating].sReport,
+                                WeatherEvent);
 
                 iRequest = eRequestForecast;
-            }
-            else if(iRequest == eRequestForecast)
-            {
+            } else if(iRequest == eRequestForecast) {
                 g_iState = STATE_WAIT_DATA;
 
                 //
@@ -1163,14 +1079,12 @@ main(void)
                 g_ui32Delay = 1000;
 
                 WeatherCurrent(iWSrcOpenWeatherMap,
-                        g_psCityInfo[g_ui32CityUpdating].pcName,
-                        &g_psCityInfo[g_ui32CityUpdating].sReport,
-                        WeatherEvent);
+                               g_psCityInfo[g_ui32CityUpdating].pcName,
+                               &g_psCityInfo[g_ui32CityUpdating].sReport,
+                               WeatherEvent);
 
                 iRequest = eRequestCurrent;
-            }
-            else if(iRequest == eRequestCurrent)
-            {
+            } else if(iRequest == eRequestCurrent) {
                 //
                 // Return to the idle request state.
                 //
@@ -1181,18 +1095,14 @@ main(void)
                 //
                 g_psCityInfo[g_ui32CityUpdating].bNeedsUpdate = false;
             }
-        }
-        else if(g_iState == STATE_UPDATE_CITY)
-        {
-            if(iRequest == eRequestCurrent)
-            {
+        } else if(g_iState == STATE_UPDATE_CITY) {
+            if(iRequest == eRequestCurrent) {
                 //
                 // If the city is the current active city and the the
                 // application is on the main screen then update the screen
                 // and not just the values.
                 //
-                if(g_ui32CityUpdating == g_ui32CityActive)
-                {
+                if(g_ui32CityUpdating == g_ui32CityActive) {
                     //
                     // Update the current city.
                     //
@@ -1214,25 +1124,19 @@ main(void)
             // 10ms * 10 is a 1 second delay between updates.
             //
             g_ui32Delay = SYSTEM_TICK_MS * 10;
-        }
-        else if(g_iState == STATE_WAIT_NICE)
-        {
+        } else if(g_iState == STATE_WAIT_NICE) {
             //
             // Wait for the "nice" delay to not hit the server too often.
             //
-            if(g_ui32Delay == 0)
-            {
+            if(g_ui32Delay == 0) {
                 g_iState = STATE_CONNECTED_IDLE;
             }
-        }
-        else if(g_iState == STATE_WAIT_DATA)
-        {
+        } else if(g_iState == STATE_WAIT_DATA) {
             //
             // If no data has been received by the timeout then close the
             // connection.
             //
-            if(g_ui32Delay == 0)
-            {
+            if(g_ui32Delay == 0) {
                 //
                 // Close out the current connection.
                 //

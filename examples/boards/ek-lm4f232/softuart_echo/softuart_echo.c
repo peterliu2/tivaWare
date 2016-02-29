@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-LM4F232 Firmware Package.
 //
 //*****************************************************************************
@@ -135,8 +135,7 @@ Timer0BIntHandler(void)
     // Call the SoftUART receive timer tick function, and see if the timer
     // should be disabled.
     //
-    if(SoftUARTRxTick(&g_sUART, false) == SOFTUART_RXTIMER_END)
-    {
+    if(SoftUARTRxTick(&g_sUART, false) == SOFTUART_RXTIMER_END) {
         //
         // Disable the timer interrupt since the SoftUART doesn't need it any
         // longer.
@@ -208,8 +207,7 @@ UARTSend(const uint8_t *pui8Buffer, uint32_t ui32Count)
     //
     // Loop while there are more characters to send.
     //
-    while(ui32Count--)
-    {
+    while(ui32Count--) {
         //
         // Write the next character to the UART.
         //
@@ -233,7 +231,7 @@ main(void)
     //
     ROM_SysCtlClockSet(SYSCTL_SYSDIV_4 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
                        SYSCTL_XTAL_16MHZ);
-    
+
     //
     // Initialize the display driver.
     //
@@ -265,7 +263,7 @@ main(void)
     GrContextFontSet(&sContext, g_psFontFixed6x8);
     GrStringDrawCentered(&sContext, "softuart-echo", -1,
                          GrContextDpyWidthGet(&sContext) / 2, 4, 0);
-    
+
     //
     // Initialize the display and write some instructions.
     //
@@ -342,21 +340,18 @@ main(void)
     //
     // Loop forever echoing data through the UART.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Wait until there are characters available in the receive buffer.
         //
-        while(g_ui32Flag == 0)
-        {
+        while(g_ui32Flag == 0) {
         }
         g_ui32Flag = 0;
 
         //
         // Loop while there are characters in the receive buffer.
         //
-        while(SoftUARTCharsAvail(&g_sUART))
-        {
+        while(SoftUARTCharsAvail(&g_sUART)) {
             //
             // Read the next character from the UART and write it back to the
             // UART.

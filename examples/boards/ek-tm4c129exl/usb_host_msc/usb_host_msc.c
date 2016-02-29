@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C129EXL Firmware Package.
 //
 //*****************************************************************************
@@ -145,8 +145,7 @@ static FIL g_sFileObject;
 // FAT file system driver.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     FRESULT fresult;
     char *pcResultStr;
 }
@@ -166,8 +165,7 @@ tFresultString;
 // printing to the console.
 //
 //*****************************************************************************
-tFresultString g_sFresultStrings[] =
-{
+tFresultString g_sFresultStrings[] = {
     FRESULT_ENTRY(FR_OK),
     FRESULT_ENTRY(FR_DISK_ERR),
     FRESULT_ENTRY(FR_INT_ERR),
@@ -231,8 +229,7 @@ DECLARE_EVENT_DRIVER(g_sUSBEventDriver, 0, 0, USBHCDEvents);
 // In this case, only the MSC class is loaded.
 //
 //*****************************************************************************
-static tUSBHostClassDriver const * const g_ppHostClassDrivers[] =
-{
+static tUSBHostClassDriver const * const g_ppHostClassDrivers[] = {
     &g_sUSBHostMSCClassDriver,
     &g_sUSBEventDriver
 };
@@ -242,8 +239,7 @@ static tUSBHostClassDriver const * const g_ppHostClassDrivers[] =
 // Hold the current state for the application.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     //
     // No device is present.
     //
@@ -360,12 +356,9 @@ GetTickms(void)
     ui32RetVal = g_ui32SysTickCount;
     ui32Saved = ui32RetVal;
 
-    if(ui32Saved > g_ui32LastTick)
-    {
+    if(ui32Saved > g_ui32LastTick) {
         ui32RetVal = ui32Saved - g_ui32LastTick;
-    }
-    else
-    {
+    } else {
         ui32RetVal = g_ui32LastTick - ui32Saved;
     }
 
@@ -396,13 +389,11 @@ StringFromFresult(FRESULT fresult)
     //
     // Enter a loop to search the error code table for a matching error code.
     //
-    for(ui32Idx = 0; ui32Idx < NUM_FRESULT_CODES; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < NUM_FRESULT_CODES; ui32Idx++) {
         //
         // If a match is found, then return the string name of the error code.
         //
-        if(g_sFresultStrings[ui32Idx].fresult == fresult)
-        {
+        if(g_sFresultStrings[ui32Idx].fresult == fresult) {
             return(g_sFresultStrings[ui32Idx].pcResultStr);
         }
     }
@@ -435,8 +426,7 @@ Cmd_ls(int argc, char *argv[])
     //
     // Do not attempt to do anything if there is not a drive attached.
     //
-    if(g_eState != STATE_DEVICE_READY)
-    {
+    if(g_eState != STATE_DEVICE_READY) {
         return(FR_NOT_READY);
     }
 
@@ -448,8 +438,7 @@ Cmd_ls(int argc, char *argv[])
     //
     // Check for error and return if there is a problem.
     //
-    if(fresult != FR_OK)
-    {
+    if(fresult != FR_OK) {
         return(fresult);
     }
 
@@ -460,8 +449,7 @@ Cmd_ls(int argc, char *argv[])
     //
     // Enter loop to enumerate through all directory entries.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Read an entry from the directory.
         //
@@ -470,24 +458,21 @@ Cmd_ls(int argc, char *argv[])
         //
         // Check for error and return if there is a problem.
         //
-        if(fresult != FR_OK)
-        {
+        if(fresult != FR_OK) {
             return(fresult);
         }
 
         //
         // If the file name is blank, then this is the end of the listing.
         //
-        if(!g_sFileInfo.fname[0])
-        {
+        if(!g_sFileInfo.fname[0]) {
             break;
         }
 
         //
         // If the attribute is directory, then increment the directory count.
         //
-        if(g_sFileInfo.fattrib & AM_DIR)
-        {
+        if(g_sFileInfo.fattrib & AM_DIR) {
             ui32DirCount++;
         }
 
@@ -495,8 +480,7 @@ Cmd_ls(int argc, char *argv[])
         // Otherwise, it is a file.  Increment the file count, and add in the
         // file size to the total.
         //
-        else
-        {
+        else {
             ui32FileCount++;
             ui32TotalSize += g_sFileInfo.fsize;
         }
@@ -506,25 +490,25 @@ Cmd_ls(int argc, char *argv[])
         // the attributes, date, time, size, and name.
         //
         UARTprintf("%c%c%c%c%c %u/%02u/%02u %02u:%02u %9u  %s\n",
-                    (g_sFileInfo.fattrib & AM_DIR) ? 'D' : '-',
-                    (g_sFileInfo.fattrib & AM_RDO) ? 'R' : '-',
-                    (g_sFileInfo.fattrib & AM_HID) ? 'H' : '-',
-                    (g_sFileInfo.fattrib & AM_SYS) ? 'S' : '-',
-                    (g_sFileInfo.fattrib & AM_ARC) ? 'A' : '-',
-                    (g_sFileInfo.fdate >> 9) + 1980,
-                    (g_sFileInfo.fdate >> 5) & 15,
-                     g_sFileInfo.fdate & 31,
-                    (g_sFileInfo.ftime >> 11),
-                    (g_sFileInfo.ftime >> 5) & 63,
-                     g_sFileInfo.fsize,
-                     g_sFileInfo.fname);
+                   (g_sFileInfo.fattrib & AM_DIR) ? 'D' : '-',
+                   (g_sFileInfo.fattrib & AM_RDO) ? 'R' : '-',
+                   (g_sFileInfo.fattrib & AM_HID) ? 'H' : '-',
+                   (g_sFileInfo.fattrib & AM_SYS) ? 'S' : '-',
+                   (g_sFileInfo.fattrib & AM_ARC) ? 'A' : '-',
+                   (g_sFileInfo.fdate >> 9) + 1980,
+                   (g_sFileInfo.fdate >> 5) & 15,
+                   g_sFileInfo.fdate & 31,
+                   (g_sFileInfo.ftime >> 11),
+                   (g_sFileInfo.ftime >> 5) & 63,
+                   g_sFileInfo.fsize,
+                   g_sFileInfo.fname);
     }
 
     //
     // Print summary lines showing the file, dir, and size totals.
     //
     UARTprintf("\n%4u File(s),%10u bytes total\n%4u Dir(s)",
-                ui32FileCount, ui32TotalSize, ui32DirCount);
+               ui32FileCount, ui32TotalSize, ui32DirCount);
 
     //
     // Get the free space.
@@ -534,8 +518,7 @@ Cmd_ls(int argc, char *argv[])
     //
     // Check for error and return if there is a problem.
     //
-    if(fresult != FR_OK)
-    {
+    if(fresult != FR_OK) {
         return(fresult);
     }
 
@@ -579,8 +562,7 @@ Cmd_cd(int argc, char *argv[])
     //
     // Do not attempt to do anything if there is not a drive attached.
     //
-    if(g_eState != STATE_DEVICE_READY)
-    {
+    if(g_eState != STATE_DEVICE_READY) {
         return(FR_NOT_READY);
     }
 
@@ -594,13 +576,11 @@ Cmd_cd(int argc, char *argv[])
     // If the first character is /, then this is a fully specified path, and it
     // should just be used as-is.
     //
-    if(argv[1][0] == '/')
-    {
+    if(argv[1][0] == '/') {
         //
         // Make sure the new path is not bigger than the cwd buffer.
         //
-        if(strlen(argv[1]) + 1 > sizeof(g_cCwdBuf))
-        {
+        if(strlen(argv[1]) + 1 > sizeof(g_cCwdBuf)) {
             UARTprintf("Resulting path name is too long\n");
             return(0);
         }
@@ -609,8 +589,7 @@ Cmd_cd(int argc, char *argv[])
         // If the new path name (in argv[1])  is not too long, then copy it
         // into the temporary buffer so it can be checked.
         //
-        else
-        {
+        else {
             strncpy(g_cTmpBuf, argv[1], sizeof(g_cTmpBuf));
         }
     }
@@ -619,8 +598,7 @@ Cmd_cd(int argc, char *argv[])
     // If the argument is .. then attempt to remove the lowest level on the
     // CWD.
     //
-    else if(!strcmp(argv[1], ".."))
-    {
+    else if(!strcmp(argv[1], "..")) {
         //
         // Get the index to the last character in the current path.
         //
@@ -630,8 +608,7 @@ Cmd_cd(int argc, char *argv[])
         // Back up from the end of the path name until a separator (/) is
         // found, or until we bump up to the start of the path.
         //
-        while((g_cTmpBuf[ui32Idx] != '/') && (ui32Idx > 1))
-        {
+        while((g_cTmpBuf[ui32Idx] != '/') && (ui32Idx > 1)) {
             //
             // Back up one character.
             //
@@ -650,15 +627,13 @@ Cmd_cd(int argc, char *argv[])
     // Otherwise this is just a normal path name from the current directory,
     // and it needs to be appended to the current path.
     //
-    else
-    {
+    else {
         //
         // Test to make sure that when the new additional path is added on to
         // the current path, there is room in the buffer for the full new path.
         // It needs to include a new separator, and a trailing null character.
         //
-        if(strlen(g_cTmpBuf) + strlen(argv[1]) + 1 + 1 > sizeof(g_cCwdBuf))
-        {
+        if(strlen(g_cTmpBuf) + strlen(argv[1]) + 1 + 1 > sizeof(g_cCwdBuf)) {
             UARTprintf("Resulting path name is too long\n");
             return(0);
         }
@@ -667,13 +642,11 @@ Cmd_cd(int argc, char *argv[])
         // The new path is okay, so add the separator and then append the new
         // directory to the path.
         //
-        else
-        {
+        else {
             //
             // If not already at the root level, then append a /
             //
-            if(strcmp(g_cTmpBuf, "/"))
-            {
+            if(strcmp(g_cTmpBuf, "/")) {
                 strcat(g_cTmpBuf, "/");
             }
 
@@ -693,8 +666,7 @@ Cmd_cd(int argc, char *argv[])
     //
     // If it can't be opened, then it is a bad path.  Inform user and return.
     //
-    if(fresult != FR_OK)
-    {
+    if(fresult != FR_OK) {
         UARTprintf("cd: %s\n", g_cTmpBuf);
         return(fresult);
     }
@@ -702,8 +674,7 @@ Cmd_cd(int argc, char *argv[])
     //
     // Otherwise, it is a valid new path, so copy it into the CWD.
     //
-    else
-    {
+    else {
         strncpy(g_cCwdBuf, g_cTmpBuf, sizeof(g_cCwdBuf));
     }
 
@@ -725,8 +696,7 @@ Cmd_pwd(int argc, char *argv[])
     //
     // Do not attempt to do anything if there is not a drive attached.
     //
-    if(g_eState != STATE_DEVICE_READY)
-    {
+    if(g_eState != STATE_DEVICE_READY) {
         return(FR_NOT_READY);
     }
 
@@ -758,8 +728,7 @@ Cmd_cat(int argc, char *argv[])
     //
     // Do not attempt to do anything if there is not a drive attached.
     //
-    if(g_eState != STATE_DEVICE_READY)
-    {
+    if(g_eState != STATE_DEVICE_READY) {
         return(FR_NOT_READY);
     }
 
@@ -769,8 +738,7 @@ Cmd_cat(int argc, char *argv[])
     // buffer that will be used to hold the file name.  The file name must be
     // fully specified, with path, to FatFs.
     //
-    if(strlen(g_cCwdBuf) + strlen(argv[1]) + 1 + 1 > sizeof(g_cTmpBuf))
-    {
+    if(strlen(g_cCwdBuf) + strlen(argv[1]) + 1 + 1 > sizeof(g_cTmpBuf)) {
         UARTprintf("Resulting path name is too long\n");
         return(0);
     }
@@ -783,8 +751,7 @@ Cmd_cat(int argc, char *argv[])
     //
     // If not already at the root level, then append a separator.
     //
-    if(strcmp("/", g_cCwdBuf))
-    {
+    if(strcmp("/", g_cCwdBuf)) {
         strcat(g_cTmpBuf, "/");
     }
 
@@ -801,8 +768,7 @@ Cmd_cat(int argc, char *argv[])
     //
     // If there was some problem opening the file, then return an error.
     //
-    if(fresult != FR_OK)
-    {
+    if(fresult != FR_OK) {
         return(fresult);
     }
 
@@ -810,8 +776,7 @@ Cmd_cat(int argc, char *argv[])
     // Enter a loop to repeatedly read data from the file and display it, until
     // the end of the file is reached.
     //
-    do
-    {
+    do {
         //
         // Read a block of data from the file.  Read as much as can fit in the
         // temporary buffer, including a space for the trailing null.
@@ -823,8 +788,7 @@ Cmd_cat(int argc, char *argv[])
         // If there was an error reading, then print a newline and return the
         // error to the user.
         //
-        if(fresult != FR_OK)
-        {
+        if(fresult != FR_OK) {
             UARTprintf("\n");
             return(fresult);
         }
@@ -844,8 +808,7 @@ Cmd_cat(int argc, char *argv[])
         // Continue reading until less than the full number of bytes are read.
         // That means the end of the buffer was reached.
         //
-    }
-    while(ui32BytesRead == sizeof(g_cTmpBuf) - 1);
+    } while(ui32BytesRead == sizeof(g_cTmpBuf) - 1);
 
     //
     // Return success.
@@ -879,8 +842,7 @@ Cmd_help(int argc, char *argv[])
     // Enter a loop to read each entry from the command table.  The end of the
     // table has been reached when the command name is NULL.
     //
-    while(pEntry->pcCmd)
-    {
+    while(pEntry->pcCmd) {
         //
         // Print the command name and the brief description.
         //
@@ -904,8 +866,7 @@ Cmd_help(int argc, char *argv[])
 // brief description.
 //
 //*****************************************************************************
-tCmdLineEntry g_psCmdTable[] =
-{
+tCmdLineEntry g_psCmdTable[] = {
     { "help",   Cmd_help,      " : Display list of commands" },
     { "h",      Cmd_help,   "    : alias for help" },
     { "?",      Cmd_help,   "    : alias for help" },
@@ -941,14 +902,12 @@ MSCCallback(tUSBHMSCInstance *ps32Instance, uint32_t ui32Event, void *pvData)
     //
     // Determine the event.
     //
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // Called when the device driver has successfully enumerated an MSC
         // device.
         //
-        case MSC_EVENT_OPEN:
-        {
+        case MSC_EVENT_OPEN: {
             //
             // Proceed to the enumeration state.
             //
@@ -960,8 +919,7 @@ MSCCallback(tUSBHMSCInstance *ps32Instance, uint32_t ui32Event, void *pvData)
         // Called when the device driver has been unloaded due to error or
         // the device is no longer present.
         //
-        case MSC_EVENT_CLOSE:
-        {
+        case MSC_EVENT_CLOSE: {
             //
             // Go back to the "no device" state and wait for a new connection.
             //
@@ -970,8 +928,7 @@ MSCCallback(tUSBHMSCInstance *ps32Instance, uint32_t ui32Event, void *pvData)
             break;
         }
 
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -1004,13 +961,11 @@ USBHCDEvents(void *pvData)
     //
     pEventInfo = (tEventInfo *)pvData;
 
-    switch(pEventInfo->ui32Event)
-    {
+    switch(pEventInfo->ui32Event) {
         //
         // Unknown device detected.
         //
-        case USB_EVENT_UNKNOWN_CONNECTED:
-        {
+        case USB_EVENT_UNKNOWN_CONNECTED: {
             //
             // Save the unknown class.
             //
@@ -1027,8 +982,7 @@ USBHCDEvents(void *pvData)
         //
         // Keyboard has been unplugged.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             //
             // Unknown device has been removed.
             //
@@ -1037,8 +991,7 @@ USBHCDEvents(void *pvData)
             break;
         }
 
-        case USB_EVENT_POWER_FAULT:
-        {
+        case USB_EVENT_POWER_FAULT: {
             //
             // No power means no device is present.
             //
@@ -1047,8 +1000,7 @@ USBHCDEvents(void *pvData)
             break;
         }
 
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -1084,19 +1036,16 @@ ReadLine(void)
     // Loop forever.  This loop will be explicitly broken out of when the line
     // has been fully read.
     //
-    while(1)
-    {
+    while(1) {
         //
         // See if a mass storage device has been enumerated.
         //
-        if(g_eState == STATE_DEVICE_ENUM)
-        {
+        if(g_eState == STATE_DEVICE_ENUM) {
             //
             // Take it easy on the Mass storage device if it is slow to
             // start up after connecting.
             //
-            if(USBHMSCDriveReady(g_psMSCInstance) != 0)
-            {
+            if(USBHMSCDriveReady(g_psMSCInstance) != 0) {
                 //
                 // Wait about 500ms before attempting to check if the
                 // device is ready again.
@@ -1112,8 +1061,7 @@ ReadLine(void)
                 // If the timeout is hit then go to the
                 // STATE_TIMEOUT_DEVICE state.
                 //
-                if(ui32DriveTimeout == 0)
-                {
+                if(ui32DriveTimeout == 0) {
                     g_eState = STATE_TIMEOUT_DEVICE;
                 }
 
@@ -1132,8 +1080,7 @@ ReadLine(void)
             // device has enumerated) if it is still initializing.
             //
             f_mount(0, &g_sFatFs);
-            if(f_opendir(&g_sDirObject, g_cCwdBuf) == FR_OK)
-            {
+            if(f_opendir(&g_sDirObject, g_cCwdBuf) == FR_OK) {
                 //
                 // The drive is fully ready, so move to that state.
                 //
@@ -1147,24 +1094,18 @@ ReadLine(void)
         // accesses.
         //
         eStateCopy = g_eUIState;
-        if(g_eState != eStateCopy)
-        {
+        if(g_eState != eStateCopy) {
             //
             // Determine the new state.
             //
-            switch(g_eState)
-            {
+            switch(g_eState) {
                 //
                 // A previously connected device has been disconnected.
                 //
-                case STATE_NO_DEVICE:
-                {
-                    if(g_eUIState == STATE_UNKNOWN_DEVICE)
-                    {
+                case STATE_NO_DEVICE: {
+                    if(g_eUIState == STATE_UNKNOWN_DEVICE) {
                         UARTprintf("\nUnknown device disconnected.\n");
-                    }
-                    else
-                    {
+                    } else {
                         UARTprintf("\nMass storage device disconnected.\n");
                     }
                     ui32Prompt = 1;
@@ -1174,16 +1115,14 @@ ReadLine(void)
                 //
                 // A mass storage device is being enumerated.
                 //
-                case STATE_DEVICE_ENUM:
-                {
+                case STATE_DEVICE_ENUM: {
                     break;
                 }
 
                 //
                 // A mass storage device has been enumerated and initialized.
                 //
-                case STATE_DEVICE_READY:
-                {
+                case STATE_DEVICE_READY: {
                     UARTprintf("\nMass storage device connected.\n");
                     ui32Prompt = 1;
                     break;
@@ -1192,8 +1131,7 @@ ReadLine(void)
                 //
                 // An unknown device has been connected.
                 //
-                case STATE_UNKNOWN_DEVICE:
-                {
+                case STATE_UNKNOWN_DEVICE: {
                     UARTprintf("Unknown Device Class (0x%02x) Connected.\n",
                                g_ui32UnknownClass);
                     ui32Prompt = 1;
@@ -1203,8 +1141,7 @@ ReadLine(void)
                 //
                 // The connected mass storage device is not reporting ready.
                 //
-                case STATE_TIMEOUT_DEVICE:
-                {
+                case STATE_TIMEOUT_DEVICE: {
                     //
                     // If this is the first time in this state then print a
                     // message.
@@ -1218,8 +1155,7 @@ ReadLine(void)
                 //
                 // A power fault has occurred.
                 //
-                case STATE_POWER_FAULT:
-                {
+                case STATE_POWER_FAULT: {
                     UARTprintf("\nPower fault.\n");
                     ui32Prompt = 1;
                     break;
@@ -1235,21 +1171,15 @@ ReadLine(void)
         //
         // Print a prompt if necessary.
         //
-        if(ui32Prompt)
-        {
+        if(ui32Prompt) {
             //
             // Print the prompt based on the current state.
             //
-            if(g_eState == STATE_DEVICE_READY)
-            {
+            if(g_eState == STATE_DEVICE_READY) {
                 UARTprintf("%s> %s", g_cCwdBuf, g_cCmdBuf);
-            }
-            else if(g_eState == STATE_UNKNOWN_DEVICE)
-            {
+            } else if(g_eState == STATE_UNKNOWN_DEVICE) {
                 UARTprintf("UNKNOWN> %s", g_cCmdBuf);
-            }
-            else
-            {
+            } else {
                 UARTprintf("NODEV> %s", g_cCmdBuf);
             }
 
@@ -1263,8 +1193,7 @@ ReadLine(void)
         // Loop while there are characters that have been received from the
         // UART.
         //
-        while(ROM_UARTCharsAvail(UART0_BASE))
-        {
+        while(ROM_UARTCharsAvail(UART0_BASE)) {
             //
             // Read the next character from the UART.
             //
@@ -1274,8 +1203,7 @@ ReadLine(void)
             // See if this character is a backspace and there is at least one
             // character in the input line.
             //
-            if((ui8Char == '\b') && (ui32Idx != 0))
-            {
+            if((ui8Char == '\b') && (ui32Idx != 0)) {
                 //
                 // Erase the lsat character from the input line.
                 //
@@ -1287,8 +1215,7 @@ ReadLine(void)
             //
             // See if this character is a newline.
             //
-            else if((ui8Char == '\r') || (ui8Char == '\n'))
-            {
+            else if((ui8Char == '\r') || (ui8Char == '\n')) {
                 //
                 // Return to the caller.
                 //
@@ -1299,13 +1226,11 @@ ReadLine(void)
             //
             // See if this character is an escape or Ctrl-U.
             //
-            else if((ui8Char == 0x1b) || (ui8Char == 0x15))
-            {
+            else if((ui8Char == 0x1b) || (ui8Char == 0x15)) {
                 //
                 // Erase all characters in the input buffer.
                 //
-                while(ui32Idx)
-                {
+                while(ui32Idx) {
                     UARTprintf("\b \b");
                     ui32Idx--;
                 }
@@ -1316,8 +1241,7 @@ ReadLine(void)
             // See if this is a printable ASCII character.
             //
             else if((ui8Char >= ' ') && (ui8Char <= '~') &&
-                    (ui32Idx < (sizeof(g_cCmdBuf) - 1)))
-            {
+                    (ui32Idx < (sizeof(g_cCmdBuf) - 1))) {
                 //
                 // Add this character to the input buffer.
                 //
@@ -1422,14 +1346,12 @@ main(void)
     // Enter an infinite loop for reading and processing commands from the
     // user.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Get a line of text from the user.
         //
         ReadLine();
-        if(g_cCmdBuf[0] == '\0')
-        {
+        if(g_cCmdBuf[0] == '\0') {
             continue;
         }
 
@@ -1442,16 +1364,14 @@ main(void)
         //
         // Handle the case of bad command.
         //
-        if(iStatus == CMDLINE_BAD_CMD)
-        {
+        if(iStatus == CMDLINE_BAD_CMD) {
             UARTprintf("Bad command!\n");
         }
 
         //
         // Handle the case of too many arguments.
         //
-        else if(iStatus == CMDLINE_TOO_MANY_ARGS)
-        {
+        else if(iStatus == CMDLINE_TOO_MANY_ARGS) {
             UARTprintf("Too many arguments for command processor!\n");
         }
 
@@ -1459,10 +1379,9 @@ main(void)
         // Otherwise the command was executed.  Print the error
         // code if one was returned.
         //
-        else if(iStatus != 0)
-        {
+        else if(iStatus != 0) {
             UARTprintf("Command returned error code %s\n",
-                        StringFromFresult((FRESULT)iStatus));
+                       StringFromFresult((FRESULT)iStatus));
         }
     }
 }

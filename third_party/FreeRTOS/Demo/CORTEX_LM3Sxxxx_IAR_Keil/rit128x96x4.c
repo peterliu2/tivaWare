@@ -3,24 +3,24 @@
 // rit128x96x4.c - Driver for the RIT 128x96x4 graphical OLED display.
 //
 // Copyright (c) 2007 Luminary Micro, Inc.  All rights reserved.
-// 
+//
 // Software License Agreement
-// 
+//
 // Luminary Micro, Inc. (LMI) is supplying this software for use solely and
 // exclusively on LMI's microcontroller products.
-// 
+//
 // The software is owned by LMI and/or its suppliers, and is protected under
 // applicable copyright laws.  All rights are reserved.  Any use in violation
 // of the foregoing restrictions may subject the user to criminal sanctions
 // under applicable laws, as well as to civil liability for the breach of the
 // terms and conditions of this license.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
 // OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
 // MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
 // LMI SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
 // CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 1504-conf of the Stellaris Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -123,8 +123,7 @@ static const unsigned char g_pucRIT128x96x4HorizontalInc[] = { 0xA0, 0x52 };
 // function to the appropriate four bit-per-pixel gray scale format.
 //
 //*****************************************************************************
-static const unsigned char g_pucFont[96][5] =
-{
+static const unsigned char g_pucFont[96][5] = {
     { 0x00, 0x00, 0x00, 0x00, 0x00 }, // " "
     { 0x00, 0x00, 0x4f, 0x00, 0x00 }, // !
     { 0x00, 0x07, 0x00, 0x07, 0x00 }, // "
@@ -232,8 +231,7 @@ static const unsigned char g_pucFont[96][5] =
 // the P14201.  Values used are from the RIT app note, except where noted.
 //
 //*****************************************************************************
-static const unsigned char g_pucRIT128x96x4Init[] =
-{
+static const unsigned char g_pucRIT128x96x4Init[] = {
     //
     // Unlock commands
     //
@@ -343,21 +341,19 @@ RITWriteCommand(const unsigned char *pucBuffer, unsigned long ulCount)
     //
     // Return if SSI port is not enabled for RIT display.
     //
-    if(!g_bSSIEnabled)
-    {
+    if(!g_bSSIEnabled) {
         return;
     }
 
     //
     // Clear the command/control bit to enable command mode.
     //
-    GPIOPinWrite(ulGPIOBase, ulOLEDDC_PIN, 0); 
+    GPIOPinWrite(ulGPIOBase, ulOLEDDC_PIN, 0);
 
     //
     // Loop while there are more bytes left to be transferred.
     //
-    while(ulCount != 0)
-    {
+    while(ulCount != 0) {
         //
         // Write the next byte to the controller.
         //
@@ -395,8 +391,7 @@ RITWriteData(const unsigned char *pucBuffer, unsigned long ulCount)
     //
     // Return if SSI port is not enabled for RIT display.
     //
-    if(!g_bSSIEnabled)
-    {
+    if(!g_bSSIEnabled) {
         return;
     }
 
@@ -408,8 +403,7 @@ RITWriteData(const unsigned char *pucBuffer, unsigned long ulCount)
     //
     // Loop while there are more bytes left to be transferred.
     //
-    while(ulCount != 0)
-    {
+    while(ulCount != 0) {
         //
         // Write the next byte to the controller.
         //
@@ -464,15 +458,13 @@ RIT128x96x4Clear(void)
     //
     // Loop through the rows
     //
-    for(ulRow = 0; ulRow < 96; ulRow++)
-    {
+    for(ulRow = 0; ulRow < 96; ulRow++) {
         //
         // Loop through the columns.  Each byte is two pixels,
         // and the buffer hold 8 bytes, so 16 pixels are cleared
         // at a time.
         //
-        for(ulColumn = 0; ulColumn < 128; ulColumn += 8 * 2)
-        {
+        for(ulColumn = 0; ulColumn < 128; ulColumn += 8 * 2) {
             //
             // Write 8 clearing bytes to the display, which will
             // clear 16 pixels across.
@@ -547,42 +539,34 @@ RIT128x96x4StringDraw(const char *pcStr, unsigned long ulX,
     //
     // Loop while there are more characters in the string.
     //
-    while(*pcStr != 0)
-    {
+    while(*pcStr != 0) {
         //
         // Get a working copy of the current character and convert to an
         // index into the character bit-map array.
         //
         ucTemp = *pcStr;
         ucTemp &= 0x7F;
-        if(ucTemp < ' ')
-        {
+        if(ucTemp < ' ') {
             ucTemp = ' ';
-        }
-        else
-        {
+        } else {
             ucTemp -= ' ';
         }
 
         //
         // Build and display the character buffer.
         //
-        for(ulIdx1 = 0; ulIdx1 < 3; ulIdx1++)
-        {
+        for(ulIdx1 = 0; ulIdx1 < 3; ulIdx1++) {
             //
             // Convert two columns of 1-bit font data into a single data
             // byte column of 4-bit font data.
             //
-            for(ulIdx2 = 0; ulIdx2 < 8; ulIdx2++)
-            {
+            for(ulIdx2 = 0; ulIdx2 < 8; ulIdx2++) {
                 g_pucBuffer[ulIdx2] = 0;
-                if(g_pucFont[ucTemp][ulIdx1*2] & (1 << ulIdx2))
-                {
+                if(g_pucFont[ucTemp][ulIdx1*2] & (1 << ulIdx2)) {
                     g_pucBuffer[ulIdx2] = ((ucLevel << 4) & 0xf0);
                 }
                 if((ulIdx1 < 2) &&
-                    (g_pucFont[ucTemp][ulIdx1*2+1] & (1 << ulIdx2)))
-                {
+                        (g_pucFont[ucTemp][ulIdx1*2+1] & (1 << ulIdx2))) {
                     g_pucBuffer[ulIdx2] |= ((ucLevel << 0) & 0x0f);
                 }
             }
@@ -591,13 +575,10 @@ RIT128x96x4StringDraw(const char *pcStr, unsigned long ulX,
             // If there is room, dump the single data byte column to the
             // display.  Otherwise, bail out.
             //
-            if(ulX < 126)
-            {
+            if(ulX < 126) {
                 RITWriteData(g_pucBuffer, 8);
                 ulX += 2;
-            }
-            else
-            {
+            } else {
                 return;
             }
         }
@@ -707,8 +688,7 @@ RIT128x96x4ImageDraw(const unsigned char *pucImage, unsigned long ulX,
     //
     // Loop while there are more rows to display.
     //
-    while(ulHeight--)
-    {
+    while(ulHeight--) {
         //
         // Write this row of image data.
         //
@@ -766,8 +746,7 @@ RIT128x96x4Enable(unsigned long ulFrequency)
     //
     // Drain the receive fifo.
     //
-    while(SSIDataNonBlockingGet(SSI0_BASE, &ulTemp) != 0)
-    {
+    while(SSIDataNonBlockingGet(SSI0_BASE, &ulTemp) != 0) {
     }
 
     //
@@ -802,8 +781,7 @@ RIT128x96x4Disable(void)
     //
     // Drain the receive fifo.
     //
-    while(SSIDataNonBlockingGet(SSI0_BASE, &ulTemp) != 0)
-    {
+    while(SSIDataNonBlockingGet(SSI0_BASE, &ulTemp) != 0) {
     }
 
     //
@@ -842,30 +820,27 @@ RIT128x96x4Init(unsigned long ulFrequency)
     unsigned long ulIdx;
 
 
-	/* Determine which board is being used. */
-	if( SysCtlPeripheralPresent( SYSCTL_PERIPH_ETH ) )
-	{
-		/* Ethernet is present, we must be using the LM3S8962 EK. */
-		ulGPIOId = LM3S8962_SYSCTL_PERIPH_GPIO_OLEDDC;
-		ulGPIOBase = LM3S8962_GPIO_OLEDDC_BASE;
-		ulOLEDDC_PIN = GPIO_PIN_6;
-		ulOLEDEN_PIN = GPIO_PIN_7;
-	}
-	else
-	{
-		/* Ethernet is not present, we must be using the LM3S1968 EK. */
-		ulGPIOId = LM3S1968_SYSCTL_PERIPH_GPIO_OLEDDC;
-		ulGPIOBase = LM3S1968_GPIO_OLEDDC_BASE;
-		ulOLEDDC_PIN = GPIO_PIN_2;
-		ulOLEDEN_PIN = GPIO_PIN_3;
-	}
+    /* Determine which board is being used. */
+    if( SysCtlPeripheralPresent( SYSCTL_PERIPH_ETH ) ) {
+        /* Ethernet is present, we must be using the LM3S8962 EK. */
+        ulGPIOId = LM3S8962_SYSCTL_PERIPH_GPIO_OLEDDC;
+        ulGPIOBase = LM3S8962_GPIO_OLEDDC_BASE;
+        ulOLEDDC_PIN = GPIO_PIN_6;
+        ulOLEDEN_PIN = GPIO_PIN_7;
+    } else {
+        /* Ethernet is not present, we must be using the LM3S1968 EK. */
+        ulGPIOId = LM3S1968_SYSCTL_PERIPH_GPIO_OLEDDC;
+        ulGPIOBase = LM3S1968_GPIO_OLEDDC_BASE;
+        ulOLEDDC_PIN = GPIO_PIN_2;
+        ulOLEDEN_PIN = GPIO_PIN_3;
+    }
 
     //
     // Enable the SSI0 and GPIO port blocks as they are needed by this driver.
     //
     SysCtlPeripheralEnable(SYSCTL_PERIPH_SSI0);
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
-    SysCtlPeripheralEnable(ulGPIOId); 
+    SysCtlPeripheralEnable(ulGPIOId);
 
     //
     // Configure the SSI0CLK and SSIOTX pins for SSI operation.
@@ -899,8 +874,7 @@ RIT128x96x4Init(unsigned long ulFrequency)
     // sequence array, sending each command "string" to the controller.
     //
     for(ulIdx = 0; ulIdx < sizeof(g_pucRIT128x96x4Init);
-        ulIdx += g_pucRIT128x96x4Init[ulIdx] + 1)
-    {
+            ulIdx += g_pucRIT128x96x4Init[ulIdx] + 1) {
         //
         // Send this command.
         //
@@ -933,8 +907,7 @@ RIT128x96x4DisplayOn(void)
     // sequence array, sending each command "string" to the controller.
     //
     for(ulIdx = 0; ulIdx < sizeof(g_pucRIT128x96x4Init);
-        ulIdx += g_pucRIT128x96x4Init[ulIdx] + 1)
-    {
+            ulIdx += g_pucRIT128x96x4Init[ulIdx] + 1) {
         //
         // Send this command.
         //
@@ -962,8 +935,7 @@ RIT128x96x4DisplayOn(void)
 void
 RIT128x96x4DisplayOff(void)
 {
-    static const unsigned char pucCommand1[] =
-    {
+    static const unsigned char pucCommand1[] = {
         0xAE, 0xe3
     };
 

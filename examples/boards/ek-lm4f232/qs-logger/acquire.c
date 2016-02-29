@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-LM4F232 Firmware Package.
 //
 //*****************************************************************************
@@ -87,8 +87,7 @@
 // times and will be averaged.
 //
 //*****************************************************************************
-uint32_t g_pui32ADCSeq[] =
-{
+uint32_t g_pui32ADCSeq[] = {
     CHAN_USER0, CHAN_USER1, CHAN_USER2, CHAN_USER3, CHAN_ACCELX, CHAN_ACCELY,
     CHAN_ACCELZ, CHAN_EXTTEMP, CHAN_INTTEMP, CHAN_CURRENT, CHAN_CURRENT,
     CHAN_CURRENT, CHAN_CURRENT, CHAN_CURRENT, CHAN_CURRENT, CHAN_CURRENT,
@@ -155,8 +154,7 @@ static volatile bool g_bNeedKeepAlive = false;
 //
 //*****************************************************************************
 #define RECORD_SIZE             (sizeof(tLogRecord) + (NUM_LOG_ITEMS * 2))
-static union
-{
+static union {
     uint32_t g_pui32RecordBuf[(RECORD_SIZE + 3) / sizeof(uint32_t)];
     tLogRecord sRecord;
 }
@@ -186,8 +184,7 @@ UpdateViewerData(const tLogRecord *psRecord)
     //
     // Loop through the analog channels and update the text display strings.
     //
-    for(ui32Idx = LOG_ITEM_USER0; ui32Idx <= LOG_ITEM_USER3; ui32Idx++)
-    {
+    for(ui32Idx = LOG_ITEM_USER0; ui32Idx <= LOG_ITEM_USER3; ui32Idx++) {
         usnprintf(pcViewerBuf, sizeof(pcViewerBuf), " CH%u: %u.%03u V ",
                   ui32Idx - LOG_ITEM_USER0, psRecord->pi16Items[ui32Idx] / 1000,
                   psRecord->pi16Items[ui32Idx] % 1000);
@@ -197,8 +194,7 @@ UpdateViewerData(const tLogRecord *psRecord)
     //
     // Loop through the accel channels and update the text display strings.
     //
-    for(ui32Idx = LOG_ITEM_ACCELX; ui32Idx <= LOG_ITEM_ACCELZ; ui32Idx++)
-    {
+    for(ui32Idx = LOG_ITEM_ACCELX; ui32Idx <= LOG_ITEM_ACCELZ; ui32Idx++) {
         int16_t i16Accel = psRecord->pi16Items[ui32Idx];
         i16Accel *= (i16Accel < 0) ? -1 : 1;
         usnprintf(pcViewerBuf, sizeof(pcViewerBuf), " %c: %c%d.%02u g ",
@@ -280,13 +276,11 @@ ProcessDataItems(tLogRecord *psRecord)
     // Process the user analog input channels.  These will be converted and
     // stored as millivolts.
     //
-    for(ui8Idx = LOG_ITEM_USER0; ui8Idx <= LOG_ITEM_USER3; ui8Idx++)
-    {
+    for(ui8Idx = LOG_ITEM_USER0; ui8Idx <= LOG_ITEM_USER3; ui8Idx++) {
         //
         // Check to see if this item should be logged
         //
-        if((1 << ui8Idx) & ui32SelectedMask)
-        {
+        if((1 << ui8Idx) & ui32SelectedMask) {
             ui32Millivolts = (g_pui32ADCData[ui8Idx] * 4100) / 819;
             psRecord->pi16Items[ui8ItemIdx++] = (int16_t)ui32Millivolts;
         }
@@ -296,13 +290,11 @@ ProcessDataItems(tLogRecord *psRecord)
     // Process the accelerometers.  These will be processed and stored in
     // units of 1/100 g.
     //
-    for(ui8Idx = LOG_ITEM_ACCELX; ui8Idx <= LOG_ITEM_ACCELZ; ui8Idx++)
-    {
+    for(ui8Idx = LOG_ITEM_ACCELX; ui8Idx <= LOG_ITEM_ACCELZ; ui8Idx++) {
         //
         // Check to see if this item should be logged
         //
-        if((1 << ui8Idx) & ui32SelectedMask)
-        {
+        if((1 << ui8Idx) & ui32SelectedMask) {
             i32Accel = (((int32_t)g_pui32ADCData[ui8Idx] - 2047L) * 1000L) /
                        4095L;
             psRecord->pi16Items[ui8ItemIdx++] = (int16_t)i32Accel;
@@ -313,10 +305,9 @@ ProcessDataItems(tLogRecord *psRecord)
     // Process the external temperature. The temperature is stored in units
     // of 1/10 C.
     //
-    if((1 << LOG_ITEM_EXTTEMP) & ui32SelectedMask)
-    {
+    if((1 << LOG_ITEM_EXTTEMP) & ui32SelectedMask) {
         i32TempC = (1866300 - ((200000 * g_pui32ADCData[LOG_ITEM_EXTTEMP]) /
-                                273)) / 1169;
+                               273)) / 1169;
         psRecord->pi16Items[ui8ItemIdx++] = (int16_t)i32TempC;
     }
 
@@ -324,8 +315,7 @@ ProcessDataItems(tLogRecord *psRecord)
     // Process the internal temperature. The temperature is stored in units
     // of 1/10 C.
     //
-    if((1 << LOG_ITEM_INTTEMP) & ui32SelectedMask)
-    {
+    if((1 << LOG_ITEM_INTTEMP) & ui32SelectedMask) {
         i32TempC = 1475 - ((2250 * g_pui32ADCData[LOG_ITEM_INTTEMP]) / 4095);
         psRecord->pi16Items[ui8ItemIdx++] = (int16_t)i32TempC;
     }
@@ -335,15 +325,13 @@ ProcessDataItems(tLogRecord *psRecord)
     // (or 1/10000 A).  Multiple current samples were taken in order
     // to average and smooth the data.
     //
-    if((1 << LOG_ITEM_CURRENT) & ui32SelectedMask)
-    {
+    if((1 << LOG_ITEM_CURRENT) & ui32SelectedMask) {
         //
         // Average all the current samples that are available in the ADC
         // buffer.
         //
         for(ui8Idx = LOG_ITEM_CURRENT;
-            ui8Idx < (LOG_ITEM_CURRENT + NUM_CURRENT_SAMPLES); ui8Idx++)
-        {
+                ui8Idx < (LOG_ITEM_CURRENT + NUM_CURRENT_SAMPLES); ui8Idx++) {
             ui32Current += g_pui32ADCData[ui8Idx];
         }
         ui32Current /= NUM_CURRENT_SAMPLES;
@@ -429,8 +417,7 @@ RTCHandler(void)
     // RTC seconds.  This is safe because if sleep-logging is used, it
     // is only with periods of whole seconds, 1 second or longer.
     //
-    if(g_psConfigState->ui32SleepLogging)
-    {
+    if(g_psConfigState->ui32SleepLogging) {
         g_pui32NextMatch[0] = ui32Seconds;
         g_pui32NextMatch[1] = 0;
     }
@@ -441,15 +428,13 @@ RTCHandler(void)
     // collected, then we must send a keep-alive packet once per second.
     //
     if((g_psConfigState->ui8Storage == CONFIG_STORAGE_HOSTPC) &&
-       (g_pui32MatchPeriod[0] > 1))
-    {
+            (g_pui32MatchPeriod[0] > 1)) {
         //
         // If the current seconds count is less than the match value, that
         // means we got the interrupt due to one-second keep alive for the
         // host PC.
         //
-        if(ui32Seconds < g_pui32NextMatch[0])
-        {
+        if(ui32Seconds < g_pui32NextMatch[0]) {
             //
             // Set the next match for one second ahead (next keep-alive)
             //
@@ -488,8 +473,7 @@ RTCHandler(void)
     //
     g_pui32NextMatch[0] += g_pui32MatchPeriod[0];
     g_pui32NextMatch[1] += g_pui32MatchPeriod[1];
-    if(g_pui32NextMatch[1] > 32767)
-    {
+    if(g_pui32NextMatch[1] > 32767) {
         //
         // Handle subseconds rollover
         //
@@ -503,12 +487,9 @@ RTCHandler(void)
     // packet to be sent to the PC
     //
     if((g_psConfigState->ui8Storage == CONFIG_STORAGE_HOSTPC) &&
-       (g_pui32MatchPeriod[0] > 1))
-    {
+            (g_pui32MatchPeriod[0] > 1)) {
         HibernateRTCMatchSet(0, ui32Seconds + 1);
-    }
-    else
-    {
+    } else {
         //
         // Otherwise this is a normal match and the next match should also be a
         // normal match, so set the next wakeup to the calculated match time.
@@ -548,16 +529,14 @@ AcquireRun(void)
     //
     // Make sure we are properly configured to run
     //
-    if(!g_psConfigState)
-    {
+    if(!g_psConfigState) {
         return(0);
     }
 
     //
     // Check to see if new ADC data is available
     //
-    if(g_ui32ADCCount != g_ui32LastADCCount)
-    {
+    if(g_ui32ADCCount != g_ui32LastADCCount) {
         g_ui32LastADCCount = g_ui32ADCCount;
 
         //
@@ -570,45 +549,38 @@ AcquireRun(void)
         // strip start if sleep-logging.
         //
         if((g_psConfigState->ui8Storage != CONFIG_STORAGE_VIEWER) &&
-           !g_psConfigState->ui32SleepLogging)
-        {
+                !g_psConfigState->ui32SleepLogging) {
             StripChartMgrAddItems(psRecord->pi16Items);
         }
 
         //
         // If USB stick is used, write the record to the USB stick
         //
-        if(g_psConfigState->ui8Storage == CONFIG_STORAGE_USB)
-        {
+        if(g_psConfigState->ui8Storage == CONFIG_STORAGE_USB) {
             USBStickWriteRecord(psRecord);
         }
 
         //
         // If host PC is used, write data to USB serial port
         //
-        if(g_psConfigState->ui8Storage == CONFIG_STORAGE_HOSTPC)
-        {
+        if(g_psConfigState->ui8Storage == CONFIG_STORAGE_HOSTPC) {
             USBSerialWriteRecord(psRecord);
         }
 
         //
         // If flash storage is used, write data to the flash
         //
-        if(g_psConfigState->ui8Storage == CONFIG_STORAGE_FLASH)
-        {
+        if(g_psConfigState->ui8Storage == CONFIG_STORAGE_FLASH) {
             FlashStoreWriteRecord(psRecord);
 
             //
             // If we are sleep logging, then save the storage address for
             // use in the next cycle.
             //
-            if(g_psConfigState->ui32SleepLogging)
-            {
+            if(g_psConfigState->ui32SleepLogging) {
                 g_psConfigState->ui32FlashStore = FlashStoreGetAddr();
             }
-        }
-        else if(g_psConfigState->ui8Storage == CONFIG_STORAGE_VIEWER)
-        {
+        } else if(g_psConfigState->ui8Storage == CONFIG_STORAGE_VIEWER) {
             //
             // If in viewer mode, then update the viewer text strings.
             //
@@ -619,10 +591,8 @@ AcquireRun(void)
         // Return indication to caller that data was processed.
         //
         return(1);
-    }
-    else if((g_psConfigState->ui8Storage == CONFIG_STORAGE_HOSTPC) &&
-            (g_bNeedKeepAlive == true))
-    {
+    } else if((g_psConfigState->ui8Storage == CONFIG_STORAGE_HOSTPC) &&
+              (g_bNeedKeepAlive == true)) {
         //
         // Else there is no new data to process, but check to see if we are
         // logging to PC and a keep alive packet is needed.
@@ -666,8 +636,7 @@ AcquireStart(tConfigState *psConfig)
     // Check the parameters
     //
     ASSERT(psConfig);
-    if(!psConfig)
-    {
+    if(!psConfig) {
         return;
     }
 
@@ -690,10 +659,8 @@ AcquireStart(tConfigState *psConfig)
     //
     ui32Idx = ui32SelectedMask;
     g_ui32NumItems = 0;
-    while(ui32Idx)
-    {
-        if(ui32Idx & 1)
-        {
+    while(ui32Idx) {
+        if(ui32Idx & 1) {
             g_ui32NumItems++;
         }
         ui32Idx >>= 1;
@@ -704,8 +671,7 @@ AcquireStart(tConfigState *psConfig)
     // the strip chart if we are using viewer mode, or sleep-logging.
     //
     if((psConfig->ui8Storage != CONFIG_STORAGE_VIEWER) &&
-       !psConfig->ui32SleepLogging)
-    {
+            !psConfig->ui32SleepLogging) {
         StripChartMgrInit();
         StripChartMgrConfigure(ui32SelectedMask);
     }
@@ -713,24 +679,18 @@ AcquireStart(tConfigState *psConfig)
     //
     // Configure USB for memory stick if USB storage is chosen
     //
-    if(psConfig->ui8Storage == CONFIG_STORAGE_USB)
-    {
+    if(psConfig->ui8Storage == CONFIG_STORAGE_USB) {
         USBStickOpenLogFile(0);
-    }
-    else if(psConfig->ui8Storage == CONFIG_STORAGE_FLASH)
-    {
+    } else if(psConfig->ui8Storage == CONFIG_STORAGE_FLASH) {
 
         //
         // Flash storage is to be used, prepare the flash storage module.
         // If already sleep-logging, then pass in the saved flash address
         // so it does not need to be searched.
         //
-        if(psConfig->ui32SleepLogging)
-        {
+        if(psConfig->ui32SleepLogging) {
             FlashStoreOpenLogFile(psConfig->ui32FlashStore);
-        }
-        else
-        {
+        } else {
             //
             // Otherwise not sleep logging, so just initialize the flash store,
             // this will cause it to search for the starting storage address.
@@ -763,17 +723,14 @@ AcquireStart(tConfigState *psConfig)
     // If we are not already sleep-logging, then initialize the RTC match.
     // If we are sleep logging then this does not need to be set up.
     //
-    if(!psConfig->ui32SleepLogging)
-    {
+    if(!psConfig->ui32SleepLogging) {
         //
         // Get the current RTC value
         //
-        do
-        {
+        do {
             pui32RTC[0] = HibernateRTCGet();
             pui32RTC[1] = HibernateRTCSSGet();
-        }
-        while(pui32RTC[0] != HibernateRTCGet());
+        } while(pui32RTC[0] != HibernateRTCGet());
 
         //
         // Set an initial next match value.  Start with the subseconds always
@@ -796,15 +753,13 @@ AcquireStart(tConfigState *psConfig)
     // If we are configured to sleep, but not sleeping yet, then enter sleep
     // logging mode if allowed.
     //
-    if(psConfig->bSleep && !psConfig->ui32SleepLogging)
-    {
+    if(psConfig->bSleep && !psConfig->ui32SleepLogging) {
         //
         // Allow sleep logging if storing to flash at a period of 1 second
         // or greater.
         //
         if((psConfig->ui8Storage == CONFIG_STORAGE_FLASH) &&
-           (psConfig->ui32Period >= 0x100))
-        {
+                (psConfig->ui32Period >= 0x100)) {
             psConfig->ui32SleepLogging = 1;
         }
     }
@@ -851,8 +806,7 @@ AcquireStop(void)
     // If USB stick is being used, then close the file so it will flush
     // the buffers to the USB stick.
     //
-    if(g_psConfigState->ui8Storage == CONFIG_STORAGE_USB)
-    {
+    if(g_psConfigState->ui8Storage == CONFIG_STORAGE_USB) {
         USBStickCloseFile();
     }
 
@@ -893,7 +847,7 @@ AcquireInit(void)
     // Configure the pins to be used as analog inputs.
     //
     MAP_GPIOPinTypeADC(GPIO_PORTE_BASE, GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 |
-                   GPIO_PIN_7 | GPIO_PIN_3);
+                       GPIO_PIN_7 | GPIO_PIN_3);
     MAP_GPIOPinTypeADC(GPIO_PORTP_BASE, GPIO_PIN_0);
 
     //
@@ -920,18 +874,14 @@ AcquireInit(void)
     // acquire the data for the data logger.  Multiple ADC and sequencers
     // will be used in order to acquire all the channels.
     //
-    for(ui32Chan = 0; ui32Chan < NUM_ADC_CHANNELS; ui32Chan++)
-    {
+    for(ui32Chan = 0; ui32Chan < NUM_ADC_CHANNELS; ui32Chan++) {
         //
         // If this is the first ADC then set the base for ADC0
         //
-        if(ui32Chan < 8)
-        {
+        if(ui32Chan < 8) {
             ui32Base = ADC0_BASE;
             ui32Seq = 0;
-        }
-        else if(ui32Chan < 16)
-        {
+        } else if(ui32Chan < 16) {
             //
             // Second ADC, set the base for ADC1
             //
@@ -946,8 +896,7 @@ AcquireInit(void)
         //
         ui32ChCtl = g_pui32ADCSeq[ui32Chan];
         if((ui32Chan == 7) || (ui32Chan == 15) ||
-           (ui32Chan == (NUM_ADC_CHANNELS - 1)))
-        {
+                (ui32Chan == (NUM_ADC_CHANNELS - 1))) {
             ui32ChCtl |= ADC_CTL_IE | ADC_CTL_END;
         }
 
@@ -955,7 +904,7 @@ AcquireInit(void)
         // Configure the sequence step
         //
         MAP_ADCSequenceStepConfigure(ui32Base, ui32Seq, ui32Chan % 8,
-                                      ui32ChCtl);
+                                     ui32ChCtl);
     }
 
     //

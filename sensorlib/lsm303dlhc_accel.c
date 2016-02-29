@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -54,8 +54,7 @@
 // and multiplying by 9.81 (1 g = 9.81 m/s^2).
 //
 //*****************************************************************************
-static const float g_pfLSM303DLHCAccelFactors[] =
-{
+static const float g_pfLSM303DLHCAccelFactors[] = {
     0.00059875,                             // Range = +/- 2 g (16384 lsb/g)
     0.00119751,                             // Range = +/- 4 g (8192 lsb/g)
     0.00239502,                             // Range = +/- 8 g (4096 lsb/g)
@@ -66,12 +65,10 @@ static const float g_pfLSM303DLHCAccelFactors[] =
 // Uninitialized values will default to zero which is what we want.  0x80 is
 // ORed into the register address so the writes auto-increment
 //
-static const uint8_t g_pui8ZeroCtrl1[8] =
-{
+static const uint8_t g_pui8ZeroCtrl1[8] = {
     0x80 | LSM303DLHC_O_CTRL1
 };
-static const uint8_t g_pui8ZeroFifoCtl[14] =
-{
+static const uint8_t g_pui8ZeroFifoCtl[14] = {
     0x80 | LSM303DLHC_O_FIFO_CTRL
 };
 
@@ -96,23 +93,20 @@ LSM303DLHCCallback(void *pvCallbackData, uint_fast8_t ui8Status)
     // to the idle state (which will also result in a callback to propagate the
     // error).
     //
-    if(ui8Status != I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status != I2CM_STATUS_SUCCESS) {
         psInst->ui8State = LSM303DLHC_STATE_IDLE;
     }
 
     //
     // Determine the current state of the LSM303DLHC state machine.
     //
-    switch(psInst->ui8State)
-    {
+    switch(psInst->ui8State) {
         //
         // All states that trivially transition to IDLE, and all unknown
         // states.
         //
         case LSM303DLHC_STATE_READ:
-        default:
-        {
+        default: {
             //
             // The state machine is now idle.
             //
@@ -124,8 +118,7 @@ LSM303DLHCCallback(void *pvCallbackData, uint_fast8_t ui8Status)
             break;
         }
 
-        case LSM303DLHC_STATE_INIT:
-        {
+        case LSM303DLHC_STATE_INIT: {
             psInst->ui8State = LSM303DLHC_STATE_IDLE;
             I2CMWrite(psInst->psI2CInst, psInst->ui8Addr, g_pui8ZeroFifoCtl,
                       14, LSM303DLHCCallback, pvCallbackData);
@@ -139,8 +132,7 @@ LSM303DLHCCallback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // A write just completed
         //
-        case LSM303DLHC_STATE_WRITE:
-        {
+        case LSM303DLHC_STATE_WRITE: {
             //
             // Set the accelerometer ranges to the new values.  If the register
             // was not modified, the values will be the same so this has no
@@ -162,14 +154,12 @@ LSM303DLHCCallback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // A read-modify-write just completed
         //
-        case LSM303DLHC_STATE_RMW:
-        {
+        case LSM303DLHC_STATE_RMW: {
             //
             // See if the ACCEL_CONFIG register was just modified.
             //
             if(psInst->uCommand.sReadModifyWriteState.pui8Buffer[0] ==
-               LSM303DLHC_O_CTRL4)
-            {
+                    LSM303DLHC_O_CTRL4) {
                 //
                 // Extract the FS_SEL from the ACCEL_CONFIG register value.
                 //
@@ -193,8 +183,7 @@ LSM303DLHCCallback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if the state machine is now idle and there is a callback function.
     //
-    if((psInst->ui8State == LSM303DLHC_STATE_IDLE) && psInst->pfnCallback)
-    {
+    if((psInst->ui8State == LSM303DLHC_STATE_IDLE) && psInst->pfnCallback) {
         //
         // Call the application-supplied callback function.
         //
@@ -249,8 +238,7 @@ LSM303DLHCAccelInit(tLSM303DLHCAccel *psInst, tI2CMInstance *psI2CInst,
     //
     psInst->ui8State = LSM303DLHC_STATE_INIT;
     if(I2CMWrite(psInst->psI2CInst, psInst->ui8Addr, g_pui8ZeroCtrl1, 7,
-                 LSM303DLHCCallback, (void *)psInst) == 0)
-    {
+                 LSM303DLHCCallback, (void *)psInst) == 0) {
         psInst->ui8State = LSM303DLHC_STATE_IDLE;
         return(0);
     }
@@ -290,8 +278,7 @@ LSM303DLHCAccelRead(tLSM303DLHCAccel *psInst, uint_fast8_t ui8Reg,
     // Return a failure if the LSM303DLHC driver is not idle (in other words,
     // there is already an outstanding request to the LSM303DLHC).
     //
-    if(psInst->ui8State != LSM303DLHC_STATE_IDLE)
-    {
+    if(psInst->ui8State != LSM303DLHC_STATE_IDLE) {
         return(0);
     }
 
@@ -312,8 +299,7 @@ LSM303DLHCAccelRead(tLSM303DLHCAccel *psInst, uint_fast8_t ui8Reg,
     psInst->uCommand.pui8Buffer[0] = ui8Reg;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
                 psInst->uCommand.pui8Buffer, 1, pui8Data, ui16Count,
-                LSM303DLHCCallback, psInst) == 0)
-    {
+                LSM303DLHCCallback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -358,8 +344,7 @@ LSM303DLHCAccelWrite(tLSM303DLHCAccel *psInst, uint_fast8_t ui8Reg,
     // Return a failure if the LSM303DLHC driver is not idle (in other words,
     // there is already an outstanding request to the LSM303DLHC).
     //
-    if(psInst->ui8State != LSM303DLHC_STATE_IDLE)
-    {
+    if(psInst->ui8State != LSM303DLHC_STATE_IDLE) {
         return(0);
     }
 
@@ -373,13 +358,11 @@ LSM303DLHCAccelWrite(tLSM303DLHCAccel *psInst, uint_fast8_t ui8Reg,
     // See if they're rebooting via CTRL5
     //
     if((ui8Reg <= LSM303DLHC_O_CTRL5) &&
-       ((ui8Reg + ui16Count) > LSM303DLHC_O_CTRL5))
-    {
+            ((ui8Reg + ui16Count) > LSM303DLHC_O_CTRL5)) {
         //
         // See if a soft reset is being requested.
         //
-        if(pui8Data[ui8Reg - LSM303DLHC_O_CTRL5] & LSM303DLHC_CTRL5_REBOOTCTL_M)
-        {
+        if(pui8Data[ui8Reg - LSM303DLHC_O_CTRL5] & LSM303DLHC_CTRL5_REBOOTCTL_M) {
             //
             // Default range setting is +/- 2 g.
             //
@@ -391,8 +374,7 @@ LSM303DLHCAccelWrite(tLSM303DLHCAccel *psInst, uint_fast8_t ui8Reg,
     // See if the ACCEL_CONFIG register is being written.
     //
     if((ui8Reg <= LSM303DLHC_O_CTRL4) &&
-       ((ui8Reg + ui16Count) > LSM303DLHC_O_CTRL4))
-    {
+            ((ui8Reg + ui16Count) > LSM303DLHC_O_CTRL4)) {
         //
         // Extract the AFS_SEL from the ACCEL_CONFIG register value.
         //
@@ -411,8 +393,7 @@ LSM303DLHCAccelWrite(tLSM303DLHCAccel *psInst, uint_fast8_t ui8Reg,
     //
     if(I2CMWrite8(&(psInst->uCommand.sWriteState), psInst->psI2CInst,
                   psInst->ui8Addr, ui8Reg, pui8Data, ui16Count,
-                  LSM303DLHCCallback, psInst) == 0)
-    {
+                  LSM303DLHCCallback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -461,8 +442,7 @@ LSM303DLHCAccelReadModifyWrite(tLSM303DLHCAccel *psInst, uint_fast8_t ui8Reg,
     // Return a failure if the LSM303DLHC driver is not idle (in other words,
     // there is already an outstanding request to the LSM303DLHC).
     //
-    if(psInst->ui8State != LSM303DLHC_STATE_IDLE)
-    {
+    if(psInst->ui8State != LSM303DLHC_STATE_IDLE) {
         return(0);
     }
 
@@ -483,8 +463,7 @@ LSM303DLHCAccelReadModifyWrite(tLSM303DLHCAccel *psInst, uint_fast8_t ui8Reg,
     if(I2CMReadModifyWrite8(&(psInst->uCommand.sReadModifyWriteState),
                             psInst->psI2CInst, psInst->ui8Addr, ui8Reg,
                             ui8Mask, ui8Value, LSM303DLHCCallback,
-                            psInst) == 0)
-    {
+                            psInst) == 0) {
         //
         // The I2C read-modify-write failed, so move to the idle state and
         // return a failure.
@@ -526,8 +505,7 @@ LSM303DLHCAccelDataRead(tLSM303DLHCAccel *psInst, tSensorCallback *pfnCallback,
     // Return a failure if the LSM303DLHC driver is not idle (in other words,
     // there is already an outstanding request to the LSM303DLHC).
     //
-    if(psInst->ui8State != LSM303DLHC_STATE_IDLE)
-    {
+    if(psInst->ui8State != LSM303DLHC_STATE_IDLE) {
         return(0);
     }
 
@@ -547,8 +525,7 @@ LSM303DLHCAccelDataRead(tLSM303DLHCAccel *psInst, tSensorCallback *pfnCallback,
     //
     psInst->pui8Data[0] = LSM303DLHC_O_OUT_X_LSB | 0x80;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr, psInst->pui8Data, 1,
-                psInst->pui8Data, 6, LSM303DLHCCallback, psInst) == 0)
-    {
+                psInst->pui8Data, 6, LSM303DLHCCallback, psInst) == 0) {
         //
         // The I2C read failed, so move to the idle state and return a failure.
         //
@@ -590,16 +567,13 @@ LSM303DLHCAccelDataAccelGetRaw(tLSM303DLHCAccel *psInst,
     //
     // Return the raw accelerometer values.
     //
-    if(pui16AccelX)
-    {
+    if(pui16AccelX) {
         *pui16AccelX = (psInst->pui8Data[1] << 8) | psInst->pui8Data[0];
     }
-    if(pui16AccelY)
-    {
+    if(pui16AccelY) {
         *pui16AccelY = (psInst->pui8Data[3] << 8) | psInst->pui8Data[2];
     }
-    if(pui16AccelZ)
-    {
+    if(pui16AccelZ) {
         *pui16AccelZ = (psInst->pui8Data[5] << 8) | psInst->pui8Data[4];
     }
 }
@@ -637,18 +611,15 @@ LSM303DLHCAccelDataAccelGetFloat(tLSM303DLHCAccel *psInst, float *pfAccelX,
     //
     // Convert the Accelerometer values into floating-point gravity values.
     //
-    if(pfAccelX)
-    {
+    if(pfAccelX) {
         *pfAccelX = (float)(((int16_t)((psInst->pui8Data[1] << 8) |
                                        psInst->pui8Data[0])) * fFactor);
     }
-    if(pfAccelY)
-    {
+    if(pfAccelY) {
         *pfAccelY = (float)(((int16_t)((psInst->pui8Data[3] << 8) |
                                        psInst->pui8Data[2])) * fFactor);
     }
-    if(pfAccelZ)
-    {
+    if(pfAccelZ) {
         *pfAccelZ = (float)(((int16_t)((psInst->pui8Data[5] << 8) |
                                        psInst->pui8Data[4])) * fFactor);
     }

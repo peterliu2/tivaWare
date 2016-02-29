@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Utility Library.
 //
 //*****************************************************************************
@@ -93,8 +93,7 @@ SoftSSIConfigSet(tSoftSSI *psSSI, uint8_t ui8Protocol,
     //
     // See if a GPIO pin has been set for Fss.
     //
-    if(psSSI->ui32FssGPIO != 0)
-    {
+    if(psSSI->ui32FssGPIO != 0) {
         //
         // Configure the Fss pin.
         //
@@ -116,12 +115,9 @@ SoftSSIConfigSet(tSoftSSI *psSSI, uint8_t ui8Protocol,
     //
     // Set the Clk pin high or low based on the configured clock polarity.
     //
-    if((ui8Protocol & SOFTSSI_FLAG_SPO) == 0)
-    {
+    if((ui8Protocol & SOFTSSI_FLAG_SPO) == 0) {
         HWREG(psSSI->ui32ClkGPIO) = 0;
-    }
-    else
-    {
+    } else {
         HWREG(psSSI->ui32ClkGPIO) = 255;
     }
 
@@ -135,8 +131,7 @@ SoftSSIConfigSet(tSoftSSI *psSSI, uint8_t ui8Protocol,
     //
     // See if a GPIO pin has been set for Rx.
     //
-    if(psSSI->ui32RxGPIO != 0)
-    {
+    if(psSSI->ui32RxGPIO != 0) {
         //
         // Configure the Rx pin.
         //
@@ -203,13 +198,10 @@ SoftSSITxInt(tSoftSSI *psSSI)
     //
     // Determine the number of words left in the transmit FIFO.
     //
-    if(psSSI->ui16TxBufferRead > psSSI->ui16TxBufferWrite)
-    {
+    if(psSSI->ui16TxBufferRead > psSSI->ui16TxBufferWrite) {
         ui16Temp = (psSSI->ui16TxBufferLen + psSSI->ui16TxBufferWrite -
                     psSSI->ui16TxBufferRead);
-    }
-    else
-    {
+    } else {
         ui16Temp = psSSI->ui16TxBufferWrite - psSSI->ui16TxBufferRead;
     }
 
@@ -217,12 +209,9 @@ SoftSSITxInt(tSoftSSI *psSSI)
     // If the transmit FIFO is now half full or less, generate a transmit FIFO
     // "interrupt".  Otherwise, clear the transmit FIFO "interrupt".
     //
-    if(ui16Temp <= (psSSI->ui16TxBufferLen / 2))
-    {
+    if(ui16Temp <= (psSSI->ui16TxBufferLen / 2)) {
         psSSI->ui8IntStatus |= SOFTSSI_TXFF;
-    }
-    else
-    {
+    } else {
         psSSI->ui8IntStatus &= ~(SOFTSSI_TXFF);
     }
 }
@@ -247,13 +236,10 @@ SoftSSIRxInt(tSoftSSI *psSSI)
     //
     // Determine the number of words in the receive FIFO.
     //
-    if(psSSI->ui16RxBufferRead > psSSI->ui16RxBufferWrite)
-    {
+    if(psSSI->ui16RxBufferRead > psSSI->ui16RxBufferWrite) {
         ui16Temp = (psSSI->ui16RxBufferLen + psSSI->ui16RxBufferWrite -
                     psSSI->ui16RxBufferRead);
-    }
-    else
-    {
+    } else {
         ui16Temp = psSSI->ui16RxBufferWrite - psSSI->ui16RxBufferRead;
     }
 
@@ -261,12 +247,9 @@ SoftSSIRxInt(tSoftSSI *psSSI)
     // If the receive FIFO is now half full or more, generate a receive FIFO
     // "interrupt".  Otherwise, clear the receive FIFO "interrupt".
     //
-    if(ui16Temp >= (psSSI->ui16RxBufferLen / 2))
-    {
+    if(ui16Temp >= (psSSI->ui16RxBufferLen / 2)) {
         psSSI->ui8IntStatus |= SOFTSSI_RXFF;
-    }
-    else
-    {
+    } else {
         psSSI->ui8IntStatus &= ~(SOFTSSI_RXFF);
     }
 }
@@ -296,25 +279,21 @@ SoftSSITimerTick(tSoftSSI *psSSI)
     //
     // Determine the current state of the state machine.
     //
-    switch(psSSI->ui8State)
-    {
+    switch(psSSI->ui8State) {
         //
         // The state machine is idle.
         //
-        case SOFTSSI_STATE_IDLE:
-        {
+        case SOFTSSI_STATE_IDLE: {
             //
             // See if the SoftSSI module is enabled and there is data in the
             // transmit FIFO.
             //
             if(((psSSI->ui8Flags & SOFTSSI_FLAG_ENABLE) != 0) &&
-               (psSSI->ui16TxBufferRead != psSSI->ui16TxBufferWrite))
-            {
+                    (psSSI->ui16TxBufferRead != psSSI->ui16TxBufferWrite)) {
                 //
                 // Assert the Fss signal if it is configured.
                 //
-                if(psSSI->ui32FssGPIO != 0)
-                {
+                if(psSSI->ui32FssGPIO != 0) {
                     HWREG(psSSI->ui32FssGPIO) = 0;
                 }
 
@@ -328,8 +307,7 @@ SoftSSITimerTick(tSoftSSI *psSSI)
             // Otherwise, see if there is data in the receive FIFO.
             //
             else if((psSSI->ui16RxBufferRead != psSSI->ui16RxBufferWrite) &&
-                    (psSSI->ui8IdleCount != 64))
-            {
+                    (psSSI->ui8IdleCount != 64)) {
                 //
                 // Increment the idle counter.
                 //
@@ -339,8 +317,7 @@ SoftSSITimerTick(tSoftSSI *psSSI)
                 // See if the idle counter has become large enough to trigger
                 // a timeout "interrupt".
                 //
-                if(psSSI->ui8IdleCount == 64)
-                {
+                if(psSSI->ui8IdleCount == 64) {
                     //
                     // Trigger the receive timeout "interrupt".
                     //
@@ -357,8 +334,7 @@ SoftSSITimerTick(tSoftSSI *psSSI)
         //
         // The start machine is in the transfer start state.
         //
-        case SOFTSSI_STATE_START:
-        {
+        case SOFTSSI_STATE_START: {
             //
             // Get the next word to transfer from the transmit FIFO.
             //
@@ -390,8 +366,7 @@ SoftSSITimerTick(tSoftSSI *psSSI)
             //
             // If in SPI mode 1 or 3, then the Clk signal needs to be toggled.
             //
-            if((psSSI->ui8Flags & SOFTSSI_FLAG_SPH) != 0)
-            {
+            if((psSSI->ui8Flags & SOFTSSI_FLAG_SPH) != 0) {
                 HWREG(psSSI->ui32ClkGPIO) ^= 255;
             }
 
@@ -409,13 +384,11 @@ SoftSSITimerTick(tSoftSSI *psSSI)
         //
         // The state machine is in the data input state.
         //
-        case SOFTSSI_STATE_IN:
-        {
+        case SOFTSSI_STATE_IN: {
             //
             // Read the next bit from the Rx signal if it is configured.
             //
-            if(psSSI->ui32RxGPIO != 0)
-            {
+            if(psSSI->ui32RxGPIO != 0) {
                 psSSI->ui16RxData = ((psSSI->ui16RxData << 1) |
                                      (HWREG(psSSI->ui32RxGPIO) ? 1 : 0));
             }
@@ -433,23 +406,19 @@ SoftSSITimerTick(tSoftSSI *psSSI)
             //
             // See if the entire word has been transferred.
             //
-            if(psSSI->ui8CurrentBit != psSSI->ui8Bits)
-            {
+            if(psSSI->ui8CurrentBit != psSSI->ui8Bits) {
                 //
                 // There are more bits to transfer, so move to the data output
                 // state.
                 //
                 psSSI->ui8State = SOFTSSI_STATE_OUT;
-            }
-            else
-            {
+            } else {
                 //
                 // Increment the transmit read pointer, removing the word that
                 // was just transferred from the transmit FIFO.
                 //
                 psSSI->ui16TxBufferRead++;
-                if(psSSI->ui16TxBufferRead == psSSI->ui16TxBufferLen)
-                {
+                if(psSSI->ui16TxBufferRead == psSSI->ui16TxBufferLen) {
                     psSSI->ui16TxBufferRead = 0;
                 }
 
@@ -462,8 +431,7 @@ SoftSSITimerTick(tSoftSSI *psSSI)
                 // Determine the new value for the receive FIFO write pointer.
                 //
                 ui16Temp = psSSI->ui16RxBufferWrite + 1;
-                if(ui16Temp >= psSSI->ui16RxBufferLen)
-                {
+                if(ui16Temp >= psSSI->ui16RxBufferLen) {
                     ui16Temp = 0;
                 }
 
@@ -471,16 +439,13 @@ SoftSSITimerTick(tSoftSSI *psSSI)
                 // See if there is space in the receive FIFO for the word that
                 // was just received.
                 //
-                if(ui16Temp == psSSI->ui16RxBufferRead)
-                {
+                if(ui16Temp == psSSI->ui16RxBufferRead) {
                     //
                     // The receive FIFO is full, so generate a receive FIFO
                     // overrun "interrupt".
                     //
                     psSSI->ui8IntStatus |= SOFTSSI_RXOR;
-                }
-                else
-                {
+                } else {
                     //
                     // Store the new word into the receive FIFO.
                     //
@@ -505,9 +470,8 @@ SoftSSITimerTick(tSoftSSI *psSSI)
                 // mode 1 or 3.
                 //
                 if(((psSSI->ui8Flags & SOFTSSI_FLAG_ENABLE) != 0) &&
-                   ((psSSI->ui8Flags & SOFTSSI_FLAG_SPH) != 0) &&
-                   (psSSI->ui16TxBufferRead != psSSI->ui16TxBufferWrite))
-                {
+                        ((psSSI->ui8Flags & SOFTSSI_FLAG_SPH) != 0) &&
+                        (psSSI->ui16TxBufferRead != psSSI->ui16TxBufferWrite)) {
                     //
                     // Get the next word to transfer from the transmit FIFO.
                     //
@@ -529,9 +493,7 @@ SoftSSITimerTick(tSoftSSI *psSSI)
                     // Move to the data output state.
                     //
                     psSSI->ui8State = SOFTSSI_STATE_OUT;
-                }
-                else
-                {
+                } else {
                     //
                     // The next word should not be transmitted immediately, so
                     // move to the first step of the stop state.
@@ -549,8 +511,7 @@ SoftSSITimerTick(tSoftSSI *psSSI)
         //
         // The state machine is in the data output state.
         //
-        case SOFTSSI_STATE_OUT:
-        {
+        case SOFTSSI_STATE_OUT: {
             //
             // Write the next bit of the transmit word to the Tx pin.
             //
@@ -580,8 +541,7 @@ SoftSSITimerTick(tSoftSSI *psSSI)
         //
         // The state machine is in the first step of the stop state.
         //
-        case SOFTSSI_STATE_STOP1:
-        {
+        case SOFTSSI_STATE_STOP1: {
             //
             // Set the Tx pin low.
             //
@@ -590,8 +550,7 @@ SoftSSITimerTick(tSoftSSI *psSSI)
             //
             // If in SPI mode 1 or 3, then the Clk signal needs to be toggled.
             //
-            if((psSSI->ui8Flags & SOFTSSI_FLAG_SPH) == 0)
-            {
+            if((psSSI->ui8Flags & SOFTSSI_FLAG_SPH) == 0) {
                 HWREG(psSSI->ui32ClkGPIO) ^= 255;
             }
 
@@ -609,13 +568,11 @@ SoftSSITimerTick(tSoftSSI *psSSI)
         //
         // The state machine is in the second step of the stop state.
         //
-        case SOFTSSI_STATE_STOP2:
-        {
+        case SOFTSSI_STATE_STOP2: {
             //
             // Deassert the Fss signal if it is configured.
             //
-            if(psSSI->ui32FssGPIO != 0)
-            {
+            if(psSSI->ui32FssGPIO != 0) {
                 HWREG(psSSI->ui32FssGPIO) = 255;
             }
 
@@ -632,8 +589,7 @@ SoftSSITimerTick(tSoftSSI *psSSI)
             //
             // See if the end of transfer "interrupt" should be generated.
             //
-            if(psSSI->ui16TxBufferRead == psSSI->ui16TxBufferWrite)
-            {
+            if(psSSI->ui16TxBufferRead == psSSI->ui16TxBufferWrite) {
                 psSSI->ui8IntStatus |= SOFTSSI_TXEOT;
             }
 
@@ -651,8 +607,7 @@ SoftSSITimerTick(tSoftSSI *psSSI)
     // the SSI peripheral.
     //
     while(((psSSI->ui8IntStatus & psSSI->ui8IntMask) != 0) &&
-          (psSSI->pfnIntCallback != 0))
-    {
+            (psSSI->pfnIntCallback != 0)) {
         //
         // Call the callback function.
         //
@@ -776,12 +731,9 @@ SoftSSIIntStatus(tSoftSSI *psSSI, bool bMasked)
     // Return either the "interrupt" status or the raw "interrupt" status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return(psSSI->ui8IntStatus & psSSI->ui8IntMask);
-    }
-    else
-    {
+    } else {
         return(psSSI->ui8IntStatus);
     }
 }
@@ -856,8 +808,7 @@ SoftSSISpaceAvail(tSoftSSI *psSSI)
     // Determine the values of the write pointer once incremented.
     //
     ui16Temp = psSSI->ui16TxBufferWrite + 1;
-    if(ui16Temp == psSSI->ui16TxBufferLen)
-    {
+    if(ui16Temp == psSSI->ui16TxBufferLen) {
         ui16Temp = 0;
     }
 
@@ -894,12 +845,10 @@ SoftSSIDataPut(tSoftSSI *psSSI, uint32_t ui32Data)
     // Wait until there is space.
     //
     ui16Temp = psSSI->ui16TxBufferWrite + 1;
-    if(ui16Temp == psSSI->ui16TxBufferLen)
-    {
+    if(ui16Temp == psSSI->ui16TxBufferLen) {
         ui16Temp = 0;
     }
-    while(ui16Temp == *(volatile uint16_t *)(&(psSSI->ui16TxBufferRead)))
-    {
+    while(ui16Temp == *(volatile uint16_t *)(&(psSSI->ui16TxBufferRead))) {
     }
 
     //
@@ -942,23 +891,19 @@ SoftSSIDataPutNonBlocking(tSoftSSI *psSSI, uint32_t ui32Data)
     // Determine the values of the write pointer once incremented.
     //
     ui16Temp = psSSI->ui16TxBufferWrite + 1;
-    if(ui16Temp == psSSI->ui16TxBufferLen)
-    {
+    if(ui16Temp == psSSI->ui16TxBufferLen) {
         ui16Temp = 0;
     }
 
     //
     // Check for space to write.
     //
-    if(ui16Temp != psSSI->ui16TxBufferRead)
-    {
+    if(ui16Temp != psSSI->ui16TxBufferRead) {
         psSSI->pui16TxBuffer[psSSI->ui16TxBufferWrite] = ui32Data;
         psSSI->ui16TxBufferWrite = ui16Temp;
         SoftSSITxInt(psSSI);
         return(1);
-    }
-    else
-    {
+    } else {
         return(0);
     }
 }
@@ -990,8 +935,7 @@ SoftSSIDataGet(tSoftSSI *psSSI, uint32_t *pui32Data)
     // Wait until there is data to be read.
     //
     while(psSSI->ui16RxBufferRead ==
-          *(volatile uint16_t *)(&(psSSI->ui16RxBufferWrite)))
-    {
+            *(volatile uint16_t *)(&(psSSI->ui16RxBufferWrite))) {
     }
 
     //
@@ -999,8 +943,7 @@ SoftSSIDataGet(tSoftSSI *psSSI, uint32_t *pui32Data)
     //
     *pui32Data = psSSI->pui16RxBuffer[psSSI->ui16RxBufferRead];
     psSSI->ui16RxBufferRead++;
-    if(psSSI->ui16RxBufferRead == psSSI->ui16RxBufferLen)
-    {
+    if(psSSI->ui16RxBufferRead == psSSI->ui16RxBufferLen) {
         psSSI->ui16RxBufferRead = 0;
     }
 
@@ -1037,19 +980,15 @@ SoftSSIDataGetNonBlocking(tSoftSSI *psSSI, uint32_t *pui32Data)
     //
     // Check for data to read.
     //
-    if(psSSI->ui16RxBufferRead != psSSI->ui16RxBufferWrite)
-    {
+    if(psSSI->ui16RxBufferRead != psSSI->ui16RxBufferWrite) {
         *pui32Data = psSSI->pui16RxBuffer[psSSI->ui16RxBufferRead];
         psSSI->ui16RxBufferRead++;
-        if(psSSI->ui16RxBufferRead == psSSI->ui16RxBufferLen)
-        {
+        if(psSSI->ui16RxBufferRead == psSSI->ui16RxBufferLen) {
             psSSI->ui16RxBufferRead = 0;
         }
         SoftSSIRxInt(psSSI);
         return(1);
-    }
-    else
-    {
+    } else {
         return(0);
     }
 }
@@ -1127,12 +1066,9 @@ SoftSSIFssGPIOSet(tSoftSSI *psSSI, uint32_t ui32Base, uint8_t ui8Pin)
     //
     // Save the base address and pin for the Fss signal.
     //
-    if(ui32Base == 0)
-    {
+    if(ui32Base == 0) {
         psSSI->ui32FssGPIO = 0;
-    }
-    else
-    {
+    } else {
         psSSI->ui32FssGPIO = ui32Base + (ui8Pin << 2);
     }
 }
@@ -1211,12 +1147,9 @@ SoftSSIRxGPIOSet(tSoftSSI *psSSI, uint32_t ui32Base, uint8_t ui8Pin)
     //
     // Save the base address and pin for the Rx signal.
     //
-    if(ui32Base == 0)
-    {
+    if(ui32Base == 0) {
         psSSI->ui32RxGPIO = 0;
-    }
-    else
-    {
+    } else {
         psSSI->ui32RxGPIO = ui32Base + (ui8Pin << 2);
     }
 }

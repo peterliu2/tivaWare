@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -60,8 +60,7 @@ static void HIDDriverClose(void *pvInstance);
 // a HID device.
 //
 //*****************************************************************************
-struct tHIDInstance
-{
+struct tHIDInstance {
     //
     // Save the device instance.
     //
@@ -101,8 +100,7 @@ static tHIDInstance g_psHIDDevice[MAX_HID_DEVICES];
 //! provided with the USB library.
 //
 //*****************************************************************************
-const tUSBHostClassDriver g_sUSBHIDClassDriver =
-{
+const tUSBHostClassDriver g_sUSBHIDClassDriver = {
     USB_CLASS_HID,
     HIDDriverOpen,
     HIDDriverClose,
@@ -145,10 +143,8 @@ USBHHIDOpen(tHIDSubClassProtocol iDeviceType, tUSBCallback pfnCallback,
     //
     // Find a free device instance structure.
     //
-    for(ui32Loop = 0; ui32Loop < MAX_HID_DEVICES; ui32Loop++)
-    {
-        if(g_psHIDDevice[ui32Loop].iDeviceType == eUSBHHIDClassNone)
-        {
+    for(ui32Loop = 0; ui32Loop < MAX_HID_DEVICES; ui32Loop++) {
+        if(g_psHIDDevice[ui32Loop].iDeviceType == eUSBHHIDClassNone) {
             //
             // Save the instance data for this device.
             //
@@ -209,39 +205,34 @@ HIDIntINCallback(uint32_t ui32Pipe, uint32_t ui32Event)
 {
     int32_t i32Dev;
 
-    switch (ui32Event)
-    {
+    switch (ui32Event) {
         //
         // Handles a request to schedule a new request on the interrupt IN
         // pipe.
         //
-        case USB_EVENT_SCHEDULER:
-        {
+        case USB_EVENT_SCHEDULER: {
             USBHCDPipeSchedule(ui32Pipe, 0, 1);
             break;
         }
         //
         // Called when new data is available on the interrupt IN pipe.
         //
-        case USB_EVENT_RX_AVAILABLE:
-        {
+        case USB_EVENT_RX_AVAILABLE: {
             //
             // Determine which device this notification is intended for.
             //
-            for(i32Dev = 0; i32Dev < MAX_HID_DEVICES; i32Dev++)
-            {
+            for(i32Dev = 0; i32Dev < MAX_HID_DEVICES; i32Dev++) {
                 //
                 // Does this device own the pipe we have been passed?
                 //
-                if(g_psHIDDevice[i32Dev].ui32IntInPipe == ui32Pipe)
-                {
+                if(g_psHIDDevice[i32Dev].ui32IntInPipe == ui32Pipe) {
                     //
                     // Yes - send the report data to the USB host HID device
                     // class driver.
                     //
                     g_psHIDDevice[i32Dev].pfnCallback(
-                                    g_psHIDDevice[i32Dev].pvCBData,
-                                    USB_EVENT_RX_AVAILABLE, ui32Pipe, 0);
+                        g_psHIDDevice[i32Dev].pvCBData,
+                        USB_EVENT_RX_AVAILABLE, ui32Pipe, 0);
                 }
             }
 
@@ -281,30 +272,26 @@ HIDDriverOpen(tUSBHostDevice *psDevice)
     // Search the currently open instances for one that supports the protocol
     // of this device.
     //
-    for(i32Dev = 0; i32Dev < MAX_HID_DEVICES; i32Dev++)
-    {
+    for(i32Dev = 0; i32Dev < MAX_HID_DEVICES; i32Dev++) {
         if(g_psHIDDevice[i32Dev].iDeviceType ==
-           psInterface->bInterfaceProtocol)
-        {
+                psInterface->bInterfaceProtocol) {
             //
             // Save the device pointer.
             //
             g_psHIDDevice[i32Dev].psDevice = psDevice;
 
-            for(i32Idx = 0; i32Idx < 3; i32Idx++)
-            {
+            for(i32Idx = 0; i32Idx < 3; i32Idx++) {
                 //
                 // Get the first endpoint descriptor.
                 //
                 psEndpointDescriptor = USBDescGetInterfaceEndpoint(psInterface,
-                                                                   i32Idx,
-                                                                   256);
+                                       i32Idx,
+                                       256);
 
                 //
                 // If no more endpoints then break out.
                 //
-                if(psEndpointDescriptor == 0)
-                {
+                if(psEndpointDescriptor == 0) {
                     break;
                 }
 
@@ -312,21 +299,19 @@ HIDDriverOpen(tUSBHostDevice *psDevice)
                 // Interrupt
                 //
                 if((psEndpointDescriptor->bmAttributes & USB_EP_ATTR_TYPE_M) ==
-                   USB_EP_ATTR_INT)
-                {
+                        USB_EP_ATTR_INT) {
                     //
                     // Interrupt IN.
                     //
-                    if(psEndpointDescriptor->bEndpointAddress & USB_EP_DESC_IN)
-                    {
+                    if(psEndpointDescriptor->bEndpointAddress & USB_EP_DESC_IN) {
                         g_psHIDDevice[i32Dev].ui32IntInPipe =
-                                USBHCDPipeAlloc(0, USBHCD_PIPE_INTR_IN,
-                                                psDevice, HIDIntINCallback);
+                            USBHCDPipeAlloc(0, USBHCD_PIPE_INTR_IN,
+                                            psDevice, HIDIntINCallback);
                         USBHCDPipeConfig(g_psHIDDevice[i32Dev].ui32IntInPipe,
-                                    psEndpointDescriptor->wMaxPacketSize,
-                                    psEndpointDescriptor->bInterval,
-                                    (psEndpointDescriptor->bEndpointAddress &
-                                     USB_EP_DESC_NUM_M));
+                                         psEndpointDescriptor->wMaxPacketSize,
+                                         psEndpointDescriptor->bInterval,
+                                         (psEndpointDescriptor->bEndpointAddress &
+                                          USB_EP_DESC_NUM_M));
                     }
                 }
             }
@@ -335,12 +320,11 @@ HIDDriverOpen(tUSBHostDevice *psDevice)
             // If there is a callback function call it to inform the application that
             // the device has been enumerated.
             //
-            if(g_psHIDDevice[i32Dev].pfnCallback != 0)
-            {
+            if(g_psHIDDevice[i32Dev].pfnCallback != 0) {
                 g_psHIDDevice[i32Dev].pfnCallback(
-                                    g_psHIDDevice[i32Dev].pvCBData,
-                                    USB_EVENT_CONNECTED,
-                                    (uint32_t)&g_psHIDDevice[i32Dev], 0);
+                    g_psHIDDevice[i32Dev].pvCBData,
+                    USB_EVENT_CONNECTED,
+                    (uint32_t)&g_psHIDDevice[i32Dev], 0);
             }
 
             //
@@ -390,16 +374,14 @@ HIDDriverClose(void *pvInstance)
     //
     // Free the Interrupt IN pipe.
     //
-    if(psInst->ui32IntInPipe != 0)
-    {
+    if(psInst->ui32IntInPipe != 0) {
         USBHCDPipeFree(psInst->ui32IntInPipe);
     }
 
     //
     // If the callback exists, call it with a DISCONNECTED event.
     //
-    if(psInst->pfnCallback != 0)
-    {
+    if(psInst->pfnCallback != 0) {
         psInst->pfnCallback(psInst->pvCBData, USB_EVENT_DISCONNECTED,
                             (uint32_t)pvInstance, 0);
     }
@@ -513,8 +495,8 @@ USBHHIDGetReportDescriptor(tHIDInstance *psHIDInstance, uint8_t *pui8Buffer,
     // is known.
     //
     ui32Bytes = USBHCDControlTransfer(0, &sSetupPacket,
-                psHIDInstance->psDevice, pui8Buffer, ui32Size,
-                psHIDInstance->psDevice->sDeviceDescriptor.bMaxPacketSize0);
+                                      psHIDInstance->psDevice, pui8Buffer, ui32Size,
+                                      psHIDInstance->psDevice->sDeviceDescriptor.bMaxPacketSize0);
 
     return(ui32Bytes);
 }
@@ -552,15 +534,12 @@ USBHHIDSetProtocol(tHIDInstance *psHIDInstance, uint32_t ui32BootProtocol)
     //
     sSetupPacket.bRequest = USBREQ_SET_PROTOCOL;
 
-    if(ui32BootProtocol)
-    {
+    if(ui32BootProtocol) {
         //
         // Boot Protocol.
         //
         sSetupPacket.wValue = 0;
-    }
-    else
-    {
+    } else {
         //
         // Report Protocol.
         //
@@ -582,7 +561,7 @@ USBHHIDSetProtocol(tHIDInstance *psHIDInstance, uint32_t ui32BootProtocol)
     // is known.
     //
     USBHCDControlTransfer(0, &sSetupPacket, psHIDInstance->psDevice, 0, 0,
-                psHIDInstance->psDevice->sDeviceDescriptor.bMaxPacketSize0);
+                          psHIDInstance->psDevice->sDeviceDescriptor.bMaxPacketSize0);
 
     return(0);
 }
@@ -674,8 +653,8 @@ USBHHIDSetReport(tHIDInstance *psHIDInstance, uint32_t ui32Interface,
     // is known.
     //
     USBHCDControlTransfer(0, &sSetupPacket, psHIDInstance->psDevice,
-            pui8Data, ui32Size,
-            psHIDInstance->psDevice->sDeviceDescriptor.bMaxPacketSize0);
+                          pui8Data, ui32Size,
+                          psHIDInstance->psDevice->sDeviceDescriptor.bMaxPacketSize0);
 
     return(ui32Size);
 }

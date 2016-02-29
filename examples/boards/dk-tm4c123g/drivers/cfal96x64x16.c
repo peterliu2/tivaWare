@@ -6,20 +6,20 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C123G Firmware Package.
 //
 //*****************************************************************************
@@ -108,8 +108,7 @@
 //
 //*****************************************************************************
 static
-uint8_t g_ui8DisplayInitCommands[] =
-{
+uint8_t g_ui8DisplayInitCommands[] = {
 //    0xAE,         // display off
     0x87, 0x07,     // master control current 7/16
     0x81, 0xA0,     // contrast A control
@@ -177,8 +176,7 @@ CFAL96x64x16WriteCommand(const uint8_t *pi8Cmd, uint32_t ui32Count)
     //
     // Wait for any previous SSI operation to finish.
     //
-    while(ROM_SSIBusy(DISPLAY_SSI_BASE))
-    {
+    while(ROM_SSIBusy(DISPLAY_SSI_BASE)) {
     }
 
     //
@@ -189,8 +187,7 @@ CFAL96x64x16WriteCommand(const uint8_t *pi8Cmd, uint32_t ui32Count)
     //
     // Send all the command bytes to the display
     //
-    while(ui32Count--)
-    {
+    while(ui32Count--) {
         ROM_SSIDataPut(DISPLAY_SSI_BASE, *pi8Cmd);
         pi8Cmd++;
     }
@@ -220,8 +217,7 @@ CFAL96x64x16WriteData(const uint8_t *pi8Data, uint32_t ui32Count)
     //
     // Wait for any previous SSI operation to finish.
     //
-    while(ROM_SSIBusy(DISPLAY_SSI_BASE))
-    {
+    while(ROM_SSIBusy(DISPLAY_SSI_BASE)) {
     }
 
     //
@@ -232,8 +228,7 @@ CFAL96x64x16WriteData(const uint8_t *pi8Data, uint32_t ui32Count)
     //
     // Send all the data bytes to the display
     //
-    while(ui32Count--)
-    {
+    while(ui32Count--) {
         ROM_SSIDataPut(DISPLAY_SSI_BASE, *pi8Data);
         pi8Data++;
     }
@@ -346,18 +341,15 @@ CFAL96x64x16PixelDrawMultiple(void *pvDisplayData, int32_t i32X, int32_t i32Y, i
     // Determine how to interpret the pixel data based on the number of bits
     // per pixel.
     //
-    switch(i32BPP & 0xFF)
-    {
+    switch(i32BPP & 0xFF) {
         //
         // The pixel data is in 1 bit per pixel format.
         //
-        case 1:
-        {
+        case 1: {
             //
             // Loop while there are more pixels to draw.
             //
-            while(i32Count)
-            {
+            while(i32Count) {
                 //
                 // Get the next byte of image data.
                 //
@@ -366,13 +358,12 @@ CFAL96x64x16PixelDrawMultiple(void *pvDisplayData, int32_t i32X, int32_t i32Y, i
                 //
                 // Loop through the pixels in this byte of image data.
                 //
-                for(; (i32X0 < 8) && i32Count; i32X0++, i32Count--)
-                {
+                for(; (i32X0 < 8) && i32Count; i32X0++, i32Count--) {
                     //
                     // Draw this pixel in the appropriate color.
                     //
                     uint8_t ui8BPP = ((uint32_t *)pui8Palette)
-                                            [(ui32Byte >> (7 - i32X0)) & 1];
+                                     [(ui32Byte >> (7 - i32X0)) & 1];
                     CFAL96x64x16WriteData(&ui8BPP, 1);
                 }
 
@@ -391,8 +382,7 @@ CFAL96x64x16PixelDrawMultiple(void *pvDisplayData, int32_t i32X, int32_t i32Y, i
         //
         // The pixel data is in 4 bit per pixel format.
         //
-        case 4:
-        {
+        case 4: {
             //
             // Loop while there are more pixels to draw.  "Duff's device" is
             // used to jump into the middle of the loop if the first nibble of
@@ -402,11 +392,9 @@ CFAL96x64x16PixelDrawMultiple(void *pvDisplayData, int32_t i32X, int32_t i32Y, i
             // http://en.wikipedia.org/wiki/Duff's_device for detailed
             // information about Duff's device.
             //
-            switch(i32X0 & 1)
-            {
+            switch(i32X0 & 1) {
                 case 0:
-                    while(i32Count)
-                    {
+                    while(i32Count) {
                         uint8_t ui8Color;
 
                         //
@@ -416,7 +404,7 @@ CFAL96x64x16PixelDrawMultiple(void *pvDisplayData, int32_t i32X, int32_t i32Y, i
                         //
                         ui32Byte = (*pui8Data >> 4) * 3;
                         ui32Byte = (*(uint32_t *)(pui8Palette + ui32Byte) &
-                                  0x00ffffff);
+                                    0x00ffffff);
 
                         //
                         // Translate this palette entry and write it to the
@@ -433,9 +421,8 @@ CFAL96x64x16PixelDrawMultiple(void *pvDisplayData, int32_t i32X, int32_t i32Y, i
                         //
                         // See if there is another pixel to draw.
                         //
-                        if(i32Count)
-                        {
-                case 1:
+                        if(i32Count) {
+                        case 1:
                             //
                             // Get the lower nibble of the next byte of pixel
                             // data and extract the corresponding entry from
@@ -443,7 +430,7 @@ CFAL96x64x16PixelDrawMultiple(void *pvDisplayData, int32_t i32X, int32_t i32Y, i
                             //
                             ui32Byte = (*pui8Data++ & 15) * 3;
                             ui32Byte = (*(uint32_t *)(pui8Palette + ui32Byte) &
-                                      0x00ffffff);
+                                        0x00ffffff);
 
                             //
                             // Translate this palette entry and write it to the
@@ -469,13 +456,11 @@ CFAL96x64x16PixelDrawMultiple(void *pvDisplayData, int32_t i32X, int32_t i32Y, i
         //
         // The pixel data is in 8 bit per pixel format.
         //
-        case 8:
-        {
+        case 8: {
             //
             // Loop while there are more pixels to draw.
             //
-            while(i32Count--)
-            {
+            while(i32Count--) {
                 uint8_t ui8Color;
 
                 //
@@ -539,15 +524,13 @@ CFAL96x64x16LineDrawH(void *pvDisplayData, int32_t i32X1, int32_t i32X2, int32_t
     // Use buffer of pixels to draw line, so multiple bytes can be sent at
     // one time.  Fill the buffer with the line color.
     //
-    for(uIdx = 0; uIdx < sizeof(ui8LineBuf); uIdx++)
-    {
+    for(uIdx = 0; uIdx < sizeof(ui8LineBuf); uIdx++) {
         ui8LineBuf[uIdx] = ui32Value;
     }
 
     uIdx = (i32X1 < i32X2) ? (i32X2 - i32X1) : (i32X1 - i32X2);
     uIdx += 1;
-    while(uIdx)
-    {
+    while(uIdx) {
         CFAL96x64x16WriteData(ui8LineBuf, (uIdx < 16) ? uIdx : 16);
         uIdx -= (uIdx < 16) ? uIdx : 16;
     }
@@ -595,15 +578,13 @@ CFAL96x64x16LineDrawV(void *pvDisplayData, int32_t i32X, int32_t i32Y1, int32_t 
     // Use buffer of pixels to draw line, so multiple bytes can be sent at
     // one time.  Fill the buffer with the line color.
     //
-    for(uIdx = 0; uIdx < sizeof(ui8LineBuf); uIdx++)
-    {
+    for(uIdx = 0; uIdx < sizeof(ui8LineBuf); uIdx++) {
         ui8LineBuf[uIdx] = ui32Value;
     }
 
     uIdx = (i32Y1 < i32Y2) ? (i32Y2 - i32Y1) : (i32Y1 - i32Y2);
     uIdx += 1;
-    while(uIdx)
-    {
+    while(uIdx) {
         CFAL96x64x16WriteData(ui8LineBuf, (uIdx < 16) ? uIdx : 16);
         uIdx -= (uIdx < 16) ? uIdx : 16;
     }
@@ -639,8 +620,7 @@ CFAL96x64x16RectFill(void *pvDisplayData, const tRectangle *pRect,
 {
     unsigned int uY;
 
-    for(uY = pRect->i16YMin; uY <= pRect->i16YMax; uY++)
-    {
+    for(uY = pRect->i16YMin; uY <= pRect->i16YMax; uY++) {
         CFAL96x64x16LineDrawH(0, pRect->i16XMin, pRect->i16XMax, uY, ui32Value);
     }
 }
@@ -700,8 +680,7 @@ CFAL96x64x16Flush(void *pvDisplayData)
 //! CFAL9664-F-B1 OLED panel with SSD 1332 controller.
 //
 //*****************************************************************************
-const tDisplay g_sCFAL96x64x16 =
-{
+const tDisplay g_sCFAL96x64x16 = {
     sizeof(tDisplay),
     0,
     96,

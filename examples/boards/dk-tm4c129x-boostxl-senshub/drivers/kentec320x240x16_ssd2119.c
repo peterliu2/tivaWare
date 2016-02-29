@@ -6,20 +6,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -374,10 +374,10 @@ Kentec320x240x16_SSD2119PixelDraw(void *pvDisplayData, int32_t i32X,
 //*****************************************************************************
 static void
 Kentec320x240x16_SSD2119PixelDrawMultiple(void *pvDisplayData, int32_t i32X,
-                                          int32_t i32Y, int32_t i32X0,
-                                          int32_t i32Count, int32_t i32BPP,
-                                          const uint8_t *pui8Data,
-                                          const uint8_t *pui8Palette)
+        int32_t i32Y, int32_t i32X0,
+        int32_t i32Count, int32_t i32BPP,
+        const uint8_t *pui8Data,
+        const uint8_t *pui8Palette)
 {
     uint32_t ui32Byte;
 
@@ -408,18 +408,15 @@ Kentec320x240x16_SSD2119PixelDrawMultiple(void *pvDisplayData, int32_t i32X,
     // Determine how to interpret the pixel data based on the number of bits
     // per pixel.
     //
-    switch(i32BPP & ~GRLIB_DRIVER_FLAG_NEW_IMAGE)
-    {
+    switch(i32BPP & ~GRLIB_DRIVER_FLAG_NEW_IMAGE) {
         //
         // The pixel data is in 1 bit per pixel format.
         //
-        case 1:
-        {
+        case 1: {
             //
             // Loop while there are more pixels to draw.
             //
-            while(i32Count)
-            {
+            while(i32Count) {
                 //
                 // Get the next byte of image data.
                 //
@@ -428,8 +425,7 @@ Kentec320x240x16_SSD2119PixelDrawMultiple(void *pvDisplayData, int32_t i32X,
                 //
                 // Loop through the pixels in this byte of image data.
                 //
-                for(; (i32X0 < 8) && i32Count; i32X0++, i32Count--)
-                {
+                for(; (i32X0 < 8) && i32Count; i32X0++, i32Count--) {
                     //
                     // Draw this pixel in the appropriate color.
                     //
@@ -452,8 +448,7 @@ Kentec320x240x16_SSD2119PixelDrawMultiple(void *pvDisplayData, int32_t i32X,
         //
         // The pixel data is in 4 bit per pixel format.
         //
-        case 4:
-        {
+        case 4: {
             //
             // Loop while there are more pixels to draw.  "Duff's device" is
             // used to jump into the middle of the loop if the first nibble of
@@ -463,11 +458,9 @@ Kentec320x240x16_SSD2119PixelDrawMultiple(void *pvDisplayData, int32_t i32X,
             // http://en.wikipedia.org/wiki/Duff's_device for detailed
             // information about Duff's device.
             //
-            switch(i32X0 & 1)
-            {
+            switch(i32X0 & 1) {
                 case 0:
-                    while(i32Count)
-                    {
+                    while(i32Count) {
                         //
                         // Get the upper nibble of the next byte of pixel data
                         // and extract the corresponding entry from the
@@ -491,9 +484,8 @@ Kentec320x240x16_SSD2119PixelDrawMultiple(void *pvDisplayData, int32_t i32X,
                         //
                         // See if there is another pixel to draw.
                         //
-                        if(i32Count)
-                        {
-                case 1:
+                        if(i32Count) {
+                        case 1:
                             //
                             // Get the lower nibble of the next byte of pixel
                             // data and extract the corresponding entry from
@@ -526,13 +518,11 @@ Kentec320x240x16_SSD2119PixelDrawMultiple(void *pvDisplayData, int32_t i32X,
         //
         // The pixel data is in 8 bit per pixel format.
         //
-        case 8:
-        {
+        case 8: {
             //
             // Loop while there are more pixels to draw.
             //
-            while(i32Count--)
-            {
+            while(i32Count--) {
                 //
                 // Get the next byte of pixel data and extract the
                 // corresponding entry from the palette.
@@ -602,8 +592,7 @@ Kentec320x240x16_SSD2119LineDrawH(void *pvDisplayData, int32_t i32X1,
     //
     // Loop through the pixels of this horizontal line.
     //
-    while(i32X1++ <= i32X2)
-    {
+    while(i32X1++ <= i32X2) {
         //
         // Write the pixel value.
         //
@@ -659,8 +648,7 @@ Kentec320x240x16_SSD2119LineDrawV(void *pvDisplayData, int32_t i32X,
     //
     // Loop through the pixels of this vertical line.
     //
-    while(i32Y1++ <= i32Y2)
-    {
+    while(i32Y1++ <= i32Y2) {
         //
         // Write the pixel value.
         //
@@ -720,10 +708,10 @@ Kentec320x240x16_SSD2119RectFill(void *pvDisplayData, const tRectangle *psRect,
     WriteCommand(SSD2119_V_RAM_POS_REG);
 #if (defined LANDSCAPE_FLIP) || (defined PORTRAIT)
     WriteData(MAPPED_Y(psRect->i16XMin, psRect->i16YMin) |
-             (MAPPED_Y(psRect->i16XMax, psRect->i16YMax) << 8));
+              (MAPPED_Y(psRect->i16XMax, psRect->i16YMax) << 8));
 #else
     WriteData(MAPPED_Y(psRect->i16XMax, psRect->i16YMax) |
-             (MAPPED_Y(psRect->i16XMin, psRect->i16YMin) << 8));
+              (MAPPED_Y(psRect->i16XMin, psRect->i16YMin) << 8));
 #endif
 
     //
@@ -745,8 +733,7 @@ Kentec320x240x16_SSD2119RectFill(void *pvDisplayData, const tRectangle *psRect,
     //
     for(i32Count = ((psRect->i16XMax - psRect->i16XMin + 1) *
                     (psRect->i16YMax - psRect->i16YMin + 1)); i32Count >= 0;
-        i32Count--)
-    {
+            i32Count--) {
         //
         // Write the pixel value.
         //
@@ -823,8 +810,7 @@ Kentec320x240x16_SSD2119Flush(void *pvDisplayData)
 //! TFT panel with an SSD2119 controller.
 //
 //*****************************************************************************
-const tDisplay g_sKentec320x240x16_SSD2119 =
-{
+const tDisplay g_sKentec320x240x16_SSD2119 = {
     sizeof(tDisplay),
     0,
 #if defined(PORTRAIT) || defined(PORTRAIT_FLIP)
@@ -1042,8 +1028,7 @@ Kentec320x240x16_SSD2119Init(uint32_t ui32SysClock)
     // Clear the contents of the display buffer.
     //
     WriteCommand(SSD2119_RAM_DATA_REG);
-    for(ui32Count = 0; ui32Count < (320 * 240); ui32Count++)
-    {
+    for(ui32Count = 0; ui32Count < (320 * 240); ui32Count++) {
         WriteData(0x0000);
     }
 }

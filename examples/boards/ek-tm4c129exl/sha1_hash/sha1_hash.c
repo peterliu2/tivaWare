@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C129EXL Firmware Package.
 //
 //*****************************************************************************
@@ -78,8 +78,7 @@ tDMAControlTable g_psDMAControlTable[64] __attribute__((aligned(1024)));
 // randomly generated data.
 //
 //*****************************************************************************
-uint32_t g_pui32RandomData[] =
-{
+uint32_t g_pui32RandomData[] = {
     0x7c68c9ec, 0x72af34b3, 0xca0edf2e, 0x60f4860d, 0x50cfa1dc, 0x9a2b538c,
     0x98450274, 0x60f5c272, 0x7317d78e, 0x2361ca0e, 0xfa4a52b1, 0x658f729b,
     0x5267f9d9, 0x1bccd3ca, 0x2f0bb993, 0x1be38a3d, 0x00bd2d2a, 0x97405e63,
@@ -131,15 +130,13 @@ uint32_t g_pui32RandomData[] =
 // a Perl script.
 //
 //*****************************************************************************
-typedef struct SHA1TestVectorStruct
-{
+typedef struct SHA1TestVectorStruct {
     uint32_t pui32HashResult[5];
     uint32_t ui32DataLength;
 }
 tSHA1TestVector;
 
-tSHA1TestVector g_psSHA1TestVectors[] =
-{
+tSHA1TestVector g_psSHA1TestVectors[] = {
     {
         { 0xe08e0896, 0xe63b4b20, 0x5c8d85b0, 0x95a95bdd, 0x2b4f2797 },
         1024
@@ -196,46 +193,39 @@ SHAMD5IntHandler(void)
     //
     // Print a different message depending on the interrupt source.
     //
-    if(ui32IntStatus & SHAMD5_INT_CONTEXT_READY)
-    {
+    if(ui32IntStatus & SHAMD5_INT_CONTEXT_READY) {
         ROM_SHAMD5IntDisable(SHAMD5_BASE, SHAMD5_INT_CONTEXT_READY);
         g_bContextReadyFlag = true;
         UARTprintf("Context input registers are ready.\n");
     }
-    if(ui32IntStatus & SHAMD5_INT_PARTHASH_READY)
-    {
+    if(ui32IntStatus & SHAMD5_INT_PARTHASH_READY) {
         ROM_SHAMD5IntDisable(SHAMD5_BASE, SHAMD5_INT_PARTHASH_READY);
         UARTprintf("Context output registers are ready after a\n");
         UARTprintf("context switch.\n");
     }
-    if(ui32IntStatus & SHAMD5_INT_INPUT_READY)
-    {
+    if(ui32IntStatus & SHAMD5_INT_INPUT_READY) {
         ROM_SHAMD5IntDisable(SHAMD5_BASE, SHAMD5_INT_INPUT_READY);
         g_bInputReadyFlag = true;
         UARTprintf("Data FIFO is ready to receive data.\n");
     }
-    if(ui32IntStatus & SHAMD5_INT_OUTPUT_READY)
-    {
+    if(ui32IntStatus & SHAMD5_INT_OUTPUT_READY) {
         ROM_SHAMD5IntDisable(SHAMD5_BASE, SHAMD5_INT_OUTPUT_READY);
         g_bOutputReadyFlag = true;
         UARTprintf("Context output registers are ready.\n");
     }
-    if(ui32IntStatus & SHAMD5_INT_DMA_CONTEXT_IN)
-    {
+    if(ui32IntStatus & SHAMD5_INT_DMA_CONTEXT_IN) {
         ROM_SHAMD5IntClear(SHAMD5_BASE, SHAMD5_INT_DMA_CONTEXT_IN);
         g_bContextInDMADoneFlag = true;
         UARTprintf("DMA completed a context write to the internal\n");
         UARTprintf("registers.\n");
     }
-    if(ui32IntStatus & SHAMD5_INT_DMA_DATA_IN)
-    {
+    if(ui32IntStatus & SHAMD5_INT_DMA_DATA_IN) {
         ROM_SHAMD5IntClear(SHAMD5_BASE, SHAMD5_INT_DMA_DATA_IN);
         g_bDataInDMADoneFlag = true;
         UARTprintf("DMA has written the last word of input data to\n");
         UARTprintf("the internal FIFO of the engine.\n");
     }
-    if(ui32IntStatus & SHAMD5_INT_DMA_CONTEXT_OUT)
-    {
+    if(ui32IntStatus & SHAMD5_INT_DMA_CONTEXT_OUT) {
         ROM_SHAMD5IntClear(SHAMD5_BASE, SHAMD5_INT_DMA_CONTEXT_OUT);
         g_bContextOutDMADoneFlag = true;
         UARTprintf("DMA completed the output context movement from\n");
@@ -276,8 +266,7 @@ SHA1HashGenerate(uint32_t *pui32Data, uint32_t ui32DataLength,
     //
     // Wait for the context ready flag.
     //
-    while(!g_bContextReadyFlag)
-    {
+    while(!g_bContextReadyFlag) {
     }
 
     //
@@ -288,8 +277,7 @@ SHA1HashGenerate(uint32_t *pui32Data, uint32_t ui32DataLength,
     //
     // Use DMA to write the data into the SHA/MD5 module.
     //
-    if(bUseDMA)
-    {
+    if(bUseDMA) {
         //
         // Enable DMA done interrupts.
         //
@@ -297,8 +285,7 @@ SHA1HashGenerate(uint32_t *pui32Data, uint32_t ui32DataLength,
                                           SHAMD5_INT_DMA_DATA_IN |
                                           SHAMD5_INT_DMA_CONTEXT_OUT));
 
-        if(ui32DataLength != 0)
-        {
+        if(ui32DataLength != 0) {
             //
             // Setup the DMA module to copy data in.
             //
@@ -351,21 +338,18 @@ SHA1HashGenerate(uint32_t *pui32Data, uint32_t ui32DataLength,
         //
         ROM_SHAMD5HashLengthSet(SHAMD5_BASE, ui32DataLength);
 
-        if(ui32DataLength != 0)
-        {
+        if(ui32DataLength != 0) {
             //
             // Wait for the DMA done interrupt.
             //
-            while(!g_bDataInDMADoneFlag)
-            {
+            while(!g_bDataInDMADoneFlag) {
             }
         }
 
         //
         // Wait for the next DMA done interrupt.
         //
-        while(!g_bContextOutDMADoneFlag)
-        {
+        while(!g_bContextOutDMADoneFlag) {
         }
 
         //
@@ -377,8 +361,7 @@ SHA1HashGenerate(uint32_t *pui32Data, uint32_t ui32DataLength,
     //
     // Perform hash computation by copying the data with the CPU.
     //
-    else
-    {
+    else {
         //
         // Perform the hashing operation
         //
@@ -400,8 +383,7 @@ SHAMD5Init(void)
     //
     // Check that the CCM peripheral is present.
     //
-    if(!ROM_SysCtlPeripheralPresent(SYSCTL_PERIPH_CCM0))
-    {
+    if(!ROM_SysCtlPeripheralPresent(SYSCTL_PERIPH_CCM0)) {
         UARTprintf(" No CCM peripheral found!\n");
 
         //
@@ -419,15 +401,13 @@ SHAMD5Init(void)
     // Wait for the peripheral to be ready.
     //
     ui32Loop = 0;
-    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0))
-    {
+    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0)) {
         //
         // Increment our poll counter.
         //
         ui32Loop++;
 
-        if(ui32Loop > CCM_LOOP_TIMEOUT)
-        {
+        if(ui32Loop > CCM_LOOP_TIMEOUT) {
             //
             // Timed out, notify and spin.
             //
@@ -449,15 +429,13 @@ SHAMD5Init(void)
     // Wait for the peripheral to be ready again.
     //
     ui32Loop = 0;
-    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0))
-    {
+    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0)) {
         //
         // Increment our poll counter.
         //
         ui32Loop++;
 
-        if(ui32Loop > CCM_LOOP_TIMEOUT)
-        {
+        if(ui32Loop > CCM_LOOP_TIMEOUT) {
             //
             // Timed out, spin.
             //
@@ -550,8 +528,7 @@ main(void)
     //
     // Initialize the CCM and SHAMD5 modules.
     //
-    if(!SHAMD5Init())
-    {
+    if(!SHAMD5Init()) {
         UARTprintf("Initialization of the SHA module failed.\n");
         ui32Errors |= 0x00000001;
     }
@@ -559,8 +536,7 @@ main(void)
     //
     // Run tests without uDMA.
     //
-    for(ui32Vector = 0; ui32Vector < 3; ui32Vector++)
-    {
+    for(ui32Vector = 0; ui32Vector < 3; ui32Vector++) {
         UARTprintf("Running test #%d without uDMA\n", ui32Vector);
 
         //
@@ -573,11 +549,9 @@ main(void)
         //
         // Check the result.
         //
-        for(ui32Idx = 0; ui32Idx < 5; ui32Idx++)
-        {
+        for(ui32Idx = 0; ui32Idx < 5; ui32Idx++) {
             if(pui32HashResult[ui32Idx] !=
-               g_psSHA1TestVectors[ui32Vector].pui32HashResult[ui32Idx])
-            {
+                    g_psSHA1TestVectors[ui32Vector].pui32HashResult[ui32Idx]) {
                 UARTprintf("Hash result mismatch - Exp: 0x%x, Act: 0x%x\n",
                            g_psSHA1TestVectors[ui32Vector].
                            pui32HashResult[ui32Idx], pui32HashResult[0]);
@@ -589,8 +563,7 @@ main(void)
     //
     // Run tests with uDMA.
     //
-    for(ui32Vector = 0; ui32Vector < 3; ui32Vector++)
-    {
+    for(ui32Vector = 0; ui32Vector < 3; ui32Vector++) {
         UARTprintf("Running test #%d with uDMA\n", ui32Vector);
 
         //
@@ -603,11 +576,9 @@ main(void)
         //
         // Check the result.
         //
-        for(ui32Idx = 0; ui32Idx < 5; ui32Idx++)
-        {
+        for(ui32Idx = 0; ui32Idx < 5; ui32Idx++) {
             if(pui32HashResult[ui32Idx] !=
-               g_psSHA1TestVectors[ui32Vector].pui32HashResult[ui32Idx])
-            {
+                    g_psSHA1TestVectors[ui32Vector].pui32HashResult[ui32Idx]) {
                 UARTprintf("Hash result mismatch - Exp: 0x%x, Act: 0x%x\n",
                            g_psSHA1TestVectors[ui32Vector].
                            pui32HashResult[ui32Idx], pui32HashResult[0]);
@@ -619,18 +590,14 @@ main(void)
     //
     // Finished.
     //
-    if(ui32Errors)
-    {
+    if(ui32Errors) {
         UARTprintf("Demo failed with error code 0x%x.\n", ui32Errors);
-		LEDWrite(CLP_D3 | CLP_D4, CLP_D4);
-    }
-    else
-    {
+        LEDWrite(CLP_D3 | CLP_D4, CLP_D4);
+    } else {
         UARTprintf("Demo completed successfully.\n");
-		LEDWrite(CLP_D3 | CLP_D4, CLP_D3);
+        LEDWrite(CLP_D3 | CLP_D4, CLP_D3);
     }
 
-    while(1)
-    {
+    while(1) {
     }
 }

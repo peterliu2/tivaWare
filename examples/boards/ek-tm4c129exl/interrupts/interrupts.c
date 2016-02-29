@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C129EXL Firmware Package.
 //
 //*****************************************************************************
@@ -151,22 +151,18 @@ Delay(uint32_t ui32Seconds)
     //
     // Loop while there are more seconds to wait.
     //
-    while(ui32Seconds--)
-    {
-        for(ui8Loop = 0; ui8Loop < 100; ui8Loop++)
-        {
+    while(ui32Seconds--) {
+        for(ui8Loop = 0; ui8Loop < 100; ui8Loop++) {
             //
             // Wait until the SysTick value is less than 1000.
             //
-            while(ROM_SysTickValueGet() > 1000)
-            {
+            while(ROM_SysTickValueGet() > 1000) {
             }
 
             //
             // Wait until the SysTick value is greater than 1000.
             //
-            while(ROM_SysTickValueGet() < 1000)
-            {
+            while(ROM_SysTickValueGet() < 1000) {
             }
         }
     }
@@ -189,8 +185,7 @@ DisplayIntStatus(void)
     //
     UARTprintf("\033[2J\033[H");
     UARTprintf("Interrupts example\n\n");
-    switch (g_ui32IntMode)
-    {
+    switch (g_ui32IntMode) {
         case 0:
             UARTprintf("Equal Priority\n\n");
             break;
@@ -406,8 +401,8 @@ main(void)
     // Run from the PLL at 120 MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
-                SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Configure the device pins.
@@ -488,8 +483,7 @@ main(void)
     //
     // Verify that the interrupts were processed in the correct order.
     //
-    if((g_ui32GPIOa != 3) || (g_ui32GPIOb != 2) || (g_ui32GPIOc != 1))
-    {
+    if((g_ui32GPIOa != 3) || (g_ui32GPIOb != 2) || (g_ui32GPIOc != 1)) {
         ui8Error |= 1;
     }
 
@@ -532,8 +526,7 @@ main(void)
     //
     // Verify that the interrupts were processed in the correct order.
     //
-    if((g_ui32GPIOa != 3) || (g_ui32GPIOb != 2) || (g_ui32GPIOc != 1))
-    {
+    if((g_ui32GPIOa != 3) || (g_ui32GPIOb != 2) || (g_ui32GPIOc != 1)) {
         ui8Error |= 2;
     }
 
@@ -576,8 +569,7 @@ main(void)
     //
     // Verify that the interrupts were processed in the correct order.
     //
-    if((g_ui32GPIOa != 1) || (g_ui32GPIOb != 2) || (g_ui32GPIOc != 3))
-    {
+    if((g_ui32GPIOa != 1) || (g_ui32GPIOb != 2) || (g_ui32GPIOc != 3)) {
         ui8Error |= 4;
     }
 
@@ -603,30 +595,23 @@ main(void)
     //
     UARTprintf("\033[2J\033[H");
     UARTprintf("Interrupts example\n\n");
-    if(ui8Error)
-    {
-        if(ui8Error & 1)
-        {
+    if(ui8Error) {
+        if(ui8Error & 1) {
             UARTprintf("Equal Priority Fail!\n");
         }
-        if(ui8Error & 2)
-        {
+        if(ui8Error & 2) {
             UARTprintf("Decreasing Priority Fail!\n");
         }
-        if(ui8Error & 4)
-        {
+        if(ui8Error & 4) {
             UARTprintf("Increasing Priority Fail!\n");
         }
-    }
-    else
-    {
+    } else {
         UARTprintf("Success!");
     }
 
     //
     // Loop forever.
     //
-    while(1)
-    {
+    while(1) {
     }
 }

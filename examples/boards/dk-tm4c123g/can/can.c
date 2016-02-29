@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C123G Firmware Package.
 //
 //*****************************************************************************
@@ -192,8 +192,7 @@ CAN0IntHandler(void)
     // If this was a status interrupt acknowledge it by reading the CAN
     // controller status register.
     //
-    if(ui32Status == CAN_INT_INTID_STATUS)
-    {
+    if(ui32Status == CAN_INT_INTID_STATUS) {
         //
         // Read the controller status.  This will return a field of status
         // error bits that can indicate various errors. Refer to the
@@ -214,8 +213,7 @@ CAN0IntHandler(void)
     // Check if the cause is message object RXOBJECT, which we are using
     // for receiving messages.
     //
-    else if(ui32Status == RXOBJECT)
-    {
+    else if(ui32Status == RXOBJECT) {
         //
         // Getting to this point means that the RX interrupt occurred on
         // message object RXOBJECT, and the message reception is complete.
@@ -248,8 +246,7 @@ CAN0IntHandler(void)
     // Check if the cause is message object TXOBJECT, which we are using
     // for transmitting messages.
     //
-    else if(ui32Status == TXOBJECT)
-    {
+    else if(ui32Status == TXOBJECT) {
         //
         // Getting to this point means that the TX interrupt occurred on
         // message object TXOBJECT, and the message reception is complete.
@@ -277,8 +274,7 @@ CAN0IntHandler(void)
     // Otherwise, something unexpected caused the interrupt.  This should
     // never happen.
     //
-    else
-    {
+    else {
         //
         // Spurious interrupt handling can go here.
         //
@@ -490,8 +486,7 @@ CANErrorHandler(void)
     //
     // CAN controller has entered a Bus Off state.
     //
-    if(g_ui32ErrFlag & CAN_STATUS_BUS_OFF)
-    {
+    if(g_ui32ErrFlag & CAN_STATUS_BUS_OFF) {
         //
         // Handle Error Condition here
         //
@@ -507,8 +502,7 @@ CANErrorHandler(void)
     //
     // CAN controller error level has reached warning level.
     //
-    if(g_ui32ErrFlag & CAN_STATUS_EWARN)
-    {
+    if(g_ui32ErrFlag & CAN_STATUS_EWARN) {
         //
         // Handle Error Condition here
         //
@@ -523,8 +517,7 @@ CANErrorHandler(void)
     //
     // CAN controller error level has reached error passive level.
     //
-    if(g_ui32ErrFlag & CAN_STATUS_EPASS)
-    {
+    if(g_ui32ErrFlag & CAN_STATUS_EPASS) {
         //
         // Handle Error Condition here
         //
@@ -538,8 +531,7 @@ CANErrorHandler(void)
     //
     // A message was received successfully since the last read of this status.
     //
-    if(g_ui32ErrFlag & CAN_STATUS_RXOK)
-    {
+    if(g_ui32ErrFlag & CAN_STATUS_RXOK) {
         //
         // Handle Error Condition here
         //
@@ -554,8 +546,7 @@ CANErrorHandler(void)
     // A message was transmitted successfully since the last read of this
     // status.
     //
-    if(g_ui32ErrFlag & CAN_STATUS_TXOK)
-    {
+    if(g_ui32ErrFlag & CAN_STATUS_TXOK) {
         //
         // Handle Error Condition here
         //
@@ -569,8 +560,7 @@ CANErrorHandler(void)
     //
     // This is the mask for the last error code field.
     //
-    if(g_ui32ErrFlag & CAN_STATUS_LEC_MSK)
-    {
+    if(g_ui32ErrFlag & CAN_STATUS_LEC_MSK) {
         //
         // Handle Error Condition here
         //
@@ -584,8 +574,7 @@ CANErrorHandler(void)
     //
     // A bit stuffing error has occurred.
     //
-    if(g_ui32ErrFlag & CAN_STATUS_LEC_STUFF)
-    {
+    if(g_ui32ErrFlag & CAN_STATUS_LEC_STUFF) {
         //
         // Handle Error Condition here
         //
@@ -599,8 +588,7 @@ CANErrorHandler(void)
     //
     // A formatting error has occurred.
     //
-    if(g_ui32ErrFlag & CAN_STATUS_LEC_FORM)
-    {
+    if(g_ui32ErrFlag & CAN_STATUS_LEC_FORM) {
         //
         // Handle Error Condition here
         //
@@ -614,8 +602,7 @@ CANErrorHandler(void)
     //
     // An acknowledge error has occurred.
     //
-    if(g_ui32ErrFlag & CAN_STATUS_LEC_ACK)
-    {
+    if(g_ui32ErrFlag & CAN_STATUS_LEC_ACK) {
         //
         // Handle Error Condition here
         //
@@ -629,8 +616,7 @@ CANErrorHandler(void)
     //
     // The bus remained a bit level of 1 for longer than is allowed.
     //
-    if(g_ui32ErrFlag & CAN_STATUS_LEC_BIT1)
-    {
+    if(g_ui32ErrFlag & CAN_STATUS_LEC_BIT1) {
         //
         // Handle Error Condition here
         //
@@ -644,8 +630,7 @@ CANErrorHandler(void)
     //
     // The bus remained a bit level of 0 for longer than is allowed.
     //
-    if(g_ui32ErrFlag & CAN_STATUS_LEC_BIT0)
-    {
+    if(g_ui32ErrFlag & CAN_STATUS_LEC_BIT0) {
         //
         // Handle Error Condition here
         //
@@ -659,8 +644,7 @@ CANErrorHandler(void)
     //
     // A CRC error has occurred.
     //
-    if(g_ui32ErrFlag & CAN_STATUS_LEC_CRC)
-    {
+    if(g_ui32ErrFlag & CAN_STATUS_LEC_CRC) {
         //
         // Handle Error Condition here
         //
@@ -674,8 +658,7 @@ CANErrorHandler(void)
     //
     // This is the mask for the CAN Last Error Code (LEC).
     //
-    if(g_ui32ErrFlag & CAN_STATUS_LEC_MASK)
-    {
+    if(g_ui32ErrFlag & CAN_STATUS_LEC_MASK) {
         //
         // Handle Error Condition here
         //
@@ -690,8 +673,7 @@ CANErrorHandler(void)
     // If there are any bits still set in g_ui32ErrFlag then something unhandled
     // has happened. Print the value of g_ui32ErrFlag.
     //
-    if(g_ui32ErrFlag !=0)
-    {
+    if(g_ui32ErrFlag !=0) {
         UARTprintf("    Unhandled ERROR: %x \n",g_ui32ErrFlag);
     }
 }
@@ -744,14 +726,12 @@ main(void)
     //
     // Poll UART for data, transmit across CAN when something is entered
     //
-    while(1)
-    {
+    while(1) {
         //
         // If the flag is set, that means that the RX interrupt occurred and
         // there is a message ready to be read from the CAN
         //
-        if(g_bRXFlag)
-        {
+        if(g_bRXFlag) {
             //
             // Reuse the same message object that was used earlier to configure
             // the CAN for receiving messages.  A buffer for storing the
@@ -778,8 +758,7 @@ main(void)
             // Check to see if there is an indication that some messages were
             // lost.
             //
-            if(g_sCAN0RxMessage.ui32Flags & MSG_OBJ_DATA_LOST)
-            {
+            if(g_sCAN0RxMessage.ui32Flags & MSG_OBJ_DATA_LOST) {
                 UARTprintf("\nCAN message loss detected\n");
             }
 
@@ -789,7 +768,7 @@ main(void)
             UARTprintf("%c", g_ui8RXMsgData);
 
             //
-            // Print the received character to the display, 
+            // Print the received character to the display,
             // clear line with spaces
             //
             GrStringDrawCentered(&g_sContext, "RX Data", -1,
@@ -799,22 +778,18 @@ main(void)
                                  1, GrContextDpyWidthGet(&g_sContext) / 2,
                                  SCREENLINE3, true);
             GrFlush(&g_sContext);
-        }
-        else
-        {
+        } else {
             //
             // Error Handling
             //
-            if(g_ui32ErrFlag != 0)
-            {
+            if(g_ui32ErrFlag != 0) {
                 CANErrorHandler();
             }
 
             //
             // See if there is something new to transmit
             //
-            while(ROM_UARTCharsAvail(UART0_BASE))
-            {
+            while(ROM_UARTCharsAvail(UART0_BASE)) {
                 //
                 // Read the next character from the UART terminal
                 //

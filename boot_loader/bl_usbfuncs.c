@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -60,15 +60,14 @@ static void USBDGetInterface(tUSBRequest *pUSBRequest);
 static void USBDSetInterface(tUSBRequest *pUSBRequest);
 static void USBDEP0StateTx(void);
 static int32_t USBDStringIndexFromRequest(uint16_t ui16Lang,
-                                          uint16_t ui16Index);
+        uint16_t ui16Index);
 
 //*****************************************************************************
 //
 // This structure holds the full state for the device enumeration.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // The devices current address, this also has a change pending bit in the
     // MSB of this value specified by DEV_ADDR_PENDING.
@@ -127,8 +126,7 @@ tDeviceState;
 // The states for endpoint zero during enumeration.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     //
     // The USB device is waiting on a request from the host controller on
     // endpoint zero.
@@ -232,8 +230,7 @@ static volatile tEP0State g_eUSBDEP0State = USB_STATE_IDLE;
 // Function table to handle standard requests.
 //
 //*****************************************************************************
-static const tStdRequest g_ppfnUSBDStdRequests[] =
-{
+static const tStdRequest g_ppfnUSBDStdRequests[] = {
     USBDGetStatus,
     USBDClearFeature,
     0,
@@ -309,8 +306,7 @@ USBEndpoint0DataGet(uint8_t *pui8Data, uint32_t *pui32Size)
     //
     // Don't allow reading of data if the RxPktRdy bit is not set.
     //
-    if((HWREGH(USB0_BASE + USB_O_CSRL0) & USB_CSRL0_RXRDY) == 0)
-    {
+    if((HWREGH(USB0_BASE + USB_O_CSRL0) & USB_CSRL0_RXRDY) == 0) {
         //
         // Can't read the data because none is available.
         //
@@ -340,8 +336,7 @@ USBEndpoint0DataGet(uint8_t *pui8Data, uint32_t *pui32Size)
     //
     // Read the data out of the FIFO.
     //
-    for(; ui32ByteCount > 0; ui32ByteCount--)
-    {
+    for(; ui32ByteCount > 0; ui32ByteCount--) {
         //
         // Read a byte at a time from the FIFO.
         //
@@ -402,16 +397,14 @@ USBEndpoint0DataPut(uint8_t *pui8Data, uint32_t ui32Size)
     //
     // Don't allow transmit of data if the TxPktRdy bit is already set.
     //
-    if(HWREGB(USB0_BASE + USB_O_CSRL0 + USB_EP_0) & USB_CSRL0_TXRDY)
-    {
+    if(HWREGB(USB0_BASE + USB_O_CSRL0 + USB_EP_0) & USB_CSRL0_TXRDY) {
         return(-1);
     }
 
     //
     // Write the data to the FIFO.
     //
-    for(; ui32Size > 0; ui32Size--)
-    {
+    for(; ui32Size > 0; ui32Size--) {
         HWREGB(USB0_BASE + USB_O_FIFO0 + (USB_EP_0 >> 2)) = *pui8Data++;
     }
 
@@ -450,8 +443,7 @@ USBEndpoint0DataSend(uint32_t ui32TransType)
     //
     // Don't allow transmit of data if the TxPktRdy bit is already set.
     //
-    if(HWREGB(USB0_BASE + USB_O_CSRL0 + USB_EP_0) & USB_CSRL0_TXRDY)
-    {
+    if(HWREGB(USB0_BASE + USB_O_CSRL0 + USB_EP_0) & USB_CSRL0_TXRDY) {
         return(-1);
     }
 
@@ -505,20 +497,20 @@ USBConfigurePins(void)
     // address space.
     //
     while((HWREG(SYSCTL_PRGPIO) &
-          (0x0 |
+            (0x0 |
 #if defined(USB_VBUS_CONFIG)
-           USB_VBUS_PERIPH |
+             USB_VBUS_PERIPH |
 #endif
 #if defined(USB_ID_CONFIG)
-           USB_ID_PERIPH |
+             USB_ID_PERIPH |
 #endif
 #if defined(USB_DP_CONFIG)
-           USB_DP_PERIPH |
+             USB_DP_PERIPH |
 #endif
 #if defined(USB_DM_CONFIG)
-           USB_DM_PERIPH
+             USB_DM_PERIPH
 #endif
-        )) !=
+            )) !=
             (0x0 |
 #if defined(USB_VBUS_CONFIG)
              USB_VBUS_PERIPH |
@@ -534,13 +526,13 @@ USBConfigurePins(void)
 #endif
             ));
 
-    // 
+    //
     // Setup the pins based on bl_config.h
     //
 #if defined(USB_VBUS_CONFIG)
     //
     // Set the VBUS pin to be an analog input.
-    // 
+    //
     HWREG(USB_VBUS_PORT + GPIO_O_DIR) &= ~(1 << USB_VBUS_PIN);
     HWREG(USB_VBUS_PORT + GPIO_O_AMSEL) |= (1 << USB_VBUS_PIN);
 #endif
@@ -548,15 +540,15 @@ USBConfigurePins(void)
 #if defined(USB_ID_CONFIG)
     //
     // Set the ID pin to be an analog input.
-    // 
+    //
     HWREG(USB_ID_PORT + GPIO_O_DIR) &= ~(1 << USB_ID_PIN);
     HWREG(USB_ID_PORT + GPIO_O_AMSEL) |= (1 << USB_ID_PIN);
 #endif
-    
+
 #if defined(USB_DP_CONFIG)
     //
     // Set the DP pin to be an analog input.
-    // 
+    //
     HWREG(USB_DP_PORT + GPIO_O_DIR) &= ~(1 << USB_DP_PIN);
     HWREG(USB_DP_PORT + GPIO_O_AMSEL) |= (1 << USB_DP_PIN);
 #endif
@@ -564,7 +556,7 @@ USBConfigurePins(void)
 #if defined(USB_DM_CONFIG)
     //
     // Set the DM pin to be an analog input.
-    // 
+    //
     HWREG(USB_DM_PORT + GPIO_O_DIR) &= ~(1 << USB_DM_PIN);
     HWREG(USB_DM_PORT + GPIO_O_AMSEL) |= (1 << USB_DM_PIN);
 #endif
@@ -606,8 +598,7 @@ USBBLInit(void)
     //
     // Wait for the peripheral ready
     //
-    while((HWREG(SYSCTL_PRUSB) & SYSCTL_PRUSB_R0) != SYSCTL_PRUSB_R0)
-    {
+    while((HWREG(SYSCTL_PRUSB) & SYSCTL_PRUSB_R0) != SYSCTL_PRUSB_R0) {
     }
 
 #if defined(TARGET_IS_TM4C129_RA0) ||                                         \
@@ -796,37 +787,30 @@ USBDReadAndDispatchRequest(void)
     //
     USBEndpoint0DataGet(g_pui8DataBufferIn, &ui32Size);
 
-    if(!ui32Size)
-    {
+    if(!ui32Size) {
         return;
     }
 
     //
     // See if this is a standard request or not.
     //
-    if((pRequest->bmRequestType & USB_RTYPE_TYPE_M) != USB_RTYPE_STANDARD)
-    {
+    if((pRequest->bmRequestType & USB_RTYPE_TYPE_M) != USB_RTYPE_STANDARD) {
         //
         // Pass this non-standard request on to the DFU handler
         //
         HandleRequests(pRequest);
-    }
-    else
-    {
+    } else {
         //
         // Assure that the jump table is not out of bounds.
         //
         if((pRequest->bRequest <
-            (sizeof(g_ppfnUSBDStdRequests) / sizeof(tStdRequest))) &&
-           (g_ppfnUSBDStdRequests[pRequest->bRequest] != 0))
-        {
+                (sizeof(g_ppfnUSBDStdRequests) / sizeof(tStdRequest))) &&
+                (g_ppfnUSBDStdRequests[pRequest->bRequest] != 0)) {
             //
             // Jump table to the appropriate handler.
             //
             g_ppfnUSBDStdRequests[pRequest->bRequest](pRequest);
-        }
-        else
-        {
+        } else {
             //
             // If there is no handler then stall this request.
             //
@@ -895,14 +879,12 @@ USBDeviceEnumHandler(void)
     //
     // What state are we currently in?
     //
-    switch(g_eUSBDEP0State)
-    {
+    switch(g_eUSBDEP0State) {
         //
         // Handle the status state, this is a transitory state from
         // USB_STATE_TX or USB_STATE_RX back to USB_STATE_IDLE.
         //
-        case USB_STATE_STATUS:
-        {
+        case USB_STATE_STATUS: {
             //
             // Just go back to the idle state.
             //
@@ -911,8 +893,7 @@ USBDeviceEnumHandler(void)
             //
             // If there is a pending address change then set the address.
             //
-            if(g_sUSBDeviceState.ui32DevAddress & DEV_ADDR_PENDING)
-            {
+            if(g_sUSBDeviceState.ui32DevAddress & DEV_ADDR_PENDING) {
                 //
                 // Clear the pending address change and set the address.
                 //
@@ -925,8 +906,7 @@ USBDeviceEnumHandler(void)
             // If a new packet is already pending, we need to read it
             // and handle whatever request it contains.
             //
-            if(ui32EPStatus & USB_DEV_EP0_OUT_PKTRDY)
-            {
+            if(ui32EPStatus & USB_DEV_EP0_OUT_PKTRDY) {
                 //
                 // Process the newly arrived packet.
                 //
@@ -938,13 +918,11 @@ USBDeviceEnumHandler(void)
         //
         // In the IDLE state the code is waiting to receive data from the host.
         //
-        case USB_STATE_IDLE:
-        {
+        case USB_STATE_IDLE: {
             //
             // Is there a packet waiting for us?
             //
-            if(ui32EPStatus & USB_DEV_EP0_OUT_PKTRDY)
-            {
+            if(ui32EPStatus & USB_DEV_EP0_OUT_PKTRDY) {
                 //
                 // Yes - process it.
                 //
@@ -957,8 +935,7 @@ USBDeviceEnumHandler(void)
         // Data is still being sent to the host so handle this in the
         // EP0StateTx() function.
         //
-        case USB_STATE_TX:
-        {
+        case USB_STATE_TX: {
             USBDEP0StateTx();
             break;
         }
@@ -967,22 +944,18 @@ USBDeviceEnumHandler(void)
         // Handle the receive state for commands that are receiving data on
         // endpoint zero.
         //
-        case USB_STATE_RX:
-        {
+        case USB_STATE_RX: {
             uint32_t ui32DataSize;
 
             //
             // Set the number of bytes to get out of this next packet.
             //
-            if(g_sUSBDeviceState.ui32EP0DataRemain > EP0_MAX_PACKET_SIZE)
-            {
+            if(g_sUSBDeviceState.ui32EP0DataRemain > EP0_MAX_PACKET_SIZE) {
                 //
                 // Don't send more than EP0_MAX_PACKET_SIZE bytes.
                 //
                 ui32DataSize = EP0_MAX_PACKET_SIZE;
-            }
-            else
-            {
+            } else {
                 //
                 // There was space so send the remaining bytes.
                 //
@@ -1000,8 +973,7 @@ USBDeviceEnumHandler(void)
             // EP0_MAX_PACKET_SIZE remaining then there still needs to be
             // null packet sent before this is complete.
             //
-            if(g_sUSBDeviceState.ui32EP0DataRemain < EP0_MAX_PACKET_SIZE)
-            {
+            if(g_sUSBDeviceState.ui32EP0DataRemain < EP0_MAX_PACKET_SIZE) {
                 //
                 // Need to ack the data on end point 0 in this case
                 // without setting data end.
@@ -1016,8 +988,7 @@ USBDeviceEnumHandler(void)
                 //
                 // If there is a receive callback then call it.
                 //
-                if(g_sUSBDeviceState.ui32OUTDataSize != 0)
-                {
+                if(g_sUSBDeviceState.ui32OUTDataSize != 0) {
                     //
                     // Call the receive handler to handle the data
                     // that was received.
@@ -1030,9 +1001,7 @@ USBDeviceEnumHandler(void)
                     //
                     g_sUSBDeviceState.ui32OUTDataSize = 0;
                 }
-            }
-            else
-            {
+            } else {
                 //
                 // Need to ack the data on end point 0 in this case
                 // without setting data end.
@@ -1056,13 +1025,11 @@ USBDeviceEnumHandler(void)
         // The device stalled endpoint zero so check if the stall needs to be
         // cleared once it has been successfully sent.
         //
-        case USB_STATE_STALL:
-        {
+        case USB_STATE_STALL: {
             //
             // If we sent a stall then acknowledge this interrupt.
             //
-            if(ui32EPStatus & USB_DEV_EP0_SENT_STALL)
-            {
+            if(ui32EPStatus & USB_DEV_EP0_SENT_STALL) {
                 //
                 // Clear the stall condition.
                 //
@@ -1079,8 +1046,7 @@ USBDeviceEnumHandler(void)
         //
         // Halt on an unknown state, but only in DEBUG mode builds.
         //
-        default:
-        {
+        default: {
 #ifdef DEBUG
             while(1);
 #endif
@@ -1149,13 +1115,11 @@ USBDGetStatus(tUSBRequest *pUSBRequest)
     //
     // Determine what type of status was requested.
     //
-    switch(pUSBRequest->bmRequestType & USB_RTYPE_RECIPIENT_M)
-    {
+    switch(pUSBRequest->bmRequestType & USB_RTYPE_RECIPIENT_M) {
         //
         // This was a Device Status request.
         //
-        case USB_RTYPE_DEVICE:
-        {
+        case USB_RTYPE_DEVICE: {
             //
             // Return the current status for the device.
             //
@@ -1167,8 +1131,7 @@ USBDGetStatus(tUSBRequest *pUSBRequest)
         //
         // This was a Interface status request.
         //
-        case USB_RTYPE_INTERFACE:
-        {
+        case USB_RTYPE_INTERFACE: {
             //
             // Interface status always returns 0.
             //
@@ -1182,8 +1145,7 @@ USBDGetStatus(tUSBRequest *pUSBRequest)
         // we have none) so set a stall.
         //
         case USB_RTYPE_ENDPOINT:
-        default:
-        {
+        default: {
             //
             // Anything else causes a stall condition to indicate that the
             // command was not supported.
@@ -1230,18 +1192,15 @@ USBDClearFeature(tUSBRequest *pUSBRequest)
     //
     // Determine what type of status was requested.
     //
-    switch(pUSBRequest->bmRequestType & USB_RTYPE_RECIPIENT_M)
-    {
+    switch(pUSBRequest->bmRequestType & USB_RTYPE_RECIPIENT_M) {
         //
         // This is a clear feature request at the device level.
         //
-        case USB_RTYPE_DEVICE:
-        {
+        case USB_RTYPE_DEVICE: {
             //
             // Only remote wake is clearable by this function.
             //
-            if(USB_FEATURE_REMOTE_WAKE & pUSBRequest->wValue)
-            {
+            if(USB_FEATURE_REMOTE_WAKE & pUSBRequest->wValue) {
                 //
                 // Clear the remote wake up state.
                 //
@@ -1251,9 +1210,7 @@ USBDClearFeature(tUSBRequest *pUSBRequest)
                 // Need to ack the data on end point 0.
                 //
                 USBDevEndpoint0DataAck(true);
-            }
-            else
-            {
+            } else {
                 USBBLStallEP0();
             }
             break;
@@ -1263,8 +1220,7 @@ USBDClearFeature(tUSBRequest *pUSBRequest)
         // This is an unknown request or one destined for an invalid endpoint.
         //
         case USB_RTYPE_ENDPOINT:
-        default:
-        {
+        default: {
             USBBLStallEP0();
             return;
         }
@@ -1297,18 +1253,15 @@ USBDSetFeature(tUSBRequest *pUSBRequest)
     //
     // Determine what type of status was requested.
     //
-    switch(pUSBRequest->bmRequestType & USB_RTYPE_RECIPIENT_M)
-    {
+    switch(pUSBRequest->bmRequestType & USB_RTYPE_RECIPIENT_M) {
         //
         // This is a set feature request at the device level.
         //
-        case USB_RTYPE_DEVICE:
-        {
+        case USB_RTYPE_DEVICE: {
             //
             // Only remote wake is setable by this function.
             //
-            if(USB_FEATURE_REMOTE_WAKE & pUSBRequest->wValue)
-            {
+            if(USB_FEATURE_REMOTE_WAKE & pUSBRequest->wValue) {
                 //
                 // Set the remote wakeup state.
                 //
@@ -1318,9 +1271,7 @@ USBDSetFeature(tUSBRequest *pUSBRequest)
                 // Need to ack the data on end point 0.
                 //
                 USBDevEndpoint0DataAck(true);
-            }
-            else
-            {
+            } else {
                 USBBLStallEP0();
             }
             break;
@@ -1330,8 +1281,7 @@ USBDSetFeature(tUSBRequest *pUSBRequest)
         // This is an unknown request or one destined for an invalid endpoint.
         //
         case USB_RTYPE_ENDPOINT:
-        default:
-        {
+        default: {
             USBBLStallEP0();
             return;
         }
@@ -1410,13 +1360,11 @@ USBDGetDescriptor(tUSBRequest *pUSBRequest)
     //
     // Which descriptor are we being asked for?
     //
-    switch(pUSBRequest->wValue >> 8)
-    {
+    switch(pUSBRequest->wValue >> 8) {
         //
         // This request was for a device descriptor.
         //
-        case USB_DTYPE_DEVICE:
-        {
+        case USB_DTYPE_DEVICE: {
             //
             // Return the externally provided device descriptor.
             //
@@ -1434,8 +1382,7 @@ USBDGetDescriptor(tUSBRequest *pUSBRequest)
         //
         // This request was for a configuration descriptor.
         //
-        case USB_DTYPE_CONFIGURATION:
-        {
+        case USB_DTYPE_CONFIGURATION: {
             uint8_t ui8Index;
 
             //
@@ -1446,8 +1393,7 @@ USBDGetDescriptor(tUSBRequest *pUSBRequest)
             //
             // Is this valid?
             //
-            if(ui8Index != 0)
-            {
+            if(ui8Index != 0) {
                 //
                 // This is an invalid configuration index.  Stall EP0 to
                 // indicate a request error.
@@ -1455,9 +1401,7 @@ USBDGetDescriptor(tUSBRequest *pUSBRequest)
                 USBBLStallEP0();
                 g_sUSBDeviceState.pui8EP0Data = 0;
                 g_sUSBDeviceState.ui32EP0DataRemain = 0;
-            }
-            else
-            {
+            } else {
                 //
                 // Start by sending data from the beginning of the first
                 // descriptor.
@@ -1479,8 +1423,7 @@ USBDGetDescriptor(tUSBRequest *pUSBRequest)
         //
         // This request was for a string descriptor.
         //
-        case USB_DTYPE_STRING:
-        {
+        case USB_DTYPE_STRING: {
             int32_t i32Index;
 
             //
@@ -1494,8 +1437,7 @@ USBDGetDescriptor(tUSBRequest *pUSBRequest)
             // If the mapping function returned -1 then stall the request to
             // indicate that the request was not valid.
             //
-            if(i32Index == -1)
-            {
+            if(i32Index == -1) {
                 USBBLStallEP0();
                 break;
             }
@@ -1519,8 +1461,7 @@ USBDGetDescriptor(tUSBRequest *pUSBRequest)
         // Any other request is not handled by the default enumeration handler
         // so see if it needs to be passed on to another handler.
         //
-        default:
-        {
+        default: {
             //
             // All other requests are not handled.
             //
@@ -1533,8 +1474,7 @@ USBDGetDescriptor(tUSBRequest *pUSBRequest)
     //
     // If there was no stall, ACK the data and see if data needs to be sent.
     //
-    if(ui32Stall == 0)
-    {
+    if(ui32Stall == 0) {
         //
         // Need to ack the data on end point 0 in this case without
         // setting data end.
@@ -1544,14 +1484,12 @@ USBDGetDescriptor(tUSBRequest *pUSBRequest)
         //
         // If this request has data to send, then send it.
         //
-        if(g_sUSBDeviceState.pui8EP0Data)
-        {
+        if(g_sUSBDeviceState.pui8EP0Data) {
             //
             // If there is more data to send than is requested then just
             // send the requested amount of data.
             //
-            if(g_sUSBDeviceState.ui32EP0DataRemain > pUSBRequest->wLength)
-            {
+            if(g_sUSBDeviceState.ui32EP0DataRemain > pUSBRequest->wLength) {
                 g_sUSBDeviceState.ui32EP0DataRemain = pUSBRequest->wLength;
             }
 
@@ -1600,8 +1538,7 @@ USBDStringIndexFromRequest(uint16_t ui16Lang, uint16_t ui16Index)
     // requested.  This is the special case since descriptor 0 contains the
     // language codes supported by the device.
     //
-    if(ui16Index == 0)
-    {
+    if(ui16Index == 0) {
         return(0);
     }
 
@@ -1628,8 +1565,7 @@ USBDStringIndexFromRequest(uint16_t ui16Lang, uint16_t ui16Index)
     // number of strings per language.  We expect the string table to contain
     // (1 + (strings_per_language * languages)) entries.
     //
-    if((1 + (ui32NumStringsPerLang * ui32NumLangs)) != NUM_STRING_DESCRIPTORS)
-    {
+    if((1 + (ui32NumStringsPerLang * ui32NumLangs)) != NUM_STRING_DESCRIPTORS) {
         return(-1);
     }
 
@@ -1644,13 +1580,11 @@ USBDStringIndexFromRequest(uint16_t ui16Lang, uint16_t ui16Index)
     // Look through the supported languages looking for the one we were asked
     // for.
     //
-    for(ui32Loop = 0; ui32Loop < ui32NumLangs; ui32Loop++)
-    {
+    for(ui32Loop = 0; ui32Loop < ui32NumLangs; ui32Loop++) {
         //
         // Have we found the requested language?
         //
-        if(pLang->wLANGID[ui32Loop] == ui16Lang)
-        {
+        if(pLang->wLANGID[ui32Loop] == ui16Lang) {
             //
             // Yes - calculate the index of the descriptor to send.
             //
@@ -1709,12 +1643,9 @@ USBDGetConfiguration(tUSBRequest *pUSBRequest)
     // If we still have an address pending then the device is still not
     // configured.
     //
-    if(g_sUSBDeviceState.ui32DevAddress & DEV_ADDR_PENDING)
-    {
+    if(g_sUSBDeviceState.ui32DevAddress & DEV_ADDR_PENDING) {
         ui8Value = 0;
-    }
-    else
-    {
+    } else {
         ui8Value = (uint8_t)g_sUSBDeviceState.ui32Configuration;
     }
 
@@ -1747,16 +1678,13 @@ USBDSetConfiguration(tUSBRequest *pUSBRequest)
     // Cannot set the configuration to one that does not exist so check the
     // enumeration structure to see how many valid configurations are present.
     //
-    if(pUSBRequest->wValue > 1)
-    {
+    if(pUSBRequest->wValue > 1) {
         //
         // The passed configuration number is not valid.  Stall the endpoint to
         // signal the error to the host.
         //
         USBBLStallEP0();
-    }
-    else
-    {
+    } else {
         //
         // Need to ack the data on end point 0.
         //
@@ -1772,8 +1700,7 @@ USBDSetConfiguration(tUSBRequest *pUSBRequest)
         // not currently configured), configure the endpoints (other than EP0)
         // appropriately.
         //
-        if(g_sUSBDeviceState.ui32Configuration)
-        {
+        if(g_sUSBDeviceState.ui32Configuration) {
             //
             // Set the power state
             //
@@ -1813,24 +1740,18 @@ USBDGetInterface(tUSBRequest *pUSBRequest)
     // If we still have an address pending then the device is still not
     // configured.
     //
-    if(g_sUSBDeviceState.ui32DevAddress & DEV_ADDR_PENDING)
-    {
+    if(g_sUSBDeviceState.ui32DevAddress & DEV_ADDR_PENDING) {
         ui8Value = 0;
-    }
-    else
-    {
+    } else {
         //
         // Is the interface number valid?
         //
-        if(pUSBRequest->wIndex == 0)
-        {
+        if(pUSBRequest->wIndex == 0) {
             //
             // Read the current alternate setting for the required interface.
             //
             ui8Value = g_sUSBDeviceState.ui8AltSetting;
-        }
-        else
-        {
+        } else {
             //
             // An invalid interface number was specified.
             //
@@ -1866,15 +1787,12 @@ USBDGetInterface(tUSBRequest *pUSBRequest)
 static void
 USBDSetInterface(tUSBRequest *pUSBRequest)
 {
-    if((pUSBRequest->wIndex == 0) && (pUSBRequest->wValue == 0))
-    {
+    if((pUSBRequest->wIndex == 0) && (pUSBRequest->wValue == 0)) {
         //
         // We were passed a valid interface number so acknowledge the request.
         //
         USBDevEndpoint0DataAck(true);
-    }
-    else
-    {
+    } else {
         //
         // The values passed were not valid so stall endpoint 0.
         //
@@ -1908,8 +1826,7 @@ USBDEP0StateTx(void)
     //
     // Limit individual transfers to 64 bytes.
     //
-    if(ui32NumBytes > EP0_MAX_PACKET_SIZE)
-    {
+    if(ui32NumBytes > EP0_MAX_PACKET_SIZE) {
         ui32NumBytes = EP0_MAX_PACKET_SIZE;
     }
 
@@ -1933,17 +1850,14 @@ USBDEP0StateTx(void)
     //
     // If this is exactly 64 then don't set the last packet yet.
     //
-    if(ui32NumBytes == EP0_MAX_PACKET_SIZE)
-    {
+    if(ui32NumBytes == EP0_MAX_PACKET_SIZE) {
         //
         // There is more data to send or exactly 64 bytes were sent, this
         // means that there is either more data coming or a null packet needs
         // to be sent to complete the transaction.
         //
         USBEndpoint0DataSend(USB_TRANS_IN);
-    }
-    else
-    {
+    } else {
         //
         // Now go to the status state and wait for the transmit to complete.
         //

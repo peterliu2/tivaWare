@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2005-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -60,8 +60,7 @@
 // A mapping of GPIO port address to interrupt number.
 //
 //*****************************************************************************
-static const uint32_t g_ppui32GPIOIntMapBlizzard[][2] =
-{
+static const uint32_t g_ppui32GPIOIntMapBlizzard[][2] = {
     { GPIO_PORTA_BASE, INT_GPIOA_TM4C123 },
     { GPIO_PORTA_AHB_BASE, INT_GPIOA_TM4C123 },
     { GPIO_PORTB_BASE, INT_GPIOB_TM4C123 },
@@ -90,8 +89,7 @@ static const uint32_t g_ppui32GPIOIntMapBlizzard[][2] =
 static const uint_fast32_t g_ui32GPIOIntMapBlizzardRows =
     sizeof(g_ppui32GPIOIntMapBlizzard) / sizeof(g_ppui32GPIOIntMapBlizzard[0]);
 
-static const uint32_t g_ppui32GPIOIntMapSnowflake[][2] =
-{
+static const uint32_t g_ppui32GPIOIntMapSnowflake[][2] = {
     { GPIO_PORTA_BASE, INT_GPIOA_TM4C129 },
     { GPIO_PORTA_AHB_BASE, INT_GPIOA_TM4C129 },
     { GPIO_PORTB_BASE, INT_GPIOB_TM4C129 },
@@ -127,8 +125,7 @@ static const uint_fast32_t g_ui32GPIOIntMapSnowflakeRows =
 // are provided.
 //
 //*****************************************************************************
-static const uint32_t g_pui32GPIOBaseAddrs[] =
-{
+static const uint32_t g_pui32GPIOBaseAddrs[] = {
     GPIO_PORTA_BASE, GPIO_PORTA_AHB_BASE,
     GPIO_PORTB_BASE, GPIO_PORTB_AHB_BASE,
     GPIO_PORTC_BASE, GPIO_PORTC_AHB_BASE,
@@ -222,8 +219,7 @@ _GPIOIntNumberGet(uint32_t ui32Port)
     ppui32GPIOIntMap = g_ppui32GPIOIntMapBlizzard;
     ui32Rows = g_ui32GPIOIntMapBlizzardRows;
 
-    if(CLASS_IS_TM4C129)
-    {
+    if(CLASS_IS_TM4C129) {
         ppui32GPIOIntMap = g_ppui32GPIOIntMapSnowflake;
         ui32Rows = g_ui32GPIOIntMapSnowflakeRows;
     }
@@ -232,13 +228,11 @@ _GPIOIntNumberGet(uint32_t ui32Port)
     // Loop through the table that maps I2C base addresses to interrupt
     // numbers.
     //
-    for(ui32Idx = 0; ui32Idx < ui32Rows; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < ui32Rows; ui32Idx++) {
         //
         // See if this base address matches.
         //
-        if(ppui32GPIOIntMap[ui32Idx][0] == ui32Port)
-        {
+        if(ppui32GPIOIntMap[ui32Idx][0] == ui32Port) {
             //
             // Return the corresponding interrupt number.
             //
@@ -574,10 +568,8 @@ GPIOPadConfigSet(uint32_t ui32Port, uint8_t ui8Pins,
     // harmless write on older devices. Walk pins 0-7 and clear or set the
     // provided PC[EDMn] encoding.
     //
-    for(ui8Bit = 0; ui8Bit < 8; ui8Bit++)
-    {
-        if(ui8Pins & (1 << ui8Bit))
-        {
+    for(ui8Bit = 0; ui8Bit < 8; ui8Bit++) {
+        if(ui8Pins & (1 << ui8Bit)) {
             HWREG(ui32Port + GPIO_O_PC) = (HWREG(ui32Port + GPIO_O_PC) &
                                            ~(0x3 << (2 * ui8Bit)));
             HWREG(ui32Port + GPIO_O_PC) |= (((ui32Strength >> 5) & 0x3) <<
@@ -716,8 +708,7 @@ GPIOPadConfigGet(uint32_t ui32Port, uint8_t ui8Pin,
     ui32PinType |= ((HWREG(ui32Port + GPIO_O_PUR) & ui8Pin) ? 2 : 0);
     ui32PinType |= ((HWREG(ui32Port + GPIO_O_PDR) & ui8Pin) ? 4 : 0);
     ui32PinType |= ((HWREG(ui32Port + GPIO_O_DEN) & ui8Pin) ? 8 : 0);
-    if(HWREG(ui32Port + GPIO_O_WAKEPEN) & ui8Pin)
-    {
+    if(HWREG(ui32Port + GPIO_O_WAKEPEN) & ui8Pin) {
         ui32PinType |= ((HWREG(ui32Port + GPIO_O_WAKELVL) & ui8Pin) ?
                         0x200 : 0x100);
     }
@@ -840,12 +831,9 @@ GPIOIntStatus(uint32_t ui32Port, bool bMasked)
     //
     // Return the interrupt status.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return(HWREG(ui32Port + GPIO_O_MIS));
-    }
-    else
-    {
+    } else {
         return(HWREG(ui32Port + GPIO_O_RIS));
     }
 }
@@ -1243,7 +1231,7 @@ void GPIOPinTypeComparatorOutput(uint32_t ui32Port, uint8_t ui8Pins)
 //! \param ui8Pins is the bit-packed representation of the pin(s).
 //!
 //! The system control output pin must be properly configured for the DIVSCLK to
-//! function correctly. This function provides the proper configuration for 
+//! function correctly. This function provides the proper configuration for
 //! those pin(s).
 //!
 //! The pin(s) are specified using a bit-packed byte, where each bit that is
@@ -2377,12 +2365,9 @@ GPIOPinConfigure(uint32_t ui32PinConfig)
     // Get the base address of the GPIO module, selecting either the APB or the
     // AHB aperture as appropriate.
     //
-    if(HWREG(SYSCTL_GPIOHBCTL) & (1 << ui32Base))
-    {
+    if(HWREG(SYSCTL_GPIOHBCTL) & (1 << ui32Base)) {
         ui32Base = g_pui32GPIOBaseAddrs[(ui32Base << 1) + 1];
-    }
-    else
-    {
+    } else {
         ui32Base = g_pui32GPIOBaseAddrs[ui32Base << 1];
     }
 

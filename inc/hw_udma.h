@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2007-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -50,9 +50,9 @@
 #define UDMA_CFG                0x400FF004  // DMA Configuration
 #define UDMA_CTLBASE            0x400FF008  // DMA Channel Control Base Pointer
 #define UDMA_ALTBASE            0x400FF00C  // DMA Alternate Channel Control
-                                            // Base Pointer
+// Base Pointer
 #define UDMA_WAITSTAT           0x400FF010  // DMA Channel Wait-on-Request
-                                            // Status
+// Status
 #define UDMA_SWREQ              0x400FF014  // DMA Channel Software Request
 #define UDMA_USEBURSTSET        0x400FF018  // DMA Channel Useburst Set
 #define UDMA_USEBURSTCLR        0x400FF01C  // DMA Channel Useburst Clear
@@ -61,9 +61,9 @@
 #define UDMA_ENASET             0x400FF028  // DMA Channel Enable Set
 #define UDMA_ENACLR             0x400FF02C  // DMA Channel Enable Clear
 #define UDMA_ALTSET             0x400FF030  // DMA Channel Primary Alternate
-                                            // Set
+// Set
 #define UDMA_ALTCLR             0x400FF034  // DMA Channel Primary Alternate
-                                            // Clear
+// Clear
 #define UDMA_PRIOSET            0x400FF038  // DMA Channel Priority Set
 #define UDMA_PRIOCLR            0x400FF03C  // DMA Channel Priority Clear
 #define UDMA_ERRCLR             0x400FF04C  // DMA Bus Error Clear
@@ -92,7 +92,7 @@
 #define UDMA_STAT_STATE_WR_DSTDAT                                             \
                                 0x00000050  // Writing destination data
 #define UDMA_STAT_STATE_WAIT    0x00000060  // Waiting for uDMA request to
-                                            // clear
+// clear
 #define UDMA_STAT_STATE_WR_CTRL 0x00000070  // Writing channel controller data
 #define UDMA_STAT_STATE_STALL   0x00000080  // Stalled
 #define UDMA_STAT_STATE_DONE    0x00000090  // Done
@@ -121,7 +121,7 @@
 //
 //*****************************************************************************
 #define UDMA_ALTBASE_ADDR_M     0xFFFFFFFF  // Alternate Channel Address
-                                            // Pointer
+// Pointer
 #define UDMA_ALTBASE_ADDR_S     0
 
 //*****************************************************************************
@@ -226,9 +226,9 @@
 //*****************************************************************************
 #define UDMA_CHASGN_M           0xFFFFFFFF  // Channel [n] Assignment Select
 #define UDMA_CHASGN_PRIMARY     0x00000000  // Use the primary channel
-                                            // assignment
+// assignment
 #define UDMA_CHASGN_SECONDARY   0x00000001  // Use the secondary channel
-                                            // assignment
+// assignment
 
 //*****************************************************************************
 //
@@ -331,9 +331,9 @@
 //
 //*****************************************************************************
 #define UDMA_O_SRCENDP          0x00000000  // DMA Channel Source Address End
-                                            // Pointer
+// Pointer
 #define UDMA_O_DSTENDP          0x00000004  // DMA Channel Destination Address
-                                            // End Pointer
+// End Pointer
 #define UDMA_O_CHCTL            0x00000008  // DMA Channel Control Word
 
 //*****************************************************************************
@@ -408,7 +408,7 @@
                                 0x00000006  // Peripheral Scatter-Gather
 #define UDMA_CHCTL_XFERMODE_PER_SGA                                           \
                                 0x00000007  // Alternate Peripheral
-                                            // Scatter-Gather
+// Scatter-Gather
 #define UDMA_CHCTL_XFERSIZE_S   4
 
 #endif // __HW_UDMA_H__

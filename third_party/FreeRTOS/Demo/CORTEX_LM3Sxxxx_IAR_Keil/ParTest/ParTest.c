@@ -99,19 +99,19 @@ void vParTestInitialise( void )
 
 void vParTestSetLED( unsigned portBASE_TYPE uxLED, signed portBASE_TYPE xValue )
 {
-	/* There is only one LED. */
-	( void ) uxLED;
-	
+    /* There is only one LED. */
+    ( void ) uxLED;
+
     GPIOPinWrite( GPIO_PORTF_BASE, GPIO_PIN_0, xValue );
 }
 /*-----------------------------------------------------------*/
 
 unsigned portBASE_TYPE uxParTestGetLED( unsigned portBASE_TYPE uxLED )
 {
-	/* There is only one LED. */
-	( void ) uxLED;
+    /* There is only one LED. */
+    ( void ) uxLED;
 
-	return GPIOPinRead( GPIO_PORTF_BASE, GPIO_PIN_0 );	
+    return GPIOPinRead( GPIO_PORTF_BASE, GPIO_PIN_0 );
 }
 
 

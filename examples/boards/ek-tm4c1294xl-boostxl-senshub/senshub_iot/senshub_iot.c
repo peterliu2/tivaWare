@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -215,7 +215,7 @@ void SensorCloudStatTimerConfig(void)
     //
     ROM_TimerConfigure(TIMER0_BASE, TIMER_CFG_PERIODIC);
     ROM_TimerLoadSet(TIMER0_BASE, TIMER_A, g_ui32SysClock /
-                                           (configTICK_RATE_HZ * 10));
+                     (configTICK_RATE_HZ * 10));
 
     //
     // Setup the interrupts for the timer timeouts.
@@ -260,8 +260,7 @@ vApplicationStackOverflowHook(xTaskHandle *pxTask, char *pcTaskName)
     // on entry to this function, so no processor interrupts will interrupt
     // this loop.
     //
-    while(1)
-    {
+    while(1) {
     }
 }
 
@@ -277,9 +276,9 @@ main(void)
     // Configure the system frequency.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN |
-                                             SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN |
+                                            SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Configure the device pins for this board.
@@ -338,15 +337,13 @@ main(void)
     // Create the virtual com port task.
     // Doing this task first initializes the UART.
     //
-    if(CommandTaskInit() != 0)
-    {
+    if(CommandTaskInit() != 0) {
         //
         // Init returned an error. Print an alert to the user and
         // spin forever.  Wait for reset or user to debug.
         //
         UARTprintf("Virtual COM Port: Task Init Failed!");
-        while(1)
-        {
+        while(1) {
             //
             // Do Nothing.
             //
@@ -356,15 +353,13 @@ main(void)
     //
     // Create the cloud task.
     //
-    if(CloudTaskInit() != 0)
-    {
+    if(CloudTaskInit() != 0) {
         //
         // Print an error message.
         //
         UARTprintf("CloudTask: Init Failed!\n");
 
-        while(1)
-        {
+        while(1) {
             //
             // Do Nothing.
             //
@@ -374,15 +369,13 @@ main(void)
     //
     // Create the TMP006 temperature sensor task.
     //
-    if(TMP006TaskInit() != 0)
-    {
+    if(TMP006TaskInit() != 0) {
         //
         // Init returned an error. Print an alert to the user and
         // spin forever.  Wait for reset or user to debug.
         //
         UARTprintf("TMP006: Task Init Failed!\n");
-        while(1)
-        {
+        while(1) {
             //
             // Do Nothing.
             //
@@ -392,15 +385,13 @@ main(void)
     //
     // Create the SHT21 sensor task.
     //
-    if(SHT21TaskInit() != 0)
-    {
+    if(SHT21TaskInit() != 0) {
         //
         // Init returned an error. Print an alert to the user and
         // spin forever.  Wait for reset or user to debug.
         //
         UARTprintf("SHT21: Task Init Failed!\n");
-        while(1)
-        {
+        while(1) {
             //
             // Do Nothing.
             //
@@ -410,15 +401,13 @@ main(void)
     //
     // Create the CompDCM 9 axis sensor task.
     //
-    if(CompDCMTaskInit() != 0)
-    {
+    if(CompDCMTaskInit() != 0) {
         //
         // Init returned an error. Print an alert to the user and
         // spin forever.  Wait for reset or user to debug.
         //
         UARTprintf("CompDCM: Task Init Failed!\n");
-        while(1)
-        {
+        while(1) {
             //
             // Do Nothing.
             //
@@ -427,15 +416,13 @@ main(void)
     //
     // Create the BMP180 sensor task.
     //
-    if(BMP180TaskInit() != 0)
-    {
+    if(BMP180TaskInit() != 0) {
         //
         // Init returned an error. Print an alert to the user and
         // spin forever.  Wait for reset or user to debug.
         //
         UARTprintf("BMP180: Task Init Failed!\n");
-        while(1)
-        {
+        while(1) {
             //
             // Do Nothing.
             //
@@ -445,15 +432,13 @@ main(void)
     //
     // Create the ISL29023 sensor task.
     //
-    if(ISL29023TaskInit() != 0)
-    {
+    if(ISL29023TaskInit() != 0) {
         //
         // Init returned an error. Print an alert to the user and
         // spin forever.  Wait for reset or user to debug.
         //
         UARTprintf("ISL29023: Task Init Failed!\n");
-        while(1)
-        {
+        while(1) {
             //
             // Do Nothing.
             //
@@ -463,8 +448,7 @@ main(void)
     //
     // Verify that the semaphores were created correctly.
     //
-    if((g_xI2CSemaphore == NULL) || (g_xCloudDataSemaphore == NULL))
-    {
+    if((g_xI2CSemaphore == NULL) || (g_xCloudDataSemaphore == NULL)) {
         //
         // I2C or CloudData semaphore was not created successfully.
         // Print an error message and wait for user to debug or reset.
@@ -473,8 +457,7 @@ main(void)
         UARTprintf("I2C Semaphore: 0x%X\t\tCloudData Semaphore: 0x%X",
                    (uint32_t) g_xI2CSemaphore,
                    (uint32_t) g_xCloudDataSemaphore);
-        while(1)
-        {
+        while(1) {
             //
             // Do Nothing.
             //
@@ -506,8 +489,7 @@ main(void)
     // forever.
     //
     UARTprintf("RTOS scheduler returned unexpectedly.\n");
-    while(1)
-    {
+    while(1) {
         //
         // Do Nothing.
         //

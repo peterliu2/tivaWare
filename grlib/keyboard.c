@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Graphics Library.
 //
 //*****************************************************************************
@@ -36,8 +36,7 @@
 //
 //*****************************************************************************
 #define MAX_KEYS_US_EN_LOWER    34
-const tKeyText g_psUSEnglishLower[MAX_KEYS_US_EN_LOWER] =
-{
+const tKeyText g_psUSEnglishLower[MAX_KEYS_US_EN_LOWER] = {
     //
     // Row 1
     //
@@ -155,8 +154,7 @@ const tKeyText g_psUSEnglishLower[MAX_KEYS_US_EN_LOWER] =
 };
 
 #define MAX_KEYS_US_EN_UPPER    34
-const tKeyText g_psUSEnglishUpper[MAX_KEYS_US_EN_UPPER] =
-{
+const tKeyText g_psUSEnglishUpper[MAX_KEYS_US_EN_UPPER] = {
     //
     // Row 1
     //
@@ -274,8 +272,7 @@ const tKeyText g_psUSEnglishUpper[MAX_KEYS_US_EN_UPPER] =
 };
 
 #define MAX_KEYS_US_EN_NUMERIC  38
-const tKeyText g_psUSEnglishNumeric[MAX_KEYS_US_EN_NUMERIC] =
-{
+const tKeyText g_psUSEnglishNumeric[MAX_KEYS_US_EN_NUMERIC] = {
     //
     // Row 1
     //
@@ -404,8 +401,7 @@ const tKeyText g_psUSEnglishNumeric[MAX_KEYS_US_EN_NUMERIC] =
     }
 };
 
-const tKeyboard g_psKeyboardUSEnglish[NUM_KEYBOARD_US_ENGLISH] =
-{
+const tKeyboard g_psKeyboardUSEnglish[NUM_KEYBOARD_US_ENGLISH] = {
     {
         UNICODE_CUSTOM_LOWCASE,
         MAX_KEYS_US_EN_LOWER,
@@ -512,8 +508,7 @@ ButtonPaintText(tWidget *psWidget, const tKeyText *psKey)
     //
     // See if the keyboard fill style is selected.
     //
-    if(psKeyboard->ui32Style & KEYBOARD_STYLE_FILL)
-    {
+    if(psKeyboard->ui32Style & KEYBOARD_STYLE_FILL) {
         //
         // Fill the key with the fill color.
         //
@@ -527,8 +522,7 @@ ButtonPaintText(tWidget *psWidget, const tKeyText *psKey)
     //
     // See if the keyboard outline style is selected.
     //
-    if(psKeyboard->ui32Style & KEYBOARD_STYLE_OUTLINE)
-    {
+    if(psKeyboard->ui32Style & KEYBOARD_STYLE_OUTLINE) {
         //
         // Outline the key with the outline color.
         //
@@ -547,8 +541,7 @@ ButtonPaintText(tWidget *psWidget, const tKeyText *psKey)
     // clipping region by one pixel on each side so that the outline is not
     // overwritten by the text or image.
     //
-    if(psKeyboard->ui32Style & KEYBOARD_STYLE_OUTLINE)
-    {
+    if(psKeyboard->ui32Style & KEYBOARD_STYLE_OUTLINE) {
         sCtx.sClipRegion.i16XMin++;
         sCtx.sClipRegion.i16YMin++;
         sCtx.sClipRegion.i16XMax--;
@@ -567,40 +560,31 @@ ButtonPaintText(tWidget *psWidget, const tKeyText *psKey)
 
     ui32Size = 0;
 
-    if(psKey->ui32Code == UNICODE_BACKSPACE)
-    {
+    if(psKey->ui32Code == UNICODE_BACKSPACE) {
         pcKeyCap[0] = 'B';
         pcKeyCap[1] = 'S';
         ui32Size = 2;
-    }
-    else if(psKey->ui32Code == UNICODE_RETURN)
-    {
+    } else if(psKey->ui32Code == UNICODE_RETURN) {
         pcKeyCap[0] = 'E';
         pcKeyCap[1] = 'n';
         pcKeyCap[2] = 't';
         ui32Size = 3;
-    }
-    else if(psKey->ui32Code == UNICODE_CUSTOM_SHIFT)
-    {
+    } else if(psKey->ui32Code == UNICODE_CUSTOM_SHIFT) {
         pcKeyCap[0] = 'S';
         pcKeyCap[1] = 'h';
         ui32Size = 2;
-    }
-    else if(psKey->ui32Code == UNICODE_CUSTOM_MODE_TOG)
-    {
+    } else if(psKey->ui32Code == UNICODE_CUSTOM_MODE_TOG) {
         pcKeyCap[0] = '1';
         pcKeyCap[1] = '2';
         pcKeyCap[2] = '3';
         ui32Size = 3;
-    }
-    else
-    {
+    } else {
         ui32Size = 1;
         pcKeyCap[0] = (char)psKey->ui32Code;
     }
     GrStringDrawCentered(&sCtx, (const char *)pcKeyCap, ui32Size, i32X,
-                       i32Y,
-                       psKeyboard->ui32Style & KEYBOARD_STYLE_TEXT_OPAQUE);
+                         i32Y,
+                         psKeyboard->ui32Style & KEYBOARD_STYLE_TEXT_OPAQUE);
 }
 
 //*****************************************************************************
@@ -643,14 +627,12 @@ KeyboardPaint(tWidget *psWidget)
     //
     // Fill the keyboard with the fill color.
     //
-    if(psKeyboardWidget->ui32Style & KEYBOARD_STYLE_BG)
-    {
+    if(psKeyboardWidget->ui32Style & KEYBOARD_STYLE_BG) {
         GrContextForegroundSet(&sCtx, psKeyboardWidget->ui32BackgroundColor);
         GrRectFill(&sCtx, &psWidget->sPosition);
     }
 
-    for(i32Key = 0; i32Key < psKeyboard->ui16NumKeys; i32Key++)
-    {
+    for(i32Key = 0; i32Key < psKeyboard->ui16NumKeys; i32Key++) {
         ButtonPaintText(psWidget, &psKeyboard->uKeys.psKeysText[i32Key]);
     }
 }
@@ -687,8 +669,7 @@ FindKey(tKeyboardWidget *psKeyWidget, const tKeyboard *psKeyboard,
     i32X *= 10000;
     i32Y *= 10000;
 
-    for(ui32Key = 0; ui32Key < psKeyboard->ui16NumKeys; ui32Key++)
-    {
+    for(ui32Key = 0; ui32Key < psKeyboard->ui16NumKeys; ui32Key++) {
         psKey = &psKeyboard->uKeys.psKeysText[ui32Key];
 
         //
@@ -712,8 +693,7 @@ FindKey(tKeyboardWidget *psKeyWidget, const tKeyboard *psKeyboard,
         i32YMax = i32YMin + (ui32Range * (uint32_t)psKey->ui16Height);
 
         if((i32X >= i32XMin) && (i32X <= i32XMax) &&
-           (i32Y >= i32YMin) && (i32Y <= i32YMax))
-        {
+                (i32Y >= i32YMin) && (i32Y <= i32YMax)) {
             break;
         }
     }
@@ -769,8 +749,7 @@ TextButtonEvent(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
     //
     // See if this is a pointer up message.
     //
-    if(ui32Msg == WIDGET_MSG_PTR_UP)
-    {
+    if(ui32Msg == WIDGET_MSG_PTR_UP) {
         //
         // Indicate that this key is no longer pressed.
         //
@@ -781,18 +760,16 @@ TextButtonEvent(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
         // keyboard to show it in its non-pressed state.
         //
         if((psKeyWidget->ui32Style & KEYBOARD_STYLE_FILL) ||
-           ((psKeyWidget->ui32Style & KEYBOARD_STYLE_IMG)))
-        {
+                ((psKeyWidget->ui32Style & KEYBOARD_STYLE_IMG))) {
             //
             // Make sure the key is valid.
             //
-            if(psKeyWidget->ui32KeyPressed < psKeyboard->ui16NumKeys)
-            {
+            if(psKeyWidget->ui32KeyPressed < psKeyboard->ui16NumKeys) {
                 //
                 // Always clear the key that was last marked pressed.
                 //
                 ButtonPaintText(psWidget,
-                   &psKeyboard->uKeys.psKeysText[psKeyWidget->ui32KeyPressed]);
+                                &psKeyboard->uKeys.psKeysText[psKeyWidget->ui32KeyPressed]);
             }
         }
 
@@ -801,49 +778,37 @@ TextButtonEvent(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
         // release notify button, call the notification function here.
         //
         if((ui32Key < psKeyboard->ui16NumKeys) &&
-           (psKeyWidget->ui32Style & KEYBOARD_STYLE_RELEASE_NOTIFY) &&
-           psKeyWidget->pfnOnEvent)
-        {
+                (psKeyWidget->ui32Style & KEYBOARD_STYLE_RELEASE_NOTIFY) &&
+                psKeyWidget->pfnOnEvent) {
             psKeyWidget->pfnOnEvent(psWidget,
-                            psKeyboard->uKeys.psKeysText[ui32Key].ui32Code,
-                            KEYBOARD_EVENT_RELEASE);
+                                    psKeyboard->uKeys.psKeysText[ui32Key].ui32Code,
+                                    KEYBOARD_EVENT_RELEASE);
         }
     }
 
     //
     // See if the given coordinates are within the extents of the key.
     //
-    if(ui32Key < psKeyboard->ui16NumKeys)
-    {
+    if(ui32Key < psKeyboard->ui16NumKeys) {
         //
         // See if this is a pointer down message.
         //
-        if(ui32Msg == WIDGET_MSG_PTR_DOWN)
-        {
+        if(ui32Msg == WIDGET_MSG_PTR_DOWN) {
             //
             // Handle a shift to update the keyboard.
             //
             if(psKeyboard->uKeys.psKeysText[ui32Key].ui32Code ==
-               UNICODE_CUSTOM_SHIFT)
-            {
-                if(psKeyWidget->ui32Active == 0)
-                {
+                    UNICODE_CUSTOM_SHIFT) {
+                if(psKeyWidget->ui32Active == 0) {
                     psKeyWidget->ui32Active = 1;
-                }
-                else if(psKeyWidget->ui32Active == 1)
-                {
-                    if(psKeyWidget->ui32Flags & FLAG_KEY_CAPSLOCK)
-                    {
+                } else if(psKeyWidget->ui32Active == 1) {
+                    if(psKeyWidget->ui32Flags & FLAG_KEY_CAPSLOCK) {
                         psKeyWidget->ui32Flags &= ~FLAG_KEY_CAPSLOCK;
                         psKeyWidget->ui32Active = 0;
-                    }
-                    else
-                    {
+                    } else {
                         psKeyWidget->ui32Flags |= FLAG_KEY_CAPSLOCK;
                     }
-                }
-                else
-                {
+                } else {
                     psKeyWidget->ui32Active = 0;
                 }
 
@@ -854,14 +819,10 @@ TextButtonEvent(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
                 return(1);
             }
             if(psKeyboard->uKeys.psKeysText[ui32Key].ui32Code ==
-               UNICODE_CUSTOM_MODE_TOG)
-            {
-                if(psKeyWidget->ui32Active == 2)
-                {
+                    UNICODE_CUSTOM_MODE_TOG) {
+                if(psKeyWidget->ui32Active == 2) {
                     psKeyWidget->ui32Active = 0;
-                }
-                else
-                {
+                } else {
                     psKeyWidget->ui32Active = 2;
                 }
 
@@ -871,10 +832,8 @@ TextButtonEvent(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
                 KeyboardPaint(psWidget);
 
                 return(1);
-            }
-            else if((psKeyWidget->ui32Active == 1) &&
-                    ((psKeyWidget->ui32Flags & FLAG_KEY_CAPSLOCK) == 0))
-            {
+            } else if((psKeyWidget->ui32Active == 1) &&
+                      ((psKeyWidget->ui32Flags & FLAG_KEY_CAPSLOCK) == 0)) {
                 psKeyWidget->ui32Flags &= ~FLAG_KEY_CAPSLOCK;
                 psKeyWidget->ui32Active = 0;
 
@@ -895,8 +854,7 @@ TextButtonEvent(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
             // the keyboard to show it in its pressed state.
             //
             if((psKeyWidget->ui32Style & KEYBOARD_STYLE_FILL) ||
-               ((psKeyWidget->ui32Style & KEYBOARD_STYLE_IMG)))
-            {
+                    ((psKeyWidget->ui32Style & KEYBOARD_STYLE_IMG))) {
                 //
                 // Save the key that was pressed.
                 //
@@ -910,30 +868,26 @@ TextButtonEvent(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
         //
         // See if there is an OnEvent callback for this widget.
         //
-        if(psKeyWidget->pfnOnEvent)
-        {
+        if(psKeyWidget->pfnOnEvent) {
             //
             // If the pointer was just pressed then call the callback.
             //
             if((ui32Msg == WIDGET_MSG_PTR_DOWN) &&
-               (psKeyWidget->ui32Style & KEYBOARD_STYLE_PRESS_NOTIFY))
-            {
+                    (psKeyWidget->ui32Style & KEYBOARD_STYLE_PRESS_NOTIFY)) {
                 psKeyWidget->pfnOnEvent(psWidget,
-                            psKeyboard->uKeys.psKeysText[ui32Key].ui32Code,
-                            KEYBOARD_EVENT_PRESS);
+                                        psKeyboard->uKeys.psKeysText[ui32Key].ui32Code,
+                                        KEYBOARD_EVENT_PRESS);
             }
 
             //
             // See if auto-repeat is enabled for this widget.
             //
-            if(psKeyWidget->ui32Style & KEYBOARD_STYLE_AUTO_REPEAT)
-            {
+            if(psKeyWidget->ui32Style & KEYBOARD_STYLE_AUTO_REPEAT) {
                 //
                 // If the pointer was just pressed, reset the auto-repeat
                 // count.
                 //
-                if(ui32Msg == WIDGET_MSG_PTR_DOWN)
-                {
+                if(ui32Msg == WIDGET_MSG_PTR_DOWN) {
                     psKeyWidget->ui32AutoRepeatCount = 0;
                 }
 
@@ -942,8 +896,7 @@ TextButtonEvent(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
                 //
                 else if((ui32Msg == WIDGET_MSG_PTR_MOVE) &&
                         (psKeyWidget->pfnOnEvent) &&
-                        (psKeyWidget->ui32Style & KEYBOARD_STYLE_PRESS_NOTIFY))
-                {
+                        (psKeyWidget->ui32Style & KEYBOARD_STYLE_PRESS_NOTIFY)) {
                     //
                     // Increment the auto-repeat count.
                     //
@@ -955,14 +908,13 @@ TextButtonEvent(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
                     // call the callback.
                     //
                     if((psKeyWidget->ui32AutoRepeatCount >=
-                        psKeyWidget->ui16AutoRepeatDelay) &&
-                       (((psKeyWidget->ui32AutoRepeatCount -
-                          psKeyWidget->ui16AutoRepeatDelay) %
-                         psKeyWidget->ui16AutoRepeatRate) == 0))
-                    {
+                            psKeyWidget->ui16AutoRepeatDelay) &&
+                            (((psKeyWidget->ui32AutoRepeatCount -
+                               psKeyWidget->ui16AutoRepeatDelay) %
+                              psKeyWidget->ui16AutoRepeatRate) == 0)) {
                         psKeyWidget->pfnOnEvent(psWidget,
-                              psKeyboard->uKeys.psKeysText[ui32Key].ui32Code,
-                              KEYBOARD_EVENT_PRESS);
+                                                psKeyboard->uKeys.psKeysText[ui32Key].ui32Code,
+                                                KEYBOARD_EVENT_PRESS);
                     }
                 }
             }
@@ -1014,18 +966,15 @@ KeyboardMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
     //
     // Determine which message is being sent.
     //
-    switch(ui32Msg)
-    {
+    switch(ui32Msg) {
         //
         // The widget paint request has been sent.
         //
-        case WIDGET_MSG_PAINT:
-        {
+        case WIDGET_MSG_PAINT: {
             //
             // Only redraw if no buttons are pressed.
             //
-            if((psKeyWidget->ui32Flags & FLAG_KEY_PRESSED) == 0)
-            {
+            if((psKeyWidget->ui32Flags & FLAG_KEY_PRESSED) == 0) {
                 //
                 // Handle the widget paint request.
                 //
@@ -1044,8 +993,7 @@ KeyboardMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
         //
         case WIDGET_MSG_PTR_DOWN:
         case WIDGET_MSG_PTR_MOVE:
-        case WIDGET_MSG_PTR_UP:
-        {
+        case WIDGET_MSG_PTR_UP: {
             //
             // Handle the pointer request, returning the appropriate value.
             //
@@ -1055,8 +1003,7 @@ KeyboardMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
         //
         // An unknown request has been sent.
         //
-        default:
-        {
+        default: {
             //
             // Let the default message handler process this message.
             //
@@ -1101,8 +1048,7 @@ KeyboardInit(tKeyboardWidget *psWidget, const tDisplay *psDisplay,
     //
     // Clear out the widget structure.
     //
-    for(ui32Idx = 0; ui32Idx < sizeof(tKeyboardWidget); ui32Idx += 4)
-    {
+    for(ui32Idx = 0; ui32Idx < sizeof(tKeyboardWidget); ui32Idx += 4) {
         ((uint32_t *)psWidget)[ui32Idx / 4] = 0;
     }
 

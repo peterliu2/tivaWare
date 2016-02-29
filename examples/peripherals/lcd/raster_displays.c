@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -215,15 +215,14 @@ EnableBacklightOnPT2(uint32_t ui32SysClk)
 // 800x480 resolution refreshed at 75Hz.
 //
 //*****************************************************************************
-const tRasterDisplayInfo g_sOptrex800x480x75Hz =
-{
+const tRasterDisplayInfo g_sOptrex800x480x75Hz = {
     "800x480 at 75Hz on Optrex T-55226D043J-LW-A-AAN",
     30000000,
     SYSCTL_CFG_VCO_480,
     120000000,
     {
         (RASTER_TIMING_ACTIVE_HIGH_PIXCLK |
-         RASTER_TIMING_SYNCS_ON_RISING_PIXCLK),
+        RASTER_TIMING_SYNCS_ON_RISING_PIXCLK),
         800, 480,
         2, 30, 8,
         10, 10, 8,
@@ -238,8 +237,7 @@ const tRasterDisplayInfo g_sOptrex800x480x75Hz =
 // resolution, refreshed at 60Hz.
 //
 //*****************************************************************************
-const tRasterDisplayInfo g_sFormike800x480x60Hz =
-{
+const tRasterDisplayInfo g_sFormike800x480x60Hz = {
     "800x480 at 60Hz on Formike KWH070KQ13",
     40000000,
     SYSCTL_CFG_VCO_480,
@@ -264,8 +262,7 @@ const tRasterDisplayInfo g_sFormike800x480x60Hz =
 // resolution, refreshed at 60Hz.
 //
 //*****************************************************************************
-const tRasterDisplayInfo g_sInnoLux800x480x60Hz =
-{
+const tRasterDisplayInfo g_sInnoLux800x480x60Hz = {
     "800x480 at 60Hz on InnoLux EJ090NA-03A",
     34000000,
     SYSCTL_CFG_VCO_480,
@@ -290,18 +287,17 @@ const tRasterDisplayInfo g_sInnoLux800x480x60Hz =
 // refreshed at 58Hz.
 //
 //*****************************************************************************
-const tRasterDisplayInfo g_sLXD640x480x60Hz =
-{
+const tRasterDisplayInfo g_sLXD640x480x60Hz = {
     "640x480 at 58Hz on LXD M7170A",
     24000000,
     SYSCTL_CFG_VCO_480,
     120000000,
     {
         (RASTER_TIMING_ACTIVE_LOW_PIXCLK |
-         RASTER_TIMING_SYNCS_ON_FALLING_PIXCLK |
-         RASTER_TIMING_ACTIVE_LOW_HSYNC |
-         RASTER_TIMING_ACTIVE_LOW_VSYNC |
-         RASTER_TIMING_ACTIVE_HIGH_OE),
+        RASTER_TIMING_SYNCS_ON_FALLING_PIXCLK |
+        RASTER_TIMING_ACTIVE_LOW_HSYNC |
+        RASTER_TIMING_ACTIVE_LOW_VSYNC |
+        RASTER_TIMING_ACTIVE_HIGH_OE),
         640, 480,
         16, 134, 10,
         32, 11, 2,

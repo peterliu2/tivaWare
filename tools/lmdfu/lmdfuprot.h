@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -77,19 +77,18 @@
 // the host in response to a USBD_DFU_REQUEST_GETSTATE request.
 //
 //*****************************************************************************
-typedef enum
-{
-   STATE_APP_IDLE = 0,
-   STATE_APP_DETACH,
-   STATE_IDLE,
-   STATE_DNLOAD_SYNC,
-   STATE_DNBUSY,
-   STATE_DNLOAD_IDLE,
-   STATE_MANIFEST_SYNC,
-   STATE_MANIFEST,
-   STATE_MANIFEST_WAIT_RESET,
-   STATE_UPLOAD_IDLE,
-   STATE_ERROR
+typedef enum {
+    STATE_APP_IDLE = 0,
+    STATE_APP_DETACH,
+    STATE_IDLE,
+    STATE_DNLOAD_SYNC,
+    STATE_DNBUSY,
+    STATE_DNLOAD_IDLE,
+    STATE_MANIFEST_SYNC,
+    STATE_MANIFEST,
+    STATE_MANIFEST_WAIT_RESET,
+    STATE_UPLOAD_IDLE,
+    STATE_ERROR
 }
 tDFUState;
 
@@ -147,8 +146,7 @@ tDFUState;
 //
 //*****************************************************************************
 #pragma pack(1)
-typedef struct
-{
+typedef struct {
     unsigned short usMarker;        // DFU_PROTOCOL_TIVA_MARKER
     unsigned short usVersion;       // DFU_PROTOCOL_TIVA_VERSION_1
 }
@@ -159,8 +157,7 @@ tLMDFUQueryTivaProtocol;
 // Generic download command header.
 //
 //***************************************************************************
-typedef struct
-{
+typedef struct {
     unsigned char ucCommand;     // Command identifier.
     unsigned char ucData[7];     // Command-specific data elements.
 }
@@ -194,13 +191,12 @@ tDFUDownloadHeader;
 // change in the future.
 //
 //***************************************************************************
-typedef struct
-{
+typedef struct {
     unsigned char  ucCommand;   // TIVA_DFU_CMD_PROG
     unsigned char  ucReserved;  // Reserved - set to 0x00.
     unsigned short usStartAddr; // Block start address / 1024
     unsigned long  ulLength;    // Total length, in bytes, of following data
-                                // for the complete download operation.
+    // for the complete download operation.
 }
 tDFUDownloadProgHeader;
 
@@ -228,13 +224,12 @@ tDFUDownloadProgHeader;
 // before the check is performed.
 //
 //****************************************************************************
-typedef struct
-{
+typedef struct {
     unsigned char  ucCommand;    // TIVA_DFU_CMD_READ or TIVA_DFU_CMD_CHECK
     unsigned char  ucReserved;   // Reserved - write to 0
     unsigned short usStartAddr;  // Block start address / 1024
     unsigned long  ulLength;     // The number of bytes of data to read back or
-                                 // check.
+    // check.
 }
 tDFUDownloadReadCheckHeader;
 
@@ -248,8 +243,7 @@ tDFUDownloadReadCheckHeader;
 // size of the device may be determined using the TIVA_DFU_CMD_INFO command.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     unsigned char  ucCommand;      // TIVA_DFU_CMD_ERASE
     unsigned char  ucReserved;     // Reserved - set to 0.
     unsigned short usStartAddr;    // Block start address / 1024
@@ -267,8 +261,7 @@ tDFUDownloadEraseHeader;
 // USBD_DFU_REQUEST_UPLOAD request.
 //
 //****************************************************************************
-typedef struct
-{
+typedef struct {
     unsigned char ucCommand;     // TIVA_DFU_CMD_INFO
     unsigned char ucReserved[7]; // Reserved - set to 0.
 }
@@ -286,11 +279,10 @@ tDFUDownloadInfoHeader;
 // convenient to be able to upload an image without this header.
 //
 //****************************************************************************
-typedef struct
-{
+typedef struct {
     unsigned char ucCommand;     // TIVA_DFU_CMD_BIN
     unsigned bBinary;            // Zero to include the DFU header, non-zero to
-                                 // omit it and send binary data.
+    // omit it and send binary data.
     unsigned char ucReserved[6]; // Reserved - set to 0.
 }
 tDFUDownloadBinHeader;
@@ -303,21 +295,20 @@ tDFUDownloadBinHeader;
 // USBD_DFU_REQUEST_UPLOAD request following a TIVA_DFU_CMD_INFO command.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     unsigned short usFlashBlockSize;  // The size of a flash block in bytes.
     unsigned short usNumFlashBlocks;  // The number of blocks of flash in the
-                                      // device.  Total flash size is
-                                      // usNumFlashBlocks * usFlashBlockSize.
+    // device.  Total flash size is
+    // usNumFlashBlocks * usFlashBlockSize.
     unsigned long ulPartInfo;         // Information on the part number,
-                                      // family, version and package as
-                                      // read from SYSCTL register DID1.
+    // family, version and package as
+    // read from SYSCTL register DID1.
     unsigned long ulClassInfo;        // Information on the part class as read
-                                      // from SYSCTL register DID0.
+    // from SYSCTL register DID0.
     unsigned long ulFlashTop;         // Address 1 byte above the highest
-                                      // location the boot loader can access.
+    // location the boot loader can access.
     unsigned long ulAppStartAddr;     // Lowest address the boot loader can
-                                      // write or erase.
+    // write or erase.
 }
 tDFUDeviceInfo;
 
@@ -326,8 +317,7 @@ tDFUDeviceInfo;
 // Structure sent to the host in response to USBD_DFU_REQUEST_GETSTATUS.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     unsigned char bStatus;
     unsigned char bwPollTimeout[3];
     unsigned char bState;

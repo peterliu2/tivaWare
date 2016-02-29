@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2007-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Graphics Library.
 //
 //*****************************************************************************
@@ -82,15 +82,14 @@ GrStringWidthGet(const tContext *pContext, const char *pcString,
     // This function doesn't support wide character fonts or wrapped fonts.
     //
     ASSERT(!(pContext->psFont->ui8Format &&
-            (FONT_FMT_WRAPPED | FONT_WIDE_MARKER)));
+             (FONT_FMT_WRAPPED | FONT_WIDE_MARKER)));
 
     //
     // Get some pointers to relevant information in the font to make things
     // easier, and give the compiler a hint about extraneous loads that it can
     // avoid.
     //
-    if(pContext->psFont->ui8Format & FONT_EX_MARKER)
-    {
+    if(pContext->psFont->ui8Format & FONT_EX_MARKER) {
         tFontEx *psFont;
 
         psFont = (tFontEx *)(pContext->psFont);
@@ -104,25 +103,20 @@ GrStringWidthGet(const tContext *pContext, const char *pcString,
         // Does the default absent character replacement exist in the font?
         //
         if((ABSENT_CHAR_REPLACEMENT >= ui8First) &&
-           (ABSENT_CHAR_REPLACEMENT <= ui8Last))
-        {
+                (ABSENT_CHAR_REPLACEMENT <= ui8Last)) {
             //
             // Yes - use the standard character when an absent character is
             // found.
             //
             ui8Absent = ABSENT_CHAR_REPLACEMENT;
-        }
-        else
-        {
+        } else {
             //
             // The default absent character is not present in the font so use
             // the first character (we only use its width here) instead.
             //
             ui8Absent = psFont->ui8First;
         }
-    }
-    else
-    {
+    } else {
         pui8Data = pContext->psFont->pui8Data;
         pui16Offset = pContext->psFont->pui16Offset;
         ui8First = 32;
@@ -133,22 +127,18 @@ GrStringWidthGet(const tContext *pContext, const char *pcString,
     //
     // Loop through the characters in the string.
     //
-    for(i32Width = 0; *pcString && i32Length; pcString++, i32Length--)
-    {
+    for(i32Width = 0; *pcString && i32Length; pcString++, i32Length--) {
         //
         // Get a pointer to the font data for the next character from the
         // string.  If there is not a glyph for the next character, replace it
         // with a ".".
         //
-        if((*pcString >= ui8First) && (*pcString <= ui8Last))
-        {
+        if((*pcString >= ui8First) && (*pcString <= ui8Last)) {
             //
             // Add the width of this character as drawn with the given font.
             //
             i32Width += pui8Data[pui16Offset[*pcString - ui8First] + 1];
-        }
-        else
-        {
+        } else {
             //
             // This character does not exist in the font so replace it with
             // a '.' instead.  This matches the approach taken in GrStringDraw
@@ -197,8 +187,7 @@ GrStringWidthGet(const tContext *pContext, const char *pcString,
     //
     // Loop through each character in the string.
     //
-    while(ui32Count)
-    {
+    while(ui32Count) {
         //
         // Get the next character to render.
         //
@@ -208,8 +197,7 @@ GrStringWidthGet(const tContext *pContext, const char *pcString,
         //
         // If we ran out of characters to render, drop out of the loop.
         //
-        if(!ui32Char)
-        {
+        if(!ui32Char) {
             break;
         }
 
@@ -221,8 +209,7 @@ GrStringWidthGet(const tContext *pContext, const char *pcString,
         //
         // Does the glyph exist?
         //
-        if(!pui8Data)
-        {
+        if(!pui8Data) {
             //
             // No - get the absent character replacement information.
             //
@@ -232,8 +219,7 @@ GrStringWidthGet(const tContext *pContext, const char *pcString,
             //
             // Does this character exist in the font?
             //
-            if(!pui8Data)
-            {
+            if(!pui8Data) {
                 //
                 // No - look for the ASCII/Unicode space character.
                 //
@@ -243,8 +229,7 @@ GrStringWidthGet(const tContext *pContext, const char *pcString,
                 //
                 // Does this exist?
                 //
-                if(!pui8Data)
-                {
+                if(!pui8Data) {
                     //
                     // No - give up and just pad with a character cell of space.
                     //
@@ -323,7 +308,7 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
     // This function doesn't support wide character fonts or wrapped fonts.
     //
     ASSERT(!(pContext->psFont->ui8Format &&
-            (FONT_FMT_WRAPPED | FONT_WIDE_MARKER)));
+             (FONT_FMT_WRAPPED | FONT_WIDE_MARKER)));
 
     //
     // Copy the drawing context into a local structure that can be modified.
@@ -334,8 +319,7 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
     // Extract various parameters from the font depending upon whether it's
     // in the tFont or tFontEx format.
     //
-    if(pContext->psFont->ui8Format & FONT_EX_MARKER)
-    {
+    if(pContext->psFont->ui8Format & FONT_EX_MARKER) {
         tFontEx *psFont;
 
         psFont = (tFontEx *)(pContext->psFont);
@@ -349,25 +333,20 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
         // Does the default absent character replacement exist in the font?
         //
         if((ABSENT_CHAR_REPLACEMENT >= ui8First) &&
-           (ABSENT_CHAR_REPLACEMENT <= ui8Last))
-        {
+                (ABSENT_CHAR_REPLACEMENT <= ui8Last)) {
             //
             // Yes - use the standard character when an absent character is
             // found.
             //
             ui8Absent = ABSENT_CHAR_REPLACEMENT;
-        }
-        else
-        {
+        } else {
             //
             // The default absent character is not present in the font so use
             // the first character instead.
             //
             ui8Absent = psFont->ui8First;
         }
-    }
-    else
-    {
+    } else {
         pui8Glyphs = pContext->psFont->pui8Data;
         pui16Offset = pContext->psFont->pui16Offset;
         ui8First = 32;
@@ -378,14 +357,12 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
     //
     // Loop through the characters in the string.
     //
-    while(*pcString && i32Length--)
-    {
+    while(*pcString && i32Length--) {
         //
         // Stop drawing the string if the right edge of the clipping region has
         // been exceeded.
         //
-        if(i32X > i16Con.sClipRegion.i16XMax)
-        {
+        if(i32X > i16Con.sClipRegion.i16XMax) {
             break;
         }
 
@@ -394,12 +371,9 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
         // string.  If there is not a glyph for the next character, replace it
         // with the "absent" character (usually '.').
         //
-        if((*pcString >= ui8First) && (*pcString <= ui8Last))
-        {
+        if((*pcString >= ui8First) && (*pcString <= ui8Last)) {
             pui8Data = (pui8Glyphs + pui16Offset[*pcString - ui8First]);
-        }
-        else
-        {
+        } else {
             pui8Data = (pui8Glyphs + pui16Offset[ui8Absent - ui8First]);
         }
         pcString++;
@@ -407,8 +381,7 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
         //
         // See if the entire character is to the left of the clipping region.
         //
-        if((i32X + pui8Data[1]) < i16Con.sClipRegion.i16XMin)
-        {
+        if((i32X + pui8Data[1]) < i16Con.sClipRegion.i16XMin) {
             //
             // Increment the X coordinate by the width of the character.
             //
@@ -424,13 +397,11 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
         // Loop through the bytes in the encoded data for this glyph.
         //
         for(i32Idx = 2, i32X0 = 0, i32Bit = 0, i32Y0 = 0;
-            i32Idx < pui8Data[0]; )
-        {
+                i32Idx < pui8Data[0]; ) {
             //
             // See if the bottom of the clipping region has been exceeded.
             //
-            if((i32Y + i32Y0) > i16Con.sClipRegion.i16YMax)
-            {
+            if((i32Y + i32Y0) > i16Con.sClipRegion.i16YMax) {
                 //
                 // Stop drawing this character.
                 //
@@ -441,14 +412,12 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
             // See if the font is uncompressed.
             //
             if((i16Con.psFont->ui8Format & ~FONT_EX_MARKER) ==
-                FONT_FMT_UNCOMPRESSED)
-            {
+                    FONT_FMT_UNCOMPRESSED) {
                 //
                 // Count the number of off pixels from this position in the
                 // glyph image.
                 //
-                for(i32Off = 0; i32Idx < pui8Data[0]; )
-                {
+                for(i32Off = 0; i32Idx < pui8Data[0]; ) {
                     //
                     // Get the number of zero pixels at this position.
                     //
@@ -461,8 +430,7 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
                     // Therefore, simply limit it to the number of pixels
                     // remaining in this byte.
                     //
-                    if(i32Count > 8)
-                    {
+                    if(i32Count > 8) {
                         i32Count = 8 - i32Bit;
                     }
 
@@ -479,17 +447,14 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
                     //
                     // See if the end of the byte has been reached.
                     //
-                    if(i32Bit == 8)
-                    {
+                    if(i32Bit == 8) {
                         //
                         // Advance to the next byte and continue counting off
                         // pixels.
                         //
                         i32Bit = 0;
                         i32Idx++;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Since the end of the byte was not reached, there
                         // must be an on pixel.  Therefore, stop counting off
@@ -503,8 +468,7 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
                 // Count the number of on pixels from this position in the
                 // glyph image.
                 //
-                for(i32On = 0; i32Idx < pui8Data[0]; )
-                {
+                for(i32On = 0; i32Idx < pui8Data[0]; ) {
                     //
                     // Get the number of one pixels at this location (by
                     // inverting the data and counting the number of zeros).
@@ -518,8 +482,7 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
                     // Therefore, simply limit it to the number of pixels
                     // remaining in this byte.
                     //
-                    if(i32Count > 8)
-                    {
+                    if(i32Count > 8) {
                         i32Count = 8 - i32Bit;
                     }
 
@@ -536,17 +499,14 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
                     //
                     // See if the end of the byte has been reached.
                     //
-                    if(i32Bit == 8)
-                    {
+                    if(i32Bit == 8) {
                         //
                         // Advance to the next byte and continue counting on
                         // pixels.
                         //
                         i32Bit = 0;
                         i32Idx++;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Since the end of the byte was not reached, there
                         // must be an off pixel.  Therefore, stop counting on
@@ -560,13 +520,11 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
             //
             // Otherwise, the font is compressed with a pixel RLE scheme.
             //
-            else
-            {
+            else {
                 //
                 // See if this is a byte that encodes some on and off pixels.
                 //
-                if(pui8Data[i32Idx])
-                {
+                if(pui8Data[i32Idx]) {
                     //
                     // Extract the number of off pixels.
                     //
@@ -586,8 +544,7 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
                 //
                 // Otherwise, see if this is a repeated on pixel byte.
                 //
-                else if(pui8Data[i32Idx + 1] & 0x80)
-                {
+                else if(pui8Data[i32Idx + 1] & 0x80) {
                     //
                     // There are no off pixels in this encoding.
                     //
@@ -607,8 +564,7 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
                 //
                 // Otherwise, this is a repeated off pixel byte.
                 //
-                else
-                {
+                else {
                     //
                     // Extract the number of off pixels.
                     //
@@ -629,13 +585,11 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
             //
             // Loop while there are any off pixels.
             //
-            while(i32Off)
-            {
+            while(i32Off) {
                 //
                 // See if the bottom of the clipping region has been exceeded.
                 //
-                if((i32Y + i32Y0) > i16Con.sClipRegion.i16YMax)
-                {
+                if((i32Y + i32Y0) > i16Con.sClipRegion.i16YMax) {
                     //
                     // Ignore the remainder of the on pixels.
                     //
@@ -646,8 +600,7 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
                 // See if there is more than one on pixel that will fit onto
                 // the current row.
                 //
-                if((i32Off > 1) && ((i32X0 + 1) < pui8Data[1]))
-                {
+                if((i32Off > 1) && ((i32X0 + 1) < pui8Data[1])) {
                     //
                     // Determine the number of on pixels that will fit on this
                     // row.
@@ -661,8 +614,7 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
                     // pixels.
                     //
                     if(((i32Y + i32Y0) >= i16Con.sClipRegion.i16YMin) &&
-                       bOpaque)
-                    {
+                            bOpaque) {
                         i16Con.ui32Foreground = pContext->ui32Background;
                         GrLineDrawH(&i16Con, i32X + i32X0, i32X + i32X0 +
                                     i32Count - 1, i32Y + i32Y0);
@@ -684,17 +636,15 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
                 // Otherwise, there is only a single on pixel that can be
                 // drawn.
                 //
-                else
-                {
+                else {
                     //
                     // If this pixel is within the clipping region, then draw
                     // it.
                     //
                     if(((i32X + i32X0) >= i16Con.sClipRegion.i16XMin) &&
-                       ((i32X + i32X0) <= i16Con.sClipRegion.i16XMax) &&
-                       ((i32Y + i32Y0) >= i16Con.sClipRegion.i16YMin) &&
-                       bOpaque)
-                    {
+                            ((i32X + i32X0) <= i16Con.sClipRegion.i16XMax) &&
+                            ((i32Y + i32Y0) >= i16Con.sClipRegion.i16YMin) &&
+                            bOpaque) {
                         DpyPixelDraw(pContext->psDisplay, i32X + i32X0,
                                      i32Y + i32Y0, pContext->ui32Background);
                     }
@@ -714,8 +664,7 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
                 // See if the X offset has reached the right side of the
                 // character glyph.
                 //
-                if(i32X0 == pui8Data[1])
-                {
+                if(i32X0 == pui8Data[1]) {
                     //
                     // Increment the Y offset.
                     //
@@ -732,13 +681,11 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
             //
             // Loop while there are any on pixels.
             //
-            while(i32On)
-            {
+            while(i32On) {
                 //
                 // See if the bottom of the clipping region has been exceeded.
                 //
-                if((i32Y + i32Y0) > i16Con.sClipRegion.i16YMax)
-                {
+                if((i32Y + i32Y0) > i16Con.sClipRegion.i16YMax) {
                     //
                     // Ignore the remainder of the on pixels.
                     //
@@ -749,8 +696,7 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
                 // See if there is more than one on pixel that will fit onto
                 // the current row.
                 //
-                if((i32On > 1) && ((i32X0 + 1) < pui8Data[1]))
-                {
+                if((i32On > 1) && ((i32X0 + 1) < pui8Data[1])) {
                     //
                     // Determine the number of on pixels that will fit on this
                     // row.
@@ -763,8 +709,7 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
                     // horizontal line that corresponds to the sequence of on
                     // pixels.
                     //
-                    if((i32Y + i32Y0) >= i16Con.sClipRegion.i16YMin)
-                    {
+                    if((i32Y + i32Y0) >= i16Con.sClipRegion.i16YMin) {
                         i16Con.ui32Foreground = pContext->ui32Foreground;
                         GrLineDrawH(&i16Con, i32X + i32X0, i32X + i32X0 +
                                     i32Count - 1, i32Y + i32Y0);
@@ -786,16 +731,14 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
                 // Otherwise, there is only a single on pixel that can be
                 // drawn.
                 //
-                else
-                {
+                else {
                     //
                     // If this pixel is within the clipping region, then draw
                     // it.
                     //
                     if(((i32X + i32X0) >= i16Con.sClipRegion.i16XMin) &&
-                       ((i32X + i32X0) <= i16Con.sClipRegion.i16XMax) &&
-                       ((i32Y + i32Y0) >= i16Con.sClipRegion.i16YMin))
-                    {
+                            ((i32X + i32X0) <= i16Con.sClipRegion.i16XMax) &&
+                            ((i32Y + i32Y0) >= i16Con.sClipRegion.i16YMin)) {
                         DpyPixelDraw(pContext->psDisplay, i32X + i32X0,
                                      i32Y + i32Y0, pContext->ui32Foreground);
                     }
@@ -815,8 +758,7 @@ GrStringDraw(const tContext *pContext, const char *pcString, int32_t i32Length,
                 // See if the X offset has reached the right side of the
                 // character glyph.
                 //
-                if(i32X0 == pui8Data[1])
-                {
+                if(i32X0 == pui8Data[1]) {
                     //
                     // Increment the Y offset.
                     //
@@ -917,8 +859,7 @@ GrDefaultStringRenderer(const tContext *pContext, const char *pcString,
     // start rendering it.
     //
     if((i32Y > pContext->sClipRegion.i16YMax) ||
-       ((i32Y + ui8Height) < pContext->sClipRegion.i16YMin))
-    {
+            ((i32Y + ui8Height) < pContext->sClipRegion.i16YMin)) {
         return;
     }
 
@@ -934,8 +875,7 @@ GrDefaultStringRenderer(const tContext *pContext, const char *pcString,
     //
     // Loop through each character in the string.
     //
-    while(ui32Count)
-    {
+    while(ui32Count) {
         //
         // Get the next character to render.
         //
@@ -945,16 +885,14 @@ GrDefaultStringRenderer(const tContext *pContext, const char *pcString,
         //
         // If we ran out of characters to render, return immediately.
         //
-        if(!ui32Char)
-        {
+        if(!ui32Char) {
             return;
         }
 
         //
         // If we are already outside the clipping region, exit early.
         //
-        if(i32X >= pContext->sClipRegion.i16XMax)
-        {
+        if(i32X >= pContext->sClipRegion.i16XMax) {
             return;
         }
 
@@ -966,8 +904,7 @@ GrDefaultStringRenderer(const tContext *pContext, const char *pcString,
         //
         // Does this glyph exist in the font?
         //
-        if(!pui8Data)
-        {
+        if(!pui8Data) {
             //
             // Look for the character we are supposed to use in place of absent
             // glyphs.
@@ -978,8 +915,7 @@ GrDefaultStringRenderer(const tContext *pContext, const char *pcString,
             //
             // Does this glyph exist in the font?
             //
-            if(!pui8Data)
-            {
+            if(!pui8Data) {
                 //
                 // Last chance - look for the space character.
                 //
@@ -991,15 +927,12 @@ GrDefaultStringRenderer(const tContext *pContext, const char *pcString,
         //
         // Did we find something to render?
         //
-        if(pui8Data)
-        {
+        if(pui8Data) {
             GrFontGlyphRender(pContext, pui8Data, i32X, i32Y,
                               (ui8Format & FONT_FMT_PIXEL_RLE) ? true : false,
                               bOpaque);
             i32X += ui8Width;
-        }
-        else
-        {
+        } else {
             //
             // Leave a space in place of the undefined glyph.
             //
@@ -1054,24 +987,20 @@ GrStringNextCharGet(const tContext *pContext, const char *pcString,
     //
     // If the string is empty, return immediately.
     //
-    if(!ui32Count)
-    {
+    if(!ui32Count) {
         return(0);
     }
 
     //
     // Has a codepage mapping table been registered for this context?
     //
-    if(pContext->pCodePointMapTable)
-    {
+    if(pContext->pCodePointMapTable) {
         //
         // Yes - use the relevant mapping function
         //
         return(pContext->pCodePointMapTable[pContext->ui8CodePointMap].
                pfnMapChar(pcString, ui32Count, pui32Skip));
-    }
-    else
-    {
+    } else {
         //
         // No codepage mapping table has been registered so fall back on the
         // assumption that we are using ASCII or ISO8859-1 for both the
@@ -1129,29 +1058,25 @@ GrFontGlyphRender(const tContext *pContext, const uint8_t *pui8Data,
     // Stop drawing the string if the right edge of the clipping region has
     // been exceeded.
     //
-    if(i32X > pContext->sClipRegion.i16XMax)
-    {
+    if(i32X > pContext->sClipRegion.i16XMax) {
         return;
     }
 
     //
     // See if the entire character is to the left of the clipping region.
     //
-    if((i32X + pui8Data[1]) < pContext->sClipRegion.i16XMin)
-    {
+    if((i32X + pui8Data[1]) < pContext->sClipRegion.i16XMin) {
         return;
     }
 
     //
     // Loop through the bytes in the encoded data for this glyph.
     //
-    for(i32Idx = 2, i32X0 = 0, i32Bit = 0, i32Y0 = 0; i32Idx < pui8Data[0]; )
-    {
+    for(i32Idx = 2, i32X0 = 0, i32Bit = 0, i32Y0 = 0; i32Idx < pui8Data[0]; ) {
         //
         // See if the bottom of the clipping region has been exceeded.
         //
-        if((i32Y + i32Y0) > pContext->sClipRegion.i16YMax)
-        {
+        if((i32Y + i32Y0) > pContext->sClipRegion.i16YMax) {
             //
             // Stop drawing this character.
             //
@@ -1161,14 +1086,12 @@ GrFontGlyphRender(const tContext *pContext, const uint8_t *pui8Data,
         //
         // See if the font is uncompressed.
         //
-        if(!bCompressed)
-        {
+        if(!bCompressed) {
             //
             // Count the number of off pixels from this position in the
             // glyph image.
             //
-            for(i32Off = 0; i32Idx < pui8Data[0]; )
-            {
+            for(i32Off = 0; i32Idx < pui8Data[0]; ) {
                 //
                 // Get the number of zero pixels at this position.
                 //
@@ -1180,8 +1103,7 @@ GrFontGlyphRender(const tContext *pContext, const uint8_t *pui8Data,
                 // Therefore, simply limit it to the number of pixels
                 // remaining in this byte.
                 //
-                if(i32Count > 8)
-                {
+                if(i32Count > 8) {
                     i32Count = 8 - i32Bit;
                 }
 
@@ -1198,17 +1120,14 @@ GrFontGlyphRender(const tContext *pContext, const uint8_t *pui8Data,
                 //
                 // See if the end of the byte has been reached.
                 //
-                if(i32Bit == 8)
-                {
+                if(i32Bit == 8) {
                     //
                     // Advance to the next byte and continue counting off
                     // pixels.
                     //
                     i32Bit = 0;
                     i32Idx++;
-                }
-                else
-                {
+                } else {
                     //
                     // Since the end of the byte was not reached, there
                     // must be an on pixel.  Therefore, stop counting off
@@ -1222,8 +1141,7 @@ GrFontGlyphRender(const tContext *pContext, const uint8_t *pui8Data,
             // Count the number of on pixels from this position in the
             // glyph image.
             //
-            for(i32On = 0; i32Idx < pui8Data[0]; )
-            {
+            for(i32On = 0; i32Idx < pui8Data[0]; ) {
                 //
                 // Get the number of one pixels at this location (by
                 // inverting the data and counting the number of zeros).
@@ -1237,8 +1155,7 @@ GrFontGlyphRender(const tContext *pContext, const uint8_t *pui8Data,
                 // Therefore, simply limit it to the number of pixels
                 // remaining in this byte.
                 //
-                if(i32Count > 8)
-                {
+                if(i32Count > 8) {
                     i32Count = 8 - i32Bit;
                 }
 
@@ -1255,17 +1172,14 @@ GrFontGlyphRender(const tContext *pContext, const uint8_t *pui8Data,
                 //
                 // See if the end of the byte has been reached.
                 //
-                if(i32Bit == 8)
-                {
+                if(i32Bit == 8) {
                     //
                     // Advance to the next byte and continue counting on
                     // pixels.
                     //
                     i32Bit = 0;
                     i32Idx++;
-                }
-                else
-                {
+                } else {
                     //
                     // Since the end of the byte was not reached, there
                     // must be an off pixel.  Therefore, stop counting on
@@ -1279,13 +1193,11 @@ GrFontGlyphRender(const tContext *pContext, const uint8_t *pui8Data,
         //
         // Otherwise, the font is compressed with a pixel RLE scheme.
         //
-        else
-        {
+        else {
             //
             // See if this is a byte that encodes some on and off pixels.
             //
-            if(pui8Data[i32Idx])
-            {
+            if(pui8Data[i32Idx]) {
                 //
                 // Extract the number of off pixels.
                 //
@@ -1305,8 +1217,7 @@ GrFontGlyphRender(const tContext *pContext, const uint8_t *pui8Data,
             //
             // Otherwise, see if this is a repeated on pixel byte.
             //
-            else if(pui8Data[i32Idx + 1] & 0x80)
-            {
+            else if(pui8Data[i32Idx + 1] & 0x80) {
                 //
                 // There are no off pixels in this encoding.
                 //
@@ -1326,8 +1237,7 @@ GrFontGlyphRender(const tContext *pContext, const uint8_t *pui8Data,
             //
             // Otherwise, this is a repeated off pixel byte.
             //
-            else
-            {
+            else {
                 //
                 // Extract the number of off pixels.
                 //
@@ -1348,13 +1258,11 @@ GrFontGlyphRender(const tContext *pContext, const uint8_t *pui8Data,
         //
         // Loop while there are any off pixels.
         //
-        while(i32Off)
-        {
+        while(i32Off) {
             //
             // See if the bottom of the clipping region has been exceeded.
             //
-            if((i32Y + i32Y0) > pContext->sClipRegion.i16YMax)
-            {
+            if((i32Y + i32Y0) > pContext->sClipRegion.i16YMax) {
                 //
                 // Ignore the remainder of the on pixels.
                 //
@@ -1365,8 +1273,7 @@ GrFontGlyphRender(const tContext *pContext, const uint8_t *pui8Data,
             // See if there is more than one on pixel that will fit onto
             // the current row.
             //
-            if((i32Off > 1) && ((i32X0 + 1) < pui8Data[1]))
-            {
+            if((i32Off > 1) && ((i32X0 + 1) < pui8Data[1])) {
                 //
                 // Determine the number of on pixels that will fit on this
                 // row.
@@ -1380,24 +1287,17 @@ GrFontGlyphRender(const tContext *pContext, const uint8_t *pui8Data,
                 // pixels.
                 //
                 if(((i32Y + i32Y0) >= pContext->sClipRegion.i16YMin) &&
-                   bOpaque)
-                {
-                    if((i32X + i32X0) < pContext->sClipRegion.i16XMin)
-                    {
+                        bOpaque) {
+                    if((i32X + i32X0) < pContext->sClipRegion.i16XMin) {
                         i32ClipX1 = pContext->sClipRegion.i16XMin;
-                    }
-                    else
-                    {
+                    } else {
                         i32ClipX1 = i32X + i32X0;
                     }
 
                     if((i32X + i32X0 + i32Count - 1) >
-                       pContext->sClipRegion.i16XMax)
-                    {
+                            pContext->sClipRegion.i16XMax) {
                         i32ClipX2 = pContext->sClipRegion.i16XMax;
-                    }
-                    else
-                    {
+                    } else {
                         i32ClipX2 = i32X + i32X0 + i32Count - 1;
                     }
 
@@ -1421,17 +1321,15 @@ GrFontGlyphRender(const tContext *pContext, const uint8_t *pui8Data,
             // Otherwise, there is only a single on pixel that can be
             // drawn.
             //
-            else
-            {
+            else {
                 //
                 // If this pixel is within the clipping region, then draw
                 // it.
                 //
                 if(((i32X + i32X0) >= pContext->sClipRegion.i16XMin) &&
-                   ((i32X + i32X0) <= pContext->sClipRegion.i16XMax) &&
-                   ((i32Y + i32Y0) >= pContext->sClipRegion.i16YMin) &&
-                   bOpaque)
-                {
+                        ((i32X + i32X0) <= pContext->sClipRegion.i16XMax) &&
+                        ((i32Y + i32Y0) >= pContext->sClipRegion.i16YMin) &&
+                        bOpaque) {
                     DpyPixelDraw(pContext->psDisplay, i32X + i32X0,
                                  i32Y + i32Y0, pContext->ui32Background);
                 }
@@ -1451,8 +1349,7 @@ GrFontGlyphRender(const tContext *pContext, const uint8_t *pui8Data,
             // See if the X offset has reached the right side of the
             // character glyph.
             //
-            if(i32X0 == pui8Data[1])
-            {
+            if(i32X0 == pui8Data[1]) {
                 //
                 // Increment the Y offset.
                 //
@@ -1469,13 +1366,11 @@ GrFontGlyphRender(const tContext *pContext, const uint8_t *pui8Data,
         //
         // Loop while there are any on pixels.
         //
-        while(i32On)
-        {
+        while(i32On) {
             //
             // See if the bottom of the clipping region has been exceeded.
             //
-            if((i32Y + i32Y0) > pContext->sClipRegion.i16YMax)
-            {
+            if((i32Y + i32Y0) > pContext->sClipRegion.i16YMax) {
                 //
                 // Ignore the remainder of the on pixels.
                 //
@@ -1486,8 +1381,7 @@ GrFontGlyphRender(const tContext *pContext, const uint8_t *pui8Data,
             // See if there is more than one on pixel that will fit onto
             // the current row.
             //
-            if((i32On > 1) && ((i32X0 + 1) < pui8Data[1]))
-            {
+            if((i32On > 1) && ((i32X0 + 1) < pui8Data[1])) {
                 //
                 // Determine the number of on pixels that will fit on this
                 // row.
@@ -1500,24 +1394,17 @@ GrFontGlyphRender(const tContext *pContext, const uint8_t *pui8Data,
                 // horizontal line that corresponds to the sequence of on
                 // pixels.
                 //
-                if((i32Y + i32Y0) >= pContext->sClipRegion.i16YMin)
-                {
-                    if((i32X + i32X0) >= pContext->sClipRegion.i16XMin)
-                    {
+                if((i32Y + i32Y0) >= pContext->sClipRegion.i16YMin) {
+                    if((i32X + i32X0) >= pContext->sClipRegion.i16XMin) {
                         i32ClipX1 = i32X + i32X0;
-                    }
-                    else
-                    {
+                    } else {
                         i32ClipX1 = pContext->sClipRegion.i16XMin;
                     }
 
                     if((i32X + i32X0 + i32Count - 1) >
-                       pContext->sClipRegion.i16XMax)
-                    {
+                            pContext->sClipRegion.i16XMax) {
                         i32ClipX2 = pContext->sClipRegion.i16XMax;
-                    }
-                    else
-                    {
+                    } else {
                         i32ClipX2 = i32X + i32X0 + i32Count - 1;
                     }
 
@@ -1541,16 +1428,14 @@ GrFontGlyphRender(const tContext *pContext, const uint8_t *pui8Data,
             // Otherwise, there is only a single on pixel that can be
             // drawn.
             //
-            else
-            {
+            else {
                 //
                 // If this pixel is within the clipping region, then draw
                 // it.
                 //
                 if(((i32X + i32X0) >= pContext->sClipRegion.i16XMin) &&
-                   ((i32X + i32X0) <= pContext->sClipRegion.i16XMax) &&
-                   ((i32Y + i32Y0) >= pContext->sClipRegion.i16YMin))
-                {
+                        ((i32X + i32X0) <= pContext->sClipRegion.i16XMax) &&
+                        ((i32Y + i32Y0) >= pContext->sClipRegion.i16YMin)) {
                     DpyPixelDraw(pContext->psDisplay, i32X + i32X0,
                                  i32Y + i32Y0, pContext->ui32Foreground);
                 }
@@ -1570,8 +1455,7 @@ GrFontGlyphRender(const tContext *pContext, const uint8_t *pui8Data,
             // See if the X offset has reached the right side of the
             // character glyph.
             //
-            if(i32X0 == pui8Data[1])
-            {
+            if(i32X0 == pui8Data[1]) {
                 //
                 // Increment the Y offset.
                 //
@@ -1625,8 +1509,7 @@ GrFontInfoGet(const tFont *psFont, uint8_t *pui8Format, uint8_t *pui8MaxWidth,
     //
     // Is this a wrapped font?
     //
-    if(psFont->ui8Format & FONT_FMT_WRAPPED)
-    {
+    if(psFont->ui8Format & FONT_FMT_WRAPPED) {
         tFontWrapper *psFontWrapper;
 
         //
@@ -1637,9 +1520,7 @@ GrFontInfoGet(const tFont *psFont, uint8_t *pui8Format, uint8_t *pui8MaxWidth,
         psFontWrapper->pFuncs->pfnFontInfoGet(psFontWrapper->pui8FontId,
                                               pui8Format, pui8MaxWidth,
                                               pui8Height, pui8Baseline);
-    }
-    else
-    {
+    } else {
         //
         // This is not a wrapped font so we can read the information directly
         // from the font structure passed.
@@ -1672,12 +1553,9 @@ GrFontBaselineGet(const tFont *psFont)
 
     ASSERT(psFont);
 
-    if(psFont->ui8Format != FONT_FMT_WRAPPED)
-    {
+    if(psFont->ui8Format != FONT_FMT_WRAPPED) {
         return((uint32_t)(psFont->ui8Baseline));
-    }
-    else
-    {
+    } else {
         tFontWrapper *pWrap;
 
         pWrap = (tFontWrapper *)psFont;
@@ -1707,12 +1585,9 @@ GrFontHeightGet(const tFont *psFont)
 
     ASSERT(psFont);
 
-    if(psFont->ui8Format != FONT_FMT_WRAPPED)
-    {
+    if(psFont->ui8Format != FONT_FMT_WRAPPED) {
         return(psFont->ui8Height);
-    }
-    else
-    {
+    } else {
         tFontWrapper *pWrap;
 
         pWrap = (tFontWrapper *)psFont;
@@ -1741,12 +1616,9 @@ GrFontMaxWidthGet(const tFont *psFont)
 
     ASSERT(psFont);
 
-    if(psFont->ui8Format != FONT_FMT_WRAPPED)
-    {
+    if(psFont->ui8Format != FONT_FMT_WRAPPED) {
         return(psFont->ui8MaxWidth);
-    }
-    else
-    {
+    } else {
         tFontWrapper *pWrap;
 
         pWrap = (tFontWrapper *)psFont;
@@ -1788,17 +1660,14 @@ FontGlyphDataGet(const tFont *psFont, uint32_t ui32CodePoint,
     // Extract various parameters from the font depending upon whether it's
     // in the tFont or tFontEx format.
     //
-    if(psFont->ui8Format & FONT_EX_MARKER)
-    {
+    if(psFont->ui8Format & FONT_EX_MARKER) {
         psFontEx = (const tFontEx *)psFont;
 
         pui8Glyphs = psFontEx->pui8Data;
         pui16Offset = psFontEx->pui16Offset;
         ui8First = psFontEx->ui8First;
         ui8Last = psFontEx->ui8Last;
-    }
-    else
-    {
+    } else {
         pui8Glyphs = psFont->pui8Data;
         pui16Offset = psFont->pui16Offset;
         ui8First = 32;
@@ -1808,17 +1677,14 @@ FontGlyphDataGet(const tFont *psFont, uint32_t ui32CodePoint,
     //
     // Does the codepoint passed exist in the font?
     //
-    if((ui32CodePoint >= ui8First) && (ui32CodePoint <= ui8Last))
-    {
+    if((ui32CodePoint >= ui8First) && (ui32CodePoint <= ui8Last)) {
         //
         // Yes - return a pointer to the glyph data for the character.
         //
         pui8Data = pui8Glyphs + pui16Offset[ui32CodePoint - ui8First];
         *pui8Width = pui8Data[1];
         return(pui8Data);
-    }
-    else
-    {
+    } else {
         //
         // No - the glyph doesn't exist so return NULL to indicate this.
         //
@@ -1862,15 +1728,13 @@ FontWideGlyphDataGet(const tFontWide *psFont, uint32_t ui32CodePoint,
     // Run through the blocks of the font looking for the one that contains
     // our codepoint.
     //
-    for(ui32Loop = 0; ui32Loop < psFont->ui16NumBlocks; ui32Loop++)
-    {
+    for(ui32Loop = 0; ui32Loop < psFont->ui16NumBlocks; ui32Loop++) {
         //
         // Does the codepoint lie within this block?
         //
         if((ui32CodePoint >= pBlock[ui32Loop].ui32StartCodepoint) &&
-           (ui32CodePoint < (pBlock[ui32Loop].ui32StartCodepoint +
-                             pBlock[ui32Loop].ui32NumCodepoints)))
-        {
+                (ui32CodePoint < (pBlock[ui32Loop].ui32StartCodepoint +
+                                  pBlock[ui32Loop].ui32NumCodepoints))) {
             //
             // Yes - drop out of the loop early.
             //
@@ -1881,8 +1745,7 @@ FontWideGlyphDataGet(const tFontWide *psFont, uint32_t ui32CodePoint,
     //
     // Did we find the block?
     //
-    if(ui32Loop == psFont->ui16NumBlocks)
-    {
+    if(ui32Loop == psFont->ui16NumBlocks) {
         //
         // No - return NULL to indicate that the character wasn't found.
         //
@@ -1901,8 +1764,7 @@ FontWideGlyphDataGet(const tFontWide *psFont, uint32_t ui32CodePoint,
     // Is the offset non-zero? Zero offset indicates that the glyph is not
     // encoded in the font.
     //
-    if(ui32Offset)
-    {
+    if(ui32Offset) {
         //
         // The offset is not 0 so this glyph does exist. Return a pointer to
         // its data.
@@ -1910,9 +1772,7 @@ FontWideGlyphDataGet(const tFontWide *psFont, uint32_t ui32CodePoint,
         pui8Data = (const uint8_t *)pui32OffsetTable + ui32Offset;
         *pui8Width = pui8Data[1];
         return(pui8Data);
-    }
-    else
-    {
+    } else {
         //
         // The glyph offset was 0 so this implies that the glyph does not
         // exist.  Return NULL to indicate this.
@@ -1950,8 +1810,7 @@ GrFontGlyphDataGet(const tFont *psFont, uint32_t ui32CodePoint,
     //
     // What type of font are we dealing with here?
     //
-    if(psFont->ui8Format == FONT_FMT_WRAPPED)
-    {
+    if(psFont->ui8Format == FONT_FMT_WRAPPED) {
         tFontWrapper *psFontWrapper;
 
         //
@@ -1962,18 +1821,14 @@ GrFontGlyphDataGet(const tFont *psFont, uint32_t ui32CodePoint,
         return(psFontWrapper->pFuncs->
                pfnFontGlyphDataGet(psFontWrapper->pui8FontId, ui32CodePoint,
                                    pui8Width));
-    }
-    else if (psFont->ui8Format & FONT_WIDE_MARKER)
-    {
+    } else if (psFont->ui8Format & FONT_WIDE_MARKER) {
         //
         // This is a wide character set font so call the relevant function to
         // retrieve the glyph data pointer.
         //
         return(FontWideGlyphDataGet((const tFontWide *)psFont, ui32CodePoint,
                                     pui8Width));
-    }
-    else
-    {
+    } else {
         //
         // This is an 8 bit font so call the relevant function to retrieve the
         // glyph data pointer.
@@ -2005,15 +1860,12 @@ GrFontCodepageGet(const tFont *psFont)
     //
     // Is this a wide character set font?
     //
-    if(psFont->ui8Format & FONT_WIDE_MARKER)
-    {
+    if(psFont->ui8Format & FONT_WIDE_MARKER) {
         //
         // Yes - read the font codepage from the header.
         //
         return(((tFontWide *)psFont)->ui16Codepage);
-    }
-    else if(psFont->ui8Format & FONT_FMT_WRAPPED)
-    {
+    } else if(psFont->ui8Format & FONT_FMT_WRAPPED) {
         //
         // This is a wrapper-based font so call the access function to get
         // its codepage.
@@ -2022,9 +1874,7 @@ GrFontCodepageGet(const tFont *psFont)
 
         return(((tFontWrapper *)psFont)->pFuncs->
                pfnFontCodepageGet(((tFontWrapper *)psFont)->pui8FontId));
-    }
-    else
-    {
+    } else {
         //
         // No - this is an old format font so just return ISO8859-1.  This is
         // compatible with ASCII so should be benign.
@@ -2048,8 +1898,7 @@ UpdateContextCharMapping(tContext *pContext)
     //
     // Make sure we have a font selected.
     //
-    if(!pContext->psFont)
-    {
+    if(!pContext->psFont) {
         //
         // No font is yet selected so we can't determine the codepage map to
         // use.
@@ -2066,13 +1915,11 @@ UpdateContextCharMapping(tContext *pContext)
     // Look through the codepage mapping functions we have been given and
     // find an appropriate one.
     //
-    for(ui32Loop = 0; ui32Loop < pContext->ui8NumCodePointMaps; ui32Loop++)
-    {
+    for(ui32Loop = 0; ui32Loop < pContext->ui8NumCodePointMaps; ui32Loop++) {
         if((pContext->pCodePointMapTable[ui32Loop].ui16SrcCodepage ==
-            pContext->ui16Codepage) &&
-           (pContext->pCodePointMapTable[ui32Loop].ui16FontCodepage ==
-            ui16FontCodepage))
-        {
+                pContext->ui16Codepage) &&
+                (pContext->pCodePointMapTable[ui32Loop].ui16FontCodepage ==
+                 ui16FontCodepage)) {
             //
             // We found a suitable mapping function so remember it.
             //
@@ -2115,15 +1962,12 @@ GrFontNumBlocksGet(const tFont *psFont)
     //
     // Is this a wide character set font?
     //
-    if(psFont->ui8Format & FONT_WIDE_MARKER)
-    {
+    if(psFont->ui8Format & FONT_WIDE_MARKER) {
         //
         // Yes - read the number of blocks from the header.
         //
         return(((tFontWide *)psFont)->ui16NumBlocks);
-    }
-    else if(psFont->ui8Format & FONT_FMT_WRAPPED)
-    {
+    } else if(psFont->ui8Format & FONT_FMT_WRAPPED) {
         //
         // This is a wrapper-based font so call the access function to get
         // the information.
@@ -2132,9 +1976,7 @@ GrFontNumBlocksGet(const tFont *psFont)
 
         return(((tFontWrapper *)psFont)->pFuncs->
                pfnFontNumBlocksGet(((tFontWrapper *)psFont)->pui8FontId));
-    }
-    else
-    {
+    } else {
         //
         // No - this is an old format font so it only supports a single block
         // of characters.
@@ -2184,8 +2026,7 @@ GrFontBlockCodepointsGet(const tFont *psFont, uint16_t ui16BlockIndex,
     //
     // Is this a wide character set font?
     //
-    if(psFont->ui8Format & FONT_WIDE_MARKER)
-    {
+    if(psFont->ui8Format & FONT_WIDE_MARKER) {
         tFontWide *psFontWide;
         tFontBlock *pBlock;
 
@@ -2193,8 +2034,7 @@ GrFontBlockCodepointsGet(const tFont *psFont, uint16_t ui16BlockIndex,
         // This is a wide character set font.  Is the block index valid?
         //
         psFontWide = (tFontWide *)psFont;
-        if(ui16BlockIndex >= psFontWide->ui16NumBlocks)
-        {
+        if(ui16BlockIndex >= psFontWide->ui16NumBlocks) {
             //
             // The block number is invalid so return 0 to indicate the error.
             //
@@ -2208,9 +2048,7 @@ GrFontBlockCodepointsGet(const tFont *psFont, uint16_t ui16BlockIndex,
         pBlock = (tFontBlock *)(psFontWide + 1);
         *pui32Start = pBlock[ui16BlockIndex].ui32StartCodepoint;
         return(pBlock[ui16BlockIndex].ui32NumCodepoints);
-    }
-    else if(psFont->ui8Format & FONT_FMT_WRAPPED)
-    {
+    } else if(psFont->ui8Format & FONT_FMT_WRAPPED) {
         //
         // This is a wrapper-based font so call the access function to get
         // its codepage.
@@ -2220,15 +2058,12 @@ GrFontBlockCodepointsGet(const tFont *psFont, uint16_t ui16BlockIndex,
         return(((tFontWrapper *)psFont)->pFuncs->
                pfnFontBlockCodepointsGet(((tFontWrapper *)psFont)->pui8FontId,
                                          ui16BlockIndex, pui32Start));
-    }
-    else
-    {
+    } else {
         //
         // No - this is an old format font so it only supports a single block
         // of
         //
-        if(ui16BlockIndex != 0)
-        {
+        if(ui16BlockIndex != 0) {
             //
             // An invalid block number was passed so return 0 to indicate an
             // error.
@@ -2241,27 +2076,24 @@ GrFontBlockCodepointsGet(const tFont *psFont, uint16_t ui16BlockIndex,
         // codepoint and number of characters.  Is this an extended font or
         // the original ASCII-only flavor?
         //
-         if(psFont->ui8Format & FONT_EX_MARKER)
-         {
-             tFontEx *psFontEx;
+        if(psFont->ui8Format & FONT_EX_MARKER) {
+            tFontEx *psFontEx;
 
-             //
-             // It's an extended font so read the character range from the
-             // header.
-             //
-             psFontEx = (tFontEx *)psFont;
+            //
+            // It's an extended font so read the character range from the
+            // header.
+            //
+            psFontEx = (tFontEx *)psFont;
 
-             *pui32Start = (uint32_t)psFontEx->ui8First;
-             return((uint32_t)(psFontEx->ui8Last - psFontEx->ui8First + 1));
-         }
-         else
-         {
-             //
-             // This is an ASCII font so it supports a fixed set of characters.
-             //
-             *pui32Start = 0x20;
-             return(96);
-         }
+            *pui32Start = (uint32_t)psFontEx->ui8First;
+            return((uint32_t)(psFontEx->ui8Last - psFontEx->ui8First + 1));
+        } else {
+            //
+            // This is an ASCII font so it supports a fixed set of characters.
+            //
+            *pui32Start = 0x20;
+            return(96);
+        }
     }
 }
 
@@ -2490,13 +2322,11 @@ GrStringLanguageSet(uint16_t ui16LangID)
     //
     // Search for the requested language.
     //
-    for(i32Lang = 0; i32Lang < g_ui16NumLanguages; i32Lang++)
-    {
+    for(i32Lang = 0; i32Lang < g_ui16NumLanguages; i32Lang++) {
         //
         // Once found, break out and save the new language.
         //
-        if(g_pui16LanguageTable[i32Lang] == ui16LangID)
-        {
+        if(g_pui16LanguageTable[i32Lang] == ui16LangID) {
             break;
         }
     }
@@ -2505,8 +2335,7 @@ GrStringLanguageSet(uint16_t ui16LangID)
     // Only accept the language if it was found, otherwise continue using
     // previous language.
     //
-    if(i32Lang != g_ui16NumLanguages)
-    {
+    if(i32Lang != g_ui16NumLanguages) {
         g_ui16Language = i32Lang;
         return(1);
     }
@@ -2553,26 +2382,23 @@ GrStringGet(int32_t i32Index, char *pcData, uint32_t ui32Size)
     // this could nest multiple layers, so we follow in
     //
     ui32SubCode[i32Pos] = g_pui32StringTable[(g_ui16Language *
-                                              g_ui16NumStrings) + i32Index];
+                          g_ui16NumStrings) + i32Index];
 
-    if(SC_GET_LEN(ui32SubCode[i32Pos]))
-    {
+    if(SC_GET_LEN(ui32SubCode[i32Pos])) {
         //
         // recurse down
         //
-        while(i32Pos < 16)
-        {
+        while(i32Pos < 16) {
             //
             // Copy over the partial (if any) from a previous string.
             //
             i32Idx = SC_GET_INDEX(ui32SubCode[i32Pos++]);
 
             ui32SubCode[i32Pos] = g_pui32StringTable[(g_ui16Language *
-                                                      g_ui16NumStrings) +
-                                                     i32Idx];
+                                  g_ui16NumStrings) +
+                                  i32Idx];
 
-            if(!SC_GET_LEN(ui32SubCode[i32Pos]))
-            {
+            if(!SC_GET_LEN(ui32SubCode[i32Pos])) {
                 //
                 // not linked, just string
                 //
@@ -2589,22 +2415,18 @@ GrStringGet(int32_t i32Index, char *pcData, uint32_t ui32Size)
     //
     // Build up the string in pieces.
     //
-    while(i32Pos >= 0)
-    {
+    while(i32Pos >= 0) {
         //
         // Get the offset in string table.
         //
         ui32Offset = SC_GET_OFF(ui32SubCode[i32Pos]);
 
-        if(ui32Offset == SC_IS_NULL)
-        {
+        if(ui32Offset == SC_IS_NULL) {
             //
             // An empty string.
             //
             pcData[i32Idx] = 0;
-        }
-        else if(ui32Offset & SC_FLAG_COMPRESSED)
-        {
+        } else if(ui32Offset & SC_FLAG_COMPRESSED) {
             //
             // This is a compressed string so initialize the pointer to the
             // compressed data.
@@ -2626,8 +2448,7 @@ GrStringGet(int32_t i32Index, char *pcData, uint32_t ui32Size)
             // If the out buffer is beyond the maximum size then just break
             // out and return what we have so far.
             //
-            if((char *)pui8BufferOut > (pcData + ui32Size))
-            {
+            if((char *)pui8BufferOut > (pcData + ui32Size)) {
                 break;
             }
 
@@ -2635,70 +2456,56 @@ GrStringGet(int32_t i32Index, char *pcData, uint32_t ui32Size)
             // Now build up real string by decompressing bits.
             //
             if(!SC_GET_LEN(ui32SubCode[i32Pos]) &&
-               SC_GET_INDEX(ui32SubCode[i32Pos]))
-            {
+                    SC_GET_INDEX(ui32SubCode[i32Pos])) {
                 i32Skip = SC_GET_INDEX(ui32SubCode[i32Pos]);
 
-                if(i32Pos)
-                {
+                if(i32Pos) {
                     ui32Len = SC_GET_LEN(ui32SubCode[i32Pos - 1]);
-                }
-                else
-                {
+                } else {
                     ui32Len = (i32Skip & 0x3f);
                 }
 
                 i32Skip >>= 6;
                 i32Idx += ui32Len;
                 ui32Len += i32Skip;
-            }
-            else if(i32Pos)
-            {
+            } else if(i32Pos) {
                 //
                 // Get the length of the partial string.
                 //
                 ui32Len = SC_GET_LEN(ui32SubCode[i32Pos - 1]) - i32Idx;
                 i32Idx += ui32Len;
-            }
-            else if(!SC_GET_LEN(ui32SubCode[0]) &&
-                    SC_GET_INDEX(ui32SubCode[0]))
-            {
+            } else if(!SC_GET_LEN(ui32SubCode[0]) &&
+                      SC_GET_INDEX(ui32SubCode[0])) {
                 ui32Len = SC_GET_INDEX(ui32SubCode[0]);
                 i32Skip = ui32Len >> 6;
                 ui32Len = (ui32Len & 0x3f) + i32Skip;
-            }
-            else
-            {
+            } else {
                 //
                 // Arbitrary as null character ends the string.
                 //
                 ui32Len = 1024;
             }
 
-            for(; ui32Len; ui32Len--)
-            {
+            for(; ui32Len; ui32Len--) {
                 //
                 // Packed 6 bits for each char
                 //
                 *pui8BufferOut = (*pui8String >> i32Bit) & 0x3f;
 
-                if(i32Bit >= 2)
-                {
+                if(i32Bit >= 2) {
                     *pui8BufferOut |= (*++pui8String << (8 - i32Bit)) & 0x3f;
                 }
 
                 i32Bit = (i32Bit + 6) & 0x7;
 
-                if(!*pui8BufferOut)
-                {
+                if(!*pui8BufferOut) {
                     //
                     // end of string
                     //
                     break;
                 }
 
-                if(i32Skip)
-                {
+                if(i32Skip) {
                     i32Skip--;
                     continue;
                 }
@@ -2712,20 +2519,13 @@ GrStringGet(int32_t i32Index, char *pcData, uint32_t ui32Size)
                 // Now look for a few special chars we mapped up into other
                 // characters.
                 //
-                if(*pui8BufferOut == '`')
-                {
+                if(*pui8BufferOut == '`') {
                     *pui8BufferOut = ' ';
-                }
-                else if(*pui8BufferOut == '~')
-                {
+                } else if(*pui8BufferOut == '~') {
                     *pui8BufferOut = '-';
-                }
-                else if(*pui8BufferOut == 0x7f)
-                {
+                } else if(*pui8BufferOut == 0x7f) {
                     *pui8BufferOut = '.';
-                }
-                else if(*pui8BufferOut == '\\')
-                {
+                } else if(*pui8BufferOut == '\\') {
                     *pui8BufferOut = ':';
                 }
 
@@ -2735,14 +2535,11 @@ GrStringGet(int32_t i32Index, char *pcData, uint32_t ui32Size)
                 //
                 pui8BufferOut++;
 
-                if((char *)pui8BufferOut >= (pcData + ui32Size))
-                {
+                if((char *)pui8BufferOut >= (pcData + ui32Size)) {
                     break;
                 }
             }
-        }
-        else if(i32Pos)
-        {
+        } else if(i32Pos) {
             //
             // Part of another string
             //
@@ -2752,58 +2549,46 @@ GrStringGet(int32_t i32Index, char *pcData, uint32_t ui32Size)
             // Prevent this copy from going beyond the end of the buffer
             // provided.
             //
-            if((i32Idx + ui32Len) > ui32Size)
-            {
+            if((i32Idx + ui32Len) > ui32Size) {
                 ui32Len = ui32Size - i32Idx;
             }
 
             //
             // Copy this portion of the string to the output buffer.
             //
-            for(i32Buf = 0; i32Buf < ui32Len; i32Buf++)
-            {
+            for(i32Buf = 0; i32Buf < ui32Len; i32Buf++) {
                 pcData[i32Idx + i32Buf] = g_pui8StringData[ui32Offset +
-                                                           i32Buf];
+                                          i32Buf];
             }
 
             i32Idx += ui32Len;
-        }
-        else if(SC_GET_INDEX(ui32SubCode[0]) && !SC_GET_LEN(ui32SubCode[0]))
-        {
+        } else if(SC_GET_INDEX(ui32SubCode[0]) && !SC_GET_LEN(ui32SubCode[0])) {
             //
             // Copy this portion of the string to the output buffer.
             //
-            for(i32Buf = 0; i32Buf < SC_GET_INDEX(ui32SubCode[0]); i32Buf++)
-            {
-                if((i32Idx + i32Buf) < ui32Size)
-                {
+            for(i32Buf = 0; i32Buf < SC_GET_INDEX(ui32SubCode[0]); i32Buf++) {
+                if((i32Idx + i32Buf) < ui32Size) {
                     pcData[i32Idx + i32Buf] = g_pui8StringData[ui32Offset +
-                                                               i32Buf];
-                }
-                else
-                {
+                                              i32Buf];
+                } else {
                     break;
                 }
             }
-        }
-        else
-        {
+        } else {
             //
             // Now copy the last piece of the string.
             //
-            for(i32Buf = 0; i32Buf < (ui32Size - i32Idx); i32Buf++)
-            {
+            for(i32Buf = 0; i32Buf < (ui32Size - i32Idx); i32Buf++) {
                 //
                 // Copy the string to the output buffer.
                 //
                 pcData[i32Idx + i32Buf] = g_pui8StringData[ui32Offset +
-                                                           i32Buf];
+                                          i32Buf];
 
                 //
                 // If a null is hit then terminate the copy.
                 //
-                if(pcData[i32Idx + i32Buf] == 0)
-                {
+                if(pcData[i32Idx + i32Buf] == 0) {
                     break;
                 }
             }
@@ -2814,8 +2599,7 @@ GrStringGet(int32_t i32Index, char *pcData, uint32_t ui32Size)
             // the function that returns the length happy).  This will be the
             // case if we are using an uncompressed string table.
             //
-            if(!pui8BufferOut)
-            {
+            if(!pui8BufferOut) {
                 pui8BufferOut = (uint8_t *)pcData + (i32Idx + i32Buf);
             }
         }
@@ -2825,20 +2609,16 @@ GrStringGet(int32_t i32Index, char *pcData, uint32_t ui32Size)
     //
     // Return the number of bytes copied into the output buffer.
     //
-    if(pui8BufferOut)
-    {
+    if(pui8BufferOut) {
         ui32Len = ((uint32_t)pui8BufferOut - (uint32_t)pcData);
 
         //
         // Null terminate the string if there is room.
         //
-        if(ui32Len < ui32Size)
-        {
+        if(ui32Len < ui32Size) {
             pcData[ui32Len] = 0;
         }
-    }
-    else
-    {
+    } else {
         ui32Len = 0;
     }
 

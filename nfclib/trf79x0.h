@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -55,8 +55,7 @@
 // development board.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     RF_DAUGHTER_NONE = 0,
     RF_DAUGHTER_TRF7960ATB = 1,
     RF_DAUGHTER_TRF7970ATB = 2,
@@ -292,8 +291,7 @@ extern unsigned char g_ucNfcWorkMode;
 //
 // States for the TRF79x0 State Machine
 //
-typedef enum
-{
+typedef enum {
     BOARD_INIT = 0,
     P2P_INITATIOR_MODE,
     P2P_PASSIVE_TARGET_MODE,
@@ -305,8 +303,7 @@ typedef enum
 //
 // Frequency Settings for TRF79x0
 //
-typedef enum
-{
+typedef enum {
     FREQ_STAND_BY= 0,           // Used for Board Initialization
     FREQ_106_KBPS,
     FREQ_212_KBPS,
@@ -316,8 +313,7 @@ typedef enum
 //
 // CRC Settings for TRF79x0
 //
-typedef enum
-{
+typedef enum {
     CRC_BIT_DISABLE = 0,
     CRC_BIT_ENABLE
 } tTRF79x0CRC;
@@ -325,8 +321,7 @@ typedef enum
 //
 // IRQ Flag deffinitions. Defined in datasheet, provided for ease of use
 //
-typedef enum
-{
+typedef enum {
     IRQ_STATUS_IDLE = 0x00,
     IRQ_STATUS_COLLISION_ERROR = 0x01,
     IRQ_STATUS_COLLISION_AVOID_FINISHED = 0x02,
@@ -356,20 +351,20 @@ extern uint8_t* TRF79x0GetNFCBuffer(void);
 extern void TRF79x0DirectCommand(uint8_t ucCommand);
 extern void TRF79x0ResetFifoCommand(void);
 extern tStatus TRF79x0Init2(tTRF79x0TRFMode eMode,
-                                tTRF79x0Frequency eFrequency);
+                            tTRF79x0Frequency eFrequency);
 tStatus TRF79x0WriteFIFO(uint8_t *pui8Buffer, tTRF79x0CRC eCRCBit,
-                            uint8_t ui8Length);
+                         uint8_t ui8Length);
 tTRF79x0IRQFlag TRF79x0IRQHandler(uint16_t ui16TimeOut);
 extern void TRF79x0WriteRegister(unsigned char ucAddress,
                                  unsigned char ucData);
 extern void TRF79x0WriteRegisterContinuous(unsigned char ucAddress,
-                                           unsigned char *pucData,
-                                           unsigned int uiLength);
+        unsigned char *pucData,
+        unsigned int uiLength);
 extern unsigned char TRF79x0ReadIRQStatus(void);
 extern unsigned char TRF79x0ReadRegister(unsigned char ucAddress);
 extern void TRF79x0ReadRegisterContinuous(unsigned char ucAddress,
-                                          unsigned char *pucData,
-                                          unsigned int uiLength);
+        unsigned char *pucData,
+        unsigned int uiLength);
 extern void TRF79x0FIFOWrite(unsigned char const *pucData,
                              unsigned int uiLength);
 extern void TRF79x0Receive(unsigned char *pucData, unsigned int *puiLength);
@@ -388,13 +383,13 @@ extern int TRF79x0GetCollisionPosition(void);
 extern int TRF79x0IsCollision(void);
 extern void TRF79x0InitialSettings(void);
 extern void TRF79x0ReceiveAgain(unsigned char *pucRXBuf,
-                                    unsigned int *puiRXLen);
+                                unsigned int *puiRXLen);
 extern void TRF79x0ReceiveEnd(void);
 extern void TRF79x0TransceiveISO15693(unsigned char const *pucTXBuf,
-                                unsigned int uiTXLen,
-                                unsigned int uiTXBits, unsigned char *pucRXBuf,
-                                unsigned int *puiRXLen, unsigned int *puiRXBits,
-                                unsigned int uiFlags);
+                                      unsigned int uiTXLen,
+                                      unsigned int uiTXBits, unsigned char *pucRXBuf,
+                                      unsigned int *puiRXLen, unsigned int *puiRXBits,
+                                      unsigned int uiFlags);
 extern int SendResponse(int Something, int DataLength, char *DataPtr);
 extern int SendResponse_w_o_CRC(int Something, int DataLength, char *DataPtr);
 #endif

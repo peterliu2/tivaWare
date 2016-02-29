@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -120,13 +120,10 @@ UpdateStatusBox(const tRectangle *psRect, const char *pcString, bool bActive)
     //
     // Change the status box to green for active devices.
     //
-    if(bActive)
-    {
+    if(bActive) {
         GrContextForegroundSet(&g_sContext, ClrOrange);
         ui32TextColor = ClrBlack;
-    }
-    else
-    {
+    } else {
         GrContextForegroundSet(&g_sContext, ClrBlack);
         ui32TextColor = ClrWhite;
     }
@@ -155,8 +152,8 @@ UpdateStatusBox(const tRectangle *psRect, const char *pcString, bool bActive)
     // Unknown device is currently connected.
     //
     GrStringDrawCentered(&g_sContext, pcString, -1,
-                   psRect->i16XMin + ((psRect->i16XMax - psRect->i16XMin) / 2),
-                   psRect->i16YMin + (BUTTON_HEIGHT / 2), false);
+                         psRect->i16XMin + ((psRect->i16XMax - psRect->i16XMin) / 2),
+                         psRect->i16YMin + (BUTTON_HEIGHT / 2), false);
 
 }
 
@@ -180,8 +177,7 @@ UpdateCursor(void)
     // If the left button is not pressed then erase the previous cursor
     // position.
     //
-    if((g_sStatus.ui32Buttons & 1) == 0)
-    {
+    if((g_sStatus.ui32Buttons & 1) == 0) {
         //
         // Erase the previous cursor.
         //
@@ -192,16 +188,11 @@ UpdateCursor(void)
     //
     // Update the X position.
     //
-    if(g_sStatus.ui32XPos >= (MOUSE_MAX_X - DISPLAY_MOUSE_SIZE))
-    {
+    if(g_sStatus.ui32XPos >= (MOUSE_MAX_X - DISPLAY_MOUSE_SIZE)) {
         g_sCursor.i16XMin = MOUSE_MAX_X - DISPLAY_MOUSE_SIZE - 1;
-    }
-    else if(g_sStatus.ui32XPos < MOUSE_MIN_X)
-    {
+    } else if(g_sStatus.ui32XPos < MOUSE_MIN_X) {
         g_sCursor.i16XMin = MOUSE_MIN_X;
-    }
-    else
-    {
+    } else {
         g_sCursor.i16XMin = g_sStatus.ui32XPos;
     }
 
@@ -210,16 +201,11 @@ UpdateCursor(void)
     //
     // Update the Y position.
     //
-    if(g_sStatus.ui32YPos >= (MOUSE_MAX_Y - DISPLAY_MOUSE_SIZE))
-    {
+    if(g_sStatus.ui32YPos >= (MOUSE_MAX_Y - DISPLAY_MOUSE_SIZE)) {
         g_sCursor.i16YMin = MOUSE_MAX_Y - DISPLAY_MOUSE_SIZE - 1;
-    }
-    else if(g_sStatus.ui32YPos < MOUSE_MIN_Y)
-    {
+    } else if(g_sStatus.ui32YPos < MOUSE_MIN_Y) {
         g_sCursor.i16YMin = MOUSE_MIN_Y;
-    }
-    else
-    {
+    } else {
         g_sCursor.i16YMin = g_sStatus.ui32YPos;
     }
 
@@ -259,17 +245,13 @@ UpdateButtons(void)
     //
     // Check all three buttons.
     //
-    for(iButton = 0; iButton < 3; iButton++)
-    {
+    for(iButton = 0; iButton < 3; iButton++) {
         //
         // Draw the button indicator red if pressed and black if not pressed.
         //
-        if(g_sStatus.ui32Buttons & (1 << iButton))
-        {
+        if(g_sStatus.ui32Buttons & (1 << iButton)) {
             GrContextForegroundSet(&g_sContext, ClrRed);
-        }
-        else
-        {
+        } else {
             GrContextForegroundSet(&g_sContext, ClrBlack);
         }
 
@@ -305,8 +287,7 @@ UIUpdateStatus(void)
 {
     uint8_t ui8DevClass, ui8DevProtocol;
     static const char pcNoPos[] = "---,---";
-    static const tRectangle psRect[2] =
-    {
+    static const tRectangle psRect[2] = {
         {
             DISPLAY_TEXT_BORDER_H,
             STATUS_MIN_Y,
@@ -333,8 +314,7 @@ UIUpdateStatus(void)
     //
     ui8DevProtocol = USB_HID_PROTOCOL_NONE;
 
-    if(g_sStatus.bConnected)
-    {
+    if(g_sStatus.bConnected) {
         ui8DevClass = USBHCDDevClass(g_sStatus.ui32Instance, 0);
         ui8DevProtocol = USBHCDDevProtocol(g_sStatus.ui32Instance, 0);
 
@@ -342,62 +322,47 @@ UIUpdateStatus(void)
         // If the class has not yet been recognized then print out the new
         // class of device that has been connected.
         //
-        if(g_bTypeUpdated == false)
-        {
+        if(g_bTypeUpdated == false) {
             //
             // Now the class has been updated so do not update it again.
             //
             g_bTypeUpdated = true;
 
-            if(ui8DevClass == USB_CLASS_HID)
-            {
-                if(ui8DevProtocol == USB_HID_PROTOCOL_MOUSE)
-                {
+            if(ui8DevClass == USB_CLASS_HID) {
+                if(ui8DevProtocol == USB_HID_PROTOCOL_MOUSE) {
                     //
                     // Mouse is currently connected.
                     //
                     UpdateStatusBox(&psRect[0], "Mouse", true);
-                }
-                else if(ui8DevProtocol == USB_HID_PROTOCOL_KEYB)
-                {
+                } else if(ui8DevProtocol == USB_HID_PROTOCOL_KEYB) {
                     //
                     // Keyboard is currently connected.
                     //
                     UpdateStatusBox(&psRect[0], "Keyboard", true);
-                }
-                else
-                {
+                } else {
                     //
                     // Unknown device is currently connected.
                     //
                     UpdateStatusBox(&psRect[0], "Unknown", true);
                 }
-            }
-            else if(ui8DevClass == USB_CLASS_MASS_STORAGE)
-            {
+            } else if(ui8DevClass == USB_CLASS_MASS_STORAGE) {
                 //
                 // MSC device is currently connected.
                 //
                 UpdateStatusBox(&psRect[0], "Mass Storage", true);
-            }
-            else if(ui8DevClass == USB_CLASS_HUB)
-            {
+            } else if(ui8DevClass == USB_CLASS_HUB) {
                 //
                 // MSC device is currently connected.
                 //
                 UpdateStatusBox(&psRect[0], "Hub", true);
-            }
-            else
-            {
+            } else {
                 //
                 // Unknown device is currently connected.
                 //
                 UpdateStatusBox(&psRect[0], "Unknown", true);
             }
         }
-    }
-    else
-    {
+    } else {
         //
         // Unknown device is currently connected.
         //
@@ -410,8 +375,7 @@ UIUpdateStatus(void)
         g_bTypeUpdated = false;
     }
 
-    if(ui8DevProtocol == USB_HID_PROTOCOL_MOUSE)
-    {
+    if(ui8DevProtocol == USB_HID_PROTOCOL_MOUSE) {
         //
         // Update the current cursor position.
         //
@@ -419,9 +383,7 @@ UIUpdateStatus(void)
 
         usprintf(pcPos, "%3d,%3d", g_sCursor.i16XMin, g_sCursor.i16YMin);
         UpdateStatusBox(&psRect[1], pcPos, false);
-    }
-    else
-    {
+    } else {
         UpdateStatusBox(&psRect[1], pcNoPos, false);
     }
 

@@ -74,8 +74,7 @@ static unsigned long pulStack[STACK_SIZE] @ ".noinit";
 // pointers.
 //
 //*****************************************************************************
-typedef union
-{
+typedef union {
     void (*pfnHandler)(void);
     unsigned long ulPtr;
 }
@@ -88,10 +87,9 @@ uVectorEntry;
 // 0x0000.0000.
 //
 //*****************************************************************************
-__root const uVectorEntry __vector_table[] @ ".intvec" =
-{
+__root const uVectorEntry __vector_table[] @ ".intvec" = {
     { .ulPtr = (unsigned long)pulStack + sizeof(pulStack) },
-                                            // The initial stack pointer
+    // The initial stack pointer
     __iar_program_start,                    // The reset handler
     NmiSR,                                  // The NMI handler
     FaultISR,                               // The hard fault handler
@@ -153,8 +151,7 @@ NmiSR(void)
     //
     // Enter an infinite loop.
     //
-    while(1)
-    {
+    while(1) {
     }
 }
 
@@ -171,8 +168,7 @@ FaultISR(void)
     //
     // Enter an infinite loop.
     //
-    while(1)
-    {
+    while(1) {
     }
 }
 
@@ -189,7 +185,6 @@ IntDefaultHandler(void)
     //
     // Go into an infinite loop.
     //
-    while(1)
-    {
+    while(1) {
     }
 }

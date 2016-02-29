@@ -57,10 +57,16 @@ FL_EXPORT void gl_start();
 FL_EXPORT void gl_finish();
 
 FL_EXPORT void gl_color(Fl_Color);
-inline void gl_color(int c) {gl_color((Fl_Color)c);} // back compatability
+inline void gl_color(int c)
+{
+    gl_color((Fl_Color)c);   // back compatability
+}
 
 FL_EXPORT void gl_rect(int x,int y,int w,int h);
-inline void gl_rectf(int x,int y,int w,int h) {glRecti(x,y,x+w,y+h);}
+inline void gl_rectf(int x,int y,int w,int h)
+{
+    glRecti(x,y,x+w,y+h);
+}
 
 FL_EXPORT void gl_font(int fontid, int size);
 FL_EXPORT int  gl_height();

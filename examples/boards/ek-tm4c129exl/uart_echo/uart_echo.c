@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C129EXL Firmware Package.
 //
 //*****************************************************************************
@@ -90,8 +90,7 @@ UARTIntHandler(void)
     //
     // Loop while there are characters in the receive FIFO.
     //
-    while(ROM_UARTCharsAvail(UART0_BASE))
-    {
+    while(ROM_UARTCharsAvail(UART0_BASE)) {
         //
         // Read the next character from the UART and write it back to the UART.
         //
@@ -126,8 +125,7 @@ UARTSend(const uint8_t *pui8Buffer, uint32_t ui32Count)
     //
     // Loop while there are more characters to send.
     //
-    while(ui32Count--)
-    {
+    while(ui32Count--) {
         //
         // Write the next character to the UART.
         //
@@ -147,9 +145,9 @@ main(void)
     // Set the clocking to run directly from the crystal at 120MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN |
-                                             SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN |
+                                            SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
     //
     // Enable the GPIO port that is used for the on-board LED.
     //
@@ -199,7 +197,6 @@ main(void)
     //
     // Loop forever echoing data through the UART.
     //
-    while(1)
-    {
+    while(1) {
     }
 }

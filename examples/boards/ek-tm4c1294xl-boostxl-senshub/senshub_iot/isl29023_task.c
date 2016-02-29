@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -125,13 +125,11 @@ sISL29023Data_t g_sISL29023Data;
 // creates a +/- 1% hysteresis band between range adjustments.
 //
 //*****************************************************************************
-const float g_fThresholdHigh[4] =
-{
+const float g_fThresholdHigh[4] = {
     810.0f, 3240.0f, 12960.0f, 64000.0f
 };
 
-const float g_fThresholdLow[4] =
-{
+const float g_fThresholdLow[4] = {
     0.0f, 760.0f, 3040.0f, 12160.0f
 };
 
@@ -166,8 +164,7 @@ ISL29023AppCallback(void *pvCallbackData, uint_fast8_t ui8Status)
     // If a higher priority task was waiting for a semaphore released by this
     // isr then that high priority task will run when the ISR exits.
     //
-    if(xHigherPriorityTaskWokenTransaction == pdTRUE)
-    {
+    if(xHigherPriorityTaskWokenTransaction == pdTRUE) {
         portYIELD_FROM_ISR(true);
     }
 }
@@ -306,14 +303,12 @@ ISL29023AppAdjustRange(float fVisible)
     //
     // Check if we crossed the upper threshold.
     //
-    if(fVisible > g_fThresholdHigh[g_sISL29023Inst.ui8Range])
-    {
+    if(fVisible > g_fThresholdHigh[g_sISL29023Inst.ui8Range]) {
         //
         // The current intensity is over our threshold so adjsut the range
         // accordingly
         //
-        if(g_sISL29023Inst.ui8Range < ISL29023_CMD_II_RANGE_64K)
-        {
+        if(g_sISL29023Inst.ui8Range < ISL29023_CMD_II_RANGE_64K) {
             ui8NewRange = g_sISL29023Inst.ui8Range + 1;
         }
     }
@@ -321,14 +316,12 @@ ISL29023AppAdjustRange(float fVisible)
     //
     // Check if we crossed the lower threshold
     //
-    if(fVisible < g_fThresholdLow[g_sISL29023Inst.ui8Range])
-    {
+    if(fVisible < g_fThresholdLow[g_sISL29023Inst.ui8Range]) {
         //
         // If possible go to the next lower range setting and re-config the
         // thresholds.
         //
-        if(g_sISL29023Inst.ui8Range > ISL29023_CMD_II_RANGE_1K)
-        {
+        if(g_sISL29023Inst.ui8Range > ISL29023_CMD_II_RANGE_1K) {
             ui8NewRange = g_sISL29023Inst.ui8Range - 1;
         }
     }
@@ -336,8 +329,7 @@ ISL29023AppAdjustRange(float fVisible)
     //
     // If the desired range value changed then send the new range to the sensor
     //
-    if(ui8NewRange != g_sISL29023Inst.ui8Range)
-    {
+    if(ui8NewRange != g_sISL29023Inst.ui8Range) {
         //
         // Take the I2C semaphore.
         //
@@ -363,8 +355,7 @@ ISL29023AppAdjustRange(float fVisible)
         //
         // If an error occurred call the error handler immediately.
         //
-        if(g_vui8ISL29023I2CErrorStatus)
-        {
+        if(g_vui8ISL29023I2CErrorStatus) {
             ISL29023AppErrorHandler(__FILE__, __LINE__);
         }
     }
@@ -393,8 +384,7 @@ IntHandlerGPIOPortE(void)
     //
     GPIOIntClear(GPIO_PORTE_BASE, ulStatus);
 
-    if(ulStatus & GPIO_PIN_5)
-    {
+    if(ulStatus & GPIO_PIN_5) {
         //
         // ISL29023 has indicated that the light level has crossed outside of
         // the intensity threshold levels set in INT_LT and INT_HT registers.
@@ -407,8 +397,7 @@ IntHandlerGPIOPortE(void)
         // make sure it has opportunity to run immediately upon return from
         // this ISR.
         //
-        if(xHigherPriorityTaskWoken == pdTRUE)
-        {
+        if(xHigherPriorityTaskWoken == pdTRUE) {
             portYIELD_FROM_ISR(true);
         }
     }
@@ -455,8 +444,7 @@ ISL29023Task(void *pvParameters)
     //
     // If an error occurred call the error handler immediately.
     //
-    if(g_vui8ISL29023I2CErrorStatus)
-    {
+    if(g_vui8ISL29023I2CErrorStatus) {
         //
         // Give back the I2C Semaphore
         //
@@ -488,8 +476,7 @@ ISL29023Task(void *pvParameters)
     //
     // If an error occurred call the error handler immediately.
     //
-    if(g_vui8ISL29023I2CErrorStatus)
-    {
+    if(g_vui8ISL29023I2CErrorStatus) {
         //
         // Give back the I2C Semaphore
         //
@@ -518,8 +505,7 @@ ISL29023Task(void *pvParameters)
     //
     // If an error occurred call the error handler immediately.
     //
-    if(g_vui8ISL29023I2CErrorStatus)
-    {
+    if(g_vui8ISL29023I2CErrorStatus) {
         //
         // Give back the I2C Semaphore
         //
@@ -553,8 +539,7 @@ ISL29023Task(void *pvParameters)
     //
     // If an error occurred call the error handler immediately.
     //
-    if(g_vui8ISL29023I2CErrorStatus)
-    {
+    if(g_vui8ISL29023I2CErrorStatus) {
         ISL29023AppErrorHandler(__FILE__, __LINE__);
     }
 
@@ -566,13 +551,12 @@ ISL29023Task(void *pvParameters)
     //
     // Loop forever.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Wait for the required amount of time to check back.
         //
         vTaskDelayUntil(&xLastWakeTime, ISL29023_TASK_PERIOD_MS /
-                                        portTICK_RATE_MS);
+                        portTICK_RATE_MS);
 
         //
         // Take the I2C semaphore.  Given back in the Interrupt contect in the
@@ -599,8 +583,7 @@ ISL29023Task(void *pvParameters)
         //
         // If an error occurred call the error handler immediately.
         //
-        if(g_vui8ISL29023I2CErrorStatus)
-        {
+        if(g_vui8ISL29023I2CErrorStatus) {
             ISL29023AppErrorHandler(__FILE__, __LINE__);
         }
 
@@ -613,8 +596,7 @@ ISL29023Task(void *pvParameters)
         // Check if the intensity of light has crossed a threshold. If so
         // then adjust range of sensor readings to track intensity.
         //
-        if(xSemaphoreTake(g_xISL29023AdjustRangeSemaphore, 0) == pdTRUE)
-        {
+        if(xSemaphoreTake(g_xISL29023AdjustRangeSemaphore, 0) == pdTRUE) {
             //
             // Adjust the lux range.
             //
@@ -648,8 +630,7 @@ ISL29023Task(void *pvParameters)
             //
             // If an error occurred call the error handler immediately.
             //
-            if(g_vui8ISL29023I2CErrorStatus)
-            {
+            if(g_vui8ISL29023I2CErrorStatus) {
                 ISL29023AppErrorHandler(__FILE__, __LINE__);
             }
         }
@@ -679,8 +660,7 @@ ISL29023TaskInit(void)
     // Reset the GPIO port to be sure all previous interrupt config is cleared.
     //
     SysCtlPeripheralReset(SYSCTL_PERIPH_GPIOE);
-    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOE))
-    {
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOE)) {
         //
         // Do Nothing. Wait for reset to complete.
         //
@@ -719,8 +699,7 @@ ISL29023TaskInit(void)
     //
     if(xTaskCreate(ISL29023Task, (const portCHAR *)"ISL29023  ",
                    ISL29023_TASK_STACK_SIZE, NULL, tskIDLE_PRIORITY +
-                   PRIORITY_ISL29023_TASK, g_xISL29023Handle) != pdTRUE)
-    {
+                   PRIORITY_ISL29023_TASK, g_xISL29023Handle) != pdTRUE) {
         //
         // Task creation failed.
         //
@@ -731,8 +710,7 @@ ISL29023TaskInit(void)
     // Check if Semaphore creation was successfull.
     //
     if((g_xISL29023TransactionCompleteSemaphore == NULL) ||
-       (g_xISL29023AdjustRangeSemaphore == NULL))
-    {
+            (g_xISL29023AdjustRangeSemaphore == NULL)) {
         //
         // Semaphore was not created successfully.
         //

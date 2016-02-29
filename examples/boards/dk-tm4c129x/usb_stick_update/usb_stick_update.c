@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -158,8 +158,7 @@ tDMAControlTable g_sDMAControlTable[6] __attribute__ ((aligned(1024)));
 // In this case, only the MSC class is loaded.
 //
 //*****************************************************************************
-static tUSBHostClassDriver const * const g_ppHostClassDrivers[] =
-{
+static tUSBHostClassDriver const * const g_ppHostClassDrivers[] = {
     &g_sUSBHostMSCClassDriver
 };
 
@@ -289,14 +288,12 @@ MSCCallback(tUSBHMSCInstance *psMSCInstance, uint32_t ui32Event, void *pvData)
     //
     // Determine the event.
     //
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // Called when the device driver has successfully enumerated an MSC
         // device.
         //
-        case MSC_EVENT_OPEN:
-        {
+        case MSC_EVENT_OPEN: {
             //
             // Proceed to the enumeration state.
             //
@@ -308,8 +305,7 @@ MSCCallback(tUSBHMSCInstance *psMSCInstance, uint32_t ui32Event, void *pvData)
         // Called when the device driver has been unloaded due to error or
         // the device is no longer present.
         //
-        case MSC_EVENT_CLOSE:
-        {
+        case MSC_EVENT_CLOSE: {
             //
             // Go back to the "no device" state and wait for a new connection.
             //
@@ -317,8 +313,7 @@ MSCCallback(tUSBHMSCInstance *psMSCInstance, uint32_t ui32Event, void *pvData)
             break;
         }
 
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -359,8 +354,7 @@ ReadAppAndProgram(void)
     // Check to see if the mass storage device is ready.  Some large drives
     // take a while to be ready, so retry until they are ready.
     //
-    while(USBHMSCDriveReady(g_psMSCInstance))
-    {
+    while(USBHMSCDriveReady(g_psMSCInstance)) {
         //
         // Wait about 500ms before attempting to check if the
         // device is ready again.
@@ -375,8 +369,7 @@ ReadAppAndProgram(void)
         //
         // If the timeout is hit then return with a failure.
         //
-        if(ui32DriveTimeout == 0)
-        {
+        if(ui32DriveTimeout == 0) {
             return(1);
         }
     }
@@ -384,8 +377,7 @@ ReadAppAndProgram(void)
     //
     // Initialize the file system and return if error.
     //
-    if(SimpleFsInit(g_ui8SectorBuf))
-    {
+    if(SimpleFsInit(g_ui8SectorBuf)) {
         return(1);
     }
 
@@ -395,8 +387,7 @@ ReadAppAndProgram(void)
     // error.
     //
     ui32FileSize = SimpleFsOpen(USB_UPDATE_FILENAME);
-    if(ui32FileSize == 0)
-    {
+    if(ui32FileSize == 0) {
         return(1);
     }
 
@@ -425,8 +416,7 @@ ReadAppAndProgram(void)
     // Check to make sure the file size is not too large to fit in the flash.
     // If it is too large, then return an error.
     //
-    if((ui32FileSize + APP_START_ADDRESS) > ui32FlashEnd)
-    {
+    if((ui32FileSize + APP_START_ADDRESS) > ui32FlashEnd) {
         return(1);
     }
 
@@ -434,8 +424,7 @@ ReadAppAndProgram(void)
     // Enter a loop to erase all the requested flash pages beginning at the
     // application start address (above the USB stick updater).
     //
-    for(ui32Idx = APP_START_ADDRESS; ui32Idx < ui32FlashEnd; ui32Idx += 1024)
-    {
+    for(ui32Idx = APP_START_ADDRESS; ui32Idx < ui32FlashEnd; ui32Idx += 1024) {
         ROM_FlashErase(ui32Idx);
     }
 
@@ -446,8 +435,7 @@ ReadAppAndProgram(void)
     //
     ui32ProgAddr = APP_START_ADDRESS;
     ui32Remaining = ui32FileSize;
-    while(SimpleFsReadFileSector())
-    {
+    while(SimpleFsReadFileSector()) {
         //
         // Compute how much data was read from this sector and adjust the
         // remaining amount.
@@ -474,8 +462,7 @@ ReadAppAndProgram(void)
         // (8 bytes).  These two words will be programmed later, after
         // everything else.
         //
-        if(ui32ProgAddr == APP_START_ADDRESS)
-        {
+        if(ui32ProgAddr == APP_START_ADDRESS) {
             uint32_t *pui32Temp;
 
             pui32Temp = (uint32_t *)g_ui8SectorBuf;
@@ -494,8 +481,7 @@ ReadAppAndProgram(void)
         //
         // All other blocks except the first block
         //
-        else
-        {
+        else {
             //
             // Call the function to program a block of flash.  The length of the
             // block passed to the flash function must be divisible by 4.
@@ -509,8 +495,7 @@ ReadAppAndProgram(void)
         // address.  Progress will continue to the next iteration of
         // the while loop.
         //
-        if(ui32Remaining)
-        {
+        if(ui32Remaining) {
             ui32ProgAddr += ui32DataSize;
         }
 
@@ -519,10 +504,9 @@ ReadAppAndProgram(void)
         // Program the first two words of the image that were saved earlier,
         // and return a success indication.
         //
-        else
-        {
+        else {
             ROM_FlashProgram((uint32_t *)ui32SavedRegs, APP_START_ADDRESS,
-                              8);
+                             8);
 
             return(0);
         }
@@ -556,36 +540,30 @@ UpdaterUSB(void)
     //
     // Loop forever, running the USB host driver.
     //
-    while(1)
-    {
+    while(1) {
         USBHCDMain();
 
         //
         // Check for a state change from the USB driver.
         //
-        switch(g_eState)
-        {
+        switch(g_eState) {
             //
             // This state means that a mass storage device has been
             // plugged in and enumerated.
             //
-            case STATE_DEVICE_ENUM:
-            {
+            case STATE_DEVICE_ENUM: {
                 //
                 // Attempt to read the application image from the storage
                 // device and load it into flash memory.
                 //
-                if(ReadAppAndProgram())
-                {
+                if(ReadAppAndProgram()) {
                     //
                     // There was some error reading or programming the app,
                     // so reset the state to no device which will cause a
                     // wait for a new device to be plugged in.
                     //
                     g_eState = STATE_NO_DEVICE;
-                }
-                else
-                {
+                } else {
                     //
                     // User app load and programming was successful, so reboot
                     // the micro.  Perform a software reset request.  This
@@ -599,8 +577,7 @@ UpdaterUSB(void)
                     // The microcontroller should have reset, so this should
                     // never be reached.  Just in case, loop forever.
                     //
-                    while(1)
-                    {
+                    while(1) {
                     }
                 }
                 break;
@@ -610,8 +587,7 @@ UpdaterUSB(void)
             // This state means that there is no device present, so just
             // do nothing until something is plugged in.
             //
-            case STATE_NO_DEVICE:
-            {
+            case STATE_NO_DEVICE: {
                 break;
             }
         }
@@ -714,8 +690,8 @@ UpdaterMain(void)
     // Run from the PLL at 120 MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Enable lazy stacking for interrupt handlers.  This allows floating-point
@@ -774,10 +750,9 @@ main(void)
     //
     pui32App = (uint32_t *)APP_START_ADDRESS;
     if((pui32App[0] == 0xffffffff) ||
-        ((pui32App[0] & 0xfff00000) != 0x20000000) ||
-        (pui32App[1] == 0xffffffff) ||
-        ((pui32App[1] & 0xfff00001) != 0x00000001))
-    {
+            ((pui32App[0] & 0xfff00000) != 0x20000000) ||
+            (pui32App[1] == 0xffffffff) ||
+            ((pui32App[1] & 0xfff00001) != 0x00000001)) {
         //
         // App starting stack pointer or PC is not valid, so force an update.
         //
@@ -787,8 +762,7 @@ main(void)
     //
     // Check to see if the application has requested an update
     //
-    if(HWREG(FORCE_UPDATE_ADDR) == FORCE_UPDATE_VALUE)
-    {
+    if(HWREG(FORCE_UPDATE_ADDR) == FORCE_UPDATE_VALUE) {
         HWREG(FORCE_UPDATE_ADDR) = 0;
         UpdaterMain();
     }
@@ -804,8 +778,7 @@ main(void)
     //
     // Check if the button is pressed, if so then force an update.
     //
-    if(ROM_GPIOPinRead(GPIO_PORTP_BASE, GPIO_PIN_1) == 0)
-    {
+    if(ROM_GPIOPinRead(GPIO_PORTP_BASE, GPIO_PIN_1) == 0) {
         UpdaterMain();
     }
 
@@ -899,20 +872,20 @@ CallApplication(uint_fast32_t ui32StartAddr)
     // Set the vector table address to the beginning of the application.
     //
     ldr     r1, =0xe000ed08
-    str     r0, [r1]
+                 str     r0, [r1]
 
-    //
-    // Load the stack pointer from the application's vector table.
-    //
-    ldr     r1, [r0]
-    mov     sp, r1
+                 //
+                 // Load the stack pointer from the application's vector table.
+                 //
+                 ldr     r1, [r0]
+                 mov     sp, r1
 
-    //
-    // Load the initial PC from the application's vector table and branch to
-    // the application's entry point.
-    //
-    ldr     r0, [r0, #4]
-    bx      r0
+                 //
+                 // Load the initial PC from the application's vector table and branch to
+                 // the application's entry point.
+                 //
+                 ldr     r0, [r0, #4]
+                 bx      r0
 }
 #elif defined(ccs)
 void

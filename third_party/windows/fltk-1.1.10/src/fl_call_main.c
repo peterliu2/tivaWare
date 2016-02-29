@@ -64,36 +64,37 @@ extern int main(int, char *[]);
 #  endif /* BORLAND5 */
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-                             LPSTR lpCmdLine, int nCmdShow) {
-  int rc;
+                   LPSTR lpCmdLine, int nCmdShow)
+{
+    int rc;
 
 #  ifdef _DEBUG
- /*
-  * If we are using compiling in debug mode, open a console window so
-  * we can see any printf's, etc...
-  *
-  * While we can detect if the program was run from the command-line -
-  * look at the CMDLINE environment variable, it will be "WIN" for
-  * programs started from the GUI - the shell seems to run all WIN32
-  * applications in the background anyways...
-  */
+    /*
+     * If we are using compiling in debug mode, open a console window so
+     * we can see any printf's, etc...
+     *
+     * While we can detect if the program was run from the command-line -
+     * look at the CMDLINE environment variable, it will be "WIN" for
+     * programs started from the GUI - the shell seems to run all WIN32
+     * applications in the background anyways...
+     */
 
-  AllocConsole();
-  freopen("conin$", "r", stdin);
-  freopen("conout$", "w", stdout);
-  freopen("conout$", "w", stderr);
+    AllocConsole();
+    freopen("conin$", "r", stdin);
+    freopen("conout$", "w", stdout);
+    freopen("conout$", "w", stderr);
 #  endif /* _DEBUG */
 
-  /* Run the standard main entry point function... */
-  rc = main(__argc, __argv);
+    /* Run the standard main entry point function... */
+    rc = main(__argc, __argv);
 
 #  ifdef _DEBUG
-  fclose(stdin);
-  fclose(stdout);
-  fclose(stderr);
+    fclose(stdin);
+    fclose(stdout);
+    fclose(stderr);
 #  endif /* _DEBUG */
 
-  return rc;
+    return rc;
 }
 
 #elif defined(__hpux)

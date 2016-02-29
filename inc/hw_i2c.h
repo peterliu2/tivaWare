@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2005-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -52,11 +52,11 @@
 #define I2C_O_MIMR              0x00000010  // I2C Master Interrupt Mask
 #define I2C_O_MRIS              0x00000014  // I2C Master Raw Interrupt Status
 #define I2C_O_MMIS              0x00000018  // I2C Master Masked Interrupt
-                                            // Status
+// Status
 #define I2C_O_MICR              0x0000001C  // I2C Master Interrupt Clear
 #define I2C_O_MCR               0x00000020  // I2C Master Configuration
 #define I2C_O_MCLKOCNT          0x00000024  // I2C Master Clock Low Timeout
-                                            // Count
+// Count
 #define I2C_O_MBMON             0x0000002C  // I2C Master Bus Monitor
 #define I2C_O_MBLEN             0x00000030  // I2C Master Burst Length
 #define I2C_O_MBCNT             0x00000034  // I2C Master Burst Count
@@ -67,7 +67,7 @@
 #define I2C_O_SIMR              0x0000080C  // I2C Slave Interrupt Mask
 #define I2C_O_SRIS              0x00000810  // I2C Slave Raw Interrupt Status
 #define I2C_O_SMIS              0x00000814  // I2C Slave Masked Interrupt
-                                            // Status
+// Status
 #define I2C_O_SICR              0x00000818  // I2C Slave Interrupt Clear
 #define I2C_O_SOAR2             0x0000081C  // I2C Slave Own Address 2
 #define I2C_O_SACKCTL           0x00000820  // I2C Slave ACK Control
@@ -115,7 +115,7 @@
 //
 //*****************************************************************************
 #define I2C_MDR_DATA_M          0x000000FF  // This byte contains the data
-                                            // transferred during a transaction
+// transferred during a transaction
 #define I2C_MDR_DATA_S          0
 
 //*****************************************************************************
@@ -143,11 +143,11 @@
 //*****************************************************************************
 #define I2C_MIMR_RXFFIM         0x00000800  // Receive FIFO Full Interrupt Mask
 #define I2C_MIMR_TXFEIM         0x00000400  // Transmit FIFO Empty Interrupt
-                                            // Mask
+// Mask
 #define I2C_MIMR_RXIM           0x00000200  // Receive FIFO Request Interrupt
-                                            // Mask
+// Mask
 #define I2C_MIMR_TXIM           0x00000100  // Transmit FIFO Request Interrupt
-                                            // Mask
+// Mask
 #define I2C_MIMR_ARBLOSTIM      0x00000080  // Arbitration Lost Interrupt Mask
 #define I2C_MIMR_STOPIM         0x00000040  // STOP Detection Interrupt Mask
 #define I2C_MIMR_STARTIM        0x00000020  // START Detection Interrupt Mask
@@ -163,26 +163,26 @@
 //
 //*****************************************************************************
 #define I2C_MRIS_RXFFRIS        0x00000800  // Receive FIFO Full Raw Interrupt
-                                            // Status
+// Status
 #define I2C_MRIS_TXFERIS        0x00000400  // Transmit FIFO Empty Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define I2C_MRIS_RXRIS          0x00000200  // Receive FIFO Request Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define I2C_MRIS_TXRIS          0x00000100  // Transmit Request Raw Interrupt
-                                            // Status
+// Status
 #define I2C_MRIS_ARBLOSTRIS     0x00000080  // Arbitration Lost Raw Interrupt
-                                            // Status
+// Status
 #define I2C_MRIS_STOPRIS        0x00000040  // STOP Detection Raw Interrupt
-                                            // Status
+// Status
 #define I2C_MRIS_STARTRIS       0x00000020  // START Detection Raw Interrupt
-                                            // Status
+// Status
 #define I2C_MRIS_NACKRIS        0x00000010  // Address/Data NACK Raw Interrupt
-                                            // Status
+// Status
 #define I2C_MRIS_DMATXRIS       0x00000008  // Transmit DMA Raw Interrupt
-                                            // Status
+// Status
 #define I2C_MRIS_DMARXRIS       0x00000004  // Receive DMA Raw Interrupt Status
 #define I2C_MRIS_CLKRIS         0x00000002  // Clock Timeout Raw Interrupt
-                                            // Status
+// Status
 #define I2C_MRIS_RIS            0x00000001  // Master Raw Interrupt Status
 
 //*****************************************************************************
@@ -192,9 +192,9 @@
 //*****************************************************************************
 #define I2C_MMIS_RXFFMIS        0x00000800  // Receive FIFO Full Interrupt Mask
 #define I2C_MMIS_TXFEMIS        0x00000400  // Transmit FIFO Empty Interrupt
-                                            // Mask
+// Mask
 #define I2C_MMIS_RXMIS          0x00000200  // Receive FIFO Request Interrupt
-                                            // Mask
+// Mask
 #define I2C_MMIS_TXMIS          0x00000100  // Transmit Request Interrupt Mask
 #define I2C_MMIS_ARBLOSTMIS     0x00000080  // Arbitration Lost Interrupt Mask
 #define I2C_MMIS_STOPMIS        0x00000040  // STOP Detection Interrupt Mask
@@ -203,7 +203,7 @@
 #define I2C_MMIS_DMATXMIS       0x00000008  // Transmit DMA Interrupt Status
 #define I2C_MMIS_DMARXMIS       0x00000004  // Receive DMA Interrupt Status
 #define I2C_MMIS_CLKMIS         0x00000002  // Clock Timeout Masked Interrupt
-                                            // Status
+// Status
 #define I2C_MMIS_MIS            0x00000001  // Masked Interrupt Status
 
 //*****************************************************************************
@@ -212,18 +212,18 @@
 //
 //*****************************************************************************
 #define I2C_MICR_RXFFIC         0x00000800  // Receive FIFO Full Interrupt
-                                            // Clear
+// Clear
 #define I2C_MICR_TXFEIC         0x00000400  // Transmit FIFO Empty Interrupt
-                                            // Clear
+// Clear
 #define I2C_MICR_RXIC           0x00000200  // Receive FIFO Request Interrupt
-                                            // Clear
+// Clear
 #define I2C_MICR_TXIC           0x00000100  // Transmit FIFO Request Interrupt
-                                            // Clear
+// Clear
 #define I2C_MICR_ARBLOSTIC      0x00000080  // Arbitration Lost Interrupt Clear
 #define I2C_MICR_STOPIC         0x00000040  // STOP Detection Interrupt Clear
 #define I2C_MICR_STARTIC        0x00000020  // START Detection Interrupt Clear
 #define I2C_MICR_NACKIC         0x00000010  // Address/Data NACK Interrupt
-                                            // Clear
+// Clear
 #define I2C_MICR_DMATXIC        0x00000008  // Transmit DMA Interrupt Clear
 #define I2C_MICR_DMARXIC        0x00000004  // Receive DMA Interrupt Clear
 #define I2C_MICR_CLKIC          0x00000002  // Clock Timeout Interrupt Clear
@@ -326,11 +326,11 @@
 //*****************************************************************************
 #define I2C_SIMR_RXFFIM         0x00000100  // Receive FIFO Full Interrupt Mask
 #define I2C_SIMR_TXFEIM         0x00000080  // Transmit FIFO Empty Interrupt
-                                            // Mask
+// Mask
 #define I2C_SIMR_RXIM           0x00000040  // Receive FIFO Request Interrupt
-                                            // Mask
+// Mask
 #define I2C_SIMR_TXIM           0x00000020  // Transmit FIFO Request Interrupt
-                                            // Mask
+// Mask
 #define I2C_SIMR_DMATXIM        0x00000010  // Transmit DMA Interrupt Mask
 #define I2C_SIMR_DMARXIM        0x00000008  // Receive DMA Interrupt Mask
 #define I2C_SIMR_STOPIM         0x00000004  // Stop Condition Interrupt Mask
@@ -343,20 +343,20 @@
 //
 //*****************************************************************************
 #define I2C_SRIS_RXFFRIS        0x00000100  // Receive FIFO Full Raw Interrupt
-                                            // Status
+// Status
 #define I2C_SRIS_TXFERIS        0x00000080  // Transmit FIFO Empty Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define I2C_SRIS_RXRIS          0x00000040  // Receive FIFO Request Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define I2C_SRIS_TXRIS          0x00000020  // Transmit Request Raw Interrupt
-                                            // Status
+// Status
 #define I2C_SRIS_DMATXRIS       0x00000010  // Transmit DMA Raw Interrupt
-                                            // Status
+// Status
 #define I2C_SRIS_DMARXRIS       0x00000008  // Receive DMA Raw Interrupt Status
 #define I2C_SRIS_STOPRIS        0x00000004  // Stop Condition Raw Interrupt
-                                            // Status
+// Status
 #define I2C_SRIS_STARTRIS       0x00000002  // Start Condition Raw Interrupt
-                                            // Status
+// Status
 #define I2C_SRIS_DATARIS        0x00000001  // Data Raw Interrupt Status
 
 //*****************************************************************************
@@ -366,19 +366,19 @@
 //*****************************************************************************
 #define I2C_SMIS_RXFFMIS        0x00000100  // Receive FIFO Full Interrupt Mask
 #define I2C_SMIS_TXFEMIS        0x00000080  // Transmit FIFO Empty Interrupt
-                                            // Mask
+// Mask
 #define I2C_SMIS_RXMIS          0x00000040  // Receive FIFO Request Interrupt
-                                            // Mask
+// Mask
 #define I2C_SMIS_TXMIS          0x00000020  // Transmit FIFO Request Interrupt
-                                            // Mask
+// Mask
 #define I2C_SMIS_DMATXMIS       0x00000010  // Transmit DMA Masked Interrupt
-                                            // Status
+// Status
 #define I2C_SMIS_DMARXMIS       0x00000008  // Receive DMA Masked Interrupt
-                                            // Status
+// Status
 #define I2C_SMIS_STOPMIS        0x00000004  // Stop Condition Masked Interrupt
-                                            // Status
+// Status
 #define I2C_SMIS_STARTMIS       0x00000002  // Start Condition Masked Interrupt
-                                            // Status
+// Status
 #define I2C_SMIS_DATAMIS        0x00000001  // Data Masked Interrupt Status
 
 //*****************************************************************************
@@ -388,7 +388,7 @@
 //*****************************************************************************
 #define I2C_SICR_RXFFIC         0x00000100  // Receive FIFO Full Interrupt Mask
 #define I2C_SICR_TXFEIC         0x00000080  // Transmit FIFO Empty Interrupt
-                                            // Mask
+// Mask
 #define I2C_SICR_RXIC           0x00000040  // Receive Request Interrupt Mask
 #define I2C_SICR_TXIC           0x00000020  // Transmit Request Interrupt Mask
 #define I2C_SICR_DMATXIC        0x00000010  // Transmit DMA Interrupt Clear

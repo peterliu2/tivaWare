@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -55,8 +55,7 @@
 // and multiplying by 9.81 (1 g = 9.81 m/s^2).
 //
 //*****************************************************************************
-static const float g_fMPU6050AccelFactors[] =
-{
+static const float g_fMPU6050AccelFactors[] = {
     0.00059875,                              // Range = +/- 2 g (16384 lsb/g)
     0.00119751,                              // Range = +/- 4 g (8192 lsb/g)
     0.00239502,                              // Range = +/- 8 g (4096 lsb/g)
@@ -73,8 +72,7 @@ static const float g_fMPU6050AccelFactors[] =
 // 0.0174532925 radians).
 //
 //*****************************************************************************
-static const float g_fMPU6050GyroFactors[] =
-{
+static const float g_fMPU6050GyroFactors[] = {
     1.3323124e-4f,   // Range = +/- 250 dps  (131.0 LSBs/DPS)
     2.6646248e-4f,   // Range = +/- 500 dps  (65.5 LSBs/DPS)
     5.3211258e-4f,   // Range = +/- 1000 dps (32.8 LSBs/DPS)
@@ -104,24 +102,21 @@ MPU6050Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     // state.
     //
     if((ui8Status != I2CM_STATUS_SUCCESS) &&
-        !((ui8Status == I2CM_STATUS_ADDR_NACK) &&
-            (psInst->ui8State == MPU6050_STATE_INIT_WAIT)))
-    {
+            !((ui8Status == I2CM_STATUS_ADDR_NACK) &&
+              (psInst->ui8State == MPU6050_STATE_INIT_WAIT))) {
         psInst->ui8State = MPU6050_STATE_IDLE;
     }
 
     //
     // Determine the current state of the MPU6050 state machine.
     //
-    switch(psInst->ui8State)
-    {
+    switch(psInst->ui8State) {
         //
         // All states that trivially transition to IDLE, and all unknown
         // states.
         //
         case MPU6050_STATE_READ:
-        default:
-        {
+        default: {
             //
             // The state machine is now idle.
             //
@@ -136,8 +131,7 @@ MPU6050Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // MPU6050 Device reset was issued
         //
-        case MPU6050_STATE_INIT_RES:
-        {
+        case MPU6050_STATE_INIT_RES: {
             //
             // Issue a read of the status register to confirm reset is done.
             //
@@ -153,8 +147,7 @@ MPU6050Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // Status register was read, check if reset is done before proceeding.
         //
-        case MPU6050_STATE_INIT_WAIT:
-        {
+        case MPU6050_STATE_INIT_WAIT: {
             //
             // Check the value read back from status to determine if device
             // is still in reset or if it is ready.  Reset state for this
@@ -164,8 +157,7 @@ MPU6050Callback(void *pvCallbackData, uint_fast8_t ui8Status)
             //
             //
             if((psInst->pui8Data[0] != MPU6050_PWR_MGMT_1_SLEEP) ||
-                (ui8Status == I2CM_STATUS_ADDR_NACK))
-            {
+                    (ui8Status == I2CM_STATUS_ADDR_NACK)) {
                 //
                 // Device still in reset so begin polling this register.
                 //
@@ -177,9 +169,7 @@ MPU6050Callback(void *pvCallbackData, uint_fast8_t ui8Status)
                 //
                 // Intentionally stay in this state to create polling effect.
                 //
-            }
-            else
-            {
+            } else {
                 //
                 // Device is out of reset, move to the idle state.
                 //
@@ -191,8 +181,7 @@ MPU6050Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // A write just completed
         //
-        case MPU6050_STATE_WRITE:
-        {
+        case MPU6050_STATE_WRITE: {
             //
             // Set the accelerometer and gyroscope ranges to the new values.
             // If the register was not modified, the values will be the same so
@@ -215,20 +204,17 @@ MPU6050Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // A read-modify-write just completed
         //
-        case MPU6050_STATE_RMW:
-        {
+        case MPU6050_STATE_RMW: {
             //
             // See if the PWR_MGMT_1 register was just modified.
             //
             if(psInst->uCommand.sReadModifyWriteState.pui8Buffer[0] ==
-               MPU6050_O_PWR_MGMT_1)
-            {
+                    MPU6050_O_PWR_MGMT_1) {
                 //
                 // See if a soft reset has been issued.
                 //
                 if(psInst->uCommand.sReadModifyWriteState.pui8Buffer[1] &
-                   MPU6050_PWR_MGMT_1_DEVICE_RESET)
-                {
+                        MPU6050_PWR_MGMT_1_DEVICE_RESET) {
                     //
                     // Default range setting is +/- 2 g
                     //
@@ -247,8 +233,7 @@ MPU6050Callback(void *pvCallbackData, uint_fast8_t ui8Status)
             // See if the GYRO_CONFIG register was just modified.
             //
             if(psInst->uCommand.sReadModifyWriteState.pui8Buffer[0] ==
-               MPU6050_O_GYRO_CONFIG)
-            {
+                    MPU6050_O_GYRO_CONFIG) {
                 //
                 // Extract the FS_SEL from the GYRO_CONFIG register value.
                 //
@@ -262,8 +247,7 @@ MPU6050Callback(void *pvCallbackData, uint_fast8_t ui8Status)
             // See if the ACCEL_CONFIG register was just modified.
             //
             if(psInst->uCommand.sReadModifyWriteState.pui8Buffer[0] ==
-               MPU6050_O_ACCEL_CONFIG)
-            {
+                    MPU6050_O_ACCEL_CONFIG) {
                 //
                 // Extract the FS_SEL from the ACCEL_CONFIG register value.
                 //
@@ -288,8 +272,7 @@ MPU6050Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if the state machine is now idle and there is a callback function.
     //
-    if((psInst->ui8State == MPU6050_STATE_IDLE) && psInst->pfnCallback)
-    {
+    if((psInst->ui8State == MPU6050_STATE_IDLE) && psInst->pfnCallback) {
         //
         // Call the application-supplied callback function.
         //
@@ -358,8 +341,7 @@ MPU6050Init(tMPU6050 *psInst, tI2CMInstance *psI2CInst,
     psInst->uCommand.pui8Buffer[0] = MPU6050_O_PWR_MGMT_1;
     psInst->uCommand.pui8Buffer[1] = MPU6050_PWR_MGMT_1_DEVICE_RESET;
     if(I2CMWrite(psInst->psI2CInst, psInst->ui8Addr,
-                 psInst->uCommand.pui8Buffer, 2, MPU6050Callback, psInst) == 0)
-    {
+                 psInst->uCommand.pui8Buffer, 2, MPU6050Callback, psInst) == 0) {
         psInst->ui8State = MPU6050_STATE_IDLE;
         return(0);
     }
@@ -399,8 +381,7 @@ MPU6050Read(tMPU6050 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     // Return a failure if the MPU6050 driver is not idle (in other words,
     // there is already an outstanding request to the MPU6050).
     //
-    if(psInst->ui8State != MPU6050_STATE_IDLE)
-    {
+    if(psInst->ui8State != MPU6050_STATE_IDLE) {
         return(0);
     }
 
@@ -421,8 +402,7 @@ MPU6050Read(tMPU6050 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     psInst->uCommand.pui8Buffer[0] = ui8Reg;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
                 psInst->uCommand.pui8Buffer, 1, pui8Data, ui16Count,
-                MPU6050Callback, psInst) == 0)
-    {
+                MPU6050Callback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -467,8 +447,7 @@ MPU6050Write(tMPU6050 *psInst, uint_fast8_t ui8Reg, const uint8_t *pui8Data,
     // Return a failure if the MPU6050 driver is not idle (in other words,
     // there is already an outstanding request to the MPU6050).
     //
-    if(psInst->ui8State != MPU6050_STATE_IDLE)
-    {
+    if(psInst->ui8State != MPU6050_STATE_IDLE) {
         return(0);
     }
 
@@ -482,14 +461,12 @@ MPU6050Write(tMPU6050 *psInst, uint_fast8_t ui8Reg, const uint8_t *pui8Data,
     // See if the PWR_MGMT_1 register is being written.
     //
     if((ui8Reg <= MPU6050_O_PWR_MGMT_1) &&
-       ((ui8Reg + ui16Count) > MPU6050_O_PWR_MGMT_1))
-    {
+            ((ui8Reg + ui16Count) > MPU6050_O_PWR_MGMT_1)) {
         //
         // See if a soft reset is being requested.
         //
         if(pui8Data[ui8Reg - MPU6050_O_PWR_MGMT_1] &
-           MPU6050_PWR_MGMT_1_DEVICE_RESET)
-        {
+                MPU6050_PWR_MGMT_1_DEVICE_RESET) {
             //
             // Default range setting is +/- 2 g.
             //
@@ -506,8 +483,7 @@ MPU6050Write(tMPU6050 *psInst, uint_fast8_t ui8Reg, const uint8_t *pui8Data,
     // See if the GYRO_CONFIG register is being written.
     //
     if((ui8Reg <= MPU6050_O_GYRO_CONFIG) &&
-       ((ui8Reg + ui16Count) > MPU6050_O_GYRO_CONFIG))
-    {
+            ((ui8Reg + ui16Count) > MPU6050_O_GYRO_CONFIG)) {
         //
         // Extract the FS_SEL from the GYRO_CONFIG register value.
         //
@@ -520,8 +496,7 @@ MPU6050Write(tMPU6050 *psInst, uint_fast8_t ui8Reg, const uint8_t *pui8Data,
     // See if the ACCEL_CONFIG register is being written.
     //
     if((ui8Reg <= MPU6050_O_ACCEL_CONFIG) &&
-       ((ui8Reg + ui16Count) > MPU6050_O_ACCEL_CONFIG))
-    {
+            ((ui8Reg + ui16Count) > MPU6050_O_ACCEL_CONFIG)) {
         //
         // Extract the AFS_SEL from the ACCEL_CONFIG register value.
         //
@@ -541,8 +516,7 @@ MPU6050Write(tMPU6050 *psInst, uint_fast8_t ui8Reg, const uint8_t *pui8Data,
     //
     if(I2CMWrite8(&(psInst->uCommand.sWriteState), psInst->psI2CInst,
                   psInst->ui8Addr, ui8Reg, pui8Data, ui16Count,
-                  MPU6050Callback, psInst) == 0)
-    {
+                  MPU6050Callback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -590,8 +564,7 @@ MPU6050ReadModifyWrite(tMPU6050 *psInst, uint_fast8_t ui8Reg,
     // Return a failure if the MPU6050 driver is not idle (in other words,
     // there is already an outstanding request to the MPU6050).
     //
-    if(psInst->ui8State != MPU6050_STATE_IDLE)
-    {
+    if(psInst->ui8State != MPU6050_STATE_IDLE) {
         return(0);
     }
 
@@ -611,8 +584,7 @@ MPU6050ReadModifyWrite(tMPU6050 *psInst, uint_fast8_t ui8Reg,
     //
     if(I2CMReadModifyWrite8(&(psInst->uCommand.sReadModifyWriteState),
                             psInst->psI2CInst, psInst->ui8Addr, ui8Reg,
-                            ui8Mask, ui8Value, MPU6050Callback, psInst) == 0)
-    {
+                            ui8Mask, ui8Value, MPU6050Callback, psInst) == 0) {
         //
         // The I2C read-modify-write failed, so move to the idle state and
         // return a failure.
@@ -656,8 +628,7 @@ MPU6050DataRead(tMPU6050 *psInst, tSensorCallback *pfnCallback,
     // Return a failure if the MPU6050 driver is not idle (in other words,
     // there is already an outstanding request to the MPU6050).
     //
-    if(psInst->ui8State != MPU6050_STATE_IDLE)
-    {
+    if(psInst->ui8State != MPU6050_STATE_IDLE) {
         return(0);
     }
 
@@ -677,8 +648,7 @@ MPU6050DataRead(tMPU6050 *psInst, tSensorCallback *pfnCallback,
     //
     psInst->pui8Data[0] = MPU6050_O_ACCEL_XOUT_H;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr, psInst->pui8Data, 1,
-                psInst->pui8Data, 14, MPU6050Callback, psInst) == 0)
-    {
+                psInst->pui8Data, 14, MPU6050Callback, psInst) == 0) {
         //
         // The I2C read failed, so move to the idle state and return a failure.
         //
@@ -718,16 +688,13 @@ MPU6050DataAccelGetRaw(tMPU6050 *psInst, uint_fast16_t *pui16AccelX,
     //
     // Return the raw accelerometer values.
     //
-    if(pui16AccelX)
-    {
+    if(pui16AccelX) {
         *pui16AccelX = (psInst->pui8Data[0] << 8) | psInst->pui8Data[1];
     }
-    if(pui16AccelY)
-    {
+    if(pui16AccelY) {
         *pui16AccelY = (psInst->pui8Data[2] << 8) | psInst->pui8Data[3];
     }
-    if(pui16AccelZ)
-    {
+    if(pui16AccelZ) {
         *pui16AccelZ = (psInst->pui8Data[4] << 8) | psInst->pui8Data[5];
     }
 }
@@ -765,18 +732,15 @@ MPU6050DataAccelGetFloat(tMPU6050 *psInst, float *pfAccelX, float *pfAccelY,
     //
     // Convert the Accelerometer values into floating-point gravity values.
     //
-    if(pfAccelX)
-    {
+    if(pfAccelX) {
         *pfAccelX = (float)((int16_t)((psInst->pui8Data[0] << 8) |
                                       psInst->pui8Data[1]) * fFactor);
     }
-    if(pfAccelY)
-    {
+    if(pfAccelY) {
         *pfAccelY = (float)((int16_t)((psInst->pui8Data[2] << 8) |
                                       psInst->pui8Data[3]) * fFactor);
     }
-    if(pfAccelZ)
-    {
+    if(pfAccelZ) {
         *pfAccelZ = (float)((int16_t)((psInst->pui8Data[4] << 8) |
                                       psInst->pui8Data[5]) * fFactor);
     }
@@ -807,16 +771,13 @@ MPU6050DataGyroGetRaw(tMPU6050 *psInst, uint_fast16_t *pui16GyroX,
     //
     // Return the raw gyroscope values.
     //
-    if(pui16GyroX)
-    {
+    if(pui16GyroX) {
         *pui16GyroX = (psInst->pui8Data[8] << 8) | psInst->pui8Data[9];
     }
-    if(pui16GyroY)
-    {
+    if(pui16GyroY) {
         *pui16GyroY = (psInst->pui8Data[10] << 8) | psInst->pui8Data[11];
     }
-    if(pui16GyroZ)
-    {
+    if(pui16GyroZ) {
         *pui16GyroZ = (psInst->pui8Data[12] << 8) | psInst->pui8Data[13];
     }
 }
@@ -854,18 +815,15 @@ MPU6050DataGyroGetFloat(tMPU6050 *psInst, float *pfGyroX, float *pfGyroY,
     //
     // Convert the gyroscope values into rad/sec
     //
-    if(pfGyroX)
-    {
+    if(pfGyroX) {
         *pfGyroX = ((float)(int16_t)((psInst->pui8Data[8] << 8) |
                                      psInst->pui8Data[9]) * fFactor);
     }
-    if(pfGyroY)
-    {
+    if(pfGyroY) {
         *pfGyroY = ((float)(int16_t)((psInst->pui8Data[10] << 8) |
                                      psInst->pui8Data[11]) * fFactor);
     }
-    if(pfGyroZ)
-    {
+    if(pfGyroZ) {
         *pfGyroZ = ((float)(int16_t)((psInst->pui8Data[12] << 8) |
                                      psInst->pui8Data[13]) * fFactor);
     }

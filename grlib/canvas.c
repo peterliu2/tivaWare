@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Graphics Library.
 //
 //*****************************************************************************
@@ -78,8 +78,7 @@ CanvasPaint(tWidget *psWidget)
     //
     // See if the canvas fill style is selected.
     //
-    if(psCanvas->ui32Style & CANVAS_STYLE_FILL)
-    {
+    if(psCanvas->ui32Style & CANVAS_STYLE_FILL) {
         //
         // Fill the canvas with the fill color.
         //
@@ -90,8 +89,7 @@ CanvasPaint(tWidget *psWidget)
     //
     // See if the canvas outline style is selected.
     //
-    if(psCanvas->ui32Style & CANVAS_STYLE_OUTLINE)
-    {
+    if(psCanvas->ui32Style & CANVAS_STYLE_OUTLINE) {
         //
         // Outline the canvas with the outline color.
         //
@@ -102,25 +100,23 @@ CanvasPaint(tWidget *psWidget)
     //
     // See if the canvas text or image style is selected.
     //
-    if(psCanvas->ui32Style & (CANVAS_STYLE_TEXT | CANVAS_STYLE_IMG))
-    {
+    if(psCanvas->ui32Style & (CANVAS_STYLE_TEXT | CANVAS_STYLE_IMG)) {
         //
         // Compute the center of the canvas.
         //
         i32X = (psWidget->sPosition.i16XMin +
-              ((psWidget->sPosition.i16XMax -
-                psWidget->sPosition.i16XMin + 1) / 2));
+                ((psWidget->sPosition.i16XMax -
+                  psWidget->sPosition.i16XMin + 1) / 2));
         i32Y = (psWidget->sPosition.i16YMin +
-              ((psWidget->sPosition.i16YMax -
-                psWidget->sPosition.i16YMin + 1) / 2));
+                ((psWidget->sPosition.i16YMax -
+                  psWidget->sPosition.i16YMin + 1) / 2));
 
         //
         // If the canvas outline style is selected then shrink the clipping
         // region by one pixel on each side so that the outline is not
         // overwritten by the text or image.
         //
-        if(psCanvas->ui32Style & CANVAS_STYLE_OUTLINE)
-        {
+        if(psCanvas->ui32Style & CANVAS_STYLE_OUTLINE) {
             sCtx.sClipRegion.i16XMin++;
             sCtx.sClipRegion.i16YMin++;
             sCtx.sClipRegion.i16XMax--;
@@ -130,8 +126,7 @@ CanvasPaint(tWidget *psWidget)
         //
         // See if the canvas image style is selected.
         //
-        if(psCanvas->ui32Style & CANVAS_STYLE_IMG)
-        {
+        if(psCanvas->ui32Style & CANVAS_STYLE_IMG) {
             //
             // Set the foreground and background colors to use for 1 BPP
             // images.
@@ -150,8 +145,7 @@ CanvasPaint(tWidget *psWidget)
         //
         // See if the canvas text style is selected.
         //
-        if(psCanvas->ui32Style & CANVAS_STYLE_TEXT)
-        {
+        if(psCanvas->ui32Style & CANVAS_STYLE_TEXT) {
             //
             // Set the relevant font and colors.
             //
@@ -170,8 +164,7 @@ CanvasPaint(tWidget *psWidget)
             //
             i32Size = GrStringWidthGet(&sCtx, psCanvas->pcText, -1);
 
-            if(psCanvas->ui32Style & CANVAS_STYLE_TEXT_LEFT)
-            {
+            if(psCanvas->ui32Style & CANVAS_STYLE_TEXT_LEFT) {
                 //
                 // The string is to be aligned with the left edge of
                 // the widget.  Use the clipping rectangle as reference
@@ -179,11 +172,8 @@ CanvasPaint(tWidget *psWidget)
                 // encroach on any border that is set.
                 //
                 i32X = sCtx.sClipRegion.i16XMin;
-            }
-            else
-            {
-                if(psCanvas->ui32Style & CANVAS_STYLE_TEXT_RIGHT)
-                {
+            } else {
+                if(psCanvas->ui32Style & CANVAS_STYLE_TEXT_RIGHT) {
                     //
                     // The string is to be aligned with the right edge of
                     // the widget.  Use the clipping rectangle as reference
@@ -191,9 +181,7 @@ CanvasPaint(tWidget *psWidget)
                     // encroach on any border that is set.
                     //
                     i32X = sCtx.sClipRegion.i16XMax - i32Size;
-                }
-                else
-                {
+                } else {
                     //
                     // We are centering the string horizontally so adjust
                     // the position accordingly to take into account the
@@ -211,8 +199,7 @@ CanvasPaint(tWidget *psWidget)
             //
             i32Size = GrStringHeightGet(&sCtx);
 
-            if(psCanvas->ui32Style & CANVAS_STYLE_TEXT_TOP)
-            {
+            if(psCanvas->ui32Style & CANVAS_STYLE_TEXT_TOP) {
                 //
                 // The string is to be aligned with the top edge of
                 // the widget.  Use the clipping rectangle as reference
@@ -220,11 +207,8 @@ CanvasPaint(tWidget *psWidget)
                 // encroach on any border that is set.
                 //
                 i32Y = sCtx.sClipRegion.i16YMin;
-            }
-            else
-            {
-                if(psCanvas->ui32Style & CANVAS_STYLE_TEXT_BOTTOM)
-                {
+            } else {
+                if(psCanvas->ui32Style & CANVAS_STYLE_TEXT_BOTTOM) {
                     //
                     // The string is to be aligned with the bottom edge of
                     // the widget.  Use the clipping rectangle as reference
@@ -232,9 +216,7 @@ CanvasPaint(tWidget *psWidget)
                     // encroach on any border that is set.
                     //
                     i32Y = sCtx.sClipRegion.i16YMax - i32Size;
-                }
-                else
-                {
+                } else {
                     //
                     // We are centering the string vertically so adjust
                     // the position accordingly to take into account the
@@ -255,8 +237,7 @@ CanvasPaint(tWidget *psWidget)
     //
     // See if the application-drawn style is selected.
     //
-    if(psCanvas->ui32Style & CANVAS_STYLE_APP_DRAWN)
-    {
+    if(psCanvas->ui32Style & CANVAS_STYLE_APP_DRAWN) {
         //
         // Call the application-supplied function to draw the canvas.
         //
@@ -294,13 +275,11 @@ CanvasMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
     //
     // Determine which message is being sent.
     //
-    switch(ui32Msg)
-    {
+    switch(ui32Msg) {
         //
         // The widget paint request has been sent.
         //
-        case WIDGET_MSG_PAINT:
-        {
+        case WIDGET_MSG_PAINT: {
             //
             // Handle the widget paint request.
             //
@@ -316,8 +295,7 @@ CanvasMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
         //
         // An unknown request has been sent.
         //
-        default:
-        {
+        default: {
             //
             // Let the default message handler process this message.
             //
@@ -358,8 +336,7 @@ CanvasInit(tCanvasWidget *psWidget, const tDisplay *psDisplay, int32_t i32X,
     //
     // Clear out the widget structure.
     //
-    for(ui32Idx = 0; ui32Idx < sizeof(tCanvasWidget); ui32Idx += 4)
-    {
+    for(ui32Idx = 0; ui32Idx < sizeof(tCanvasWidget); ui32Idx += 4) {
         ((uint32_t *)psWidget)[ui32Idx / 4] = 0;
     }
 

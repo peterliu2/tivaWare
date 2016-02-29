@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2009-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Utility Library.
 //
 //*****************************************************************************
@@ -75,8 +75,7 @@ TFTPClose(tTFTPConnection *psTFTP)
     //
     // Tell the application we are closing the connection.
     //
-    if(psTFTP->pfnClose)
-    {
+    if(psTFTP->pfnClose) {
         psTFTP->pfnClose(psTFTP);
     }
 
@@ -112,8 +111,7 @@ TFTPErrorSend(tTFTPConnection *psTFTP, tTFTPError eError)
     // Allocate a pbuf for this data packet.
     //
     p = pbuf_alloc(PBUF_TRANSPORT, ui32Length, PBUF_RAM);
-    if(!p)
-    {
+    if(!p) {
         return;
     }
 
@@ -158,12 +156,9 @@ TFTPDataSend(tTFTPConnection *psTFTP)
     //
     // Determine the number of bytes to place into this packet.
     //
-    if(psTFTP->ui32DataRemaining < (psTFTP->ui32BlockNum * TFTP_BLOCK_SIZE))
-    {
+    if(psTFTP->ui32DataRemaining < (psTFTP->ui32BlockNum * TFTP_BLOCK_SIZE)) {
         ui32Length = psTFTP->ui32DataRemaining & (TFTP_BLOCK_SIZE - 1);
-    }
-    else
-    {
+    } else {
         ui32Length = TFTP_BLOCK_SIZE;
     }
 
@@ -171,8 +166,7 @@ TFTPDataSend(tTFTPConnection *psTFTP)
     // Allocate a pbuf for this data packet.
     //
     p = pbuf_alloc(PBUF_TRANSPORT, ui32Length + 4, PBUF_RAM);
-    if(!p)
-    {
+    if(!p) {
         return;
     }
 
@@ -199,12 +193,9 @@ TFTPDataSend(tTFTPConnection *psTFTP)
     //
     // Send the data packet or, if an error was reported, send an error.
     //
-    if(eError == TFTP_OK)
-    {
+    if(eError == TFTP_OK) {
         udp_send(psTFTP->psPCB, p);
-    }
-    else
-    {
+    } else {
         TFTPErrorSend(psTFTP, eError);
         TFTPClose(psTFTP);
     }
@@ -230,8 +221,7 @@ TFTPDataAck(tTFTPConnection *psTFTP)
     // Allocate a pbuf for this data packet.
     //
     p = pbuf_alloc(PBUF_TRANSPORT, 4, PBUF_RAM);
-    if(!p)
-    {
+    if(!p) {
         return;
     }
 
@@ -294,8 +284,7 @@ TFTPDataRecv(void *arg, struct udp_pcb *upcb, struct pbuf *p,
     // ongoing GET (read) request.
     //
     if((pui8Data[0] == ((TFTP_ACK >> 8) & 0xff)) &&
-       (pui8Data[1] == (TFTP_ACK & 0xff)))
-    {
+            (pui8Data[1] == (TFTP_ACK & 0xff))) {
         //
         // Extract the block number from the acknowledge.
         //
@@ -312,32 +301,26 @@ TFTPDataRecv(void *arg, struct udp_pcb *upcb, struct pbuf *p,
         // that the file is a multiple of 512 bytes (in other words, the last
         // packet of valid data was a full packet).
         //
-        if((ui32Block * TFTP_BLOCK_SIZE) <= psTFTP->ui32DataRemaining)
-        {
+        if((ui32Block * TFTP_BLOCK_SIZE) <= psTFTP->ui32DataRemaining) {
             //
             // Send the next block of the file.
             //
             psTFTP->ui32BlockNum = ui32Block + 1;
             TFTPDataSend(psTFTP);
-        }
-        else
-        {
+        } else {
             //
             // The transfer is complete, so close the data connection.
             //
             TFTPClose(psTFTP);
             psTFTP = NULL;
         }
-    }
-    else
-    {
+    } else {
         //
         // If this is a DATA packet, get the payload and write it to the
         // appropriate location in the serial flash.
         //
         if((pui8Data[0] == ((TFTP_DATA >> 8) & 0xff)) &&
-           (pui8Data[1] == (TFTP_DATA & 0xff)))
-        {
+                (pui8Data[1] == (TFTP_DATA & 0xff))) {
             //
             // This is a data packet.  Extract the block number from the packet
             // and set the offset within the block (stored in
@@ -358,8 +341,7 @@ TFTPDataRecv(void *arg, struct udp_pcb *upcb, struct pbuf *p,
             //
             // Keep writing until we run out of data.
             //
-            while(pBuf)
-            {
+            while(pBuf) {
                 //
                 // Pass this block to the application.
                 //
@@ -368,8 +350,7 @@ TFTPDataRecv(void *arg, struct udp_pcb *upcb, struct pbuf *p,
                 //
                 // Was the data written successfully?
                 //
-                if(eRetcode != TFTP_OK)
-                {
+                if(eRetcode != TFTP_OK) {
                     //
                     // No - drop out.
                     //
@@ -386,8 +367,7 @@ TFTPDataRecv(void *arg, struct udp_pcb *upcb, struct pbuf *p,
                 // Move to the next pbuf in the chain
                 //
                 pBuf = pBuf->next;
-                if(pBuf)
-                {
+                if(pBuf) {
                     psTFTP->pui8Data = pBuf->payload;
                     psTFTP->ui32DataLength = pBuf->len;
                 }
@@ -397,8 +377,7 @@ TFTPDataRecv(void *arg, struct udp_pcb *upcb, struct pbuf *p,
             // If we get here and there was an error reported, pass the error
             // back to the TFTP client.
             //
-            if(psTFTP && (eRetcode != TFTP_OK))
-            {
+            if(psTFTP && (eRetcode != TFTP_OK)) {
                 //
                 // Send the error code to the client.
                 //
@@ -409,9 +388,7 @@ TFTPDataRecv(void *arg, struct udp_pcb *upcb, struct pbuf *p,
                 //
                 TFTPClose(psTFTP);
                 psTFTP = NULL;
-            }
-            else
-            {
+            } else {
                 //
                 // Acknowledge this block.
                 //
@@ -420,8 +397,7 @@ TFTPDataRecv(void *arg, struct udp_pcb *upcb, struct pbuf *p,
                 //
                 // Is the transfer finished?
                 //
-                if(p->tot_len < (TFTP_BLOCK_SIZE + 4))
-                {
+                if(p->tot_len < (TFTP_BLOCK_SIZE + 4)) {
                     //
                     // We got a short packet so the transfer is complete.
                     // Close the connection.
@@ -430,15 +406,12 @@ TFTPDataRecv(void *arg, struct udp_pcb *upcb, struct pbuf *p,
                     psTFTP = NULL;
                 }
             }
-        }
-        else
-        {
+        } else {
             //
             // Is the client reporting an error?
             //
             if((pui8Data[0] == ((TFTP_ERROR >> 8) & 0xff)) &&
-               (pui8Data[1] == (TFTP_ERROR & 0xff)))
-            {
+                    (pui8Data[1] == (TFTP_ERROR & 0xff))) {
                 //
                 // Yes - we got an error so close the connection.
                 //
@@ -469,10 +442,8 @@ TFTPModeGet(uint8_t *pui8Request, uint32_t ui32Len)
     // Look for the first zero after the start of the filename string (skipping
     // the first two bytes of the request packet).
     //
-    for(ui32Loop = 2; ui32Loop < ui32Len; ui32Loop++)
-    {
-        if(pui8Request[ui32Loop] == (uint8_t)0)
-        {
+    for(ui32Loop = 2; ui32Loop < ui32Len; ui32Loop++) {
+        if(pui8Request[ui32Loop] == (uint8_t)0) {
             break;
         }
     }
@@ -485,8 +456,7 @@ TFTPModeGet(uint8_t *pui8Request, uint32_t ui32Len)
     //
     // Did we run off the end of the string?
     //
-    if(ui32Loop >= ui32Len)
-    {
+    if(ui32Loop >= ui32Len) {
         //
         // Yes - this appears to be an invalid request.
         //
@@ -501,8 +471,7 @@ TFTPModeGet(uint8_t *pui8Request, uint32_t ui32Len)
     //
     // Now determine which of the modes this request asks for.  Is it ASCII?
     //
-    if(!ustrncasecmp("netascii", (char *)&pui8Request[ui32Loop], ui32Max))
-    {
+    if(!ustrncasecmp("netascii", (char *)&pui8Request[ui32Loop], ui32Max)) {
         //
         // This is an ASCII file transfer.
         //
@@ -512,8 +481,7 @@ TFTPModeGet(uint8_t *pui8Request, uint32_t ui32Len)
     //
     // Binary transfer?
     //
-    if(!ustrncasecmp("octet", (char *)&pui8Request[ui32Loop], ui32Max))
-    {
+    if(!ustrncasecmp("octet", (char *)&pui8Request[ui32Loop], ui32Max)) {
         //
         // This is a binary file transfer.
         //
@@ -550,8 +518,7 @@ TFTPRecv(void *arg, struct udp_pcb *upcb, struct pbuf *p, struct ip_addr *addr,
     // Is this a read (GET) request?
     //
     if((pui8Data[0] == ((TFTP_RRQ >> 8) & 0xff)) &&
-       (pui8Data[1] == (TFTP_RRQ & 0xff)))
-    {
+            (pui8Data[1] == (TFTP_RRQ & 0xff))) {
         //
         // Yes - remember that this is a GET request.
         //
@@ -562,15 +529,12 @@ TFTPRecv(void *arg, struct udp_pcb *upcb, struct pbuf *p, struct ip_addr *addr,
     // Is this a write (PUT) request?
     //
     else if((pui8Data[0] == ((TFTP_WRQ >> 8) & 0xff)) &&
-            (pui8Data[1] == (TFTP_WRQ & 0xff)))
-    {
+            (pui8Data[1] == (TFTP_WRQ & 0xff))) {
         //
         // Yes - remember that this is a PUT request.
         //
         bGetRequest = false;
-    }
-    else
-    {
+    } else {
         //
         // The request is neither GET nor PUT so just ignore it.
         //
@@ -586,8 +550,7 @@ TFTPRecv(void *arg, struct udp_pcb *upcb, struct pbuf *p, struct ip_addr *addr,
     //
     // Was the transfer mode valid?
     //
-    if(eMode != TFTP_MODE_INVALID)
-    {
+    if(eMode != TFTP_MODE_INVALID) {
         //
         // The transfer mode is valid so allocate a new connection instance
         // and pass this to the client to have it tell us how to proceed.
@@ -598,8 +561,7 @@ TFTPRecv(void *arg, struct udp_pcb *upcb, struct pbuf *p, struct ip_addr *addr,
         // If we can't allocate the connection instance, all we can do is
         // ignore the datagram.
         //
-        if(!psTFTP)
-        {
+        if(!psTFTP) {
             pbuf_free(p);
             return;
         }
@@ -627,21 +589,17 @@ TFTPRecv(void *arg, struct udp_pcb *upcb, struct pbuf *p, struct ip_addr *addr,
         //
         // Does it want to go on?
         //
-        if(eRetcode == TFTP_OK)
-        {
+        if(eRetcode == TFTP_OK) {
             //
             // Yes - what kind of request is this?
             //
-            if(bGetRequest)
-            {
+            if(bGetRequest) {
                 //
                 // For a GET request, we send back the first block of data.
                 //
                 psTFTP->ui32BlockNum = 1;
                 TFTPDataSend(psTFTP);
-            }
-            else
-            {
+            } else {
                 //
                 // For a PUT request, we acknowledge the transfer which tells
                 // the TFTP client that it can start sending us data.
@@ -649,9 +607,7 @@ TFTPRecv(void *arg, struct udp_pcb *upcb, struct pbuf *p, struct ip_addr *addr,
                 psTFTP->ui32BlockNum = 0;
                 TFTPDataAck(psTFTP);
             }
-        }
-        else
-        {
+        } else {
             //
             // The application indicated that there was an error.  Send the
             // error report and close the connection.

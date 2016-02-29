@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -51,13 +51,13 @@
 //!
 //! This application is intended for use with the boot_serial flash-based boot
 //! loader included in the software release. Since the sector size is 16KB, the
-//! link address is set to 0x4000.  If you are using USB or Ethernet boot 
+//! link address is set to 0x4000.  If you are using USB or Ethernet boot
 //! loader, you may change this address to a 16KB boundary higher than the last
 //! address occupied by the boot loader binary as long as you also rebuild the
-//! boot loader itself after modifying its bl_config.h file to set 
+//! boot loader itself after modifying its bl_config.h file to set
 //! APP_START_ADDRESS to the same value.
 //!
-//! The boot_demo2 application can be used along with this application to 
+//! The boot_demo2 application can be used along with this application to
 //! easily demonstrate that the boot loader is actually updating the on-chip
 //! flash.
 //!
@@ -84,7 +84,7 @@ volatile uint32_t g_ui32SysClockFreq;
 //*****************************************************************************
 #ifdef DEBUG
 void
-__error__(char *pcFilename, uint32_t ui32Line) 
+__error__(char *pcFilename, uint32_t ui32Line)
 {
 }
 #endif
@@ -104,11 +104,11 @@ void
 JumpToBootLoader(void)
 {
     //
-    // We must make sure we turn off SysTick and its interrupt before entering 
+    // We must make sure we turn off SysTick and its interrupt before entering
     // the boot loader!
     //
-    ROM_SysTickIntDisable(); 
-    ROM_SysTickDisable(); 
+    ROM_SysTickIntDisable();
+    ROM_SysTickDisable();
 
     //
     // Disable all processor interrupts.  Instead of disabling them
@@ -124,7 +124,7 @@ JumpToBootLoader(void)
     // Return control to the boot loader.  This is a call to the SVC
     // handler in the boot loader.
     //
-    (*((void (*)(void))(*(uint32_t *)0x2c)))(); 
+    (*((void (*)(void))(*(uint32_t *)0x2c)))();
 }
 
 //*****************************************************************************
@@ -201,9 +201,9 @@ main(void)
     // Set the system clock to run at 120MHz from the PLL
     //
     g_ui32SysClockFreq = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN |
-                                             SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN |
+                                            SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Initialize the peripherals that each of the boot loader flavours
@@ -236,8 +236,7 @@ main(void)
     // On switch SW press detection exit the blinking program and jump to
     // the flash boot loader.
     //
-    while((GPIOPinRead(GPIO_PORTJ_BASE, GPIO_PIN_0) & GPIO_PIN_0) != 0x0)
-    {
+    while((GPIOPinRead(GPIO_PORTJ_BASE, GPIO_PIN_0) & GPIO_PIN_0) != 0x0) {
         GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0);
         SysCtlDelay(g_ui32SysClockFreq / 6);
         GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
@@ -248,7 +247,7 @@ main(void)
     // Before passing control make sure that the LED is turned OFF.
     //
     GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0x0);
-    
+
     //
     // Pass control to whichever flavour of boot loader the board is configured
     // with.

@@ -6,20 +6,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -35,8 +35,7 @@ extern "C"
 //
 // Long Term Key info
 //
-typedef struct
-{
+typedef struct {
     bool    bValid;
     bool    bAuth;
     uint8_t ui8LTKSize;
@@ -85,7 +84,7 @@ typedef struct
 #define GATT_HUMIDITY_NOTIDY_UUID_HANDLE           0x39
 #define GATT_HUMIDITY_CFG_UUID_HANDLE              0x3C
 
-// 
+//
 // GAP Profile Roles Bit mask values
 //
 #define GAP_PROFILE_BROADCASTER   0x01 //A device that sends advertising events only.
@@ -164,7 +163,7 @@ typedef struct
 #define GAP_ADTYPE_ADV_NONCONN_IND        0x03  //!< Non-Connectable undirected advertisement
 #define GAP_ADTYPE_SCAN_RSP_IND           0x04  //!< Only used in gapDeviceInfoEvent_t
 
-// 
+//
 // Vendor Specific Event Code
 //
 #define HCI_VE_EVENT_CODE                 0xFF

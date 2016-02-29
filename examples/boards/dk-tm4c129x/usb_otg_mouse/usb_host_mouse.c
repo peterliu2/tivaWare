@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -60,8 +60,7 @@ DECLARE_EVENT_DRIVER(g_sUSBEventDriver, 0, 0, USBHCDEvents);
 // In this case, only the Mouse class is loaded.
 //
 //*****************************************************************************
-static tUSBHostClassDriver const * const g_ppHostClassDrivers[] =
-{
+static tUSBHostClassDriver const * const g_ppHostClassDrivers[] = {
     &g_sUSBHIDClassDriver,
     &g_sUSBEventDriver
 };
@@ -95,8 +94,7 @@ static tRectangle g_sCursor;
 // This enumerated type is used to hold the states of the mouse.
 //
 //*****************************************************************************
-enum
-{
+enum {
     //
     // No device is present.
     //
@@ -188,8 +186,7 @@ UpdateCursor(int32_t i32XDelta, int32_t i32YDelta)
     // If the left button is not pressed then erase the previous cursor
     // position.
     //
-    if((g_ui32Buttons & 1) == 0)
-    {
+    if((g_ui32Buttons & 1) == 0) {
         //
         // Erase the previous cursor.
         //
@@ -206,8 +203,7 @@ UpdateCursor(int32_t i32XDelta, int32_t i32YDelta)
     // Update the X position without going off the screen.
     //
     if(((int)g_sCursor.i16XMin + i32XDelta + DISPLAY_MOUSE_SIZE) <
-       GrContextDpyWidthGet(&g_sContext))
-    {
+            GrContextDpyWidthGet(&g_sContext)) {
         //
         // Update the X cursor position.
         //
@@ -216,8 +212,7 @@ UpdateCursor(int32_t i32XDelta, int32_t i32YDelta)
         //
         // Don't let the cursor go off the left of the screen either.
         //
-        if(i32Temp < 0)
-        {
+        if(i32Temp < 0) {
             i32Temp = 0;
         }
     }
@@ -237,9 +232,8 @@ UpdateCursor(int32_t i32XDelta, int32_t i32YDelta)
     // Update the Y position without going off the screen.
     //
     if(((int)g_sCursor.i16YMin + i32YDelta) <
-       (GrContextDpyHeightGet(&g_sContext) -
-        DISPLAY_BANNER_HEIGHT - DISPLAY_MOUSE_SIZE - 1))
-    {
+            (GrContextDpyHeightGet(&g_sContext) -
+             DISPLAY_BANNER_HEIGHT - DISPLAY_MOUSE_SIZE - 1)) {
         //
         // Update the Y cursor position.
         //
@@ -248,8 +242,7 @@ UpdateCursor(int32_t i32XDelta, int32_t i32YDelta)
         //
         // Don't let the cursor overwrite the status area of the screen.
         //
-        if(i32Temp < DISPLAY_BANNER_HEIGHT + 1)
-        {
+        if(i32Temp < DISPLAY_BANNER_HEIGHT + 1) {
             i32Temp = DISPLAY_BANNER_HEIGHT + 1;
         }
     }
@@ -295,17 +288,13 @@ UpdateButtons(void)
     //
     // Check all three buttons.
     //
-    for(iButton = 0; iButton < 3; iButton++)
-    {
+    for(iButton = 0; iButton < 3; iButton++) {
         //
         // Draw the button indicator red if pressed and black if not pressed.
         //
-        if(g_ui32Buttons & (1 << iButton))
-        {
+        if(g_ui32Buttons & (1 << iButton)) {
             GrContextForegroundSet(&g_sContext, ClrRed);
-        }
-        else
-        {
+        } else {
             GrContextForegroundSet(&g_sContext, ClrBlack);
         }
 
@@ -346,7 +335,7 @@ UpdateStatus(char *pcString, uint32_t ui32Buttons, bool bClrBackground)
     //
     sRect.i16XMin = 0;
     sRect.i16YMin = GrContextDpyHeightGet(&g_sContext) -
-                  DISPLAY_BANNER_HEIGHT - 1;
+                    DISPLAY_BANNER_HEIGHT - 1;
     sRect.i16XMax = GrContextDpyWidthGet(&g_sContext) - 1;
     sRect.i16YMax = sRect.i16YMin + DISPLAY_BANNER_HEIGHT;
 
@@ -355,8 +344,7 @@ UpdateStatus(char *pcString, uint32_t ui32Buttons, bool bClrBackground)
     //
     GrContextBackgroundSet(&g_sContext, DISPLAY_BANNER_BG);
 
-    if(bClrBackground)
-    {
+    if(bClrBackground) {
         //
         // Draw the background of the banner.
         //
@@ -378,43 +366,34 @@ UpdateStatus(char *pcString, uint32_t ui32Buttons, bool bClrBackground)
     //
     // Update the status on the screen.
     //
-    if(pcString != 0)
-    {
+    if(pcString != 0) {
         UARTprintf(pcString);
         UARTprintf("\n");
         GrStringDraw(&g_sContext, pcString, -1, 10, sRect.i16YMin + 4, 1);
 
         g_ui32Buttons = ui32Buttons;
-    }
-    else if(iUSBState == eStateNoDevice)
-    {
+    } else if(iUSBState == eStateNoDevice) {
         //
         // Mouse is currently disconnected.
         //
         UARTprintf("no device\n");
         GrStringDraw(&g_sContext, "no device     ", -1, 10, sRect.i16YMin + 4,
                      1);
-    }
-    else if(iUSBState == eStateMouseConnected)
-    {
+    } else if(iUSBState == eStateMouseConnected) {
         //
         // Mouse is connected.
         //
         UARTprintf("connected\n");
         GrStringDraw(&g_sContext, "connected     ", -1, 10, sRect.i16YMin + 4,
                      1);
-    }
-    else if(iUSBState == eStateUnknownDevice)
-    {
+    } else if(iUSBState == eStateUnknownDevice) {
         //
         // Some other (unknown) device is connected.
         //
         UARTprintf("unknown device\n");
         GrStringDraw(&g_sContext, "unknown device", -1, 10, sRect.i16YMin + 4,
                      1);
-    }
-    else if(iUSBState == eStatePowerFault)
-    {
+    } else if(iUSBState == eStatePowerFault) {
         //
         // Power fault.
         //
@@ -453,21 +432,18 @@ USBHCDEvents(void *pvData)
     //
     psEventInfo = (tEventInfo *)pvData;
 
-    switch(psEventInfo->ui32Event)
-    {
+    switch(psEventInfo->ui32Event) {
         //
         // New mouse detected.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             //
             // See if this is a HID Keyboard.
             //
             if((USBHCDDevClass(psEventInfo->ui32Instance, 0) ==
-                USB_CLASS_HID) &&
-               (USBHCDDevProtocol(psEventInfo->ui32Instance, 0) ==
-                USB_HID_PROTOCOL_MOUSE))
-            {
+                    USB_CLASS_HID) &&
+                    (USBHCDDevProtocol(psEventInfo->ui32Instance, 0) ==
+                     USB_HID_PROTOCOL_MOUSE)) {
                 //
                 // Indicate that the mouse has been detected.
                 //
@@ -486,8 +462,7 @@ USBHCDEvents(void *pvData)
         //
         // Unsupported device detected.
         //
-        case USB_EVENT_UNKNOWN_CONNECTED:
-        {
+        case USB_EVENT_UNKNOWN_CONNECTED: {
             UARTprintf("Unsupported Device Connected\n");
 
             //
@@ -500,8 +475,7 @@ USBHCDEvents(void *pvData)
         //
         // Device has been unplugged.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             //
             // Indicate that the mouse has been disconnected.
             //
@@ -523,8 +497,7 @@ USBHCDEvents(void *pvData)
         //
         // Power Fault.
         //
-        case USB_EVENT_POWER_FAULT:
-        {
+        case USB_EVENT_POWER_FAULT: {
             UARTprintf("Power Fault\n");
 
             //
@@ -534,8 +507,7 @@ USBHCDEvents(void *pvData)
 
             break;
         }
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -562,13 +534,11 @@ void
 MouseCallback(tUSBHMouse *psMsInstance, uint32_t ui32Event,
               uint32_t ui32MsgParam, void *pvMsgData)
 {
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // Mouse button press detected.
         //
-        case USBH_EVENT_HID_MS_PRESS:
-        {
+        case USBH_EVENT_HID_MS_PRESS: {
             UARTprintf("Button Pressed %02x\n", ui32MsgParam);
 
             //
@@ -582,8 +552,7 @@ MouseCallback(tUSBHMouse *psMsInstance, uint32_t ui32Event,
         //
         // Mouse button release detected.
         //
-        case USBH_EVENT_HID_MS_REL:
-        {
+        case USBH_EVENT_HID_MS_REL: {
             UARTprintf("Button Released %02x\n", ui32MsgParam);
 
             //
@@ -597,8 +566,7 @@ MouseCallback(tUSBHMouse *psMsInstance, uint32_t ui32Event,
         //
         // Mouse X movement detected.
         //
-        case USBH_EVENT_HID_MS_X:
-        {
+        case USBH_EVENT_HID_MS_X: {
             UARTprintf("X:%02d.\n", (signed char)ui32MsgParam);
 
             //
@@ -612,8 +580,7 @@ MouseCallback(tUSBHMouse *psMsInstance, uint32_t ui32Event,
         //
         // Mouse Y movement detected.
         //
-        case USBH_EVENT_HID_MS_Y:
-        {
+        case USBH_EVENT_HID_MS_Y: {
             UARTprintf("Y:%02d.\n", (signed char)ui32MsgParam);
 
             //
@@ -682,13 +649,11 @@ HostInit(void)
 void
 HostMain(void)
 {
-    switch(iUSBState)
-    {
+    switch(iUSBState) {
         //
         // This state is entered when the mouse is first detected.
         //
-        case eStateMouseInit:
-        {
+        case eStateMouseInit: {
             //
             // Initialize the newly connected mouse.
             //
@@ -712,23 +677,20 @@ HostMain(void)
 
             break;
         }
-        case eStateMouseConnected:
-        {
+        case eStateMouseConnected: {
             //
             // Nothing is currently done in the main loop when the mouse
             // is connected.
             //
             break;
         }
-        case eStateNoDevice:
-        {
+        case eStateNoDevice: {
             //
             // The mouse is not connected so nothing needs to be done here.
             //
             break;
         }
-        default:
-        {
+        default: {
             break;
         }
     }

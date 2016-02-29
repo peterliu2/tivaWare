@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2009-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -176,12 +176,12 @@
 #define USB_ATTYPE_SPEAKER      0x0301  // A generic speaker.
 #define USB_ATTYPE_HEADPHONES   0x0302  // A head-mounted audio output device.
 #define USB_ATTYPE_HMD          0x0303  // The audio part of a VR head mounted
-                                        // display.
+// display.
 #define USB_ATTYPE_SPEAKER_DT   0x0304  // Desktop or Monitor speaker(s).
 #define USB_ATTYPE_SPEAKER_RM   0x0305  // Larger room speaker(s).
 #define USB_ATTYPE_SPEAKER_COM  0x0306  // Communications Speaker (phone).
 #define USB_ATTYPE_SPEAKER_LFE  0x0307  // Speaker designed for low
-                                        // frequencies.
+// frequencies.
 
 //*****************************************************************************
 //
@@ -286,8 +286,7 @@
 //! for Audio Devices Release 1.0.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The length of this descriptor in bytes.
     //
@@ -356,8 +355,7 @@ PACKED tACHeader;
 //! Universal Serial Bus Device Class Definition for Audio Devices Release 1.0.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The length of this descriptor in bytes.
     //
@@ -406,8 +404,7 @@ PACKED tACFeatureUnit;
 //! Universal Serial Bus Device Class Definition for Audio Devices Release 1.0.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The length of this descriptor in bytes.
     //
@@ -460,8 +457,7 @@ PACKED tACOutputTerminal;
 //! Universal Serial Bus Device Class Definition for Audio Devices Release 1.0.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The length of this descriptor in bytes.
     //
@@ -526,8 +522,7 @@ PACKED tACInputTerminal;
 //! Serial Bus Device Class Definition for Audio Devices Release 1.0.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The length of this descriptor in bytes.
     //
@@ -569,8 +564,7 @@ PACKED tACMixer;
 //! Serial Bus Device Class Definition for Audio Devices Release 1.0.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The length of this descriptor in bytes.
     //
@@ -612,8 +606,7 @@ PACKED tACSelector;
 //! Universal Serial Bus Device Class Definition for Audio Devices Release 1.0.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The length of this descriptor in bytes.
     //
@@ -655,8 +648,7 @@ PACKED tACGeneral;
 //! USB Audio Devices Release 1.0.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The length of this descriptor in bytes.
     //

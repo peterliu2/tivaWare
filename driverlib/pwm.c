@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2005-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -229,8 +229,7 @@ PWMGenConfigure(uint32_t ui32Base, uint32_t ui32Gen,
     //
     // Set the individual PWM generator controls.
     //
-    if(ui32Config & PWM_X_CTL_MODE)
-    {
+    if(ui32Config & PWM_X_CTL_MODE) {
         //
         // In up/down count mode, set the signal high on up count comparison
         // and low on down count comparison (that is, center align the
@@ -240,9 +239,7 @@ PWMGenConfigure(uint32_t ui32Base, uint32_t ui32Gen,
                                          PWM_X_GENA_ACTCMPAD_ZERO);
         HWREG(ui32Gen + PWM_O_X_GENB) = (PWM_X_GENB_ACTCMPBU_ONE |
                                          PWM_X_GENB_ACTCMPBD_ZERO);
-    }
-    else
-    {
+    } else {
         //
         // In down count mode, set the signal high on load and low on count
         // comparison (that is, left align the signals).
@@ -292,17 +289,14 @@ PWMGenPeriodSet(uint32_t ui32Base, uint32_t ui32Gen,
     //
     // Set the reload register based on the mode.
     //
-    if(HWREG(ui32Gen + PWM_O_X_CTL) & PWM_X_CTL_MODE)
-    {
+    if(HWREG(ui32Gen + PWM_O_X_CTL) & PWM_X_CTL_MODE) {
         //
         // In up/down count mode, set the reload register to half the requested
         // period.
         //
         ASSERT((ui32Period / 2) < 65536);
         HWREG(ui32Gen + PWM_O_X_LOAD) = ui32Period / 2;
-    }
-    else
-    {
+    } else {
         //
         // In down count mode, set the reload register to the requested period
         // minus one.
@@ -349,15 +343,12 @@ PWMGenPeriodGet(uint32_t ui32Base, uint32_t ui32Gen)
     //
     // Figure out the counter mode.
     //
-    if(HWREG(ui32Gen + PWM_O_X_CTL) & PWM_X_CTL_MODE)
-    {
+    if(HWREG(ui32Gen + PWM_O_X_CTL) & PWM_X_CTL_MODE) {
         //
         // The period is twice the reload register value.
         //
         return(HWREG(ui32Gen + PWM_O_X_LOAD) * 2);
-    }
-    else
-    {
+    } else {
         //
         // The period is the reload register value plus one.
         //
@@ -463,8 +454,7 @@ PWMPulseWidthSet(uint32_t ui32Base, uint32_t ui32PWMOut,
     //
     // If the counter is in up/down count mode, divide the width by two.
     //
-    if(HWREG(ui32GenBase + PWM_O_X_CTL) & PWM_X_CTL_MODE)
-    {
+    if(HWREG(ui32GenBase + PWM_O_X_CTL) & PWM_X_CTL_MODE) {
         ui32Width /= 2;
     }
 
@@ -486,12 +476,9 @@ PWMPulseWidthSet(uint32_t ui32Base, uint32_t ui32PWMOut,
     //
     // Write to the appropriate registers.
     //
-    if(PWM_IS_OUTPUT_ODD(ui32PWMOut))
-    {
+    if(PWM_IS_OUTPUT_ODD(ui32PWMOut)) {
         HWREG(ui32GenBase + PWM_O_X_CMPB) = ui32Reg;
-    }
-    else
-    {
+    } else {
         HWREG(ui32GenBase + PWM_O_X_CMPA) = ui32Reg;
     }
 }
@@ -535,12 +522,9 @@ PWMPulseWidthGet(uint32_t ui32Base, uint32_t ui32PWMOut)
     // width = (load - compare) * 2.  Otherwise, set width = load - compare.
     //
     ui32Load = HWREG(ui32GenBase + PWM_O_X_LOAD);
-    if(PWM_IS_OUTPUT_ODD(ui32PWMOut))
-    {
+    if(PWM_IS_OUTPUT_ODD(ui32PWMOut)) {
         ui32Reg = HWREG(ui32GenBase + PWM_O_X_CMPB);
-    }
-    else
-    {
+    } else {
         ui32Reg = HWREG(ui32GenBase + PWM_O_X_CMPA);
     }
     ui32Reg = ui32Load - ui32Reg;
@@ -548,8 +532,7 @@ PWMPulseWidthGet(uint32_t ui32Base, uint32_t ui32PWMOut)
     //
     // If in up/down count mode, double the pulse width.
     //
-    if(HWREG(ui32GenBase + PWM_O_X_CTL) & PWM_X_CTL_MODE)
-    {
+    if(HWREG(ui32GenBase + PWM_O_X_CTL) & PWM_X_CTL_MODE) {
         ui32Reg = ui32Reg * 2;
     }
 
@@ -738,12 +721,9 @@ PWMOutputState(uint32_t ui32Base, uint32_t ui32PWMOutBits,
     // Read the module's ENABLE output control register and set or clear the
     // requested bits.
     //
-    if(bEnable == true)
-    {
+    if(bEnable == true) {
         HWREG(ui32Base + PWM_O_ENABLE) |= ui32PWMOutBits;
-    }
-    else
-    {
+    } else {
         HWREG(ui32Base + PWM_O_ENABLE) &= ~(ui32PWMOutBits);
     }
 }
@@ -786,12 +766,9 @@ PWMOutputInvert(uint32_t ui32Base, uint32_t ui32PWMOutBits,
     // Read the module's INVERT output control register and set or clear the
     // requested bits.
     //
-    if(bInvert == true)
-    {
+    if(bInvert == true) {
         HWREG(ui32Base + PWM_O_INVERT) |= ui32PWMOutBits;
-    }
-    else
-    {
+    } else {
         HWREG(ui32Base + PWM_O_INVERT) &= ~(ui32PWMOutBits);
     }
 }
@@ -842,12 +819,9 @@ PWMOutputFaultLevel(uint32_t ui32Base, uint32_t ui32PWMOutBits,
     // Read the module's FAULT output control register and set or clear the
     // requested bits.
     //
-    if(bDriveHigh == true)
-    {
+    if(bDriveHigh == true) {
         HWREG(ui32Base + PWM_O_FAULTVAL) |= ui32PWMOutBits;
-    }
-    else
-    {
+    } else {
         HWREG(ui32Base + PWM_O_FAULTVAL) &= ~(ui32PWMOutBits);
     }
 }
@@ -895,12 +869,9 @@ PWMOutputFault(uint32_t ui32Base, uint32_t ui32PWMOutBits,
     // Read the module's FAULT output control register and set or clear the
     // requested bits.
     //
-    if(bFaultSuppress == true)
-    {
+    if(bFaultSuppress == true) {
         HWREG(ui32Base + PWM_O_FAULT) |= ui32PWMOutBits;
-    }
-    else
-    {
+    } else {
         HWREG(ui32Base + PWM_O_FAULT) &= ~(ui32PWMOutBits);
     }
 }
@@ -925,23 +896,16 @@ _PWMGenIntNumberGet(uint32_t ui32Base, uint32_t ui32Gen)
     //
     // Determine the generator and PWM module in question.
     //
-    switch(ui32Base + ui32Gen)
-    {
+    switch(ui32Base + ui32Gen) {
         //
         // The first PWM generator in the first PWM module.
         //
-        case PWM0_BASE + PWM_GEN_0:
-        {
-            if(CLASS_IS_TM4C123)
-            {
+        case PWM0_BASE + PWM_GEN_0: {
+            if(CLASS_IS_TM4C123) {
                 return(INT_PWM0_0_TM4C123);
-            }
-            else if(CLASS_IS_TM4C129)
-            {
+            } else if(CLASS_IS_TM4C129) {
                 return(INT_PWM0_0_TM4C129);
-            }
-            else
-            {
+            } else {
                 return(0);
             }
         }
@@ -949,14 +913,10 @@ _PWMGenIntNumberGet(uint32_t ui32Base, uint32_t ui32Gen)
         //
         // The second PWM generator in the first PWM module.
         //
-        case PWM0_BASE + PWM_GEN_1:
-        {
-            if(CLASS_IS_TM4C129)
-            {
+        case PWM0_BASE + PWM_GEN_1: {
+            if(CLASS_IS_TM4C129) {
                 return(INT_PWM0_1_TM4C129);
-            }
-            else
-            {
+            } else {
                 return(0);
             }
         }
@@ -964,14 +924,10 @@ _PWMGenIntNumberGet(uint32_t ui32Base, uint32_t ui32Gen)
         //
         // The third PWM generator in the first PWM module.
         //
-        case PWM0_BASE + PWM_GEN_2:
-        {
-            if(CLASS_IS_TM4C129)
-            {
+        case PWM0_BASE + PWM_GEN_2: {
+            if(CLASS_IS_TM4C129) {
                 return(INT_PWM0_2_TM4C129);
-            }
-            else
-            {
+            } else {
                 return(0);
             }
         }
@@ -979,14 +935,10 @@ _PWMGenIntNumberGet(uint32_t ui32Base, uint32_t ui32Gen)
         //
         // The fourth PWM generator in the first PWM module.
         //
-        case PWM0_BASE + PWM_GEN_3:
-        {
-            if(CLASS_IS_TM4C129)
-            {
+        case PWM0_BASE + PWM_GEN_3: {
+            if(CLASS_IS_TM4C129) {
                 return(INT_PWM0_3_TM4C129);
-            }
-            else
-            {
+            } else {
                 return(0);
             }
         }
@@ -994,14 +946,10 @@ _PWMGenIntNumberGet(uint32_t ui32Base, uint32_t ui32Gen)
         //
         // The first PWM generator in the second PWM module.
         //
-        case PWM1_BASE + PWM_GEN_0:
-        {
-            if(CLASS_IS_TM4C123)
-            {
+        case PWM1_BASE + PWM_GEN_0: {
+            if(CLASS_IS_TM4C123) {
                 return(INT_PWM1_0_TM4C123);
-            }
-            else
-            {
+            } else {
                 return(0);
             }
         }
@@ -1009,14 +957,10 @@ _PWMGenIntNumberGet(uint32_t ui32Base, uint32_t ui32Gen)
         //
         // The first PWM generator in the second PWM module.
         //
-        case PWM1_BASE + PWM_GEN_1:
-        {
-            if(CLASS_IS_TM4C123)
-            {
+        case PWM1_BASE + PWM_GEN_1: {
+            if(CLASS_IS_TM4C123) {
                 return(INT_PWM1_1_TM4C123);
-            }
-            else
-            {
+            } else {
                 return(0);
             }
         }
@@ -1024,14 +968,10 @@ _PWMGenIntNumberGet(uint32_t ui32Base, uint32_t ui32Gen)
         //
         // The first PWM generator in the second PWM module.
         //
-        case PWM1_BASE + PWM_GEN_2:
-        {
-            if(CLASS_IS_TM4C123)
-            {
+        case PWM1_BASE + PWM_GEN_2: {
+            if(CLASS_IS_TM4C123) {
                 return(INT_PWM1_2_TM4C123);
-            }
-            else
-            {
+            } else {
                 return(0);
             }
         }
@@ -1039,14 +979,10 @@ _PWMGenIntNumberGet(uint32_t ui32Base, uint32_t ui32Gen)
         //
         // The first PWM generator in the second PWM module.
         //
-        case PWM1_BASE + PWM_GEN_3:
-        {
-            if(CLASS_IS_TM4C123)
-            {
+        case PWM1_BASE + PWM_GEN_3: {
+            if(CLASS_IS_TM4C123) {
                 return(INT_PWM1_3_TM4C123);
-            }
-            else
-            {
+            } else {
                 return(0);
             }
         }
@@ -1054,8 +990,7 @@ _PWMGenIntNumberGet(uint32_t ui32Base, uint32_t ui32Gen)
         //
         // An unknown PWM module/generator was specified.
         //
-        default:
-        {
+        default: {
             return(0);
         }
     }
@@ -1181,17 +1116,12 @@ _PWMFaultIntNumberGet(uint32_t ui32Base)
     //
     // Return the fault interrupt number.
     //
-    if(CLASS_IS_TM4C123)
-    {
+    if(CLASS_IS_TM4C123) {
         return((ui32Base == PWM0_BASE) ? INT_PWM0_FAULT_TM4C123 :
                INT_PWM1_FAULT_TM4C123);
-    }
-    else if(CLASS_IS_TM4C129)
-    {
+    } else if(CLASS_IS_TM4C129) {
         return((ui32Base == PWM0_BASE) ? INT_PWM0_FAULT_TM4C129 : 0);
-    }
-    else
-    {
+    } else {
         return(0);
     }
 }
@@ -1410,12 +1340,9 @@ PWMGenIntStatus(uint32_t ui32Base, uint32_t ui32Gen, bool bMasked)
     // Read and return the specified generator's raw or enabled interrupt
     // status.
     //
-    if(bMasked == true)
-    {
+    if(bMasked == true) {
         return(HWREG(ui32Gen + PWM_O_X_ISC));
-    }
-    else
-    {
+    } else {
         return(HWREG(ui32Gen + PWM_O_X_RIS));
     }
 }
@@ -1602,12 +1529,9 @@ PWMIntStatus(uint32_t ui32Base, bool bMasked)
     //
     // Read and return either the module's raw or enabled interrupt status.
     //
-    if(bMasked == true)
-    {
+    if(bMasked == true) {
         return(HWREG(ui32Base + PWM_O_ISC));
-    }
-    else
-    {
+    } else {
         return(HWREG(ui32Base + PWM_O_RIS));
     }
 }
@@ -1624,11 +1548,11 @@ PWMIntStatus(uint32_t ui32Base, bool bMasked)
 //! \e ui32FaultInts must be the logical OR of any of \b PWM_INT_FAULT0,
 //! \b PWM_INT_FAULT1, \b PWM_INT_FAULT2, or \b PWM_INT_FAULT3.
 //!
-//! The fault interrupts are derived by performing a logical OR of each of the 
+//! The fault interrupts are derived by performing a logical OR of each of the
 //! configured fault trigger signals for a given generator.  Therefore, these
-//! interrupts are not directly related to the four possible FAULTn inputs to 
-//! the device but indicate that a fault has been signaled to one of the four 
-//! possible PWM generators. 
+//! interrupts are not directly related to the four possible FAULTn inputs to
+//! the device but indicate that a fault has been signaled to one of the four
+//! possible PWM generators.
 //!
 //! \note Because there is a write buffer in the Cortex-M processor, it may
 //! take several clock cycles before the interrupt source is actually cleared.
@@ -1779,13 +1703,10 @@ PWMGenFaultTriggerSet(uint32_t ui32Base, uint32_t ui32Gen,
     //
     // Write the fault triggers to the appropriate register.
     //
-    if(ui32Group == PWM_FAULT_GROUP_0)
-    {
+    if(ui32Group == PWM_FAULT_GROUP_0) {
         HWREG(PWM_GEN_BADDR(ui32Base, ui32Gen) + PWM_O_X_FLTSRC0) =
             ui32FaultTriggers;
-    }
-    else
-    {
+    } else {
         HWREG(PWM_GEN_BADDR(ui32Base, ui32Gen) + PWM_O_X_FLTSRC1) =
             ui32FaultTriggers;
     }
@@ -1833,12 +1754,9 @@ PWMGenFaultTriggerGet(uint32_t ui32Base, uint32_t ui32Gen,
     //
     // Return the current fault triggers.
     //
-    if(ui32Group == PWM_FAULT_GROUP_0)
-    {
+    if(ui32Group == PWM_FAULT_GROUP_0) {
         return(HWREG(PWM_GEN_BADDR(ui32Base, ui32Gen) + PWM_O_X_FLTSRC0));
-    }
-    else
-    {
+    } else {
         return(HWREG(PWM_GEN_BADDR(ui32Base, ui32Gen) + PWM_O_X_FLTSRC1));
     }
 }
@@ -1892,12 +1810,9 @@ PWMGenFaultStatus(uint32_t ui32Base, uint32_t ui32Gen,
     //
     // Return the current fault status.
     //
-    if(ui32Group == PWM_FAULT_GROUP_0)
-    {
+    if(ui32Group == PWM_FAULT_GROUP_0) {
         return(HWREG(PWM_GEN_EXT_BADDR(ui32Base, ui32Gen) + PWM_O_X_FLTSTAT0));
-    }
-    else
-    {
+    } else {
         return(HWREG(PWM_GEN_EXT_BADDR(ui32Base, ui32Gen) + PWM_O_X_FLTSTAT1));
     }
 }
@@ -1950,13 +1865,10 @@ PWMGenFaultClear(uint32_t ui32Base, uint32_t ui32Gen,
     //
     // Clear the given faults.
     //
-    if(ui32Group == PWM_FAULT_GROUP_0)
-    {
+    if(ui32Group == PWM_FAULT_GROUP_0) {
         HWREG(PWM_GEN_EXT_BADDR(ui32Base, ui32Gen) + PWM_O_X_FLTSTAT0) =
             ui32FaultTriggers;
-    }
-    else
-    {
+    } else {
         HWREG(PWM_GEN_EXT_BADDR(ui32Base, ui32Gen) + PWM_O_X_FLTSTAT1) =
             ui32FaultTriggers;
     }
@@ -2038,15 +1950,12 @@ PWMClockGet(uint32_t ui32Base)
     // Return the current PWM clock configuration.  Make sure that
     // PWM_SYSCLK_DIV_1 is returned in all cases where the divider is disabled.
     //
-    if(!(HWREG(ui32Base + PWM_O_CC) & PWM_CC_USEPWM))
-    {
+    if(!(HWREG(ui32Base + PWM_O_CC) & PWM_CC_USEPWM)) {
         //
         // The divider is not active so reflect this in the value we return.
         //
         return(PWM_SYSCLK_DIV_1);
-    }
-    else
-    {
+    } else {
         //
         // The divider is active so directly return the masked register value.
         //
@@ -2116,13 +2025,11 @@ PWMOutputUpdateMode(uint32_t ui32Base, uint32_t ui32PWMOutBits,
     //
     // Loop to find out which PWM outputs are to be modified.
     //
-    while(ui8Index < 8)
-    {
+    while(ui8Index < 8) {
         //
         // Check if this PWM output is to be modified.
         //
-        if(ui32PWMOutputMask & ui32PWMOutBits)
-        {
+        if(ui32PWMOutputMask & ui32PWMOutBits) {
             //
             // Set the update mode value for the requested PWM output by
             // writing to the appropriate field.

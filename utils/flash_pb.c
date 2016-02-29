@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Utility Library.
 //
 //*****************************************************************************
@@ -107,16 +107,14 @@ FlashPBIsValid(uint8_t *pui8Offset)
     //
     // Loop through the bytes in the block, computing the checksum.
     //
-    for(ui32Idx = 0, ui32Sum = 0; ui32Idx < g_ui32FlashPBSize; ui32Idx++)
-    {
+    for(ui32Idx = 0, ui32Sum = 0; ui32Idx < g_ui32FlashPBSize; ui32Idx++) {
         ui32Sum += pui8Offset[ui32Idx];
     }
 
     //
     // The checksum should be zero, so return a failure if it is not.
     //
-    if((ui32Sum & 255) != 0)
-    {
+    if((ui32Sum & 255) != 0) {
         return(0);
     }
 
@@ -124,8 +122,7 @@ FlashPBIsValid(uint8_t *pui8Offset)
     // If the sum is equal to the size * 255, then the block is all ones and
     // should not be considered valid.
     //
-    if((g_ui32FlashPBSize * 255) == ui32Sum)
-    {
+    if((g_ui32FlashPBSize * 255) == ui32Sum) {
         return(0);
     }
 
@@ -152,8 +149,7 @@ FlashPBGet(void)
     //
     // See if there is a valid parameter block.
     //
-    if(g_pui8FlashPBCurrent)
-    {
+    if(g_pui8FlashPBCurrent) {
         //
         // Return the address of the most recent parameter block.
         //
@@ -210,8 +206,7 @@ FlashPBSave(uint8_t *pui8Buffer)
     //
     // See if there is a valid parameter block in flash.
     //
-    if(g_pui8FlashPBCurrent)
-    {
+    if(g_pui8FlashPBCurrent) {
         //
         // Set the sequence number to one greater than the most recent
         // parameter block.
@@ -223,13 +218,10 @@ FlashPBSave(uint8_t *pui8Buffer)
         // recent parameter block.
         //
         pui8New = g_pui8FlashPBCurrent + g_ui32FlashPBSize;
-        if(pui8New == g_pui8FlashPBEnd)
-        {
+        if(pui8New == g_pui8FlashPBEnd) {
             pui8New = g_pui8FlashPBStart;
         }
-    }
-    else
-    {
+    } else {
         //
         // There is not a valid parameter block in flash, so set the sequence
         // number of this parameter block to zero.
@@ -246,8 +238,7 @@ FlashPBSave(uint8_t *pui8Buffer)
     //
     // Compute the checksum of the parameter block to be written.
     //
-    for(ui32Idx = 0, ui32Sum = 0; ui32Idx < g_ui32FlashPBSize; ui32Idx++)
-    {
+    for(ui32Idx = 0, ui32Sum = 0; ui32Idx < g_ui32FlashPBSize; ui32Idx++) {
         ui32Sum -= pui8Buffer[ui32Idx];
     }
 
@@ -260,13 +251,11 @@ FlashPBSave(uint8_t *pui8Buffer)
     // Look for a location to store this parameter block.  This infinite loop
     // will be explicitly broken out of when a valid location is found.
     //
-    while(1)
-    {
+    while(1) {
         //
         // See if this location is at the start of an erase block.
         //
-        if(((uint32_t)pui8New & (FLASH_SECTOR_SIZE - 1)) == 0)
-        {
+        if(((uint32_t)pui8New & (FLASH_SECTOR_SIZE - 1)) == 0) {
             //
             // Erase this block of the flash.  This does not assume that the
             // erase succeeded in case this block of the flash has become bad
@@ -281,10 +270,8 @@ FlashPBSave(uint8_t *pui8Buffer)
         // Loop through this portion of flash to see if is all ones (in other
         // words, it is an erased portion of flash).
         //
-        for(ui32Idx = 0; ui32Idx < g_ui32FlashPBSize; ui32Idx++)
-        {
-            if(pui8New[ui32Idx] != 0xff)
-            {
+        for(ui32Idx = 0; ui32Idx < g_ui32FlashPBSize; ui32Idx++) {
+            if(pui8New[ui32Idx] != 0xff) {
                 break;
             }
         }
@@ -294,8 +281,7 @@ FlashPBSave(uint8_t *pui8Buffer)
         // the loop since this is a good location for storing the parameter
         // block.
         //
-        if(ui32Idx == g_ui32FlashPBSize)
-        {
+        if(ui32Idx == g_ui32FlashPBSize) {
             break;
         }
 
@@ -303,8 +289,7 @@ FlashPBSave(uint8_t *pui8Buffer)
         // Increment to the next parameter block location.
         //
         pui8New += g_ui32FlashPBSize;
-        if(pui8New == g_pui8FlashPBEnd)
-        {
+        if(pui8New == g_pui8FlashPBEnd) {
             pui8New = g_pui8FlashPBStart;
         }
 
@@ -314,8 +299,7 @@ FlashPBSave(uint8_t *pui8Buffer)
         // return without writing it.
         //
         if((g_pui8FlashPBCurrent && (pui8New == g_pui8FlashPBCurrent)) ||
-           (!g_pui8FlashPBCurrent && (pui8New == g_pui8FlashPBStart)))
-        {
+                (!g_pui8FlashPBCurrent && (pui8New == g_pui8FlashPBStart))) {
             return;
         }
     }
@@ -332,10 +316,8 @@ FlashPBSave(uint8_t *pui8Buffer)
     // parameter block in flash as the most recent (since the current parameter
     // block failed to properly program).
     //
-    for(ui32Idx = 0; ui32Idx < g_ui32FlashPBSize; ui32Idx++)
-    {
-        if(pui8New[ui32Idx] != pui8Buffer[ui32Idx])
-        {
+    for(ui32Idx = 0; ui32Idx < g_ui32FlashPBSize; ui32Idx++) {
+        if(pui8New[ui32Idx] != pui8Buffer[ui32Idx]) {
             return;
         }
     }
@@ -432,19 +414,16 @@ FlashPBInit(uint32_t ui32Start, uint32_t ui32End, uint32_t ui32Size)
     // blocks.
     //
     for(pui8Offset = g_pui8FlashPBStart, pui8Current = 0;
-        pui8Offset < g_pui8FlashPBEnd; pui8Offset += g_ui32FlashPBSize)
-    {
+            pui8Offset < g_pui8FlashPBEnd; pui8Offset += g_ui32FlashPBSize) {
         //
         // See if this is a valid parameter block (in other words, the checksum
         // is correct).
         //
-        if(FlashPBIsValid(pui8Offset))
-        {
+        if(FlashPBIsValid(pui8Offset)) {
             //
             // See if a valid parameter block has been previously found.
             //
-            if(pui8Current != 0)
-            {
+            if(pui8Current != 0) {
                 //
                 // Get the sequence numbers for the current and new parameter
                 // blocks.
@@ -459,8 +438,7 @@ FlashPBInit(uint32_t ui32Start, uint32_t ui32End, uint32_t ui32Size)
                 // after 256 parameter blocks.
                 //
                 if(((ui8One > ui8Two) && ((ui8One - ui8Two) < 128)) ||
-                   ((ui8Two > ui8One) && ((ui8Two - ui8One) > 128)))
-                {
+                        ((ui8Two > ui8One) && ((ui8Two - ui8One) > 128))) {
                     //
                     // The new parameter block is older than the current
                     // parameter block, so skip the new parameter block and

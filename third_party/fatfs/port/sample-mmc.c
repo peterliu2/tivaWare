@@ -347,10 +347,9 @@ DRESULT disk_read (
 
     if (count == 1) {    /* Single block read */
         if ((send_cmd(CMD17, sector) == 0)    /* READ_SINGLE_BLOCK */
-            && rcvr_datablock(buff, 512))
+                && rcvr_datablock(buff, 512))
             count = 0;
-    }
-    else {                /* Multiple block read */
+    } else {              /* Multiple block read */
         if (send_cmd(CMD18, sector) == 0) {    /* READ_MULTIPLE_BLOCK */
             do {
                 if (!rcvr_datablock(buff, 512)) break;
@@ -390,12 +389,12 @@ DRESULT disk_write (
 
     if (count == 1) {    /* Single block write */
         if ((send_cmd(CMD24, sector) == 0)    /* WRITE_BLOCK */
-            && xmit_datablock(buff, 0xFE))
+                && xmit_datablock(buff, 0xFE))
             count = 0;
-    }
-    else {                /* Multiple block write */
+    } else {              /* Multiple block write */
         if (CardType & 2) {
-            send_cmd(CMD55, 0); send_cmd(CMD23, count);    /* ACMD23 */
+            send_cmd(CMD55, 0);
+            send_cmd(CMD23, count);    /* ACMD23 */
         }
         if (send_cmd(CMD25, sector) == 0) {    /* WRITE_MULTIPLE_BLOCK */
             do {
@@ -437,79 +436,78 @@ DRESULT disk_ioctl (
 
     if (ctrl == CTRL_POWER) {
         switch (*ptr) {
-        case 0:        /* Sub control code == 0 (POWER_OFF) */
-            if (chk_power())
-                power_off();        /* Power off */
-            res = RES_OK;
-            break;
-        case 1:        /* Sub control code == 1 (POWER_ON) */
-            power_on();                /* Power on */
-            res = RES_OK;
-            break;
-        case 2:        /* Sub control code == 2 (POWER_GET) */
-            *(ptr+1) = (BYTE)chk_power();
-            res = RES_OK;
-            break;
-        default :
-            res = RES_PARERR;
+            case 0:        /* Sub control code == 0 (POWER_OFF) */
+                if (chk_power())
+                    power_off();        /* Power off */
+                res = RES_OK;
+                break;
+            case 1:        /* Sub control code == 1 (POWER_ON) */
+                power_on();                /* Power on */
+                res = RES_OK;
+                break;
+            case 2:        /* Sub control code == 2 (POWER_GET) */
+                *(ptr+1) = (BYTE)chk_power();
+                res = RES_OK;
+                break;
+            default :
+                res = RES_PARERR;
         }
-    }
-    else {
+    } else {
         if (Stat & STA_NOINIT) return RES_NOTRDY;
 
         SELECT();        /* CS = L */
 
         switch (ctrl) {
-        case GET_SECTOR_COUNT :    /* Get number of sectors on the disk (DWORD) */
-            if ((send_cmd(CMD9, 0) == 0) && rcvr_datablock(csd, 16)) {
-                if ((csd[0] >> 6) == 1) {    /* SDC ver 2.00 */
-                    csize = csd[9] + ((WORD)csd[8] << 8) + 1;
-                    *(DWORD*)buff = (DWORD)csize << 10;
-                } else {                    /* MMC or SDC ver 1.XX */
-                    n = (csd[5] & 15) + ((csd[10] & 128) >> 7) + ((csd[9] & 3) << 1) + 2;
-                    csize = (csd[8] >> 6) + ((WORD)csd[7] << 2) + ((WORD)(csd[6] & 3) << 10) + 1;
-                    *(DWORD*)buff = (DWORD)csize << (n - 9);
+            case GET_SECTOR_COUNT :    /* Get number of sectors on the disk (DWORD) */
+                if ((send_cmd(CMD9, 0) == 0) && rcvr_datablock(csd, 16)) {
+                    if ((csd[0] >> 6) == 1) {    /* SDC ver 2.00 */
+                        csize = csd[9] + ((WORD)csd[8] << 8) + 1;
+                        *(DWORD*)buff = (DWORD)csize << 10;
+                    } else {                    /* MMC or SDC ver 1.XX */
+                        n = (csd[5] & 15) + ((csd[10] & 128) >> 7) + ((csd[9] & 3) << 1) + 2;
+                        csize = (csd[8] >> 6) + ((WORD)csd[7] << 2) + ((WORD)(csd[6] & 3) << 10) + 1;
+                        *(DWORD*)buff = (DWORD)csize << (n - 9);
+                    }
+                    res = RES_OK;
                 }
+                break;
+
+            case GET_SECTOR_SIZE :    /* Get sectors on the disk (WORD) */
+                *(WORD*)buff = 512;
                 res = RES_OK;
-            }
-            break;
+                break;
 
-        case GET_SECTOR_SIZE :    /* Get sectors on the disk (WORD) */
-            *(WORD*)buff = 512;
-            res = RES_OK;
-            break;
+            case CTRL_SYNC :    /* Make sure that data has been written */
+                if (wait_ready() == 0xFF)
+                    res = RES_OK;
+                break;
 
-        case CTRL_SYNC :    /* Make sure that data has been written */
-            if (wait_ready() == 0xFF)
+            case MMC_GET_CSD :    /* Receive CSD as a data block (16 bytes) */
+                if (send_cmd(CMD9, 0) == 0        /* READ_CSD */
+                        && rcvr_datablock(ptr, 16))
+                    res = RES_OK;
+                break;
+
+            case MMC_GET_CID :    /* Receive CID as a data block (16 bytes) */
+                if (send_cmd(CMD10, 0) == 0        /* READ_CID */
+                        && rcvr_datablock(ptr, 16))
+                    res = RES_OK;
+                break;
+
+            case MMC_GET_OCR :    /* Receive OCR as an R3 resp (4 bytes) */
+                if (send_cmd(CMD58, 0) == 0) {    /* READ_OCR */
+                    for (n = 0; n < 4; n++)
+                        *ptr++ = rcvr_spi();
+                    res = RES_OK;
+                }
+
+            case MMC_GET_TYPE :    /* Get card type flags (1 byte) */
+                *ptr = CardType;
                 res = RES_OK;
-            break;
+                break;
 
-        case MMC_GET_CSD :    /* Receive CSD as a data block (16 bytes) */
-            if (send_cmd(CMD9, 0) == 0        /* READ_CSD */
-                && rcvr_datablock(ptr, 16))
-                res = RES_OK;
-            break;
-
-        case MMC_GET_CID :    /* Receive CID as a data block (16 bytes) */
-            if (send_cmd(CMD10, 0) == 0        /* READ_CID */
-                && rcvr_datablock(ptr, 16))
-                res = RES_OK;
-            break;
-
-        case MMC_GET_OCR :    /* Receive OCR as an R3 resp (4 bytes) */
-            if (send_cmd(CMD58, 0) == 0) {    /* READ_OCR */
-                for (n = 0; n < 4; n++)
-                    *ptr++ = rcvr_spi();
-                res = RES_OK;
-            }
-
-        case MMC_GET_TYPE :    /* Get card type flags (1 byte) */
-            *ptr = CardType;
-            res = RES_OK;
-            break;
-
-        default:
-            res = RES_PARERR;
+            default:
+                res = RES_PARERR;
         }
 
         DESELECT();            /* CS = H */

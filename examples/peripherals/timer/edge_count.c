@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -195,8 +195,7 @@ MainLoopRun(void)
     //
     // Loop forever while the timer runs.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Get the current timer count.
         //
@@ -205,8 +204,7 @@ MainLoopRun(void)
         //
         // Has it changed?
         //
-        if(ui32Count != ui32LastCount)
-        {
+        if(ui32Count != ui32LastCount) {
             //
             // Yes - update the display.
             //
@@ -222,8 +220,7 @@ MainLoopRun(void)
         //
         // Has there been an interrupt since last we checked?
         //
-        if(HWREGBITW(&g_ui32Flags, 0))
-        {
+        if(HWREGBITW(&g_ui32Flags, 0)) {
             //
             // Clear the bit.
             //
@@ -348,7 +345,7 @@ main(void)
     // pull-up or pull-down, this will not be required.
     //
     MAP_GPIOPadConfigSet(GPIO_PORTM_BASE, GPIO_PIN_0,
-                     GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
+                         GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
 
     //
     // Enable processor interrupts.
@@ -364,7 +361,7 @@ main(void)
     // pins are connected to specific timers.
     //
     ROM_TimerConfigure(TIMER4_BASE, (TIMER_CFG_SPLIT_PAIR |
-                       TIMER_CFG_A_CAP_COUNT));
+                                     TIMER_CFG_A_CAP_COUNT));
     ROM_TimerControlEvent(TIMER4_BASE, TIMER_A, TIMER_EVENT_POS_EDGE);
     ROM_TimerLoadSet(TIMER4_BASE, TIMER_A, 9);
     ROM_TimerMatchSet(TIMER4_BASE, TIMER_A, 0);

@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2005-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -49,10 +49,10 @@
 #define FLASH_FMD               0x400FD004  // Flash Memory Data
 #define FLASH_FMC               0x400FD008  // Flash Memory Control
 #define FLASH_FCRIS             0x400FD00C  // Flash Controller Raw Interrupt
-                                            // Status
+// Status
 #define FLASH_FCIM              0x400FD010  // Flash Controller Interrupt Mask
 #define FLASH_FCMISC            0x400FD014  // Flash Controller Masked
-                                            // Interrupt Status and Clear
+// Interrupt Status and Clear
 #define FLASH_FMC2              0x400FD020  // Flash Memory Control 2
 #define FLASH_FWBVAL            0x400FD030  // Flash Write Buffer Valid
 #define FLASH_FLPEKEY           0x400FD03C  // Flash Program/Erase Key
@@ -72,69 +72,69 @@
 #define FLASH_USERREG2          0x400FE1E8  // User Register 2
 #define FLASH_USERREG3          0x400FE1EC  // User Register 3
 #define FLASH_FMPRE0            0x400FE200  // Flash Memory Protection Read
-                                            // Enable 0
+// Enable 0
 #define FLASH_FMPRE1            0x400FE204  // Flash Memory Protection Read
-                                            // Enable 1
+// Enable 1
 #define FLASH_FMPRE2            0x400FE208  // Flash Memory Protection Read
-                                            // Enable 2
+// Enable 2
 #define FLASH_FMPRE3            0x400FE20C  // Flash Memory Protection Read
-                                            // Enable 3
+// Enable 3
 #define FLASH_FMPRE4            0x400FE210  // Flash Memory Protection Read
-                                            // Enable 4
+// Enable 4
 #define FLASH_FMPRE5            0x400FE214  // Flash Memory Protection Read
-                                            // Enable 5
+// Enable 5
 #define FLASH_FMPRE6            0x400FE218  // Flash Memory Protection Read
-                                            // Enable 6
+// Enable 6
 #define FLASH_FMPRE7            0x400FE21C  // Flash Memory Protection Read
-                                            // Enable 7
+// Enable 7
 #define FLASH_FMPRE8            0x400FE220  // Flash Memory Protection Read
-                                            // Enable 8
+// Enable 8
 #define FLASH_FMPRE9            0x400FE224  // Flash Memory Protection Read
-                                            // Enable 9
+// Enable 9
 #define FLASH_FMPRE10           0x400FE228  // Flash Memory Protection Read
-                                            // Enable 10
+// Enable 10
 #define FLASH_FMPRE11           0x400FE22C  // Flash Memory Protection Read
-                                            // Enable 11
+// Enable 11
 #define FLASH_FMPRE12           0x400FE230  // Flash Memory Protection Read
-                                            // Enable 12
+// Enable 12
 #define FLASH_FMPRE13           0x400FE234  // Flash Memory Protection Read
-                                            // Enable 13
+// Enable 13
 #define FLASH_FMPRE14           0x400FE238  // Flash Memory Protection Read
-                                            // Enable 14
+// Enable 14
 #define FLASH_FMPRE15           0x400FE23C  // Flash Memory Protection Read
-                                            // Enable 15
+// Enable 15
 #define FLASH_FMPPE0            0x400FE400  // Flash Memory Protection Program
-                                            // Enable 0
+// Enable 0
 #define FLASH_FMPPE1            0x400FE404  // Flash Memory Protection Program
-                                            // Enable 1
+// Enable 1
 #define FLASH_FMPPE2            0x400FE408  // Flash Memory Protection Program
-                                            // Enable 2
+// Enable 2
 #define FLASH_FMPPE3            0x400FE40C  // Flash Memory Protection Program
-                                            // Enable 3
+// Enable 3
 #define FLASH_FMPPE4            0x400FE410  // Flash Memory Protection Program
-                                            // Enable 4
+// Enable 4
 #define FLASH_FMPPE5            0x400FE414  // Flash Memory Protection Program
-                                            // Enable 5
+// Enable 5
 #define FLASH_FMPPE6            0x400FE418  // Flash Memory Protection Program
-                                            // Enable 6
+// Enable 6
 #define FLASH_FMPPE7            0x400FE41C  // Flash Memory Protection Program
-                                            // Enable 7
+// Enable 7
 #define FLASH_FMPPE8            0x400FE420  // Flash Memory Protection Program
-                                            // Enable 8
+// Enable 8
 #define FLASH_FMPPE9            0x400FE424  // Flash Memory Protection Program
-                                            // Enable 9
+// Enable 9
 #define FLASH_FMPPE10           0x400FE428  // Flash Memory Protection Program
-                                            // Enable 10
+// Enable 10
 #define FLASH_FMPPE11           0x400FE42C  // Flash Memory Protection Program
-                                            // Enable 11
+// Enable 11
 #define FLASH_FMPPE12           0x400FE430  // Flash Memory Protection Program
-                                            // Enable 12
+// Enable 12
 #define FLASH_FMPPE13           0x400FE434  // Flash Memory Protection Program
-                                            // Enable 13
+// Enable 13
 #define FLASH_FMPPE14           0x400FE438  // Flash Memory Protection Program
-                                            // Enable 14
+// Enable 14
 #define FLASH_FMPPE15           0x400FE43C  // Flash Memory Protection Program
-                                            // Enable 15
+// Enable 15
 
 //*****************************************************************************
 //
@@ -169,13 +169,13 @@
 //
 //*****************************************************************************
 #define FLASH_FCRIS_PROGRIS     0x00002000  // Program Verify Error Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define FLASH_FCRIS_ERRIS       0x00000800  // Erase Verify Error Raw Interrupt
-                                            // Status
+// Status
 #define FLASH_FCRIS_INVDRIS     0x00000400  // Invalid Data Raw Interrupt
-                                            // Status
+// Status
 #define FLASH_FCRIS_VOLTRIS     0x00000200  // Pump Voltage Raw Interrupt
-                                            // Status
+// Status
 #define FLASH_FCRIS_ERIS        0x00000004  // EEPROM Raw Interrupt Status
 #define FLASH_FCRIS_PRIS        0x00000002  // Programming Raw Interrupt Status
 #define FLASH_FCRIS_ARIS        0x00000001  // Access Raw Interrupt Status
@@ -199,19 +199,19 @@
 //
 //*****************************************************************************
 #define FLASH_FCMISC_PROGMISC   0x00002000  // PROGVER Masked Interrupt Status
-                                            // and Clear
+// and Clear
 #define FLASH_FCMISC_ERMISC     0x00000800  // ERVER Masked Interrupt Status
-                                            // and Clear
+// and Clear
 #define FLASH_FCMISC_INVDMISC   0x00000400  // Invalid Data Masked Interrupt
-                                            // Status and Clear
+// Status and Clear
 #define FLASH_FCMISC_VOLTMISC   0x00000200  // VOLT Masked Interrupt Status and
-                                            // Clear
+// Clear
 #define FLASH_FCMISC_EMISC      0x00000004  // EEPROM Masked Interrupt Status
-                                            // and Clear
+// and Clear
 #define FLASH_FCMISC_PMISC      0x00000002  // Programming Masked Interrupt
-                                            // Status and Clear
+// Status and Clear
 #define FLASH_FCMISC_AMISC      0x00000001  // Access Masked Interrupt Status
-                                            // and Clear
+// and Clear
 
 //*****************************************************************************
 //
@@ -252,13 +252,13 @@
 #define FLASH_PP_FMM            0x20000000  // Flash Mirror Mode
 #define FLASH_PP_DFA            0x10000000  // DMA Flash Access
 #define FLASH_PP_EESS_M         0x00780000  // EEPROM Sector Size of the
-                                            // physical bank
+// physical bank
 #define FLASH_PP_EESS_1KB       0x00000000  // 1 KB
 #define FLASH_PP_EESS_2KB       0x00080000  // 2 KB
 #define FLASH_PP_EESS_4KB       0x00100000  // 4 KB
 #define FLASH_PP_EESS_8KB       0x00180000  // 8 KB
 #define FLASH_PP_MAINSS_M       0x00070000  // Flash Sector Size of the
-                                            // physical bank
+// physical bank
 #define FLASH_PP_MAINSS_1KB     0x00000000  // 1 KB
 #define FLASH_PP_MAINSS_2KB     0x00010000  // 2 KB
 #define FLASH_PP_MAINSS_4KB     0x00020000  // 4 KB
@@ -310,49 +310,49 @@
 #define FLASH_ROMSWMAP_SW0EN_M  0x00000003  // ROM SW Region 0 Availability
 #define FLASH_ROMSWMAP_SW0EN_NOTVIS                                           \
                                 0x00000000  // Software region not available to
-                                            // the core
+// the core
 #define FLASH_ROMSWMAP_SW0EN_CORE                                             \
                                 0x00000001  // Region available to core
 #define FLASH_ROMSWMAP_SW1EN_M  0x0000000C  // ROM SW Region 1 Availability
 #define FLASH_ROMSWMAP_SW1EN_NOTVIS                                           \
                                 0x00000000  // Software region not available to
-                                            // the core
+// the core
 #define FLASH_ROMSWMAP_SW1EN_CORE                                             \
                                 0x00000004  // Region available to core
 #define FLASH_ROMSWMAP_SW2EN_M  0x00000030  // ROM SW Region 2 Availability
 #define FLASH_ROMSWMAP_SW2EN_NOTVIS                                           \
                                 0x00000000  // Software region not available to
-                                            // the core
+// the core
 #define FLASH_ROMSWMAP_SW2EN_CORE                                             \
                                 0x00000010  // Region available to core
 #define FLASH_ROMSWMAP_SW3EN_M  0x000000C0  // ROM SW Region 3 Availability
 #define FLASH_ROMSWMAP_SW3EN_NOTVIS                                           \
                                 0x00000000  // Software region not available to
-                                            // the core
+// the core
 #define FLASH_ROMSWMAP_SW3EN_CORE                                             \
                                 0x00000040  // Region available to core
 #define FLASH_ROMSWMAP_SW4EN_M  0x00000300  // ROM SW Region 4 Availability
 #define FLASH_ROMSWMAP_SW4EN_NOTVIS                                           \
                                 0x00000000  // Software region not available to
-                                            // the core
+// the core
 #define FLASH_ROMSWMAP_SW4EN_CORE                                             \
                                 0x00000100  // Region available to core
 #define FLASH_ROMSWMAP_SW5EN_M  0x00000C00  // ROM SW Region 5 Availability
 #define FLASH_ROMSWMAP_SW5EN_NOTVIS                                           \
                                 0x00000000  // Software region not available to
-                                            // the core
+// the core
 #define FLASH_ROMSWMAP_SW5EN_CORE                                             \
                                 0x00000400  // Region available to core
 #define FLASH_ROMSWMAP_SW6EN_M  0x00003000  // ROM SW Region 6 Availability
 #define FLASH_ROMSWMAP_SW6EN_NOTVIS                                           \
                                 0x00000000  // Software region not available to
-                                            // the core
+// the core
 #define FLASH_ROMSWMAP_SW6EN_CORE                                             \
                                 0x00001000  // Region available to core
 #define FLASH_ROMSWMAP_SW7EN_M  0x0000C000  // ROM SW Region 7 Availability
 #define FLASH_ROMSWMAP_SW7EN_NOTVIS                                           \
                                 0x00000000  // Software region not available to
-                                            // the core
+// the core
 #define FLASH_ROMSWMAP_SW7EN_CORE                                             \
                                 0x00004000  // Region available to core
 
@@ -370,9 +370,9 @@
 //
 //*****************************************************************************
 #define FLASH_DMAST_ADDR_M      0x1FFFF800  // Contains the starting address of
-                                            // the flash region accessible by
-                                            // uDMA if the FLASHPP register DFA
-                                            // bit is set
+// the flash region accessible by
+// uDMA if the FLASHPP register DFA
+// bit is set
 #define FLASH_DMAST_ADDR_S      11
 
 //*****************************************************************************

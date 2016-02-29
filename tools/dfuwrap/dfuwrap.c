@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -100,8 +100,7 @@ unsigned long g_pulCRC32Table[256];
 // The standard DFU file suffix.
 //
 //*****************************************************************************
-unsigned char g_pcDFUSuffix[] =
-{
+unsigned char g_pcDFUSuffix[] = {
     0x00, // bcdDevice LSB
     0x00, // bcdDevice MSB
     0x00, // idProduct LSB
@@ -126,8 +125,7 @@ unsigned char g_pcDFUSuffix[] =
 // determine where the image should be located in flash.
 //
 //*****************************************************************************
-unsigned char g_pcDFUPrefix[] =
-{
+unsigned char g_pcDFUPrefix[] = {
     0x01, // TIVA_DFU_CMD_PROG
     0x00, // Reserved
     0x00, // LSB start address / 1024
@@ -149,21 +147,20 @@ unsigned char g_pcDFUPrefix[] =
 unsigned long
 Reflect(unsigned long ulRef, char ucCh)
 {
-      unsigned long ulValue;
-      int iLoop;
+    unsigned long ulValue;
+    int iLoop;
 
-      ulValue = 0;
+    ulValue = 0;
 
-      //
-      // Swap bit 0 for bit 7, bit 1 for bit 6, etc.
-      //
-      for(iLoop = 1; iLoop < (ucCh + 1); iLoop++)
-      {
-            if(ulRef & 1)
-                  ulValue |= 1 << (ucCh - iLoop);
-            ulRef >>= 1;
-      }
-      return ulValue;
+    //
+    // Swap bit 0 for bit 7, bit 1 for bit 6, etc.
+    //
+    for(iLoop = 1; iLoop < (ucCh + 1); iLoop++) {
+        if(ulRef & 1)
+            ulValue |= 1 << (ucCh - iLoop);
+        ulRef >>= 1;
+    }
+    return ulValue;
 }
 
 void
@@ -177,16 +174,14 @@ InitCRC32Table()
     //
     ulPolynomial = 0x04c11db7;
 
-    for(i = 0; i <= 0xFF; i++)
-    {
+    for(i = 0; i <= 0xFF; i++) {
         g_pulCRC32Table[i]=Reflect(i, 8) << 24;
-          for (j = 0; j < 8; j++)
-          {
-              g_pulCRC32Table[i] = (g_pulCRC32Table[i] << 1) ^
-                                     (g_pulCRC32Table[i] & (1 << 31) ?
-                                      ulPolynomial : 0);
-          }
-          g_pulCRC32Table[i] = Reflect(g_pulCRC32Table[i], 32);
+        for (j = 0; j < 8; j++) {
+            g_pulCRC32Table[i] = (g_pulCRC32Table[i] << 1) ^
+                                 (g_pulCRC32Table[i] & (1 << 31) ?
+                                  ulPolynomial : 0);
+        }
+        g_pulCRC32Table[i] = Reflect(g_pulCRC32Table[i], 32);
     }
 }
 
@@ -219,8 +214,7 @@ CalculateCRC32(unsigned char *pcData, unsigned long ulLength)
     // Perform the algorithm on each byte in the supplied buffer using the
     // lookup table values calculated in InitCRC32Table().
     //
-    while(ulCount--)
-    {
+    while(ulCount--) {
         ucChar = *pcBuffer++;
         ulCRC = (ulCRC >> 8) ^ g_pulCRC32Table[(ulCRC & 0xFF) ^ ucChar];
     }
@@ -252,8 +246,7 @@ ShowHelp(void)
     //
     // Only print help if we are not in quiet mode.
     //
-    if(g_bQuiet)
-    {
+    if(g_bQuiet) {
         return;
     }
 
@@ -301,20 +294,17 @@ ParseCommandLine(int argc, char *argv[])
     //
     bShowHelp = FALSE;
 
-    while(1)
-    {
+    while(1) {
         //
         // Get the next command line parameter.
         //
         iRetcode = getopt(argc, argv, "a:i:o:v:d:p:eh?qcrfx");
 
-        if(iRetcode == -1)
-        {
+        if(iRetcode == -1) {
             break;
         }
 
-        switch(iRetcode)
-        {
+        switch(iRetcode) {
             case 'i':
                 g_pszInput = optarg;
                 break;
@@ -379,15 +369,13 @@ ParseCommandLine(int argc, char *argv[])
     // Catch various invalid parameter cases.
     //
     if(bShowHelp || (g_pszInput == NULL) ||
-       (((g_ulAddress == 0) || (g_ulAddress & 1023)) && g_bAdd && !g_bCheck))
-    {
+            (((g_ulAddress == 0) || (g_ulAddress & 1023)) && g_bAdd && !g_bCheck)) {
         ShowHelp();
 
         //
         // Make sure we were given an input file.
         //
-        if(g_pszInput == NULL)
-        {
+        if(g_pszInput == NULL) {
             QUIETPRINT("ERROR: An input file must be specified using the -i "
                        "parameter.\n");
         }
@@ -395,15 +383,11 @@ ParseCommandLine(int argc, char *argv[])
         //
         // Make sure we were given a start address.
         //
-        if(g_bAdd && !g_bCheck)
-        {
-            if(g_ulAddress == 0)
-            {
+        if(g_bAdd && !g_bCheck) {
+            if(g_ulAddress == 0) {
                 QUIETPRINT("ERROR: The flash address of the image must be "
                            "provided using the -a parameter.\n");
-            }
-            else
-            {
+            } else {
                 QUIETPRINT("ERROR: The supplied flash address must be a "
                            "multiple of 1024.\n");
             }
@@ -429,8 +413,7 @@ ParseCommandLine(int argc, char *argv[])
 void
 DumpCommandLineParameters(void)
 {
-    if(!g_bQuiet && g_bVerbose)
-    {
+    if(!g_bQuiet && g_bVerbose) {
         printf("Input file:        %s\n", g_pszInput);
         printf("Output file:       %s\n", g_pszOutput);
         printf("Operation:         %s\n",
@@ -473,8 +456,7 @@ ReadInputFile(char *pcFilename, BOOL bHdrs, unsigned long *pulLength)
     // Try to open the input file.
     //
     fhFile = fopen(pcFilename, "rb");
-    if(!fhFile)
-    {
+    if(!fhFile) {
         //
         // File not found or cannot be opened for some reason.
         //
@@ -494,10 +476,9 @@ ReadInputFile(char *pcFilename, BOOL bHdrs, unsigned long *pulLength)
     // prefix and suffix structures.
     //
     iSizeAlloc = iSize + (bHdrs ?
-                    (sizeof(g_pcDFUPrefix) + sizeof(g_pcDFUSuffix)) : 0);
+                          (sizeof(g_pcDFUPrefix) + sizeof(g_pcDFUSuffix)) : 0);
     pcFileBuffer = malloc(iSizeAlloc);
-    if(pcFileBuffer == NULL)
-    {
+    if(pcFileBuffer == NULL) {
         QUIETPRINT("Can't allocate %d bytes of memory!\n", iSizeAlloc);
         return(NULL);
     }
@@ -506,7 +487,7 @@ ReadInputFile(char *pcFilename, BOOL bHdrs, unsigned long *pulLength)
     // Read the file contents into the buffer at the correct position.
     //
     iRead = fread(pcFileBuffer + (bHdrs ? sizeof(g_pcDFUPrefix) : 0),
-                     1, iSize, fhFile);
+                  1, iSize, fhFile);
 
     //
     // Close the file.
@@ -516,8 +497,7 @@ ReadInputFile(char *pcFilename, BOOL bHdrs, unsigned long *pulLength)
     //
     // Did we get the whole file?
     //
-    if(iSize != iRead)
-    {
+    if(iSize != iRead) {
         //
         // Nope - free the buffer and return an error.
         //
@@ -531,8 +511,7 @@ ReadInputFile(char *pcFilename, BOOL bHdrs, unsigned long *pulLength)
     // If we are adding headers, copy the template structures into the buffer
     // before we return it to the caller.
     //
-    if(bHdrs)
-    {
+    if(bHdrs) {
         //
         // Copy the prefix.
         //
@@ -570,8 +549,7 @@ IsPrefixValid(unsigned char *pcPrefix, unsigned char *pcEnd)
     //
     // Is the data block large enough to contain a whole prefix structure?
     //
-    if((pcEnd - pcPrefix) < sizeof(g_pcDFUPrefix))
-    {
+    if((pcEnd - pcPrefix) < sizeof(g_pcDFUPrefix)) {
         //
         // Nope - prefix can't be valid.
         //
@@ -582,8 +560,7 @@ IsPrefixValid(unsigned char *pcPrefix, unsigned char *pcEnd)
     //
     // Check the first 2 bytes of the prefix since their values are fixed.
     //
-    if((pcPrefix[0] != 0x01) || (pcPrefix[1] != 0x00))
-    {
+    if((pcPrefix[0] != 0x01) || (pcPrefix[1] != 0x00)) {
         //
         // First two values are not as expected so the prefix is invalid.
         //
@@ -603,9 +580,8 @@ IsPrefixValid(unsigned char *pcPrefix, unsigned char *pcEnd)
     // this prefix.
     //
     if((ulLength != (pcEnd - pcPrefix) - sizeof(g_pcDFUPrefix)) &&
-       (ulLength != (pcEnd - pcPrefix) -
-           (sizeof(g_pcDFUPrefix) + sizeof(g_pcDFUSuffix))))
-    {
+            (ulLength != (pcEnd - pcPrefix) -
+             (sizeof(g_pcDFUPrefix) + sizeof(g_pcDFUSuffix)))) {
         //
         // Nope. Prefix is invalid.
         //
@@ -645,8 +621,7 @@ IsSuffixValid(unsigned char *pcData, unsigned char *pcEnd)
     // at least as long as the ones we already know about?
     //
     if((ucSuffixLen < sizeof(g_pcDFUSuffix)) ||
-       ((pcEnd - pcData) < ucSuffixLen))
-    {
+            ((pcEnd - pcData) < ucSuffixLen)) {
         //
         // The reported length cannot indicate a valid suffix.
         //
@@ -658,9 +633,8 @@ IsSuffixValid(unsigned char *pcData, unsigned char *pcEnd)
     // Now check that the "DFU" marker is in place.
     //
     if( (*(pcEnd - 6) != 'D') ||
-        (*(pcEnd - 7) != 'F') ||
-        (*(pcEnd - 8) != 'U'))
-    {
+            (*(pcEnd - 7) != 'F') ||
+            (*(pcEnd - 8) != 'U')) {
         //
         // The DFU marker is not in place so the suffix is invalid.
         //
@@ -678,13 +652,10 @@ IsSuffixValid(unsigned char *pcData, unsigned char *pcEnd)
     //
     // If the CRCs match, we have a good suffix, else there is a problem.
     //
-    if(ulCRCRead == ulCRCCalc)
-    {
+    if(ulCRCRead == ulCRCCalc) {
         VERBOSEPRINT("DFU suffix is valid.\n");
         return(TRUE);
-    }
-    else
-    {
+    } else {
         VERBOSEPRINT("Read CRC 0x%08lx, calculated 0x%08lx.\n", ulCRCRead, ulCRCCalc);
         VERBOSEPRINT("DFU suffix is invalid.\n");
         return(FALSE);
@@ -750,14 +721,12 @@ WriteOutputFile(char *pszFile, unsigned char *pcData, unsigned long ulLength)
     // Have we been asked to overwrite an existing output file without
     // prompting?
     //
-    if(!g_bOverwrite)
-    {
+    if(!g_bOverwrite) {
         //
         // No - we need to check to see if the file exists before proceeding.
         //
         fh = fopen(pszFile, "rb");
-        if(fh)
-        {
+        if(fh) {
             VERBOSEPRINT("Output file already exists.\n");
 
             //
@@ -766,12 +735,10 @@ WriteOutputFile(char *pszFile, unsigned char *pcData, unsigned long ulLength)
             //
             fclose(fh);
 
-            if(!g_bQuiet)
-            {
+            if(!g_bQuiet) {
                 printf("File %s exists. Overwrite? ", pszFile);
                 iResponse = getc(stdin);
-                if((iResponse != 'y') && (iResponse != 'Y'))
-                {
+                if((iResponse != 'y') && (iResponse != 'Y')) {
                     //
                     // The user didn't respond with 'y' or 'Y' so return an
                     // error and don't overwrite the file.
@@ -780,9 +747,7 @@ WriteOutputFile(char *pszFile, unsigned char *pcData, unsigned long ulLength)
                     return(6);
                 }
                 printf("Overwriting existing output file.\n");
-            }
-            else
-            {
+            } else {
                 //
                 // In quiet mode but -x has not been specified so don't
                 // overwrite.
@@ -797,8 +762,7 @@ WriteOutputFile(char *pszFile, unsigned char *pcData, unsigned long ulLength)
     // already exist) so go ahead and open it.
     //
     fh = fopen(pszFile, "wb");
-    if(!fh)
-    {
+    if(!fh) {
         QUIETPRINT("Error opening output file for writing\n");
         return(8);
     }
@@ -818,14 +782,11 @@ WriteOutputFile(char *pszFile, unsigned char *pcData, unsigned long ulLength)
     //
     // Did we write all the data?
     //
-    if(ulWritten != ulLength)
-    {
+    if(ulWritten != ulLength) {
         QUIETPRINT("Error writing data to output file! Wrote %ld, "
                    "requested %ld\n", ulWritten, ulLength);
         return(9);
-    }
-    else
-    {
+    } else {
         QUIETPRINT("Output file written successfully.\n");
     }
 
@@ -858,8 +819,7 @@ main(int argc, char *argv[])
     // Parse the command line arguments
     //
     iRetcode = ParseCommandLine(argc, argv);
-    if(!iRetcode)
-    {
+    if(!iRetcode) {
         return(1);
     }
 
@@ -872,8 +832,7 @@ main(int argc, char *argv[])
     // Read the input file into memory.
     //
     pcInput = ReadInputFile(g_pszInput, g_bAdd, &ulFileLen);
-    if(!pcInput)
-    {
+    if(!pcInput) {
         VERBOSEPRINT("Error reading input file.\n");
         exit(1);
     }
@@ -890,29 +849,22 @@ main(int argc, char *argv[])
     //
     // Are we being asked to check the validity of a DFU image?
     //
-    if(g_bCheck)
-    {
+    if(g_bCheck) {
         //
         // Yes - was the DFU prefix valid?
         //
-        if(!bPrefixValid)
-        {
+        if(!bPrefixValid) {
             QUIETPRINT("File prefix appears to be invalid or absent.\n");
-        }
-        else
-        {
+        } else {
             DumpPrefix(pcPrefix);
         }
 
         //
         // Was the suffix valid?
         //
-        if(!bSuffixValid)
-        {
+        if(!bSuffixValid) {
             QUIETPRINT("DFU suffix appears to be invalid or absent.\n");
-        }
-        else
-        {
+        } else {
             DumpSuffix(pcSuffix);
         }
 
@@ -921,19 +873,15 @@ main(int argc, char *argv[])
         // to be a valid DFU-formatted image.
         //
         iRetcode = (!bPrefixValid || !bSuffixValid) ? 2 : 0;
-    }
-    else
-    {
+    } else {
         //
         // Were we asked to remove the existing DFU wrapper from the file?
         //
-        if(!g_bAdd)
-        {
+        if(!g_bAdd) {
             //
             // We can only remove the wrapper if one actually exists.
             //
-            if(!bPrefixValid)
-            {
+            if(!bPrefixValid) {
                 //
                 // Without the prefix, we can't tell how much of the file to
                 // write to the output.
@@ -941,9 +889,7 @@ main(int argc, char *argv[])
                 QUIETPRINT("This does not appear to be a "
                            "valid DFU-formatted file.\n");
                 iRetcode = 3;
-            }
-            else
-            {
+            } else {
                 //
                 // Write the input file payload to the output file, this removing
                 // the wrapper.
@@ -952,22 +898,17 @@ main(int argc, char *argv[])
                                            pcPrefix + sizeof(g_pcDFUPrefix),
                                            READ_LONG(pcPrefix + 4));
             }
-        }
-        else
-        {
+        } else {
             //
             // We are adding a new DFU wrapper to the input file. First check to
             // see if it already appears to have a wrapper.
             //
-            if(bPrefixValid && bSuffixValid && !g_bForce)
-            {
+            if(bPrefixValid && bSuffixValid && !g_bForce) {
                 QUIETPRINT("This file already contains a valid DFU wrapper.\n");
                 QUIETPRINT("Use -f if you want to force the writing of "
                            "another wrapper.\n");
                 iRetcode = 5;
-            }
-            else
-            {
+            } else {
                 //
                 // The file is not wrapped or we have been asked to force a
                 // new wrapper over the existing one.  First fill in the

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C123GXL Firmware Package.
 //
 //*****************************************************************************
@@ -156,13 +156,11 @@ uint32_t
 GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
                void *pvMsgData)
 {
-    switch (ui32Event)
-    {
+    switch (ui32Event) {
         //
         // The host has connected to us and configured the device.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             g_iGamepadState = eStateIdle;
 
             //
@@ -176,8 +174,7 @@ GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // The host has disconnected from us.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             g_iGamepadState = eStateNotConfigured;
 
             //
@@ -193,8 +190,7 @@ GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         // of a report.  It is to return to the idle state so that a new report
         // can be sent to the host.
         //
-        case USB_EVENT_TX_COMPLETE:
-        {
+        case USB_EVENT_TX_COMPLETE: {
             //
             // Enter the idle state since we finished sending something.
             //
@@ -208,8 +204,7 @@ GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // This event indicates that the host has suspended the USB bus.
         //
-        case USB_EVENT_SUSPEND:
-        {
+        case USB_EVENT_SUSPEND: {
             //
             // Go to the suspended state.
             //
@@ -228,8 +223,7 @@ GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // This event signals that the host has resumed signaling on the bus.
         //
-        case USB_EVENT_RESUME:
-        {
+        case USB_EVENT_RESUME: {
             //
             // Go back to the idle state.
             //
@@ -248,8 +242,7 @@ GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         // rarely if ever made, but is required by the USB HID
         // specification.
         //
-        case USBD_HID_EVENT_GET_REPORT:
-        {
+        case USBD_HID_EVENT_GET_REPORT: {
             *(void **)pvMsgData = (void *)&sReport;
 
             break;
@@ -258,8 +251,7 @@ GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // We ignore all other events.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -332,13 +324,12 @@ ADCInit(void)
     // Configure the pins which are used as analog inputs.
     //
     ROM_GPIOPinTypeADC(GPIO_PORTE_AHB_BASE, GPIO_PIN_3 | GPIO_PIN_2 |
-                                            GPIO_PIN_1);
+                       GPIO_PIN_1);
 
     //
     // Configure the sequencer for 3 steps.
     //
-    for(ui32Chan = 0; ui32Chan < 2; ui32Chan++)
-    {
+    for(ui32Chan = 0; ui32Chan < 2; ui32Chan++) {
         //
         // Configure the sequence step
         //
@@ -346,7 +337,7 @@ ADCInit(void)
     }
 
     ROM_ADCSequenceStepConfigure(ADC0_BASE, 0, 2, ADC_CTL_CH2 | ADC_CTL_IE |
-                                                  ADC_CTL_END);
+                                 ADC_CTL_END);
     //
     // Enable the sequence but do not start it yet.
     //
@@ -450,13 +441,11 @@ main(void)
     // then drop into the main gamepad handling section.  If the host
     // disconnects, we return to the top and wait for a new connection.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Wait here until USB device is connected to a host.
         //
-        if(g_iGamepadState == eStateIdle)
-        {
+        if(g_iGamepadState == eStateIdle) {
             //
             // No update by default.
             //
@@ -472,29 +461,25 @@ main(void)
             //
             // Set button 1 if left pressed.
             //
-            if(ui8Buttons & LEFT_BUTTON)
-            {
+            if(ui8Buttons & LEFT_BUTTON) {
                 sReport.ui8Buttons |= 0x01;
             }
 
             //
             // Set button 2 if right pressed.
             //
-            if(ui8Buttons & RIGHT_BUTTON)
-            {
+            if(ui8Buttons & RIGHT_BUTTON) {
                 sReport.ui8Buttons |= 0x02;
             }
 
-            if(ui8ButtonsChanged)
-            {
+            if(ui8ButtonsChanged) {
                 bUpdate = true;
             }
 
             //
             // See if the ADC updated.
             //
-            if(ADCIntStatus(ADC0_BASE, 0, false) != 0)
-            {
+            if(ADCIntStatus(ADC0_BASE, 0, false) != 0) {
                 //
                 // Clear the ADC interrupt.
                 //
@@ -518,8 +503,7 @@ main(void)
             //
             // Send the report if there was an update.
             //
-            if(bUpdate)
-            {
+            if(bUpdate) {
                 USBDHIDGamepadSendReport(&g_sGamepadDevice, &sReport,
                                          sizeof(sReport));
 
@@ -534,8 +518,7 @@ main(void)
                 //
                 // Limit the blink rate of the LED.
                 //
-                if(g_ui32Updates++ == 40)
-                {
+                if(g_ui32Updates++ == 40) {
                     //
                     // Turn on the blue LED.
                     //

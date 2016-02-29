@@ -134,11 +134,10 @@ the received value. */
 testing of limits easier (don't have to deal with wrapping values). */
 #define queuesetIGNORED_BOUNDARY	( queuesetALLOWABLE_RX_DEVIATION * 2 )
 
-typedef enum
-{
-	eEqualPriority = 0,	/* Tx and Rx tasks have the same priority. */
-	eTxHigherPriority,	/* The priority of the Tx task is above that of the Rx task. */
-	eTxLowerPriority	/* The priority of the Tx task is below that of the Rx task. */
+typedef enum {
+    eEqualPriority = 0,	/* Tx and Rx tasks have the same priority. */
+    eTxHigherPriority,	/* The priority of the Tx task is above that of the Rx task. */
+    eTxLowerPriority	/* The priority of the Tx task is below that of the Rx task. */
 } eRelativePriorities;
 
 /*
@@ -232,496 +231,435 @@ TaskHandle_t xQueueSetSendingTask, xQueueSetReceivingTask;
 
 void vStartQueueSetTasks( void )
 {
-	/* Create the tasks. */
-	xTaskCreate( prvQueueSetSendingTask, "SetTx", configMINIMAL_STACK_SIZE, NULL, queuesetMEDIUM_PRIORITY, &xQueueSetSendingTask );
-	xTaskCreate( prvQueueSetReceivingTask, "SetRx", configMINIMAL_STACK_SIZE, ( void * ) xQueueSetSendingTask, queuesetMEDIUM_PRIORITY, &xQueueSetReceivingTask );
+    /* Create the tasks. */
+    xTaskCreate( prvQueueSetSendingTask, "SetTx", configMINIMAL_STACK_SIZE, NULL, queuesetMEDIUM_PRIORITY, &xQueueSetSendingTask );
+    xTaskCreate( prvQueueSetReceivingTask, "SetRx", configMINIMAL_STACK_SIZE, ( void * ) xQueueSetSendingTask, queuesetMEDIUM_PRIORITY, &xQueueSetReceivingTask );
 
-	/* It is important that the sending task does not attempt to write to a
-	queue before the queue has been created.  It is therefore placed into the
-	suspended state before the scheduler has started.  It is resumed by the
-	receiving task after the receiving task has created the queues and added the
-	queues to the queue set. */
-	vTaskSuspend( xQueueSetSendingTask );
+    /* It is important that the sending task does not attempt to write to a
+    queue before the queue has been created.  It is therefore placed into the
+    suspended state before the scheduler has started.  It is resumed by the
+    receiving task after the receiving task has created the queues and added the
+    queues to the queue set. */
+    vTaskSuspend( xQueueSetSendingTask );
 }
 /*-----------------------------------------------------------*/
 
 BaseType_t xAreQueueSetTasksStillRunning( void )
 {
-static uint32_t ulLastCycleCounter, ulLastISRTxValue = 0;
-static uint32_t ulLastQueueUsedCounter[ queuesetNUM_QUEUES_IN_SET ] = { 0 };
-BaseType_t xReturn = pdPASS, x;
+    static uint32_t ulLastCycleCounter, ulLastISRTxValue = 0;
+    static uint32_t ulLastQueueUsedCounter[ queuesetNUM_QUEUES_IN_SET ] = { 0 };
+    BaseType_t xReturn = pdPASS, x;
 
-	if( ulLastCycleCounter == ulCycleCounter )
-	{
-		/* The cycle counter is no longer being incremented.  Either one of the
-		tasks is stalled or an error has been detected. */
-		xReturn = pdFAIL;
-	}
+    if( ulLastCycleCounter == ulCycleCounter ) {
+        /* The cycle counter is no longer being incremented.  Either one of the
+        tasks is stalled or an error has been detected. */
+        xReturn = pdFAIL;
+    }
 
-	ulLastCycleCounter = ulCycleCounter;
+    ulLastCycleCounter = ulCycleCounter;
 
-	/* Ensure that all the queues in the set have been used.  This ensures the
-	test is working as intended and guards against the rand() in the Tx task
-	missing some values. */
-	for( x = 0; x < queuesetNUM_QUEUES_IN_SET; x++ )
-	{
-		if( ulLastQueueUsedCounter[ x ] == ulQueueUsedCounter[ x ] )
-		{
-			xReturn = pdFAIL;
-		}
+    /* Ensure that all the queues in the set have been used.  This ensures the
+    test is working as intended and guards against the rand() in the Tx task
+    missing some values. */
+    for( x = 0; x < queuesetNUM_QUEUES_IN_SET; x++ ) {
+        if( ulLastQueueUsedCounter[ x ] == ulQueueUsedCounter[ x ] ) {
+            xReturn = pdFAIL;
+        }
 
-		ulLastQueueUsedCounter[ x ] = ulQueueUsedCounter[ x ];
-	}
+        ulLastQueueUsedCounter[ x ] = ulQueueUsedCounter[ x ];
+    }
 
-	/* Check the global status flag. */
-	if( xQueueSetTasksStatus != pdPASS )
-	{
-		xReturn = pdFAIL;
-	}
+    /* Check the global status flag. */
+    if( xQueueSetTasksStatus != pdPASS ) {
+        xReturn = pdFAIL;
+    }
 
-	/* Check that the ISR is still sending values to the queues too. */
-	if( ulISRTxValue == ulLastISRTxValue )
-	{
-		xReturn = pdFAIL;
-	}
-	else
-	{
-		ulLastISRTxValue = ulISRTxValue;
-	}
+    /* Check that the ISR is still sending values to the queues too. */
+    if( ulISRTxValue == ulLastISRTxValue ) {
+        xReturn = pdFAIL;
+    } else {
+        ulLastISRTxValue = ulISRTxValue;
+    }
 
-	return xReturn;
+    return xReturn;
 }
 /*-----------------------------------------------------------*/
 
 static void prvQueueSetSendingTask( void *pvParameters )
 {
-uint32_t ulTaskTxValue = 0, ulQueueToWriteTo;
-QueueHandle_t xQueueInUse;
+    uint32_t ulTaskTxValue = 0, ulQueueToWriteTo;
+    QueueHandle_t xQueueInUse;
 
-	/* Remove compiler warning about the unused parameter. */
-	( void ) pvParameters;
+    /* Remove compiler warning about the unused parameter. */
+    ( void ) pvParameters;
 
-	/* Seed mini pseudo random number generator. */
-	prvSRand( ( uint32_t ) &ulTaskTxValue );
+    /* Seed mini pseudo random number generator. */
+    prvSRand( ( uint32_t ) &ulTaskTxValue );
 
-	for( ;; )
-	{
-		/* Generate the index for the queue to which a value is to be sent. */
-		ulQueueToWriteTo = prvRand() % queuesetNUM_QUEUES_IN_SET;
-		xQueueInUse = xQueues[ ulQueueToWriteTo ];
+    for( ;; ) {
+        /* Generate the index for the queue to which a value is to be sent. */
+        ulQueueToWriteTo = prvRand() % queuesetNUM_QUEUES_IN_SET;
+        xQueueInUse = xQueues[ ulQueueToWriteTo ];
 
-		/* Note which index is being written to to ensure all the queues are
-		used. */
-		( ulQueueUsedCounter[ ulQueueToWriteTo ] )++;
+        /* Note which index is being written to to ensure all the queues are
+        used. */
+        ( ulQueueUsedCounter[ ulQueueToWriteTo ] )++;
 
-		/* Send to the queue to unblock the task that is waiting for data to
-		arrive on a queue within the queue set to which this queue belongs. */
-		if( xQueueSendToBack( xQueueInUse, &ulTaskTxValue, portMAX_DELAY ) != pdPASS )
-		{
-			/* The send should always pass as an infinite block time was
-			used. */
-			xQueueSetTasksStatus = pdFAIL;
-		}
+        /* Send to the queue to unblock the task that is waiting for data to
+        arrive on a queue within the queue set to which this queue belongs. */
+        if( xQueueSendToBack( xQueueInUse, &ulTaskTxValue, portMAX_DELAY ) != pdPASS ) {
+            /* The send should always pass as an infinite block time was
+            used. */
+            xQueueSetTasksStatus = pdFAIL;
+        }
 
-		#if( configUSE_PREEMPTION == 0 )
-			taskYIELD();
-		#endif
+#if( configUSE_PREEMPTION == 0 )
+        taskYIELD();
+#endif
 
-		ulTaskTxValue++;
+        ulTaskTxValue++;
 
-		/* If the Tx value has reached the range used by the ISR then set it
-		back to 0. */
-		if( ulTaskTxValue == queuesetINITIAL_ISR_TX_VALUE )
-		{
-			ulTaskTxValue = 0;
-		}
+        /* If the Tx value has reached the range used by the ISR then set it
+        back to 0. */
+        if( ulTaskTxValue == queuesetINITIAL_ISR_TX_VALUE ) {
+            ulTaskTxValue = 0;
+        }
 
-		/* Increase test coverage by occasionally change the priorities of the
-		two tasks relative to each other. */
-		prvChangeRelativePriorities();
-	}
+        /* Increase test coverage by occasionally change the priorities of the
+        two tasks relative to each other. */
+        prvChangeRelativePriorities();
+    }
 }
 /*-----------------------------------------------------------*/
 
 static void prvChangeRelativePriorities( void )
 {
-static UBaseType_t ulLoops = 0;
-static eRelativePriorities ePriorities = eEqualPriority;
+    static UBaseType_t ulLoops = 0;
+    static eRelativePriorities ePriorities = eEqualPriority;
 
-	/* Occasionally change the task priority relative to the priority of
-	the receiving task. */
-	ulLoops++;
-	if( ulLoops >= queuesetPRIORITY_CHANGE_LOOPS )
-	{
-		ulLoops = 0;
+    /* Occasionally change the task priority relative to the priority of
+    the receiving task. */
+    ulLoops++;
+    if( ulLoops >= queuesetPRIORITY_CHANGE_LOOPS ) {
+        ulLoops = 0;
 
-		switch( ePriorities )
-		{
-			case eEqualPriority:
-				/* Both tasks are running with medium priority.  Now lower the
-				priority of the receiving task so the Tx task has the higher
-				relative priority. */
-				vTaskPrioritySet( xQueueSetReceivingTask, queuesetLOW_PRIORITY );
-				ePriorities = eTxHigherPriority;
-				break;
+        switch( ePriorities ) {
+            case eEqualPriority:
+                /* Both tasks are running with medium priority.  Now lower the
+                priority of the receiving task so the Tx task has the higher
+                relative priority. */
+                vTaskPrioritySet( xQueueSetReceivingTask, queuesetLOW_PRIORITY );
+                ePriorities = eTxHigherPriority;
+                break;
 
-			case eTxHigherPriority:
-				/* The Tx task is running with a higher priority than the Rx
-				task.  Switch the priorities around so the Rx task has the
-				higher relative priority. */
-				vTaskPrioritySet( xQueueSetReceivingTask, queuesetMEDIUM_PRIORITY );
-				vTaskPrioritySet( xQueueSetSendingTask, queuesetLOW_PRIORITY );
-				ePriorities = eTxLowerPriority;
-				break;
+            case eTxHigherPriority:
+                /* The Tx task is running with a higher priority than the Rx
+                task.  Switch the priorities around so the Rx task has the
+                higher relative priority. */
+                vTaskPrioritySet( xQueueSetReceivingTask, queuesetMEDIUM_PRIORITY );
+                vTaskPrioritySet( xQueueSetSendingTask, queuesetLOW_PRIORITY );
+                ePriorities = eTxLowerPriority;
+                break;
 
-			case eTxLowerPriority:
-				/* The Tx task is running with a lower priority than the Rx
-				task.  Make the priorities equal again. */
-				vTaskPrioritySet( xQueueSetSendingTask, queuesetMEDIUM_PRIORITY );
-				ePriorities = eEqualPriority;
+            case eTxLowerPriority:
+                /* The Tx task is running with a lower priority than the Rx
+                task.  Make the priorities equal again. */
+                vTaskPrioritySet( xQueueSetSendingTask, queuesetMEDIUM_PRIORITY );
+                ePriorities = eEqualPriority;
 
-				/* When both tasks are using a non-idle priority the queue set
-				tasks will starve idle priority tasks of execution time - so
-				relax a bit before the next iteration to minimise the impact. */
-				vTaskDelay( queuesetTX_LOOP_DELAY );
+                /* When both tasks are using a non-idle priority the queue set
+                tasks will starve idle priority tasks of execution time - so
+                relax a bit before the next iteration to minimise the impact. */
+                vTaskDelay( queuesetTX_LOOP_DELAY );
 
-				break;
-		}
-	}
+                break;
+        }
+    }
 }
 /*-----------------------------------------------------------*/
 
 static void prvQueueSetReceivingTask( void *pvParameters )
 {
-uint32_t ulReceived;
-QueueHandle_t xActivatedQueue;
-TickType_t xBlockTime;
+    uint32_t ulReceived;
+    QueueHandle_t xActivatedQueue;
+    TickType_t xBlockTime;
 
-	/* Remove compiler warnings. */
-	( void ) pvParameters;
+    /* Remove compiler warnings. */
+    ( void ) pvParameters;
 
-	/* Create the queues and add them to the queue set before resuming the Tx
-	task. */
-	prvSetupTest();
+    /* Create the queues and add them to the queue set before resuming the Tx
+    task. */
+    prvSetupTest();
 
-	for( ;; )
-	{
-		/* For test coverage reasons, the block time is dependent on the
-		priority of this task - which changes during the test.  When the task
-		is at the idle priority it polls the queue set. */
-		if( uxTaskPriorityGet( NULL ) == tskIDLE_PRIORITY )
-		{
-			xBlockTime = 0;
-		}
-		else
-		{
-			xBlockTime = portMAX_DELAY;
-		}
+    for( ;; ) {
+        /* For test coverage reasons, the block time is dependent on the
+        priority of this task - which changes during the test.  When the task
+        is at the idle priority it polls the queue set. */
+        if( uxTaskPriorityGet( NULL ) == tskIDLE_PRIORITY ) {
+            xBlockTime = 0;
+        } else {
+            xBlockTime = portMAX_DELAY;
+        }
 
-		/* Wait for a message to arrive on one of the queues in the set. */
-		xActivatedQueue = xQueueSelectFromSet( xQueueSet, portMAX_DELAY );		
+        /* Wait for a message to arrive on one of the queues in the set. */
+        xActivatedQueue = xQueueSelectFromSet( xQueueSet, portMAX_DELAY );
 
-		if( xActivatedQueue == NULL )
-		{
-			if( xBlockTime != 0 )
-			{
-				/* This should not happen as an infinite delay was used. */
-				xQueueSetTasksStatus = pdFAIL;
-			}
-		}
-		else
-		{
-			/* Reading from the queue should pass with a zero block time as
-			this task will only run when something has been posted to a task
-			in the queue set. */
-			if( xQueueReceive( xActivatedQueue, &ulReceived, queuesetDONT_BLOCK ) != pdPASS )
-			{
-				xQueueSetTasksStatus = pdFAIL;
-			}
+        if( xActivatedQueue == NULL ) {
+            if( xBlockTime != 0 ) {
+                /* This should not happen as an infinite delay was used. */
+                xQueueSetTasksStatus = pdFAIL;
+            }
+        } else {
+            /* Reading from the queue should pass with a zero block time as
+            this task will only run when something has been posted to a task
+            in the queue set. */
+            if( xQueueReceive( xActivatedQueue, &ulReceived, queuesetDONT_BLOCK ) != pdPASS ) {
+                xQueueSetTasksStatus = pdFAIL;
+            }
 
-			/* Ensure the value received was the value expected.  This function
-			manipulates file scope data and is also called from an ISR, hence
-			the critical section. */
-			taskENTER_CRITICAL();
-			{
-				prvCheckReceivedValue( ulReceived );
-			}
-			taskEXIT_CRITICAL();
+            /* Ensure the value received was the value expected.  This function
+            manipulates file scope data and is also called from an ISR, hence
+            the critical section. */
+            taskENTER_CRITICAL();
+            {
+                prvCheckReceivedValue( ulReceived );
+            }
+            taskEXIT_CRITICAL();
 
-			if( xQueueSetTasksStatus == pdPASS )
-			{
-				ulCycleCounter++;
-			}
-		}
-	}
+            if( xQueueSetTasksStatus == pdPASS ) {
+                ulCycleCounter++;
+            }
+        }
+    }
 }
 /*-----------------------------------------------------------*/
 
 void vQueueSetAccessQueueSetFromISR( void )
 {
-static uint32_t ulCallCount = 0;
+    static uint32_t ulCallCount = 0;
 
-	/* xSetupComplete is set to pdTRUE when the queues have been created and
-	are available for use. */
-	if( xSetupComplete == pdTRUE )
-	{
-		/* It is intended that this function is called from the tick hook
-		function, so each call is one tick period apart. */
-		ulCallCount++;
-		if( ulCallCount > queuesetISR_TX_PERIOD )
-		{
-			ulCallCount = 0;
+    /* xSetupComplete is set to pdTRUE when the queues have been created and
+    are available for use. */
+    if( xSetupComplete == pdTRUE ) {
+        /* It is intended that this function is called from the tick hook
+        function, so each call is one tick period apart. */
+        ulCallCount++;
+        if( ulCallCount > queuesetISR_TX_PERIOD ) {
+            ulCallCount = 0;
 
-			/* First attempt to read from the queue set. */
-			prvReceiveFromQueueInSetFromISR();
+            /* First attempt to read from the queue set. */
+            prvReceiveFromQueueInSetFromISR();
 
-			/* Then write to the queue set. */
-			prvSendToQueueInSetFromISR();
-		}
-	}
+            /* Then write to the queue set. */
+            prvSendToQueueInSetFromISR();
+        }
+    }
 }
 /*-----------------------------------------------------------*/
 
 static void prvCheckReceivedValue( uint32_t ulReceived )
 {
-static uint32_t ulExpectedReceivedFromTask = 0, ulExpectedReceivedFromISR = queuesetINITIAL_ISR_TX_VALUE;
+    static uint32_t ulExpectedReceivedFromTask = 0, ulExpectedReceivedFromISR = queuesetINITIAL_ISR_TX_VALUE;
 
-	/* Values are received in tasks and interrupts.  It is likely that the
-	receiving task will sometimes get preempted by the receiving interrupt
-	between reading a value from the queue and calling this function.  When
-	that happens, if the receiving interrupt calls this function the values
-	will get passed into this function slightly out of order.  For that
-	reason the value passed in is tested against a small range of expected
-	values, rather than a single absolute value.  To make the range testing
-	easier values in the range limits are ignored. */
+    /* Values are received in tasks and interrupts.  It is likely that the
+    receiving task will sometimes get preempted by the receiving interrupt
+    between reading a value from the queue and calling this function.  When
+    that happens, if the receiving interrupt calls this function the values
+    will get passed into this function slightly out of order.  For that
+    reason the value passed in is tested against a small range of expected
+    values, rather than a single absolute value.  To make the range testing
+    easier values in the range limits are ignored. */
 
-	/* If the received value is equal to or greater than
-	queuesetINITIAL_ISR_TX_VALUE then it was sent by an ISR. */
-	if( ulReceived >= queuesetINITIAL_ISR_TX_VALUE )
-	{
-		/* The value was sent from the ISR. */
-		if( ( ulReceived - queuesetINITIAL_ISR_TX_VALUE ) < queuesetIGNORED_BOUNDARY )
-		{
-			/* The value received is at the lower limit of the expected range.
-			Don't test it and expect to receive one higher next time. */
-		}
-		else if( ( ULONG_MAX - ulReceived ) <= queuesetIGNORED_BOUNDARY )
-		{
-			/* The value received is at the higher limit of the expected range.
-			Don't test it and expect to wrap soon. */
-		}
-		else
-		{
-			/* Check the value against its expected value range. */
-			if( prvCheckReceivedValueWithinExpectedRange( ulReceived, ulExpectedReceivedFromISR ) != pdPASS )
-			{
-				xQueueSetTasksStatus = pdFAIL;
-			}
-		}
+    /* If the received value is equal to or greater than
+    queuesetINITIAL_ISR_TX_VALUE then it was sent by an ISR. */
+    if( ulReceived >= queuesetINITIAL_ISR_TX_VALUE ) {
+        /* The value was sent from the ISR. */
+        if( ( ulReceived - queuesetINITIAL_ISR_TX_VALUE ) < queuesetIGNORED_BOUNDARY ) {
+            /* The value received is at the lower limit of the expected range.
+            Don't test it and expect to receive one higher next time. */
+        } else if( ( ULONG_MAX - ulReceived ) <= queuesetIGNORED_BOUNDARY ) {
+            /* The value received is at the higher limit of the expected range.
+            Don't test it and expect to wrap soon. */
+        } else {
+            /* Check the value against its expected value range. */
+            if( prvCheckReceivedValueWithinExpectedRange( ulReceived, ulExpectedReceivedFromISR ) != pdPASS ) {
+                xQueueSetTasksStatus = pdFAIL;
+            }
+        }
 
-		configASSERT( xQueueSetTasksStatus );
+        configASSERT( xQueueSetTasksStatus );
 
-		/* It is expected to receive an incrementing number. */
-		ulExpectedReceivedFromISR++;
-		if( ulExpectedReceivedFromISR == 0 )
-		{
-			ulExpectedReceivedFromISR = queuesetINITIAL_ISR_TX_VALUE;
-		}
-	}
-	else
-	{
-		/* The value was sent from the Tx task. */
-		if( ulReceived < queuesetIGNORED_BOUNDARY )
-		{
-			/* The value received is at the lower limit of the expected range.
-			Don't test it, and expect to receive one higher next time. */
-		}
-		else if( ( ( queuesetINITIAL_ISR_TX_VALUE - 1 ) - ulReceived ) <= queuesetIGNORED_BOUNDARY )
-		{
-			/* The value received is at the higher limit of the expected range.
-			Don't test it and expect to wrap soon. */
-		}
-		else
-		{
-			/* Check the value against its expected value range. */
-			if( prvCheckReceivedValueWithinExpectedRange( ulReceived, ulExpectedReceivedFromTask ) != pdPASS )
-			{
-				xQueueSetTasksStatus = pdFAIL;
-			}
-		}
+        /* It is expected to receive an incrementing number. */
+        ulExpectedReceivedFromISR++;
+        if( ulExpectedReceivedFromISR == 0 ) {
+            ulExpectedReceivedFromISR = queuesetINITIAL_ISR_TX_VALUE;
+        }
+    } else {
+        /* The value was sent from the Tx task. */
+        if( ulReceived < queuesetIGNORED_BOUNDARY ) {
+            /* The value received is at the lower limit of the expected range.
+            Don't test it, and expect to receive one higher next time. */
+        } else if( ( ( queuesetINITIAL_ISR_TX_VALUE - 1 ) - ulReceived ) <= queuesetIGNORED_BOUNDARY ) {
+            /* The value received is at the higher limit of the expected range.
+            Don't test it and expect to wrap soon. */
+        } else {
+            /* Check the value against its expected value range. */
+            if( prvCheckReceivedValueWithinExpectedRange( ulReceived, ulExpectedReceivedFromTask ) != pdPASS ) {
+                xQueueSetTasksStatus = pdFAIL;
+            }
+        }
 
-		configASSERT( xQueueSetTasksStatus );
+        configASSERT( xQueueSetTasksStatus );
 
-		/* It is expected to receive an incrementing number. */
-		ulExpectedReceivedFromTask++;
-		if( ulExpectedReceivedFromTask >= queuesetINITIAL_ISR_TX_VALUE )
-		{
-			ulExpectedReceivedFromTask = 0;
-		}
-	}
+        /* It is expected to receive an incrementing number. */
+        ulExpectedReceivedFromTask++;
+        if( ulExpectedReceivedFromTask >= queuesetINITIAL_ISR_TX_VALUE ) {
+            ulExpectedReceivedFromTask = 0;
+        }
+    }
 }
 /*-----------------------------------------------------------*/
 
 static BaseType_t prvCheckReceivedValueWithinExpectedRange( uint32_t ulReceived, uint32_t ulExpectedReceived )
 {
-BaseType_t xReturn = pdPASS;
+    BaseType_t xReturn = pdPASS;
 
-	if( ulReceived > ulExpectedReceived )
-	{
-		configASSERT( ( ulReceived - ulExpectedReceived ) <= queuesetALLOWABLE_RX_DEVIATION );
-		if( ( ulReceived - ulExpectedReceived ) > queuesetALLOWABLE_RX_DEVIATION )
-		{
-			xReturn = pdFALSE;
-		}
-	}
-	else
-	{
-		configASSERT( ( ulExpectedReceived - ulReceived ) <= queuesetALLOWABLE_RX_DEVIATION );
-		if( ( ulExpectedReceived - ulReceived ) > queuesetALLOWABLE_RX_DEVIATION )
-		{
-			xReturn = pdFALSE;
-		}
-	}
+    if( ulReceived > ulExpectedReceived ) {
+        configASSERT( ( ulReceived - ulExpectedReceived ) <= queuesetALLOWABLE_RX_DEVIATION );
+        if( ( ulReceived - ulExpectedReceived ) > queuesetALLOWABLE_RX_DEVIATION ) {
+            xReturn = pdFALSE;
+        }
+    } else {
+        configASSERT( ( ulExpectedReceived - ulReceived ) <= queuesetALLOWABLE_RX_DEVIATION );
+        if( ( ulExpectedReceived - ulReceived ) > queuesetALLOWABLE_RX_DEVIATION ) {
+            xReturn = pdFALSE;
+        }
+    }
 
-	return xReturn;
+    return xReturn;
 }
 /*-----------------------------------------------------------*/
 
 static void prvReceiveFromQueueInSetFromISR( void )
 {
-QueueSetMemberHandle_t xActivatedQueue;
-uint32_t ulReceived;
+    QueueSetMemberHandle_t xActivatedQueue;
+    uint32_t ulReceived;
 
-	/* See if any of the queues in the set contain data. */
-	xActivatedQueue = xQueueSelectFromSetFromISR( xQueueSet );
+    /* See if any of the queues in the set contain data. */
+    xActivatedQueue = xQueueSelectFromSetFromISR( xQueueSet );
 
-	if( xActivatedQueue != NULL )
-	{
-		/* Reading from the queue for test purposes only. */
-		if( xQueueReceiveFromISR( xActivatedQueue, &ulReceived, NULL ) != pdPASS )
-		{
-			/* Data should have been available as the handle was returned from
-			xQueueSelectFromSetFromISR(). */
-			xQueueSetTasksStatus = pdFAIL;
-		}
+    if( xActivatedQueue != NULL ) {
+        /* Reading from the queue for test purposes only. */
+        if( xQueueReceiveFromISR( xActivatedQueue, &ulReceived, NULL ) != pdPASS ) {
+            /* Data should have been available as the handle was returned from
+            xQueueSelectFromSetFromISR(). */
+            xQueueSetTasksStatus = pdFAIL;
+        }
 
-		/* Ensure the value received was the value expected. */
-		prvCheckReceivedValue( ulReceived );
-	}
+        /* Ensure the value received was the value expected. */
+        prvCheckReceivedValue( ulReceived );
+    }
 }
 /*-----------------------------------------------------------*/
 
 static void prvSendToQueueInSetFromISR( void )
 {
-static BaseType_t xQueueToWriteTo = 0;
+    static BaseType_t xQueueToWriteTo = 0;
 
-	if( xQueueSendFromISR( xQueues[ xQueueToWriteTo ], ( void * ) &ulISRTxValue, NULL ) == pdPASS )
-	{
-		ulISRTxValue++;
+    if( xQueueSendFromISR( xQueues[ xQueueToWriteTo ], ( void * ) &ulISRTxValue, NULL ) == pdPASS ) {
+        ulISRTxValue++;
 
-		/* If the Tx value has wrapped then set it back to its initial value. */
-		if( ulISRTxValue == 0UL )
-		{
-			ulISRTxValue = queuesetINITIAL_ISR_TX_VALUE;
-		}
+        /* If the Tx value has wrapped then set it back to its initial value. */
+        if( ulISRTxValue == 0UL ) {
+            ulISRTxValue = queuesetINITIAL_ISR_TX_VALUE;
+        }
 
-		/* Use a different queue next time. */
-		xQueueToWriteTo++;
-		if( xQueueToWriteTo >= queuesetNUM_QUEUES_IN_SET )
-		{
-			xQueueToWriteTo = 0;
-		}
-	}
+        /* Use a different queue next time. */
+        xQueueToWriteTo++;
+        if( xQueueToWriteTo >= queuesetNUM_QUEUES_IN_SET ) {
+            xQueueToWriteTo = 0;
+        }
+    }
 }
 /*-----------------------------------------------------------*/
 
 static void prvSetupTest( void )
 {
-BaseType_t x;
-uint32_t ulValueToSend = 0;
+    BaseType_t x;
+    uint32_t ulValueToSend = 0;
 
-	/* Ensure the queues are created and the queue set configured before the
-	sending task is unsuspended.
+    /* Ensure the queues are created and the queue set configured before the
+    sending task is unsuspended.
 
-	First Create the queue set such that it will be able to hold a message for
-	every space in every queue in the set. */
-	xQueueSet = xQueueCreateSet( queuesetNUM_QUEUES_IN_SET * queuesetQUEUE_LENGTH );
+    First Create the queue set such that it will be able to hold a message for
+    every space in every queue in the set. */
+    xQueueSet = xQueueCreateSet( queuesetNUM_QUEUES_IN_SET * queuesetQUEUE_LENGTH );
 
-	for( x = 0; x < queuesetNUM_QUEUES_IN_SET; x++ )
-	{
-		/* Create the queue and add it to the set.  The queue is just holding
-		uint32_t value. */
-		xQueues[ x ] = xQueueCreate( queuesetQUEUE_LENGTH, sizeof( uint32_t ) );
-		configASSERT( xQueues[ x ] );
-		if( xQueueAddToSet( xQueues[ x ], xQueueSet ) != pdPASS )
-		{
-			xQueueSetTasksStatus = pdFAIL;
-		}
-		else
-		{
-			/* The queue has now been added to the queue set and cannot be added to
-			another. */
-			if( xQueueAddToSet( xQueues[ x ], xQueueSet ) != pdFAIL )
-			{
-				xQueueSetTasksStatus = pdFAIL;
-			}
-		}
-	}
+    for( x = 0; x < queuesetNUM_QUEUES_IN_SET; x++ ) {
+        /* Create the queue and add it to the set.  The queue is just holding
+        uint32_t value. */
+        xQueues[ x ] = xQueueCreate( queuesetQUEUE_LENGTH, sizeof( uint32_t ) );
+        configASSERT( xQueues[ x ] );
+        if( xQueueAddToSet( xQueues[ x ], xQueueSet ) != pdPASS ) {
+            xQueueSetTasksStatus = pdFAIL;
+        } else {
+            /* The queue has now been added to the queue set and cannot be added to
+            another. */
+            if( xQueueAddToSet( xQueues[ x ], xQueueSet ) != pdFAIL ) {
+                xQueueSetTasksStatus = pdFAIL;
+            }
+        }
+    }
 
-	/* Attempt to remove a queue from a queue set it does not belong
-	to (NULL being passed as the queue set in this case). */
-	if( xQueueRemoveFromSet( xQueues[ 0 ], NULL ) != pdFAIL )
-	{
-		/* It is not possible to successfully remove a queue from a queue
-		set it does not belong to. */
-		xQueueSetTasksStatus = pdFAIL;
-	}
+    /* Attempt to remove a queue from a queue set it does not belong
+    to (NULL being passed as the queue set in this case). */
+    if( xQueueRemoveFromSet( xQueues[ 0 ], NULL ) != pdFAIL ) {
+        /* It is not possible to successfully remove a queue from a queue
+        set it does not belong to. */
+        xQueueSetTasksStatus = pdFAIL;
+    }
 
-	/* Attempt to remove a queue from the queue set it does belong to. */
-	if( xQueueRemoveFromSet( xQueues[ 0 ], xQueueSet ) != pdPASS )
-	{
-		/* It should be possible to remove the queue from the queue set it
-		does belong to. */
-		xQueueSetTasksStatus = pdFAIL;
-	}
+    /* Attempt to remove a queue from the queue set it does belong to. */
+    if( xQueueRemoveFromSet( xQueues[ 0 ], xQueueSet ) != pdPASS ) {
+        /* It should be possible to remove the queue from the queue set it
+        does belong to. */
+        xQueueSetTasksStatus = pdFAIL;
+    }
 
-	/* Add an item to the queue before attempting to add it back into the
-	set. */
-	xQueueSend( xQueues[ 0 ], ( void * ) &ulValueToSend, 0 );
-	if( xQueueAddToSet( xQueues[ 0 ], xQueueSet ) != pdFAIL )
-	{
-		/* Should not be able to add a non-empty queue to a set. */
-		xQueueSetTasksStatus = pdFAIL;
-	}
+    /* Add an item to the queue before attempting to add it back into the
+    set. */
+    xQueueSend( xQueues[ 0 ], ( void * ) &ulValueToSend, 0 );
+    if( xQueueAddToSet( xQueues[ 0 ], xQueueSet ) != pdFAIL ) {
+        /* Should not be able to add a non-empty queue to a set. */
+        xQueueSetTasksStatus = pdFAIL;
+    }
 
-	/* Remove the item from the queue before adding the queue back into the
-	set so the dynamic tests can begin. */
-	xQueueReceive( xQueues[ 0 ], &ulValueToSend, 0 );
-	if( xQueueAddToSet( xQueues[ 0 ], xQueueSet ) != pdPASS )
-	{
-		/* If the queue was successfully removed from the queue set then it
-		should be possible to add it back in again. */
-		xQueueSetTasksStatus = pdFAIL;
-	}
+    /* Remove the item from the queue before adding the queue back into the
+    set so the dynamic tests can begin. */
+    xQueueReceive( xQueues[ 0 ], &ulValueToSend, 0 );
+    if( xQueueAddToSet( xQueues[ 0 ], xQueueSet ) != pdPASS ) {
+        /* If the queue was successfully removed from the queue set then it
+        should be possible to add it back in again. */
+        xQueueSetTasksStatus = pdFAIL;
+    }
 
-	/* The task that sends to the queues is not running yet, so attempting to
-	read from the queue set should fail. */
-	if( xQueueSelectFromSet( xQueueSet, queuesetSHORT_DELAY ) != NULL )
-	{
-		xQueueSetTasksStatus = pdFAIL;
-	}
+    /* The task that sends to the queues is not running yet, so attempting to
+    read from the queue set should fail. */
+    if( xQueueSelectFromSet( xQueueSet, queuesetSHORT_DELAY ) != NULL ) {
+        xQueueSetTasksStatus = pdFAIL;
+    }
 
-	/* Resume the task that writes to the queues. */
-	vTaskResume( xQueueSetSendingTask );
+    /* Resume the task that writes to the queues. */
+    vTaskResume( xQueueSetSendingTask );
 
-	/* Let the ISR access the queues also. */
-	xSetupComplete = pdTRUE;
+    /* Let the ISR access the queues also. */
+    xSetupComplete = pdTRUE;
 }
 /*-----------------------------------------------------------*/
 
 static uint32_t prvRand( void )
 {
-	ulNextRand = ( ulNextRand * 1103515245UL ) + 12345UL;
+    ulNextRand = ( ulNextRand * 1103515245UL ) + 12345UL;
     return ( ulNextRand / 65536UL ) % 32768UL;
 }
 /*-----------------------------------------------------------*/

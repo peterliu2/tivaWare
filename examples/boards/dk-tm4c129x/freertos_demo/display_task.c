@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2009-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -38,8 +38,7 @@
 // This structure defines the messages that are sent to the display task.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint32_t ui32Type;
     uint16_t ui16X;
     uint16_t ui16Y;
@@ -111,23 +110,19 @@ DisplayTask(void *pvParameters)
     //
     // Loop forever.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Read the next message from the queue.
         //
-        if(xQueueReceive(g_pDisplayQueue, &sMessage, portMAX_DELAY) == pdPASS)
-        {
+        if(xQueueReceive(g_pDisplayQueue, &sMessage, portMAX_DELAY) == pdPASS) {
             //
             // Determine the message type.
             //
-            switch(sMessage.ui32Type)
-            {
+            switch(sMessage.ui32Type) {
                 //
                 // The drawing of an image has been requested.
                 //
-                case DISPLAY_IMAGE:
-                {
+                case DISPLAY_IMAGE: {
                     //
                     // Draw this image on the display.
                     //
@@ -143,8 +138,7 @@ DisplayTask(void *pvParameters)
                 //
                 // The drawing of a string has been requested.
                 //
-                case DISPLAY_STRING:
-                {
+                case DISPLAY_STRING: {
                     //
                     // Draw this string on the display.
                     //
@@ -160,8 +154,7 @@ DisplayTask(void *pvParameters)
                 //
                 // A move of the pen has been requested.
                 //
-                case DISPLAY_MOVE:
-                {
+                case DISPLAY_MOVE: {
                     //
                     // Save the new pen position.
                     //
@@ -177,8 +170,7 @@ DisplayTask(void *pvParameters)
                 //
                 // A draw with the pen has been requested.
                 //
-                case DISPLAY_DRAW:
-                {
+                case DISPLAY_DRAW: {
                     //
                     // Draw a line from the previous pen position to the new
                     // pen position.
@@ -308,8 +300,7 @@ DisplayTaskInit(void)
     // Create a queue for sending messages to the display task.
     //
     g_pDisplayQueue = xQueueCreate(DISPLAY_QUEUE_SIZE, DISPLAY_ITEM_SIZE);
-    if(g_pDisplayQueue == NULL)
-    {
+    if(g_pDisplayQueue == NULL) {
         return(1);
     }
 
@@ -318,8 +309,8 @@ DisplayTaskInit(void)
     //
     if(xTaskCreate(DisplayTask, (const portCHAR *)"Display",
                    STACKSIZE_DISPLAYTASK, NULL,
-                   tskIDLE_PRIORITY + PRIORITY_DISPLAY_TASK, &g_sDisplayTask) !=  pdTRUE)
-    { // FIXME
+                   tskIDLE_PRIORITY + PRIORITY_DISPLAY_TASK, &g_sDisplayTask) !=  pdTRUE) {
+        // FIXME
         return(1);
     }
 

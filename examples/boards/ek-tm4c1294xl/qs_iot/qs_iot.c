@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -144,45 +144,44 @@ char g_pcAlert[140] = "";
 //
 //*****************************************************************************
 tStat g_sSW1Presses =
-    {"SW1-presses", &g_ui32SW1Presses, "usrsw1", INT, WRITE_ONLY};
+{"SW1-presses", &g_ui32SW1Presses, "usrsw1", INT, WRITE_ONLY};
 
 tStat g_sSW2Presses =
-    {"SW2-presses", &g_ui32SW2Presses, "usrsw2", INT, WRITE_ONLY};
+{"SW2-presses", &g_ui32SW2Presses, "usrsw2", INT, WRITE_ONLY};
 
 tStat g_sInternalTempF =
-    {"Temp(F)", &g_ui32InternalTempF, 0, INT, WRITE_ONLY};
+{"Temp(F)", &g_ui32InternalTempF, 0, INT, WRITE_ONLY};
 
 tStat g_sInternalTempC =
-    {"Temp(C)", &g_ui32InternalTempC, "jtemp", INT, WRITE_ONLY};
+{"Temp(C)", &g_ui32InternalTempC, "jtemp", INT, WRITE_ONLY};
 
 tStat g_sSecondsOnTime =
-    {"Time since reset", &g_ui32SecondsOnTime, "ontime", INT, WRITE_ONLY};
+{"Time since reset", &g_ui32SecondsOnTime, "ontime", INT, WRITE_ONLY};
 
 tStat g_sLEDD1 =
-    {"LED D1", &g_ui32LEDD1, "ledd1", INT, READ_WRITE};
+{"LED D1", &g_ui32LEDD1, "ledd1", INT, READ_WRITE};
 
 tStat g_sLEDD2 =
-    {"LED D2", &g_ui32LEDD2, "ledd2", INT, READ_WRITE};
+{"LED D2", &g_ui32LEDD2, "ledd2", INT, READ_WRITE};
 
 tStat g_sLocation =
-    {"Location", g_pcLocation, "location", STRING, READ_ONLY};
+{"Location", g_pcLocation, "location", STRING, READ_ONLY};
 
 tStat g_sBoardState =
-    {NULL, &g_ui32BoardState, "gamestate", HEX, WRITE_ONLY};
+{NULL, &g_ui32BoardState, "gamestate", HEX, WRITE_ONLY};
 
 tStat g_sContactEmail =
-    {"Contact Email", g_pcContactEmail, "emailaddr", STRING, READ_WRITE};
+{"Contact Email", g_pcContactEmail, "emailaddr", STRING, READ_WRITE};
 
 tStat g_sAlert =
-    {"Alert Message", g_pcAlert, "alert", STRING, NONE};
+{"Alert Message", g_pcAlert, "alert", STRING, NONE};
 
 //*****************************************************************************
 //
 // Global array of pointers to all tStat structures to be synced with Exosite.
 //
 //*****************************************************************************
-tStat *g_psDeviceStatistics[NUM_STATS]=
-{
+tStat *g_psDeviceStatistics[NUM_STATS]= {
     &g_sSW1Presses,
     &g_sSW2Presses,
     &g_sInternalTempF,
@@ -225,8 +224,7 @@ volatile bool g_bOnline = false;
 // Global variables to keep track of the error conditions.
 //
 //*****************************************************************************
-enum
-{
+enum {
     ERR_IP_ADDR,
     ERR_CIK,
     ERR_UNKNOWN,
@@ -257,10 +255,8 @@ PrintStats(tStat **psStats)
     //
     // Loop over all statistics in the list.
     //
-    for(ui32Index = 0; psStats[ui32Index] != NULL; ui32Index++)
-    {
-        if(psStats[ui32Index]->pcName)
-        {
+    for(ui32Index = 0; psStats[ui32Index] != NULL; ui32Index++) {
+        if(psStats[ui32Index]->pcName) {
             //
             // For each statistic, print the name and current value to the UART.
             //
@@ -293,8 +289,7 @@ PrintMac(void)
     //
     // Extract each pair of characters and print them to the UART.
     //
-    for(ui8Idx = 0; ui8Idx < 6; ui8Idx++)
-    {
+    for(ui8Idx = 0; ui8Idx < 6; ui8Idx++) {
         UARTprintf("%02x", pui8MACAddr[ui8Idx]);
     }
 
@@ -311,8 +306,7 @@ PrintAllData(void)
 {
     char cExositeCIK[CIK_LENGTH];
 
-    if(UARTPeek('\r') != -1)
-    {
+    if(UARTPeek('\r') != -1) {
         g_bPrintingData = false;
 
         //
@@ -341,12 +335,9 @@ PrintAllData(void)
     //
     // Check to see if we already have a CIK, and print it to the UART
     //
-    if(Exosite_GetCIK(cExositeCIK))
-    {
+    if(Exosite_GetCIK(cExositeCIK)) {
         UARTprintf("Current CIK: %s\n", cExositeCIK);
-    }
-    else
-    {
+    } else {
         UARTprintf("No CIK found. Connect to Exosite to obtain one.\n");
     }
 
@@ -354,23 +345,18 @@ PrintAllData(void)
     // Check to see how many times (if any) we've failed to connect to the
     // server.
     //
-    if((g_ui32LinkRetries == 0) && g_bOnline)
-    {
+    if((g_ui32LinkRetries == 0) && g_bOnline) {
         //
         // For zero failures, report a "Link OK"
         //
         UARTprintf("Link Status: OK\n");
-    }
-    else if((g_ui32LinkRetries < MAX_SYNC_RETRIES) && g_bOnline)
-    {
+    } else if((g_ui32LinkRetries < MAX_SYNC_RETRIES) && g_bOnline) {
         //
         // For the first few failures, report that we are trying to
         // re-establish a link.
         //
         UARTprintf("Link Status: Lost (Retries: %d)\n", g_ui32LinkRetries);
-    }
-    else
-    {
+    } else {
         //
         // If we have exceeded the maximum number of retries, show status as
         // offline.
@@ -444,16 +430,13 @@ GetEEPROMCIK(void)
     // Try to read the CIK from EEPROM, and alert the user based on what we
     // find.
     //
-    if(Exosite_GetCIK(pcExositeCIK))
-    {
+    if(Exosite_GetCIK(pcExositeCIK)) {
         //
         // If a CIK is found, continue on to make sure that the CIK is valid.
         //
         UARTprintf("CIK found in EEPROM storage.\n\nCIK: %s\n\n",
                    pcExositeCIK);
-    }
-    else
-    {
+    } else {
         //
         // If a CIK was not found, return immediately and indicate the failure.
         //
@@ -467,16 +450,13 @@ GetEEPROMCIK(void)
     // If a CIK was found, try to sync with Exosite. This should tell us if
     // the CIK is valid or not.
     //
-    if(SyncWithExosite(g_psDeviceStatistics))
-    {
+    if(SyncWithExosite(g_psDeviceStatistics)) {
         //
         // If the sync worked, the CIK is valid. Alert the caller.
         //
         UARTprintf("Connected! Type 'stats' to see data for this board.");
         return 1;
-    }
-    else
-    {
+    } else {
         //
         // If the sync failed, the CIK is probably invalid, so pass the error
         // back to the caller.
@@ -509,23 +489,18 @@ ProvisionCIK(void)
     // Try to activate with Exosite a few times. If we succeed move on with the
     // new CIK. Otherwise, fail.
     //
-    for(ui32Idx = 0; ui32Idx < 1; ui32Idx++)
-    {
-        if(Exosite_Activate())
-        {
+    for(ui32Idx = 0; ui32Idx < 1; ui32Idx++) {
+        if(Exosite_Activate()) {
             //
             // If exosite gives us a CIK, send feedback to the user
             //
             UARTprintf("CIK acquired!\n\n");
 
-            if(Exosite_GetCIK(pcExositeCIK))
-            {
+            if(Exosite_GetCIK(pcExositeCIK)) {
                 UARTprintf("CIK: %s\n\n", pcExositeCIK);
                 UARTprintf("Connected! ");
                 UARTprintf("Type 'stats' to see data for this board.");
-            }
-            else
-            {
+            } else {
                 //
                 // This shouldn't ever happen, but print an error message in
                 // case it does.
@@ -537,16 +512,13 @@ ProvisionCIK(void)
             // Return "true" indicating that we found a valid CIK.
             //
             return true;
-        }
-        else
-        {
+        } else {
             //
             // If the activation fails, wait at least one second before
             // retrying.
             //
             //ROM_SysCtlDelay(g_ui32SysClock/3);
-            if(Exosite_StatusCode() == EXO_STATUS_CONFLICT)
-            {
+            if(Exosite_StatusCode() == EXO_STATUS_CONFLICT) {
                 //
                 // This can occur if the MAC address for this board has already
                 // been activated, and the device has not been re-enabled for a
@@ -597,16 +569,11 @@ LocateValidCIK(void)
     // CIK, make sure to set the global state variable that indicates
     // that we can connect to exosite.
     //
-    if(GetEEPROMCIK())
-    {
+    if(GetEEPROMCIK()) {
         return true;
-    }
-    else if(ProvisionCIK())
-    {
+    } else if(ProvisionCIK()) {
         return true;
-    }
-    else
-    {
+    } else {
         //
         // If both cases above fail, return false, indicating that we did not
         // find a CIK.
@@ -634,8 +601,7 @@ UpdateInternalTemp(void)
     //
     // Wait for the ADC to finish taking the sample
     //
-    while(!ROM_ADCIntStatus(ADC0_BASE, 3, false))
-    {
+    while(!ROM_ADCIntStatus(ADC0_BASE, 3, false)) {
     }
 
     //
@@ -677,12 +643,9 @@ UpdateButtons(void)
     // If either button has been pressed, record that status to the
     // corresponding global variable.
     //
-    if(BUTTON_PRESSED(USR_SW1, ui8Buttons, ui8ButtonsChanged))
-    {
+    if(BUTTON_PRESSED(USR_SW1, ui8Buttons, ui8ButtonsChanged)) {
         g_ui32SW1Presses++;
-    }
-    else if(BUTTON_PRESSED(USR_SW2, ui8Buttons, ui8ButtonsChanged))
-    {
+    } else if(BUTTON_PRESSED(USR_SW2, ui8Buttons, ui8ButtonsChanged)) {
         g_ui32SW2Presses++;
     }
 }
@@ -699,21 +662,15 @@ UpdateLEDs(void)
     // If either LED's global flag is set, turn that LED on. Otherwise, turn
     // them off.
     //
-    if(g_ui32LEDD1)
-    {
+    if(g_ui32LEDD1) {
         ROM_GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, GPIO_PIN_1);
-    }
-    else
-    {
+    } else {
         ROM_GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1, 0);
     }
 
-    if(g_ui32LEDD2)
-    {
+    if(g_ui32LEDD2) {
         ROM_GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, GPIO_PIN_0);
-    }
-    else
-    {
+    } else {
         ROM_GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0, 0);
     }
 }
@@ -732,8 +689,7 @@ CheckForUserCommands(void)
     //
     // Peek to see if a full command is ready for processing
     //
-    if(UARTPeek('\r') == -1)
-    {
+    if(UARTPeek('\r') == -1) {
         //
         // If not, return so other functions get a chance to run.
         //
@@ -744,8 +700,7 @@ CheckForUserCommands(void)
     // If we do have commands, process them immediately in the order they were
     // received.
     //
-    while(UARTPeek('\r') != -1)
-    {
+    while(UARTPeek('\r') != -1) {
         //
         // Get a user command back
         //
@@ -759,16 +714,14 @@ CheckForUserCommands(void)
         //
         // Handle the case of bad command.
         //
-        if(iStatus == CMDLINE_BAD_CMD)
-        {
+        if(iStatus == CMDLINE_BAD_CMD) {
             UARTprintf("Bad command!\n");
         }
 
         //
         // Handle the case of too many arguments.
         //
-        else if(iStatus == CMDLINE_TOO_MANY_ARGS)
-        {
+        else if(iStatus == CMDLINE_TOO_MANY_ARGS) {
             UARTprintf("Too many arguments for command processor!\n");
         }
     }
@@ -810,16 +763,14 @@ Timer0IntHandler(void)
     //
     UpdateButtons();
 
-    if((!g_bPrintingData) && (!g_bGameActive))
-    {
+    if((!g_bPrintingData) && (!g_bGameActive)) {
         CheckForUserCommands();
     }
 
     //
     // Once per second, perform the following operations.
     //
-    if(!(g_ui32TimerIntCount % APP_TICKS_PER_SEC))
-    {
+    if(!(g_ui32TimerIntCount % APP_TICKS_PER_SEC)) {
         //
         // Keep track of the total seconds of on-time
         //
@@ -838,21 +789,17 @@ Timer0IntHandler(void)
         //
         // Check to see if we have any on-going actions that require the UART
         //
-        if(g_bPrintingData)
-        {
+        if(g_bPrintingData) {
             //
             // If the user has requested a data print-out, perform that here.
             //
             PrintAllData();
-        }
-        else if(g_bGameActive)
-        {
+        } else if(g_bGameActive) {
             //
             // If the user is playing a game of tic-tac-toe, enter the game
             // state machine here.
             //
-            if(AdvanceGameState())
-            {
+            if(AdvanceGameState()) {
                 //
                 // When the tic-tac-toe game state function returns a '1', the
                 // game is over. Print a newline, remove the 'g_bGameActive'
@@ -868,8 +815,7 @@ Timer0IntHandler(void)
     // Make sure the running tally of the number of interrupts doesn't
     // overflow.
     //
-    if(g_ui32TimerIntCount == (20 * APP_TICKS_PER_SEC))
-    {
+    if(g_ui32TimerIntCount == (20 * APP_TICKS_PER_SEC)) {
         //
         // Reset the interrupt count to zero.
         //
@@ -970,9 +916,9 @@ main(void)
     // Run from the PLL at 120 MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN |
-                                             SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN |
+                                            SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Set the pinout for the board, including required pins for Ethernet
@@ -1053,14 +999,12 @@ main(void)
     //
     // Loop a few times to make sure that DHCP has time to find an IP.
     //
-    for(ui32Timeout = 10; ui32Timeout > 0; ui32Timeout--)
-    {
+    for(ui32Timeout = 10; ui32Timeout > 0; ui32Timeout--) {
         //
         // Check to see if we have an IP yet.
         //
         if((lwIPLocalIPAddrGet() != 0xffffffff) &&
-           (lwIPLocalIPAddrGet() != 0x00000000))
-        {
+                (lwIPLocalIPAddrGet() != 0x00000000)) {
             //
             // Report that we found an IP address.
             //
@@ -1085,9 +1029,7 @@ main(void)
             g_bOnline = LocateValidCIK();
 
             break;
-        }
-        else if(ui32Timeout == 0)
-        {
+        } else if(ui32Timeout == 0) {
             //
             // Alert the user if it takes a long time to find an IP address. An
             // IP address can still be found later, so this is not an
@@ -1108,8 +1050,7 @@ main(void)
     // device is "offline" and not performing any data synchronization with the
     // cloud.
     //
-    if(!g_bOnline)
-    {
+    if(!g_bOnline) {
         UARTprintf("Continuing in offline mode.\n\n");
     }
 
@@ -1128,26 +1069,21 @@ main(void)
     //
     // Main application loop.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Only run the following loop if we have a valid connection to
         // Exosite.
         //
-        if(g_bOnline)
-        {
+        if(g_bOnline) {
             //
             // Attempt to sync data with Exosite
             //
-            if(SyncWithExosite(g_psDeviceStatistics))
-            {
+            if(SyncWithExosite(g_psDeviceStatistics)) {
                 //
                 // If the sync is successful, reset the "retries" count to zero
                 //
                 g_ui32LinkRetries = 0;
-            }
-            else if(Exosite_StatusCode() == EXO_STATUS_NOAUTH)
-            {
+            } else if(Exosite_StatusCode() == EXO_STATUS_NOAUTH) {
                 //
                 // Failed for having an old CIK.  Flush the UART output, and
                 // stop any data-printing operation.
@@ -1178,9 +1114,7 @@ main(void)
                 // LED D2 is used as error indicator in this case.
                 //
                 g_ui32LEDD1 = 0;
-            }
-            else
-            {
+            } else {
                 //
                 // Sync failed for some other reason.  Since we don't know the
                 // reason for this failure, try to sync with Exosite server
@@ -1193,8 +1127,7 @@ main(void)
             // Check if IP address has changed.
             //
             ui32IPAddr = lwIPLocalIPAddrGet();
-            if(g_ui32IPAddr != ui32IPAddr)
-            {
+            if(g_ui32IPAddr != ui32IPAddr) {
                 //
                 // Yes, then let the app know that link is lost and we are
                 // offline.
@@ -1215,23 +1148,18 @@ main(void)
                 //
                 g_ui32LEDD2 = 0;
             }
-        }
-        else
-        {
+        } else {
             //
             // If we are here it means that connection to Exosite is lost.
             // Handle the different cases that could have caused this.
             //
-            switch(g_ui32Err)
-            {
-                case ERR_IP_ADDR:
-                {
+            switch(g_ui32Err) {
+                case ERR_IP_ADDR: {
                     //
                     // Check if IP address has been acquired.
                     //
                     ui32IPAddr = lwIPLocalIPAddrGet();
-                    if((ui32IPAddr == 0xffffffff) || (ui32IPAddr == 0x00000000))
-                    {
+                    if((ui32IPAddr == 0xffffffff) || (ui32IPAddr == 0x00000000)) {
                         //
                         // No - Delay a second to allow DHCP to find an IP
                         // address.
@@ -1265,8 +1193,7 @@ main(void)
                     // connection with Exosite.
                     //
                     g_bOnline = LocateValidCIK();
-                    if(!g_bOnline)
-                    {
+                    if(!g_bOnline) {
                         //
                         // Failed to connect to Exosite.  Assume that CIK is
                         // not valid.
@@ -1291,13 +1218,11 @@ main(void)
                     break;
                 }
 
-                case ERR_CIK:
-                {
+                case ERR_CIK: {
                     //
                     // Attempt to acquire a new CIK from Exosite.
                     //
-                    if(ProvisionCIK())
-                    {
+                    if(ProvisionCIK()) {
                         //
                         // Success - notify the application that we are
                         // connected to Exosite.  Also reset the necessary
@@ -1315,8 +1240,7 @@ main(void)
                     // before giving up.
                     //
                     ui32CIKRetries++;
-                    if(ui32CIKRetries > 5)
-                    {
+                    if(ui32CIKRetries > 5) {
                         //
                         // Report to the user.
                         //
@@ -1342,8 +1266,7 @@ main(void)
                     break;
                 }
 
-                case ERR_UNKNOWN:
-                {
+                case ERR_UNKNOWN: {
                     //
                     // Report to the user.
                     //
@@ -1374,8 +1297,7 @@ main(void)
                 }
 
                 case ERR_NO_ERR:
-                default:
-                {
+                default: {
                     break;
                 }
             }

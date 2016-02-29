@@ -12,8 +12,7 @@
 // the USB bulk device.
 //
 //****************************************************************************
-typedef struct
-{
+typedef struct {
     usb_dev_handle *hDevice;
 
 } tDeviceInfo;
@@ -43,7 +42,7 @@ BOOL InitializeDevice(void)
     usb_init();
 
     //
-    // 
+    //
     //
 
     return(TRUE);
@@ -73,7 +72,7 @@ BOOL TerminateDevice(void)
 //
 // \param pcBuffer points to the first byte of data to send.
 // \param ulSize contains the number of bytes of data to send.
-// \param pulWritten is a pointer which will be written with the number of 
+// \param pulWritten is a pointer which will be written with the number of
 // bytes of data actually written to the device.
 //
 // This function is used to send data to the USB device via its bulk OUT endpoint.
@@ -82,7 +81,7 @@ BOOL TerminateDevice(void)
 //
 //****************************************************************************
 BOOL WriteUSBPacket(unsigned char *pcBuffer, unsigned long ulSize,
-                           unsigned long *pulWritten)
+                    unsigned long *pulWritten)
 {
     return(TRUE);
 }
@@ -93,9 +92,9 @@ BOOL WriteUSBPacket(unsigned char *pcBuffer, unsigned long ulSize,
 //
 // \param pcBuffer points to a buffer into which the data from the device will
 // be written.
-// \param ulSize contains the number of bytes that are requested from the 
+// \param ulSize contains the number of bytes that are requested from the
 // device.
-// \param pulRead is a pointer which will be written with the number of 
+// \param pulRead is a pointer which will be written with the number of
 // bytes of data actually read from the device.
 //
 // This function is used to receivedata from the USB device via its bulk IN
@@ -105,7 +104,7 @@ BOOL WriteUSBPacket(unsigned char *pcBuffer, unsigned long ulSize,
 //
 //****************************************************************************
 BOOL ReadUSBPacket(unsigned char *pcBuffer, unsigned long ulSize,
-                          unsigned long *pulRead)
+                   unsigned long *pulRead)
 
 {
     return(TRUE);

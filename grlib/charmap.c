@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Graphics Library.
 //
 //*****************************************************************************
@@ -70,8 +70,7 @@
 // An array containing Unicode mappings for ISO8859-2 codes from 0xA1 and above.
 //
 //*****************************************************************************
-const uint16_t g_pui16ISO8859_2_Unicode[] =
-{
+const uint16_t g_pui16ISO8859_2_Unicode[] = {
     0x0104, 0x02D8, 0x0141, 0x00A4, 0x013D, 0x015A, 0x00A7, 0x00A8,
     0x0160, 0x015E, 0x0164, 0x0179, 0x00AD, 0x017D, 0x017B, 0x00B0,
     0x0105, 0x02DB, 0x0142, 0x00B4, 0x013E, 0x015B, 0x02C7, 0x00B8,
@@ -91,8 +90,7 @@ const uint16_t g_pui16ISO8859_2_Unicode[] =
 // An array containing Unicode mappings for ISO8859-3 codes from 0xA1 and above.
 //
 //*****************************************************************************
-const uint16_t g_pui16ISO8859_3_Unicode[] =
-{
+const uint16_t g_pui16ISO8859_3_Unicode[] = {
     0x0126, 0x02D8, 0x00A3, 0x00A4, 0x0000, 0x0124, 0x00A7, 0x00A8,
     0x0130, 0x015E, 0x011E, 0x0134, 0x00AD, 0x0000, 0x017B, 0x00B0,
     0x0127, 0x00B2, 0x00B3, 0x00B4, 0x00B5, 0x0125, 0x00B7, 0x00B8,
@@ -112,8 +110,7 @@ const uint16_t g_pui16ISO8859_3_Unicode[] =
 // An array containing Unicode mappings for ISO8859-4 codes from 0xA1 and above.
 //
 //*****************************************************************************
-const uint16_t g_pui16ISO8859_4_Unicode[] =
-{
+const uint16_t g_pui16ISO8859_4_Unicode[] = {
     0x0104, 0x0138, 0x0156, 0x00A4, 0x0128, 0x013B, 0x00A7, 0x00A8,
     0x0160, 0x0112, 0x0122, 0x0166, 0x00AD, 0x017D, 0x00AF, 0x00B0,
     0x0105, 0x02DB, 0x0157, 0x00B4, 0x0129, 0x013C, 0x02C7, 0x00B8,
@@ -133,8 +130,7 @@ const uint16_t g_pui16ISO8859_4_Unicode[] =
 // An array containing Unicode mappings for ISO8859-7 codes from 0xA1 to 0xBD
 //
 //*****************************************************************************
-const uint16_t g_pui16ISO8859_7_Unicode[] =
-{
+const uint16_t g_pui16ISO8859_7_Unicode[] = {
     0x2018, 0x2019, 0x00A3, 0x20AC, 0x20AF, 0x00A6, 0x00A7, 0x00A8,
     0x00A9, 0x037A, 0x00AB, 0x00AC, 0x00AD, 0x0000, 0x2015, 0x00B0,
     0x00B1, 0x00B2, 0x00B3, 0x0384, 0x0385, 0x0386, 0x00B7, 0x0388,
@@ -147,8 +143,7 @@ const uint16_t g_pui16ISO8859_7_Unicode[] =
 // above.
 //
 //*****************************************************************************
-const uint16_t g_pui16ISO8859_10_Unicode[] =
-{
+const uint16_t g_pui16ISO8859_10_Unicode[] = {
     0x0104, 0x0112, 0x0122, 0x012A, 0x0128, 0x0136, 0x00A7, 0x013B,
     0x0110, 0x0160, 0x0166, 0x017D, 0x00AD, 0x016A, 0x014A, 0x00B0,
     0x0105, 0x0113, 0x0123, 0x012B, 0x0129, 0x0137, 0x00B7, 0x013C,
@@ -169,8 +164,7 @@ const uint16_t g_pui16ISO8859_10_Unicode[] =
 // above.
 //
 //*****************************************************************************
-const uint16_t g_pui16ISO8859_13_Unicode[] =
-{
+const uint16_t g_pui16ISO8859_13_Unicode[] = {
     0x201D, 0x00A2, 0x00A3, 0x00A4, 0x201E, 0x00A6, 0x00A7, 0x00D8,
     0x00A9, 0x0156, 0x00AB, 0x00AC, 0x00AD, 0x00AE, 0x00C6, 0x00B0,
     0x00B1, 0x00B2, 0x00B3, 0x201C, 0x00B5, 0x00B6, 0x00B7, 0x00F8,
@@ -190,8 +184,7 @@ const uint16_t g_pui16ISO8859_13_Unicode[] =
 // An array containing Unicode mappings for ISO8859-14 codes from 0xA1 to 0xBF.
 //
 //*****************************************************************************
-const uint16_t g_pui16ISO8859_14_Unicode[] =
-{
+const uint16_t g_pui16ISO8859_14_Unicode[] = {
     0x1E02, 0x1E03, 0x00A3, 0x010A, 0x010B, 0x1E0A, 0x00A7, 0x1E80,
     0x00A9, 0x1E82, 0x1E0B, 0x1EF2, 0x00AD, 0x00AE, 0x0178, 0x1E1E,
     0x1E1F, 0x0120, 0x0121, 0x1E40, 0x1E41, 0x00B6, 0x1E56, 0x1E81,
@@ -204,8 +197,7 @@ const uint16_t g_pui16ISO8859_14_Unicode[] =
 // above.
 //
 //*****************************************************************************
-const uint16_t g_pui16ISO8859_16_Unicode[] =
-{
+const uint16_t g_pui16ISO8859_16_Unicode[] = {
     0x0104, 0x0105, 0x0141, 0x20AC, 0x201E, 0x0160, 0x00A7, 0x0161,
     0x00A9, 0x0218, 0x00AB, 0x0179, 0x00AD, 0x017A, 0x017B, 0x00B0,
     0x00B1, 0x010C, 0x0142, 0x017D, 0x201D, 0x00B6, 0x00B7, 0x017E,
@@ -226,12 +218,11 @@ const uint16_t g_pui16ISO8859_16_Unicode[] =
 // 0xFF.
 //
 //*****************************************************************************
-const uint16_t g_pui16WIN1250_Unicode[] =
-{
+const uint16_t g_pui16WIN1250_Unicode[] = {
     0x20AC,      0, 0x201A,      0, 0x201E, 0x2026, 0x2020, 0x2021,
-         0, 0x2030, 0x0160, 0x2039, 0x015A, 0x0164, 0x017D, 0x0179,
-         0, 0x2018, 0x2019, 0x201C, 0x201D, 0x2022, 0x2013, 0x2014,
-         0, 0x2122, 0x0161, 0x203A, 0x015B, 0x0165, 0x017E, 0x017A,
+    0, 0x2030, 0x0160, 0x2039, 0x015A, 0x0164, 0x017D, 0x0179,
+    0, 0x2018, 0x2019, 0x201C, 0x201D, 0x2022, 0x2013, 0x2014,
+    0, 0x2122, 0x0161, 0x203A, 0x015B, 0x0165, 0x017E, 0x017A,
     0x00A0, 0x02C7, 0x02D8, 0x0141, 0x00A4, 0x0104, 0x00A6, 0x00A7,
     0x00A8, 0x00A9, 0x015E, 0x00AB, 0x00AC, 0x00AD, 0x00AE, 0x017B,
     0x00B0, 0x00B1, 0x02DB, 0x0142, 0x00B4, 0x00B5, 0x00B6, 0x00B7,
@@ -252,8 +243,7 @@ const uint16_t g_pui16WIN1250_Unicode[] =
 // 0xBF.  Codes from 0xC0 to 0xFF calculate as code + 0x0350.
 //
 //*****************************************************************************
-const uint16_t g_pui16WIN1251_Unicode[] =
-{
+const uint16_t g_pui16WIN1251_Unicode[] = {
     0x0402, 0x0403, 0x201A, 0x0453, 0x201E, 0x2026, 0x2020, 0x2021,
     0x20AC, 0x2030, 0x0409, 0x2039, 0x040A, 0x040C, 0x040B, 0x040F,
     0x0452, 0x2018, 0x2019, 0x201C, 0x201D, 0x2022, 0x2013, 0x2014,
@@ -270,8 +260,7 @@ const uint16_t g_pui16WIN1251_Unicode[] =
 // 0x9F.  All codes outside this range map directly the same Unicode codepoint.
 //
 //*****************************************************************************
-const uint16_t g_pui16WIN1252_Unicode[] =
-{
+const uint16_t g_pui16WIN1252_Unicode[] = {
     0x20AC,      0, 0x201A, 0x0192, 0x201E, 0x2026, 0x2020, 0x2021,
     0x02C6, 0x2030, 0x0160, 0x2039, 0x0152, 0,      0x017D, 0,
     0,      0x2018, 0x2019, 0x201C, 0x201D, 0x2022, 0x2013, 0x2014,
@@ -285,8 +274,7 @@ const uint16_t g_pui16WIN1252_Unicode[] =
 // Codes from 0xC0 to 0xFF calculate as code + 0x02D0.
 //
 //*****************************************************************************
-const uint16_t g_pui16WIN1253_Unicode[] =
-{
+const uint16_t g_pui16WIN1253_Unicode[] = {
     0x0390, 0x0391, 0x0392, 0x0393, 0x0394, 0x0395, 0x0396, 0x0397,
     0x0398, 0x0399, 0x039A, 0x039B, 0x039C, 0x039D, 0x039E, 0x039F,
     0x03A0, 0x03A1,      0, 0x03A3, 0x03A4, 0x03A5, 0x03A6, 0x03A7,
@@ -303,11 +291,10 @@ const uint16_t g_pui16WIN1253_Unicode[] =
 // 0x9F.  All codes outside this range are compatible with ISO8859-9.
 //
 //*****************************************************************************
-const uint16_t g_pui16WIN1254_Unicode[] =
-{
+const uint16_t g_pui16WIN1254_Unicode[] = {
     0x20AC,      0, 0x201A, 0x0192, 0x201E, 0x2026, 0x2020, 0x2021,
     0x02C6, 0x2030, 0x0160, 0x2039, 0x0152,      0,      0,      0,
-         0, 0x2018, 0x2019, 0x201C, 0x201D, 0x2022, 0x2013, 0x2014,
+    0, 0x2018, 0x2019, 0x201C, 0x201D, 0x2022, 0x2013, 0x2014,
     0x02DC, 0x2122, 0x0161, 0x203A, 0x0153,      0,      0, 0x0178
 };
 
@@ -399,14 +386,11 @@ GrMapISO8859_2_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     //
     // Is this character one of those which maps directly to Unicode?
     //
-    if((uint8_t)*pcSrcChar <= 0xA0)
-    {
+    if((uint8_t)*pcSrcChar <= 0xA0) {
         return((uint32_t)(char)*pcSrcChar);
-    }
-    else
-    {
+    } else {
         return((uint32_t)g_pui16ISO8859_2_Unicode[
-                              (char)*pcSrcChar - 0xA1]);
+                   (char)*pcSrcChar - 0xA1]);
     }
 }
 
@@ -454,14 +438,11 @@ GrMapISO8859_3_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     //
     // Is this character one of those which maps directly to Unicode?
     //
-    if((uint8_t)*pcSrcChar <= 0xA0)
-    {
+    if((uint8_t)*pcSrcChar <= 0xA0) {
         return((uint32_t)(uint8_t)*pcSrcChar);
-    }
-    else
-    {
+    } else {
         return((uint32_t)g_pui16ISO8859_3_Unicode[
-               (uint8_t)*pcSrcChar - 0xA1]);
+                   (uint8_t)*pcSrcChar - 0xA1]);
     }
 }
 
@@ -509,14 +490,11 @@ GrMapISO8859_4_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     //
     // Is this character one of those which maps directly to Unicode?
     //
-    if((uint8_t)*pcSrcChar <= 0xA0)
-    {
+    if((uint8_t)*pcSrcChar <= 0xA0) {
         return((uint32_t)(uint8_t)*pcSrcChar);
-    }
-    else
-    {
+    } else {
         return((uint32_t)g_pui16ISO8859_4_Unicode[
-               (uint8_t)*pcSrcChar - 0xA1]);
+                   (uint8_t)*pcSrcChar - 0xA1]);
     }
 }
 
@@ -565,12 +543,9 @@ GrMapISO8859_5_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     //
     // Is this character one of those which maps directly to Unicode?
     //
-    if((uint8_t)*pcSrcChar <= 0xA0)
-    {
+    if((uint8_t)*pcSrcChar <= 0xA0) {
         return((uint32_t)(uint8_t)*pcSrcChar);
-    }
-    else
-    {
+    } else {
         return((uint32_t)((uint8_t)*pcSrcChar) + 0x360);
     }
 }
@@ -622,12 +597,9 @@ GrMapISO8859_6_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     // Is this character one of those which maps directly to Unicode?
     //
     if(((uint8_t)*pcSrcChar <= 0xA4) ||
-       ((uint8_t)*pcSrcChar == 0xAD))
-    {
+            ((uint8_t)*pcSrcChar == 0xAD)) {
         return((uint32_t)(uint8_t)*pcSrcChar);
-    }
-    else
-    {
+    } else {
         return((uint32_t)((uint8_t)*pcSrcChar) + 0x560);
     }
 }
@@ -678,23 +650,18 @@ GrMapISO8859_7_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     //
     // Is this character one of those which maps directly to Unicode?
     //
-    if((uint8_t)*pcSrcChar <= 0xA0)
-    {
+    if((uint8_t)*pcSrcChar <= 0xA0) {
         //
         // This character is in the basic ASCII range so return it without
         // remapping.
         //
         return((uint32_t)(uint8_t)*pcSrcChar);
-    }
-    else if((uint8_t)*pcSrcChar >= 0xBE)
-    {
+    } else if((uint8_t)*pcSrcChar >= 0xBE) {
         //
         // This character can be mapped to Unicode by a simple addition.
         //
         return((uint32_t)((uint8_t)*pcSrcChar) + 0x2D0);
-    }
-    else
-    {
+    } else {
         //
         // This is one of the characters in the range which we map using a
         // table.
@@ -749,30 +716,23 @@ GrMapISO8859_8_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     //
     // Is this character one of those which maps directly to Unicode?
     //
-    if((uint8_t)*pcSrcChar <= 0xDE)
-    {
+    if((uint8_t)*pcSrcChar <= 0xDE) {
         //
         // This character is in the basic ASCII range so return it without
         // remapping.
         //
         return((uint32_t)(uint8_t)*pcSrcChar);
-    }
-    else if((uint8_t)*pcSrcChar == 0xDF)
-    {
+    } else if((uint8_t)*pcSrcChar == 0xDF) {
         //
         // Return this special case.
         //
         return(0x2017);
-    }
-    else if((uint8_t)*pcSrcChar <= 0xFC)
-    {
+    } else if((uint8_t)*pcSrcChar <= 0xFC) {
         //
         // Map this range using a simple addition.
         //
         return((uint8_t)*pcSrcChar + 0x4F0);
-    }
-    else
-    {
+    } else {
         //
         // There are only 2 valid characters left at 0xFD and 0xFE.  Map these
         // to Unicode by adding 0x1F11 to map them to 0x200E and 0x200F.
@@ -825,53 +785,46 @@ GrMapISO8859_9_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     //
     // Deal with the special cases in this switch.
     //
-    switch((uint8_t)*pcSrcChar)
-    {
+    switch((uint8_t)*pcSrcChar) {
         //
         // Character 0xD0 in ISO8859-9 maps to U+011E
         //
-        case 0xD0:
-        {
+        case 0xD0: {
             return(0x11E);
         }
 
         //
         // Character 0xDD in ISO8859-9 maps to U+0130
         //
-        case 0xDD:
-        {
+        case 0xDD: {
             return(0x130);
         }
 
         //
         // Character 0xDE in ISO8859-9 maps to U+015E
         //
-        case 0xDE:
-        {
+        case 0xDE: {
             return(0x15E);
         }
 
         //
         // Character 0xF0 in ISO8859-9 maps to U+011F
         //
-        case 0xF0:
-        {
+        case 0xF0: {
             return(0x11F);
         }
 
         //
         // Character 0xFD in ISO8859-9 maps to U+0131
         //
-        case 0xFD:
-        {
+        case 0xFD: {
             return(0x131);
         }
 
         //
         // Character 0xFE in ISO8859-9 maps to U+015F
         //
-        case 0xFE:
-        {
+        case 0xFE: {
             return(0x15F);
         }
 
@@ -879,8 +832,7 @@ GrMapISO8859_9_Unicode(const char *pcSrcChar, uint32_t ui32Count,
         // All other characters map directly to Unicode using the same
         // codepoints.
         //
-        default:
-        {
+        default: {
             return((uint32_t)(uint8_t)*pcSrcChar);
         }
     }
@@ -930,14 +882,11 @@ GrMapISO8859_10_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     //
     // Is this character one of those which maps directly to Unicode?
     //
-    if((uint8_t)*pcSrcChar <= 0xA0)
-    {
+    if((uint8_t)*pcSrcChar <= 0xA0) {
         return((uint32_t)(uint8_t)*pcSrcChar);
-    }
-    else
-    {
+    } else {
         return((uint32_t)g_pui16ISO8859_10_Unicode[
-               (uint8_t)*pcSrcChar - 0xA1]);
+                   (uint8_t)*pcSrcChar - 0xA1]);
     }
 }
 
@@ -986,12 +935,9 @@ GrMapISO8859_11_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     //
     // Is this character one of those which maps directly to Unicode?
     //
-    if((uint8_t)*pcSrcChar <= 0xA0)
-    {
+    if((uint8_t)*pcSrcChar <= 0xA0) {
         return((uint32_t)(uint8_t)*pcSrcChar);
-    }
-    else
-    {
+    } else {
         return((uint32_t)((uint8_t)*pcSrcChar) + 0xD60);
     }
 }
@@ -1040,12 +986,9 @@ GrMapISO8859_13_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     //
     // Is this character one of those which maps directly to Unicode?
     //
-    if((uint8_t)*pcSrcChar <= 0xA0)
-    {
+    if((uint8_t)*pcSrcChar <= 0xA0) {
         return((uint32_t)(uint8_t)*pcSrcChar);
-    }
-    else
-    {
+    } else {
         return((uint32_t)g_pui16ISO8859_13_Unicode[(uint8_t)*pcSrcChar - 0xA1]);
     }
 }
@@ -1094,53 +1037,46 @@ GrMapISO8859_14_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     //
     // Deal with the special cases in this switch.
     //
-    switch((uint8_t)*pcSrcChar)
-    {
+    switch((uint8_t)*pcSrcChar) {
         //
         // Character 0xD0 in ISO8859-14 maps to U+0174
         //
-        case 0xD0:
-        {
+        case 0xD0: {
             return(0x174);
         }
 
         //
         // Character 0xD7 in ISO8859-14 maps to U+1E6A
         //
-        case 0xD7:
-        {
+        case 0xD7: {
             return(0x1E6A);
         }
 
         //
         // Character 0xDE in ISO8859-14 maps to U+0176
         //
-        case 0xDE:
-        {
+        case 0xDE: {
             return(0x176);
         }
 
         //
         // Character 0xF0 in ISO8859-14 maps to U+0175
         //
-        case 0xF0:
-        {
+        case 0xF0: {
             return(0x175);
         }
 
         //
         // Character 0xF7 in ISO8859-14 maps to U+1E6B
         //
-        case 0xF7:
-        {
+        case 0xF7: {
             return(0x1E6B);
         }
 
         //
         // Character 0xFD in ISO8859-14 maps to U+0177
         //
-        case 0xFD:
-        {
+        case 0xFD: {
             return(0x131);
         }
 
@@ -1149,16 +1085,12 @@ GrMapISO8859_14_Unicode(const char *pcSrcChar, uint32_t ui32Count,
         // equivalents.  Mappings for characters from 0xA1 to 0xBF are handled
         // using a global table.
         //
-        default:
-        {
-            if((uint8_t)*pcSrcChar >= 0xC0)
-            {
+        default: {
+            if((uint8_t)*pcSrcChar >= 0xC0) {
                 return((uint32_t)(uint8_t)*pcSrcChar);
-            }
-            else
-            {
+            } else {
                 return((uint32_t)g_pui16ISO8859_14_Unicode[
-                       (uint8_t)*pcSrcChar - 0xA1]);
+                           (uint8_t)*pcSrcChar - 0xA1]);
             }
         }
     }
@@ -1207,77 +1139,67 @@ GrMapISO8859_15_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     //
     // Deal with the special cases in this switch.
     //
-    switch((uint8_t)*pcSrcChar)
-    {
+    switch((uint8_t)*pcSrcChar) {
         //
         // Character 0xA4 in ISO8859-15 maps to U+20AC
         //
-        case 0xA4:
-        {
+        case 0xA4: {
             return(0x20AC);
         }
 
         //
         // Character 0xA6 in ISO8859-15 maps to U+0160
         //
-        case 0xA6:
-        {
+        case 0xA6: {
             return(0x160);
         }
 
         //
         // Character 0xA8 in ISO8859-15 maps to U+0161
         //
-        case 0xA8:
-        {
+        case 0xA8: {
             return(0x161);
         }
 
         //
         // Character 0xB4 in ISO8859-15 maps to U+017D
         //
-        case 0xB4:
-        {
+        case 0xB4: {
             return(0x17D);
         }
 
         //
         // Character 0xB8 in ISO8859-15 maps to U+017E
         //
-        case 0xB8:
-        {
+        case 0xB8: {
             return(0x17E);
         }
 
         //
         // Character 0xBC in ISO8859-15 maps to U+0152
         //
-        case 0xBC:
-        {
+        case 0xBC: {
             return(0x152);
         }
 
         //
         // Character 0xBD in ISO8859-15 maps to U+0153
         //
-        case 0xBD:
-        {
+        case 0xBD: {
             return(0x153);
         }
 
         //
         // Character 0xBE in ISO8859-15 maps to U+0178
         //
-        case 0xBE:
-        {
+        case 0xBE: {
             return(0x178);
         }
 
         //
         // All other codepoints map directly to their Unicode equivalents.
         //
-        default:
-        {
+        default: {
             return((uint32_t)(uint8_t)*pcSrcChar);
         }
     }
@@ -1327,14 +1249,11 @@ GrMapISO8859_16_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     //
     // Is this character one of those which maps directly to Unicode?
     //
-    if((uint8_t)*pcSrcChar <= 0xA0)
-    {
+    if((uint8_t)*pcSrcChar <= 0xA0) {
         return((uint32_t)(uint8_t)*pcSrcChar);
-    }
-    else
-    {
+    } else {
         return((uint32_t)g_pui16ISO8859_16_Unicode[
-               (uint8_t)*pcSrcChar - 0xA1]);
+                   (uint8_t)*pcSrcChar - 0xA1]);
     }
 }
 
@@ -1385,21 +1304,19 @@ GrMapUTF8_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     // While we have bytes left to examine in the buffer and the current byte
     // is a continuation code...
     //
-    while(ui32Count && ((uint8_t)pcSrcChar[ui32Index] & 0xC0) == 0x80)
-    {
-          //
-           // Skip the byte.
-           //
-           ui32Index++;
-           ui32Count--;
+    while(ui32Count && ((uint8_t)pcSrcChar[ui32Index] & 0xC0) == 0x80) {
+        //
+        // Skip the byte.
+        //
+        ui32Index++;
+        ui32Count--;
     }
 
     //
     // We are now either at the end of the string or the start of a new
     // character unit.  Did we get to the end of the string?
     //
-    if(!ui32Count)
-    {
+    if(!ui32Count) {
         //
         // Yes - return 0.
         //
@@ -1409,17 +1326,14 @@ GrMapUTF8_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     //
     // Is this a single byte encoded character of the form 0xxxxxxx?
     //
-    if(!((uint8_t)(pcSrcChar[ui32Index]) & 0x80))
-    {
+    if(!((uint8_t)(pcSrcChar[ui32Index]) & 0x80)) {
         //
         // Yes - the Unicode equivalent is just the bottom 7 bits of the
         // UTF-8 byte.
         //
         ui32Unicode = (uint8_t)(pcSrcChar[ui32Index++]) & 0x7F;
         ui32ToRead = 0;
-    }
-    else
-    {
+    } else {
         //
         // This is a multi-byte encoded character. Determine how many bytes
         // it uses.
@@ -1432,45 +1346,38 @@ GrMapUTF8_Unicode(const char *pcSrcChar, uint32_t ui32Count,
         // There can be a maximum of 5 more bytes to read.  If we found more
         // than this, then this is an illegal code.
         //
-        if(ui32ToRead > 5)
-        {
+        if(ui32ToRead > 5) {
             ui32Unicode = 0;
             ui32ToRead = 0;
             ui32Index++;
-        }
-        else
-        {
+        } else {
             //
             // Extract the first bits of the Unicode value from this byte.
             //
             ui32Unicode = (uint8_t)pcSrcChar[ui32Index++] &
-                        ((1 << (6 - ui32ToRead)) - 1);
+                          ((1 << (6 - ui32ToRead)) - 1);
 
             //
             // Read the remaining bytes encoding this character.
             //
-            while(ui32Count && ui32ToRead)
-            {
+            while(ui32Count && ui32ToRead) {
                 //
                 // Is this a continuation byte with form 10xxxxxx?
                 //
-                if(((uint8_t)pcSrcChar[ui32Index] & 0xC0) != 0x80)
-                {
+                if(((uint8_t)pcSrcChar[ui32Index] & 0xC0) != 0x80) {
                     //
                     // No - this is an invalid character to return 0 and tell
                     // the caller to skip past it.
                     //
                     *pui32Skip = ui32Index;
                     return(0);
-                }
-                else
-                {
+                } else {
                     //
                     // Extract the bottom 6 bits from the continuation
                     // character and mask them into the Unicode code.
                     //
                     ui32Unicode = ((ui32Unicode << 6) |
-                                 ((uint8_t)pcSrcChar[ui32Index++] & 0x3F));
+                                   ((uint8_t)pcSrcChar[ui32Index++] & 0x3F));
                     ui32ToRead--;
                     ui32Count--;
                 }
@@ -1480,8 +1387,7 @@ GrMapUTF8_Unicode(const char *pcSrcChar, uint32_t ui32Count,
             // If we get here and we didn't read the expected number of bytes,
             // this is an invalid character.
             //
-            if(ui32ToRead)
-            {
+            if(ui32ToRead) {
                 //
                 // We ran out of data before reading all the required
                 // continuation bytes so tell the caller to skip the data and
@@ -1545,13 +1451,12 @@ GrMapUTF16_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     ui32Code = 0;
     pcChar = pcSrcChar;
 
-    while(ui32Count >= 2)
-    {
+    while(ui32Count >= 2) {
         //
         // Get a word from the string.
         //
         ui16Char = bLE ? (pcChar[0] + 256 * pcChar[1]) :
-                       (pcChar[1] + 256 * pcChar[0]);
+                   (pcChar[1] + 256 * pcChar[0]);
 
         //
         // Move to the next word and update our count.
@@ -1562,41 +1467,35 @@ GrMapUTF16_Unicode(const char *pcSrcChar, uint32_t ui32Count,
         //
         // Is this a valid single-word encoding?
         //
-        if((ui16Char <= 0xD7FF) || (ui16Char >= 0xE000))
-        {
+        if((ui16Char <= 0xD7FF) || (ui16Char >= 0xE000)) {
             //
             // Yes - return the value and tell the caller to skip the
             // appropriate number of bytes to get to the end of this character.
             //
             ui32Code = (uint32_t)ui16Char;
             break;
-        }
-        else
-        {
+        } else {
             //
             // Is this a valid first word for a high surrogate (first word in a
             // 2 word encoding)?
             //
-            if((ui16Char >= 0xD800) && (ui16Char < 0xDC00))
-            {
+            if((ui16Char >= 0xD800) && (ui16Char < 0xDC00)) {
                 //
                 // Yes - this is valid. Now look ahead and see if the next
                 // word is valid as a low surrogate, assuming there are at
                 // least 2 more bytes for us to look at.
                 //
-                if(ui32Count >= 2)
-                {
+                if(ui32Count >= 2) {
                     //
                     // Get the next word in the string.
                     //
                     ui16CharToo = bLE ? (pcChar[0] + 256 * pcChar[1]) :
-                                      (pcChar[1] + 256 * pcChar[0]);
+                                  (pcChar[1] + 256 * pcChar[0]);
 
                     //
                     // Is this a valid low surrogate?
                     //
-                    if((ui16CharToo >= 0xDC00) && (ui16CharToo < 0xE000))
-                    {
+                    if((ui16CharToo >= 0xDC00) && (ui16CharToo < 0xE000)) {
                         //
                         // Yes, it's valid. Update our skip count and parse
                         // the Unicode codepoint from the two words we've read.
@@ -1604,8 +1503,8 @@ GrMapUTF16_Unicode(const char *pcSrcChar, uint32_t ui32Count,
                         pcChar += 2;
                         ui32Count -= 2;
                         ui32Code = 0x10000 +
-                                 ((uint32_t)(ui16Char - 0xD800) << 10) +
-                                 ((uint32_t)ui16CharToo - 0xDC00);
+                                   ((uint32_t)(ui16Char - 0xD800) << 10) +
+                                   ((uint32_t)ui16CharToo - 0xDC00);
                         break;
                     }
                 }
@@ -1726,16 +1625,13 @@ GrMapUnicode_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     //
     // Do we have enough bytes to pull out a single 32 bit character code?
     //
-    if(ui32Count < 4)
-    {
+    if(ui32Count < 4) {
         //
         // Return 0 to indicate an error since we don't have enough data to
         // extract a single character code.
         //
         return(0);
-    }
-    else
-    {
+    } else {
         //
         // We have at least 4 bytes so tell the caller to skip 4 bytes to get
         // the following character and return the Unicode codepoint represented
@@ -1792,14 +1688,11 @@ GrMapWIN1250_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     //
     // Is this character one of those which maps directly to Unicode?
     //
-    if((uint8_t)*pcSrcChar <= 0x7F)
-    {
+    if((uint8_t)*pcSrcChar <= 0x7F) {
         return((uint32_t)(uint8_t)*pcSrcChar);
-    }
-    else
-    {
+    } else {
         return((uint32_t)g_pui16WIN1250_Unicode[
-                              (uint8_t)*pcSrcChar - 0x80]);
+                   (uint8_t)*pcSrcChar - 0x80]);
     }
 }
 
@@ -1849,19 +1742,14 @@ GrMapWIN1251_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     //
     // Is this character one of those which maps directly to Unicode?
     //
-    if((uint8_t)*pcSrcChar <= 0x7F)
-    {
+    if((uint8_t)*pcSrcChar <= 0x7F) {
         return((uint32_t)(uint8_t)*pcSrcChar);
-    }
-    else if(((uint8_t)*pcSrcChar >= 0x80) &&
-            ((uint8_t)*pcSrcChar <= 0xBF))
-    {
+    } else if(((uint8_t)*pcSrcChar >= 0x80) &&
+              ((uint8_t)*pcSrcChar <= 0xBF)) {
         return((uint32_t)g_pui16WIN1251_Unicode[
-               (uint8_t)*pcSrcChar - 0x80]);
-    }
-    else
-    {
-         return((uint32_t)((uint8_t)*pcSrcChar) + 0x350);
+                   (uint8_t)*pcSrcChar - 0x80]);
+    } else {
+        return((uint32_t)((uint8_t)*pcSrcChar) + 0x350);
     }
 }
 
@@ -1913,14 +1801,11 @@ GrMapWIN1252_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     // Is this character one of those which maps directly to Unicode?
     //
     if(((uint8_t)*pcSrcChar <= 0x7F) ||
-       ((uint8_t)*pcSrcChar >= 0xA0))
-    {
+            ((uint8_t)*pcSrcChar >= 0xA0)) {
         return((uint32_t)(uint8_t)*pcSrcChar);
-    }
-    else
-    {
+    } else {
         return((uint32_t)g_pui16WIN1252_Unicode[
-                              (uint8_t)*pcSrcChar - 0x80]);
+                   (uint8_t)*pcSrcChar - 0x80]);
     }
 }
 
@@ -1970,21 +1855,16 @@ GrMapWIN1253_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     //
     // Is this character one of those which maps directly to Unicode?
     //
-    if((uint8_t)*pcSrcChar <= 0x7F)
-    {
+    if((uint8_t)*pcSrcChar <= 0x7F) {
         return((uint32_t)(uint8_t)*pcSrcChar);
-    }
-    else if(((uint8_t)*pcSrcChar >= 0x80) &&
-            ((uint8_t)*pcSrcChar <= 0xBF))
-    {
+    } else if(((uint8_t)*pcSrcChar >= 0x80) &&
+              ((uint8_t)*pcSrcChar <= 0xBF)) {
         //
         // This is a character we remap via the global table.
         //
         return((uint32_t)g_pui16WIN1253_Unicode[
-               (uint8_t)*pcSrcChar - 0x80]);
-    }
-    else
-    {
+                   (uint8_t)*pcSrcChar - 0x80]);
+    } else {
         //
         // This is a character we can calculate the Unicode character code for.
         //
@@ -2036,17 +1916,14 @@ GrMapWIN1254_Unicode(const char *pcSrcChar, uint32_t ui32Count,
     // Is this character one of those which maps directly to Unicode?
     //
     if(((uint8_t)*pcSrcChar <= 0x7F) ||
-       ((uint8_t)*pcSrcChar >= 0xA0))
-    {
+            ((uint8_t)*pcSrcChar >= 0xA0)) {
         return(GrMapISO8859_9_Unicode(pcSrcChar, ui32Count, pui32Skip));
-    }
-    else
-    {
+    } else {
         //
         // This is a character we remap via the global table.
         //
         return((uint32_t)g_pui16WIN1254_Unicode[
-               (uint8_t)*pcSrcChar - 0x80]);
+                   (uint8_t)*pcSrcChar - 0x80]);
     }
 }
 

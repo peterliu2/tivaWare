@@ -47,11 +47,11 @@ void telnetd_appcall(void);
 #endif
 
 struct telnetd_state {
-  char *lines[TELNETD_CONF_NUMLINES];
-  char buf[TELNETD_CONF_LINELEN];
-  char bufptr;
-  u8_t numsent;
-  u8_t state;
+    char *lines[TELNETD_CONF_NUMLINES];
+    char buf[TELNETD_CONF_LINELEN];
+    char bufptr;
+    u8_t numsent;
+    u8_t state;
 };
 
 typedef struct telnetd_state uip_tcp_appstate_t;

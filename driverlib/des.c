@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -82,8 +82,7 @@ DESReset(uint32_t ui32Base)
     // Wait for the reset to finish.
     //
     while((HWREG(ui32Base + DES_O_SYSSTATUS) &
-           DES_SYSSTATUS_RESETDONE) == 0)
-    {
+            DES_SYSSTATUS_RESETDONE) == 0) {
     }
 }
 
@@ -173,8 +172,7 @@ DESKeySet(uint32_t ui32Base, uint32_t *pui32Key)
     // If we are performing tripe DES, then write the key registers for
     // the second and third rounds.
     //
-    if(HWREG(ui32Base + DES_O_CTRL) & DES_CFG_TRIPLE)
-    {
+    if(HWREG(ui32Base + DES_O_CTRL) & DES_CFG_TRIPLE) {
         HWREG(ui32Base + DES_O_KEY2_L) = pui32Key[2];
         HWREG(ui32Base + DES_O_KEY2_H) = pui32Key[3];
         HWREG(ui32Base + DES_O_KEY3_L) = pui32Key[4];
@@ -210,8 +208,7 @@ DESIVSet(uint32_t ui32Base, uint32_t *pui32IVdata)
     // Check to see if context registers can be overwritten.  If not, return
     // false.
     //
-    if((HWREG(ui32Base + DES_O_CTRL) & DES_CTRL_CONTEXT) == 0)
-    {
+    if((HWREG(ui32Base + DES_O_CTRL) & DES_CTRL_CONTEXT) == 0) {
         return(false);
     }
 
@@ -281,8 +278,7 @@ DESDataReadNonBlocking(uint32_t ui32Base, uint32_t *pui32Dest)
     //
     // Check to see if the data is ready to be read.
     //
-    if((DES_CTRL_OUTPUT_READY & (HWREG(ui32Base + DES_O_CTRL))) == 0)
-    {
+    if((DES_CTRL_OUTPUT_READY & (HWREG(ui32Base + DES_O_CTRL))) == 0) {
         return(false);
     }
 
@@ -323,8 +319,7 @@ DESDataRead(uint32_t ui32Base, uint32_t *pui32Dest)
     //
     // Wait for data output to be ready.
     //
-    while((HWREG(ui32Base + DES_O_CTRL) & DES_CTRL_OUTPUT_READY) == 0)
-    {
+    while((HWREG(ui32Base + DES_O_CTRL) & DES_CTRL_OUTPUT_READY) == 0) {
     }
 
     //
@@ -359,8 +354,7 @@ DESDataWriteNonBlocking(uint32_t ui32Base, uint32_t *pui32Src)
     // Check if the DES module is ready to encrypt or decrypt data.  If it
     // is not, return false.
     //
-    if(!(DES_CTRL_INPUT_READY & (HWREG(ui32Base + DES_O_CTRL))))
-    {
+    if(!(DES_CTRL_INPUT_READY & (HWREG(ui32Base + DES_O_CTRL)))) {
         return(false);
     }
 
@@ -400,8 +394,7 @@ DESDataWrite(uint32_t ui32Base, uint32_t *pui32Src)
     //
     // Wait for the input ready bit to go high.
     //
-    while(((HWREG(ui32Base + DES_O_CTRL) & DES_CTRL_INPUT_READY)) == 0)
-    {
+    while(((HWREG(ui32Base + DES_O_CTRL) & DES_CTRL_INPUT_READY)) == 0) {
     }
 
     //
@@ -455,13 +448,11 @@ DESDataProcess(uint32_t ui32Base, uint32_t *pui32Src, uint32_t *pui32Dest,
     //
     // Now loop until the blocks are written.
     //
-    for(ui32Count = 0; ui32Count < (ui32Length / 4); ui32Count += 2)
-    {
+    for(ui32Count = 0; ui32Count < (ui32Length / 4); ui32Count += 2) {
         //
         // Check if the input ready is fine
         //
-        while((DES_CTRL_INPUT_READY & (HWREG(ui32Base + DES_O_CTRL))) == 0)
-        {
+        while((DES_CTRL_INPUT_READY & (HWREG(ui32Base + DES_O_CTRL))) == 0) {
         }
 
         //
@@ -472,8 +463,7 @@ DESDataProcess(uint32_t ui32Base, uint32_t *pui32Src, uint32_t *pui32Dest,
         //
         // Wait for the output ready
         //
-        while((DES_CTRL_OUTPUT_READY & (HWREG(ui32Base + DES_O_CTRL))) == 0)
-        {
+        while((DES_CTRL_OUTPUT_READY & (HWREG(ui32Base + DES_O_CTRL))) == 0) {
         }
 
         //
@@ -523,14 +513,11 @@ DESIntStatus(uint32_t ui32Base, bool bMasked)
     // Read the status register and return the value.
     //
     ui32Status = HWREG(ui32Base + DES_O_IRQSTATUS);
-    if(bMasked)
-    {
+    if(bMasked) {
         ui32Enable = HWREG(ui32Base + DES_O_IRQENABLE);
         return((ui32Status & ui32Enable) |
                (HWREG(ui32Base + DES_O_DMAMIS) << 16));
-    }
-    else
-    {
+    } else {
         return(ui32Status | (HWREG(ui32Base + DES_O_DMARIS) << 16));
     }
 }

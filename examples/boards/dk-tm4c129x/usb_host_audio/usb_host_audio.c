@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -295,21 +295,21 @@ Canvas(g_sStatusText, &g_sStatusPanel, 0, 0, &g_sKentec320x240x16_SSD2119,
 // Stop button.
 //
 RectangularButton(g_sStop, &g_sStatusPanel, &g_sStatusText, 0,
-       &g_sKentec320x240x16_SSD2119, BG_MIN_X + 58,
-       BG_MAX_Y - STATUS_HEIGHT + 4, 50, BUTTON_HEIGHT,
-       PB_STYLE_FILL | PB_STYLE_TEXT |
-       PB_STYLE_RELEASE_NOTIFY, ClrLightGrey, ClrDarkGray, 0,
-       ClrBlack, g_psFontCmss16, "Stop", 0, 0, 0 ,0 , Stop);
+                  &g_sKentec320x240x16_SSD2119, BG_MIN_X + 58,
+                  BG_MAX_Y - STATUS_HEIGHT + 4, 50, BUTTON_HEIGHT,
+                  PB_STYLE_FILL | PB_STYLE_TEXT |
+                  PB_STYLE_RELEASE_NOTIFY, ClrLightGrey, ClrDarkGray, 0,
+                  ClrBlack, g_psFontCmss16, "Stop", 0, 0, 0 ,0 , Stop);
 
 //
 // Play/Pause button.
 //
 RectangularButton(g_sPlayPause, &g_sStatusPanel, &g_sStop, 0,
-       &g_sKentec320x240x16_SSD2119, BG_MIN_X + 4,
-       BG_MAX_Y - STATUS_HEIGHT + 4, 50, BUTTON_HEIGHT,
-       PB_STYLE_FILL | PB_STYLE_TEXT |
-       PB_STYLE_RELEASE_NOTIFY, ClrLightGrey, ClrDarkGray, 0,
-       ClrBlack, g_psFontCmss16, "Play", 0, 0, 0 ,0 , PlayPause);
+                  &g_sKentec320x240x16_SSD2119, BG_MIN_X + 4,
+                  BG_MAX_Y - STATUS_HEIGHT + 4, 50, BUTTON_HEIGHT,
+                  PB_STYLE_FILL | PB_STYLE_TEXT |
+                  PB_STYLE_RELEASE_NOTIFY, ClrLightGrey, ClrDarkGray, 0,
+                  ClrBlack, g_psFontCmss16, "Play", 0, 0, 0 ,0 , PlayPause);
 
 //
 // Background of the status area behind the buttons.
@@ -375,8 +375,7 @@ DisplayTime(uint32_t ui32ForceUpdate)
     //
     // Only display on the screen once per second.
     //
-    if((g_ui32BytesPlayed >= g_ui32NextUpdate) || (ui32ForceUpdate != 0))
-    {
+    if((g_ui32BytesPlayed >= g_ui32NextUpdate) || (ui32ForceUpdate != 0)) {
         //
         // Set the next update time to one second later.
         //
@@ -428,8 +427,7 @@ WaveStop(void)
     //
     // Zero out the buffer.
     //
-    for(ui32Idx = 0; ui32Idx < (AUDIO_BUFFER_SIZE >> 2); ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < (AUDIO_BUFFER_SIZE >> 2); ui32Idx++) {
         pui32Buffer[ui32Idx] = 0;
     }
 
@@ -489,13 +487,11 @@ ChangeToDirectory(char *pcDirectory)
     // If the first character is /, then this is a fully specified
     // path, and it should just be used as-is.
     //
-    if(pcDirectory[0] == '/')
-    {
+    if(pcDirectory[0] == '/') {
         //
         // Make sure the new path is not bigger than the cwd buffer.
         //
-        if(strlen(pcDirectory) + 1 > sizeof(g_pcCwdBuf))
-        {
+        if(strlen(pcDirectory) + 1 > sizeof(g_pcCwdBuf)) {
             return(FR_OK);
         }
 
@@ -503,8 +499,7 @@ ChangeToDirectory(char *pcDirectory)
         // If the new path name (in argv[1])  is not too long, then
         // copy it into the temporary buffer so it can be checked.
         //
-        else
-        {
+        else {
             strncpy(g_pcTmpBuf, pcDirectory, sizeof(g_pcTmpBuf));
         }
     }
@@ -513,8 +508,7 @@ ChangeToDirectory(char *pcDirectory)
     // If the argument is .. then attempt to remove the lowest level
     // on the CWD.
     //
-    else if(!strcmp(pcDirectory, ".."))
-    {
+    else if(!strcmp(pcDirectory, "..")) {
         //
         // Get the index to the last character in the current path.
         //
@@ -524,8 +518,7 @@ ChangeToDirectory(char *pcDirectory)
         // Back up from the end of the path name until a separator (/)
         // is found, or until we bump up to the start of the path.
         //
-        while((g_pcTmpBuf[ui32Idx] != '/') && (ui32Idx > 1))
-        {
+        while((g_pcTmpBuf[ui32Idx] != '/') && (ui32Idx > 1)) {
             //
             // Back up one character.
             //
@@ -545,16 +538,14 @@ ChangeToDirectory(char *pcDirectory)
     // Otherwise this is just a normal path name from the current
     // directory, and it needs to be appended to the current path.
     //
-    else
-    {
+    else {
         //
         // Test to make sure that when the new additional path is
         // added on to the current path, there is room in the buffer
         // for the full new path.  It needs to include a new separator,
         // and a trailing null character.
         //
-        if(strlen(g_pcTmpBuf) + strlen(pcDirectory) + 2 > sizeof(g_pcCwdBuf))
-        {
+        if(strlen(g_pcTmpBuf) + strlen(pcDirectory) + 2 > sizeof(g_pcCwdBuf)) {
             return(FR_INVALID_OBJECT);
         }
 
@@ -562,13 +553,11 @@ ChangeToDirectory(char *pcDirectory)
         // The new path is okay, so add the separator and then append
         // the new directory to the path.
         //
-        else
-        {
+        else {
             //
             // If not already at the root level, then append a /
             //
-            if(strcmp(g_pcTmpBuf, "/"))
-            {
+            if(strcmp(g_pcTmpBuf, "/")) {
                 strcat(g_pcTmpBuf, "/");
             }
 
@@ -588,8 +577,7 @@ ChangeToDirectory(char *pcDirectory)
     //
     // This was a valid path, so copy it into the CWD.
     //
-    if(fresult == FR_OK)
-    {
+    if(fresult == FR_OK) {
         strncpy(g_pcCwdBuf, g_pcTmpBuf, sizeof(g_pcCwdBuf));
     }
 
@@ -613,8 +601,7 @@ FillAudioBuffer(void)
     //
     // If already full return.
     //
-    if(g_ui32ValidBytes == g_ui32BufferSize)
-    {
+    if(g_ui32ValidBytes == g_ui32BufferSize) {
         return;
     }
 
@@ -629,8 +616,7 @@ FillAudioBuffer(void)
     // If write is ahead of read then fill to the end of the buffer if
     // possible.
     //
-    if(pui8Read <= g_pui8Write)
-    {
+    if(pui8Read <= g_pui8Write) {
         //
         // Calculate the amount of space we have.
         //
@@ -643,15 +629,13 @@ FillAudioBuffer(void)
         g_ui32ValidBytes += ui32Count;
         IntMasterEnable();
 
-        if(g_pui8Write == (g_pui8AudioBuffer + g_ui32BufferSize))
-        {
+        if(g_pui8Write == (g_pui8AudioBuffer + g_ui32BufferSize)) {
             g_pui8Write = g_pui8AudioBuffer;
         }
 
         ui32Size = pui8Read - g_pui8AudioBuffer;
 
-        if(ui32Size)
-        {
+        if(ui32Size) {
             ui32Count = WavRead(&g_sWavFile, (uint8_t *)g_pui8Write, ui32Size);
             g_pui8Write += ui32Count;
             IntMasterDisable();
@@ -663,8 +647,7 @@ FillAudioBuffer(void)
     //
     // If read is now ahead of write then fill to the read pointer.
     //
-    if(pui8Read > g_pui8Write)
-    {
+    if(pui8Read > g_pui8Write) {
         //
         // Calculate the amount of space we have.
         //
@@ -691,8 +674,7 @@ USBAudioOutCallback(void *pvBuffer, uint32_t ui32Event, uint32_t ui32Value)
     //
     // If a buffer has been played then schedule a new one to play.
     //
-    if((ui32Event == USB_EVENT_TX_COMPLETE) && (g_ePlayState == AUDIO_PLAYING))
-    {
+    if((ui32Event == USB_EVENT_TX_COMPLETE) && (g_ePlayState == AUDIO_PLAYING)) {
         //
         // Indicate that a transfer was complete so that the non-interrupt
         // code can read in more data from the file.
@@ -707,20 +689,16 @@ USBAudioOutCallback(void *pvBuffer, uint32_t ui32Event, uint32_t ui32Value)
         //
         // Remove the specified number of bytes from the buffer.
         //
-        if(g_ui32ValidBytes > g_ui32TransferSize)
-        {
+        if(g_ui32ValidBytes > g_ui32TransferSize) {
             g_ui32ValidBytes -= g_ui32TransferSize;
-        }
-        else
-        {
+        } else {
             g_ui32ValidBytes = 0;
         }
 
         //
         // Wrap the read pointer if necessary.
         //
-        if(g_pui8Read >= (g_pui8AudioBuffer + g_ui32BufferSize))
-        {
+        if(g_pui8Read >= (g_pui8AudioBuffer + g_ui32BufferSize)) {
             g_pui8Read = g_pui8AudioBuffer;
         }
 
@@ -751,8 +729,7 @@ PlayPause(tWidget *psWidget)
     //
     // If we are stopped, then start playing.
     //
-    if(g_ePlayState == AUDIO_STOPPED)
-    {
+    if(g_ePlayState == AUDIO_STOPPED) {
         //
         // Get the current selection from the list box.
         //
@@ -761,8 +738,7 @@ PlayPause(tWidget *psWidget)
         //
         // See if this is a valid .wav file that can be opened.
         //
-        if(WavOpen(g_pcFilenames[i16Select], &g_sWavFile) == 0)
-        {
+        if(WavOpen(g_pcFilenames[i16Select], &g_sWavFile) == 0) {
             //
             // Initialize the read and write pointers.
             //
@@ -790,9 +766,7 @@ PlayPause(tWidget *psWidget)
             //
             PushButtonTextSet(&g_sPlayPause, g_pcPause);
             WidgetPaint((tWidget *)&g_sPlayPause);
-        }
-        else
-        {
+        } else {
             //
             // Play was pressed on an invalid file.
             //
@@ -819,9 +793,7 @@ PlayPause(tWidget *psWidget)
         //
         USBSoundBufferOut((uint8_t *)g_pui8Read, g_ui32TransferSize,
                           USBAudioOutCallback);
-    }
-    else if(g_ePlayState == AUDIO_PLAYING)
-    {
+    } else if(g_ePlayState == AUDIO_PLAYING) {
         //
         // Now switching to a paused state, so change the button to say play.
         //
@@ -829,9 +801,7 @@ PlayPause(tWidget *psWidget)
         WidgetPaint((tWidget *)&g_sPlayPause);
 
         g_ePlayState = AUDIO_PAUSED;
-    }
-    else if(g_ePlayState == AUDIO_PAUSED)
-    {
+    } else if(g_ePlayState == AUDIO_PAUSED) {
         //
         // Fill the audio buffer from the file.
         //
@@ -864,8 +834,7 @@ Stop(tWidget *psWidget)
     //
     // Stop play back if we are playing.
     //
-    if((g_ePlayState == AUDIO_PLAYING) || (g_ePlayState == AUDIO_PAUSED))
-    {
+    if((g_ePlayState == AUDIO_PLAYING) || (g_ePlayState == AUDIO_PAUSED)) {
         WaveStop();
     }
 }
@@ -892,8 +861,7 @@ PopulateFileListBox(bool bRepaint)
     // Make sure the list box will be redrawn next time the message queue
     // is processed.
     //
-    if(bRepaint)
-    {
+    if(bRepaint) {
         WidgetPaint((tWidget *)&g_sDirList);
     }
 
@@ -905,8 +873,7 @@ PopulateFileListBox(bool bRepaint)
     //
     // Check for error and return if there is a problem.
     //
-    if(iFResult != FR_OK)
-    {
+    if(iFResult != FR_OK) {
         //
         // Change the text to reflect the change.
         //
@@ -918,24 +885,20 @@ PopulateFileListBox(bool bRepaint)
     //
     // If not at the root then add the ".." entry.
     //
-    if(g_pcCwdBuf[1] != 0)
-    {
+    if(g_pcCwdBuf[1] != 0) {
         g_pcFilenames[0][0] = '.';
         g_pcFilenames[0][1] = '.';
         g_pcFilenames[0][2] = 0;
         ListBoxTextAdd(&g_sDirList, g_pcFilenames[0]);
         ui32ItemCount = 1;
-    }
-    else
-    {
+    } else {
         ui32ItemCount = 0;
     }
 
     //
     // Enter loop to enumerate through all directory entries.
     //
-    for(;;)
-    {
+    for(;;) {
         //
         // Read an entry from the directory.
         //
@@ -944,8 +907,7 @@ PopulateFileListBox(bool bRepaint)
         //
         // Check for error and return if there is a problem.
         //
-        if(iFResult != FR_OK)
-        {
+        if(iFResult != FR_OK) {
             //
             // Change the text to reflect the change.
             //
@@ -958,23 +920,18 @@ PopulateFileListBox(bool bRepaint)
         // If the file name is blank, then this is the end of the
         // listing.
         //
-        if(!g_sFileInfo.fname[0])
-        {
+        if(!g_sFileInfo.fname[0]) {
             break;
         }
 
         //
         // Add the information as a line in the listbox widget.
         //
-        if(ui32ItemCount < NUM_LIST_STRINGS)
-        {
-            if(g_sFileInfo.fattrib & AM_DIR)
-            {
+        if(ui32ItemCount < NUM_LIST_STRINGS) {
+            if(g_sFileInfo.fattrib & AM_DIR) {
                 usnprintf(g_pcFilenames[ui32ItemCount],
                           MAX_FILENAME_STRING_LEN, "+ %s", g_sFileInfo.fname);
-            }
-            else
-            {
+            } else {
                 ustrncpy(g_pcFilenames[ui32ItemCount], g_sFileInfo.fname,
                          MAX_FILENAME_STRING_LEN);
             }
@@ -1014,64 +971,50 @@ void OnListBoxChange(tWidget *psWidget, int16_t i16Selected)
     //
     // Is there any selection?
     //
-    if(i16Sel == -1)
-    {
+    if(i16Sel == -1) {
         return;
-    }
-    else
-    {
+    } else {
         //
         // Is the selection a directory name.
         //
-        if(g_pcFilenames[i16Sel][0] == '+')
-        {
+        if(g_pcFilenames[i16Sel][0] == '+') {
             if((g_ePlayState != AUDIO_PLAYING) &&
-               (g_ePlayState != AUDIO_PAUSED))
-            {
+                    (g_ePlayState != AUDIO_PAUSED)) {
                 CanvasTextSet(&g_sWaveInfoFileName, "");
                 CanvasTextSet(&g_sWaveInfoSample, "");
                 g_pcTime[0] = 0;
             }
 
-            if(ChangeToDirectory(&g_pcFilenames[i16Sel][2]) == FR_OK)
-            {
+            if(ChangeToDirectory(&g_pcFilenames[i16Sel][2]) == FR_OK) {
                 PopulateFileListBox(true);
             }
-        }
-        else if((g_pcFilenames[i16Sel][0] == '.') &&
-                (g_pcFilenames[i16Sel][1] == '.'))
-        {
+        } else if((g_pcFilenames[i16Sel][0] == '.') &&
+                  (g_pcFilenames[i16Sel][1] == '.')) {
             //
             // If this was the .. selection then move up a directory.
             //
-            if(ChangeToDirectory("..") == FR_OK)
-            {
+            if(ChangeToDirectory("..") == FR_OK) {
                 PopulateFileListBox(true);
             }
 
             if((g_ePlayState != AUDIO_PLAYING) &&
-               (g_ePlayState != AUDIO_PAUSED))
-            {
+                    (g_ePlayState != AUDIO_PAUSED)) {
                 CanvasTextSet(&g_sWaveInfoFileName, "");
                 CanvasTextSet(&g_sWaveInfoSample, "");
                 g_pcTime[0] = 0;
             }
-        }
-        else
-        {
+        } else {
             //
             // This was a normal file selections so see if it is a wav file.
             //
             CanvasTextSet(&g_sWaveInfoFileName, g_pcFilenames[i16Sel]);
 
             if((g_ePlayState == AUDIO_PLAYING) ||
-               (g_ePlayState == AUDIO_PAUSED))
-            {
+                    (g_ePlayState == AUDIO_PAUSED)) {
                 WaveStop();
             }
 
-            if(WavOpen(g_pcFilenames[i16Sel], &g_sWavFile) == 0)
-            {
+            if(WavOpen(g_pcFilenames[i16Sel], &g_sWavFile) == 0) {
                 //
                 // Read the .wav file format.
                 //
@@ -1088,12 +1031,9 @@ void OnListBoxChange(tWidget *psWidget, int16_t i16Selected)
                 //
                 // Concatenate the number of channels.
                 //
-                if(g_sWavHeader.ui16NumChannels == 1)
-                {
+                if(g_sWavHeader.ui16NumChannels == 1) {
                     strcat(g_pcFormat, "Mono");
-                }
-                else
-                {
+                } else {
                     strcat(g_pcFormat, "Stereo");
                 }
 
@@ -1103,7 +1043,7 @@ void OnListBoxChange(tWidget *psWidget, int16_t i16Selected)
                 // Calculate the minutes and seconds in the file.
                 //
                 g_ui16Seconds = g_sWavHeader.ui32DataSize /
-                              g_sWavHeader.ui32AvgByteRate;
+                                g_sWavHeader.ui32AvgByteRate;
                 g_ui16Minutes = g_ui16Seconds / 60;
                 g_ui16Seconds -= g_ui16Minutes * 60;
 
@@ -1121,9 +1061,7 @@ void OnListBoxChange(tWidget *psWidget, int16_t i16Selected)
                 // Close the file, it will be re-opened on play.
                 //
                 WavClose(&g_sWavFile);
-            }
-            else
-            {
+            } else {
                 CanvasTextSet(&g_sWaveInfoSample, "");
                 g_pcTime[0] = 0;
                 WidgetPaint((tWidget *)&g_sWaveInfoTime);
@@ -1171,8 +1109,7 @@ FileInit(void)
     //
     // Mount the file system, using logical disk 0.
     //
-    if(f_mount(0, &g_sFatFs) != FR_OK)
-    {
+    if(f_mount(0, &g_sFatFs) != FR_OK) {
         return(false);
     }
     return(true);
@@ -1187,10 +1124,8 @@ FileInit(void)
 static void
 AudioEvent(uint32_t ui32Event, uint32_t ui32Param)
 {
-    switch(ui32Event)
-    {
-        case SOUND_EVENT_READY:
-        {
+    switch(ui32Event) {
+        case SOUND_EVENT_READY: {
             //
             // Flag that a new audio device is present.
             //
@@ -1204,13 +1139,11 @@ AudioEvent(uint32_t ui32Event, uint32_t ui32Param)
 
             break;
         }
-        case SOUND_EVENT_DISCONNECT:
-        {
+        case SOUND_EVENT_DISCONNECT: {
             //
             // If playing return the button text to play.
             //
-            if(g_ePlayState == AUDIO_PLAYING)
-            {
+            if(g_ePlayState == AUDIO_PLAYING) {
                 PushButtonTextSet(&g_sPlayPause, g_pcPlay);
                 WidgetPaint((tWidget *)&g_sPlayPause);
 
@@ -1231,17 +1164,13 @@ AudioEvent(uint32_t ui32Event, uint32_t ui32Param)
 
             break;
         }
-        case SOUND_EVENT_UNKNOWN_DEV:
-        {
-            if(ui32Param == 1)
-            {
+        case SOUND_EVENT_UNKNOWN_DEV: {
+            if(ui32Param == 1) {
                 //
                 // .
                 //
                 CanvasTextSet(&g_sStatusText, g_pcUnknownDevice);
-            }
-            else
-            {
+            } else {
                 //
                 // Unknown device disconnected.
                 //
@@ -1251,8 +1180,7 @@ AudioEvent(uint32_t ui32Event, uint32_t ui32Param)
 
             break;
         }
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -1365,8 +1293,7 @@ main(void)
     //
     ui32Retcode = disk_initialize(0);
 
-    if(ui32Retcode != RES_OK)
-    {
+    if(ui32Retcode != RES_OK) {
         CanvasTextSet(&g_sStatusText,  "File system error! ");
         WidgetPaint((tWidget *)&g_sStatusText);
 
@@ -1374,21 +1301,18 @@ main(void)
         // Process any messages in the widget message queue.
         //
         WidgetMessageQueueProcess();
-        
+
         while(1);
-    }
-    else
-    {
+    } else {
         //
         // Mount the file system, using logical disk 0.
         //
         f_mount(0, &g_sFatFs);
 
-        if(!FileInit())
-        {
+        if(!FileInit()) {
             CanvasTextSet(&g_sStatusText, "File system error! ");
             WidgetPaint((tWidget *)&g_sStatusText);
-            
+
             //
             // Process any messages in the widget message queue.
             //
@@ -1422,13 +1346,11 @@ main(void)
     // Enter an (almost) infinite loop for reading and processing commands from
     // the user.
     //
-    while(1)
-    {
+    while(1) {
         //
         // On connect change the device state to ready.
         //
-        if(HWREGBITW(&g_ui32Flags, FLAGS_DEVICE_CONNECT))
-        {
+        if(HWREGBITW(&g_ui32Flags, FLAGS_DEVICE_CONNECT)) {
             HWREGBITW(&g_ui32Flags, FLAGS_DEVICE_CONNECT) = 0;
 
             //
@@ -1442,15 +1364,12 @@ main(void)
             // Initiate a directory change to the root.  This will
             // populate a menu structure representing the root directory.
             //
-            if(ChangeToDirectory("/") == FR_OK)
-            {
+            if(ChangeToDirectory("/") == FR_OK) {
                 //
                 // Request a repaint so the file menu will be shown
                 //
                 WidgetPaint(WIDGET_ROOT);
-            }
-            else
-            {
+            } else {
                 CanvasTextSet(&g_sStatusText,
                               "Error accessing root directory ");
                 WidgetPaint((tWidget *)&g_sStatusText);
@@ -1461,16 +1380,11 @@ main(void)
             // Attempt to set the audio format to 44100 16 bit stereo by
             // default otherwise try 48000 16 bit stereo.
             //
-            if(USBSoundOutputFormatSet(44100, 16, 2) == 0)
-            {
+            if(USBSoundOutputFormatSet(44100, 16, 2) == 0) {
                 ui32Temp = 44100;
-            }
-            else if(USBSoundOutputFormatSet(48000, 16, 2) == 0)
-            {
+            } else if(USBSoundOutputFormatSet(48000, 16, 2) == 0) {
                 ui32Temp = 48000;
-            }
-            else
-            {
+            } else {
                 ui32Temp = 0;
             }
 
@@ -1478,8 +1392,7 @@ main(void)
             // If the audio device was support put the sample rate in the
             // status line.
             //
-            if(ui32Temp != 0)
-            {
+            if(ui32Temp != 0) {
                 //
                 // Calculate the number of bytes per USB frame.
                 //
@@ -1493,19 +1406,14 @@ main(void)
                 //
                 // Print the time string in the format mm.ss/mm.ss
                 //
-                if(ui32Temp == 44100)
-                {
+                if(ui32Temp == 44100) {
                     CanvasTextSet(&g_sStatusText, "44.1 kHz Ready ");
-                }
-                else if(ui32Temp == 48000)
-                {
+                } else if(ui32Temp == 48000) {
                     CanvasTextSet(&g_sStatusText, "48 kHz Ready ");
                 }
 
                 g_ePlayState = AUDIO_STOPPED;
-            }
-            else
-            {
+            } else {
                 CanvasTextSet(&g_sStatusText, "Unsupported Audio Device ");
                 g_ePlayState = AUDIO_NONE;
             }
@@ -1515,13 +1423,11 @@ main(void)
         //
         // Handle the case when the wave file is playing.
         //
-        if(g_ePlayState == AUDIO_PLAYING)
-        {
+        if(g_ePlayState == AUDIO_PLAYING) {
             //
             // Handle the transmit complete event.
             //
-            if(HWREGBITW(&g_ui32Flags, FLAGS_TX_COMPLETE))
-            {
+            if(HWREGBITW(&g_ui32Flags, FLAGS_TX_COMPLETE)) {
                 //
                 // Clear the transmit complete flag.
                 //
@@ -1535,8 +1441,7 @@ main(void)
                 //
                 // If we run out of valid bytes then stop the playback.
                 //
-                if(g_ui32ValidBytes == 0)
-                {
+                if(g_ui32ValidBytes == 0) {
                     //
                     // No more data or error so stop playing.
                     //

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -75,24 +75,21 @@ BMP180Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     // to the idle state (which will also result in a callback to propagate the
     // error).
     //
-    if(ui8Status != I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status != I2CM_STATUS_SUCCESS) {
         psInst->ui8State = BMP180_STATE_IDLE;
     }
 
     //
     // Determine the current state of the BMP180 state machine.
     //
-    switch(psInst->ui8State)
-    {
+    switch(psInst->ui8State) {
         //
         // All states that trivially transition to IDLE, and all unknown
         // states.
         //
         case BMP180_STATE_READ:
         case BMP180_STATE_READ_PRES:
-        default:
-        {
+        default: {
             //
             // The state machine is now idle.
             //
@@ -107,8 +104,7 @@ BMP180Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // The first step of initialization has just completed.
         //
-        case BMP180_STATE_INIT1:
-        {
+        case BMP180_STATE_INIT1: {
             //
             // Read the calibration data from the BMP180.
             //
@@ -130,8 +126,7 @@ BMP180Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // The second step of initialization has just completed.
         //
-        case BMP180_STATE_INIT2:
-        {
+        case BMP180_STATE_INIT2: {
             //
             // Data communication is checked by verifying that the calibration
             // data is neither 0 nor 0xFFFF.  This is used to check that reset
@@ -141,8 +136,7 @@ BMP180Callback(void *pvCallbackData, uint_fast8_t ui8Status)
             ui16ReadVerify = psInst->uCommand.pui8Buffer[0];
             ui16ReadVerify <<= 8;
             ui16ReadVerify |= psInst->uCommand.pui8Buffer[1];
-            if((ui16ReadVerify == 0) || (ui16ReadVerify == 0xFFFF))
-            {
+            if((ui16ReadVerify == 0) || (ui16ReadVerify == 0xFFFF)) {
                 //
                 // Reread the calibration data from the BMP180.
                 //
@@ -150,9 +144,7 @@ BMP180Callback(void *pvCallbackData, uint_fast8_t ui8Status)
                 I2CMRead(psInst->psI2CInst, psInst->ui8Addr, psInst->pui8Data,
                          1, psInst->uCommand.pui8Buffer, 22, BMP180Callback,
                          psInst);
-            }
-            else
-            {
+            } else {
                 //
                 // Extract the calibration data from the data that was read.
                 //
@@ -202,8 +194,7 @@ BMP180Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // A write has just completed.
         //
-        case BMP180_STATE_WRITE:
-        {
+        case BMP180_STATE_WRITE: {
             //
             // Set the mode to the new mode.  If the register was not modified,
             // the values will be the same so this has no effect.
@@ -224,14 +215,12 @@ BMP180Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // A read-modify-write has just completed.
         //
-        case BMP180_STATE_RMW:
-        {
+        case BMP180_STATE_RMW: {
             //
             // See if the CTRL_MEAS register was just modified.
             //
             if(psInst->uCommand.sReadModifyWriteState.pui8Buffer[0] ==
-               BMP180_O_CTRL_MEAS)
-            {
+                    BMP180_O_CTRL_MEAS) {
                 //
                 // Extract the measurement mode from the CTRL_MEAS register
                 // value.
@@ -255,8 +244,7 @@ BMP180Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // The temperature has been requested.
         //
-        case BMP180_STATE_REQ_TEMP:
-        {
+        case BMP180_STATE_REQ_TEMP: {
             //
             // Read the control register to see if the temperature reading is
             // available.
@@ -280,13 +268,11 @@ BMP180Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // Waiting for the temperature reading to be available.
         //
-        case BMP180_STATE_WAIT_TEMP:
-        {
+        case BMP180_STATE_WAIT_TEMP: {
             //
             // See if the temperature reading is available.
             //
-            if(psInst->uCommand.pui8Buffer[1] & BMP180_CTRL_MEAS_SCO)
-            {
+            if(psInst->uCommand.pui8Buffer[1] & BMP180_CTRL_MEAS_SCO) {
                 //
                 // The temperature reading is not ready yet, so read the
                 // control register again.
@@ -295,9 +281,7 @@ BMP180Callback(void *pvCallbackData, uint_fast8_t ui8Status)
                          psInst->uCommand.pui8Buffer, 1,
                          psInst->uCommand.pui8Buffer + 1, 1, BMP180Callback,
                          psInst);
-            }
-            else
-            {
+            } else {
                 //
                 // The temperature reading is ready, so read it now.
                 //
@@ -321,8 +305,7 @@ BMP180Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // The temperature reading has been retrieved.
         //
-        case BMP180_STATE_READ_TEMP:
-        {
+        case BMP180_STATE_READ_TEMP: {
             //
             // Request the pressure reading from the BMP180.
             //
@@ -347,8 +330,7 @@ BMP180Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // The pressure has been requested.
         //
-        case BMP180_STATE_REQ_PRES:
-        {
+        case BMP180_STATE_REQ_PRES: {
             //
             // Read the control register to see if the pressure reading is
             // available.
@@ -372,13 +354,11 @@ BMP180Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // Waiting for the pressure reading to be available.
         //
-        case BMP180_STATE_WAIT_PRES:
-        {
+        case BMP180_STATE_WAIT_PRES: {
             //
             // See if the pressure reading is available.
             //
-            if(psInst->uCommand.pui8Buffer[1] & BMP180_CTRL_MEAS_SCO)
-            {
+            if(psInst->uCommand.pui8Buffer[1] & BMP180_CTRL_MEAS_SCO) {
                 //
                 // The pressure reading is not ready yet, so read the control
                 // register again.
@@ -387,9 +367,7 @@ BMP180Callback(void *pvCallbackData, uint_fast8_t ui8Status)
                          psInst->uCommand.pui8Buffer, 1,
                          psInst->uCommand.pui8Buffer + 1, 1, BMP180Callback,
                          psInst);
-            }
-            else
-            {
+            } else {
                 //
                 // The pressure reading is ready, so read it now.
                 //
@@ -414,8 +392,7 @@ BMP180Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if the state machine is now idle and there is a callback function.
     //
-    if((psInst->ui8State == BMP180_STATE_IDLE) && psInst->pfnCallback)
-    {
+    if((psInst->ui8State == BMP180_STATE_IDLE) && psInst->pfnCallback) {
         //
         // Call the application-supplied callback function.
         //
@@ -465,8 +442,7 @@ BMP180Init(tBMP180 *psInst, tI2CMInstance *psI2CInst, uint_fast8_t ui8I2CAddr,
     psInst->pui8Data[0] = BMP180_O_SOFT_RESET;
     psInst->pui8Data[1] = BMP180_SOFT_RESET_VALUE;
     if(I2CMWrite(psI2CInst, ui8I2CAddr, psInst->pui8Data, 2, BMP180Callback,
-                 psInst) == 0)
-    {
+                 psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -510,8 +486,7 @@ BMP180Read(tBMP180 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     // Return a failure if the BMP180 driver is not idle (in other words, there
     // is already an outstanding request to the BMP180).
     //
-    if(psInst->ui8State != BMP180_STATE_IDLE)
-    {
+    if(psInst->ui8State != BMP180_STATE_IDLE) {
         return(0);
     }
 
@@ -532,8 +507,7 @@ BMP180Read(tBMP180 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     psInst->uCommand.pui8Buffer[0] = ui8Reg;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
                 psInst->uCommand.pui8Buffer, 1, pui8Data, ui16Count,
-                BMP180Callback, psInst) == 0)
-    {
+                BMP180Callback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -578,8 +552,7 @@ BMP180Write(tBMP180 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     // Return a failure if the BMP180 driver is not idle (in other words, there
     // is already an outstanding request to the BMP180).
     //
-    if(psInst->ui8State != BMP180_STATE_IDLE)
-    {
+    if(psInst->ui8State != BMP180_STATE_IDLE) {
         return(0);
     }
 
@@ -593,8 +566,7 @@ BMP180Write(tBMP180 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     // See if the CTRL_MEAS register is being written.
     //
     if((ui8Reg <= BMP180_O_CTRL_MEAS) &&
-       ((ui8Reg + ui16Count) > BMP180_O_CTRL_MEAS))
-    {
+            ((ui8Reg + ui16Count) > BMP180_O_CTRL_MEAS)) {
         //
         // Extract the measurement mode from the CTRL_MEAS register value.
         //
@@ -612,8 +584,7 @@ BMP180Write(tBMP180 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     //
     if(I2CMWrite8(&(psInst->uCommand.sWriteState), psInst->psI2CInst,
                   psInst->ui8Addr, ui8Reg, pui8Data, ui16Count, BMP180Callback,
-                  psInst) == 0)
-    {
+                  psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -661,8 +632,7 @@ BMP180ReadModifyWrite(tBMP180 *psInst, uint_fast8_t ui8Reg,
     // Return a failure if the BMP180 driver is not idle (in other words, there
     // is already an outstanding request to the BMP180).
     //
-    if(psInst->ui8State != BMP180_STATE_IDLE)
-    {
+    if(psInst->ui8State != BMP180_STATE_IDLE) {
         return(0);
     }
 
@@ -682,8 +652,7 @@ BMP180ReadModifyWrite(tBMP180 *psInst, uint_fast8_t ui8Reg,
     //
     if(I2CMReadModifyWrite8(&(psInst->uCommand.sReadModifyWriteState),
                             psInst->psI2CInst, psInst->ui8Addr, ui8Reg,
-                            ui8Mask, ui8Value, BMP180Callback, psInst) == 0)
-    {
+                            ui8Mask, ui8Value, BMP180Callback, psInst) == 0) {
         //
         // The I2C read-modify-write failed, so move to the idle state and
         // return a failure.
@@ -727,8 +696,7 @@ BMP180DataRead(tBMP180 *psInst, tSensorCallback *pfnCallback,
     // Return a failure if the BMP180 driver is not idle (in other words, there
     // is already an outstanding request to the BMP180).
     //
-    if(psInst->ui8State != BMP180_STATE_IDLE)
-    {
+    if(psInst->ui8State != BMP180_STATE_IDLE) {
         return(0);
     }
 
@@ -750,8 +718,7 @@ BMP180DataRead(tBMP180 *psInst, tSensorCallback *pfnCallback,
     psInst->uCommand.pui8Buffer[1] = (BMP180_CTRL_MEAS_SCO |
                                       BMP180_CTRL_MEAS_TEMPERATURE);
     if(I2CMWrite(psInst->psI2CInst, psInst->ui8Addr,
-                 psInst->uCommand.pui8Buffer, 2, BMP180Callback, psInst) == 0)
-    {
+                 psInst->uCommand.pui8Buffer, 2, BMP180Callback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -820,7 +787,7 @@ BMP180DataPressureGetFloat(tBMP180 *psInst, float *pfPressure)
     // Retrieve the uncompensated temperature and pressure.
     //
     fUT = (float)(uint16_t)((psInst->pui8Data[0] << 8) |
-                           psInst->pui8Data[1]);
+                            psInst->pui8Data[1]);
     fUP = ((float)(int32_t)((psInst->pui8Data[2] << 16) |
                             (psInst->pui8Data[3] << 8) |
                             (psInst->pui8Data[4] & BMP180_OUT_XLSB_M)) /

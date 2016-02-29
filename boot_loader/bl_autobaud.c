@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2006-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -106,8 +106,7 @@ GPIOIntHandler(void)
     // While we still have space in our buffer, store the current system tick
     // count and return from interrupt.
     //
-    if(g_ui32TickIndex < 20)
-    {
+    if(g_ui32TickIndex < 20) {
         ui32Temp = HWREG(NVIC_ST_CURRENT);
         g_pui32DataBuffer[g_ui32TickIndex++] = ui32Temp;
     }
@@ -182,8 +181,7 @@ UARTAutoBaud(uint32_t *pui32Ratio)
     //
     // Wait for MIN_EDGE_COUNT to pass to collect enough edges.
     //
-    while(g_ui32TickIndex < MIN_EDGE_COUNT)
-    {
+    while(g_ui32TickIndex < MIN_EDGE_COUNT) {
     }
 
     //
@@ -194,8 +192,7 @@ UARTAutoBaud(uint32_t *pui32Ratio)
     //
     // Calculate the pulse widths from the array of tick times.
     //
-    for(i32Pulse = 0; i32Pulse < (MIN_EDGE_COUNT - 1); i32Pulse++)
-    {
+    for(i32Pulse = 0; i32Pulse < (MIN_EDGE_COUNT - 1); i32Pulse++) {
         i32Temp = (((int32_t)g_pui32DataBuffer[i32Pulse] -
                     (int32_t)g_pui32DataBuffer[i32Pulse + 1]) & 0x00ffffff);
         g_pui32DataBuffer[i32Pulse] = i32Temp;
@@ -205,15 +202,13 @@ UARTAutoBaud(uint32_t *pui32Ratio)
     // This loops handles checking for consecutive pulses that have pulse
     // widths that are within an acceptable margin.
     //
-    for(i32Pulse = 0; i32Pulse < (MIN_EDGE_COUNT - 1); i32Pulse++)
-    {
+    for(i32Pulse = 0; i32Pulse < (MIN_EDGE_COUNT - 1); i32Pulse++) {
         //
         // Calculate the absolute difference between two consecutive pulses.
         //
         i32Temp = (int32_t)g_pui32DataBuffer[i32Pulse];
         i32Temp -= (int32_t)g_pui32DataBuffer[i32Pulse + 1];
-        if(i32Temp < 0)
-        {
+        if(i32Temp < 0) {
             i32Temp *= -1;
         }
 
@@ -225,13 +220,10 @@ UARTAutoBaud(uint32_t *pui32Ratio)
         // PULSE_DETECTION_MULT * abs(Pulse[n] - Pulse[n + 1]) < Pulse[n + 1]
         //
         if((i32Temp * PULSE_DETECTION_MULT) <
-           (int32_t)g_pui32DataBuffer[i32Pulse + 1])
-        {
+                (int32_t)g_pui32DataBuffer[i32Pulse + 1]) {
             i32Total += (int32_t)g_pui32DataBuffer[i32Pulse];
             i32ValidPulses++;
-        }
-        else
-        {
+        } else {
             i32ValidPulses = 0;
             i32Total = 0;
         }
@@ -240,8 +232,7 @@ UARTAutoBaud(uint32_t *pui32Ratio)
         // Once we have 7 pulses calculate the ratio needed to program the
         // UART.
         //
-        if(i32ValidPulses == 7)
-        {
+        if(i32ValidPulses == 7) {
             //
             // Add in the last pulse and calculate the ratio.
             //
@@ -253,8 +244,7 @@ UARTAutoBaud(uint32_t *pui32Ratio)
             // that are coming from the host.  If we don't wait, we can turn
             // on the UART while the last two pulses come down.
             //
-            for(i32Delay = i32Total; i32Delay; i32Delay--)
-            {
+            for(i32Delay = i32Total; i32Delay; i32Delay--) {
             }
 
             //

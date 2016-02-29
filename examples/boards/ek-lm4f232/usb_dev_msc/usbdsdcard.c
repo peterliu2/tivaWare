@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-LM4F232 Firmware Package.
 //
 //*****************************************************************************
@@ -45,8 +45,7 @@
 
 #define SDCARD_PRESENT          0x00000001
 #define SDCARD_IN_USE           0x00000002
-struct
-{
+struct {
     uint32_t ui32Flags;
 }
 g_sDriveInformation;
@@ -78,8 +77,7 @@ USBDMSCStorageOpen(uint_fast32_t ui32Drive)
     //
     // Return if already in use.
     //
-    if(g_sDriveInformation.ui32Flags & SDCARD_IN_USE)
-    {
+    if(g_sDriveInformation.ui32Flags & SDCARD_IN_USE) {
         return(0);
     }
 
@@ -88,22 +86,17 @@ USBDMSCStorageOpen(uint_fast32_t ui32Drive)
     //
     ui32Temp = disk_initialize(0);
 
-    if(ui32Temp == RES_OK)
-    {
+    if(ui32Temp == RES_OK) {
         //
         // Card is present and in use.
         //
         g_sDriveInformation.ui32Flags = SDCARD_PRESENT | SDCARD_IN_USE;
-    }
-    else if(ui32Temp == STA_NODISK)
-    {
+    } else if(ui32Temp == STA_NODISK) {
         //
         // Allocate the card but it is not present.
         //
         g_sDriveInformation.ui32Flags = SDCARD_IN_USE;
-    }
-    else
-    {
+    } else {
         return(0);
     }
 
@@ -166,14 +159,13 @@ USBDMSCStorageClose(void * pvDrive)
 //
 //*****************************************************************************
 uint32_t USBDMSCStorageRead(void * pvDrive,
-                                 uint8_t *pui8Data,
-                                 uint_fast32_t ui32Sector,
-                                 uint_fast32_t ui32NumBlocks)
+                            uint8_t *pui8Data,
+                            uint_fast32_t ui32Sector,
+                            uint_fast32_t ui32NumBlocks)
 {
     ASSERT(pvDrive != 0);
 
-    if(disk_read (0, pui8Data, ui32Sector, ui32NumBlocks) == RES_OK)
-    {
+    if(disk_read (0, pui8Data, ui32Sector, ui32NumBlocks) == RES_OK) {
         // TODO remove fixed 512
         return(ui32NumBlocks * 512);
     }
@@ -199,14 +191,13 @@ uint32_t USBDMSCStorageRead(void * pvDrive,
 //
 //*****************************************************************************
 uint32_t USBDMSCStorageWrite(void * pvDrive,
-                                  uint8_t *pui8Data,
-                                  uint_fast32_t ui32Sector,
-                                  uint_fast32_t ui32NumBlocks)
+                             uint8_t *pui8Data,
+                             uint_fast32_t ui32Sector,
+                             uint_fast32_t ui32NumBlocks)
 {
     ASSERT(pvDrive != 0);
 
-    if(disk_write(0, pui8Data, ui32Sector, ui32NumBlocks) == RES_OK)
-    {
+    if(disk_write(0, pui8Data, ui32Sector, ui32NumBlocks) == RES_OK) {
         return(ui32NumBlocks * 512);
     }
     return(0);

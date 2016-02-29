@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2005-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -515,30 +515,19 @@ _QEIIntNumberGet(uint32_t ui32Base)
     //
     // Find the valid interrupt number for this quadrature encoder.
     //
-    if(CLASS_IS_TM4C123)
-    {
-        if(ui32Base == QEI0_BASE)
-        {
+    if(CLASS_IS_TM4C123) {
+        if(ui32Base == QEI0_BASE) {
             ui32Int = INT_QEI0_TM4C123;
-        }
-        else
-        {
+        } else {
             ui32Int = INT_QEI1_TM4C123;
         }
-    }
-    else if(CLASS_IS_TM4C129)
-    {
-        if(ui32Base == QEI0_BASE)
-        {
+    } else if(CLASS_IS_TM4C129) {
+        if(ui32Base == QEI0_BASE) {
             ui32Int = INT_QEI0_TM4C129;
-        }
-        else
-        {
+        } else {
             ui32Int = 0;
         }
-    }
-    else
-    {
+    } else {
         ui32Int = 0;
     }
 
@@ -725,12 +714,9 @@ QEIIntStatus(uint32_t ui32Base, bool bMasked)
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return(HWREG(ui32Base + QEI_O_ISC));
-    }
-    else
-    {
+    } else {
         return(HWREG(ui32Base + QEI_O_RIS));
     }
 }

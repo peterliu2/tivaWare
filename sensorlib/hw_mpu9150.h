@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -39,38 +39,38 @@
 #define MPU9150_O_CONFIG        0x1A        // Configuration register
 #define MPU9150_O_GYRO_CONFIG   0x1B        // Gyro configuration register
 #define MPU9150_O_ACCEL_CONFIG  0x1C        // Accelerometer configuration
-                                            // register
+// register
 #define MPU9150_O_FF_THR        0x1D        // Free-fall threshold register
 #define MPU9150_O_FF_DUR        0x1E        // Free-fall duration register
 #define MPU9150_O_MOT_THR       0x1F        // Motion detection threshold
-                                            // register
+// register
 #define MPU9150_O_MOT_DUR       0x20        // Motion detection duration
-                                            // register
+// register
 #define MPU9150_O_ZRMOT_THR     0x21        // Zero motion detection threshold
-                                            // register
+// register
 #define MPU9150_O_ZRMOT_DUR     0x22        // Zero motion detection duration
-                                            // register
+// register
 #define MPU9150_O_FIFO_EN       0x23        // FIFO enable register
 #define MPU9150_O_I2C_MST_CTRL  0x24        // I2C master control register
 #define MPU9150_O_I2C_SLV0_ADDR 0x25        // I2C slave 0 address register
 #define MPU9150_O_I2C_SLV0_REG  0x26        // I2C slave 0 register number
-                                            // register
+// register
 #define MPU9150_O_I2C_SLV0_CTRL 0x27        // I2C slave 0 control register
 #define MPU9150_O_I2C_SLV1_ADDR 0x28        // I2C slave 1 address register
 #define MPU9150_O_I2C_SLV1_REG  0x29        // I2C slave 1 register number
-                                            // register
+// register
 #define MPU9150_O_I2C_SLV1_CTRL 0x2A        // I2C slave 1 control register
 #define MPU9150_O_I2C_SLV2_ADDR 0x2B        // I2C slave 2 address register
 #define MPU9150_O_I2C_SLV2_REG  0x2C        // I2C slave 2 register number
-                                            // register
+// register
 #define MPU9150_O_I2C_SLV2_CTRL 0x2D        // I2C slave 2 control register
 #define MPU9150_O_I2C_SLV3_ADDR 0x2E        // I2C slave 3 address register
 #define MPU9150_O_I2C_SLV3_REG  0x2F        // I2C slave 3 register number
-                                            // register
+// register
 #define MPU9150_O_I2C_SLV3_CTRL 0x30        // I2C slave 3 control register
 #define MPU9150_O_I2C_SLV4_ADDR 0x31        // I2C slave 4 address register
 #define MPU9150_O_I2C_SLV4_REG  0x32        // I2C slave 4 register number
-                                            // register
+// register
 #define MPU9150_O_I2C_SLV4_DO   0x33        // I2C slave 4 output data register
 #define MPU9150_O_I2C_SLV4_CTRL 0x34        // I2C slave 4 control register
 #define MPU9150_O_I2C_SLV4_DI   0x35        // I2C slave 4 input data register
@@ -80,17 +80,17 @@
 #define MPU9150_O_INT_ENABLE    0x38        // Interrupt enable register
 #define MPU9150_O_INT_STATUS    0x3A        // Interrupt status register
 #define MPU9150_O_ACCEL_XOUT_H  0x3B        // X-axis acceleration data MSB
-                                            // register
+// register
 #define MPU9150_O_ACCEL_XOUT_L  0x3C        // X-axis acceleration data LSB
-                                            // register
+// register
 #define MPU9150_O_ACCEL_YOUT_H  0x3D        // Y-axis acceleration data MSB
-                                            // register
+// register
 #define MPU9150_O_ACCEL_YOUT_L  0x3E        // Y-axis accelearation data LSB
-                                            // register
+// register
 #define MPU9150_O_ACCEL_ZOUT_H  0x3F        // Z-axis acceleration data MSB
-                                            // register
+// register
 #define MPU9150_O_ACCEL_ZOUT_L  0x40        // Z-axis acceleration data LSB
-                                            // register
+// register
 #define MPU9150_O_TEMP_OUT_H    0x41        // Temperature data MSB register
 #define MPU9150_O_TEMP_OUT_L    0x42        // Temperature data LSB register
 #define MPU9150_O_GYRO_XOUT_H   0x43        // X-axis gyro data MSB register
@@ -155,12 +155,12 @@
 #define MPU9150_O_I2C_SLV3_DO   0x66        // I2C slave 3 output data register
 #define MPU9150_O_I2C_MST_DELAY_CTRL                                          \
                                 0x67        // I2C master delay control
-                                            // register
+// register
 #define MPU9150_O_SIGNAL_PATH_RESET                                           \
                                 0x68        // Signal path reset register
 #define MPU9150_O_MOT_DETECT_CTRL                                             \
                                 0x69        // Motion detection control
-                                            // register
+// register
 #define MPU9150_O_USER_CTRL     0x6A        // User control register
 #define MPU9150_O_PWR_MGMT_1    0x6B        // Power management 1 register
 #define MPU9150_O_PWR_MGMT_2    0x6C        // Power management 2 register
@@ -268,28 +268,28 @@
                                 0x38        // FSYNC on ACCEL_ZOUT_L[0]
 #define MPU9150_CONFIG_DLPF_CFG_M                                             \
                                 0x07        // Digital low-pass filter
-                                            // configuration
+// configuration
 #define MPU9150_CONFIG_DLPF_CFG_260_256                                       \
                                 0x00        // 260 Hz accelerometer bandwidth,
-                                            // 256 Hz gyro bandwidth
+// 256 Hz gyro bandwidth
 #define MPU9150_CONFIG_DLPF_CFG_184_188                                       \
                                 0x01        // 184 Hz accelerometer bandwidth,
-                                            // 188 Hz gyro bandwidth
+// 188 Hz gyro bandwidth
 #define MPU9150_CONFIG_DLPF_CFG_94_98                                         \
                                 0x02        // 94 Hz accelerometer bandwidth,
-                                            // 98 Hz gyro bandwidth
+// 98 Hz gyro bandwidth
 #define MPU9150_CONFIG_DLPF_CFG_44_42                                         \
                                 0x03        // 44 Hz accelerometer bandwidth,
-                                            // 42 Hz gyro bandwidth
+// 42 Hz gyro bandwidth
 #define MPU9150_CONFIG_DLPF_CFG_21_20                                         \
                                 0x04        // 21 Hz accelerometer bandwidth,
-                                            // 20 Hz gyro bandwidth
+// 20 Hz gyro bandwidth
 #define MPU9150_CONFIG_DLPF_CFG_10_10                                         \
                                 0x05        // 10 Hz accelerometer bandwidth,
-                                            // 10 Hz gyro bandwidth
+// 10 Hz gyro bandwidth
 #define MPU9150_CONFIG_DLPF_CFG_5_5                                           \
                                 0x06        // 5 Hz accelerometer bandwidth, 5
-                                            // Hz gyro bandwidth
+// Hz gyro bandwidth
 #define MPU9150_CONFIG_EXT_SYNC_SET_S                                         \
                                 3
 #define MPU9150_CONFIG_DLPF_CFG_S                                             \
@@ -311,16 +311,16 @@
                                 0x18        // Gyro full-scale range
 #define MPU9150_GYRO_CONFIG_FS_SEL_250                                        \
                                 0x00        // Gyro full-scale range +/- 250
-                                            // degrees/sec
+// degrees/sec
 #define MPU9150_GYRO_CONFIG_FS_SEL_500                                        \
                                 0x08        // Gyro full-scale range +/- 500
-                                            // degrees/sec
+// degrees/sec
 #define MPU9150_GYRO_CONFIG_FS_SEL_1000                                       \
                                 0x10        // Gyro full-scale range +/- 1000
-                                            // degrees/sec
+// degrees/sec
 #define MPU9150_GYRO_CONFIG_FS_SEL_2000                                       \
                                 0x18        // Gyro full-scale range +/- 2000
-                                            // degrees/sec
+// degrees/sec
 #define MPU9150_GYRO_CONFIG_FS_SEL_S                                          \
                                 3
 
@@ -332,27 +332,27 @@
 //*****************************************************************************
 #define MPU9150_ACCEL_CONFIG_XA_ST                                            \
                                 0x80        // X-axis accelerometer self-test
-                                            // enable
+// enable
 #define MPU9150_ACCEL_CONFIG_YA_ST                                            \
                                 0x40        // Y-axis accelerometer self-test
-                                            // enable
+// enable
 #define MPU9150_ACCEL_CONFIG_ZA_ST                                            \
                                 0x20        // Z-axis accelerometer self-test
-                                            // enable
+// enable
 #define MPU9150_ACCEL_CONFIG_AFS_SEL_M                                        \
                                 0x18        // Accelerometer full-scale range
 #define MPU9150_ACCEL_CONFIG_AFS_SEL_2G                                       \
                                 0x00        // Accelerometer full-scale range 2
-                                            // g
+// g
 #define MPU9150_ACCEL_CONFIG_AFS_SEL_4G                                       \
                                 0x08        // Accelerometer full-scale range 4
-                                            // g
+// g
 #define MPU9150_ACCEL_CONFIG_AFS_SEL_8G                                       \
                                 0x10        // Accelerometer full-scale range 8
-                                            // g
+// g
 #define MPU9150_ACCEL_CONFIG_AFS_SEL_16G                                      \
                                 0x18        // Accelerometer full-scale range
-                                            // 16 g
+// 16 g
 #define MPU9150_ACCEL_CONFIG_ACCEL_HPF_M                                      \
                                 0x07        // High-pass filter setting
 #define MPU9150_ACCEL_CONFIG_ACCEL_HPF_RESET                                  \
@@ -415,7 +415,7 @@
 //
 //*****************************************************************************
 #define MPU9150_ZRMOT_THR_M     0xFF        // Zero motion detection threshold
-                                            // value
+// value
 #define MPU9150_ZRMOT_THR_S     0
 
 //*****************************************************************************
@@ -425,7 +425,7 @@
 //
 //*****************************************************************************
 #define MPU9150_ZRMOT_DUR_M     0xFF        // Zero motion detection duration
-                                            // value
+// value
 #define MPU9150_ZRMOT_DUR_S     0
 
 //*****************************************************************************
@@ -704,7 +704,7 @@
 //*****************************************************************************
 #define MPU9150_I2C_MST_STATUS_PASS_THROUGH                                   \
                                 0x80        // Pass through FSYNC interrupt
-                                            // status
+// status
 #define MPU9150_I2C_MST_STATUS_I2C_SLV4_DONE                                  \
                                 0x40        // I2C slave 4 completion status
 #define MPU9150_I2C_MST_STATUS_I2C_LOST_ARB                                   \
@@ -753,7 +753,7 @@
                                 0x80        // Free-fall interrupt enable
 #define MPU9150_INT_ENABLE_MOT_EN                                             \
                                 0x40        // Motion detection interrupt
-                                            // enable
+// enable
 #define MPU9150_INT_ENABLE_ZMOT_EN                                            \
                                 0x20        // Zero motion interrupt enable
 #define MPU9150_INT_ENABLE_FIFO_OFLOW_EN                                      \
@@ -773,7 +773,7 @@
                                 0x80        // Free-fall interrupt status
 #define MPU9150_INT_STATUS_MOT_INT                                            \
                                 0x40        // Motion detection interrupt
-                                            // status
+// status
 #define MPU9150_INT_STATUS_ZMOT_INT                                           \
                                 0x20        // Zero motion interrupt status
 #define MPU9150_INT_STATUS_FIFO_OFLOW_INT                                     \
@@ -790,7 +790,7 @@
 //
 //*****************************************************************************
 #define MPU9150_ACCEL_XOUT_H_M  0xFF        // Bits [15:8] of X-axis
-                                            // acceleration data
+// acceleration data
 #define MPU9150_ACCEL_XOUT_H_S  0
 
 //*****************************************************************************
@@ -800,7 +800,7 @@
 //
 //*****************************************************************************
 #define MPU9150_ACCEL_XOUT_L_M  0xFF        // Bits [7:0] of X-axis
-                                            // acceleration data
+// acceleration data
 #define MPU9150_ACCEL_XOUT_L_S  0
 
 //*****************************************************************************
@@ -810,7 +810,7 @@
 //
 //*****************************************************************************
 #define MPU9150_ACCEL_YOUT_H_M  0xFF        // Bits [15:8] of Y-axis
-                                            // acceleration data
+// acceleration data
 #define MPU9150_ACCEL_YOUT_H_S  0
 
 //*****************************************************************************
@@ -820,7 +820,7 @@
 //
 //*****************************************************************************
 #define MPU9150_ACCEL_YOUT_L_M  0xFF        // Bits [7:0] of Y-axis
-                                            // acceleration data
+// acceleration data
 #define MPU9150_ACCEL_YOUT_L_S  0
 
 //*****************************************************************************
@@ -830,7 +830,7 @@
 //
 //*****************************************************************************
 #define MPU9150_ACCEL_ZOUT_H_M  0xFF        // Bits [15:8] of Z-axis
-                                            // acceleration data
+// acceleration data
 #define MPU9150_ACCEL_ZOUT_H_S  0
 
 //*****************************************************************************
@@ -840,7 +840,7 @@
 //
 //*****************************************************************************
 #define MPU9150_ACCEL_ZOUT_L_M  0xFF        // Bits [7:0] of Z-axis
-                                            // acceleration data
+// acceleration data
 #define MPU9150_ACCEL_ZOUT_L_S  0
 
 //*****************************************************************************
@@ -1191,22 +1191,22 @@
 //*****************************************************************************
 #define MPU9150_MOT_DETECT_STATUS_MOT_XNEG                                    \
                                 0x80        // Negative X-axis motion detect
-                                            // status
+// status
 #define MPU9150_MOT_DETECT_STATUS_MOT_XPOS                                    \
                                 0x40        // Positive X-axis motion detect
-                                            // status
+// status
 #define MPU9150_MOT_DETECT_STATUS_MOT_YNEG                                    \
                                 0x20        // Negative Y-axis motion detect
-                                            // status
+// status
 #define MPU9150_MOT_DETECT_STATUS_MOT_YPOS                                    \
                                 0x10        // Positive Y-axis motion detect
-                                            // status
+// status
 #define MPU9150_MOT_DETECT_STATUS_MOT_ZNEG                                    \
                                 0x08        // Negative Z-axis motion detect
-                                            // status
+// status
 #define MPU9150_MOT_DETECT_STATUS_MOT_ZPOS                                    \
                                 0x04        // Positive Z-axis motion detect
-                                            // status
+// status
 #define MPU9150_MOT_DETECT_STATUS_MOT_ZRMOT                                   \
                                 0x01        // Zero motion detect status
 
@@ -1306,7 +1306,7 @@
                                 0x0C        // Decrement by 4
 #define MPU9150_MOT_DETECT_CTRL_MOT_COUNT_M                                   \
                                 0x03        // Motion detect counter decrement
-                                            // rate
+// rate
 #define MPU9150_MOT_DETECT_CTRL_MOT_COUNT_RESET                               \
                                 0x00        // Reset counter
 #define MPU9150_MOT_DETECT_CTRL_MOT_COUNT_1                                   \
@@ -1367,10 +1367,10 @@
                                 0x03        // PLL with Z-axis gyro reference
 #define MPU9150_PWR_MGMT_1_CLKSEL_EXT32K                                      \
                                 0x04        // PLL with external 32.768 kHz
-                                            // reference
+// reference
 #define MPU9150_PWR_MGMT_1_CLKSEL_EXT19M                                      \
                                 0x05        // PLL with external 19.2 MHz
-                                            // reference
+// reference
 #define MPU9150_PWR_MGMT_1_CLKSEL_STOP                                        \
                                 0x07        // Clock disable
 #define MPU9150_PWR_MGMT_1_CLKSEL_S                                           \
@@ -1394,22 +1394,22 @@
                                 0xC0        // Wake-up at 40 Hz
 #define MPU9150_PWR_MGMT_2_STBY_XA                                            \
                                 0x20        // Put X-axis accelerometer into
-                                            // standby mode
+// standby mode
 #define MPU9150_PWR_MGMT_2_STBY_YA                                            \
                                 0x10        // Put Y-axis accelerometer into
-                                            // standby mode
+// standby mode
 #define MPU9150_PWR_MGMT_2_STBY_ZA                                            \
                                 0x08        // Put Z-axis accelerometer into
-                                            // standby mode
+// standby mode
 #define MPU9150_PWR_MGMT_2_STBY_XG                                            \
                                 0x04        // Put X-axis gyro into standby
-                                            // mode
+// mode
 #define MPU9150_PWR_MGMT_2_STBY_YG                                            \
                                 0x02        // Put Y-axis gyro into standby
-                                            // mode
+// mode
 #define MPU9150_PWR_MGMT_2_STBY_ZG                                            \
                                 0x01        // Put Z-axis gyro into standby
-                                            // mode
+// mode
 #define MPU9150_PWR_MGMT_2_LP_WAKE_CTRL_S                                     \
                                 6
 

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //****************************************************************************
@@ -232,8 +232,7 @@ static volatile bool g_bUSBConfigured = false;
 void
 __error__(char *pcFilename, uint32_t ui32Line)
 {
-    while(1)
-    {
+    while(1) {
     }
 }
 #endif
@@ -251,14 +250,12 @@ CommandPrint(const char *pcStr)
 
     ui32Index = 0;
 
-    while(pcStr[ui32Index] != 0)
-    {
+    while(pcStr[ui32Index] != 0) {
         //
         // Wait for space for two bytes in case there is a need to send out
         // the line feed plus the carriage return.
         //
-        while(USBBufferSpaceAvailable(&g_psTxBuffer[1]) < 2)
-        {
+        while(USBBufferSpaceAvailable(&g_psTxBuffer[1]) < 2) {
         }
 
         //
@@ -270,8 +267,7 @@ CommandPrint(const char *pcStr)
         //
         // If this is a line feed then send a carriage return as well.
         //
-        if(pcStr[ui32Index] == 0xa)
-        {
+        if(pcStr[ui32Index] == 0xa) {
             USBBufferWrite(&g_psTxBuffer[1], (const uint8_t *)&cCR, 1);
         }
 
@@ -308,29 +304,24 @@ CheckForSerialStateChange(const tUSBDCDCDevice *psDevice, int32_t i32Errors)
     //
     // Are any error bits set?
     //
-    if(i32Errors)
-    {
+    if(i32Errors) {
         //
         // At least one error is being notified so translate from our hardware
         // error bits into the correct state markers for the USB notification.
         //
-        if(i32Errors & UART_DR_OE)
-        {
+        if(i32Errors & UART_DR_OE) {
             usSerialState |= USB_CDC_SERIAL_STATE_OVERRUN;
         }
 
-        if(i32Errors & UART_DR_PE)
-        {
+        if(i32Errors & UART_DR_PE) {
             usSerialState |= USB_CDC_SERIAL_STATE_PARITY;
         }
 
-        if(i32Errors & UART_DR_FE)
-        {
+        if(i32Errors & UART_DR_FE) {
             usSerialState |= USB_CDC_SERIAL_STATE_FRAMING;
         }
 
-        if(i32Errors & UART_DR_BE)
-        {
+        if(i32Errors & UART_DR_BE) {
             usSerialState |= USB_CDC_SERIAL_STATE_BREAK;
         }
 
@@ -370,8 +361,7 @@ ReadUARTData(void)
     // Read data from the UART FIFO until there is none left or we run
     // out of space in our receive buffer.
     //
-    while(ui32Space && UARTCharsAvail(UART0_BASE))
-    {
+    while(ui32Space && UARTCharsAvail(UART0_BASE)) {
         //
         // Read a character from the UART FIFO into the ring buffer if no
         // errors are reported.
@@ -382,8 +372,7 @@ ReadUARTData(void)
         // If the character did not contain any error notifications,
         // copy it to the output buffer.
         //
-        if(!(i32Char & ~0xFF))
-        {
+        if(!(i32Char & ~0xFF)) {
             ucChar = (uint8_t)(i32Char & 0xFF);
 
             USBBufferWrite((tUSBBuffer *)&g_psTxBuffer[0],
@@ -393,9 +382,7 @@ ReadUARTData(void)
             // Decrement the number of bytes we know the buffer can accept.
             //
             ui32Space--;
-        }
-        else
-        {
+        } else {
             //
             // Update our error accumulator.
             //
@@ -430,8 +417,7 @@ USBUARTPrimeTransmit(uint32_t ui32Base)
     // If we are currently sending a break condition, don't receive any
     // more data. We will resume transmission once the break is turned off.
     //
-    if(g_bSendingBreak)
-    {
+    if(g_bSendingBreak) {
         return;
     }
 
@@ -439,8 +425,7 @@ USBUARTPrimeTransmit(uint32_t ui32Base)
     // If there is space in the UART FIFO, try to read some characters
     // from the receive buffer to fill it again.
     //
-    while(UARTSpaceAvail(ui32Base))
-    {
+    while(UARTSpaceAvail(ui32Base)) {
         //
         // Get a character from the buffer.
         //
@@ -449,8 +434,7 @@ USBUARTPrimeTransmit(uint32_t ui32Base)
         //
         // Did we get a character?
         //
-        if(ui32Read)
-        {
+        if(ui32Read) {
             //
             // Place the character in the UART transmit FIFO.
             //
@@ -460,9 +444,7 @@ USBUARTPrimeTransmit(uint32_t ui32Base)
             // Update our count of bytes transmitted via the UART.
             //
             g_ui32UARTTxCount++;
-        }
-        else
-        {
+        } else {
             //
             // We ran out of characters so exit the function.
             //
@@ -505,8 +487,7 @@ USBUARTIntHandler(void)
     //
     // Are we being interrupted because the TX FIFO has space available?
     //
-    if(ui32Ints & UART_INT_TX)
-    {
+    if(ui32Ints & UART_INT_TX) {
         //
         // Move as many bytes as we can into the transmit FIFO.
         //
@@ -515,8 +496,7 @@ USBUARTIntHandler(void)
         //
         // If the output buffer is empty, turn off the transmit interrupt.
         //
-        if(!USBBufferDataAvailable(&g_psRxBuffer[0]))
-        {
+        if(!USBBufferDataAvailable(&g_psRxBuffer[0])) {
             UARTIntDisable(UART0_BASE, UART_INT_TX);
         }
     }
@@ -524,8 +504,7 @@ USBUARTIntHandler(void)
     //
     // Handle receive interrupts.
     //
-    if(ui32Ints & (UART_INT_RX | UART_INT_RT))
-    {
+    if(ui32Ints & (UART_INT_RX | UART_INT_RT)) {
         //
         // Read the UART's characters into the buffer.
         //
@@ -570,34 +549,28 @@ SetLineCoding(tLineCoding *psLineCoding)
     // Word length.  For invalid values, the default is to set 8 bits per
     // character and return an error.
     //
-    switch(psLineCoding->ui8Databits)
-    {
-        case 5:
-        {
+    switch(psLineCoding->ui8Databits) {
+        case 5: {
             ui32Config = UART_CONFIG_WLEN_5;
             break;
         }
 
-        case 6:
-        {
+        case 6: {
             ui32Config = UART_CONFIG_WLEN_6;
             break;
         }
 
-        case 7:
-        {
+        case 7: {
             ui32Config = UART_CONFIG_WLEN_7;
             break;
         }
 
-        case 8:
-        {
+        case 8: {
             ui32Config = UART_CONFIG_WLEN_8;
             break;
         }
 
-        default:
-        {
+        default: {
             ui32Config = UART_CONFIG_WLEN_8;
             bRetcode = false;
             break;
@@ -607,40 +580,33 @@ SetLineCoding(tLineCoding *psLineCoding)
     //
     // Parity.  For any invalid values, we set no parity and return an error.
     //
-    switch(psLineCoding->ui8Parity)
-    {
-        case USB_CDC_PARITY_NONE:
-        {
+    switch(psLineCoding->ui8Parity) {
+        case USB_CDC_PARITY_NONE: {
             ui32Config |= UART_CONFIG_PAR_NONE;
             break;
         }
 
-        case USB_CDC_PARITY_ODD:
-        {
+        case USB_CDC_PARITY_ODD: {
             ui32Config |= UART_CONFIG_PAR_ODD;
             break;
         }
 
-        case USB_CDC_PARITY_EVEN:
-        {
+        case USB_CDC_PARITY_EVEN: {
             ui32Config |= UART_CONFIG_PAR_EVEN;
             break;
         }
 
-        case USB_CDC_PARITY_MARK:
-        {
+        case USB_CDC_PARITY_MARK: {
             ui32Config |= UART_CONFIG_PAR_ONE;
             break;
         }
 
-        case USB_CDC_PARITY_SPACE:
-        {
+        case USB_CDC_PARITY_SPACE: {
             ui32Config |= UART_CONFIG_PAR_ZERO;
             break;
         }
 
-        default:
-        {
+        default: {
             ui32Config |= UART_CONFIG_PAR_NONE;
             bRetcode = false;
             break;
@@ -654,13 +620,11 @@ SetLineCoding(tLineCoding *psLineCoding)
     // return an error in case the caller needs to Stall or otherwise report
     // this back to the host.
     //
-    switch(psLineCoding->ui8Stop)
-    {
+    switch(psLineCoding->ui8Stop) {
         //
         // One stop bit requested.
         //
-        case USB_CDC_STOP_BITS_1:
-        {
+        case USB_CDC_STOP_BITS_1: {
             ui32Config |= UART_CONFIG_STOP_ONE;
             break;
         }
@@ -668,8 +632,7 @@ SetLineCoding(tLineCoding *psLineCoding)
         //
         // Two stop bits requested.
         //
-        case USB_CDC_STOP_BITS_2:
-        {
+        case USB_CDC_STOP_BITS_2: {
             ui32Config |= UART_CONFIG_STOP_TWO;
             break;
         }
@@ -678,8 +641,7 @@ SetLineCoding(tLineCoding *psLineCoding)
         // Other cases are either invalid values of ui8Stop or values that we
         // cannot support so set 1 stop bit but return an error.
         //
-        default:
-        {
+        default: {
             ui32Config = UART_CONFIG_STOP_ONE;
             bRetcode |= false;
             break;
@@ -720,28 +682,23 @@ GetLineCoding(tLineCoding *psLineCoding)
     // Translate the configuration word length field into the format expected
     // by the host.
     //
-    switch(ui32Config & UART_CONFIG_WLEN_MASK)
-    {
-        case UART_CONFIG_WLEN_8:
-        {
+    switch(ui32Config & UART_CONFIG_WLEN_MASK) {
+        case UART_CONFIG_WLEN_8: {
             psLineCoding->ui8Databits = 8;
             break;
         }
 
-        case UART_CONFIG_WLEN_7:
-        {
+        case UART_CONFIG_WLEN_7: {
             psLineCoding->ui8Databits = 7;
             break;
         }
 
-        case UART_CONFIG_WLEN_6:
-        {
+        case UART_CONFIG_WLEN_6: {
             psLineCoding->ui8Databits = 6;
             break;
         }
 
-        case UART_CONFIG_WLEN_5:
-        {
+        case UART_CONFIG_WLEN_5: {
             psLineCoding->ui8Databits = 5;
             break;
         }
@@ -751,34 +708,28 @@ GetLineCoding(tLineCoding *psLineCoding)
     // Translate the configuration parity field into the format expected
     // by the host.
     //
-    switch(ui32Config & UART_CONFIG_PAR_MASK)
-    {
-        case UART_CONFIG_PAR_NONE:
-        {
+    switch(ui32Config & UART_CONFIG_PAR_MASK) {
+        case UART_CONFIG_PAR_NONE: {
             psLineCoding->ui8Parity = USB_CDC_PARITY_NONE;
             break;
         }
 
-        case UART_CONFIG_PAR_ODD:
-        {
+        case UART_CONFIG_PAR_ODD: {
             psLineCoding->ui8Parity = USB_CDC_PARITY_ODD;
             break;
         }
 
-        case UART_CONFIG_PAR_EVEN:
-        {
+        case UART_CONFIG_PAR_EVEN: {
             psLineCoding->ui8Parity = USB_CDC_PARITY_EVEN;
             break;
         }
 
-        case UART_CONFIG_PAR_ONE:
-        {
+        case UART_CONFIG_PAR_ONE: {
             psLineCoding->ui8Parity = USB_CDC_PARITY_MARK;
             break;
         }
 
-        case UART_CONFIG_PAR_ZERO:
-        {
+        case UART_CONFIG_PAR_ZERO: {
             psLineCoding->ui8Parity = USB_CDC_PARITY_SPACE;
             break;
         }
@@ -788,16 +739,13 @@ GetLineCoding(tLineCoding *psLineCoding)
     // Translate the configuration stop bits field into the format expected
     // by the host.
     //
-    switch(ui32Config & UART_CONFIG_STOP_MASK)
-    {
-        case UART_CONFIG_STOP_ONE:
-        {
+    switch(ui32Config & UART_CONFIG_STOP_MASK) {
+        case UART_CONFIG_STOP_ONE: {
             psLineCoding->ui8Stop = USB_CDC_STOP_BITS_1;
             break;
         }
 
-        case UART_CONFIG_STOP_TWO:
-        {
+        case UART_CONFIG_STOP_TWO: {
             psLineCoding->ui8Stop = USB_CDC_STOP_BITS_2;
             break;
         }
@@ -818,16 +766,13 @@ SendBreak(bool bSend)
     //
     // Are we being asked to start or stop the break condition?
     //
-    if(!bSend)
-    {
+    if(!bSend) {
         //
         // Remove the break condition on the line.
         //
         UARTBreakCtl(UART0_BASE, false);
         g_bSendingBreak = false;
-    }
-    else
-    {
+    } else {
         //
         // Start sending a break condition on the line.
         //
@@ -863,13 +808,11 @@ ControlHandler(void *pvCBData, uint32_t ui32Event,
     //
     // Which event are we being asked to process?
     //
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // We are connected to a host and communication is now possible.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             g_bUSBConfigured = true;
 
             //
@@ -884,8 +827,7 @@ ControlHandler(void *pvCBData, uint32_t ui32Event,
             ui32IntsOff = IntMasterDisable();
             g_pcStatus = "Host connected.";
             g_ui32Flags |= COMMAND_STATUS_UPDATE;
-            if(!ui32IntsOff)
-            {
+            if(!ui32IntsOff) {
                 IntMasterEnable();
             }
             break;
@@ -894,14 +836,12 @@ ControlHandler(void *pvCBData, uint32_t ui32Event,
         //
         // The host has disconnected.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             g_bUSBConfigured = false;
             ui32IntsOff = IntMasterDisable();
             g_pcStatus = "Host disconnected.";
             g_ui32Flags |= COMMAND_STATUS_UPDATE;
-            if(!ui32IntsOff)
-            {
+            if(!ui32IntsOff) {
                 IntMasterEnable();
             }
             break;
@@ -910,8 +850,7 @@ ControlHandler(void *pvCBData, uint32_t ui32Event,
         //
         // Return the current serial communication parameters.
         //
-        case USBD_CDC_EVENT_GET_LINE_CODING:
-        {
+        case USBD_CDC_EVENT_GET_LINE_CODING: {
             GetLineCoding(pvMsgData);
             break;
         }
@@ -919,8 +858,7 @@ ControlHandler(void *pvCBData, uint32_t ui32Event,
         //
         // Set the current serial communication parameters.
         //
-        case USBD_CDC_EVENT_SET_LINE_CODING:
-        {
+        case USBD_CDC_EVENT_SET_LINE_CODING: {
             SetLineCoding(pvMsgData);
             break;
         }
@@ -928,8 +866,7 @@ ControlHandler(void *pvCBData, uint32_t ui32Event,
         //
         // Set the current serial communication parameters.
         //
-        case USBD_CDC_EVENT_SET_CONTROL_LINE_STATE:
-        {
+        case USBD_CDC_EVENT_SET_CONTROL_LINE_STATE: {
             SetControlLineState((unsigned short)ui32MsgValue);
             break;
         }
@@ -937,8 +874,7 @@ ControlHandler(void *pvCBData, uint32_t ui32Event,
         //
         // Send a break condition on the serial line.
         //
-        case USBD_CDC_EVENT_SEND_BREAK:
-        {
+        case USBD_CDC_EVENT_SEND_BREAK: {
             SendBreak(true);
             break;
         }
@@ -946,8 +882,7 @@ ControlHandler(void *pvCBData, uint32_t ui32Event,
         //
         // Clear the break condition on the serial line.
         //
-        case USBD_CDC_EVENT_CLEAR_BREAK:
-        {
+        case USBD_CDC_EVENT_CLEAR_BREAK: {
             SendBreak(false);
             break;
         }
@@ -956,8 +891,7 @@ ControlHandler(void *pvCBData, uint32_t ui32Event,
         // Ignore SUSPEND and RESUME for now.
         //
         case USB_EVENT_SUSPEND:
-        case USB_EVENT_RESUME:
-        {
+        case USB_EVENT_RESUME: {
             break;
         }
 
@@ -965,8 +899,7 @@ ControlHandler(void *pvCBData, uint32_t ui32Event,
         // We don't expect to receive any other events.  Ignore any that show
         // up in a release build or hang in a debug build.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -998,10 +931,8 @@ TxHandlerEcho(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
     //
     // Which event have we been sent?
     //
-    switch(ui32Event)
-    {
-        case USB_EVENT_TX_COMPLETE:
-        {
+    switch(ui32Event) {
+        case USB_EVENT_TX_COMPLETE: {
             //
             // Since we are using the USBBuffer, we don't need to do anything
             // here.
@@ -1013,8 +944,7 @@ TxHandlerEcho(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
         // We don't expect to receive any other events.  Ignore any that show
         // up in a release build or hang in a debug build.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -1045,10 +975,8 @@ TxHandlerCmd(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
     //
     // Which event have we been sent?
     //
-    switch(ui32Event)
-    {
-        case USB_EVENT_TX_COMPLETE:
-        {
+    switch(ui32Event) {
+        case USB_EVENT_TX_COMPLETE: {
             //
             // Since we are using the USBBuffer, we don't need to do anything
             // here.
@@ -1060,8 +988,7 @@ TxHandlerCmd(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
         // We don't expect to receive any other events.  Ignore any that show
         // up in a release build or hang in a debug build.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -1095,13 +1022,11 @@ RxHandlerEcho(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
     //
     // Which event are we being sent?
     //
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // A new packet has been received.
         //
-        case USB_EVENT_RX_AVAILABLE:
-        {
+        case USB_EVENT_RX_AVAILABLE: {
             //
             // Feed some characters into the UART TX FIFO and enable the
             // interrupt so we are told when there is more space.
@@ -1118,8 +1043,7 @@ RxHandlerEcho(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
         // bytes in the UART FIFO is not important here, merely whether or
         // not everything previously sent to us has been transmitted.
         //
-        case USB_EVENT_DATA_REMAINING:
-        {
+        case USB_EVENT_DATA_REMAINING: {
             //
             // Get the number of bytes in the buffer and add 1 if some data
             // still has to clear the transmitter.
@@ -1135,8 +1059,7 @@ RxHandlerEcho(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
         // sending this message but this is included just for illustration and
         // completeness.
         //
-        case USB_EVENT_REQUEST_BUFFER:
-        {
+        case USB_EVENT_REQUEST_BUFFER: {
             return(0);
         }
 
@@ -1144,8 +1067,7 @@ RxHandlerEcho(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
         // We don't expect to receive any other events.  Ignore any that show
         // up in a release build or hang in a debug build.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -1183,13 +1105,11 @@ RxHandlerCmd(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
     //
     // Which event are we being sent?
     //
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // A new packet has been received.
         //
-        case USB_EVENT_RX_AVAILABLE:
-        {
+        case USB_EVENT_RX_AVAILABLE: {
             //
             // Create a device pointer.
             //
@@ -1201,20 +1121,17 @@ RxHandlerCmd(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
             // Keep reading characters as long as there are more to receive.
             //
             while(USBBufferRead(pBufferRx,
-                                (uint8_t *)&g_pcCmdBuf[ui32CmdIdx], 1))
-            {
+                                (uint8_t *)&g_pcCmdBuf[ui32CmdIdx], 1)) {
                 //
                 // If this is a backspace character, erase the last thing typed
                 // assuming there's something there to type.
                 //
-                if(g_pcCmdBuf[ui32CmdIdx] == 0x08)
-                {
+                if(g_pcCmdBuf[ui32CmdIdx] == 0x08) {
                     //
                     // If our current command buffer has any characters in it,
                     // erase the last one.
                     //
-                    if(ui32CmdIdx)
-                    {
+                    if(ui32CmdIdx) {
                         //
                         // Delete the last character.
                         //
@@ -1232,8 +1149,7 @@ RxHandlerCmd(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
                 // If this was a line feed then put out a carriage return as
                 // well.
                 //
-                else
-                {
+                else {
                     //
                     // Feed the new characters into the UART TX FIFO.
                     //
@@ -1243,8 +1159,7 @@ RxHandlerCmd(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
                     //
                     // Was this a carriage return?
                     //
-                    if(g_pcCmdBuf[ui32CmdIdx] == 0xd)
-                    {
+                    if(g_pcCmdBuf[ui32CmdIdx] == 0xd) {
                         //
                         // Set a line feed.
                         //
@@ -1266,8 +1181,7 @@ RxHandlerCmd(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
                     // the buffer and continually overwrite the last value if
                     // the buffer does attempt to overflow.
                     //
-                    else if(ui32CmdIdx < CMD_BUF_SIZE)
-                    {
+                    else if(ui32CmdIdx < CMD_BUF_SIZE) {
                         ui32CmdIdx++;
                     }
                 }
@@ -1283,8 +1197,7 @@ RxHandlerCmd(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
         // bytes in the UART FIFO is not important here, merely whether or
         // not everything previously sent to us has been transmitted.
         //
-        case USB_EVENT_DATA_REMAINING:
-        {
+        case USB_EVENT_DATA_REMAINING: {
             //
             // Get the number of bytes in the buffer and add 1 if some data
             // still has to clear the transmitter.
@@ -1299,8 +1212,7 @@ RxHandlerCmd(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
         // sending this message but this is included just for illustration and
         // completeness.
         //
-        case USB_EVENT_REQUEST_BUFFER:
-        {
+        case USB_EVENT_REQUEST_BUFFER: {
             return(0);
         }
 
@@ -1308,8 +1220,7 @@ RxHandlerCmd(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
         // We don't expect to receive any other events.  Ignore any that show
         // up in a release build or hang in a debug build.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -1334,29 +1245,22 @@ Cmd_led(int argc, char *argv[])
     // These values only check the second character since all parameters are
     // different in that character.
     //
-    if(argv[1][1] == 'n')
-    {
+    if(argv[1][1] == 'n') {
         //
         // Turn on the LED.
         //
         LEDOn();
-    }
-    else if(argv[1][1] == 'f')
-    {
+    } else if(argv[1][1] == 'f') {
         //
         // Turn off the LED.
         //
         LEDOff();
-    }
-    else if(argv[1][1] == 'o')
-    {
+    } else if(argv[1][1] == 'o') {
         //
         // Toggle the LED.
         //
         LEDToggle();
-    }
-    else
-    {
+    } else {
         //
         // The command format was not correct so print out some help.
         //
@@ -1395,8 +1299,7 @@ Echo(char *pucStr)
     //
     // Fail the command if the "echo" command is not terminated with a space.
     //
-    if(pucStr[4] != ' ')
-    {
+    if(pucStr[4] != ' ') {
         return(-1);
     }
 
@@ -1410,14 +1313,12 @@ Echo(char *pucStr)
     //
     // Loop through the characters and print them to both echo ports.
     //
-    for(ui32Index = 5; ui32Index < CMD_BUF_SIZE; ui32Index++)
-    {
+    for(ui32Index = 5; ui32Index < CMD_BUF_SIZE; ui32Index++) {
         //
         // If a null is found then go to the next argument and replace the
         // null with a space character.
         //
-        if(pucStr[ui32Index] == 0)
-        {
+        if(pucStr[ui32Index] == 0) {
             break;
         }
 
@@ -1457,8 +1358,7 @@ Cmd_help(int argc, char *argv[])
     // Enter a loop to read each entry from the command table.  The end of the
     // table has been reached when the command name is NULL.
     //
-    while(pEntry->pcCmd)
-    {
+    while(pEntry->pcCmd) {
         //
         // Print the command name and the brief description.
         //
@@ -1484,8 +1384,7 @@ Cmd_help(int argc, char *argv[])
 // brief description.
 //
 //****************************************************************************
-tCmdLineEntry g_psCmdTable[] =
-{
+tCmdLineEntry g_psCmdTable[] = {
     { "help",  Cmd_help,      " : Display list of commands" },
     { "h",     Cmd_help,   "    : alias for help" },
     { "?",     Cmd_help,   "    : alias for help" },
@@ -1511,9 +1410,9 @@ main(void)
     // Run from the PLL at 120 MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN |
-                                             SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN |
+                                            SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Not configured initially.
@@ -1549,7 +1448,7 @@ main(void)
     //
     UARTIntClear(UART0_BASE, UARTIntStatus(UART0_BASE, false));
     UARTIntEnable(UART0_BASE, (UART_INT_OE | UART_INT_BE | UART_INT_PE |
-                  UART_INT_FE | UART_INT_RT | UART_INT_TX | UART_INT_RX));
+                               UART_INT_FE | UART_INT_RT | UART_INT_TX | UART_INT_RX));
 
     //
     // Enable the system tick.
@@ -1610,10 +1509,8 @@ main(void)
     //
     // Main application loop.
     //
-    while(1)
-    {
-        if(g_ui32Flags & COMMAND_RECEIVED)
-        {
+    while(1) {
+        if(g_ui32Flags & COMMAND_RECEIVED) {
             //
             // Clear the flag
             //
@@ -1629,15 +1526,12 @@ main(void)
             // Check if this is the "echo" command, "echo" in hex is 0x6f686365
             // this prevents a more complicated string compare.
             //
-            if(0x6f686365 == *pui32Data)
-            {
+            if(0x6f686365 == *pui32Data) {
                 //
                 // Print out the string.
                 //
                 i32Status = Echo(g_pcCmdBuf);
-            }
-            else
-            {
+            } else {
                 //
                 // Process the command line.
                 //
@@ -1647,8 +1541,7 @@ main(void)
             //
             // Handle the case of bad command.
             //
-            if(i32Status == CMDLINE_BAD_CMD)
-            {
+            if(i32Status == CMDLINE_BAD_CMD) {
                 CommandPrint(g_pcCmdBuf);
                 CommandPrint(" is not a valid command!\n");
             }
@@ -1658,8 +1551,7 @@ main(void)
         //
         // Have we been asked to update the status display?
         //
-        if(g_ui32Flags & COMMAND_STATUS_UPDATE)
-        {
+        if(g_ui32Flags & COMMAND_STATUS_UPDATE) {
             //
             // Clear the command flag
             //
@@ -1671,8 +1563,7 @@ main(void)
         //
         // Has there been any transmit traffic since we last checked?
         //
-        if(ui32TxCount != g_ui32UARTTxCount)
-        {
+        if(ui32TxCount != g_ui32UARTTxCount) {
             //
             // Take a snapshot of the latest transmit count.
             //
@@ -1682,8 +1573,7 @@ main(void)
         //
         // Has there been any receive traffic since we last checked?
         //
-        if(ui32RxCount != g_ui32UARTRxCount)
-        {
+        if(ui32RxCount != g_ui32UARTRxCount) {
             //
             // Take a snapshot of the latest receive count.
             //

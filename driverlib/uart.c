@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2005-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -68,8 +68,7 @@
 // A mapping of UART base address to interrupt number.
 //
 //*****************************************************************************
-static const uint32_t g_ppui32UARTIntMap[][2] =
-{
+static const uint32_t g_ppui32UARTIntMap[][2] = {
     { UART0_BASE, INT_UART0_TM4C123 },
     { UART1_BASE, INT_UART1_TM4C123 },
     { UART2_BASE, INT_UART2_TM4C123 },
@@ -81,8 +80,7 @@ static const uint32_t g_ppui32UARTIntMap[][2] =
 };
 static const uint_fast8_t g_ui8UARTIntMapRows =
     sizeof(g_ppui32UARTIntMap) / sizeof(g_ppui32UARTIntMap[0]);
-static const uint32_t g_ppui32UARTIntMapSnowflake[][2] =
-{
+static const uint32_t g_ppui32UARTIntMapSnowflake[][2] = {
     { UART0_BASE, INT_UART0_TM4C129 },
     { UART1_BASE, INT_UART1_TM4C129 },
     { UART2_BASE, INT_UART2_TM4C129 },
@@ -145,8 +143,7 @@ _UARTIntNumberGet(uint32_t ui32Base)
     ppui32UARTIntMap = g_ppui32UARTIntMap;
     ui8Rows = g_ui8UARTIntMapRows;
 
-    if(CLASS_IS_TM4C129)
-    {
+    if(CLASS_IS_TM4C129) {
         ppui32UARTIntMap = g_ppui32UARTIntMapSnowflake;
         ui8Rows = g_ui8UARTIntMapRowsSnowflake;
     }
@@ -155,13 +152,11 @@ _UARTIntNumberGet(uint32_t ui32Base)
     // Loop through the table that maps UART base addresses to interrupt
     // numbers.
     //
-    for(ui8Idx = 0; ui8Idx < ui8Rows; ui8Idx++)
-    {
+    for(ui8Idx = 0; ui8Idx < ui8Rows; ui8Idx++) {
         //
         // See if this base address matches.
         //
-        if(ppui32UARTIntMap[ui8Idx][0] == ui32Base)
-        {
+        if(ppui32UARTIntMap[ui8Idx][0] == ui32Base) {
             //
             // Return the corresponding interrupt number.
             //
@@ -355,7 +350,7 @@ UARTFIFOLevelGet(uint32_t ui32Base, uint32_t *pui32TxLevel,
 //! the system clock is the value returned by SysCtlClockGet() for TM4C123x
 //! devices or the value returned by SysCtlClockFreqSet() for TM4C129x devices,
 //! or it can be explicitly hard coded if it is constant and known (to save the
-//! code/execution overhead of a call to SysCtlClockGet() or fetch of the 
+//! code/execution overhead of a call to SysCtlClockGet() or fetch of the
 //! variable call holding the return value of SysCtlClockFreqSet()).
 //!
 //! The function disables the UART by calling UARTDisable() before changing the
@@ -391,8 +386,7 @@ UARTConfigSetExpClk(uint32_t ui32Base, uint32_t ui32UARTClk,
     // Is the required baud rate greater than the maximum rate supported
     // without the use of high speed mode?
     //
-    if((ui32Baud * 16) > ui32UARTClk)
-    {
+    if((ui32Baud * 16) > ui32UARTClk) {
         //
         // Enable high speed mode.
         //
@@ -403,9 +397,7 @@ UARTConfigSetExpClk(uint32_t ui32Base, uint32_t ui32UARTClk,
         // mode.  This allows the following code to be common to both cases.
         //
         ui32Baud /= 2;
-    }
-    else
-    {
+    } else {
         //
         // Disable high speed mode.
         //
@@ -459,7 +451,7 @@ UARTConfigSetExpClk(uint32_t ui32Base, uint32_t ui32UARTClk,
 //! the system clock is the value returned by SysCtlClockGet() for TM4C123x
 //! devices or the value returned by SysCtlClockFreqSet() for TM4C129x devices,
 //! or it can be explicitly hard coded if it is constant and known (to save the
-//! code/execution overhead of a call to SysCtlClockGet() or fetch of the 
+//! code/execution overhead of a call to SysCtlClockGet() or fetch of the
 //! variable call holding the return value of SysCtlClockFreqSet()).
 //!
 //! For Tiva parts that have the ability to specify the UART baud clock
@@ -491,8 +483,7 @@ UARTConfigGetExpClk(uint32_t ui32Base, uint32_t ui32UARTClk,
     //
     // See if high speed mode enabled.
     //
-    if(HWREG(ui32Base + UART_O_CTL) & UART_CTL_HSE)
-    {
+    if(HWREG(ui32Base + UART_O_CTL) & UART_CTL_HSE) {
         //
         // High speed mode is enabled so the actual baud rate is actually
         // double what was just calculated.
@@ -562,8 +553,7 @@ UARTDisable(uint32_t ui32Base)
     //
     // Wait for end of TX.
     //
-    while(HWREG(ui32Base + UART_O_FR) & UART_FR_BUSY)
-    {
+    while(HWREG(ui32Base + UART_O_FR) & UART_FR_BUSY) {
     }
 
     //
@@ -661,12 +651,9 @@ UARTEnableSIR(uint32_t ui32Base, bool bLowPower)
     //
     // Enable SIR and SIRLP (if appropriate).
     //
-    if(bLowPower)
-    {
+    if(bLowPower) {
         HWREG(ui32Base + UART_O_CTL) |= (UART_CTL_SIREN | UART_CTL_SIRLP);
-    }
-    else
-    {
+    } else {
         HWREG(ui32Base + UART_O_CTL) |= (UART_CTL_SIREN);
     }
 }
@@ -1157,15 +1144,12 @@ UARTCharGetNonBlocking(uint32_t ui32Base)
     //
     // See if there are any characters in the receive FIFO.
     //
-    if(!(HWREG(ui32Base + UART_O_FR) & UART_FR_RXFE))
-    {
+    if(!(HWREG(ui32Base + UART_O_FR) & UART_FR_RXFE)) {
         //
         // Read and return the next character.
         //
         return(HWREG(ui32Base + UART_O_DR));
-    }
-    else
-    {
+    } else {
         //
         // There are no characters, so return a failure.
         //
@@ -1198,8 +1182,7 @@ UARTCharGet(uint32_t ui32Base)
     //
     // Wait until a char is available.
     //
-    while(HWREG(ui32Base + UART_O_FR) & UART_FR_RXFE)
-    {
+    while(HWREG(ui32Base + UART_O_FR) & UART_FR_RXFE) {
     }
 
     //
@@ -1236,8 +1219,7 @@ UARTCharPutNonBlocking(uint32_t ui32Base, unsigned char ucData)
     //
     // See if there is space in the transmit FIFO.
     //
-    if(!(HWREG(ui32Base + UART_O_FR) & UART_FR_TXFF))
-    {
+    if(!(HWREG(ui32Base + UART_O_FR) & UART_FR_TXFF)) {
         //
         // Write this character to the transmit FIFO.
         //
@@ -1247,9 +1229,7 @@ UARTCharPutNonBlocking(uint32_t ui32Base, unsigned char ucData)
         // Success.
         //
         return(true);
-    }
-    else
-    {
+    } else {
         //
         // There is no space in the transmit FIFO, so return a failure.
         //
@@ -1282,8 +1262,7 @@ UARTCharPut(uint32_t ui32Base, unsigned char ucData)
     //
     // Wait until space is available.
     //
-    while(HWREG(ui32Base + UART_O_FR) & UART_FR_TXFF)
-    {
+    while(HWREG(ui32Base + UART_O_FR) & UART_FR_TXFF) {
     }
 
     //
@@ -1548,12 +1527,9 @@ UARTIntStatus(uint32_t ui32Base, bool bMasked)
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return(HWREG(ui32Base + UART_O_MIS));
-    }
-    else
-    {
+    } else {
         return(HWREG(ui32Base + UART_O_RIS));
     }
 }
@@ -1927,8 +1903,7 @@ UART9BitAddrSend(uint32_t ui32Base, uint8_t ui8Addr)
     // Wait until the FIFO is empty and the UART is not busy.
     //
     while((HWREG(ui32Base + UART_O_FR) & (UART_FR_TXFE | UART_FR_BUSY)) !=
-          UART_FR_TXFE)
-    {
+            UART_FR_TXFE) {
     }
 
     //
@@ -1947,8 +1922,7 @@ UART9BitAddrSend(uint32_t ui32Base, uint8_t ui8Addr)
     // Wait until the address has been sent.
     //
     while((HWREG(ui32Base + UART_O_FR) & (UART_FR_TXFE | UART_FR_BUSY)) !=
-          UART_FR_TXFE)
-    {
+            UART_FR_TXFE) {
     }
 
     //
@@ -1967,7 +1941,7 @@ UART9BitAddrSend(uint32_t ui32Base, uint8_t ui8Addr)
 //! diagnostics and debug.  In this mode, the transmit and receive terminals of
 //! the same UART port are internally connected.  Hence, the data transmitted
 //! on the UnTx output is received on the UxRx input, without having to go
-//! through I/O's.  UARTCharPut(), UARTCharGet() functions can be used along 
+//! through I/O's.  UARTCharPut(), UARTCharGet() functions can be used along
 //! with this function.
 //!
 //! \return None.

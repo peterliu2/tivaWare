@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -68,8 +68,7 @@ typedef void (tSensorCallback)(void *pvData, uint_fast8_t ui8Status);
 // The structure that defines an I2C master command.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // The I2C address of the device being accessed.
     //
@@ -122,8 +121,7 @@ tI2CMCommand;
 // The structure that contains the state of an I2C master instance.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // The base address of the I2C module.
     //
@@ -179,8 +177,7 @@ tI2CMInstance;
 // 8 bits of data.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // A pointer to the I2C master interface instance used for the
     // read-modify-write request.
@@ -231,8 +228,7 @@ tI2CMReadModifyWrite8;
 // 16 bits of data.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // A pointer to the I2C master interface instance used for the
     // read-modify-write request.
@@ -282,8 +278,7 @@ tI2CMReadModifyWrite16;
 // The structure that contains the state of an I2C write request of 8-bit data.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // A pointer to the I2C master interface instance used for the write
     // request.
@@ -323,8 +318,7 @@ tI2CMWrite8;
 // from a big-endian device.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // A pointer to the I2C master interface instance used for the read
     // request.
@@ -359,8 +353,7 @@ tI2CMRead16BE;
 // to a big-endian device.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // A pointer to the I2C master interface instance used for the write
     // request.
@@ -415,21 +408,21 @@ extern uint_fast8_t I2CMCommand(tI2CMInstance *psInst, uint_fast8_t ui8Addr,
 extern uint_fast8_t I2CMTransferResume(tI2CMInstance *psInst,
                                        uint8_t *pui8Data);
 extern uint_fast8_t I2CMReadModifyWrite8(tI2CMReadModifyWrite8 *psInst,
-                                         tI2CMInstance *psI2CInst,
-                                         uint_fast8_t ui8Addr,
-                                         uint_fast8_t ui8Reg,
-                                         uint_fast8_t ui8Mask,
-                                         uint_fast8_t ui8Value,
-                                         tSensorCallback *pfnCallback,
-                                         void *pvCallbackData);
+        tI2CMInstance *psI2CInst,
+        uint_fast8_t ui8Addr,
+        uint_fast8_t ui8Reg,
+        uint_fast8_t ui8Mask,
+        uint_fast8_t ui8Value,
+        tSensorCallback *pfnCallback,
+        void *pvCallbackData);
 extern uint_fast8_t I2CMReadModifyWrite16LE(tI2CMReadModifyWrite16 *psInst,
-                                            tI2CMInstance *psI2CInst,
-                                            uint_fast8_t ui8Addr,
-                                            uint_fast8_t ui8Reg,
-                                            uint_fast16_t ui16Mask,
-                                            uint_fast16_t ui16Value,
-                                            tSensorCallback *pfnCallback,
-                                            void *pvCallbackData);
+        tI2CMInstance *psI2CInst,
+        uint_fast8_t ui8Addr,
+        uint_fast8_t ui8Reg,
+        uint_fast16_t ui16Mask,
+        uint_fast16_t ui16Value,
+        tSensorCallback *pfnCallback,
+        void *pvCallbackData);
 extern uint_fast8_t I2CMWrite8(tI2CMWrite8 *psInst, tI2CMInstance *psI2CInst,
                                uint_fast8_t ui8Addr, uint_fast8_t ui8Reg,
                                const uint8_t *pui8Data,

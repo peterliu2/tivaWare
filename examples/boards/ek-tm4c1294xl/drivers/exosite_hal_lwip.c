@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -103,8 +103,7 @@ char g_pcIPAddr[20];
 // The current state of the exosite connection.
 //
 //*****************************************************************************
-struct
-{
+struct {
     //
     // Flags used by the application.
     //
@@ -131,8 +130,8 @@ struct
     volatile enum
     {
         EXOSITE_STATE_NOT_CONNECTED,
-            EXOSITE_STATE_CONNECTED_IDLE,
-            EXOSITE_STATE_PROXY_WAIT,
+        EXOSITE_STATE_CONNECTED_IDLE,
+        EXOSITE_STATE_PROXY_WAIT,
     } eState;
 }
 g_sExosite;
@@ -227,13 +226,12 @@ exoHAL_EraseMeta(void)
 //*****************************************************************************
 void
 exoHAL_WriteMetaItem(unsigned char * pucBuffer, int iLength,
-        int iOffset)
+                     int iOffset)
 {
     //
     // Make sure EEPROM is initialized.
     //
-    if (g_ui32EEStatus == EEPROM_IDLE || g_ui32EEStatus == EEPROM_INITALIZED)
-    {
+    if (g_ui32EEStatus == EEPROM_IDLE || g_ui32EEStatus == EEPROM_INITALIZED) {
         //
         // Set EEPROM status to erasing.
         //
@@ -243,15 +241,13 @@ exoHAL_WriteMetaItem(unsigned char * pucBuffer, int iLength,
         // Write the info to the EEPROM.
         //
         EEPROMProgram((uint32_t *)pucBuffer,
-                (uint32_t)(EXOMETA_ADDR_OFFSET + iOffset), (uint32_t)iLength);
+                      (uint32_t)(EXOMETA_ADDR_OFFSET + iOffset), (uint32_t)iLength);
 
         //
         // Set EEPROM status to IDLE.
         //
         g_ui32EEStatus = EEPROM_IDLE;
-    }
-    else
-    {
+    } else {
         //
         // Set EEPROM status to ERROR.
         //
@@ -274,13 +270,12 @@ exoHAL_WriteMetaItem(unsigned char * pucBuffer, int iLength,
 //*****************************************************************************
 void
 exoHAL_ReadMetaItem(unsigned char * pucBuffer, int iLength,
-        int iOffset)
+                    int iOffset)
 {
     //
     // Make sure the EEPROM is initialized and idle.
     //
-    if (g_ui32EEStatus == EEPROM_IDLE || g_ui32EEStatus == EEPROM_INITALIZED)
-    {
+    if (g_ui32EEStatus == EEPROM_IDLE || g_ui32EEStatus == EEPROM_INITALIZED) {
         //
         // Indicate that the EEPROM is now being read.
         //
@@ -290,15 +285,13 @@ exoHAL_ReadMetaItem(unsigned char * pucBuffer, int iLength,
         // Read the requested data.
         //
         EEPROMRead((uint32_t *)pucBuffer,
-                (uint32_t)(EXOMETA_ADDR_OFFSET + iOffset), (uint32_t)iLength);
+                   (uint32_t)(EXOMETA_ADDR_OFFSET + iOffset), (uint32_t)iLength);
 
         //
         // Set EEPROM status to IDLE.
         //
         g_ui32EEStatus = EEPROM_IDLE;
-    }
-    else
-    {
+    } else {
         //
         // Set EEPROM status to ERROR.
         //
@@ -371,59 +364,49 @@ exoHAL_ExositeEnetEvents(uint32_t ui32Event, void *pvData, uint32_t ui32Param)
     //
     // Handle events from the Ethernet client layer.
     //
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // Ethernet client has received data.
         //
-        case ETH_CLIENT_EVENT_RECEIVE:
-        {
+        case ETH_CLIENT_EVENT_RECEIVE: {
             //
             // Set the RECEIVED flag.
             //
             HWREGBITW(&g_sExosite.ui32Flags, FLAG_RECEIVED) = 1;
 
-            if (RingBufFree(&g_sEnetBuffer) >= ui32Param)
-            {
+            if (RingBufFree(&g_sEnetBuffer) >= ui32Param) {
                 //
                 // Write to the ring buffer.
                 //
                 RingBufWrite(&g_sEnetBuffer, pD, ui32Param);
-            }
-            else
-            {
+            } else {
             }
 
             //
             // Handle the received data based on the state of the EXOSITE
             // transfer.
             //
-            switch(g_sExosite.eState)
-            {
+            switch(g_sExosite.eState) {
                 //
                 // Idle state.
                 //
-                case EXOSITE_STATE_CONNECTED_IDLE:
-                {
+                case EXOSITE_STATE_CONNECTED_IDLE: {
                     break;
                 }
 
                 //
                 // Waiting for the proxy connect request to complete.
                 //
-                case EXOSITE_STATE_PROXY_WAIT:
-                {
+                case EXOSITE_STATE_PROXY_WAIT: {
                     //
                     // Check the response.
                     //
                     if(!HTTPResponseParse((char *)pD, g_pcRequest,
-                                          (uint32_t *)&ui32NumHeaders))
-                    {
+                                          (uint32_t *)&ui32NumHeaders)) {
                         break;
                     }
 
-                    if (ustrncmp((char *)pD, "200", 3))
-                    {
+                    if (ustrncmp((char *)pD, "200", 3)) {
                         //
                         // Empty the receive buffer.
                         //
@@ -450,7 +433,7 @@ exoHAL_ExositeEnetEvents(uint32_t ui32Event, void *pvData, uint32_t ui32Param)
                 }
 
                 default:
-                break;
+                    break;
             }
             break;
         }
@@ -458,13 +441,11 @@ exoHAL_ExositeEnetEvents(uint32_t ui32Event, void *pvData, uint32_t ui32Param)
         //
         // Ethernet client has connected to the specified server/host and port.
         //
-        case ETH_CLIENT_EVENT_CONNECT:
-        {
+        case ETH_CLIENT_EVENT_CONNECT: {
             //
             // If there is a proxy, establish the connection.
             //
-            if(g_bUseProxy && HWREGBITW(&g_sExosite.ui32Flags, FLAG_PROXY_SET))
-            {
+            if(g_bUseProxy && HWREGBITW(&g_sExosite.ui32Flags, FLAG_PROXY_SET)) {
                 //
                 // Construct the CONNECT request.
                 //
@@ -475,9 +456,7 @@ exoHAL_ExositeEnetEvents(uint32_t ui32Event, void *pvData, uint32_t ui32Param)
                 // Wait for callback from the CONNECT request.
                 //
                 g_sExosite.eState = EXOSITE_STATE_PROXY_WAIT;
-            }
-            else
-            {
+            } else {
                 //
                 // Set the connected flag.
                 //
@@ -489,26 +468,21 @@ exoHAL_ExositeEnetEvents(uint32_t ui32Event, void *pvData, uint32_t ui32Param)
         //
         // Ethernet client has obtained IP address via DHCP.
         //
-        case ETH_CLIENT_EVENT_DHCP:
-        {
+        case ETH_CLIENT_EVENT_DHCP: {
             break;
         }
 
         //
         // Ethernet client has received DNS response.
         //
-        case ETH_CLIENT_EVENT_DNS:
-        {
-            if(ui32Param != 0)
-            {
+        case ETH_CLIENT_EVENT_DNS: {
+            if(ui32Param != 0) {
                 //
                 // If DNS resolved successfully, initialize the socket and
                 // stack.
                 //
                 EthClientTCPConnect();
-            }
-            else
-            {
+            } else {
                 //
                 // Clear the busy flag.
                 //
@@ -531,8 +505,7 @@ exoHAL_ExositeEnetEvents(uint32_t ui32Event, void *pvData, uint32_t ui32Param)
         //
         // Ethernet client has disconnected from the server/host.
         //
-        case ETH_CLIENT_EVENT_DISCONNECT:
-        {
+        case ETH_CLIENT_EVENT_DISCONNECT: {
             //
             // Close the socket.
             //
@@ -544,21 +517,18 @@ exoHAL_ExositeEnetEvents(uint32_t ui32Event, void *pvData, uint32_t ui32Param)
         //
         // All other cases are unhandled.
         //
-        case ETH_CLIENT_EVENT_SEND:
-        {
+        case ETH_CLIENT_EVENT_SEND: {
 
             break;
         }
 
 
-        case ETH_CLIENT_EVENT_ERROR:
-        {
+        case ETH_CLIENT_EVENT_ERROR: {
 
             break;
         }
 
-        default:
-        {
+        default: {
 
             break;
         }
@@ -574,8 +544,7 @@ exoHAL_ExositeEnetEvents(uint32_t ui32Event, void *pvData, uint32_t ui32Param)
 void
 exoHAL_ExositeInit(void)
 {
-    if (HWREGBITW(&g_sExosite.ui32Flags, FLAG_ENET_INIT) == 0)
-    {
+    if (HWREGBITW(&g_sExosite.ui32Flags, FLAG_ENET_INIT) == 0) {
 
 #if NO_SYS
         //
@@ -664,12 +633,12 @@ exoHAL_ReadUUID(unsigned char ucIfNbr, unsigned char * pucUUIDBuf)
     // Fill pucUUIDBuf.
     //
     usprintf((char *)pucUUIDBuf,"%02x%02x%02x%02x%02x%02x",
-                                                (char)pui8MACAddr[0],
-                                                (char)pui8MACAddr[1],
-                                                (char)pui8MACAddr[2],
-                                                (char)pui8MACAddr[3],
-                                                (char)pui8MACAddr[4],
-                                                (char)pui8MACAddr[5]);
+             (char)pui8MACAddr[0],
+             (char)pui8MACAddr[1],
+             (char)pui8MACAddr[2],
+             (char)pui8MACAddr[3],
+             (char)pui8MACAddr[4],
+             (char)pui8MACAddr[5]);
 
     //
     // Return the size of the MAC.
@@ -747,8 +716,7 @@ exoHAL_SocketOpenTCP(unsigned char *pucServer)
     //
     ui32Timeout = 5;
 
-    while(ui32Timeout)
-    {
+    while(ui32Timeout) {
         //
         // Decrement timeout count.
         //
@@ -762,8 +730,7 @@ exoHAL_SocketOpenTCP(unsigned char *pucServer)
         //
         // If IP is valid, print IP.
         //
-        if(ui32IPAddr == 0 || ui32IPAddr == 0xffffffff)
-        {
+        if(ui32IPAddr == 0 || ui32IPAddr == 0xffffffff) {
             //
             // Delay, wait for response and continue.
             //
@@ -773,17 +740,14 @@ exoHAL_SocketOpenTCP(unsigned char *pucServer)
             vTaskDelay(10 / portTICK_RATE_MS);
 #endif // #if NO_SYS
             continue;
-        }
-        else
-        {
+        } else {
 
         }
 
         //
         // Set Proxy if not already.
         //
-        if (g_bUseProxy && !HWREGBITW(&g_sExosite.ui32Flags, FLAG_PROXY_SET))
-        {
+        if (g_bUseProxy && !HWREGBITW(&g_sExosite.ui32Flags, FLAG_PROXY_SET)) {
             //
             // Set the proxy defined in exosite_hal_lwip.h
             //
@@ -793,8 +757,7 @@ exoHAL_SocketOpenTCP(unsigned char *pucServer)
         //
         // If we are already initiated the DNS no need to do it again.
         //
-        if (!HWREGBITW(&g_sExosite.ui32Flags, FLAG_DNS_INIT))
-        {
+        if (!HWREGBITW(&g_sExosite.ui32Flags, FLAG_DNS_INIT)) {
             //
             // Resolve the host address.
             //
@@ -803,8 +766,7 @@ exoHAL_SocketOpenTCP(unsigned char *pucServer)
             //
             // If error, break.
             //
-            if (i32Error != 0 && i32Error != -5)
-            {
+            if (i32Error != 0 && i32Error != -5) {
                 break;
             }
 
@@ -818,8 +780,7 @@ exoHAL_SocketOpenTCP(unsigned char *pucServer)
             //
             HWREGBITW(&g_sExosite.ui32Flags, FLAG_CONNECT_WAIT) = 1;
         }
-        if (HWREGBITW(&g_sExosite.ui32Flags, FLAG_CONNECT_WAIT) == 0)
-        {
+        if (HWREGBITW(&g_sExosite.ui32Flags, FLAG_CONNECT_WAIT) == 0) {
             //
             // Try to reconnect.
             //
@@ -828,8 +789,7 @@ exoHAL_SocketOpenTCP(unsigned char *pucServer)
             //
             // If error, break.
             //
-            if (i32Error != 0)
-            {
+            if (i32Error != 0) {
                 break;
             }
 
@@ -848,12 +808,9 @@ exoHAL_SocketOpenTCP(unsigned char *pucServer)
         // If connected, return success.
         // else delay and decrement timeout.
         //
-        if (i32Connected != -1)
-        {
+        if (i32Connected != -1) {
             return 0;
-        }
-        else
-        {
+        } else {
             //
             // Delay and wait for response.
             //
@@ -890,12 +847,9 @@ exoHAL_ServerConnect(long lSocket)
     //
     // Check if we have connected to Exosite.
     //
-    if (HWREGBITW(&g_sExosite.ui32Flags, FLAG_CONNECTED))
-    {
+    if (HWREGBITW(&g_sExosite.ui32Flags, FLAG_CONNECTED)) {
         return lSocket;
-    }
-    else
-    {
+    } else {
         return -1;
     }
 }
@@ -926,13 +880,11 @@ exoHAL_SocketSend(long lSocket, char * pcBuffer, int iLength)
     //
     // If IP is invalid return error.
     //
-    if(ui32IPAddr == 0 || ui32IPAddr == 0xffffffff )
-    {
+    if(ui32IPAddr == 0 || ui32IPAddr == 0xffffffff ) {
         return 0;
     }
 
-    if (HWREGBITW(&g_sExosite.ui32Flags, FLAG_CONNECTED))
-    {
+    if (HWREGBITW(&g_sExosite.ui32Flags, FLAG_CONNECTED)) {
         //
         // Send.
         //
@@ -947,9 +899,7 @@ exoHAL_SocketSend(long lSocket, char * pcBuffer, int iLength)
         // Return the number of bytes sent.
         //
         return iLength;
-    }
-    else
-    {
+    } else {
         return 0;
     }
 }
@@ -979,8 +929,7 @@ exoHAL_SocketRecv(long lSocket, char * pcBuffer, int iLength)
     //
     while(HWREGBITW(&g_sExosite.ui32Flags, FLAG_SENT) == 1 &&
             HWREGBITW(&g_sExosite.ui32Flags, FLAG_RECEIVED) == 0 &&
-            ui32Timeout)
-    {
+            ui32Timeout) {
         //
         // Decrement timeout
         //
@@ -996,8 +945,7 @@ exoHAL_SocketRecv(long lSocket, char * pcBuffer, int iLength)
 #endif // #if NO_SYS
     }
 
-    if(ui32Timeout != 0)
-    {
+    if(ui32Timeout != 0) {
         //
         // Determine how much of the buffer have we used.
         //
@@ -1007,16 +955,13 @@ exoHAL_SocketRecv(long lSocket, char * pcBuffer, int iLength)
         // If the number of bytes being requested is greater than what we have,
         // only read the number of bytes out that we have.
         //
-        if (ui32Used < iLength)
-        {
+        if (ui32Used < iLength) {
             //
             // Read from the buffer.
             //
             RingBufRead(&g_sEnetBuffer, (uint8_t *)pcBuffer, ui32Used);
             return (unsigned char)ui32Used;
-        }
-        else
-        {
+        } else {
             //
             // Read from the buffer.
             //
@@ -1024,9 +969,7 @@ exoHAL_SocketRecv(long lSocket, char * pcBuffer, int iLength)
                         (uint32_t)iLength);
             return (unsigned char)iLength;
         }
-    }
-    else
-    {
+    } else {
         //
         // Timeout.
         //

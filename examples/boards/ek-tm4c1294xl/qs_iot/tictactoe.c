@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -56,8 +56,7 @@ uint32_t g_ui32Mode = 0;
 // State variable for keeping track of the game flow
 //
 //*****************************************************************************
-enum
-{
+enum {
     NEW_GAME,
     SET_MODE,
     PLAY_TURN,
@@ -80,8 +79,7 @@ char g_pcGameInput[GAME_INPUT_SIZE];
 // Global array to track all possible winning configurations of tic-tac-toe.
 //
 //*****************************************************************************
-uint32_t g_ui32WinConditions[] =
-{
+uint32_t g_ui32WinConditions[] = {
     0x7,
     0x38,
     0x1C0,
@@ -112,8 +110,7 @@ ProcessTurn(void)
     // If the chosen coordinates are out of range, try asking for a new set
     // of coordinates.
     //
-    if(g_ui32Row > 2 || g_ui32Col > 2)
-    {
+    if(g_ui32Row > 2 || g_ui32Col > 2) {
         UARTprintf("Invalid, try again.\n");
         return false;
     }
@@ -131,13 +128,10 @@ ProcessTurn(void)
     // different move.
     //
     if((ui32Move & g_ui32BoardState) ||
-       ((ui32Move << 16) & g_ui32BoardState))
-    {
+            ((ui32Move << 16) & g_ui32BoardState)) {
         UARTprintf("Invalid, try again (space occupied).\n");
         return false;
-    }
-    else
-    {
+    } else {
         //
         // Otherwise, the move is valid. Add it to the global state.
         //
@@ -183,8 +177,7 @@ ShowBoard(void)
     //
     // Loop over rows, starting with zero
     //
-    for(ui32RowNum = 0; ui32RowNum < 3; ui32RowNum++)
-    {
+    for(ui32RowNum = 0; ui32RowNum < 3; ui32RowNum++) {
         //
         // Print the row number
         //
@@ -193,8 +186,7 @@ ShowBoard(void)
         //
         // Loop thorugh the columns
         //
-        for(ui32ColNum = 0; ui32ColNum < 3; ui32ColNum++)
-        {
+        for(ui32ColNum = 0; ui32ColNum < 3; ui32ColNum++) {
             //
             // Convert the row/column number into the format used by the global
             // game-state variable.
@@ -207,24 +199,18 @@ ShowBoard(void)
             // If a player has a token in this row and column, print the
             // corresponding symbol
             //
-            if(g_ui32BoardState & ui32MaskX)
-            {
+            if(g_ui32BoardState & ui32MaskX) {
                 UARTprintf("X");
-            }
-            else if(g_ui32BoardState & ui32MaskO)
-            {
+            } else if(g_ui32BoardState & ui32MaskO) {
                 UARTprintf("O");
-            }
-            else
-            {
+            } else {
                 UARTprintf(" ");
             }
 
             //
             // Print column separators where necessary.
             //
-            if(ui32ColNum < 2)
-            {
+            if(ui32ColNum < 2) {
                 UARTprintf("|");
             }
         }
@@ -237,8 +223,7 @@ ShowBoard(void)
         //
         // Add a row separator if necessary.
         //
-        if(ui32RowNum < 2)
-        {
+        if(ui32RowNum < 2) {
             UARTprintf("   -+-+-\n");
         }
 
@@ -269,8 +254,7 @@ CheckWinner(void)
     //
     // Loop through the table of win-conditions.
     //
-    for(ui32Idx = 0; ui32Idx < NUM_WIN_CONDITIONS; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < NUM_WIN_CONDITIONS; ui32Idx++) {
         //
         // Get a winning board configuration from the global table, and create
         // bit masks for each player corresponding to that win condition.
@@ -282,13 +266,10 @@ CheckWinner(void)
         // If a player's pieces line up with the winning configuration, count
         // this as a win.
         //
-        if((g_ui32BoardState & ui32WinMask0) == ui32WinMask0)
-        {
+        if((g_ui32BoardState & ui32WinMask0) == ui32WinMask0) {
             UARTprintf("'X' Wins!\n", (g_ui32Player ? 'O' : 'X'));
             return 1;
-        }
-        else if((g_ui32BoardState & ui32WinMask1) == ui32WinMask1)
-        {
+        } else if((g_ui32BoardState & ui32WinMask1) == ui32WinMask1) {
             UARTprintf("'O' Wins!\n", (g_ui32Player ? 'O' : 'X'));
             return 1;
         }
@@ -306,15 +287,13 @@ CheckWinner(void)
     // if it is found.
     //
     ui32QuitCheck = (g_ui32BoardState & 0x01FF);
-    if(ui32QuitCheck == 0x01FF)
-    {
+    if(ui32QuitCheck == 0x01FF) {
         UARTprintf("Game ended by other player.\n");
         return 1;
     }
 
     ui32QuitCheck = (g_ui32BoardState & 0x01FF0000);
-    if(ui32QuitCheck == 0x01FF0000)
-    {
+    if(ui32QuitCheck == 0x01FF0000) {
         UARTprintf("Game ended by other player.\n");
         return 1;
     }
@@ -322,8 +301,7 @@ CheckWinner(void)
     //
     // If all spaces are full, and no winner was detected, declare this a tie.
     //
-    if(ui32CatCheck == 0x1FF)
-    {
+    if(ui32CatCheck == 0x1FF) {
         UARTprintf("It's a tie.\n");
         return 1;
     }
@@ -351,8 +329,7 @@ SetGameMode(void)
     //
     // If there wasn't any user input, return immediately.
     //
-    if(UARTPeek('\r') == -1)
-    {
+    if(UARTPeek('\r') == -1) {
         return 0;
     }
 
@@ -365,8 +342,7 @@ SetGameMode(void)
     //
     // Check to make sure we have a valid mode selection.
     //
-    if(ui32InputMode == 3)
-    {
+    if(ui32InputMode == 3) {
         //
         // If the selected mode is "online, remote player first", set the state
         // variables accordingly.
@@ -384,9 +360,7 @@ SetGameMode(void)
         g_sBoardState.eReadWriteType = READ_WRITE;
 
         return 1;
-    }
-    else if((ui32InputMode > 0) && (ui32InputMode < 4))
-    {
+    } else if((ui32InputMode > 0) && (ui32InputMode < 4)) {
         //
         // If the user entered a different valid choice, set up the game mode,
         // but don't request a play from the remote interface.
@@ -397,9 +371,7 @@ SetGameMode(void)
         g_sBoardState.eReadWriteType = WRITE_ONLY;
 
         return 1;
-    }
-    else
-    {
+    } else {
         //
         // Invalid input.
         //
@@ -420,8 +392,7 @@ AdvanceGameState(void)
     //
     // If the user has typed a Q, skip straight to ending the game.
     //
-    if((UARTPeek('Q') >= 0) && (UARTPeek('\r') >=0))
-    {
+    if((UARTPeek('Q') >= 0) && (UARTPeek('\r') >=0)) {
         //
         // Remove the Q from the buffer.
         //
@@ -443,10 +414,8 @@ AdvanceGameState(void)
     //
     // This switch statement controls the main flow of the game.
     //
-    switch(g_ui32GameState)
-    {
-        case NEW_GAME:
-        {
+    switch(g_ui32GameState) {
+        case NEW_GAME: {
             //
             // For a new game, the first step is to determine the game mode.
             // Prompt the user for a game mode via UART, and advance the state
@@ -464,18 +433,15 @@ AdvanceGameState(void)
             break;
         }
 
-        case SET_MODE:
-        {
+        case SET_MODE: {
             //
             // Only continue if we have input from the user.
             //
-            if(UARTPeek('\r') != -1)
-            {
+            if(UARTPeek('\r') != -1) {
                 //
                 // Attempt to use the user's input to set the game mode.
                 //
-                if(SetGameMode())
-                {
+                if(SetGameMode()) {
                     //
                     // If the user input was valid, show the game board and
                     // advance the state to start the first turn.
@@ -488,24 +454,20 @@ AdvanceGameState(void)
             break;
         }
 
-        case PLAY_TURN:
-        {
+        case PLAY_TURN: {
             //
             // Check to see if we need input from the local user. This will
             // always be true for a local game, and should be true for only a
             // single player's turns for an online game.
             //
-            if(!(g_ui32BoardState & REMOTE_PLAYER))
-            {
+            if(!(g_ui32BoardState & REMOTE_PLAYER)) {
                 //
                 // If we're playing a local game, prompt for a row number and
                 // advance the state to wait for a response.
                 //
                 UARTprintf("Enter Row: ");
                 g_ui32GameState = GET_ROW;
-            }
-            else
-            {
+            } else {
                 //
                 // If the local player is not supposed to move for this turn,
                 // print a message to let the player know that we are waiting
@@ -518,13 +480,11 @@ AdvanceGameState(void)
             break;
         }
 
-        case GET_ROW:
-        {
+        case GET_ROW: {
             //
             // Only continue if we have input from the user.
             //
-            if(UARTPeek('\r') != -1)
-            {
+            if(UARTPeek('\r') != -1) {
                 //
                 // Convert the user's input to an integer, and store it as the
                 // new row number.
@@ -543,13 +503,11 @@ AdvanceGameState(void)
             break;
         }
 
-        case GET_COLUMN:
-        {
+        case GET_COLUMN: {
             //
             // Only continue if we have input from the user.
             //
-            if(UARTPeek('\r') != -1)
-            {
+            if(UARTPeek('\r') != -1) {
                 //
                 // Convert the user's input to an integer, and store it as the
                 // new column number.
@@ -561,8 +519,7 @@ AdvanceGameState(void)
                 // Try to process the recorded row and column numbers as a
                 // "move" for the current player.
                 //
-                if(ProcessTurn())
-                {
+                if(ProcessTurn()) {
                     //
                     // The user's input was successfully processed and added to
                     // the game state. Show the board with the new move
@@ -573,22 +530,18 @@ AdvanceGameState(void)
                     //
                     // Check to see if this was a winning move.
                     //
-                    if(CheckWinner())
-                    {
+                    if(CheckWinner()) {
                         //
                         // If so, return a 1 to signal the end of the game.
                         //
                         return 1;
-                    }
-                    else
-                    {
+                    } else {
 
                         //
                         // Otherwise, the game must go on. Check to see if we
                         // have a remote player.
                         //
-                        if(g_ui32Mode != 1)
-                        {
+                        if(g_ui32Mode != 1) {
                             //
                             // We have a remote player, so toggle the bit to
                             // signal that the remote player should take their
@@ -613,9 +566,7 @@ AdvanceGameState(void)
                         //
                         g_ui32GameState = PLAY_TURN;
                     }
-                }
-                else
-                {
+                } else {
                     //
                     // Something was wrong with the user's input. Try prompting
                     // them again.
@@ -628,14 +579,12 @@ AdvanceGameState(void)
             break;
         }
 
-        case REMOTE_PLAY:
-        {
+        case REMOTE_PLAY: {
             //
             // If we are waiting on a remote player, check to see if the board
             // state variable has changed.
             //
-            if(g_ui32BoardState != g_ui32LastState)
-            {
+            if(g_ui32BoardState != g_ui32LastState) {
                 //
                 // Set the board state to stop reading from the server.
                 //
@@ -662,15 +611,12 @@ AdvanceGameState(void)
                 //
                 // Check to see if this was a winning move.
                 //
-                if(CheckWinner())
-                {
+                if(CheckWinner()) {
                     //
                     // If so, return a 1 to signal the end of the game.
                     //
                     return 1;
-                }
-                else
-                {
+                } else {
                     //
                     // Otherwise, update the last valid state, advance to the
                     // next turn.

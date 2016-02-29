@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -90,8 +90,7 @@ int32_t TouchEventHandler(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
     //
     // Check if pen is up, i.e. touch screen is touched and the pen is lifted.
     //
-    if(ui32Message == WIDGET_MSG_PTR_UP)
-    {
+    if(ui32Message == WIDGET_MSG_PTR_UP) {
         //
         // Store the X and Y coordinate values returned by the touch driver to
         // pass to the main loop.
@@ -183,8 +182,7 @@ main(void)
     //
     // Loop through the calibration points.
     //
-    for(i32Idx = 0; i32Idx < 3; i32Idx++)
-    {
+    for(i32Idx = 0; i32Idx < 3; i32Idx++) {
         //
         // Fill a white box around the calibration point.
         //
@@ -208,8 +206,7 @@ main(void)
         //
         // Wait until the screen is touched and the pen lifted.
         //
-        while(g_bTouch == 0)
-        {
+        while(g_bTouch == 0) {
         }
 
         //
@@ -324,7 +321,6 @@ main(void)
     //
     // The calibration is complete.  Sit around and wait for a reset.
     //
-    while(1)
-    {
+    while(1) {
     }
 }

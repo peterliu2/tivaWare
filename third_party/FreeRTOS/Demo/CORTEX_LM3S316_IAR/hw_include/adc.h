@@ -102,16 +102,16 @@ extern long ADCSequenceDataGet(unsigned long ulBase,
 extern void ADCProcessorTrigger(unsigned long ulBase,
                                 unsigned long ulSequenceNum);
 extern void ADCSoftwareOversampleConfigure(unsigned long ulBase,
-                                           unsigned long ulSequenceNum,
-                                           unsigned long ulFactor);
+        unsigned long ulSequenceNum,
+        unsigned long ulFactor);
 extern void ADCSoftwareOversampleStepConfigure(unsigned long ulBase,
-                                               unsigned long ulSequenceNum,
-                                               unsigned long ulStep,
-                                               unsigned long ulConfig);
+        unsigned long ulSequenceNum,
+        unsigned long ulStep,
+        unsigned long ulConfig);
 extern void ADCSoftwareOversampleDataGet(unsigned long ulBase,
-                                         unsigned long ulSequenceNum,
-                                         unsigned long *pulBuffer,
-                                         unsigned long ulCount);
+        unsigned long ulSequenceNum,
+        unsigned long *pulBuffer,
+        unsigned long ulCount);
 
 #ifdef __cplusplus
 }

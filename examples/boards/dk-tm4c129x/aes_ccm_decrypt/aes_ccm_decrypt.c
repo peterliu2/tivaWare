@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -85,8 +85,7 @@ tDMAControlTable g_psDMAControlTable[64] __attribute__((aligned(1024)));
 // Test Vectors
 //
 //*****************************************************************************
-typedef struct AESTestVectorStruct
-{
+typedef struct AESTestVectorStruct {
     uint32_t ui32KeySize;
     uint32_t pui32Key[8];
     uint32_t ui32NonceLength;
@@ -102,14 +101,13 @@ typedef struct AESTestVectorStruct
 
 tAESCCMTestVector;
 
-tAESCCMTestVector g_psAESCCMTestVectors[] = 
-{
+tAESCCMTestVector g_psAESCCMTestVectors[] = {
     //
     // Test Case #1
-    // The data in these test cases have been modified to be in big endian 
+    // The data in these test cases have been modified to be in big endian
     // format as required by the AES module.  This was done to simplify writes
-    // and comparisons. 
-    // Also, The test vector is formatted in the document in a way that the 
+    // and comparisons.
+    // Also, The test vector is formatted in the document in a way that the
     // ciphertext is the concatenation of the ciphertext and the MAC.  they
     // have been separated to match the operation of the AES module.
     //
@@ -126,7 +124,7 @@ tAESCCMTestVector g_psAESCCMTestVectors[] =
         4,                                                  // Tag Length
         { 0x5d25ac4d, 0x00000000, 0x00000000, 0x00000000 }  // Tag
     },
-    
+
     //
     // Test Case #2
     //
@@ -153,13 +151,19 @@ tAESCCMTestVector g_psAESCCMTestVectors[] =
         12,                                                 // Nonce Length
         { 0x13121110, 0x17161514, 0x1b1a1918, 0x00000000 }, // Nonce
         24,                                                 // Payload Length
-        { 0x23222120, 0x27262524, 0x2b2a2928, 0x2f2e2d2c,   // Payload
-          0x33323130, 0x37363534, 0x00000000, 0x00000000 },
+        {
+            0x23222120, 0x27262524, 0x2b2a2928, 0x2f2e2d2c,   // Payload
+            0x33323130, 0x37363534, 0x00000000, 0x00000000
+        },
         20,                                                 // Auth Data Length
-        { 0x03020100, 0x07060504, 0x0b0a0908, 0x0f0e0d0c,   // Auth Data
-          0x13121110, 0x00000000, 0x00000000, 0x00000000 },
-        { 0xa901b2e3, 0x7a1ab7f5, 0xecea1c9b, 0x0be797cd,   // CipherText
-          0xd9aa7661, 0xa58a42a4, 0x00000000, 0x00000000 },
+        {
+            0x03020100, 0x07060504, 0x0b0a0908, 0x0f0e0d0c,   // Auth Data
+            0x13121110, 0x00000000, 0x00000000, 0x00000000
+        },
+        {
+            0xa901b2e3, 0x7a1ab7f5, 0xecea1c9b, 0x0be797cd,   // CipherText
+            0xd9aa7661, 0xa58a42a4, 0x00000000, 0x00000000
+        },
         8,                                                  // Tag Length
         { 0xfb924348, 0x5199b0c1, 0x00000000, 0x00000000 }  // Tag
     },
@@ -167,44 +171,60 @@ tAESCCMTestVector g_psAESCCMTestVectors[] =
     //
     // The following test cases use 256bit key, and they are taken from
     // proposals for IEEE P1619.1 Test Vectors.
-    // 
+    //
     // Test Case #4
     //
     {
         AES_CFG_KEY_SIZE_256BIT,
-        { 0xb21576fb, 0x1d89803d, 0x0b9870d4, 0xc88495c7, // Key
-          0xce64fbb2, 0x4d8f9760, 0x5ae4fc17, 0xb730e849 },
+        {
+            0xb21576fb, 0x1d89803d, 0x0b9870d4, 0xc88495c7, // Key
+            0xce64fbb2, 0x4d8f9760, 0x5ae4fc17, 0xb730e849
+        },
         12,                                                 // Nonce Length
         { 0x63a3d1db, 0xb4b72460, 0x6f7dda02, 0x00000000 }, // Nonce
         16,                                                 // Payload Length
-        { 0x8e3445a8, 0xf1b5c5c8, 0x760ef526, 0x1e1bfdfe,   // Payload
-          0x00000000, 0x00000000, 0x00000000, 0x00000000 },
+        {
+            0x8e3445a8, 0xf1b5c5c8, 0x760ef526, 0x1e1bfdfe,   // Payload
+            0x00000000, 0x00000000, 0x00000000, 0x00000000
+        },
         0,                                                 // Auth Data Length
-        { 0x00000000, 0x00000000, 0x00000000, 0x00000000,   // Auth Data
-          0x00000000, 0x00000000, 0x00000000, 0x00000000 },
-        { 0x611288cc, 0x72faa7c6, 0x39176ab9, 0x7f276b17,   // CipherText
-          0x00000000, 0x00000000, 0x00000000, 0x00000000 },
+        {
+            0x00000000, 0x00000000, 0x00000000, 0x00000000,   // Auth Data
+            0x00000000, 0x00000000, 0x00000000, 0x00000000
+        },
+        {
+            0x611288cc, 0x72faa7c6, 0x39176ab9, 0x7f276b17,   // CipherText
+            0x00000000, 0x00000000, 0x00000000, 0x00000000
+        },
         16,                                                 // Tag Length
         { 0x14e17234, 0xbe0c2c5f, 0x06496314, 0x23e4f02c }  // Tag
     },
 
-    // 
+    //
     // Test Case #5
     //
     {
         AES_CFG_KEY_SIZE_256BIT,
-        { 0x43424140, 0x47464544, 0x4b4a4948, 0x4f4e4d4c, // Key
-          0x53525150, 0x57565554, 0x5b5a5958, 0x5f5e5d5c },
+        {
+            0x43424140, 0x47464544, 0x4b4a4948, 0x4f4e4d4c, // Key
+            0x53525150, 0x57565554, 0x5b5a5958, 0x5f5e5d5c
+        },
         12,                                                 // Nonce Length
         { 0x13121110, 0x17161514, 0x1b1a1918, 0x00000000 }, // Nonce
         24,                                                 // Payload Length
-        { 0x23222120, 0x27262524, 0x2b2a2928, 0x2f2e2d2c,   // Payload
-          0x33323130, 0x37363534, 0x00000000, 0x00000000 },
+        {
+            0x23222120, 0x27262524, 0x2b2a2928, 0x2f2e2d2c,   // Payload
+            0x33323130, 0x37363534, 0x00000000, 0x00000000
+        },
         20,                                                 // Auth Data Length
-        { 0x03020100, 0x07060504, 0x0b0a0908, 0x0f0e0d0c,   // Auth Data
-          0x13121110, 0x00000000, 0x00000000, 0x00000000 },
-        { 0xae83f804, 0x3007bdb3, 0xb60bf5ea, 0x21a24fde,   // CipherText
-          0xe4e43420, 0xe5750e1b, 0x00000000, 0x00000000 },
+        {
+            0x03020100, 0x07060504, 0x0b0a0908, 0x0f0e0d0c,   // Auth Data
+            0x13121110, 0x00000000, 0x00000000, 0x00000000
+        },
+        {
+            0xae83f804, 0x3007bdb3, 0xb60bf5ea, 0x21a24fde,   // CipherText
+            0xe4e43420, 0xe5750e1b, 0x00000000, 0x00000000
+        },
         16,                                                 // Tag Length
         { 0x3a3fba9b, 0x39327f10, 0x299063bd, 0x7103f823 }  // Tag
     }
@@ -235,12 +255,9 @@ LengthRoundUp(uint32_t ui32Length)
     uint32_t ui32Remainder;
 
     ui32Remainder = ui32Length % 16;
-    if(ui32Remainder == 0)
-    {
+    if(ui32Remainder == 0) {
         return(ui32Length);
-    }
-    else
-    {
+    } else {
         return(ui32Length + (16 - ui32Remainder));
     }
 }
@@ -272,53 +289,45 @@ AESIntHandler(void)
     //
     // Print a different message depending on the interrupt source.
     //
-    if(ui32IntStatus & AES_INT_CONTEXT_IN)
-    {
+    if(ui32IntStatus & AES_INT_CONTEXT_IN) {
         ROM_AESIntDisable(AES_BASE, AES_INT_CONTEXT_IN);
         g_bContextInIntFlag = true;
         UARTprintf(" Context input registers are ready.\n");
     }
-    if(ui32IntStatus & AES_INT_DATA_IN)
-    {
+    if(ui32IntStatus & AES_INT_DATA_IN) {
         ROM_AESIntDisable(AES_BASE, AES_INT_DATA_IN);
         g_bDataInIntFlag = true;
         UARTprintf(" Data FIFO is ready to receive data.\n");
     }
-    if(ui32IntStatus & AES_INT_CONTEXT_OUT)
-    {
+    if(ui32IntStatus & AES_INT_CONTEXT_OUT) {
         ROM_AESIntDisable(AES_BASE, AES_INT_CONTEXT_OUT);
         g_bContextOutIntFlag = true;
         UARTprintf(" Context output registers are ready.\n");
     }
-    if(ui32IntStatus & AES_INT_DATA_OUT)
-    {
+    if(ui32IntStatus & AES_INT_DATA_OUT) {
         ROM_AESIntDisable(AES_BASE, AES_INT_DATA_OUT);
         g_bDataOutIntFlag = true;
         UARTprintf(" Data FIFO is ready to provide data.\n");
     }
-    if(ui32IntStatus & AES_INT_DMA_CONTEXT_IN)
-    {
+    if(ui32IntStatus & AES_INT_DMA_CONTEXT_IN) {
         ROM_AESIntClear(AES_BASE, AES_INT_DMA_CONTEXT_IN);
         g_bContextInDMADoneIntFlag = true;
         UARTprintf(" DMA completed a context write to the internal\n");
         UARTprintf(" registers.\n");
     }
-    if(ui32IntStatus & AES_INT_DMA_DATA_IN)
-    {
+    if(ui32IntStatus & AES_INT_DMA_DATA_IN) {
         ROM_AESIntClear(AES_BASE, AES_INT_DMA_DATA_IN);
         g_bDataInDMADoneIntFlag = true;
         UARTprintf(" DMA has written the last word of input data to\n");
         UARTprintf(" the internal FIFO of the engine.\n");
     }
-    if(ui32IntStatus & AES_INT_DMA_CONTEXT_OUT)
-    {
+    if(ui32IntStatus & AES_INT_DMA_CONTEXT_OUT) {
         ROM_AESIntClear(AES_BASE, AES_INT_DMA_CONTEXT_OUT);
         g_bContextOutDMADoneIntFlag = true;
         UARTprintf(" DMA completed the output context movement from\n");
         UARTprintf(" the internal registers.\n");
     }
-    if(ui32IntStatus & AES_INT_DMA_DATA_OUT)
-    {
+    if(ui32IntStatus & AES_INT_DMA_DATA_OUT) {
         ROM_AESIntClear(AES_BASE, AES_INT_DMA_DATA_OUT);
         g_bDataOutDMADoneIntFlag = true;
         UARTprintf(" DMA has written the last word of process result.\n");
@@ -328,14 +337,14 @@ AESIntHandler(void)
 //*****************************************************************************
 //
 // Perform an CCM decryption operation.
-// 
+//
 //*****************************************************************************
 bool
 AESCCMDecrypt(uint32_t ui32Keysize, uint32_t *pui32Key,
               uint32_t *pui32Src, uint32_t *pui32Dst,
-              uint32_t ui32DataLength, uint32_t *pui32Nonce, 
-              uint32_t ui32NonceLength, uint32_t *pui32AuthData, 
-              uint32_t ui32AuthDataLength, uint32_t *pui32Tag, 
+              uint32_t ui32DataLength, uint32_t *pui32Nonce,
+              uint32_t ui32NonceLength, uint32_t *pui32AuthData,
+              uint32_t ui32AuthDataLength, uint32_t *pui32Tag,
               uint32_t ui32TagLength, bool bUseDMA)
 {
     uint32_t pui32IV[4], ui32Idx;
@@ -343,39 +352,24 @@ AESCCMDecrypt(uint32_t ui32Keysize, uint32_t *pui32Key,
     uint8_t *pui8Nonce, *pui8IV;
 
     //
-    // Determine the value of M.  It is determined using 
+    // Determine the value of M.  It is determined using
     // the tag length.
     //
-    if(ui32TagLength == 4)
-    {
+    if(ui32TagLength == 4) {
         ui32M = AES_CFG_CCM_M_4;
-    }
-    else if(ui32TagLength == 6)
-    {
+    } else if(ui32TagLength == 6) {
         ui32M = AES_CFG_CCM_M_6;
-    }
-    else if(ui32TagLength == 8)
-    {
+    } else if(ui32TagLength == 8) {
         ui32M = AES_CFG_CCM_M_8;
-    }
-    else if(ui32TagLength == 10)
-    {
+    } else if(ui32TagLength == 10) {
         ui32M = AES_CFG_CCM_M_10;
-    }
-    else if(ui32TagLength == 12)
-    {
+    } else if(ui32TagLength == 12) {
         ui32M = AES_CFG_CCM_M_12;
-    }
-    else if(ui32TagLength == 14)
-    {
+    } else if(ui32TagLength == 14) {
         ui32M = AES_CFG_CCM_M_14;
-    }
-    else if(ui32TagLength == 16)
-    {
+    } else if(ui32TagLength == 16) {
         ui32M = AES_CFG_CCM_M_16;
-    }
-    else
-    {
+    } else {
         UARTprintf("Unexpected tag length.\n");
         return(false);
     }
@@ -384,40 +378,23 @@ AESCCMDecrypt(uint32_t ui32Keysize, uint32_t *pui32Key,
     // Determine the value of L. This is determined by using
     // the value of q from the NIST document:  n + q = 15
     //
-    if(ui32NonceLength == 7)
-    {   
+    if(ui32NonceLength == 7) {
         ui32L = AES_CFG_CCM_L_8;
-    }
-    else if(ui32NonceLength == 8)
-    {   
+    } else if(ui32NonceLength == 8) {
         ui32L = AES_CFG_CCM_L_7;
-    }
-    else if(ui32NonceLength == 9)
-    {   
+    } else if(ui32NonceLength == 9) {
         ui32L = AES_CFG_CCM_L_6;
-    }
-    else if(ui32NonceLength == 10)
-    {   
+    } else if(ui32NonceLength == 10) {
         ui32L = AES_CFG_CCM_L_5;
-    }
-    else if(ui32NonceLength == 11)
-    {
+    } else if(ui32NonceLength == 11) {
         ui32L = AES_CFG_CCM_L_4;
-    }
-    else if(ui32NonceLength == 12)
-    {
+    } else if(ui32NonceLength == 12) {
         ui32L = AES_CFG_CCM_L_3;
-    }
-    else if(ui32NonceLength == 13)
-    {
+    } else if(ui32NonceLength == 13) {
         ui32L = AES_CFG_CCM_L_2;
-    }
-    else if(ui32NonceLength == 14)
-    {
+    } else if(ui32NonceLength == 14) {
         ui32L = AES_CFG_CCM_L_1;
-    }
-    else
-    {
+    } else {
         UARTprintf("Unexpected nonce length.\n");
         return(false);
     }
@@ -453,44 +430,30 @@ AESCCMDecrypt(uint32_t ui32Keysize, uint32_t *pui32Key,
                                 AES_CFG_MODE_CCM | ui32L | ui32M));
 
     //
-    // Determine the value to be written in the initial value registers.  It is 
+    // Determine the value to be written in the initial value registers.  It is
     // the concatenation of 5 bits of zero, 3 bits of L, nonce, and the counter
     // value.  First, clear the contents of the IV.
     //
-    for(ui32Idx = 0; ui32Idx < 4; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < 4; ui32Idx++) {
         pui32IV[ui32Idx] = 0;
     }
 
     //
     // Now find the binary value of L.
     //
-    if(ui32L == AES_CFG_CCM_L_8)
-    {
+    if(ui32L == AES_CFG_CCM_L_8) {
         pui32IV[0] = 0x7;
-    }
-    else if(ui32L == AES_CFG_CCM_L_7)
-    {
+    } else if(ui32L == AES_CFG_CCM_L_7) {
         pui32IV[0] = 0x6;
-    }
-    else if(ui32L == AES_CFG_CCM_L_6)
-    {
+    } else if(ui32L == AES_CFG_CCM_L_6) {
         pui32IV[0] = 0x5;
-    }
-    else if(ui32L == AES_CFG_CCM_L_5)
-    {
+    } else if(ui32L == AES_CFG_CCM_L_5) {
         pui32IV[0] = 0x4;
-    }
-    else if(ui32L == AES_CFG_CCM_L_4)
-    {
+    } else if(ui32L == AES_CFG_CCM_L_4) {
         pui32IV[0] = 0x3;
-    }
-    else if(ui32L == AES_CFG_CCM_L_3)
-    {
+    } else if(ui32L == AES_CFG_CCM_L_3) {
         pui32IV[0] = 0x2;
-    }
-    else if(ui32L == AES_CFG_CCM_L_2)
-    {
+    } else if(ui32L == AES_CFG_CCM_L_2) {
         pui32IV[0] = 0x1;
     }
 
@@ -498,10 +461,9 @@ AESCCMDecrypt(uint32_t ui32Keysize, uint32_t *pui32Key,
     // Finally copy the contents of the nonce into the IV.  Convert
     // the pointers to simplify the copying.
     //
-    pui8Nonce = (uint8_t *)pui32Nonce; 
+    pui8Nonce = (uint8_t *)pui32Nonce;
     pui8IV = (uint8_t *)pui32IV;
-    for(ui32Idx = 0; ui32Idx < ui32NonceLength; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < ui32NonceLength; ui32Idx++) {
         pui8IV[ui32Idx + 1] = pui8Nonce[ui32Idx];
     }
 
@@ -514,13 +476,12 @@ AESCCMDecrypt(uint32_t ui32Keysize, uint32_t *pui32Key,
     // Write the key.
     //
     ROM_AESKey1Set(AES_BASE, pui32Key, ui32Keysize);
-    
+
     //
     // Depending on the argument, perform the decryption
     // with or without uDMA.
     //
-    if(bUseDMA)
-    {
+    if(bUseDMA) {
         //
         // Enable DMA interrupts.
         //
@@ -542,8 +503,7 @@ AESCCMDecrypt(uint32_t ui32Keysize, uint32_t *pui32Key,
                                   UDMA_SIZE_32 | UDMA_SRC_INC_32 |
                                   UDMA_DST_INC_NONE | UDMA_ARB_4 |
                                   UDMA_DST_PROT_PRIV);
-        if(ui32AuthDataLength)
-        {
+        if(ui32AuthDataLength) {
             ROM_uDMAChannelTransferSet(UDMA_CH14_AES0DIN | UDMA_PRI_SELECT,
                                        UDMA_MODE_BASIC, (void *)pui32AuthData,
                                        (void *)(AES_BASE + AES_O_DATA_IN_0),
@@ -580,12 +540,12 @@ AESCCMDecrypt(uint32_t ui32Keysize, uint32_t *pui32Key,
         // Write the auth length registers to start the process.
         //
         ROM_AESAuthLengthSet(AES_BASE, ui32AuthDataLength);
-        
+
         //
         // Enable the DMA channels to start the transfers.  This must be done after
-        // writing the length to prevent data from copying before the context is 
+        // writing the length to prevent data from copying before the context is
         // truly ready.
-        // 
+        //
         ROM_uDMAChannelEnable(UDMA_CH14_AES0DIN);
         ROM_uDMAChannelEnable(UDMA_CH15_AES0DOUT);
 
@@ -597,8 +557,7 @@ AESCCMDecrypt(uint32_t ui32Keysize, uint32_t *pui32Key,
         //
         // Wait for the data in DMA done interrupt.
         //
-        while(!g_bDataInDMADoneIntFlag)
-        {
+        while(!g_bDataInDMADoneIntFlag) {
         }
 
         //
@@ -624,17 +583,14 @@ AESCCMDecrypt(uint32_t ui32Keysize, uint32_t *pui32Key,
         //
         // Wait for the data out DMA done interrupt.
         //
-        while(!g_bDataOutDMADoneIntFlag)
-        {
+        while(!g_bDataOutDMADoneIntFlag) {
         }
 
         //
         // Read the tag out.
         //
         ROM_AESTagRead(AES_BASE, pui32Tag);
-    }
-    else
-    {
+    } else {
         //
         // Perform the decryption.
         //
@@ -657,8 +613,7 @@ AESInit(void)
     //
     // Check that the CCM peripheral is present.
     //
-    if(!ROM_SysCtlPeripheralPresent(SYSCTL_PERIPH_CCM0))
-    {
+    if(!ROM_SysCtlPeripheralPresent(SYSCTL_PERIPH_CCM0)) {
         UARTprintf("No CCM peripheral found!\n");
 
         //
@@ -676,15 +631,13 @@ AESInit(void)
     // Wait for the peripheral to be ready.
     //
     ui32Loop = 0;
-    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0))
-    {
+    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0)) {
         //
         // Increment our poll counter.
         //
         ui32Loop++;
 
-        if(ui32Loop > CCM_LOOP_TIMEOUT)
-        {
+        if(ui32Loop > CCM_LOOP_TIMEOUT) {
             //
             // Timed out, notify and spin.
             //
@@ -706,15 +659,13 @@ AESInit(void)
     // Wait for the peripheral to be ready again.
     //
     ui32Loop = 0;
-    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0))
-    {
+    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0)) {
         //
         // Increment our poll counter.
         //
         ui32Loop++;
 
-        if(ui32Loop > CCM_LOOP_TIMEOUT)
-        {
+        if(ui32Loop > CCM_LOOP_TIMEOUT) {
             //
             // Timed out, spin.
             //
@@ -788,7 +739,7 @@ main(void)
     uint8_t ui8Vector;
     uint8_t *pui8ExpTag, *pui8Tag;
     tContext sContext;
-    
+
     //
     // Run from the PLL at 120 MHz.
     //
@@ -816,7 +767,7 @@ main(void)
     // Draw the application frame.
     //
     FrameDraw(&sContext, "aes-ccm-decrypt");
-    
+
     //
     // Show some instructions on the display
     //
@@ -874,8 +825,7 @@ main(void)
     //
     // Initialize the CCM and AES modules.
     //
-    if(!AESInit())
-    {
+    if(!AESInit()) {
         UARTprintf("Initialization of the AES module failed.\n");
         ui32Errors |= 0x00000001;
     }
@@ -883,12 +833,10 @@ main(void)
     //
     // Clear the array containing the ciphertext.
     //
-    for(ui32Idx = 0; ui32Idx < 16; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < 16; ui32Idx++) {
         pui32Payload[ui32Idx] = 0;
     }
-    for(ui32Idx = 0; ui32Idx < 4; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < 4; ui32Idx++) {
         pui32Tag[ui32Idx] = 0;
     }
 
@@ -896,11 +844,10 @@ main(void)
     // Loop through all the given vectors.
     //
     for(ui8Vector = 0;
-        (ui8Vector <
-         (sizeof(g_psAESCCMTestVectors) / sizeof(g_psAESCCMTestVectors[0]))) &&
-        (ui32Errors == 0);
-        ui8Vector++)
-    {
+            (ui8Vector <
+             (sizeof(g_psAESCCMTestVectors) / sizeof(g_psAESCCMTestVectors[0]))) &&
+            (ui32Errors == 0);
+            ui8Vector++) {
         UARTprintf("Starting vector #%d\n", ui8Vector);
 
         //
@@ -909,12 +856,12 @@ main(void)
         ui32Keysize = g_psAESCCMTestVectors[ui8Vector].ui32KeySize;
         pui32Key = g_psAESCCMTestVectors[ui8Vector].pui32Key;
         pui32ExpPayload = g_psAESCCMTestVectors[ui8Vector].pui32Payload;
-        ui32PayloadLength = 
+        ui32PayloadLength =
             g_psAESCCMTestVectors[ui8Vector].ui32PayloadLength;
         pui32AuthData = g_psAESCCMTestVectors[ui8Vector].pui32AuthData;
-        ui32AuthDataLength = 
+        ui32AuthDataLength =
             g_psAESCCMTestVectors[ui8Vector].ui32AuthDataLength;
-        pui32CipherText = 
+        pui32CipherText =
             g_psAESCCMTestVectors[ui8Vector].pui32CipherText;
         pui8ExpTag = (uint8_t *)g_psAESCCMTestVectors[ui8Vector].pui32Tag;
         ui32TagLength = g_psAESCCMTestVectors[ui8Vector].ui32TagLength;
@@ -930,24 +877,20 @@ main(void)
                       pui32Payload, ui32PayloadLength, pui32Nonce,
                       ui32NonceLength, pui32AuthData, ui32AuthDataLength,
                       pui32Tag, ui32TagLength, false);
-            
+
         //
         // Check the result.
         //
-        for(ui32Idx = 0; ui32Idx < (ui32PayloadLength / 4); ui32Idx++)
-        {
-            if(pui32Payload[ui32Idx] != pui32ExpPayload[ui32Idx])
-            {
+        for(ui32Idx = 0; ui32Idx < (ui32PayloadLength / 4); ui32Idx++) {
+            if(pui32Payload[ui32Idx] != pui32ExpPayload[ui32Idx]) {
                 UARTprintf("Payload mismatch on word %d. Exp: 0x%x, Act: "
                            "0x%x\n", ui32Idx, pui32ExpPayload[ui32Idx],
                            pui32Payload[ui32Idx]);
                 ui32Errors |= (ui32Idx << 16) | 0x00000002;
             }
         }
-        for(ui32Idx = 0; ui32Idx < ui32TagLength; ui32Idx++)
-        {
-            if(pui8Tag[ui32Idx] != pui8ExpTag[ui32Idx])
-            {
+        for(ui32Idx = 0; ui32Idx < ui32TagLength; ui32Idx++) {
+            if(pui8Tag[ui32Idx] != pui8ExpTag[ui32Idx]) {
                 UARTprintf("Tag mismatch on byte %d. Exp: 0x%x, Act: "
                            "0x%x\n", ui32Idx, pui8ExpTag[ui32Idx],
                            pui8Tag[ui32Idx]);
@@ -958,12 +901,10 @@ main(void)
         //
         // Clear the array containing the ciphertext.
         //
-        for(ui32Idx = 0; ui32Idx < 16; ui32Idx++)
-        {
+        for(ui32Idx = 0; ui32Idx < 16; ui32Idx++) {
             pui32Payload[ui32Idx] = 0;
         }
-        for(ui32Idx = 0; ui32Idx < 4; ui32Idx++)
-        {
+        for(ui32Idx = 0; ui32Idx < 4; ui32Idx++) {
             pui32Tag[ui32Idx] = 0;
         }
 
@@ -975,62 +916,52 @@ main(void)
                       pui32Payload, ui32PayloadLength, pui32Nonce,
                       ui32NonceLength, pui32AuthData, ui32AuthDataLength,
                       pui32Tag, ui32TagLength, true);
-        
+
         //
         // Check the result.
         //
-        for(ui32Idx = 0; ui32Idx < (ui32PayloadLength / 4); ui32Idx++)
-        {
-            if(pui32Payload[ui32Idx] != pui32ExpPayload[ui32Idx])
-            {
+        for(ui32Idx = 0; ui32Idx < (ui32PayloadLength / 4); ui32Idx++) {
+            if(pui32Payload[ui32Idx] != pui32ExpPayload[ui32Idx]) {
                 UARTprintf("Payload mismatch on word %d. Exp: 0x%x, Act: "
                            "0x%x\n", ui32Idx, pui32ExpPayload[ui32Idx],
                            pui32Payload[ui32Idx]);
                 ui32Errors |= (ui32Idx << 16) | 0x00000002;
             }
         }
-        for(ui32Idx = 0; ui32Idx < ui32TagLength; ui32Idx++)
-        {
-            if(pui8Tag[ui32Idx] != pui8ExpTag[ui32Idx])
-            {
+        for(ui32Idx = 0; ui32Idx < ui32TagLength; ui32Idx++) {
+            if(pui8Tag[ui32Idx] != pui8ExpTag[ui32Idx]) {
                 UARTprintf("Tag mismatch on byte %d. Exp: 0x%x, Act: "
                            "0x%x\n", ui32Idx, pui8ExpTag[ui32Idx],
                            pui8Tag[ui32Idx]);
                 ui32Errors |= (ui32Idx << 16) | 0x00000004;
             }
         }
-        
+
         //
         // Clear the array containing the ciphertext.
         //
-        for(ui32Idx = 0; ui32Idx < 16; ui32Idx++)
-        {
+        for(ui32Idx = 0; ui32Idx < 16; ui32Idx++) {
             pui32Payload[ui32Idx] = 0;
         }
-        for(ui32Idx = 0; ui32Idx < 4; ui32Idx++)
-        {
+        for(ui32Idx = 0; ui32Idx < 4; ui32Idx++) {
             pui32Tag[ui32Idx] = 0;
         }
     }
-    
+
 
     //
     // Finished.
     //
-    if(ui32Errors)
-    {
+    if(ui32Errors) {
         UARTprintf("Demo failed with error code 0x%x.\n", ui32Errors);
         GrStringDrawCentered(&sContext, "Demo failed.", -1,
                              GrContextDpyWidthGet(&sContext) / 2, 180, false);
-    }
-    else
-    {
+    } else {
         UARTprintf("Demo completed successfully.\n");
         GrStringDrawCentered(&sContext, "Demo passed.", -1,
                              GrContextDpyWidthGet(&sContext) / 2, 180, false);
     }
 
-    while(1)
-    {
+    while(1) {
     }
 }

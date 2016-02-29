@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2006-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -106,23 +106,18 @@ GetPacket(uint8_t *pui8Data, uint8_t *pui8Size)
     //
     // Get the size and the checksum.
     //
-    do
-    {
-        if(UARTReceiveData(&ui8Size, 1))
-        {
+    do {
+        if(UARTReceiveData(&ui8Size, 1)) {
             return(-1);
         }
-    }
-    while(ui8Size == 0);
+    } while(ui8Size == 0);
 
-    if(UARTReceiveData(&ui8CheckSum, 1))
-    {
+    if(UARTReceiveData(&ui8CheckSum, 1)) {
         return(-1);
     }
     *pui8Size = ui8Size - 2;
 
-    if(UARTReceiveData(pui8Data, *pui8Size))
-    {
+    if(UARTReceiveData(pui8Data, *pui8Size)) {
         *pui8Size = 0;
         return(-1);
     }
@@ -130,8 +125,7 @@ GetPacket(uint8_t *pui8Data, uint8_t *pui8Size)
     //
     // Calculate the checksum from the data.
     //
-    if(CheckSum(pui8Data, *pui8Size) != ui8CheckSum)
-    {
+    if(CheckSum(pui8Data, *pui8Size) != ui8CheckSum) {
         *pui8Size = 0;
         return(NakPacket());
     }
@@ -160,8 +154,7 @@ CheckSum(uint8_t *pui8Data, uint8_t ui8Size)
 
     ui8CheckSum = 0;
 
-    for(i = 0; i < ui8Size; ++i)
-    {
+    for(i = 0; i < ui8Size; ++i) {
         ui8CheckSum += pui8Data[i];
     }
     return(ui8CheckSum);
@@ -198,16 +191,14 @@ SendPacket(uint8_t *pui8Data, uint8_t ui8Size, bool bAck)
     //
     // Send the Size in bytes.
     //
-    if(UARTSendData(&ui8Size, 1))
-    {
+    if(UARTSendData(&ui8Size, 1)) {
         return(-1);
     }
 
     //
     // Send the CheckSum
     //
-    if(UARTSendData(&ui8CheckSum, 1))
-    {
+    if(UARTSendData(&ui8CheckSum, 1)) {
         return(-1);
     }
 
@@ -219,33 +210,27 @@ SendPacket(uint8_t *pui8Data, uint8_t ui8Size, bool bAck)
     //
     // Send the Data
     //
-    if(UARTSendData(pui8Data, ui8Size))
-    {
+    if(UARTSendData(pui8Data, ui8Size)) {
         return(-1);
     }
 
     //
     // Return immediately if no ACK/NAK is expected.
     //
-    if(!bAck)
-    {
+    if(!bAck) {
         return(0);
     }
 
     //
     // Wait for the acknowledge from the device.
     //
-    do
-    {
-        if(UARTReceiveData(&ui8Ack, 1))
-        {
+    do {
+        if(UARTReceiveData(&ui8Ack, 1)) {
             return(-1);
         }
-    }
-    while(ui8Ack == 0);
+    } while(ui8Ack == 0);
 
-    if(ui8Ack != COMMAND_ACK)
-    {
+    if(ui8Ack != COMMAND_ACK) {
         return(-1);
     }
     return(0);

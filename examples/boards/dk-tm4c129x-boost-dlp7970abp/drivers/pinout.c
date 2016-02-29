@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -188,8 +188,8 @@ PinoutSet(void)
     GPIOPinTypeLCD(GPIO_PORTF_BASE, GPIO_PIN_7);
     GPIOPinTypeLCD(GPIO_PORTJ_BASE, GPIO_PIN_6);
     GPIOPinTypeLCD(GPIO_PORTR_BASE,
-                       (GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 |
-                        GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7));
+                   (GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 |
+                    GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7));
     GPIOPinTypeLCD(GPIO_PORTS_BASE, GPIO_PIN_4 | GPIO_PIN_5);
 
     //
@@ -240,7 +240,7 @@ USBULPIPinoutSet(void)
     ROM_GPIOPinConfigure(GPIO_PP4_USB0D7);
     ROM_GPIOPinConfigure(GPIO_PP5_USB0D6);
     ROM_GPIOPinTypeUSBDigital(GPIO_PORTP_BASE, GPIO_PIN_2 | GPIO_PIN_3 |
-                                               GPIO_PIN_4 | GPIO_PIN_5);
+                              GPIO_PIN_4 | GPIO_PIN_5);
     GPIOPadConfigSet(GPIO_PORTP_BASE,
                      GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5,
                      GPIO_STRENGTH_12MA, GPIO_PIN_TYPE_STD);
@@ -255,8 +255,8 @@ USBULPIPinoutSet(void)
     ROM_GPIOPinConfigure(GPIO_PL1_USB0D1);
     ROM_GPIOPinConfigure(GPIO_PL0_USB0D0);
     ROM_GPIOPinTypeUSBDigital(GPIO_PORTL_BASE, GPIO_PIN_0 | GPIO_PIN_1 |
-                                               GPIO_PIN_2 | GPIO_PIN_3 |
-                                               GPIO_PIN_4 | GPIO_PIN_5);
+                              GPIO_PIN_2 | GPIO_PIN_3 |
+                              GPIO_PIN_4 | GPIO_PIN_5);
     GPIOPadConfigSet(GPIO_PORTL_BASE,
                      GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 |
                      GPIO_PIN_4 | GPIO_PIN_5,
@@ -270,7 +270,7 @@ USBULPIPinoutSet(void)
     //
     ROM_GPIOPinTypeGPIOOutput(GPIO_PORTM_BASE, GPIO_PIN_1 | GPIO_PIN_3);
     ROM_GPIOPinWrite(GPIO_PORTM_BASE, GPIO_PIN_1 | GPIO_PIN_3, GPIO_PIN_1 |
-                                                               GPIO_PIN_3);
+                     GPIO_PIN_3);
 }
 #endif
 

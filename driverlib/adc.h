@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2005-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -152,7 +152,7 @@ extern "C"
 #define ADC_COMP_INT_LOW_ONCE   0x00000011  // Interrupt Low Once
 #define ADC_COMP_INT_LOW_HALWAYS \
                                 0x00000012  // Interrupt Low Always
-                                            // (Hysteresis)
+// (Hysteresis)
 #define ADC_COMP_INT_LOW_HONCE  0x00000013  // Interrupt Low Once (Hysteresis)
 #define ADC_COMP_INT_MID_ALWAYS \
                                 0x00000014  // Interrupt Mid Always
@@ -162,7 +162,7 @@ extern "C"
 #define ADC_COMP_INT_HIGH_ONCE  0x0000001D  // Interrupt High Once
 #define ADC_COMP_INT_HIGH_HALWAYS \
                                 0x0000001E  // Interrupt High Always
-                                            // (Hysteresis)
+// (Hysteresis)
 #define ADC_COMP_INT_HIGH_HONCE \
                                 0x0000001F  // Interrupt High Once (Hysteresis)
 
@@ -272,18 +272,18 @@ extern int32_t ADCSequenceDataGet(uint32_t ui32Base, uint32_t ui32SequenceNum,
                                   uint32_t *pui32Buffer);
 extern void ADCProcessorTrigger(uint32_t ui32Base, uint32_t ui32SequenceNum);
 extern void ADCSoftwareOversampleConfigure(uint32_t ui32Base,
-                                           uint32_t ui32SequenceNum,
-                                           uint32_t ui32Factor);
+        uint32_t ui32SequenceNum,
+        uint32_t ui32Factor);
 extern void ADCSoftwareOversampleStepConfigure(uint32_t ui32Base,
-                                               uint32_t ui32SequenceNum,
-                                               uint32_t ui32Step,
-                                               uint32_t ui32Config);
+        uint32_t ui32SequenceNum,
+        uint32_t ui32Step,
+        uint32_t ui32Config);
 extern void ADCSoftwareOversampleDataGet(uint32_t ui32Base,
-                                         uint32_t ui32SequenceNum,
-                                         uint32_t *pui32Buffer,
-                                         uint32_t ui32Count);
+        uint32_t ui32SequenceNum,
+        uint32_t *pui32Buffer,
+        uint32_t ui32Count);
 extern void ADCHardwareOversampleConfigure(uint32_t ui32Base,
-                                           uint32_t ui32Factor);
+        uint32_t ui32Factor);
 extern void ADCClockConfigSet(uint32_t ui32Base, uint32_t ui32Config,
                               uint32_t ui32ClockDiv);
 extern uint32_t ADCClockConfigGet(uint32_t ui32Base, uint32_t *pui32ClockDiv);

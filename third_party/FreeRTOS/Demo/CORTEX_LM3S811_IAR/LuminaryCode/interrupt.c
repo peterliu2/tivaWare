@@ -46,8 +46,7 @@
 //
 //*****************************************************************************
 #if defined(GROUP_pulpriority) || defined(BUILD_ALL)
-const unsigned long g_pulPriority[] =
-{
+const unsigned long g_pulPriority[] = {
     NVIC_APINT_PRIGROUP_0_8, NVIC_APINT_PRIGROUP_1_7, NVIC_APINT_PRIGROUP_2_6,
     NVIC_APINT_PRIGROUP_3_5, NVIC_APINT_PRIGROUP_4_4, NVIC_APINT_PRIGROUP_5_3,
     NVIC_APINT_PRIGROUP_6_2, NVIC_APINT_PRIGROUP_7_1
@@ -63,8 +62,7 @@ extern const unsigned long g_pulPriority[];
 //
 //*****************************************************************************
 #if defined(GROUP_pulregs) || defined(BUILD_ALL)
-const unsigned long g_pulRegs[12] =
-{
+const unsigned long g_pulRegs[12] = {
     0, NVIC_SYS_PRI1, NVIC_SYS_PRI2, NVIC_SYS_PRI3, NVIC_PRI0, NVIC_PRI1,
     NVIC_PRI2, NVIC_PRI3, NVIC_PRI4, NVIC_PRI5, NVIC_PRI6, NVIC_PRI7
 };
@@ -92,8 +90,7 @@ IntDefaultHandler(void)
     //
     // Go into an infinite loop.
     //
-    while(1)
-    {
+    while(1) {
     }
 }
 #else
@@ -213,14 +210,12 @@ IntRegister(unsigned long ulInterrupt, void (*pfnHandler)(void))
     //
     // See if the RAM vector table has been initialized.
     //
-    if(HWREG(NVIC_VTABLE) != (unsigned long)g_pfnRAMVectors)
-    {
+    if(HWREG(NVIC_VTABLE) != (unsigned long)g_pfnRAMVectors) {
         //
         // Copy the vector table from the beginning of FLASH to the RAM vector
         // table.
         //
-        for(ulIdx = 0; ulIdx < NUM_INTERRUPTS; ulIdx++)
-        {
+        for(ulIdx = 0; ulIdx < NUM_INTERRUPTS; ulIdx++) {
             g_pfnRAMVectors[ulIdx] = (void (*)(void))HWREG(ulIdx * 4);
         }
 
@@ -325,13 +320,11 @@ IntPriorityGroupingGet(void)
     //
     // Loop through the priority grouping values.
     //
-    for(ulLoop = 0; ulLoop < 8; ulLoop++)
-    {
+    for(ulLoop = 0; ulLoop < 8; ulLoop++) {
         //
         // Stop looping if this value matches.
         //
-        if(ulValue == g_pulPriority[ulLoop])
-        {
+        if(ulValue == g_pulPriority[ulLoop]) {
             break;
         }
     }
@@ -443,36 +436,27 @@ IntEnable(unsigned long ulInterrupt)
     //
     // Determine the interrupt to enable.
     //
-    if(ulInterrupt == FAULT_MPU)
-    {
+    if(ulInterrupt == FAULT_MPU) {
         //
         // Enable the MemManage interrupt.
         //
         HWREG(NVIC_SYS_HND_CTRL) |= NVIC_SYS_HND_CTRL_MEM;
-    }
-    else if(ulInterrupt == FAULT_BUS)
-    {
+    } else if(ulInterrupt == FAULT_BUS) {
         //
         // Enable the bus fault interrupt.
         //
         HWREG(NVIC_SYS_HND_CTRL) |= NVIC_SYS_HND_CTRL_BUS;
-    }
-    else if(ulInterrupt == FAULT_USAGE)
-    {
+    } else if(ulInterrupt == FAULT_USAGE) {
         //
         // Enable the usage fault interrupt.
         //
         HWREG(NVIC_SYS_HND_CTRL) |= NVIC_SYS_HND_CTRL_USAGE;
-    }
-    else if(ulInterrupt == FAULT_SYSTICK)
-    {
+    } else if(ulInterrupt == FAULT_SYSTICK) {
         //
         // Enable the System Tick interrupt.
         //
         HWREG(NVIC_ST_CTRL) |= NVIC_ST_CTRL_INTEN;
-    }
-    else if(ulInterrupt >= INT_GPIOA)
-    {
+    } else if(ulInterrupt >= INT_GPIOA) {
         //
         // Enable the general interrupt.
         //
@@ -506,36 +490,27 @@ IntDisable(unsigned long ulInterrupt)
     //
     // Determine the interrupt to disable.
     //
-    if(ulInterrupt == FAULT_MPU)
-    {
+    if(ulInterrupt == FAULT_MPU) {
         //
         // Disable the MemManage interrupt.
         //
         HWREG(NVIC_SYS_HND_CTRL) &= ~(NVIC_SYS_HND_CTRL_MEM);
-    }
-    else if(ulInterrupt == FAULT_BUS)
-    {
+    } else if(ulInterrupt == FAULT_BUS) {
         //
         // Disable the bus fault interrupt.
         //
         HWREG(NVIC_SYS_HND_CTRL) &= ~(NVIC_SYS_HND_CTRL_BUS);
-    }
-    else if(ulInterrupt == FAULT_USAGE)
-    {
+    } else if(ulInterrupt == FAULT_USAGE) {
         //
         // Disable the usage fault interrupt.
         //
         HWREG(NVIC_SYS_HND_CTRL) &= ~(NVIC_SYS_HND_CTRL_USAGE);
-    }
-    else if(ulInterrupt == FAULT_SYSTICK)
-    {
+    } else if(ulInterrupt == FAULT_SYSTICK) {
         //
         // Disable the System Tick interrupt.
         //
         HWREG(NVIC_ST_CTRL) &= ~(NVIC_ST_CTRL_INTEN);
-    }
-    else if(ulInterrupt >= INT_GPIOA)
-    {
+    } else if(ulInterrupt >= INT_GPIOA) {
         //
         // Disable the general interrupt.
         //

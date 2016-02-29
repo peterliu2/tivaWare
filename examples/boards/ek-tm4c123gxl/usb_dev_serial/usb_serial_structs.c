@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C123GXL Firmware Package.
 //
 //*****************************************************************************
@@ -38,8 +38,7 @@
 // The languages supported by this device.
 //
 //*****************************************************************************
-const uint8_t g_pui8LangDescriptor[] =
-{
+const uint8_t g_pui8LangDescriptor[] = {
     4,
     USB_DTYPE_STRING,
     USBShort(USB_LANG_EN_US)
@@ -50,8 +49,7 @@ const uint8_t g_pui8LangDescriptor[] =
 // The manufacturer string.
 //
 //*****************************************************************************
-const uint8_t g_pui8ManufacturerString[] =
-{
+const uint8_t g_pui8ManufacturerString[] = {
     (17 + 1) * 2,
     USB_DTYPE_STRING,
     'T', 0, 'e', 0, 'x', 0, 'a', 0, 's', 0, ' ', 0, 'I', 0, 'n', 0, 's', 0,
@@ -63,8 +61,7 @@ const uint8_t g_pui8ManufacturerString[] =
 // The product string.
 //
 //*****************************************************************************
-const uint8_t g_pui8ProductString[] =
-{
+const uint8_t g_pui8ProductString[] = {
     2 + (16 * 2),
     USB_DTYPE_STRING,
     'V', 0, 'i', 0, 'r', 0, 't', 0, 'u', 0, 'a', 0, 'l', 0, ' ', 0,
@@ -76,8 +73,7 @@ const uint8_t g_pui8ProductString[] =
 // The serial number string.
 //
 //*****************************************************************************
-const uint8_t g_pui8SerialNumberString[] =
-{
+const uint8_t g_pui8SerialNumberString[] = {
     2 + (8 * 2),
     USB_DTYPE_STRING,
     '1', 0, '2', 0, '3', 0, '4', 0, '5', 0, '6', 0, '7', 0, '8', 0
@@ -88,8 +84,7 @@ const uint8_t g_pui8SerialNumberString[] =
 // The control interface description string.
 //
 //*****************************************************************************
-const uint8_t g_pui8ControlInterfaceString[] =
-{
+const uint8_t g_pui8ControlInterfaceString[] = {
     2 + (21 * 2),
     USB_DTYPE_STRING,
     'A', 0, 'C', 0, 'M', 0, ' ', 0, 'C', 0, 'o', 0, 'n', 0, 't', 0,
@@ -102,8 +97,7 @@ const uint8_t g_pui8ControlInterfaceString[] =
 // The configuration description string.
 //
 //*****************************************************************************
-const uint8_t g_pui8ConfigString[] =
-{
+const uint8_t g_pui8ConfigString[] = {
     2 + (26 * 2),
     USB_DTYPE_STRING,
     'S', 0, 'e', 0, 'l', 0, 'f', 0, ' ', 0, 'P', 0, 'o', 0, 'w', 0,
@@ -117,8 +111,7 @@ const uint8_t g_pui8ConfigString[] =
 // The descriptor string table.
 //
 //*****************************************************************************
-const uint8_t * const g_ppui8StringDescriptors[] =
-{
+const uint8_t * const g_ppui8StringDescriptors[] = {
     g_pui8LangDescriptor,
     g_pui8ManufacturerString,
     g_pui8ProductString,
@@ -155,8 +148,7 @@ uint32_t ControlHandler(void *pvCBData, uint32_t ui32Event,
 // function and the callback data set to our CDC instance structure.
 //
 //*****************************************************************************
-tUSBDCDCDevice g_sCDCDevice =
-{
+tUSBDCDCDevice g_sCDCDevice = {
     USB_VID_TI_1CBE,
     USB_PID_SERIAL,
     0,
@@ -177,8 +169,7 @@ tUSBDCDCDevice g_sCDCDevice =
 //
 //*****************************************************************************
 uint8_t g_pui8USBRxBuffer[UART_BUFFER_SIZE];
-tUSBBuffer g_sRxBuffer =
-{
+tUSBBuffer g_sRxBuffer = {
     false,                          // This is a receive buffer.
     RxHandler,                      // pfnCallback
     (void *)&g_sCDCDevice,          // Callback data is our device pointer.
@@ -195,8 +186,7 @@ tUSBBuffer g_sRxBuffer =
 //
 //*****************************************************************************
 uint8_t g_pui8USBTxBuffer[UART_BUFFER_SIZE];
-tUSBBuffer g_sTxBuffer =
-{
+tUSBBuffer g_sTxBuffer = {
     true,                           // This is a transmit buffer.
     TxHandler,                      // pfnCallback
     (void *)&g_sCDCDevice,          // Callback data is our device pointer.

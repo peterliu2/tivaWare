@@ -68,18 +68,18 @@ struct httpd_state *hs;
 //
 //*****************************************************************************
 static const char page_not_found[] =
-"HTTP/1.0 404 OK\r\n"
-"Server: UIP/1.0 (http://www.sics.se/~adam/uip/)\r\n"
-"Content-type: text/html\r\n\r\n"
-"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd\">"
-"<html>"
-  "<head>"
+    "HTTP/1.0 404 OK\r\n"
+    "Server: UIP/1.0 (http://www.sics.se/~adam/uip/)\r\n"
+    "Content-type: text/html\r\n\r\n"
+    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd\">"
+    "<html>"
+    "<head>"
     "<title>Page Not Found!</title>"
-  "</head>"
-  "<body>"
+    "</head>"
+    "<body>"
     "Page Not Found!"
-  "</body>"
-"</html>";
+    "</body>"
+    "</html>";
 
 //*****************************************************************************
 //
@@ -88,15 +88,15 @@ static const char page_not_found[] =
 //
 //*****************************************************************************
 static const char default_page_buf1of3[] =
-"HTTP/1.0 200 OK\r\n"
-"Server: UIP/1.0 (http://www.sics.se/~adam/uip/)\r\n"
-"Content-type: text/html\r\n\r\n"
-"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd\">"
-"<html>"
-  "<head>"
+    "HTTP/1.0 200 OK\r\n"
+    "Server: UIP/1.0 (http://www.sics.se/~adam/uip/)\r\n"
+    "Content-type: text/html\r\n\r\n"
+    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd\">"
+    "<html>"
+    "<head>"
     "<title>Welcome to the uIP web server!</title>"
-  "</head>"
-  "<body>"
+    "</head>"
+    "<body>"
     "<center>"
     "<h1>&micro;IP Web Server</h1>"
     "<p>This web page is served by a small web server running on top of "
@@ -109,12 +109,12 @@ static const char default_page_buf1of3[] =
     "<hr width=\"75%\">"
     "<p>This page has been sent ";
 static char default_page_buf2of3[] =
-                             "00001";
+    "00001";
 static const char default_page_buf3of3[] =
     " times since reset!"
     "</center>"
-  "</body>"
-"</html>";
+    "</body>"
+    "</html>";
 
 //*****************************************************************************
 //
@@ -130,8 +130,7 @@ httpd_inc_page_count(void)
     // digit.
     //
     default_page_buf2of3[4]++;
-    if(default_page_buf2of3[4] == 0x3a)
-    {
+    if(default_page_buf2of3[4] == 0x3a) {
         default_page_buf2of3[4] = 0x30;
         default_page_buf2of3[3]++;
     }
@@ -139,8 +138,7 @@ httpd_inc_page_count(void)
     //
     // If the 'tens' digit wraps, increment the 'hundreds' digit.
     //
-    if(default_page_buf2of3[3] == 0x3a)
-    {
+    if(default_page_buf2of3[3] == 0x3a) {
         default_page_buf2of3[3] = 0x30;
         default_page_buf2of3[2]++;
     }
@@ -148,8 +146,7 @@ httpd_inc_page_count(void)
     //
     // If the 'hundreds' digit wraps, increment the 'thousands' digit.
     //
-    if(default_page_buf2of3[2] == 0x3a)
-    {
+    if(default_page_buf2of3[2] == 0x3a) {
         default_page_buf2of3[2] = 0x30;
         default_page_buf2of3[1]++;
     }
@@ -157,8 +154,7 @@ httpd_inc_page_count(void)
     //
     // If the 'thousands' digit wraps, increment the 'ten-thousands' digit.
     //
-    if(default_page_buf2of3[1] == 0x3a)
-    {
+    if(default_page_buf2of3[1] == 0x3a) {
         default_page_buf2of3[1] = 0x30;
         default_page_buf2of3[0]++;
     }
@@ -166,8 +162,7 @@ httpd_inc_page_count(void)
     //
     // If the 'ten-thousands' digit wrapped, start over.
     //
-    if(default_page_buf2of3[0] == 0x3a)
-    {
+    if(default_page_buf2of3[0] == 0x3a) {
         default_page_buf2of3[0] = 0x30;
     }
 }
@@ -196,13 +191,11 @@ httpd_init(void)
 void
 httpd_appcall(void)
 {
-    switch(uip_conn->lport)
-    {
+    switch(uip_conn->lport) {
         //
         // This is the web server:
         //
-        case HTONS(80):
-        {
+        case HTONS(80): {
             //
             // Pick out the application state from the uip_conn structure.
             //
@@ -216,8 +209,7 @@ httpd_appcall(void)
             // remote host has sent us new data, and if uip_acked() is
             // non-zero, the remote host has acknowledged the data we
             // previously sent to it. */
-            if(uip_connected())
-            {
+            if(uip_connected()) {
                 //
                 // Since we have just been connected with the remote host, we
                 // reset the state for this connection. The ->count variable
@@ -230,22 +222,17 @@ httpd_appcall(void)
                 hs->count = 0;
                 hs->bufcount = 0;
                 return;
-            }
-            else if(uip_poll())
-            {
+            } else if(uip_poll()) {
                 //
                 // If we are polled ten times, we abort the connection. This is
                 // because we don't want connections lingering indefinately in
                 // the system.
                 //
-                if(hs->count++ >= 10)
-                {
+                if(hs->count++ >= 10) {
                     uip_abort();
                 }
                 return;
-            }
-            else if(uip_newdata() && hs->state == HTTP_NOGET)
-            {
+            } else if(uip_newdata() && hs->state == HTTP_NOGET) {
                 //
                 // This is the first data we receive, and it should contain a
                 // GET.
@@ -253,10 +240,9 @@ httpd_appcall(void)
                 // Check for GET.
                 //
                 if(BUF_APPDATA[0] != 'G' ||
-                   BUF_APPDATA[1] != 'E' ||
-                   BUF_APPDATA[2] != 'T' ||
-                   BUF_APPDATA[3] != ' ')
-                {
+                        BUF_APPDATA[1] != 'E' ||
+                        BUF_APPDATA[2] != 'T' ||
+                        BUF_APPDATA[3] != ' ') {
                     //
                     // If it isn't a GET, we abort the connection.
                     //
@@ -268,41 +254,29 @@ httpd_appcall(void)
                 // Check to see what we should send.
                 //
                 if((BUF_APPDATA[4] == '/') &&
-                   (BUF_APPDATA[5] == ' '))
-                {
+                        (BUF_APPDATA[5] == ' ')) {
                     //
                     // Send buffer 1
                     //
                     uip_send(default_page_buf1of3,
-                            sizeof(default_page_buf1of3) - 1);
-                }
-                else
-                {
+                             sizeof(default_page_buf1of3) - 1);
+                } else {
                     uip_send(page_not_found,
-                            sizeof(page_not_found) - 1);
+                             sizeof(page_not_found) - 1);
                     hs->bufcount = 3;
                 }
-            }
-            else if(uip_acked())
-            {
+            } else if(uip_acked()) {
                 hs->bufcount++;
-                if(hs->bufcount == 1)
-                {
+                if(hs->bufcount == 1) {
                     uip_send(default_page_buf2of3,
-                            sizeof(default_page_buf2of3) - 1);
-                }
-                else if(hs->bufcount == 2)
-                {
+                             sizeof(default_page_buf2of3) - 1);
+                } else if(hs->bufcount == 2) {
                     uip_send(default_page_buf3of3,
-                            sizeof(default_page_buf3of3) - 1);
-                }
-                else if(hs->bufcount == 3)
-                {
+                             sizeof(default_page_buf3of3) - 1);
+                } else if(hs->bufcount == 3) {
                     httpd_inc_page_count();
                     uip_close();
-                }
-                else
-                {
+                } else {
                     uip_close();
                 }
             }
@@ -313,8 +287,7 @@ httpd_appcall(void)
             return;
         }
 
-        default:
-        {
+        default: {
             //
             // Should never happen.
             //

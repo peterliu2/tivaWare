@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-LM4F232 Firmware Package.
 //
 //*****************************************************************************
@@ -93,8 +93,7 @@ ButtonsPoll(uint8_t *pui8Delta, uint8_t *pui8RawState)
     // raw value.
     //
     ui32Data = (MAP_GPIOPinRead(BUTTONS_GPIO_BASE, ALL_BUTTONS));
-    if(pui8RawState)
-    {
+    if(pui8RawState) {
         *pui8RawState = (uint8_t)~ui32Data;
     }
 
@@ -131,8 +130,7 @@ ButtonsPoll(uint8_t *pui8Delta, uint8_t *pui8RawState)
     // Store the bit mask for the buttons that have changed for return to
     // caller.
     //
-    if(pui8Delta)
-    {
+    if(pui8Delta) {
         *pui8Delta = (uint8_t)ui32Delta;
     }
 

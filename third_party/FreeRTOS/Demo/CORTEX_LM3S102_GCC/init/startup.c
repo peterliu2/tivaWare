@@ -61,8 +61,7 @@ static unsigned long pulMainStack[STACK_SIZE];
 //
 //*****************************************************************************
 __attribute__ ((section("vectors")))
-void (* const g_pfnVectors[])(void) =
-{
+void (* const g_pfnVectors[])(void) = {
     (void (*)(void))((unsigned long)pulMainStack + sizeof(pulMainStack)),
     ResetISR,
     NmiSR,
@@ -119,16 +118,14 @@ ResetISR(void)
     // Copy the data segment initializers from flash to SRAM.
     //
     pulSrc = &_etext;
-    for(pulDest = &_data; pulDest < &_edata; )
-    {
+    for(pulDest = &_data; pulDest < &_edata; ) {
         *pulDest++ = *pulSrc++;
     }
 
     //
     // Zero fill the bss segment.
     //
-    for(pulDest = &_bss; pulDest < &_ebss; )
-    {
+    for(pulDest = &_bss; pulDest < &_ebss; ) {
         *pulDest++ = 0;
     }
 
@@ -151,8 +148,7 @@ NmiSR(void)
     //
     // Enter an infinite loop.
     //
-    while(1)
-    {
+    while(1) {
     }
 }
 
@@ -169,7 +165,6 @@ FaultISR(void)
     //
     // Enter an infinite loop.
     //
-    while(1)
-    {
+    while(1) {
     }
 }

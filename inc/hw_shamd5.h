@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -250,20 +250,20 @@
 //*****************************************************************************
 #define SHAMD5_MODE_HMAC_OUTER_HASH                                           \
                                 0x00000080  // HMAC Outer Hash Processing
-                                            // Enable
+// Enable
 #define SHAMD5_MODE_HMAC_KEY_PROC                                             \
                                 0x00000020  // HMAC Key Processing Enable
 #define SHAMD5_MODE_CLOSE_HASH  0x00000010  // Performs the padding, the
-                                            // Hash/HMAC will be 'closed' at
-                                            // the end of the block, as per
-                                            // MD5/SHA-1/SHA-2 specification
+// Hash/HMAC will be 'closed' at
+// the end of the block, as per
+// MD5/SHA-1/SHA-2 specification
 #define SHAMD5_MODE_ALGO_CONSTANT                                             \
                                 0x00000008  // The initial digest register will
-                                            // be overwritten with the
-                                            // algorithm constants for the
-                                            // selected algorithm when hashing
-                                            // and the initial digest count
-                                            // register will be reset to 0
+// be overwritten with the
+// algorithm constants for the
+// selected algorithm when hashing
+// and the initial digest count
+// register will be reset to 0
 #define SHAMD5_MODE_ALGO_M      0x00000007  // Hash Algorithm
 #define SHAMD5_MODE_ALGO_MD5    0x00000000  // MD5
 #define SHAMD5_MODE_ALGO_SHA1   0x00000002  // SHA-1
@@ -277,7 +277,7 @@
 //
 //*****************************************************************************
 #define SHAMD5_LENGTH_M         0xFFFFFFFF  // Block Length/Remaining Byte
-                                            // Count
+// Count
 #define SHAMD5_LENGTH_S         0
 
 //*****************************************************************************
@@ -503,10 +503,10 @@
 //
 //*****************************************************************************
 #define SHAMD5_DMAIM_COUT       0x00000004  // Context Out DMA Done Interrupt
-                                            // Mask
+// Mask
 #define SHAMD5_DMAIM_DIN        0x00000002  // Data In DMA Done Interrupt Mask
 #define SHAMD5_DMAIM_CIN        0x00000001  // Context In DMA Done Interrupt
-                                            // Mask
+// Mask
 
 //*****************************************************************************
 //
@@ -515,11 +515,11 @@
 //
 //*****************************************************************************
 #define SHAMD5_DMARIS_COUT      0x00000004  // Context Out DMA Done Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define SHAMD5_DMARIS_DIN       0x00000002  // Data In DMA Done Raw Interrupt
-                                            // Status
+// Status
 #define SHAMD5_DMARIS_CIN       0x00000001  // Context In DMA Done Raw
-                                            // Interrupt Status
+// Interrupt Status
 
 //*****************************************************************************
 //
@@ -528,11 +528,11 @@
 //
 //*****************************************************************************
 #define SHAMD5_DMAMIS_COUT      0x00000004  // Context Out DMA Done Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define SHAMD5_DMAMIS_DIN       0x00000002  // Data In DMA Done Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define SHAMD5_DMAMIS_CIN       0x00000001  // Context In DMA Done Raw
-                                            // Interrupt Status
+// Interrupt Status
 
 //*****************************************************************************
 //
@@ -540,9 +540,9 @@
 //
 //*****************************************************************************
 #define SHAMD5_DMAIC_COUT       0x00000004  // Context Out DMA Done Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define SHAMD5_DMAIC_DIN        0x00000002  // Data In DMA Done Interrupt Clear
 #define SHAMD5_DMAIC_CIN        0x00000001  // Context In DMA Done Raw
-                                            // Interrupt Status
+// Interrupt Status
 
 #endif // __HW_SHAMD5_H__

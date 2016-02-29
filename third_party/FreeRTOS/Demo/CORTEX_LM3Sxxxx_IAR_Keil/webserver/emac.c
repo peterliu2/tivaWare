@@ -112,10 +112,9 @@ point to one of the Rx buffers. */
 unsigned char *uip_buf;
 
 /* Buffers into which Rx data is placed. */
-static union
-{
-	unsigned long ulJustForAlignment;
-	unsigned char ucRxBuffers[ emacNUM_RX_BUFFERS ][ UIP_BUFSIZE + ( 4 * emacFRAM_SIZE_BYTES ) ];
+static union {
+    unsigned long ulJustForAlignment;
+    unsigned char ucRxBuffers[ emacNUM_RX_BUFFERS ][ UIP_BUFSIZE + ( 4 * emacFRAM_SIZE_BYTES ) ];
 } uxRxBuffers;
 
 /* The length of the data within each of the Rx buffers. */
@@ -128,63 +127,60 @@ static unsigned long ulNextTxSpace;
 
 portBASE_TYPE vInitEMAC( void )
 {
-unsigned long ulTemp;
-portBASE_TYPE xReturn;
+    unsigned long ulTemp;
+    portBASE_TYPE xReturn;
 
-	/* Ensure all interrupts are disabled. */
-	EthernetIntDisable( ETH_BASE, ( ETH_INT_PHY | ETH_INT_MDIO | ETH_INT_RXER | ETH_INT_RXOF | ETH_INT_TX | ETH_INT_TXER | ETH_INT_RX));
+    /* Ensure all interrupts are disabled. */
+    EthernetIntDisable( ETH_BASE, ( ETH_INT_PHY | ETH_INT_MDIO | ETH_INT_RXER | ETH_INT_RXOF | ETH_INT_TX | ETH_INT_TXER | ETH_INT_RX));
 
-	/* Clear any interrupts that were already pending. */
+    /* Clear any interrupts that were already pending. */
     ulTemp = EthernetIntStatus( ETH_BASE, pdFALSE );
     EthernetIntClear( ETH_BASE, ulTemp );
 
-	/* Initialise the MAC and connect. */
+    /* Initialise the MAC and connect. */
     EthernetInit( ETH_BASE );
     EthernetConfigSet( ETH_BASE, ( ETH_CFG_TX_DPLXEN | ETH_CFG_TX_CRCEN | ETH_CFG_TX_PADEN ) );
     EthernetEnable( ETH_BASE );
 
-	/* Mark each Rx buffer as empty. */
-	for( ulTemp = 0; ulTemp < emacNUM_RX_BUFFERS; ulTemp++ )
-	{
-		ulRxLength[ ulTemp ] = 0;
-	}
+    /* Mark each Rx buffer as empty. */
+    for( ulTemp = 0; ulTemp < emacNUM_RX_BUFFERS; ulTemp++ ) {
+        ulRxLength[ ulTemp ] = 0;
+    }
 
-	/* Create the queue and task used to defer the MAC processing to the
-	task level. */
-	vSemaphoreCreateBinary( xMACInterruptSemaphore );
-	xSemaphoreTake( xMACInterruptSemaphore, 0 );
-	xReturn = xTaskCreate( vMACHandleTask, "MAC", configMINIMAL_STACK_SIZE, NULL, configMAX_PRIORITIES - 1, NULL );
-	vTaskDelay( macNEGOTIATE_DELAY );
+    /* Create the queue and task used to defer the MAC processing to the
+    task level. */
+    vSemaphoreCreateBinary( xMACInterruptSemaphore );
+    xSemaphoreTake( xMACInterruptSemaphore, 0 );
+    xReturn = xTaskCreate( vMACHandleTask, "MAC", configMINIMAL_STACK_SIZE, NULL, configMAX_PRIORITIES - 1, NULL );
+    vTaskDelay( macNEGOTIATE_DELAY );
 
-	/* We are only interested in Rx interrupts. */
-	IntPrioritySet( INT_ETH, configKERNEL_INTERRUPT_PRIORITY );
+    /* We are only interested in Rx interrupts. */
+    IntPrioritySet( INT_ETH, configKERNEL_INTERRUPT_PRIORITY );
     IntEnable( INT_ETH );
     EthernetIntEnable(ETH_BASE, ETH_INT_RX);
 
-	return xReturn;
+    return xReturn;
 }
 /*-----------------------------------------------------------*/
 
 unsigned int uiGetEMACRxData( unsigned char *ucBuffer )
 {
-static unsigned long ulNextRxBuffer = 0;
-unsigned int iLen;
+    static unsigned long ulNextRxBuffer = 0;
+    unsigned int iLen;
 
-	iLen = ulRxLength[ ulNextRxBuffer ];
+    iLen = ulRxLength[ ulNextRxBuffer ];
 
-	if( iLen != 0 )
-	{
-		/* Leave room for the size at the start of the buffer. */
-		uip_buf = &( uxRxBuffers.ucRxBuffers[ ulNextRxBuffer ][ 2 ] );
+    if( iLen != 0 ) {
+        /* Leave room for the size at the start of the buffer. */
+        uip_buf = &( uxRxBuffers.ucRxBuffers[ ulNextRxBuffer ][ 2 ] );
 
-		ulRxLength[ ulNextRxBuffer ] = 0;
+        ulRxLength[ ulNextRxBuffer ] = 0;
 
-		ulNextRxBuffer++;
-		if( ulNextRxBuffer >= emacNUM_RX_BUFFERS )
-		{
-			ulNextRxBuffer = 0;
-		}
-	}
+        ulNextRxBuffer++;
+        if( ulNextRxBuffer >= emacNUM_RX_BUFFERS ) {
+            ulNextRxBuffer = 0;
+        }
+    }
 
     return iLen;
 }
@@ -192,131 +188,122 @@ unsigned int iLen;
 
 void vInitialiseSend( void )
 {
-	/* Set the index to the first byte to send - skipping over the size
-	bytes. */
-	ulNextTxSpace = 2;
+    /* Set the index to the first byte to send - skipping over the size
+    bytes. */
+    ulNextTxSpace = 2;
 }
 /*-----------------------------------------------------------*/
 
 void vIncrementTxLength( unsigned long ulLength )
 {
-	ulNextTxSpace += ulLength;
+    ulNextTxSpace += ulLength;
 }
 /*-----------------------------------------------------------*/
 
 void vSendBufferToMAC( void )
 {
-unsigned long *pulSource;
-unsigned short * pus;
-unsigned long ulNextWord;
+    unsigned long *pulSource;
+    unsigned short * pus;
+    unsigned long ulNextWord;
 
-	/* Locate the data to be send. */
-	pus = ( unsigned short * ) uip_buf;
+    /* Locate the data to be send. */
+    pus = ( unsigned short * ) uip_buf;
 
-	/* Add in the size of the data. */
-	pus--;
-	*pus = ulNextTxSpace;
+    /* Add in the size of the data. */
+    pus--;
+    *pus = ulNextTxSpace;
 
-	/* Wait for data to be sent if there is no space immediately. */
-    while( !EthernetSpaceAvail( ETH_BASE ) )
-    {
-		vTaskDelay( macWAIT_SEND_TIME );
+    /* Wait for data to be sent if there is no space immediately. */
+    while( !EthernetSpaceAvail( ETH_BASE ) ) {
+        vTaskDelay( macWAIT_SEND_TIME );
     }
 
-	pulSource = ( unsigned long * ) pus;
+    pulSource = ( unsigned long * ) pus;
 
-	for( ulNextWord = 0; ulNextWord < ulNextTxSpace; ulNextWord += sizeof( unsigned long ) )
-	{
-       	HWREG(ETH_BASE + MAC_O_DATA) = *pulSource;
-		pulSource++;
-	}
+    for( ulNextWord = 0; ulNextWord < ulNextTxSpace; ulNextWord += sizeof( unsigned long ) ) {
+        HWREG(ETH_BASE + MAC_O_DATA) = *pulSource;
+        pulSource++;
+    }
 
-	/* Go. */
+    /* Go. */
     HWREG( ETH_BASE + MAC_O_TR ) = MAC_TR_NEWTX;
 }
 /*-----------------------------------------------------------*/
 
 void vEMAC_ISR( void )
 {
-portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
-unsigned long ulTemp;
+    portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+    unsigned long ulTemp;
 
-	/* Clear the interrupt. */
-	ulTemp = EthernetIntStatus( ETH_BASE, pdFALSE );
-	EthernetIntClear( ETH_BASE, ulTemp );
+    /* Clear the interrupt. */
+    ulTemp = EthernetIntStatus( ETH_BASE, pdFALSE );
+    EthernetIntClear( ETH_BASE, ulTemp );
 
-	/* Was it an Rx interrupt? */
-	if( ulTemp & ETH_INT_RX )
-	{
-		xSemaphoreGiveFromISR( xMACInterruptSemaphore, &xHigherPriorityTaskWoken );
-		EthernetIntDisable( ETH_BASE, ETH_INT_RX );
-	}
+    /* Was it an Rx interrupt? */
+    if( ulTemp & ETH_INT_RX ) {
+        xSemaphoreGiveFromISR( xMACInterruptSemaphore, &xHigherPriorityTaskWoken );
+        EthernetIntDisable( ETH_BASE, ETH_INT_RX );
+    }
 
     /* Switch to the uIP task. */
-	portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
+    portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
 }
 /*-----------------------------------------------------------*/
 
 void vMACHandleTask( void *pvParameters )
 {
-unsigned long i, ulInt;
-unsigned long ulLength;
-unsigned long *pulBuffer;
-static unsigned long ulNextRxBuffer = 0;
+    unsigned long i, ulInt;
+    unsigned long ulLength;
+    unsigned long *pulBuffer;
+    static unsigned long ulNextRxBuffer = 0;
 
-	for( ;; )
-	{
-		/* Wait for something to do. */
-		xSemaphoreTake( xMACInterruptSemaphore, portMAX_DELAY );
+    for( ;; ) {
+        /* Wait for something to do. */
+        xSemaphoreTake( xMACInterruptSemaphore, portMAX_DELAY );
 
-		while( ( ulInt = ( EthernetIntStatus( ETH_BASE, pdFALSE ) & ETH_INT_RX ) ) != 0 )
-		{
-			ulLength = HWREG( ETH_BASE + MAC_O_DATA );
+        while( ( ulInt = ( EthernetIntStatus( ETH_BASE, pdFALSE ) & ETH_INT_RX ) ) != 0 ) {
+            ulLength = HWREG( ETH_BASE + MAC_O_DATA );
 
-			/* Leave room at the start of the buffer for the size. */
-			pulBuffer = ( unsigned long * ) &( uxRxBuffers.ucRxBuffers[ ulNextRxBuffer ][ 2 ] );
-			*pulBuffer = ( ulLength >> 16 );
+            /* Leave room at the start of the buffer for the size. */
+            pulBuffer = ( unsigned long * ) &( uxRxBuffers.ucRxBuffers[ ulNextRxBuffer ][ 2 ] );
+            *pulBuffer = ( ulLength >> 16 );
 
-			/* Get the size of the data. */
-			pulBuffer = ( unsigned long * ) &( uxRxBuffers.ucRxBuffers[ ulNextRxBuffer ][ 4 ] );
-			ulLength &= 0xFFFF;
+            /* Get the size of the data. */
+            pulBuffer = ( unsigned long * ) &( uxRxBuffers.ucRxBuffers[ ulNextRxBuffer ][ 4 ] );
+            ulLength &= 0xFFFF;
 
-			if( ulLength > 4 )
-			{
-				ulLength -= 4;
+            if( ulLength > 4 ) {
+                ulLength -= 4;
 
-				if( ulLength >= UIP_BUFSIZE )
-				{
-					/* The data won't fit in our buffer.  Ensure we don't
-					try to write into the buffer. */
-					ulLength = 0;
-				}
+                if( ulLength >= UIP_BUFSIZE ) {
+                    /* The data won't fit in our buffer.  Ensure we don't
+                    try to write into the buffer. */
+                    ulLength = 0;
+                }
 
-				/* Read out the data into our buffer. */
-				for( i = 0; i < ulLength; i += sizeof( unsigned long ) )
-				{
-					*pulBuffer = HWREG( ETH_BASE + MAC_O_DATA );
-					pulBuffer++;
-				}
+                /* Read out the data into our buffer. */
+                for( i = 0; i < ulLength; i += sizeof( unsigned long ) ) {
+                    *pulBuffer = HWREG( ETH_BASE + MAC_O_DATA );
+                    pulBuffer++;
+                }
 
-				/* Store the length of the data into the separate array. */
-				ulRxLength[ ulNextRxBuffer ] = ulLength;
+                /* Store the length of the data into the separate array. */
+                ulRxLength[ ulNextRxBuffer ] = ulLength;
 
-				/* Use the next buffer the next time through. */
-				ulNextRxBuffer++;
-				if( ulNextRxBuffer >= emacNUM_RX_BUFFERS )
-				{
-					ulNextRxBuffer = 0;
-				}
+                /* Use the next buffer the next time through. */
+                ulNextRxBuffer++;
+                if( ulNextRxBuffer >= emacNUM_RX_BUFFERS ) {
+                    ulNextRxBuffer = 0;
+                }
 
-				/* Ensure the uIP task is not blocked as data has arrived. */
-				xSemaphoreGive( xEMACSemaphore );
-			}
-		}
+                /* Ensure the uIP task is not blocked as data has arrived. */
+                xSemaphoreGive( xEMACSemaphore );
+            }
+        }
 
-		EthernetIntEnable( ETH_BASE, ETH_INT_RX );
+        EthernetIntEnable( ETH_BASE, ETH_INT_RX );
 
-		( void ) ulInt;
-	}
+        ( void ) ulInt;
+    }
 }
 

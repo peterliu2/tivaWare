@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -82,16 +82,14 @@ TMP006Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     // to the idle state (which will also result in a callback to propagate the
     // error).
     //
-    if(ui8Status != I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status != I2CM_STATUS_SUCCESS) {
         psInst->ui8State = TMP006_STATE_IDLE;
     }
 
     //
     // Determine the current state of the TMP006 state machine.
     //
-    switch(psInst->ui8State)
-    {
+    switch(psInst->ui8State) {
         //
         // All states that trivially transition to IDLE, and all unknown
         // states.
@@ -101,8 +99,7 @@ TMP006Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         case TMP006_STATE_WRITE:
         case TMP006_STATE_RMW:
         case TMP006_STATE_READ_OBJ:
-        default:
-        {
+        default: {
             //
             // The state machine is now idle.
             //
@@ -117,8 +114,7 @@ TMP006Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // The ambient temperature was just read.
         //
-        case TMP006_STATE_READ_AMB:
-        {
+        case TMP006_STATE_READ_AMB: {
             //
             // Move to the read object temperature state.
             //
@@ -143,8 +139,7 @@ TMP006Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if the state machine is now idle and there is a callback function.
     //
-    if((psInst->ui8State == TMP006_STATE_IDLE) && psInst->pfnCallback)
-    {
+    if((psInst->ui8State == TMP006_STATE_IDLE) && psInst->pfnCallback) {
         //
         // Call the application-supplied callback function.
         //
@@ -206,8 +201,7 @@ TMP006Init(tTMP006 *psInst, tI2CMInstance *psI2CInst, uint_fast8_t ui8I2CAddr,
     // Write the reset bit and issue a callback when finished.
     //
     if(I2CMWrite(psInst->psI2CInst, ui8I2CAddr, psInst->pui8Data, 3,
-                 TMP006Callback, psInst) == 0)
-    {
+                 TMP006Callback, psInst) == 0) {
         //
         // I2CMWrite failed so reset TMP006 state and return zero to indicate
         // failure.
@@ -254,8 +248,7 @@ TMP006Read(tTMP006 *psInst, uint_fast8_t ui8Reg, uint16_t *pui16Data,
     // Return a failure if the TMP006 driver is not idle (in other words, there
     // is already an outstanding request to the TMP006).
     //
-    if(psInst->ui8State != TMP006_STATE_IDLE)
-    {
+    if(psInst->ui8State != TMP006_STATE_IDLE) {
         return(0);
     }
 
@@ -275,8 +268,7 @@ TMP006Read(tTMP006 *psInst, uint_fast8_t ui8Reg, uint16_t *pui16Data,
     //
     if(I2CMRead16BE(&(psInst->uCommand.sReadState), psInst->psI2CInst,
                     psInst->ui8Addr, ui8Reg, pui16Data, ui16Count,
-                    TMP006Callback, psInst) == 0)
-    {
+                    TMP006Callback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -324,8 +316,7 @@ TMP006Write(tTMP006 *psInst, uint_fast8_t ui8Reg, const uint16_t *pui16Data,
     // Return a failure if the TMP006 driver is not idle (in other words, there
     // is already an outstanding request to the TMP006).
     //
-    if(psInst->ui8State != TMP006_STATE_IDLE)
-    {
+    if(psInst->ui8State != TMP006_STATE_IDLE) {
         return(0);
     }
 
@@ -345,8 +336,7 @@ TMP006Write(tTMP006 *psInst, uint_fast8_t ui8Reg, const uint16_t *pui16Data,
     //
     if(I2CMWrite16BE(&(psInst->uCommand.sWriteState), psInst->psI2CInst,
                      psInst->ui8Addr, ui8Reg, pui16Data, ui16Count,
-                     TMP006Callback, psInst) == 0)
-    {
+                     TMP006Callback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -394,8 +384,7 @@ TMP006ReadModifyWrite(tTMP006 *psInst, uint_fast8_t ui8Reg,
     // Return a failure if the TMP006 driver is not idle (in other words, there
     // is already an outstanding request to the TMP006).
     //
-    if(psInst->ui8State != TMP006_STATE_IDLE)
-    {
+    if(psInst->ui8State != TMP006_STATE_IDLE) {
         return(0);
     }
 
@@ -416,8 +405,7 @@ TMP006ReadModifyWrite(tTMP006 *psInst, uint_fast8_t ui8Reg,
     if(I2CMReadModifyWrite16BE(&(psInst->uCommand.sReadModifyWriteState),
                                psInst->psI2CInst, psInst->ui8Addr, ui8Reg,
                                ui16Mask, ui16Value, TMP006Callback,
-                               psInst) == 0)
-    {
+                               psInst) == 0) {
         //
         // The I2C read-modify-write failed, so move to the idle state and
         // return a failure.
@@ -459,8 +447,7 @@ TMP006DataRead(tTMP006 *psInst, tSensorCallback *pfnCallback,
     // Return a failure if the TMP006 driver is not idle (in other words, there
     // is already an outstanding request to the TMP006).
     //
-    if(psInst->ui8State != TMP006_STATE_IDLE)
-    {
+    if(psInst->ui8State != TMP006_STATE_IDLE) {
         return(0);
     }
 
@@ -481,8 +468,7 @@ TMP006DataRead(tTMP006 *psInst, tSensorCallback *pfnCallback,
     psInst->uCommand.pui8Buffer[0] = TMP006_O_TAMBIENT;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
                 psInst->uCommand.pui8Buffer, 1, psInst->pui8Data, 2,
-                TMP006Callback, psInst) == 0)
-    {
+                TMP006Callback, psInst) == 0) {
         //
         // The I2C read failed, so move to the idle state and return a failure.
         //

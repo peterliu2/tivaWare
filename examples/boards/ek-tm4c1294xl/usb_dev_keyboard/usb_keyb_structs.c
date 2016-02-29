@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -39,8 +39,7 @@
 // The languages supported by this device.
 //
 //****************************************************************************
-const uint8_t g_pui8LangDescriptor[] =
-{
+const uint8_t g_pui8LangDescriptor[] = {
     4,
     USB_DTYPE_STRING,
     USBShort(USB_LANG_EN_US)
@@ -51,8 +50,7 @@ const uint8_t g_pui8LangDescriptor[] =
 // The manufacturer string.
 //
 //****************************************************************************
-const uint8_t g_pui8ManufacturerString[] =
-{
+const uint8_t g_pui8ManufacturerString[] = {
     (17 + 1) * 2,
     USB_DTYPE_STRING,
     'T', 0, 'e', 0, 'x', 0, 'a', 0, 's', 0, ' ', 0, 'I', 0, 'n', 0, 's', 0,
@@ -64,8 +62,7 @@ const uint8_t g_pui8ManufacturerString[] =
 // The product string.
 //
 //****************************************************************************
-const uint8_t g_pui8ProductString[] =
-{
+const uint8_t g_pui8ProductString[] = {
     (16 + 1) * 2,
     USB_DTYPE_STRING,
     'K', 0, 'e', 0, 'y', 0, 'b', 0, 'o', 0, 'a', 0, 'r', 0, 'd', 0, ' ', 0,
@@ -77,8 +74,7 @@ const uint8_t g_pui8ProductString[] =
 // The serial number string.
 //
 //****************************************************************************
-const uint8_t g_pui8SeriailNumberString[] =
-{
+const uint8_t g_pui8SeriailNumberString[] = {
     (8 + 1) * 2,
     USB_DTYPE_STRING,
     '1', 0, '2', 0, '3', 0, '4', 0, '5', 0, '6', 0, '7', 0, '8', 0
@@ -89,8 +85,7 @@ const uint8_t g_pui8SeriailNumberString[] =
 // The interface description string.
 //
 //*****************************************************************************
-const uint8_t g_pui8HIDInterfaceString[] =
-{
+const uint8_t g_pui8HIDInterfaceString[] = {
     (22 + 1) * 2,
     USB_DTYPE_STRING,
     'H', 0, 'I', 0, 'D', 0, ' ', 0, 'K', 0, 'e', 0, 'y', 0, 'b', 0,
@@ -103,8 +98,7 @@ const uint8_t g_pui8HIDInterfaceString[] =
 // The configuration description string.
 //
 //*****************************************************************************
-const uint8_t g_pui8ConfigString[] =
-{
+const uint8_t g_pui8ConfigString[] = {
     (26 + 1) * 2,
     USB_DTYPE_STRING,
     'H', 0, 'I', 0, 'D', 0, ' ', 0, 'K', 0, 'e', 0, 'y', 0, 'b', 0,
@@ -118,8 +112,7 @@ const uint8_t g_pui8ConfigString[] =
 // The descriptor string table.
 //
 //*****************************************************************************
-const uint8_t * const g_ppui8StringDescriptors[] =
-{
+const uint8_t * const g_ppui8StringDescriptors[] = {
     g_pui8LangDescriptor,
     g_pui8ManufacturerString,
     g_pui8ProductString,
@@ -136,8 +129,7 @@ const uint8_t * const g_ppui8StringDescriptors[] =
 // The HID keyboard device initialization and customization structures.
 //
 //*****************************************************************************
-tUSBDHIDKeyboardDevice g_sKeyboardDevice =
-{
+tUSBDHIDKeyboardDevice g_sKeyboardDevice = {
     USB_VID_TI_1CBE,
     USB_PID_KEYBOARD,
     500,

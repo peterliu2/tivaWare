@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Graphics Library.
 //
 //*****************************************************************************
@@ -80,8 +80,7 @@ RectangularButtonPaint(tWidget *psWidget)
     //
     // See if the push button fill style is selected.
     //
-    if(pPush->ui32Style & PB_STYLE_FILL)
-    {
+    if(pPush->ui32Style & PB_STYLE_FILL) {
         //
         // Fill the push button with the fill color.
         //
@@ -94,8 +93,7 @@ RectangularButtonPaint(tWidget *psWidget)
     //
     // See if the push button outline style is selected.
     //
-    if(pPush->ui32Style & PB_STYLE_OUTLINE)
-    {
+    if(pPush->ui32Style & PB_STYLE_OUTLINE) {
         //
         // Outline the push button with the outline color.
         //
@@ -106,25 +104,23 @@ RectangularButtonPaint(tWidget *psWidget)
     //
     // See if the push button text or image style is selected.
     //
-    if(pPush->ui32Style & (PB_STYLE_TEXT | PB_STYLE_IMG))
-    {
+    if(pPush->ui32Style & (PB_STYLE_TEXT | PB_STYLE_IMG)) {
         //
         // Compute the center of the push button.
         //
         i32X = (psWidget->sPosition.i16XMin +
-              ((psWidget->sPosition.i16XMax -
-                psWidget->sPosition.i16XMin + 1) / 2));
+                ((psWidget->sPosition.i16XMax -
+                  psWidget->sPosition.i16XMin + 1) / 2));
         i32Y = (psWidget->sPosition.i16YMin +
-              ((psWidget->sPosition.i16YMax -
-                psWidget->sPosition.i16YMin + 1) / 2));
+                ((psWidget->sPosition.i16YMax -
+                  psWidget->sPosition.i16YMin + 1) / 2));
 
         //
         // If the push button outline style is selected then shrink the
         // clipping region by one pixel on each side so that the outline is not
         // overwritten by the text or image.
         //
-        if(pPush->ui32Style & PB_STYLE_OUTLINE)
-        {
+        if(pPush->ui32Style & PB_STYLE_OUTLINE) {
             sCtx.sClipRegion.i16XMin++;
             sCtx.sClipRegion.i16YMin++;
             sCtx.sClipRegion.i16XMax--;
@@ -134,8 +130,7 @@ RectangularButtonPaint(tWidget *psWidget)
         //
         // See if the push button image style is selected.
         //
-        if(pPush->ui32Style & PB_STYLE_IMG)
-        {
+        if(pPush->ui32Style & PB_STYLE_IMG) {
             //
             // Set the foreground and background colors to use for 1 BPP
             // images.
@@ -150,8 +145,8 @@ RectangularButtonPaint(tWidget *psWidget)
             // Get the image to be drawn.
             //
             pui8Image = (((pPush->ui32Style & PB_STYLE_PRESSED) &&
-                         pPush->pui8PressImage) ?
-                        pPush->pui8PressImage : pPush->pui8Image);
+                          pPush->pui8PressImage) ?
+                         pPush->pui8PressImage : pPush->pui8Image);
 
             //
             // Draw the image centered in the push button.
@@ -164,8 +159,7 @@ RectangularButtonPaint(tWidget *psWidget)
         //
         // See if the push button text style is selected.
         //
-        if(pPush->ui32Style & PB_STYLE_TEXT)
-        {
+        if(pPush->ui32Style & PB_STYLE_TEXT) {
             //
             // Draw the text centered in the middle of the push button.
             //
@@ -221,8 +215,7 @@ RectangularButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
     //
     // See if this is a pointer up message.
     //
-    if(ui32Msg == WIDGET_MSG_PTR_UP)
-    {
+    if(ui32Msg == WIDGET_MSG_PTR_UP) {
         //
         // Indicate that this push button is no longer pressed.
         //
@@ -234,8 +227,7 @@ RectangularButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
         // button to show it in its non-pressed state.
         //
         if((pPush->ui32Style & PB_STYLE_FILL) ||
-           ((pPush->ui32Style & PB_STYLE_IMG) && pPush->pui8PressImage))
-        {
+                ((pPush->ui32Style & PB_STYLE_IMG) && pPush->pui8PressImage)) {
             RectangularButtonPaint(psWidget);
         }
 
@@ -244,8 +236,7 @@ RectangularButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
         // release notify button, call the notification function here.
         //
         if(GrRectContainsPoint(&psWidget->sPosition, i32X, i32Y) &&
-           (pPush->ui32Style & PB_STYLE_RELEASE_NOTIFY) && pPush->pfnOnClick)
-        {
+                (pPush->ui32Style & PB_STYLE_RELEASE_NOTIFY) && pPush->pfnOnClick) {
             pPush->pfnOnClick(psWidget);
         }
     }
@@ -253,13 +244,11 @@ RectangularButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
     //
     // See if the given coordinates are within the extents of the push button.
     //
-    if(GrRectContainsPoint(&psWidget->sPosition, i32X, i32Y))
-    {
+    if(GrRectContainsPoint(&psWidget->sPosition, i32X, i32Y)) {
         //
         // See if this is a pointer down message.
         //
-        if(ui32Msg == WIDGET_MSG_PTR_DOWN)
-        {
+        if(ui32Msg == WIDGET_MSG_PTR_DOWN) {
             //
             // Indicate that this push button is pressed.
             //
@@ -271,8 +260,7 @@ RectangularButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
             // the push button to show it in its pressed state.
             //
             if((pPush->ui32Style & PB_STYLE_FILL) ||
-               ((pPush->ui32Style & PB_STYLE_IMG) && pPush->pui8PressImage))
-            {
+                    ((pPush->ui32Style & PB_STYLE_IMG) && pPush->pui8PressImage)) {
                 RectangularButtonPaint(psWidget);
             }
         }
@@ -280,36 +268,31 @@ RectangularButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
         //
         // See if there is an OnClick callback for this widget.
         //
-        if(pPush->pfnOnClick)
-        {
+        if(pPush->pfnOnClick) {
             //
             // If the pointer was just pressed then call the callback.
             //
             if((ui32Msg == WIDGET_MSG_PTR_DOWN) &&
-               !(pPush->ui32Style & PB_STYLE_RELEASE_NOTIFY))
-            {
+                    !(pPush->ui32Style & PB_STYLE_RELEASE_NOTIFY)) {
                 pPush->pfnOnClick(psWidget);
             }
 
             //
             // See if auto-repeat is enabled for this widget.
             //
-            if(pPush->ui32Style & PB_STYLE_AUTO_REPEAT)
-            {
+            if(pPush->ui32Style & PB_STYLE_AUTO_REPEAT) {
                 //
                 // If the pointer was just pressed, reset the auto-repeat
                 // count.
                 //
-                if(ui32Msg == WIDGET_MSG_PTR_DOWN)
-                {
+                if(ui32Msg == WIDGET_MSG_PTR_DOWN) {
                     pPush->ui32AutoRepeatCount = 0;
                 }
 
                 //
                 // See if the pointer was moved.
                 //
-                else if(ui32Msg == WIDGET_MSG_PTR_MOVE)
-                {
+                else if(ui32Msg == WIDGET_MSG_PTR_MOVE) {
                     //
                     // Increment the auto-repeat count.
                     //
@@ -321,11 +304,10 @@ RectangularButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
                     // call the callback.
                     //
                     if((pPush->ui32AutoRepeatCount >=
-                        pPush->ui16AutoRepeatDelay) &&
-                       (((pPush->ui32AutoRepeatCount -
-                          pPush->ui16AutoRepeatDelay) %
-                         pPush->ui16AutoRepeatRate) == 0))
-                    {
+                            pPush->ui16AutoRepeatDelay) &&
+                            (((pPush->ui32AutoRepeatCount -
+                               pPush->ui16AutoRepeatDelay) %
+                              pPush->ui16AutoRepeatRate) == 0)) {
                         pPush->pfnOnClick(psWidget);
                     }
                 }
@@ -374,13 +356,11 @@ RectangularButtonMsgProc(tWidget *psWidget, uint32_t ui32Msg,
     //
     // Determine which message is being sent.
     //
-    switch(ui32Msg)
-    {
+    switch(ui32Msg) {
         //
         // The widget paint request has been sent.
         //
-        case WIDGET_MSG_PAINT:
-        {
+        case WIDGET_MSG_PAINT: {
             //
             // Handle the widget paint request.
             //
@@ -398,8 +378,7 @@ RectangularButtonMsgProc(tWidget *psWidget, uint32_t ui32Msg,
         //
         case WIDGET_MSG_PTR_DOWN:
         case WIDGET_MSG_PTR_MOVE:
-        case WIDGET_MSG_PTR_UP:
-        {
+        case WIDGET_MSG_PTR_UP: {
             //
             // Handle the pointer request, returning the appropriate value.
             //
@@ -410,8 +389,7 @@ RectangularButtonMsgProc(tWidget *psWidget, uint32_t ui32Msg,
         //
         // An unknown request has been sent.
         //
-        default:
-        {
+        default: {
             //
             // Let the default message handler process this message.
             //
@@ -457,8 +435,7 @@ RectangularButtonInit(tPushButtonWidget *psWidget, const tDisplay *psDisplay,
     //
     // Clear out the widget structure.
     //
-    for(ui32Idx = 0; ui32Idx < sizeof(tPushButtonWidget); ui32Idx += 4)
-    {
+    for(ui32Idx = 0; ui32Idx < sizeof(tPushButtonWidget); ui32Idx += 4) {
         ((uint32_t *)psWidget)[ui32Idx / 4] = 0;
     }
 
@@ -546,8 +523,7 @@ CircularButtonPaint(tWidget *psWidget)
     //
     // See if the push button fill style is selected.
     //
-    if(pPush->ui32Style & PB_STYLE_FILL)
-    {
+    if(pPush->ui32Style & PB_STYLE_FILL) {
         //
         // Fill the push button with the fill color.
         //
@@ -560,8 +536,7 @@ CircularButtonPaint(tWidget *psWidget)
     //
     // See if the push button outline style is selected.
     //
-    if(pPush->ui32Style & PB_STYLE_OUTLINE)
-    {
+    if(pPush->ui32Style & PB_STYLE_OUTLINE) {
         //
         // Outline the push button with the outline color.
         //
@@ -572,15 +547,13 @@ CircularButtonPaint(tWidget *psWidget)
     //
     // See if the push button text or image style is selected.
     //
-    if(pPush->ui32Style & (PB_STYLE_TEXT | PB_STYLE_IMG))
-    {
+    if(pPush->ui32Style & (PB_STYLE_TEXT | PB_STYLE_IMG)) {
         //
         // If the push button outline style is selected then shrink the
         // clipping region by one pixel on each side so that the outline is not
         // overwritten by the text or image.
         //
-        if(pPush->ui32Style & PB_STYLE_OUTLINE)
-        {
+        if(pPush->ui32Style & PB_STYLE_OUTLINE) {
             sCtx.sClipRegion.i16XMin++;
             sCtx.sClipRegion.i16YMin++;
             sCtx.sClipRegion.i16XMax--;
@@ -590,8 +563,7 @@ CircularButtonPaint(tWidget *psWidget)
         //
         // See if the push button image style is selected.
         //
-        if(pPush->ui32Style & PB_STYLE_IMG)
-        {
+        if(pPush->ui32Style & PB_STYLE_IMG) {
             //
             // Set the foreground and background colors to use for 1 BPP
             // images.
@@ -606,8 +578,8 @@ CircularButtonPaint(tWidget *psWidget)
             // Get the image to be drawn.
             //
             pui8Image = (((pPush->ui32Style & PB_STYLE_PRESSED) &&
-                         pPush->pui8PressImage) ?
-                        pPush->pui8PressImage : pPush->pui8Image);
+                          pPush->pui8PressImage) ?
+                         pPush->pui8PressImage : pPush->pui8Image);
 
             //
             // Draw the image centered in the push button.
@@ -619,8 +591,7 @@ CircularButtonPaint(tWidget *psWidget)
         //
         // See if the push button text style is selected.
         //
-        if(pPush->ui32Style & PB_STYLE_TEXT)
-        {
+        if(pPush->ui32Style & PB_STYLE_TEXT) {
             //
             // Draw the text centered in the middle of the push button.
             //
@@ -677,8 +648,7 @@ CircularButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
     //
     // See if this is a pointer up message.
     //
-    if(ui32Msg == WIDGET_MSG_PTR_UP)
-    {
+    if(ui32Msg == WIDGET_MSG_PTR_UP) {
         //
         // Indicate that this push button is no longer pressed.
         //
@@ -690,8 +660,7 @@ CircularButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
         // button to show it in its non-pressed state.
         //
         if((pPush->ui32Style & PB_STYLE_FILL) ||
-           ((pPush->ui32Style & PB_STYLE_IMG) && pPush->pui8PressImage))
-        {
+                ((pPush->ui32Style & PB_STYLE_IMG) && pPush->pui8PressImage)) {
             CircularButtonPaint(psWidget);
         }
     }
@@ -708,13 +677,11 @@ CircularButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
     // See if the given coordinates are within the radius of the push button.
     //
     if((((i32X - i32Xc) * (i32X - i32Xc)) +
-        ((i32Y - i32Yc) * (i32Y - i32Yc))) <= (i32R * i32R))
-    {
+            ((i32Y - i32Yc) * (i32Y - i32Yc))) <= (i32R * i32R)) {
         //
         // See if this is a pointer down message.
         //
-        if(ui32Msg == WIDGET_MSG_PTR_DOWN)
-        {
+        if(ui32Msg == WIDGET_MSG_PTR_DOWN) {
             //
             // Indicate that this push button is pressed.
             //
@@ -726,8 +693,7 @@ CircularButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
             // the push button to show it in its pressed state.
             //
             if((pPush->ui32Style & PB_STYLE_FILL) ||
-               ((pPush->ui32Style & PB_STYLE_IMG) && pPush->pui8PressImage))
-            {
+                    ((pPush->ui32Style & PB_STYLE_IMG) && pPush->pui8PressImage)) {
                 CircularButtonPaint(psWidget);
             }
         }
@@ -735,40 +701,35 @@ CircularButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
         //
         // See if there is an OnClick callback for this widget.
         //
-        if(pPush->pfnOnClick)
-        {
+        if(pPush->pfnOnClick) {
             //
             // If the pointer was just pressed or if the pointer was released
             // and this button is set for release notification then call the
             // callback.
             //
             if(((ui32Msg == WIDGET_MSG_PTR_DOWN) &&
-               !(pPush->ui32Style & PB_STYLE_RELEASE_NOTIFY)) ||
-               ((ui32Msg == WIDGET_MSG_PTR_UP) &&
-                (pPush->ui32Style & PB_STYLE_RELEASE_NOTIFY)))
-            {
+                    !(pPush->ui32Style & PB_STYLE_RELEASE_NOTIFY)) ||
+                    ((ui32Msg == WIDGET_MSG_PTR_UP) &&
+                     (pPush->ui32Style & PB_STYLE_RELEASE_NOTIFY))) {
                 pPush->pfnOnClick(psWidget);
             }
 
             //
             // See if auto-repeat is enabled for this widget.
             //
-            if(pPush->ui32Style & PB_STYLE_AUTO_REPEAT)
-            {
+            if(pPush->ui32Style & PB_STYLE_AUTO_REPEAT) {
                 //
                 // If the pointer was just pressed, reset the auto-repeat
                 // count.
                 //
-                if(ui32Msg == WIDGET_MSG_PTR_DOWN)
-                {
+                if(ui32Msg == WIDGET_MSG_PTR_DOWN) {
                     pPush->ui32AutoRepeatCount = 0;
                 }
 
                 //
                 // See if the pointer was moved.
                 //
-                else if(ui32Msg == WIDGET_MSG_PTR_MOVE)
-                {
+                else if(ui32Msg == WIDGET_MSG_PTR_MOVE) {
                     //
                     // Increment the auto-repeat count.
                     //
@@ -780,11 +741,10 @@ CircularButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
                     // call the callback.
                     //
                     if((pPush->ui32AutoRepeatCount >=
-                        pPush->ui16AutoRepeatDelay) &&
-                       (((pPush->ui32AutoRepeatCount -
-                          pPush->ui16AutoRepeatDelay) %
-                         pPush->ui16AutoRepeatRate) == 0))
-                    {
+                            pPush->ui16AutoRepeatDelay) &&
+                            (((pPush->ui32AutoRepeatCount -
+                               pPush->ui16AutoRepeatDelay) %
+                              pPush->ui16AutoRepeatRate) == 0)) {
                         pPush->pfnOnClick(psWidget);
                     }
                 }
@@ -833,13 +793,11 @@ CircularButtonMsgProc(tWidget *psWidget, uint32_t ui32Msg,
     //
     // Determine which message is being sent.
     //
-    switch(ui32Msg)
-    {
+    switch(ui32Msg) {
         //
         // The widget paint request has been sent.
         //
-        case WIDGET_MSG_PAINT:
-        {
+        case WIDGET_MSG_PAINT: {
             //
             // Handle the widget paint request.
             //
@@ -857,8 +815,7 @@ CircularButtonMsgProc(tWidget *psWidget, uint32_t ui32Msg,
         //
         case WIDGET_MSG_PTR_DOWN:
         case WIDGET_MSG_PTR_MOVE:
-        case WIDGET_MSG_PTR_UP:
-        {
+        case WIDGET_MSG_PTR_UP: {
             //
             // Handle the pointer request, returning the appropriate value.
             //
@@ -869,8 +826,7 @@ CircularButtonMsgProc(tWidget *psWidget, uint32_t ui32Msg,
         //
         // An unknown request has been sent.
         //
-        default:
-        {
+        default: {
             //
             // Let the default message handler process this message.
             //
@@ -914,8 +870,7 @@ CircularButtonInit(tPushButtonWidget *psWidget, const tDisplay *psDisplay,
     //
     // Clear out the widget structure.
     //
-    for(ui32Idx = 0; ui32Idx < sizeof(tPushButtonWidget); ui32Idx += 4)
-    {
+    for(ui32Idx = 0; ui32Idx < sizeof(tPushButtonWidget); ui32Idx += 4) {
         ((uint32_t *)psWidget)[ui32Idx / 4] = 0;
     }
 

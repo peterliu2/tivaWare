@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2005-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -100,11 +100,11 @@
 #define SSI_CR1_MODE_BI         0x00000040  // Bi-SSI mode
 #define SSI_CR1_MODE_QUAD       0x00000080  // Quad-SSI Mode
 #define SSI_CR1_MODE_ADVANCED   0x000000C0  // Advanced SSI Mode with 8-bit
-                                            // packet size
+// packet size
 #define SSI_CR1_EOT             0x00000010  // End of Transmission
 #define SSI_CR1_MS              0x00000004  // SSI Master/Slave Select
 #define SSI_CR1_SSE             0x00000002  // SSI Synchronous Serial Port
-                                            // Enable
+// Enable
 #define SSI_CR1_LBM             0x00000001  // SSI Loopback Mode
 
 //*****************************************************************************
@@ -145,9 +145,9 @@
 #define SSI_IM_TXIM             0x00000008  // SSI Transmit FIFO Interrupt Mask
 #define SSI_IM_RXIM             0x00000004  // SSI Receive FIFO Interrupt Mask
 #define SSI_IM_RTIM             0x00000002  // SSI Receive Time-Out Interrupt
-                                            // Mask
+// Mask
 #define SSI_IM_RORIM            0x00000001  // SSI Receive Overrun Interrupt
-                                            // Mask
+// Mask
 
 //*****************************************************************************
 //
@@ -155,19 +155,19 @@
 //
 //*****************************************************************************
 #define SSI_RIS_EOTRIS          0x00000040  // End of Transmit Raw Interrupt
-                                            // Status
+// Status
 #define SSI_RIS_DMATXRIS        0x00000020  // SSI Transmit DMA Raw Interrupt
-                                            // Status
+// Status
 #define SSI_RIS_DMARXRIS        0x00000010  // SSI Receive DMA Raw Interrupt
-                                            // Status
+// Status
 #define SSI_RIS_TXRIS           0x00000008  // SSI Transmit FIFO Raw Interrupt
-                                            // Status
+// Status
 #define SSI_RIS_RXRIS           0x00000004  // SSI Receive FIFO Raw Interrupt
-                                            // Status
+// Status
 #define SSI_RIS_RTRIS           0x00000002  // SSI Receive Time-Out Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define SSI_RIS_RORRIS          0x00000001  // SSI Receive Overrun Raw
-                                            // Interrupt Status
+// Interrupt Status
 
 //*****************************************************************************
 //
@@ -175,19 +175,19 @@
 //
 //*****************************************************************************
 #define SSI_MIS_EOTMIS          0x00000040  // End of Transmit Masked Interrupt
-                                            // Status
+// Status
 #define SSI_MIS_DMATXMIS        0x00000020  // SSI Transmit DMA Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define SSI_MIS_DMARXMIS        0x00000010  // SSI Receive DMA Masked Interrupt
-                                            // Status
+// Status
 #define SSI_MIS_TXMIS           0x00000008  // SSI Transmit FIFO Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define SSI_MIS_RXMIS           0x00000004  // SSI Receive FIFO Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define SSI_MIS_RTMIS           0x00000002  // SSI Receive Time-Out Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define SSI_MIS_RORMIS          0x00000001  // SSI Receive Overrun Masked
-                                            // Interrupt Status
+// Interrupt Status
 
 //*****************************************************************************
 //
@@ -198,9 +198,9 @@
 #define SSI_ICR_DMATXIC         0x00000020  // SSI Transmit DMA Interrupt Clear
 #define SSI_ICR_DMARXIC         0x00000010  // SSI Receive DMA Interrupt Clear
 #define SSI_ICR_RTIC            0x00000002  // SSI Receive Time-Out Interrupt
-                                            // Clear
+// Clear
 #define SSI_ICR_RORIC           0x00000001  // SSI Receive Overrun Interrupt
-                                            // Clear
+// Clear
 
 //*****************************************************************************
 //
@@ -219,9 +219,9 @@
 #define SSI_PP_MODE_M           0x00000006  // Mode of Operation
 #define SSI_PP_MODE_LEGACY      0x00000000  // Legacy SSI mode
 #define SSI_PP_MODE_ADVBI       0x00000002  // Legacy mode, Advanced SSI mode
-                                            // and Bi-SSI mode enabled
+// and Bi-SSI mode enabled
 #define SSI_PP_MODE_ADVBIQUAD   0x00000004  // Legacy mode, Advanced mode,
-                                            // Bi-SSI and Quad-SSI mode enabled
+// Bi-SSI and Quad-SSI mode enabled
 #define SSI_PP_HSCLK            0x00000001  // High Speed Capability
 
 //*****************************************************************************
@@ -231,7 +231,7 @@
 //*****************************************************************************
 #define SSI_CC_CS_M             0x0000000F  // SSI Baud Clock Source
 #define SSI_CC_CS_SYSPLL        0x00000000  // System clock (based on clock
-                                            // source and divisor factor)
+// source and divisor factor)
 #define SSI_CC_CS_PIOSC         0x00000005  // PIOSC
 
 #endif // __HW_SSI_H__

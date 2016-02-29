@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -44,8 +44,7 @@
 // Global USB keyboard state.
 //
 //****************************************************************************
-struct
-{
+struct {
     //
     // Holds a pending special key press for the Caps Lock, Scroll Lock, or
     // Num Lock keys.
@@ -59,8 +58,7 @@ g_sKeyboardState;
 // The look up table entries for usage codes.
 //
 //****************************************************************************
-typedef struct
-{
+typedef struct {
     char cChar;
     char cUsage;
 }
@@ -71,8 +69,7 @@ sUsageEntry;
 // The un-shifted HID usage codes used by the graphical keyboard.
 //
 //****************************************************************************
-static const sUsageEntry g_pcUsageCodes[] =
-{
+static const sUsageEntry g_pcUsageCodes[] = {
     {'q', HID_KEYB_USAGE_Q}, {'w', HID_KEYB_USAGE_W},
     {'e', HID_KEYB_USAGE_E}, {'r', HID_KEYB_USAGE_R},
     {'t', HID_KEYB_USAGE_T}, {'y', HID_KEYB_USAGE_Y},
@@ -105,15 +102,14 @@ static const sUsageEntry g_pcUsageCodes[] =
 };
 
 static const uint32_t ui32NumUsageCodes =
-                                    sizeof(g_pcUsageCodes)/sizeof(sUsageEntry);
+    sizeof(g_pcUsageCodes)/sizeof(sUsageEntry);
 
 //****************************************************************************
 //
 // The shifted HID usage codes that are used by the graphical keyboard.
 //
 //****************************************************************************
-static const sUsageEntry g_pcUsageCodesShift[] =
-{
+static const sUsageEntry g_pcUsageCodesShift[] = {
     {')', HID_KEYB_USAGE_0}, {'!', HID_KEYB_USAGE_1},
     {'@', HID_KEYB_USAGE_2}, {'#', HID_KEYB_USAGE_3},
     {'$', HID_KEYB_USAGE_4}, {'%', HID_KEYB_USAGE_5},
@@ -126,7 +122,7 @@ static const sUsageEntry g_pcUsageCodesShift[] =
 };
 
 static const uint32_t ui32NumUsageCodesShift =
-                                    sizeof(g_pcUsageCodes)/sizeof(sUsageEntry);
+    sizeof(g_pcUsageCodes)/sizeof(sUsageEntry);
 
 //****************************************************************************
 //
@@ -162,21 +158,16 @@ GetUsageCode(char cKey, bool bShifted)
     int32_t i32Idx, i32Entries;
     const sUsageEntry *pUsageTable;
 
-    if(bShifted)
-    {
+    if(bShifted) {
         i32Entries = ui32NumUsageCodesShift;
         pUsageTable = g_pcUsageCodesShift;
-    }
-    else
-    {
+    } else {
         i32Entries = ui32NumUsageCodes;
         pUsageTable = g_pcUsageCodes;
     }
 
-    for(i32Idx = 0; i32Idx < i32Entries; i32Idx++)
-    {
-        if(pUsageTable[i32Idx].cChar == cKey)
-        {
+    for(i32Idx = 0; i32Idx < i32Entries; i32Idx++) {
+        if(pUsageTable[i32Idx].cChar == cKey) {
             return(pUsageTable[i32Idx].cUsage);
         }
     }
@@ -208,12 +199,10 @@ USBKeyboardUpdate(uint8_t ui8Modifiers, uint8_t ui8Key, bool bPressed)
     // Move these to a-z because USB HID does not recognize unshifted values,
     // it uses the SHIFT modifier to change the case.
     //
-    if((ui8Key >= 'A') && (ui8Key <= 'Z'))
-    {
+    if((ui8Key >= 'A') && (ui8Key <= 'Z')) {
         ui8Key |= 0x20;
 
-        if(bPressed)
-        {
+        if(bPressed) {
             ui8Modifiers |= HID_KEYB_LEFT_SHIFT;
         }
     }
@@ -228,15 +217,13 @@ USBKeyboardUpdate(uint8_t ui8Modifiers, uint8_t ui8Key, bool bPressed)
     // separately.
     //
     if((ui8Usage == HID_KEYB_USAGE_CAPSLOCK) ||
-       (ui8Usage == HID_KEYB_USAGE_SCROLLOCK) ||
-       (ui8Usage == HID_KEYB_USAGE_NUMLOCK))
-    {
+            (ui8Usage == HID_KEYB_USAGE_SCROLLOCK) ||
+            (ui8Usage == HID_KEYB_USAGE_NUMLOCK)) {
         //
         // If there was already a special key pressed, then force it to be
         // released.
         //
-        if(g_sKeyboardState.ui8Special)
-        {
+        if(g_sKeyboardState.ui8Special) {
             USBDHIDKeyboardKeyStateChange(&g_sKeyboardDevice, ui8Modifiers,
                                           g_sKeyboardState.ui8Special, false);
         }
@@ -251,15 +238,13 @@ USBKeyboardUpdate(uint8_t ui8Modifiers, uint8_t ui8Key, bool bPressed)
     // If there was not an unshifted value for this character then look for
     // a shifted version of the character.
     //
-    if(ui8Usage == 0)
-    {
+    if(ui8Usage == 0) {
         //
         // Get the shifted value and set the shift modifier.
         //
         ui8Usage = GetUsageCode(ui8Key, true);
 
-        if(bPressed)
-        {
+        if(bPressed) {
             ui8Modifiers |= HID_KEYB_LEFT_SHIFT;
         }
     }
@@ -268,8 +253,7 @@ USBKeyboardUpdate(uint8_t ui8Modifiers, uint8_t ui8Key, bool bPressed)
     // If a valid usage code was found then pass the key along to the
     // USB library.
     //
-    if(ui8Usage)
-    {
+    if(ui8Usage) {
         USBDHIDKeyboardKeyStateChange(&g_sKeyboardDevice, ui8Modifiers,
                                       ui8Usage, bPressed);
     }
@@ -287,23 +271,19 @@ USBKeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgParam,
     //
     // Handle LED set requests.  These are the various lock key requests.
     //
-    if(ui32Event == USBD_HID_KEYB_EVENT_SET_LEDS)
-    {
+    if(ui32Event == USBD_HID_KEYB_EVENT_SET_LEDS) {
         //
         // Set the state of the lock keys in the UI.
         //
         UICapsLock(ui32MsgParam & HID_KEYB_CAPS_LOCK);
         UIScrollLock(ui32MsgParam & HID_KEYB_SCROLL_LOCK);
         UINumLock(ui32MsgParam & HID_KEYB_NUM_LOCK);
-    }
-    else if(ui32Event == USB_EVENT_TX_COMPLETE)
-    {
+    } else if(ui32Event == USB_EVENT_TX_COMPLETE) {
         //
         // Any time a report is sent and there is a pending special key
         // pressed send a key release.
         //
-        if(g_sKeyboardState.ui8Special)
-        {
+        if(g_sKeyboardState.ui8Special) {
             USBDHIDKeyboardKeyStateChange(&g_sKeyboardDevice, 0,
                                           g_sKeyboardState.ui8Special, false);
             g_sKeyboardState.ui8Special = 0;

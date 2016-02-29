@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -44,8 +44,7 @@
 // FAT file system driver.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     FRESULT iResult;
     char *pcResultStr;
 }
@@ -65,8 +64,7 @@ tFresultString;
 // printing to the console.
 //
 //*****************************************************************************
-tFresultString g_sFresultStrings[] =
-{
+tFresultString g_sFresultStrings[] = {
     FRESULT_ENTRY(FR_OK),
     FRESULT_ENTRY(FR_NOT_READY),
     FRESULT_ENTRY(FR_NO_FILE),
@@ -191,8 +189,7 @@ FileInit(void)
     //
     // Mount the file system, using logical disk 0.
     //
-    if(f_mount(0, &g_sFatFs) != FR_OK)
-    {
+    if(f_mount(0, &g_sFatFs) != FR_OK) {
         return(false);
     }
     return(true);
@@ -214,14 +211,12 @@ StringFromFresult(FRESULT iResult)
     // Enter a loop to search the error code table for a matching
     // error code.
     //
-    for(ui32Idx = 0; ui32Idx < NUM_FRESULT_CODES; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < NUM_FRESULT_CODES; ui32Idx++) {
         //
         // If a match is found, then return the string name of the
         // error code.
         //
-        if(g_sFresultStrings[ui32Idx].iResult == iResult)
-        {
+        if(g_sFresultStrings[ui32Idx].iResult == iResult) {
             return(g_sFresultStrings[ui32Idx].pcResultStr);
         }
     }
@@ -257,8 +252,7 @@ Cmd_ls(int argc, char *argv[])
     //
     // Check for error and return if there is a problem.
     //
-    if(iResult != FR_OK)
-    {
+    if(iResult != FR_OK) {
         //
         // Ensure that the error is reported.
         //
@@ -276,8 +270,7 @@ Cmd_ls(int argc, char *argv[])
     //
     // Enter loop to enumerate through all directory entries.
     //
-    for(;;)
-    {
+    for(;;) {
         //
         // Read an entry from the directory.
         //
@@ -286,8 +279,7 @@ Cmd_ls(int argc, char *argv[])
         //
         // Check for error and return if there is a problem.
         //
-        if(iResult != FR_OK)
-        {
+        if(iResult != FR_OK) {
             return(iResult);
         }
 
@@ -295,8 +287,7 @@ Cmd_ls(int argc, char *argv[])
         // If the file name is blank, then this is the end of the
         // listing.
         //
-        if(!g_sFileInfo.fname[0])
-        {
+        if(!g_sFileInfo.fname[0]) {
             break;
         }
 
@@ -323,8 +314,7 @@ Cmd_ls(int argc, char *argv[])
         //
         // If the attribute is directory, then increment the directory count.
         //
-        if(g_sFileInfo.fattrib & AM_DIR)
-        {
+        if(g_sFileInfo.fattrib & AM_DIR) {
             ui32DirCount++;
         }
 
@@ -332,8 +322,7 @@ Cmd_ls(int argc, char *argv[])
         // Otherwise, it is a file.  Increment the file count, and
         // add in the file size to the total.
         //
-        else
-        {
+        else {
             ui32FileCount++;
             ui32TotalSize += g_sFileInfo.fsize;
         }
@@ -361,8 +350,7 @@ Cmd_ls(int argc, char *argv[])
     //
     // Check for error and return if there is a problem.
     //
-    if(iResult != FR_OK)
-    {
+    if(iResult != FR_OK) {
         return(iResult);
     }
 
@@ -410,13 +398,11 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
     // If the first character is /, then this is a fully specified
     // path, and it should just be used as-is.
     //
-    if(pcDirectory[0] == '/')
-    {
+    if(pcDirectory[0] == '/') {
         //
         // Make sure the new path is not bigger than the cwd buffer.
         //
-        if(strlen(pcDirectory) + 1 > sizeof(g_pcCwdBuf))
-        {
+        if(strlen(pcDirectory) + 1 > sizeof(g_pcCwdBuf)) {
             *pui32Reason = NAME_TOO_LONG_ERROR;
             return(FR_OK);
         }
@@ -425,8 +411,7 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
         // If the new path name (in argv[1])  is not too long, then
         // copy it into the temporary buffer so it can be checked.
         //
-        else
-        {
+        else {
             strncpy(g_pcTmpBuf, pcDirectory, sizeof(g_pcTmpBuf));
         }
     }
@@ -435,8 +420,7 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
     // If the argument is .. then attempt to remove the lowest level
     // on the CWD.
     //
-    else if(!strcmp(pcDirectory, ".."))
-    {
+    else if(!strcmp(pcDirectory, "..")) {
         //
         // Get the index to the last character in the current path.
         //
@@ -446,8 +430,7 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
         // Back up from the end of the path name until a separator (/)
         // is found, or until we bump up to the start of the path.
         //
-        while((g_pcTmpBuf[ui32Idx] != '/') && (ui32Idx > 1))
-        {
+        while((g_pcTmpBuf[ui32Idx] != '/') && (ui32Idx > 1)) {
             //
             // Back up one character.
             //
@@ -467,16 +450,14 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
     // Otherwise this is just a normal path name from the current
     // directory, and it needs to be appended to the current path.
     //
-    else
-    {
+    else {
         //
         // Test to make sure that when the new additional path is
         // added on to the current path, there is room in the buffer
         // for the full new path.  It needs to include a new separator,
         // and a trailing null character.
         //
-        if(strlen(g_pcTmpBuf) + strlen(pcDirectory) + 1 + 1 > sizeof(g_pcCwdBuf))
-        {
+        if(strlen(g_pcTmpBuf) + strlen(pcDirectory) + 1 + 1 > sizeof(g_pcCwdBuf)) {
             *pui32Reason = NAME_TOO_LONG_ERROR;
             return(FR_INVALID_OBJECT);
         }
@@ -485,13 +466,11 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
         // The new path is okay, so add the separator and then append
         // the new directory to the path.
         //
-        else
-        {
+        else {
             //
             // If not already at the root level, then append a /
             //
-            if(strcmp(g_pcTmpBuf, "/"))
-            {
+            if(strcmp(g_pcTmpBuf, "/")) {
                 strcat(g_pcTmpBuf, "/");
             }
 
@@ -512,8 +491,7 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
     // If it cannot be opened, then it is a bad path.  Inform
     // user and return.
     //
-    if(iResult != FR_OK)
-    {
+    if(iResult != FR_OK) {
         *pui32Reason = OPENDIR_ERROR;
         return(iResult);
     }
@@ -522,8 +500,7 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
     // Otherwise, it is a valid new path, so copy it into the CWD and update
     // the screen.
     //
-    else
-    {
+    else {
         strncpy(g_pcCwdBuf, g_pcTmpBuf, sizeof(g_pcCwdBuf));
     }
 
@@ -566,10 +543,8 @@ Cmd_cd(int argc, char *argv[])
     //
     // If an error was reported, try to offer some helpful information.
     //
-    if(iResult != FR_OK)
-    {
-        switch(ui32Reason)
-        {
+    if(iResult != FR_OK) {
+        switch(ui32Reason) {
             case OPENDIR_ERROR:
                 WriteString("Error opening new directory.\n");
                 break;
@@ -582,9 +557,7 @@ Cmd_cd(int argc, char *argv[])
                 WriteString("An unrecognized error was reported.\n");
                 break;
         }
-    }
-    else
-    {
+    } else {
         //
         // Tell the user what happened.
         //
@@ -643,8 +616,7 @@ Cmd_cat(int argc, char *argv[])
     // file name.  The file name must be fully specified, with path,
     // to FatFs.
     //
-    if(strlen(g_pcCwdBuf) + strlen(argv[1]) + 1 + 1 > sizeof(g_pcTmpBuf))
-    {
+    if(strlen(g_pcCwdBuf) + strlen(argv[1]) + 1 + 1 > sizeof(g_pcTmpBuf)) {
         WriteString("Resulting path name is too long\n");
         return(0);
     }
@@ -657,8 +629,7 @@ Cmd_cat(int argc, char *argv[])
     //
     // If not already at the root level, then append a separator.
     //
-    if(strcmp("/", g_pcCwdBuf))
-    {
+    if(strcmp("/", g_pcCwdBuf)) {
         strcat(g_pcTmpBuf, "/");
     }
 
@@ -676,8 +647,7 @@ Cmd_cat(int argc, char *argv[])
     // If there was some problem opening the file, then return
     // an error.
     //
-    if(iResult != FR_OK)
-    {
+    if(iResult != FR_OK) {
         return(iResult);
     }
 
@@ -685,8 +655,7 @@ Cmd_cat(int argc, char *argv[])
     // Enter a loop to repeatedly read data from the file and display it,
     // until the end of the file is reached.
     //
-    do
-    {
+    do {
         //
         // Read a block of data from the file.  Read as much as can fit
         // in the temporary buffer, including a space for the trailing null.
@@ -698,8 +667,7 @@ Cmd_cat(int argc, char *argv[])
         // If there was an error reading, then print a newline and
         // return the error to the user.
         //
-        if(iResult != FR_OK)
-        {
+        if(iResult != FR_OK) {
             WriteString("\n");
             return(iResult);
         }
@@ -712,17 +680,13 @@ Cmd_cat(int argc, char *argv[])
 
         pcCurrent = g_pcTmpBuf;
 
-        for(iIdx = 0; iIdx < ui32BytesRead; iIdx++)
-        {
-            if(g_pcTmpBuf[iIdx] == '\r')
-            {
+        for(iIdx = 0; iIdx < ui32BytesRead; iIdx++) {
+            if(g_pcTmpBuf[iIdx] == '\r') {
                 //
                 // Ignore carriage return.
                 //
                 g_pcTmpBuf[iIdx] = 0;
-            }
-            else if(g_pcTmpBuf[iIdx] == '\n')
-            {
+            } else if(g_pcTmpBuf[iIdx] == '\n') {
                 g_pcTmpBuf[iIdx] = 0;
 
                 //
@@ -735,9 +699,7 @@ Cmd_cat(int argc, char *argv[])
                 // Move the pointer up to the next line.
                 //
                 pcCurrent = g_pcTmpBuf + iIdx + 1;
-            }
-            else if(g_pcTmpBuf[iIdx] == 0)
-            {
+            } else if(g_pcTmpBuf[iIdx] == 0) {
                 //
                 // Print the current string and move past the null.
                 //
@@ -746,8 +708,7 @@ Cmd_cat(int argc, char *argv[])
             }
         }
 
-        if(pcCurrent < g_pcTmpBuf + ui32BytesRead)
-        {
+        if(pcCurrent < g_pcTmpBuf + ui32BytesRead) {
             //
             // Null terminate the line.
             //
@@ -758,8 +719,7 @@ Cmd_cat(int argc, char *argv[])
             //
             WriteString(pcCurrent);
         }
-    }
-    while(ui32BytesRead == sizeof(g_pcTmpBuf) - 1);
+    } while(ui32BytesRead == sizeof(g_pcTmpBuf) - 1);
 
     WriteString("\n");
 
@@ -793,14 +753,12 @@ MSCCallback(tUSBHMSCInstance *psMSCInstance, uint32_t ui32Event, void *pvData)
     //
     // Determine the event.
     //
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // Called when the device driver has successfully enumerated an MSC
         // device.
         //
-        case MSC_EVENT_OPEN:
-        {
+        case MSC_EVENT_OPEN: {
             //
             // Proceed to the enumeration state.
             //
@@ -813,8 +771,7 @@ MSCCallback(tUSBHMSCInstance *psMSCInstance, uint32_t ui32Event, void *pvData)
         // Called when the device driver has been unloaded due to error or
         // the device is no longer present.
         //
-        case MSC_EVENT_CLOSE:
-        {
+        case MSC_EVENT_CLOSE: {
             //
             // Go back to the "no device" state and wait for a new connection.
             //
@@ -828,8 +785,7 @@ MSCCallback(tUSBHMSCInstance *psMSCInstance, uint32_t ui32Event, void *pvData)
             break;
         }
 
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -864,16 +820,13 @@ MSCMain(void)
 {
     FRESULT iResult;
 
-    switch(g_iState)
-    {
-        case eStateDeviceEnum:
-        {
+    switch(g_iState) {
+        case eStateDeviceEnum: {
             //
             // Take it easy on the Mass storage device if it is slow to
             // start up after connecting.
             //
-            if(USBHMSCDriveReady(g_psMSCInstance) != 0)
-            {
+            if(USBHMSCDriveReady(g_psMSCInstance) != 0) {
                 //
                 // Wait about 500ms before attempting to check if the
                 // device is ready again.
@@ -889,8 +842,7 @@ MSCMain(void)
                 // If the timeout is hit then go to the
                 // eStateDeviceTimeout state.
                 //
-                if(g_ui32DriveTimeout == 0)
-                {
+                if(g_ui32DriveTimeout == 0) {
                     g_iState = eStateDeviceTimeout;
                 }
 
@@ -911,8 +863,7 @@ MSCMain(void)
             //
             // Check for error and return if there is a problem.
             //
-            if(iResult != FR_OK)
-            {
+            if(iResult != FR_OK) {
                 //
                 // Ensure that the error is reported.
                 //
@@ -930,16 +881,14 @@ MSCMain(void)
         //
         // The connected mass storage device is not reporting ready.
         //
-        case eStateDeviceTimeout:
-        {
+        case eStateDeviceTimeout: {
             WriteString("\n");
             WriteString("Device Timeout.\n");
             break;
         }
         case eStateNoDevice:
         case eStateDeviceReady:
-        default:
-        {
+        default: {
             break;
         }
     }

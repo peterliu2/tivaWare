@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -36,13 +36,13 @@
 #define ISL29023_O_DATA_OUT_LSB 0x02        // Least significant byte of data
 #define ISL29023_O_DATA_OUT_MSB 0x03        // Most significant byte of data
 #define ISL29023_O_INT_LT_LSB   0x04        // Interrupt lower threshold least
-                                            // significant byte.
+// significant byte.
 #define ISL29023_O_INT_LT_MSB   0x05        // Interrupt lower threshold most
-                                            // significant byte.
+// significant byte.
 #define ISL29023_O_INT_HT_LSB   0x06        // Interrupt high threshold least
-                                            // significant byte.
+// significant byte.
 #define ISL29023_O_INT_HT_MSB   0x07        // Interrupt high threshold most
-                                            // signficant byte
+// signficant byte
 
 //*****************************************************************************
 //
@@ -58,7 +58,7 @@
                                 0x0E        // RESERVED
 #define ISL29023_CMD_I_OP_MODE_ALS_LOW                                        \
                                 0x20        // Measure ALS once per integration
-                                            // cyle
+// cyle
 #define ISL29023_CMD_I_OP_MODE_IR_ONCE                                        \
                                 0x40        // Measure IR once
 #define ISL29023_CMD_I_OP_MODE_RESERVED_1                                     \
@@ -67,28 +67,28 @@
                                 0x80        // RESERVED
 #define ISL29023_CMD_I_OP_MODE_ALS_CONT                                       \
                                 0xA0        // Measure ambient light sensor
-                                            // continuously.
+// continuously.
 #define ISL29023_CMD_I_OP_MODE_IR_CONT                                        \
                                 0xC         // Measure infrared sensor
-                                            // continuously
+// continuously
 #define ISL29023_CMD_I_INT_FLAG_M                                             \
                                 0x04        // Interrupt flag
 #define ISL29023_CMD_I_INT_FLAG 0x04        // Interrupt flag
 #define ISL29023_CMD_I_INT_PERSIST_M                                          \
                                 0x03        // Consecutive measurements outside
-                                            // threshold before interrupt
+// threshold before interrupt
 #define ISL29023_CMD_I_INT_PERSIST_1                                          \
                                 0x00        // Interrupt on first cycle outside
-                                            // threshold
+// threshold
 #define ISL29023_CMD_I_INT_PERSIST_4                                          \
                                 0x01        // Interrupt on fourth cycle
-                                            // oustside threshold
+// oustside threshold
 #define ISL29023_CMD_I_INT_PERSIST_8                                          \
                                 0x02        // Interrupt on eigth cycle outside
-                                            // threshold
+// threshold
 #define ISL29023_CMD_I_INT_PERSIST_16                                         \
                                 0x03        // Interrupt on sixteenth cycle
-                                            // outside threshold
+// outside threshold
 #define ISL29023_CMD_I_OP_MODE_S                                              \
                                 5
 #define ISL29023_CMD_I_INT_FLAG_S                                             \

@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -112,8 +112,7 @@ uint32_t g_pui32CRC32Table[256];
 // to determine where the image should be located in flash.
 //
 //*****************************************************************************
-uint8_t g_pui8Prefix[] =
-{
+uint8_t g_pui8Prefix[] = {
     0x01, // TIVA_DFU_CMD_PROG
     0x00, // Reserved
     0x00, // LSB start address / 1024
@@ -143,10 +142,8 @@ Reflect(uint32_t ui32Ref, uint8_t ui8Ch)
     //
     // Swap bit 0 for bit 7, bit 1 for bit 6, etc.
     //
-    for(ui32Loop = 1; ui32Loop < (ui8Ch + 1); ui32Loop++)
-    {
-        if(ui32Ref & 1)
-        {
+    for(ui32Loop = 1; ui32Loop < (ui8Ch + 1); ui32Loop++) {
+        if(ui32Ref & 1) {
             ui32Value |= 1 << (ui8Ch - ui32Loop);
         }
         ui32Ref >>= 1;
@@ -171,11 +168,9 @@ InitCRC32Table(void)
     //
     ui32Polynomial = 0x04c11db7;
 
-    for(ui32I = 0; ui32I <= 0xFF; ui32I++)
-    {
+    for(ui32I = 0; ui32I <= 0xFF; ui32I++) {
         g_pui32CRC32Table[ui32I] = Reflect(ui32I, 8) << 24;
-        for (ui32J = 0; ui32J < 8; ui32J++)
-        {
+        for (ui32J = 0; ui32J < 8; ui32J++) {
             g_pui32CRC32Table[ui32I] = ((g_pui32CRC32Table[ui32I] << 1) ^
                                         (g_pui32CRC32Table[ui32I] & (1 << 31) ?
                                          ui32Polynomial : 0));
@@ -207,8 +202,7 @@ CalculateCRC32(uint8_t *pui8Data, uint32_t ui32Length, uint32_t ui32CRC)
     // Perform the algorithm on each byte in the supplied buffer using the
     // lookup table values calculated in InitCRC32Table().
     //
-    while(ui32Count--)
-    {
+    while(ui32Count--) {
         ui8Char = *pui8Buffer++;
         ui32CRC = (ui32CRC >> 8) ^ g_pui32CRC32Table[(ui32CRC & 0xFF) ^ ui8Char];
     }
@@ -240,8 +234,7 @@ ShowHelp(void)
     //
     // Only print help if we are not in quiet mode.
     //
-    if(g_bQuiet)
-    {
+    if(g_bQuiet) {
         return;
     }
 
@@ -251,7 +244,7 @@ ShowHelp(void)
     printf("-i <file> - The name of the input file.\n");
     printf("-o <file> - The name of the output file (default image.dfu)\n");
     printf("-a <num>  - Set the address the binary will be flashed to.  This\n"
-    "                   option is required if -d is present.\n");
+           "                   option is required if -d is present.\n");
     printf("-d        - Adds a simple download header to the output image\n"
            "            image.  This is not needed for use with LMFlash.\n");
     printf("-x        - Overwrite existing output file without prompting.\n");
@@ -298,65 +291,54 @@ ParseCommandLine(int argc, char *argv[])
     //
     bShowHelp = false;
 
-    while(1)
-    {
+    while(1) {
         //
         // Get the next command line parameter.
         //
         iRetcode = getopt(argc, argv, "a:i:o:dvh?qx");
 
-        if(iRetcode == -1)
-        {
+        if(iRetcode == -1) {
             break;
         }
 
-        switch(iRetcode)
-        {
-            case 'i':
-            {
+        switch(iRetcode) {
+            case 'i': {
                 g_pcInput = optarg;
                 break;
             }
 
-            case 'o':
-            {
+            case 'o': {
                 g_pcOutput = optarg;
                 break;
             }
 
-            case 'a':
-            {
+            case 'a': {
                 g_ui32Address = (uint32_t)strtol(optarg, NULL, 0);
                 break;
             }
 
-            case 'v':
-            {
+            case 'v': {
                 g_bVerbose = true;
                 break;
             }
 
-            case 'd':
-            {
+            case 'd': {
                 g_bSkipHeader = false;
                 break;
             }
 
-            case 'q':
-            {
+            case 'q': {
                 g_bQuiet = true;
                 break;
             }
 
-            case 'x':
-            {
+            case 'x': {
                 g_bOverwrite = true;
                 break;
             }
 
             case '?':
-            case 'h':
-            {
+            case 'h': {
                 bShowHelp = true;
                 break;
             }
@@ -372,8 +354,7 @@ ParseCommandLine(int argc, char *argv[])
     // Catch various invalid parameter cases.
     //
     if(bShowHelp || (g_pcInput == NULL) ||
-      (!g_bSkipHeader && ((g_ui32Address == 0) || (g_ui32Address & 1023))))
-    {
+            (!g_bSkipHeader && ((g_ui32Address == 0) || (g_ui32Address & 1023)))) {
         //
         // Show the command line options.
         //
@@ -383,13 +364,11 @@ ParseCommandLine(int argc, char *argv[])
         // If we were not explicitly asked for help information, provide some
         // other help on the cause of the error.
         //
-        if(!bShowHelp)
-        {
+        if(!bShowHelp) {
             //
             // Make sure we were given an input file.
             //
-            if(g_pcInput == NULL)
-            {
+            if(g_pcInput == NULL) {
                 QUIETPRINT("ERROR: An input file must be specified using the "
                            "-i parameter.\n");
             }
@@ -398,14 +377,12 @@ ParseCommandLine(int argc, char *argv[])
             // Make sure we were given a start address if we're not skipping
             // the header.
             //
-            if(!g_bSkipHeader && (g_ui32Address == 0))
-            {
+            if(!g_bSkipHeader && (g_ui32Address == 0)) {
                 QUIETPRINT("ERROR: The flash address of the image must be "
                            "provided using the -a parameter.\n");
             }
 
-            if(!g_bSkipHeader && (g_ui32Address & 1023))
-            {
+            if(!g_bSkipHeader && (g_ui32Address & 1023)) {
                 QUIETPRINT("ERROR: The supplied flash address must be a "
                            "multiple of 1024.\n");
             }
@@ -431,8 +408,7 @@ ParseCommandLine(int argc, char *argv[])
 void
 DumpCommandLineParameters(void)
 {
-    if(!g_bQuiet && g_bVerbose)
-    {
+    if(!g_bQuiet && g_bVerbose) {
         printf("Input file:        %s\n", g_pcInput);
         printf("Output file:       %s\n", g_pcOutput);
         printf("Flash Address:     0x%08x\n", g_ui32Address);
@@ -475,8 +451,7 @@ ReadInputFile(char *pcFilename, uint32_t *pui32Length)
     // Try to open the input file.
     //
     fhFile = fopen(pcFilename, "rb");
-    if(!fhFile)
-    {
+    if(!fhFile) {
         //
         // File not found or cannot be opened for some reason.
         //
@@ -496,8 +471,7 @@ ReadInputFile(char *pcFilename, uint32_t *pui32Length)
     //
     iSizeAlloc = iSize + g_ui32HeaderSize;
     pui8FileBuffer = malloc(iSizeAlloc);
-    if(pui8FileBuffer == NULL)
-    {
+    if(pui8FileBuffer == NULL) {
         QUIETPRINT("Can't allocate %d bytes of memory!\n", iSizeAlloc);
         return(NULL);
     }
@@ -516,8 +490,7 @@ ReadInputFile(char *pcFilename, uint32_t *pui32Length)
     //
     // Did we get the whole file?
     //
-    if(iSize != iRead)
-    {
+    if(iSize != iRead) {
         //
         // Nope - free the buffer and return an error.
         //
@@ -530,8 +503,7 @@ ReadInputFile(char *pcFilename, uint32_t *pui32Length)
     //
     // Copy the header if we've been asked to add it.
     //
-    if(g_ui32HeaderSize)
-    {
+    if(g_ui32HeaderSize) {
         memcpy(pui8FileBuffer, g_pui8Prefix, sizeof(g_pui8Prefix));
     }
 
@@ -562,14 +534,12 @@ WriteOutputFile(char *pcFile, uint8_t *pui8Data, uint32_t ui32Length)
     // Have we been asked to overwrite an existing output file without
     // prompting?
     //
-    if(!g_bOverwrite)
-    {
+    if(!g_bOverwrite) {
         //
         // No - we need to check to see if the file exists before proceeding.
         //
         fh = fopen(pcFile, "rb");
-        if(fh)
-        {
+        if(fh) {
             VERBOSEPRINT("Output file already exists.\n");
 
             //
@@ -578,12 +548,10 @@ WriteOutputFile(char *pcFile, uint8_t *pui8Data, uint32_t ui32Length)
             //
             fclose(fh);
 
-            if(!g_bQuiet)
-            {
+            if(!g_bQuiet) {
                 printf("File %s exists. Overwrite? ", pcFile);
                 iResponse = getc(stdin);
-                if((iResponse != 'y') && (iResponse != 'Y'))
-                {
+                if((iResponse != 'y') && (iResponse != 'Y')) {
                     //
                     // The user didn't respond with 'y' or 'Y' so return an
                     // error and don't overwrite the file.
@@ -592,9 +560,7 @@ WriteOutputFile(char *pcFile, uint8_t *pui8Data, uint32_t ui32Length)
                     return(6);
                 }
                 printf("Overwriting existing output file.\n");
-            }
-            else
-            {
+            } else {
                 //
                 // In quiet mode but -x has not been specified so don't
                 // overwrite.
@@ -609,8 +575,7 @@ WriteOutputFile(char *pcFile, uint8_t *pui8Data, uint32_t ui32Length)
     // already exist) so go ahead and open it.
     //
     fh = fopen(pcFile, "wb");
-    if(!fh)
-    {
+    if(!fh) {
         QUIETPRINT("Error opening output file for writing\n");
         return(8);
     }
@@ -630,14 +595,11 @@ WriteOutputFile(char *pcFile, uint8_t *pui8Data, uint32_t ui32Length)
     //
     // Did we write all the data?
     //
-    if(ui32Written != ui32Length)
-    {
+    if(ui32Written != ui32Length) {
         QUIETPRINT("Error writing data to output file!  Wrote %d, "
                    "requested %d\n", ui32Written, ui32Length);
         return(9);
-    }
-    else
-    {
+    } else {
         QUIETPRINT("Output file written successfully.\n");
     }
 
@@ -658,8 +620,7 @@ FindImageInfoHeader(uint8_t *pui8File, uint32_t ui32Len)
     // If the length is less than 32 bytes, there can't be a header so fail
     // immediately.
     //
-    if(ui32Len < 32)
-    {
+    if(ui32Len < 32) {
         return(0);
     }
 
@@ -670,11 +631,9 @@ FindImageInfoHeader(uint8_t *pui8File, uint32_t ui32Len)
     //
     ui32End = MY_MIN(ui32Len - 32, (257 * 4));
 
-    for(ui32Check = 0; ui32Check <= ui32End; ui32Check += 4)
-    {
+    for(ui32Check = 0; ui32Check <= ui32End; ui32Check += 4) {
         if((READ_LONG(&pui8File[ui32Check]) == INFO_MARKER0) &&
-           (READ_LONG(&pui8File[ui32Check + 4]) == INFO_MARKER1))
-        {
+                (READ_LONG(&pui8File[ui32Check + 4]) == INFO_MARKER1)) {
             //
             // Return the position of the first header payload word.
             //
@@ -713,8 +672,7 @@ main(int argc, char *argv[])
     // Parse the command line arguments
     //
     iRetcode = ParseCommandLine(argc, argv);
-    if(!iRetcode)
-    {
+    if(!iRetcode) {
         return(1);
     }
 
@@ -727,8 +685,7 @@ main(int argc, char *argv[])
     // Read the input file into memory.
     //
     pui8Input = ReadInputFile(g_pcInput, &ui32FileLen);
-    if(!pui8Input)
-    {
+    if(!pui8Input) {
         VERBOSEPRINT("Error reading input file.\n");
         exit(1);
     }
@@ -738,10 +695,9 @@ main(int argc, char *argv[])
     // vector table.
     //
     ui32LenOffset = FindImageInfoHeader(pui8Input + g_ui32HeaderSize,
-                                      ui32FileLen - g_ui32HeaderSize);
+                                        ui32FileLen - g_ui32HeaderSize);
 
-    if(!ui32LenOffset)
-    {
+    if(!ui32LenOffset) {
         QUIETPRINT("Error: Invalid input image format.\n")
         QUIETPRINT("The input file contains no image info header at the top "
                    "of the vector table!\n")
@@ -754,8 +710,7 @@ main(int argc, char *argv[])
     // Fill in the output file header address and length fields if the output
     // file has a download header appended.
     //
-    if(g_ui32HeaderSize)
-    {
+    if(g_ui32HeaderSize) {
         WRITE_SHORT(g_ui32Address / 1024, pui8Input + 2);
         WRITE_LONG(ui32FileLen - g_ui32HeaderSize, pui8Input + 4);
     }
@@ -774,11 +729,11 @@ main(int argc, char *argv[])
     //
     ui32CRCOffset = ui32LenOffset + 4;
     ui32CRC = CalculateCRC32(pui8Input + g_ui32HeaderSize, ui32CRCOffset,
-            0xffffffff);
+                             0xffffffff);
     VERBOSEPRINT("First CRC portion, %d bytes from offset %d. CRC 0x%08x.\n",
                  ui32CRCOffset, g_ui32HeaderSize, ui32CRC);
     ui32CRC = CalculateCRC32(pui8Input + g_ui32HeaderSize + ui32CRCOffset + 4,
-            ui32FileLen - (ui32CRCOffset + 4 + g_ui32HeaderSize), ui32CRC);
+                             ui32FileLen - (ui32CRCOffset + 4 + g_ui32HeaderSize), ui32CRC);
     ui32CRC ^= 0xffffffff;
     VERBOSEPRINT("Final CRC portion, %d bytes from offset %d. CRC 0x%08x.\n",
                  ui32FileLen - (ui32CRCOffset + 4 + g_ui32HeaderSize),

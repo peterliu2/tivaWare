@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C123GXL Firmware Package.
 //
 //*****************************************************************************
@@ -121,8 +121,7 @@
 //! only be used if the report descriptor is not overridden by the application.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint16_t i16XPos;
     uint16_t i16YPos;
     uint16_t i16RXPos;
@@ -253,19 +252,14 @@ uint32_t
 GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
                void *pvMsgData)
 {
-    switch (ui32Event)
-    {
+    switch (ui32Event) {
         //
         // The host has connected to us and configured the device.
         //
-        case USB_EVENT_CONNECTED:
-        {
-            if((void *)&g_sGamepadDeviceA == pvCBData)
-            {
+        case USB_EVENT_CONNECTED: {
+            if((void *)&g_sGamepadDeviceA == pvCBData) {
                 UARTprintf("USB Device 0 Connected\n");
-            }
-            else
-            {
+            } else {
                 UARTprintf("USB Device 1 Connected\n");
             }
 
@@ -277,8 +271,7 @@ GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // The host has disconnected from us.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             UARTprintf("USB disconnected\n");
 
             g_iGamepadState = eStateNotConfigured;
@@ -291,50 +284,36 @@ GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         // of a report. It is used here purely as a way of determining whether
         // the host is still talking to us or not.
         //
-        case USB_EVENT_TX_COMPLETE:
-        {
-            if((tUSBDHIDGamepadDevice *)pvCBData == &g_sGamepadDeviceA)
-            {
-                if(g_iGamepadState == eStateSendingA)
-                {
+        case USB_EVENT_TX_COMPLETE: {
+            if((tUSBDHIDGamepadDevice *)pvCBData == &g_sGamepadDeviceA) {
+                if(g_iGamepadState == eStateSendingA) {
                     //
                     // Now idle, nothing is sending.
                     //
                     g_iGamepadState = eStateIdle;
-                }
-                else if(g_iGamepadState == eStateSendingAB)
-                {
+                } else if(g_iGamepadState == eStateSendingAB) {
                     //
                     // Still waiting on gamepad B.
                     //
                     g_iGamepadState = eStateSendingB;
-                }
-                else
-                {
+                } else {
                     //
                     // Should never get here.
                     //
                     ASSERT(1);
                 }
-            }
-            else if((tUSBDHIDGamepadDevice *)pvCBData == &g_sGamepadDeviceB)
-            {
-                if(g_iGamepadState == eStateSendingB)
-                {
+            } else if((tUSBDHIDGamepadDevice *)pvCBData == &g_sGamepadDeviceB) {
+                if(g_iGamepadState == eStateSendingB) {
                     //
                     // Now idle, nothing is sending.
                     //
                     g_iGamepadState = eStateIdle;
-                }
-                else if(g_iGamepadState == eStateSendingAB)
-                {
+                } else if(g_iGamepadState == eStateSendingAB) {
                     //
                     // Still waiting on gamepad A.
                     //
                     g_iGamepadState = eStateSendingA;
-                }
-                else
-                {
+                } else {
                     //
                     // Should never get here.
                     //
@@ -349,8 +328,7 @@ GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // This event indicates that the host has suspended the USB bus.
         //
-        case USB_EVENT_SUSPEND:
-        {
+        case USB_EVENT_SUSPEND: {
             //
             // Go to the suspended state.
             //
@@ -362,8 +340,7 @@ GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // This event signals that the host has resumed signaling on the bus.
         //
-        case USB_EVENT_RESUME:
-        {
+        case USB_EVENT_RESUME: {
             //
             // Go back to the idle state.
             //
@@ -372,8 +349,7 @@ GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
             break;
         }
 
-        case USBD_HID_EVENT_GET_REPORT:
-        {
+        case USBD_HID_EVENT_GET_REPORT: {
             //
             // Return the pointer to the current report.  This call is
             // rarely if ever made, but is required by the USB HID
@@ -387,8 +363,7 @@ GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // We ignore all other events.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -470,7 +445,7 @@ GamepadButtonsGet(uint32_t *pui32Delta, uint32_t *pui32RawState)
     ui32PortD = ROM_GPIOPinRead(GPIO_PORTD_AHB_BASE, PORTD_BUTTON_PINS);
     ui32PortE = ROM_GPIOPinRead(GPIO_PORTE_AHB_BASE, PORTE_BUTTON_PINS);
     ui32PortF = ROM_GPIOPinRead(GPIO_PORTF_AHB_BASE, PORTF_BUTTON_PINS |
-                                                     PORTF_SWITCH_PINS);
+                                PORTF_SWITCH_PINS);
 
     ui32Buttons = (((ui32PortF >> 4) & 1) |                 // PF4
                    (((ui32PortE >> 0) & 1) << 1) |          // PE0
@@ -498,8 +473,7 @@ GamepadButtonsGet(uint32_t *pui32Delta, uint32_t *pui32RawState)
                    (((ui32PortA >> 3) & 1) << (16 + 9)) |   // PA3
                    (((ui32PortA >> 2) & 1) << (16 + 10)));  // PA2
 
-    if(pui32RawState)
-    {
+    if(pui32RawState) {
         *pui32RawState = ~(ui32Buttons & (BUTTON_MASK_A | BUTTON_MASK_B));
     }
 
@@ -536,8 +510,7 @@ GamepadButtonsGet(uint32_t *pui32Delta, uint32_t *pui32RawState)
     // Store the bit mask for the buttons that have changed for return to
     // caller.
     //
-    if(pui32Delta)
-    {
+    if(pui32Delta) {
         *pui32Delta = ui32Delta & (BUTTON_MASK_A | BUTTON_MASK_B);
     }
 
@@ -610,7 +583,7 @@ GamepadButtonsInit(void)
                          PORTF_BUTTON_PINS,
                          GPIO_STRENGTH_8MA, GPIO_PIN_TYPE_STD_WPU);
     MAP_GPIOPadConfigSet(GPIO_PORTF_AHB_BASE,
-            PORTF_SWITCH_PINS,
+                         PORTF_SWITCH_PINS,
                          GPIO_STRENGTH_8MA, GPIO_PIN_TYPE_STD_WPD);
 }
 
@@ -655,7 +628,7 @@ ADCInit(void)
     ADCSequenceStepConfigure(ADC0_BASE, 0, 5, ADC_CTL_CH7);
     ADCSequenceStepConfigure(ADC0_BASE, 0, 6, ADC_CTL_CH8);
     ADCSequenceStepConfigure(ADC0_BASE, 0, 7, ADC_CTL_CH11 | ADC_CTL_IE |
-                                              ADC_CTL_END);
+                             ADC_CTL_END);
 
     ADCSequenceEnable(ADC0_BASE, 0);
 }
@@ -765,13 +738,11 @@ main(void)
     // then drop into the main keyboard handling section.  If the host
     // disconnects, we return to the top and wait for a new connection.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Wait here until USB device is connected to a host.
         //
-        if(g_iGamepadState == eStateIdle)
-        {
+        if(g_iGamepadState == eStateIdle) {
             //
             // No update by default.
             //
@@ -786,8 +757,7 @@ main(void)
             //
             // See if buttons on Gamepad A changed.
             //
-            if(ui32ButtonsChanged & BUTTON_MASK_A)
-            {
+            if(ui32ButtonsChanged & BUTTON_MASK_A) {
                 bUpdateA = true;
                 sReportA.ui16Buttons = ui32ButtonRaw & BUTTON_MASK_A;
             }
@@ -795,8 +765,7 @@ main(void)
             //
             // See if buttons on Gamepad B changed.
             //
-            if(ui32ButtonsChanged & BUTTON_MASK_B)
-            {
+            if(ui32ButtonsChanged & BUTTON_MASK_B) {
                 bUpdateB = true;
                 sReportB.ui16Buttons = (ui32ButtonRaw & BUTTON_MASK_B) >> 16;
             }
@@ -804,8 +773,7 @@ main(void)
             //
             // See if the ADC updated.
             //
-            if(ADCIntStatus(ADC0_BASE, 0, false) != 0)
-            {
+            if(ADCIntStatus(ADC0_BASE, 0, false) != 0) {
                 //
                 // Clear the ADC interrupt.
                 //
@@ -843,20 +811,16 @@ main(void)
             // already sending.
             //
             if((bUpdateA) && ((g_iGamepadState != eStateSendingA) &&
-                              (g_iGamepadState != eStateSendingAB)))
-            {
+                              (g_iGamepadState != eStateSendingAB))) {
                 USBDHIDGamepadSendReport(&g_sGamepadDeviceA, &sReportA,
                                          sizeof(sReportA));
 
                 //
                 // Now sending data for gamepad A.
                 //
-                if(g_iGamepadState == eStateSendingB)
-                {
+                if(g_iGamepadState == eStateSendingB) {
                     g_iGamepadState = eStateSendingAB;
-                }
-                else
-                {
+                } else {
                     g_iGamepadState = eStateSendingA;
                 }
             }
@@ -866,20 +830,16 @@ main(void)
             // already sending.
             //
             if((bUpdateB) && ((g_iGamepadState != eStateSendingB) &&
-                              (g_iGamepadState != eStateSendingAB)))
-            {
+                              (g_iGamepadState != eStateSendingAB))) {
                 USBDHIDGamepadSendReport(&g_sGamepadDeviceB, &sReportB,
                                          sizeof(sReportB));
                 //
                 // Now sending data but protect this from an interrupt since
                 // it can change in interrupt context as well.
                 //
-                if(g_iGamepadState == eStateSendingA)
-                {
+                if(g_iGamepadState == eStateSendingA) {
                     g_iGamepadState = eStateSendingAB;
-                }
-                else
-                {
+                } else {
                     g_iGamepadState = eStateSendingB;
                 }
 

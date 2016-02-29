@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C129EXL Firmware Package.
 //
 //*****************************************************************************
@@ -96,8 +96,7 @@ PinoutSet(bool bEthernet, bool bUSB)
     // PQ4 can be used as a power fault detect on this board but it is not
     // the hardware peripheral power fault input pin.
     //
-    if(bUSB)
-    {
+    if(bUSB) {
         HWREG(GPIO_PORTD_BASE + GPIO_O_LOCK) = GPIO_LOCK_KEY;
         HWREG(GPIO_PORTD_BASE + GPIO_O_CR) = 0xff;
         ROM_GPIOPinConfigure(GPIO_PD6_USB0EPEN);
@@ -105,9 +104,7 @@ PinoutSet(bool bEthernet, bool bUSB)
         ROM_GPIOPinTypeUSBDigital(GPIO_PORTD_BASE, GPIO_PIN_6);
         ROM_GPIOPinTypeUSBAnalog(GPIO_PORTL_BASE, GPIO_PIN_6 | GPIO_PIN_7);
         ROM_GPIOPinTypeGPIOInput(GPIO_PORTQ_BASE, GPIO_PIN_4);
-    }
-    else
-    {
+    } else {
         //
         // Keep the default config for most pins used by USB.
         // Add a pull down to PD6 to turn off the TPS2052 switch
@@ -121,8 +118,7 @@ PinoutSet(bool bEthernet, bool bUSB)
     //
     // PF0/PF4 are used for Ethernet LEDs.
     //
-    if(bEthernet)
-    {
+    if(bEthernet) {
         //
         // this app wants to configure for ethernet LED function.
         //
@@ -131,9 +127,7 @@ PinoutSet(bool bEthernet, bool bUSB)
 
         GPIOPinTypeEthernetLED(GPIO_PORTF_BASE, GPIO_PIN_0 | GPIO_PIN_4);
 
-    }
-    else
-    {
+    } else {
 
         //
         // This app does not want Ethernet LED function so configure as
@@ -162,7 +156,7 @@ PinoutSet(bool bEthernet, bool bUSB)
     //
     ROM_GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_0 | GPIO_PIN_1);
     MAP_GPIOPadConfigSet(GPIO_PORTN_BASE, GPIO_PIN_0 | GPIO_PIN_1,
-                             GPIO_STRENGTH_12MA, GPIO_PIN_TYPE_STD);
+                         GPIO_STRENGTH_12MA, GPIO_PIN_TYPE_STD);
 
     //
     // Default the LEDs to OFF.
@@ -195,50 +189,34 @@ LEDWrite(uint32_t ui32LEDMask, uint32_t ui32LEDValue)
     //
     // Check the mask and set or clear the LED as directed.
     //
-    if(ui32LEDMask & CLP_D1)
-    {
-        if(ui32LEDValue & CLP_D1)
-        {
+    if(ui32LEDMask & CLP_D1) {
+        if(ui32LEDValue & CLP_D1) {
             GPIOPinWrite(CLP_D1_PORT, CLP_D1_PIN, CLP_D1_PIN);
-        }
-        else
-        {
+        } else {
             GPIOPinWrite(CLP_D1_PORT, CLP_D1_PIN, 0);
         }
     }
 
-    if(ui32LEDMask & CLP_D2)
-    {
-        if(ui32LEDValue & CLP_D2)
-        {
+    if(ui32LEDMask & CLP_D2) {
+        if(ui32LEDValue & CLP_D2) {
             GPIOPinWrite(CLP_D2_PORT, CLP_D2_PIN, CLP_D2_PIN);
-        }
-        else
-        {
+        } else {
             GPIOPinWrite(CLP_D2_PORT, CLP_D2_PIN, 0);
         }
     }
 
-    if(ui32LEDMask & CLP_D3)
-    {
-        if(ui32LEDValue & CLP_D3)
-        {
+    if(ui32LEDMask & CLP_D3) {
+        if(ui32LEDValue & CLP_D3) {
             GPIOPinWrite(CLP_D3_PORT, CLP_D3_PIN, CLP_D3_PIN);
-        }
-        else
-        {
+        } else {
             GPIOPinWrite(CLP_D3_PORT, CLP_D3_PIN, 0);
         }
     }
 
-    if(ui32LEDMask & CLP_D4)
-    {
-        if(ui32LEDValue & CLP_D4)
-        {
+    if(ui32LEDMask & CLP_D4) {
+        if(ui32LEDValue & CLP_D4) {
             GPIOPinWrite(CLP_D4_PORT, CLP_D4_PIN, CLP_D4_PIN);
-        }
-        else
-        {
+        } else {
             GPIOPinWrite(CLP_D4_PORT, CLP_D4_PIN, 0);
         }
     }
@@ -263,32 +241,28 @@ void LEDRead(uint32_t *pui32LEDValue)
     //
     // Read the pin state and set the variable bit if needed.
     //
-    if(GPIOPinRead(CLP_D4_PORT, CLP_D4_PIN))
-    {
+    if(GPIOPinRead(CLP_D4_PORT, CLP_D4_PIN)) {
         *pui32LEDValue |= CLP_D4;
     }
 
     //
     // Read the pin state and set the variable bit if needed.
     //
-    if(GPIOPinRead(CLP_D3_PORT, CLP_D3_PIN))
-    {
+    if(GPIOPinRead(CLP_D3_PORT, CLP_D3_PIN)) {
         *pui32LEDValue |= CLP_D3;
     }
 
     //
     // Read the pin state and set the variable bit if needed.
     //
-    if(GPIOPinRead(CLP_D2_PORT, CLP_D2_PIN))
-    {
+    if(GPIOPinRead(CLP_D2_PORT, CLP_D2_PIN)) {
         *pui32LEDValue |= CLP_D2;
     }
 
     //
     // Read the pin state and set the variable bit if needed.
     //
-    if(GPIOPinRead(CLP_D1_PORT, CLP_D1_PIN))
-    {
+    if(GPIOPinRead(CLP_D1_PORT, CLP_D1_PIN)) {
         *pui32LEDValue |= CLP_D1;
     }
 }

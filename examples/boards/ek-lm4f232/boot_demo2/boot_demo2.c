@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-LM4F232 Firmware Package.
 //
 //*****************************************************************************
@@ -61,11 +61,11 @@
 //! release.  To accommodate the largest of these (boot_usb), the link address
 //! is set to 0x2800.  If you are using serial or Ethernet boot loader, you
 //! may change this address to a 1KB boundary higher than the last address
-//! occupied by the boot loader binary as long as you also rebuild the boot 
+//! occupied by the boot loader binary as long as you also rebuild the boot
 //! loader itself after modifying its bl_config.h file to set APP_START_ADDRESS
 //! to the same value.
 //!
-//! The boot_demo1 application can be used along with this application to 
+//! The boot_demo1 application can be used along with this application to
 //! easily demonstrate that the boot loader is actually updating the on-chip
 //! flash.
 //!
@@ -81,7 +81,7 @@
 
 //*****************************************************************************
 //
-// The number of SysTick ticks per second. 
+// The number of SysTick ticks per second.
 //
 //*****************************************************************************
 #define TICKS_PER_SECOND 100
@@ -92,7 +92,7 @@
 // button.
 //
 //*****************************************************************************
-volatile bool g_bFirmwareUpdate = false; 
+volatile bool g_bFirmwareUpdate = false;
 
 //*****************************************************************************
 //
@@ -101,8 +101,8 @@ volatile bool g_bFirmwareUpdate = false;
 //*****************************************************************************
 #define SIZE_MAC_ADDR_BUFFER 32
 #define SIZE_IP_ADDR_BUFFER 32
-int8_t g_pi8MACAddr[SIZE_MAC_ADDR_BUFFER]; 
-int8_t g_pi8IPAddr[SIZE_IP_ADDR_BUFFER]; 
+int8_t g_pi8MACAddr[SIZE_MAC_ADDR_BUFFER];
+int8_t g_pi8IPAddr[SIZE_IP_ADDR_BUFFER];
 
 //*****************************************************************************
 //
@@ -111,7 +111,7 @@ int8_t g_pi8IPAddr[SIZE_IP_ADDR_BUFFER];
 //*****************************************************************************
 #ifdef DEBUG
 void
-__error__(char *pcFilename, uint32_t ui32Line) 
+__error__(char *pcFilename, uint32_t ui32Line)
 {
 }
 #endif
@@ -131,11 +131,11 @@ void
 JumpToBootLoader(void)
 {
     //
-    // We must make sure we turn off SysTick and its interrupt before entering 
+    // We must make sure we turn off SysTick and its interrupt before entering
     // the boot loader!
     //
-    ROM_SysTickIntDisable(); 
-    ROM_SysTickDisable(); 
+    ROM_SysTickIntDisable();
+    ROM_SysTickDisable();
 
     //
     // Disable all processor interrupts.  Instead of disabling them
@@ -149,7 +149,7 @@ JumpToBootLoader(void)
     // Return control to the boot loader.  This is a call to the SVC
     // handler in the boot loader.
     //
-    (*((void (*)(void))(*(uint32_t *)0x2c)))(); 
+    (*((void (*)(void))(*(uint32_t *)0x2c)))();
 }
 
 //*****************************************************************************
@@ -212,9 +212,9 @@ SetupForUSB(void)
 int
 main(void)
 {
-    tRectangle sRect; 
-    tContext sContext; 
-    uint32_t ui32SysClock; 
+    tRectangle sRect;
+    tContext sContext;
+    uint32_t ui32SysClock;
 
     //
     // Enable lazy stacking for interrupt handlers.  This allows floating-point
@@ -228,7 +228,7 @@ main(void)
     //
     ROM_SysCtlClockSet(SYSCTL_SYSDIV_4 | SYSCTL_USE_PLL | SYSCTL_XTAL_16MHZ |
                        SYSCTL_OSC_MAIN);
-    ui32SysClock = ROM_SysCtlClockGet(); 
+    ui32SysClock = ROM_SysCtlClockGet();
 
     //
     // Initialize the peripherals that each of the boot loader flavors
@@ -242,7 +242,7 @@ main(void)
     //
     // Initialize the buttons driver.
     //
-    ButtonsInit(); 
+    ButtonsInit();
 
     //
     // Initialize the display driver.
@@ -252,51 +252,50 @@ main(void)
     //
     // Initialize the graphics context.
     //
-    GrContextInit(&sContext, &g_sCFAL96x64x16); 
+    GrContextInit(&sContext, &g_sCFAL96x64x16);
 
     //
     // Fill the top part of the screen with blue to create the banner.
     //
-    sRect.i16XMin = 0; 
-    sRect.i16YMin = 0; 
-    sRect.i16XMax = GrContextDpyWidthGet(&sContext) - 1; 
-    sRect.i16YMax = 9; 
-    GrContextForegroundSet(&sContext, ClrDarkBlue); 
-    GrRectFill(&sContext, &sRect); 
+    sRect.i16XMin = 0;
+    sRect.i16YMin = 0;
+    sRect.i16XMax = GrContextDpyWidthGet(&sContext) - 1;
+    sRect.i16YMax = 9;
+    GrContextForegroundSet(&sContext, ClrDarkBlue);
+    GrRectFill(&sContext, &sRect);
 
     //
     // Change foreground for white text.
     //
-    GrContextForegroundSet(&sContext, ClrWhite); 
+    GrContextForegroundSet(&sContext, ClrWhite);
 
     //
     // Put the application name in the middle of the banner.
     //
-    GrContextFontSet(&sContext, g_psFontFixed6x8); 
-    GrStringDrawCentered(&sContext, "boot-demo2", -1, 
-                         GrContextDpyWidthGet(&sContext) / 2, 4, 0); 
+    GrContextFontSet(&sContext, g_psFontFixed6x8);
+    GrStringDrawCentered(&sContext, "boot-demo2", -1,
+                         GrContextDpyWidthGet(&sContext) / 2, 4, 0);
 
-    GrStringDrawCentered(&sContext, "Press select", -1, 
-                         GrContextDpyWidthGet(&sContext) / 2, 20, false); 
-    GrStringDrawCentered(&sContext, "button to", -1, 
-                         GrContextDpyWidthGet(&sContext) / 2, 30, false); 
-    GrStringDrawCentered(&sContext, "update.", -1, 
-                         GrContextDpyWidthGet(&sContext) / 2, 40, false); 
-   
+    GrStringDrawCentered(&sContext, "Press select", -1,
+                         GrContextDpyWidthGet(&sContext) / 2, 20, false);
+    GrStringDrawCentered(&sContext, "button to", -1,
+                         GrContextDpyWidthGet(&sContext) / 2, 30, false);
+    GrStringDrawCentered(&sContext, "update.", -1,
+                         GrContextDpyWidthGet(&sContext) / 2, 40, false);
+
     //
     // Wait for select button to be pressed.
-    // 
-    while ((ButtonsPoll(0, 0) & SELECT_BUTTON) == 0)  
-    {
-        ROM_SysCtlDelay(ui32SysClock / 1000); 
+    //
+    while ((ButtonsPoll(0, 0) & SELECT_BUTTON) == 0) {
+        ROM_SysCtlDelay(ui32SysClock / 1000);
     }
 
-    GrStringDrawCentered(&sContext, "             ", -1, 
-                         GrContextDpyWidthGet(&sContext) / 2, 20, true); 
-    GrStringDrawCentered(&sContext, " Updating... ", -1, 
-                         GrContextDpyWidthGet(&sContext) / 2, 30, true); 
-    GrStringDrawCentered(&sContext, "             ", -1, 
-                         GrContextDpyWidthGet(&sContext) / 2, 40, true); 
+    GrStringDrawCentered(&sContext, "             ", -1,
+                         GrContextDpyWidthGet(&sContext) / 2, 20, true);
+    GrStringDrawCentered(&sContext, " Updating... ", -1,
+                         GrContextDpyWidthGet(&sContext) / 2, 30, true);
+    GrStringDrawCentered(&sContext, "             ", -1,
+                         GrContextDpyWidthGet(&sContext) / 2, 40, true);
 
     //
     // Transfer control to the boot loader.

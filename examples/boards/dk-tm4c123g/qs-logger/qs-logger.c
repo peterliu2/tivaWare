@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C123G Firmware Package.
 //
 //*****************************************************************************
@@ -167,8 +167,7 @@ static uint32_t g_ui32KeyFocusWidgetHandle;
 // Tracks the data logging state.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     eSTATE_IDLE,
     eSTATE_LOGGING,
     eSTATE_VIEWING,
@@ -287,12 +286,9 @@ GetTickms(void)
     ui32RetVal = g_ui32TickCount;
     ui32Saved = ui32RetVal;
 
-    if(ui32Saved > g_ui32LastTick)
-    {
+    if(ui32Saved > g_ui32LastTick) {
         ui32RetVal = ui32Saved - g_ui32LastTick;
-    }
-    else
-    {
+    } else {
         ui32RetVal = g_ui32LastTick - ui32Saved;
     }
 
@@ -324,22 +320,17 @@ ModeCallback(uint32_t ui32Index, tUSBMode iMode)
     //
     // Mode-specific handling code could go here.
     //
-    switch(iMode)
-    {
-        case eUSBModeHost:
-        {
+    switch(iMode) {
+        case eUSBModeHost: {
             break;
         }
-        case eUSBModeDevice:
-        {
+        case eUSBModeDevice: {
             break;
         }
-        case eUSBModeNone:
-        {
+        case eUSBModeNone: {
             break;
         }
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -363,8 +354,7 @@ GetSavedState(tConfigState *psState)
     // Check the arguments
     //
     ASSERT(psState);
-    if(!psState)
-    {
+    if(!psState) {
         return(1);
     }
 
@@ -382,8 +372,7 @@ GetSavedState(tConfigState *psState)
     //
     // Check first to see if the "cookie" value is correct.
     //
-    if(psState->ui32Cookie != STATE_COOKIE)
-    {
+    if(psState->ui32Cookie != STATE_COOKIE) {
         return(1);
     }
 
@@ -396,8 +385,7 @@ GetSavedState(tConfigState *psState)
     //
     // If the CRC does not match, then the block is not good.
     //
-    if(psState->ui32Crc16 != (uint32_t)ui16Crc16)
-    {
+    if(psState->ui32Crc16 != (uint32_t)ui16Crc16) {
         return(1);
     }
 
@@ -432,8 +420,7 @@ SetSavedState(tConfigState *psState)
     //
     ui32StateLen = sizeof(tConfigState) / 4;
 
-    if(psState)
-    {
+    if(psState) {
         //
         // Write the cookie value to the block
         //
@@ -470,8 +457,7 @@ GetDefaultState(tConfigState *psState)
     // Check the arguments
     //
     ASSERT(psState);
-    if(psState)
-    {
+    if(psState) {
         //
         // get the default values from the menu system
         //
@@ -530,13 +516,11 @@ WidgetActivated(tWidget *psWidget, tSlideMenuItem *psMenuItem, bool bActivated)
     // Handle the activation or deactivation of the strip chart.  The strip
     // chart widget is activated when the user selects the START menu.
     //
-    if(psWidget == &g_sStripChart.sBase)
-    {
+    if(psWidget == &g_sStripChart.sBase) {
         //
         // If the strip chart is activated, start the logger running.
         //
-        if(bActivated)
-        {
+        if(bActivated) {
             //
             // Get the current state of the menus
             //
@@ -552,24 +536,20 @@ WidgetActivated(tWidget *psWidget, tSlideMenuItem *psMenuItem, bool bActivated)
             //
             AcquireStart(&g_sConfigState);
             g_iLoggerState = eSTATE_LOGGING;
-        }
-        else
-        {
+        } else {
             //
             // If the strip chart is deactivated, stop the logger.
             //
             AcquireStop();
             g_iLoggerState = eSTATE_IDLE;
         }
-    }
-    else if((psWidget == &g_sAINContainerCanvas.sBase) ||
-            (psWidget == &g_sAccelContainerCanvas.sBase) ||
-            (psWidget == &g_sCurrentContainerCanvas.sBase) ||
-            (psWidget == &g_sClockContainerCanvas.sBase) ||
-            (psWidget == &g_sTempContainerCanvas.sBase) ||
-            (psWidget == &g_sGyroContainerCanvas.sBase) ||
-            (psWidget == &g_sMagContainerCanvas.sBase))
-    {
+    } else if((psWidget == &g_sAINContainerCanvas.sBase) ||
+              (psWidget == &g_sAccelContainerCanvas.sBase) ||
+              (psWidget == &g_sCurrentContainerCanvas.sBase) ||
+              (psWidget == &g_sClockContainerCanvas.sBase) ||
+              (psWidget == &g_sTempContainerCanvas.sBase) ||
+              (psWidget == &g_sGyroContainerCanvas.sBase) ||
+              (psWidget == &g_sMagContainerCanvas.sBase)) {
         //
         // Handle the activation or deactivation of any of the container
         // canvas that is used for showing the acquired data as a numerical
@@ -577,8 +557,7 @@ WidgetActivated(tWidget *psWidget, tSlideMenuItem *psMenuItem, bool bActivated)
         //
         // A viewer has been activated.
         //
-        if(bActivated)
-        {
+        if(bActivated) {
             static tConfigState sLocalState;
 
             //
@@ -603,9 +582,7 @@ WidgetActivated(tWidget *psWidget, tSlideMenuItem *psMenuItem, bool bActivated)
             //
             AcquireStart(&sLocalState);
             g_iLoggerState = eSTATE_VIEWING;
-        }
-        else
-        {
+        } else {
             //
             // The viewer has been deactivated so turn off the acquisition
             // module.
@@ -613,21 +590,16 @@ WidgetActivated(tWidget *psWidget, tSlideMenuItem *psMenuItem, bool bActivated)
             AcquireStop();
             g_iLoggerState = eSTATE_IDLE;
         }
-    }
-    else if(psWidget == &g_sStatusContainerCanvas.sBase)
-    {
+    } else if(psWidget == &g_sStatusContainerCanvas.sBase) {
         //
         // Handle the case when a status display has been activated.  This can
         // occur when any of several menu items are selected.
         //
         // Get pointer to the text of the current menu item.
         //
-        if(psMenuItem)
-        {
+        if(psMenuItem) {
             pcMenuText = psMenuItem->pcText;
-        }
-        else
-        {
+        } else {
             return;
         }
 
@@ -635,59 +607,42 @@ WidgetActivated(tWidget *psWidget, tSlideMenuItem *psMenuItem, bool bActivated)
         // If activated from the SAVE menu, then the flash data needs to be
         // saved to USB stick.  Enter the saving state.
         //
-        if(!strcmp(pcMenuText, "SAVE"))
-        {
-            if(bActivated)
-            {
+        if(!strcmp(pcMenuText, "SAVE")) {
+            if(bActivated) {
                 g_iLoggerState = eSTATE_SAVING;
-            }
-            else
-            {
+            } else {
                 g_iLoggerState = eSTATE_IDLE;
             }
-        }
-        else if(!strcmp(pcMenuText, "ERASE DATA?"))
-        {
+        } else if(!strcmp(pcMenuText, "ERASE DATA?")) {
             //
             // If activated from the ERASE menu, then the flash data needs to
             // be erased.  Enter the erasing state.
             //
-            if(bActivated)
-            {
+            if(bActivated) {
                 g_iLoggerState = eSTATE_ERASING;
-            }
-            else
-            {
+            } else {
                 g_iLoggerState = eSTATE_IDLE;
             }
-        }
-        else if(!strcmp(pcMenuText, "FLASH SPACE"))
-        {
+        } else if(!strcmp(pcMenuText, "FLASH SPACE")) {
             //
             // If activated from the FLASH SPACE menu, then the user will be
             // shown a report on the amount of free space in flash.  Enter the
             // reporting state.
             //
-            if(bActivated)
-            {
+            if(bActivated) {
                 g_iLoggerState = eSTATE_FREEFLASH;
-            }
-            else
-            {
+            } else {
                 g_iLoggerState = eSTATE_IDLE;
             }
         }
-    }
-    else if(psWidget == &g_sClockSetter.sBase)
-    {
+    } else if(psWidget == &g_sClockSetter.sBase) {
         //
         // Handle the activation of the clock setting widget.  Deactivation is
         // handled through a separate callback.
         //
         // If the clock setter is activated, load the time structure fields.
         //
-        if(bActivated)
-        {
+        if(bActivated) {
             //
             // Get the current time in seconds from the RTC.
             //
@@ -730,8 +685,7 @@ ClockSetOkCallback(tWidget *psWidget, bool bOk)
     //
     // Only update the RTC if the OK button was selected.
     //
-    if(bOk)
-    {
+    if(bOk) {
         //
         // Convert the time structure that was altered by the clock setting
         // widget into seconds.
@@ -742,8 +696,7 @@ ClockSetOkCallback(tWidget *psWidget, bool bOk)
         // If the conversion was valid, then write the updated clock to the
         // Hibernate RTC.
         //
-        if(ui32RTC != (uint32_t)(-1))
-        {
+        if(ui32RTC != (uint32_t)(-1)) {
             HibernateRTCSet(ui32RTC);
         }
     }
@@ -780,8 +733,7 @@ CheckBoardRevision(void)
     MAP_GPIOPadConfigSet(GPIO_PORTD_BASE, GPIO_PIN_1,
                          GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPD);
     ui32BoardType=MAP_GPIOPinRead(GPIO_PORTD_BASE, GPIO_PIN_1);
-    if(ui32BoardType==0)
-    {
+    if(ui32BoardType==0) {
         //
         // The board is green, print error message and hang.
         //
@@ -790,24 +742,21 @@ CheckBoardRevision(void)
         GrContextForegroundSet(&sDisplayContext, ClrWhite);
         GrContextFontSet(&sDisplayContext, g_psFontFixed6x8);
         GrStringDrawCentered(&sDisplayContext, "ERROR:", -1,
-                        GrContextDpyWidthGet(&sDisplayContext) / 2, 4, 0);
+                             GrContextDpyWidthGet(&sDisplayContext) / 2, 4, 0);
         GrStringDrawCentered(&sDisplayContext, "Due to different", -1,
-                        GrContextDpyWidthGet(&sDisplayContext) / 2, 20, false);
+                             GrContextDpyWidthGet(&sDisplayContext) / 2, 20, false);
         GrStringDrawCentered(&sDisplayContext, "hardware this", -1,
-                        GrContextDpyWidthGet(&sDisplayContext) / 2, 30, false);
+                             GrContextDpyWidthGet(&sDisplayContext) / 2, 30, false);
         GrStringDrawCentered(&sDisplayContext, "code cannot run", -1,
-                        GrContextDpyWidthGet(&sDisplayContext) / 2, 40, false);
+                             GrContextDpyWidthGet(&sDisplayContext) / 2, 40, false);
         GrStringDrawCentered(&sDisplayContext, "on this board", -1,
-                        GrContextDpyWidthGet(&sDisplayContext) / 2, 50, false);
+                             GrContextDpyWidthGet(&sDisplayContext) / 2, 50, false);
         GrStringDrawCentered(&sDisplayContext, "Try diff code.", -1,
-                        GrContextDpyWidthGet(&sDisplayContext) / 2, 60, false);
-        while(1)
-        {
+                             GrContextDpyWidthGet(&sDisplayContext) / 2, 60, false);
+        while(1) {
             // Hang here.
         }
-    }
-    else
-    {
+    } else {
         //
         // The board is red, exit & continue as normal.
         //
@@ -874,8 +823,7 @@ main(void)
     // read the saved configuration state.  If both are okay, then proceed
     // to check and see if we are logging data using sleep mode.
     //
-    if(HibernateIsActive() && !GetSavedState(&g_sConfigState))
-    {
+    if(HibernateIsActive() && !GetSavedState(&g_sConfigState)) {
         //
         // Read the status of the hibernate module.
         //
@@ -888,8 +836,7 @@ main(void)
         // normal startup below, but skipping the splash screen so the user
         // gets immediate response.
         //
-        if(ui32HibIntStatus & HIBERNATE_INT_PIN_WAKE)
-        {
+        if(ui32HibIntStatus & HIBERNATE_INT_PIN_WAKE) {
             //
             // Clear the interrupt flag so it is not seen again until another
             // wake.
@@ -905,8 +852,7 @@ main(void)
         // in order to collect the data and go back to sleep.
         //
         else if(g_sConfigState.ui32SleepLogging &&
-                (ui32HibIntStatus & HIBERNATE_INT_RTC_MATCH_0))
-        {
+                (ui32HibIntStatus & HIBERNATE_INT_RTC_MATCH_0)) {
             //
             // Start logger and pass the configuration.  The logger should
             // configure itself to take one sample.
@@ -918,8 +864,7 @@ main(void)
             // Enter a forever loop to run the acquisition.  This will run
             // until a new sample has been taken and stored.
             //
-            while(!AcquireRun())
-            {
+            while(!AcquireRun()) {
             }
 
             //
@@ -941,8 +886,7 @@ main(void)
             // here forever until hibernate activates and the processor
             // power is removed.
             //
-            for(;;)
-            {
+            for(;;) {
             }
         }
 
@@ -951,9 +895,7 @@ main(void)
         // so just fall out of this conditional and go through the normal
         // startup below.
         //
-    }
-    else
-    {
+    } else {
         //
         // In this case, either the hibernate module was not already active, or
         // the saved configuration was not valid.  Initialize the configuration
@@ -1021,8 +963,7 @@ main(void)
     //
     // Erratum workaround for silicon revision A1.  VBUS must have pull-down.
     //
-    if(CLASS_IS_TM4C123 && REVISION_IS_A1)
-    {
+    if(CLASS_IS_TM4C123 && REVISION_IS_A1) {
         HWREG(GPIO_PORTB_BASE + GPIO_O_PDR) |= GPIO_PIN_1;
     }
 
@@ -1073,8 +1014,7 @@ main(void)
     // skip it is if the application was in sleep-logging mode and the user
     // just waked it up with the select button.
     //
-    if(!bSkipSplash)
-    {
+    if(!bSkipSplash) {
         const uint8_t *pui8SplashLogo = g_pui8Image_TI_Black;
 
         //
@@ -1082,10 +1022,8 @@ main(void)
         // logo will "slide" onto the screen.  Allow select button to break
         // out of animation.
         //
-        for(ui8X = 0; ui8X < 96; ui8X++)
-        {
-            if(ButtonsPoll(0, 0) & SELECT_BUTTON)
-            {
+        for(ui8X = 0; ui8X < 96; ui8X++) {
+            if(ButtonsPoll(0, 0) & SELECT_BUTTON) {
                 break;
             }
             GrImageDraw(&sDisplayContext, pui8SplashLogo, 95 - ui8X, 0);
@@ -1096,10 +1034,8 @@ main(void)
         // buttons so that if the user presses the select button, the logo
         // display is terminated and the application starts immediately.
         //
-        while(g_ui32TickCount < 400)
-        {
-            if(ButtonsPoll(0, 0) & SELECT_BUTTON)
-            {
+        while(g_ui32TickCount < 400) {
+            if(ButtonsPoll(0, 0) & SELECT_BUTTON) {
                 break;
             }
         }
@@ -1107,10 +1043,8 @@ main(void)
         //
         // Extended splash sequence
         //
-        if(ButtonsPoll(0, 0) & UP_BUTTON)
-        {
-            for(ui8X = 0; ui8X < 96; ui8X += 4)
-            {
+        if(ButtonsPoll(0, 0) & UP_BUTTON) {
+            for(ui8X = 0; ui8X < 96; ui8X += 4) {
                 GrImageDraw(&sDisplayContext,
                             g_ppui8Image_Splash[(ui8X / 4) & 3],
                             (int32_t)ui8X - 96L, 0);
@@ -1134,8 +1068,7 @@ main(void)
         // the logo "slides" off the display and the menu "slides" onto the
         // display.
         //
-        for(ui8Y = 0; ui8Y < 64; ui8Y++)
-        {
+        for(ui8Y = 0; ui8Y < 64; ui8Y++) {
             GrImageDraw(&sDisplayContext, pui8SplashLogo, 0, -ui8Y);
             GrImageDraw(&sDisplayContext, g_pui8OffscreenBufA, 0, 63 - ui8Y);
         }
@@ -1157,14 +1090,12 @@ main(void)
     //
     // Forever loop to run the application
     //
-    while(1)
-    {
+    while(1) {
 
         //
         // Each time the timer tick occurs, process any button events.
         //
-        if(g_ui32TickCount != ui32LastTickCount)
-        {
+        if(g_ui32TickCount != ui32LastTickCount) {
             //
             // Remember last tick count
             //
@@ -1180,24 +1111,19 @@ main(void)
             // processing mechanism.  The widget that has the button event
             // focus (probably the menu widget) will catch these button events.
             //
-            if(BUTTON_PRESSED(SELECT_BUTTON, ui8ButtonState, ui8ButtonChanged))
-            {
+            if(BUTTON_PRESSED(SELECT_BUTTON, ui8ButtonState, ui8ButtonChanged)) {
                 SendWidgetKeyMessage(WIDGET_MSG_KEY_SELECT);
             }
-            if(BUTTON_PRESSED(UP_BUTTON, ui8ButtonState, ui8ButtonChanged))
-            {
+            if(BUTTON_PRESSED(UP_BUTTON, ui8ButtonState, ui8ButtonChanged)) {
                 SendWidgetKeyMessage(WIDGET_MSG_KEY_UP);
             }
-            if(BUTTON_PRESSED(DOWN_BUTTON, ui8ButtonState, ui8ButtonChanged))
-            {
+            if(BUTTON_PRESSED(DOWN_BUTTON, ui8ButtonState, ui8ButtonChanged)) {
                 SendWidgetKeyMessage(WIDGET_MSG_KEY_DOWN);
             }
-            if(BUTTON_PRESSED(LEFT_BUTTON, ui8ButtonState, ui8ButtonChanged))
-            {
+            if(BUTTON_PRESSED(LEFT_BUTTON, ui8ButtonState, ui8ButtonChanged)) {
                 SendWidgetKeyMessage(WIDGET_MSG_KEY_LEFT);
             }
-            if(BUTTON_PRESSED(RIGHT_BUTTON, ui8ButtonState, ui8ButtonChanged))
-            {
+            if(BUTTON_PRESSED(RIGHT_BUTTON, ui8ButtonState, ui8ButtonChanged)) {
                 SendWidgetKeyMessage(WIDGET_MSG_KEY_RIGHT);
             }
         }
@@ -1211,12 +1137,9 @@ main(void)
         //
         // Call functions as needed to keep the host or device mode running.
         //
-        if(g_iCurrentUSBMode == eUSBModeDevice)
-        {
+        if(g_iCurrentUSBMode == eUSBModeDevice) {
             USBSerialRun();
-        }
-        else if(g_iCurrentUSBMode == eUSBModeHost)
-        {
+        } else if(g_iCurrentUSBMode == eUSBModeHost) {
             USBStickRun();
         }
 
@@ -1225,10 +1148,8 @@ main(void)
         // keeps the data acquisition running.
         //
         if((g_iLoggerState == eSTATE_LOGGING) ||
-           (g_iLoggerState == eSTATE_VIEWING))
-        {
-            if(AcquireRun() && g_sConfigState.ui32SleepLogging)
-            {
+                (g_iLoggerState == eSTATE_VIEWING)) {
+            if(AcquireRun() && g_sConfigState.ui32SleepLogging) {
                 //
                 // If sleep logging is enabled, then at this point we have
                 // stored the first data item, now save the state and start
@@ -1237,8 +1158,7 @@ main(void)
                 SetSavedState(&g_sConfigState);
                 HibernateWakeSet(HIBERNATE_WAKE_PIN | HIBERNATE_WAKE_RTC);
                 HibernateRequest();
-                for(;;)
-                {
+                for(;;) {
                 }
             }
 
@@ -1246,8 +1166,7 @@ main(void)
             // If viewing instead of logging then request a repaint to keep
             // the viewing window updated.
             //
-            if(g_iLoggerState == eSTATE_VIEWING)
-            {
+            if(g_iLoggerState == eSTATE_VIEWING) {
                 WidgetPaint(WIDGET_ROOT);
             }
         }
@@ -1256,8 +1175,7 @@ main(void)
         // If in the saving state, then save data from flash storage to
         // USB stick.
         //
-        if(g_iLoggerState == eSTATE_SAVING)
-        {
+        if(g_iLoggerState == eSTATE_SAVING) {
             //
             // Save data from flash to USB
             //
@@ -1272,8 +1190,7 @@ main(void)
         //
         // If in the erasing state, then erase the data stored in flash.
         //
-        if(g_iLoggerState == eSTATE_ERASING)
-        {
+        if(g_iLoggerState == eSTATE_ERASING) {
             //
             // Save data from flash to USB
             //
@@ -1289,8 +1206,7 @@ main(void)
         // If in the flash reporting state, then show the report of the amount
         // of used and free flash memory.
         //
-        if(g_iLoggerState == eSTATE_FREEFLASH)
-        {
+        if(g_iLoggerState == eSTATE_FREEFLASH) {
             //
             // Report free flash space
             //
@@ -1306,8 +1222,7 @@ main(void)
         // If we are exiting the clock setting widget, that means that control
         // needs to be given back to the menu system.
         //
-        if(g_iLoggerState == eSTATE_CLOCKEXIT)
-        {
+        if(g_iLoggerState == eSTATE_CLOCKEXIT) {
             //
             // Give the button event focus back to the menu system
             //

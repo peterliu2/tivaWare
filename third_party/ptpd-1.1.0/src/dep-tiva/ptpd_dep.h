@@ -112,9 +112,9 @@ size_t netSendGeneral(Octet*,UInteger16,NetPath*);
 /* servo.c */
 void initClock(RunTimeOpts*,PtpClock*);
 void updateDelay(TimeInternal*,TimeInternal*,
-  one_way_delay_filter*,RunTimeOpts*,PtpClock*);
+                 one_way_delay_filter*,RunTimeOpts*,PtpClock*);
 void updateOffset(TimeInternal*,TimeInternal*,
-  offset_from_master_filter*,RunTimeOpts*,PtpClock*);
+                  offset_from_master_filter*,RunTimeOpts*,PtpClock*);
 void updateClock(RunTimeOpts*,PtpClock*);
 
 /* sys.c */

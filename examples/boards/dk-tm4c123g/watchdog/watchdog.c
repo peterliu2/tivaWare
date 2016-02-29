@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C123G Firmware Package.
 //
 //*****************************************************************************
@@ -93,8 +93,7 @@ WatchdogIntHandler(void)
     // without clearing the interrupt.  This will cause the system to reset
     // next time the watchdog interrupt fires.
     //
-    if(!g_bFeedWatchdog)
-    {
+    if(!g_bFeedWatchdog) {
         return;
     }
 
@@ -108,7 +107,7 @@ WatchdogIntHandler(void)
     //
     ROM_GPIOPinWrite(GPIO_PORTG_BASE, GPIO_PIN_2,
                      (ROM_GPIOPinRead(GPIO_PORTG_BASE, GPIO_PIN_2) ^
-                                     GPIO_PIN_2));
+                      GPIO_PIN_2));
 }
 
 //*****************************************************************************
@@ -251,17 +250,14 @@ main(void)
     //
     // Loop forever while the LED winks as watchdog interrupts are handled.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Poll for the select button pressed
         //
         uint8_t ui8Buttons = ButtonsPoll(0, 0);
-        if(ui8Buttons & SELECT_BUTTON)
-        {
+        if(ui8Buttons & SELECT_BUTTON) {
             SelectButtonPressed();
-            while(1)
-            {
+            while(1) {
             }
         }
     }

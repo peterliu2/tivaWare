@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -77,22 +77,19 @@ BQ27510G3Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     // to the idle state (which will also result in a callback to propagate the
     // error).
     //
-    if(ui8Status != I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status != I2CM_STATUS_SUCCESS) {
         psInst->ui8State = BQ27510G3_STATE_IDLE;
     }
 
     //
     // Determine the current state of the BQ27510G3 state machine.
     //
-    switch(psInst->ui8State)
-    {
+    switch(psInst->ui8State) {
         //
         // The first data read state, has finished setup and trigger data read
         // state 2.
         //
-        case BQ27510G3_STATE_READ_DATA_1:
-        {
+        case BQ27510G3_STATE_READ_DATA_1: {
             //
             // Move the state machine to the next read state.
             //
@@ -103,8 +100,8 @@ BQ27510G3Callback(void *pvCallbackData, uint_fast8_t ui8Status)
             //
             psInst->uCommand.pui8Buffer[0] = BQ27510G3_O_NOM_AV_CAP_LSB;
             I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
-                        psInst->uCommand.pui8Buffer, 1, psInst->pui8Data + 6,
-                        24, BQ27510G3Callback, psInst);
+                     psInst->uCommand.pui8Buffer, 1, psInst->pui8Data + 6,
+                     24, BQ27510G3Callback, psInst);
 
             //
             // break
@@ -117,8 +114,7 @@ BQ27510G3Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         // state 3.  Read state 3 is the final state and when done will return
         // to idle and trigger the application level callback.
         //
-        case BQ27510G3_STATE_READ_DATA_2:
-        {
+        case BQ27510G3_STATE_READ_DATA_2: {
             //
             // Move the state machine to the next read state.
             //
@@ -129,8 +125,8 @@ BQ27510G3Callback(void *pvCallbackData, uint_fast8_t ui8Status)
             //
             psInst->uCommand.pui8Buffer[0] = BQ27510G3_O_INT_TEMP_LSB;
             I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
-                        psInst->uCommand.pui8Buffer, 1, psInst->pui8Data + 30,
-                        2, BQ27510G3Callback, psInst);
+                     psInst->uCommand.pui8Buffer, 1, psInst->pui8Data + 30,
+                     2, BQ27510G3Callback, psInst);
 
             //
             // break
@@ -147,8 +143,7 @@ BQ27510G3Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         case BQ27510G3_STATE_WRITE:
         case BQ27510G3_STATE_READ_DATA_3:
         case BQ27510G3_STATE_RMW:
-        default:
-        {
+        default: {
             //
             // The state machine is now idle.
             //
@@ -164,8 +159,7 @@ BQ27510G3Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if the state machine is now idle and there is a callback function.
     //
-    if((psInst->ui8State == BQ27510G3_STATE_IDLE) && psInst->pfnCallback)
-    {
+    if((psInst->ui8State == BQ27510G3_STATE_IDLE) && psInst->pfnCallback) {
         //
         // Call the application-supplied callback function.
         //
@@ -211,8 +205,7 @@ BQ27510G3Init(tBQ27510G3 *psInst, tI2CMInstance *psI2CInst,
     //
     // The default settings are ok.  Return success and call the callback.
     //
-    if(pfnCallback)
-    {
+    if(pfnCallback) {
         pfnCallback(pvCallbackData, 0);
     }
 
@@ -247,15 +240,14 @@ BQ27510G3Init(tBQ27510G3 *psInst, tI2CMInstance *psI2CInst,
 //*****************************************************************************
 uint_fast8_t
 BQ27510G3Read(tBQ27510G3 *psInst, uint_fast8_t ui8Reg, uint16_t *pui16Data,
-           uint_fast16_t ui16Count, tSensorCallback *pfnCallback,
-           void *pvCallbackData)
+              uint_fast16_t ui16Count, tSensorCallback *pfnCallback,
+              void *pvCallbackData)
 {
     //
     // Return a failure if the BQ27510G3 driver is not idle (in other words,
     // there is already an outstanding request to the BQ27510G3).
     //
-    if(psInst->ui8State != BQ27510G3_STATE_IDLE)
-    {
+    if(psInst->ui8State != BQ27510G3_STATE_IDLE) {
         return(0);
     }
 
@@ -275,8 +267,7 @@ BQ27510G3Read(tBQ27510G3 *psInst, uint_fast8_t ui8Reg, uint16_t *pui16Data,
     //
     if(I2CMRead16BE(&(psInst->uCommand.sReadState), psInst->psI2CInst,
                     psInst->ui8Addr, ui8Reg, pui16Data, ui16Count,
-                    BQ27510G3Callback, psInst) == 0)
-    {
+                    BQ27510G3Callback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -316,7 +307,7 @@ BQ27510G3Read(tBQ27510G3 *psInst, uint_fast8_t ui8Reg, uint16_t *pui16Data,
 //
 //*****************************************************************************
 uint_fast8_t
-BQ27510G3Write(tBQ27510G3 *psInst, uint_fast8_t ui8Reg, 
+BQ27510G3Write(tBQ27510G3 *psInst, uint_fast8_t ui8Reg,
                const uint16_t *pui16Data, uint_fast16_t ui16Count,
                tSensorCallback *pfnCallback, void *pvCallbackData)
 {
@@ -324,8 +315,7 @@ BQ27510G3Write(tBQ27510G3 *psInst, uint_fast8_t ui8Reg,
     // Return a failure if the BQ27510G3 driver is not idle (in other words,
     // there is already an outstanding request to the BQ27510G3).
     //
-    if(psInst->ui8State != BQ27510G3_STATE_IDLE)
-    {
+    if(psInst->ui8State != BQ27510G3_STATE_IDLE) {
         return(0);
     }
 
@@ -345,8 +335,7 @@ BQ27510G3Write(tBQ27510G3 *psInst, uint_fast8_t ui8Reg,
     //
     if(I2CMWrite16BE(&(psInst->uCommand.sWriteState), psInst->psI2CInst,
                      psInst->ui8Addr, ui8Reg, pui16Data, ui16Count,
-                     BQ27510G3Callback, psInst) == 0)
-    {
+                     BQ27510G3Callback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -387,15 +376,14 @@ BQ27510G3Write(tBQ27510G3 *psInst, uint_fast8_t ui8Reg,
 //*****************************************************************************
 uint_fast8_t
 BQ27510G3ReadModifyWrite(tBQ27510G3 *psInst, uint_fast8_t ui8Reg,
-                      uint_fast16_t ui16Mask, uint_fast16_t ui16Value,
-                      tSensorCallback *pfnCallback, void *pvCallbackData)
+                         uint_fast16_t ui16Mask, uint_fast16_t ui16Value,
+                         tSensorCallback *pfnCallback, void *pvCallbackData)
 {
     //
     // Return a failure if the BQ27510G3 driver is not idle (in other words,
     // there is already an outstanding request to the BQ27510G3).
     //
-    if(psInst->ui8State != BQ27510G3_STATE_IDLE)
-    {
+    if(psInst->ui8State != BQ27510G3_STATE_IDLE) {
         return(0);
     }
 
@@ -416,8 +404,7 @@ BQ27510G3ReadModifyWrite(tBQ27510G3 *psInst, uint_fast8_t ui8Reg,
     if(I2CMReadModifyWrite16BE(&(psInst->uCommand.sReadModifyWriteState),
                                psInst->psI2CInst, psInst->ui8Addr, ui8Reg,
                                ui16Mask, ui16Value, BQ27510G3Callback,
-                               psInst) == 0)
-    {
+                               psInst) == 0) {
         //
         // The I2C read-modify-write failed, so move to the idle state and
         // return a failure.
@@ -459,8 +446,7 @@ BQ27510G3DataRead(tBQ27510G3 *psInst, tSensorCallback *pfnCallback,
     // Return a failure if the BQ27510G3 driver is not idle (in other words,
     // there is already an outstanding request to the BQ27510G3).
     //
-    if(psInst->ui8State != BQ27510G3_STATE_IDLE)
-    {
+    if(psInst->ui8State != BQ27510G3_STATE_IDLE) {
         return(0);
     }
 
@@ -482,8 +468,7 @@ BQ27510G3DataRead(tBQ27510G3 *psInst, tSensorCallback *pfnCallback,
     psInst->uCommand.pui8Buffer[0] = BQ27510G3_O_AT_RATE_TTE_LSB;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
                 psInst->uCommand.pui8Buffer, 1, psInst->pui8Data, 6,
-                BQ27510G3Callback, psInst) == 0)
-    {
+                BQ27510G3Callback, psInst) == 0) {
         //
         // The I2C read failed, so move to the idle state and return a failure.
         //
@@ -683,7 +668,7 @@ BQ27510G3DataVoltageBatteryGetFloat(tBQ27510G3 *psInst, float *pfData)
 //*****************************************************************************
 void
 BQ27510G3DataCapacityNominalAvailableGetRaw(tBQ27510G3 *psInst,
-                                            int16_t *pi16Data)
+        int16_t *pi16Data)
 {
     //
     // Return the raw data value.

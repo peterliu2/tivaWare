@@ -137,8 +137,7 @@ PWMGenConfigure(unsigned long ulBase, unsigned long ulGen,
     //
     // Set the individual PWM generator controls.
     //
-    if(ulConfig & PWM_X_CTL_MODE)
-    {
+    if(ulConfig & PWM_X_CTL_MODE) {
         //
         // In up/down count mode, set the signal high on up count comparison
         // and low on down count comparison (i.e. center align the signals).
@@ -151,9 +150,7 @@ PWMGenConfigure(unsigned long ulBase, unsigned long ulGen,
                                         PWM_GEN_ACT_B_UP_SHIFT) |
                                        (PWM_GEN_ACT_ZERO <<
                                         PWM_GEN_ACT_B_DN_SHIFT));
-    }
-    else
-    {
+    } else {
         //
         // In down count mode, set the signal high on load and low on count
         // comparison (i.e. left align the signals).
@@ -181,7 +178,7 @@ PWMGenConfigure(unsigned long ulBase, unsigned long ulGen,
 //! in clock ticks.
 //!
 //! This function sets the period of the specified PWM generator block, where
-//! the period of the generator block is defined as the number of \b PWM 
+//! the period of the generator block is defined as the number of \b PWM
 //! clock ticks between pulses on the generator block \b zero signal.
 //!
 //! \note Any subsequent calls made to this function before an update occurs
@@ -210,17 +207,14 @@ PWMGenPeriodSet(unsigned long ulBase, unsigned long ulGen,
     //
     // Set the reload register based on the mode.
     //
-    if(HWREG(ulGen + PWM_O_X_CTL) & PWM_X_CTL_MODE)
-    {
+    if(HWREG(ulGen + PWM_O_X_CTL) & PWM_X_CTL_MODE) {
         //
         // In up/down count mode, set the reload register to half the requested
         // period.
         //
         ASSERT((ulPeriod / 2) < 65536);
         HWREG(ulGen + PWM_O_X_LOAD) = ulPeriod / 2;
-    }
-    else
-    {
+    } else {
         //
         // In down count mode, set the reload register to the requested period
         // minus one.
@@ -270,15 +264,12 @@ PWMGenPeriodGet(unsigned long ulBase, unsigned long ulGen)
     //
     // Figure out the counter mode.
     //
-    if(HWREG(ulGen + PWM_O_X_CTL) & PWM_X_CTL_MODE)
-    {
+    if(HWREG(ulGen + PWM_O_X_CTL) & PWM_X_CTL_MODE) {
         //
         // The period is twice the reload register value.
         //
         return(HWREG(ulGen + PWM_O_X_LOAD) * 2);
-    }
-    else
-    {
+    } else {
         //
         // The period is the reload register value plus one.
         //
@@ -327,7 +318,7 @@ PWMGenEnable(unsigned long ulBase, unsigned long ulGen)
 //! \param ulGen is the PWM generator to be disabled.  Must be one of
 //! \b PWM_GEN_0, \b PWM_GEN_1, or \b PWM_GEN_2.
 //!
-//! This function blocks the \b PWM clock from driving the timer/counter for 
+//! This function blocks the \b PWM clock from driving the timer/counter for
 //! the specified generator block.
 //!
 //! \return None.
@@ -392,8 +383,7 @@ PWMPulseWidthSet(unsigned long ulBase, unsigned long ulPWMOut,
     //
     // If the counter is in up/down count mode, divide the width by two.
     //
-    if(HWREG(ulGenBase + PWM_O_X_CTL) & PWM_X_CTL_MODE)
-    {
+    if(HWREG(ulGenBase + PWM_O_X_CTL) & PWM_X_CTL_MODE) {
         ulWidth /= 2;
     }
 
@@ -415,12 +405,9 @@ PWMPulseWidthSet(unsigned long ulBase, unsigned long ulPWMOut,
     //
     // Write to the appropriate registers.
     //
-    if(PWM_IS_OUTPUT_ODD(ulPWMOut))
-    {
+    if(PWM_IS_OUTPUT_ODD(ulPWMOut)) {
         HWREG(ulGenBase + PWM_O_X_CMPB) = ulReg;
-    }
-    else
-    {
+    } else {
         HWREG(ulGenBase + PWM_O_X_CMPA) = ulReg;
     }
 }
@@ -467,12 +454,9 @@ PWMPulseWidthGet(unsigned long ulBase, unsigned long ulPWMOut)
     // width = (load-compare)*2.  Otherwise, set width = load - compare
     //
     ulLoad = HWREG(ulGenBase + PWM_O_X_LOAD);
-    if(PWM_IS_OUTPUT_ODD(ulPWMOut))
-    {
+    if(PWM_IS_OUTPUT_ODD(ulPWMOut)) {
         ulReg = HWREG(ulGenBase + PWM_O_X_CMPB);
-    }
-    else
-    {
+    } else {
         ulReg = HWREG(ulGenBase + PWM_O_X_CMPA);
     }
     ulReg = ulLoad - ulReg;
@@ -480,8 +464,7 @@ PWMPulseWidthGet(unsigned long ulBase, unsigned long ulPWMOut)
     //
     // If in up/down count mode, double the pulse width.
     //
-    if(HWREG(ulGenBase + PWM_O_X_CTL) & PWM_X_CTL_MODE)
-    {
+    if(HWREG(ulGenBase + PWM_O_X_CTL) & PWM_X_CTL_MODE) {
         ulReg = ulReg * 2;
     }
 
@@ -677,12 +660,9 @@ PWMOutputState(unsigned long ulBase, unsigned long ulPWMOutBits,
     // Read the module's ENABLE output control register, and set or clear
     // the requested bits.
     //
-    if(bEnable == true)
-    {
+    if(bEnable == true) {
         HWREG(ulBase + PWM_O_ENABLE) |= ulPWMOutBits;
-    }
-    else
-    {
+    } else {
         HWREG(ulBase + PWM_O_ENABLE) &= ~(ulPWMOutBits);
     }
 }
@@ -725,12 +705,9 @@ PWMOutputInvert(unsigned long ulBase, unsigned long ulPWMOutBits,
     // Read the module's INVERT output control register, and set or clear
     // the requested bits.
     //
-    if(bInvert == true)
-    {
+    if(bInvert == true) {
         HWREG(ulBase + PWM_O_INVERT) |= ulPWMOutBits;
-    }
-    else
-    {
+    } else {
         HWREG(ulBase + PWM_O_INVERT) &= ~(ulPWMOutBits);
     }
 }
@@ -773,12 +750,9 @@ PWMOutputFault(unsigned long ulBase, unsigned long ulPWMOutBits,
     // Read the module's FAULT output control register, and set or clear
     // the requested bits.
     //
-    if(bFaultKill == true)
-    {
+    if(bFaultKill == true) {
         HWREG(ulBase + PWM_O_FAULT) |= ulPWMOutBits;
-    }
-    else
-    {
+    } else {
         HWREG(ulBase + PWM_O_FAULT) &= ~(ulPWMOutBits);
     }
 }
@@ -1100,12 +1074,9 @@ PWMGenIntStatus(unsigned long ulBase, unsigned long ulGen, tBoolean bMasked)
     // Read and return the specified generator's raw or enabled interrupt
     // status.
     //
-    if(bMasked == true)
-    {
+    if(bMasked == true) {
         return(HWREG(ulGen + PWM_O_X_ISC));
-    }
-    else
-    {
+    } else {
         return(HWREG(ulGen + PWM_O_X_RIS));
     }
 }
@@ -1272,12 +1243,9 @@ PWMIntStatus(unsigned long ulBase, tBoolean bMasked)
     //
     // Read and return either the module's raw or enabled interrupt status.
     //
-    if(bMasked == true)
-    {
+    if(bMasked == true) {
         return(HWREG(ulBase + PWM_O_ISC));
-    }
-    else
-    {
+    } else {
         return(HWREG(ulBase + PWM_O_RIS));
     }
 }

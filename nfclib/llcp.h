@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2014-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -84,8 +84,7 @@
 //! LLCP Parameter Enumerations.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     //! See LLCP V1.1 Section 4.5.1
     LLCP_VERSION =   0x01,
     //! See LLCP V1.1 Section 4.5.2
@@ -105,15 +104,14 @@ typedef enum
     //! See LLCP V1.1 Section 4.5.9
     LLCP_SDRES =     0x09,
     LLCP_ERROR
-}tLLCPParamaeter;
+} tLLCPParamaeter;
 
 //*****************************************************************************
 //
 //! PDU Type Enumerations.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     //! See LLCP V1.1 Section 4.3.1
     LLCP_SYMM_PDU =      0x00,
     //! See LLCP V1.1 Section 4.3.2
@@ -142,15 +140,14 @@ typedef enum
     LLCP_RNR_PDU =       0x0E,
     //! See LLCP V1.1 Section 4.3.14
     LLCP_RESERVED_PDU =  0x0F
-}tLLCPPduPtype;
+} tLLCPPduPtype;
 
 //*****************************************************************************
 //
 //! LLCP Connection Status Enumeration.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     //! No Tx/Rx ongoing.
     LLCP_CONNECTION_IDLE    = 0x00,
 
@@ -164,19 +161,18 @@ typedef enum
     //! When receiving data via SNEP
     LLCP_CONNECTION_RECEIVING
 
-}tLLCPConnectionStatus;
+} tLLCPConnectionStatus;
 
 //*****************************************************************************
 //
 //! Service Name Enumerations - Only support SNEP_SERVICE
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     NPP_SERVICE = 0,
     SNEP_SERVICE,
     HANDOVER_SERVICE
-}tServiceName;
+} tServiceName;
 
 
 //*****************************************************************************
@@ -184,8 +180,7 @@ typedef enum
 //! Disconnected Mode Reasons Enumerations.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     //! See LLCP Section 4.3.8.
     DM_REASON_LLCP_RECEIVED_DISC_PDU =                               0x00,
 
@@ -209,7 +204,7 @@ typedef enum
 
     //! See LLCP Section 4.3.8.
     DM_REASON_LLCP_TEMMPORARILY_NOT_ACCEPT_PDU_WITH_ANY_SSSAPT =     0x21
-}tDisconnectModeReason;
+} tDisconnectModeReason;
 
 
 

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -124,8 +124,7 @@ static FILINFO g_sFileInfo;
 // FAT file system driver.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     FRESULT fresult;
     char *pcResultStr;
 }
@@ -145,8 +144,7 @@ tFresultString;
 // printing to the screen.
 //
 //*****************************************************************************
-tFresultString g_cFresultStrings[] =
-{
+tFresultString g_cFresultStrings[] = {
     FRESULT_ENTRY(FR_OK),
     FRESULT_ENTRY(FR_DISK_ERR),
     FRESULT_ENTRY(FR_INT_ERR),
@@ -323,8 +321,7 @@ DECLARE_EVENT_DRIVER(g_sUSBEventDriver, 0, 0, USBHCDEvents);
 // In this case, only the MSC class is loaded.
 //
 //*****************************************************************************
-static tUSBHostClassDriver const * const g_ppHostClassDrivers[] =
-{
+static tUSBHostClassDriver const * const g_ppHostClassDrivers[] = {
     &g_sUSBHostMSCClassDriver,
     &g_sUSBEventDriver
 };
@@ -360,8 +357,7 @@ tDMAControlTable g_sDMAControlTable[6] __attribute__ ((aligned(1024)));
 // Storage for the status listbox widget string table.
 //
 //*****************************************************************************
-const char *g_ppcStatusStrings[NUM_STATUS_STRINGS] =
-{
+const char *g_ppcStatusStrings[NUM_STATUS_STRINGS] = {
     g_pcStatus[0],
     g_pcStatus[1],
     g_pcStatus[2],
@@ -402,7 +398,7 @@ extern tCanvasWidget g_sCDBackground;
 
 ListBox(g_sStatusList, &g_sBackground, 0, 0, &g_sKentec320x240x16_SSD2119,
         40, 170, 220, 52, (LISTBOX_STYLE_OUTLINE | LISTBOX_STYLE_LOCKED |
-        LISTBOX_STYLE_WRAP), ClrBlack, ClrBlack, ClrSilver, ClrSilver, ClrWhite,
+                           LISTBOX_STYLE_WRAP), ClrBlack, ClrBlack, ClrSilver, ClrSilver, ClrWhite,
         &g_sFontFixed6x8, g_ppcStatusStrings,  NUM_STATUS_STRINGS,
         NUM_STATUS_STRINGS, 0);
 
@@ -428,7 +424,7 @@ Canvas(g_sPWDTitle, &g_sBackground, &g_sDirList, 0,
 //*****************************************************************************
 Canvas(g_sPWD, &g_sBackground, &g_sPWDTitle, 0, &g_sKentec320x240x16_SSD2119,
        50, 35, 260, 20, (CANVAS_STYLE_TEXT | CANVAS_STYLE_FILL |
-       CANVAS_STYLE_TEXT_LEFT), ClrBlack, 0, ClrWhite, &g_sFontCmss12,
+                         CANVAS_STYLE_TEXT_LEFT), ClrBlack, 0, ClrWhite, &g_sFontCmss12,
        g_cCwdBuf, 0, 0);
 
 //*****************************************************************************
@@ -440,8 +436,8 @@ RectangularButton(g_sCDBtn, &g_sCDBackground, 0, 0,
                   &g_sKentec320x240x16_SSD2119, 170, 75, 90, 30,
                   (PB_STYLE_OUTLINE | PB_STYLE_TEXT_OPAQUE | PB_STYLE_TEXT |
                    PB_STYLE_FILL | PB_STYLE_RELEASE_NOTIFY),
-                   ClrBlack, ClrBlue, ClrWhite, ClrWhite,
-                   &g_sFontCm20, "CD", 0, 0, 0, 0, OnBtnCD);
+                  ClrBlack, ClrBlue, ClrWhite, ClrWhite,
+                  &g_sFontCm20, "CD", 0, 0, 0, 0, OnBtnCD);
 
 //*****************************************************************************
 //
@@ -461,8 +457,8 @@ RectangularButton(g_sUpBtn, &g_sUpBackground, 0, 0,
                   &g_sKentec320x240x16_SSD2119, 170, 115, 90, 30,
                   (PB_STYLE_OUTLINE | PB_STYLE_TEXT_OPAQUE | PB_STYLE_TEXT |
                    PB_STYLE_FILL | PB_STYLE_RELEASE_NOTIFY),
-                   ClrBlack, ClrBlue, ClrWhite, ClrWhite,
-                   &g_sFontCm20, "Up", 0, 0, 0, 0, OnBtnUp);
+                  ClrBlack, ClrBlue, ClrWhite, ClrWhite,
+                  &g_sFontCm20, "Up", 0, 0, 0, 0, OnBtnUp);
 
 //*****************************************************************************
 //
@@ -511,8 +507,7 @@ OnListBoxChange(tWidget *pWidget, int16_t ui16Selected)
     //
     // If no USB drive is present, just ignore this.
     //
-    if(g_eState != STATE_DEVICE_READY)
-    {
+    if(g_eState != STATE_DEVICE_READY) {
         return;
     }
 
@@ -524,24 +519,18 @@ OnListBoxChange(tWidget *pWidget, int16_t ui16Selected)
     //
     // Is there any selection?
     //
-    if(i16Selected == -1)
-    {
+    if(i16Selected == -1) {
         return;
-    }
-    else
-    {
+    } else {
         //
         // Is the selection a directory name?
         //
-        if(g_pcFilenames[i16Selected][1] == 'D')
-        {
+        if(g_pcFilenames[i16Selected][1] == 'D') {
             //
             // Enable the "CD" button.
             //
             WidgetAdd((tWidget *)&g_sCDBackground, (tWidget *)&g_sCDBtn);
-        }
-        else
-        {
+        } else {
             //
             // Hide the "CD" button.
             //
@@ -583,33 +572,26 @@ OnBtnCD(tWidget *pWidget)
     //
     // Is there any selection?
     //
-    if(i16Selected == -1)
-    {
+    if(i16Selected == -1) {
         return;
-    }
-    else
-    {
+    } else {
         //
         // Is the selection a directory name?
         //
-        if(g_pcFilenames[i16Selected][1] == 'D')
-        {
+        if(g_pcFilenames[i16Selected][1] == 'D') {
             //
             // Yes - change to the new directory.
             //
             fresult = ChangeToDirectory(&g_pcFilenames[i16Selected][4],
                                         &ui32Reason);
 
-            if(fresult != FR_OK)
-            {
+            if(fresult != FR_OK) {
                 //
                 // Update the status display to show the error.
                 //
                 PrintfStatus("Error changing directory.");
                 PrintfStatus((char *)StringFromFresult(fresult));
-            }
-            else
-            {
+            } else {
                 //
                 // Tell the user what happened.
                 //
@@ -655,16 +637,13 @@ OnBtnUp(tWidget *pWidget)
     //
     fresult = ChangeToDirectory("..", &ui32Reason);
 
-    if(fresult != FR_OK)
-    {
+    if(fresult != FR_OK) {
         //
         // Update the status display to show the error.
         //
         PrintfStatus("Error changing directory.");
         PrintfStatus((char *)StringFromFresult(fresult));
-    }
-    else
-    {
+    } else {
         //
         // Update the directory name and the list box contents.
         //
@@ -674,12 +653,9 @@ OnBtnUp(tWidget *pWidget)
         //
         // If we are now in the root directory, hide the "Up" button.
         //
-        if((strlen(g_cCwdBuf) == 1) && (g_cCwdBuf[0] == '/'))
-        {
+        if((strlen(g_cCwdBuf) == 1) && (g_cCwdBuf[0] == '/')) {
             WidgetRemove((tWidget *)&g_sUpBtn);
-        }
-        else
-        {
+        } else {
             WidgetAdd((tWidget *)&g_sUpBackground, (tWidget *)&g_sUpBtn);
         }
 
@@ -739,8 +715,7 @@ PrintfStatus(char *pi8Format, ...)
     // Update our string index.
     //
     g_ui32StatusStringIndex++;
-    if(g_ui32StatusStringIndex == NUM_STATUS_STRINGS)
-    {
+    if(g_ui32StatusStringIndex == NUM_STATUS_STRINGS) {
         g_ui32StatusStringIndex = 0;
     }
 
@@ -772,14 +747,12 @@ StringFromFresult(FRESULT fresult)
     // Enter a loop to search the error code table for a matching
     // error code.
     //
-    for(uIdx = 0; uIdx < NUM_FRESULT_CODES; uIdx++)
-    {
+    for(uIdx = 0; uIdx < NUM_FRESULT_CODES; uIdx++) {
         //
         // If a match is found, then return the string name of the
         // error code.
         //
-        if(g_cFresultStrings[uIdx].fresult == fresult)
-        {
+        if(g_cFresultStrings[uIdx].fresult == fresult) {
             return(g_cFresultStrings[uIdx].pcResultStr);
         }
     }
@@ -823,8 +796,7 @@ FileInit(void)
     //
     // Mount the file system, using logical disk 0.
     //
-    if(f_mount(0, &g_sFatFs) != FR_OK)
-    {
+    if(f_mount(0, &g_sFatFs) != FR_OK) {
         return(false);
     }
     return(true);
@@ -854,14 +826,12 @@ MSCCallback(tUSBHMSCInstance *ps32Instance, uint32_t ui32Event, void *pvData)
     //
     // Determine the event.
     //
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // Called when the device driver has successfully enumerated an MSC
         // device.
         //
-        case MSC_EVENT_OPEN:
-        {
+        case MSC_EVENT_OPEN: {
             //
             // Proceed to the enumeration state.
             //
@@ -874,8 +844,7 @@ MSCCallback(tUSBHMSCInstance *ps32Instance, uint32_t ui32Event, void *pvData)
         // Called when the device driver has been unloaded due to error or
         // the device is no int32_ter present.
         //
-        case MSC_EVENT_CLOSE:
-        {
+        case MSC_EVENT_CLOSE: {
             //
             // Go back to the "no device" state and wait for a new connection.
             //
@@ -889,8 +858,7 @@ MSCCallback(tUSBHMSCInstance *ps32Instance, uint32_t ui32Event, void *pvData)
             break;
         }
 
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -923,13 +891,11 @@ USBHCDEvents(void *pvData)
     //
     pEventInfo = (tEventInfo *)pvData;
 
-    switch(pEventInfo->ui32Event)
-    {
+    switch(pEventInfo->ui32Event) {
         //
         // An unknown device has been connected.
         //
-        case USB_EVENT_UNKNOWN_CONNECTED:
-        {
+        case USB_EVENT_UNKNOWN_CONNECTED: {
             //
             // An unknown device was detected.
             //
@@ -941,8 +907,7 @@ USBHCDEvents(void *pvData)
         //
         // The unknown device has been been unplugged.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             //
             // Unknown device has been removed.
             //
@@ -954,8 +919,7 @@ USBHCDEvents(void *pvData)
         //
         // A bus power fault was detected.
         //
-        case USB_EVENT_POWER_FAULT:
-        {
+        case USB_EVENT_POWER_FAULT: {
             //
             // No power means no device is present.
             //
@@ -964,8 +928,7 @@ USBHCDEvents(void *pvData)
             break;
         }
 
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -993,8 +956,7 @@ PopulateFileListBox(bool bRepaint)
     // Make sure the list box will be redrawn next time the message queue
     // is processed.
     //
-    if(bRepaint)
-    {
+    if(bRepaint) {
         WidgetPaint((tWidget *)&g_sDirList);
     }
 
@@ -1006,8 +968,7 @@ PopulateFileListBox(bool bRepaint)
     //
     // Check for error and return if there is a problem.
     //
-    if(fresult != FR_OK)
-    {
+    if(fresult != FR_OK) {
         //
         // Ensure that the error is reported.
         //
@@ -1021,8 +982,7 @@ PopulateFileListBox(bool bRepaint)
     //
     // Enter loop to enumerate through all directory entries.
     //
-    for(;;)
-    {
+    for(;;) {
         //
         // Read an entry from the directory.
         //
@@ -1031,8 +991,7 @@ PopulateFileListBox(bool bRepaint)
         //
         // Check for error and return if there is a problem.
         //
-        if(fresult != FR_OK)
-        {
+        if(fresult != FR_OK) {
             PrintfStatus("Error from USB disk:");
             PrintfStatus((char *)StringFromFresult(fresult));
             return(fresult);
@@ -1042,16 +1001,14 @@ PopulateFileListBox(bool bRepaint)
         // If the file name is blank, then this is the end of the
         // listing.
         //
-        if(!g_sFileInfo.fname[0])
-        {
+        if(!g_sFileInfo.fname[0]) {
             break;
         }
 
         //
         // Add the information as a line in the listbox widget.
         //
-        if(ui32ItemCount < NUM_LIST_STRINGS)
-        {
+        if(ui32ItemCount < NUM_LIST_STRINGS) {
             usnprintf(g_pcFilenames[ui32ItemCount], MAX_FILENAME_STRING_LEN,
                       "(%c) %s", (g_sFileInfo.fattrib & AM_DIR) ? 'D' : 'F',
                       g_sFileInfo.fname);
@@ -1109,13 +1066,11 @@ ChangeToDirectory(char *pi8Directory, uint32_t *pui32Reason)
     // If the first character is /, then this is a fully specified
     // path, and it should just be used as-is.
     //
-    if(pi8Directory[0] == '/')
-    {
+    if(pi8Directory[0] == '/') {
         //
         // Make sure the new path is not bigger than the cwd buffer.
         //
-        if(strlen(pi8Directory) + 1 > sizeof(g_cCwdBuf))
-        {
+        if(strlen(pi8Directory) + 1 > sizeof(g_cCwdBuf)) {
             *pui32Reason = NAME_TOO_LONG_ERROR;
             return(FR_OK);
         }
@@ -1124,8 +1079,7 @@ ChangeToDirectory(char *pi8Directory, uint32_t *pui32Reason)
         // If the new path name (in argv[1])  is not too int32_t, then
         // copy it into the temporary buffer so it can be checked.
         //
-        else
-        {
+        else {
             strncpy(g_cTmpBuf, pi8Directory, sizeof(g_cTmpBuf));
         }
     }
@@ -1134,8 +1088,7 @@ ChangeToDirectory(char *pi8Directory, uint32_t *pui32Reason)
     // If the argument is .. then attempt to remove the lowest level
     // on the CWD.
     //
-    else if(!strcmp(pi8Directory, ".."))
-    {
+    else if(!strcmp(pi8Directory, "..")) {
         //
         // Get the index to the last character in the current path.
         //
@@ -1145,8 +1098,7 @@ ChangeToDirectory(char *pi8Directory, uint32_t *pui32Reason)
         // Back up from the end of the path name until a separator (/)
         // is found, or until we bump up to the start of the path.
         //
-        while((g_cTmpBuf[uIdx] != '/') && (uIdx > 1))
-        {
+        while((g_cTmpBuf[uIdx] != '/') && (uIdx > 1)) {
             //
             // Back up one character.
             //
@@ -1166,16 +1118,14 @@ ChangeToDirectory(char *pi8Directory, uint32_t *pui32Reason)
     // Otherwise this is just a normal path name from the current
     // directory, and it needs to be appended to the current path.
     //
-    else
-    {
+    else {
         //
         // Test to make sure that when the new additional path is
         // added on to the current path, there is room in the buffer
         // for the full new path.  It needs to include a new separator,
         // and a trailing null character.
         //
-        if(strlen(g_cTmpBuf) + strlen(pi8Directory) + 1 + 1 > sizeof(g_cCwdBuf))
-        {
+        if(strlen(g_cTmpBuf) + strlen(pi8Directory) + 1 + 1 > sizeof(g_cCwdBuf)) {
             *pui32Reason = NAME_TOO_LONG_ERROR;
             return(FR_INVALID_OBJECT);
         }
@@ -1184,13 +1134,11 @@ ChangeToDirectory(char *pi8Directory, uint32_t *pui32Reason)
         // The new path is okay, so add the separator and then append
         // the new directory to the path.
         //
-        else
-        {
+        else {
             //
             // If not already at the root level, then append a /
             //
-            if(strcmp(g_cTmpBuf, "/"))
-            {
+            if(strcmp(g_cTmpBuf, "/")) {
                 strcat(g_cTmpBuf, "/");
             }
 
@@ -1211,8 +1159,7 @@ ChangeToDirectory(char *pi8Directory, uint32_t *pui32Reason)
     // If it cant be opened, then it is a bad path.  Inform
     // user and return.
     //
-    if(fresult != FR_OK)
-    {
+    if(fresult != FR_OK) {
         *pui32Reason = OPENDIR_ERROR;
         return(fresult);
     }
@@ -1221,8 +1168,7 @@ ChangeToDirectory(char *pi8Directory, uint32_t *pui32Reason)
     // Otherwise, it is a valid new path, so copy it into the CWD and update
     // the screen.
     //
-    else
-    {
+    else {
         strncpy(g_cCwdBuf, g_cTmpBuf, sizeof(g_cCwdBuf));
     }
 
@@ -1247,12 +1193,9 @@ GetTickms(void)
     ui32RetVal = g_ui32SysTickCount;
     ui32Saved = ui32RetVal;
 
-    if(ui32Saved > g_ui32LastTick)
-    {
+    if(ui32Saved > g_ui32LastTick) {
         ui32RetVal = ui32Saved - g_ui32LastTick;
-    }
-    else
-    {
+    } else {
         ui32RetVal = g_ui32LastTick - ui32Saved;
     }
 
@@ -1430,8 +1373,7 @@ main(void)
     // Enter an (almost) infinite loop for reading and processing commands from
     // the user.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Call the USB stack to keep it running.
         //
@@ -1443,16 +1385,13 @@ main(void)
         //
         WidgetMessageQueueProcess();
 
-        switch(g_eState)
-        {
-            case STATE_DEVICE_ENUM:
-            {
+        switch(g_eState) {
+            case STATE_DEVICE_ENUM: {
                 //
                 // Take it easy on the Mass storage device if it is slow to
                 // start up after connecting.
                 //
-                if(USBHMSCDriveReady(g_psMSCInstance) != 0)
-                {
+                if(USBHMSCDriveReady(g_psMSCInstance) != 0) {
                     //
                     // Wait about 500ms before attempting to check if the
                     // device is ready again.
@@ -1468,8 +1407,7 @@ main(void)
                     // If the timeout is hit then go to the
                     // STATE_TIMEOUT_DEVICE state.
                     //
-                    if(ui32DriveTimeout == 0)
-                    {
+                    if(ui32DriveTimeout == 0) {
                         g_eState = STATE_TIMEOUT_DEVICE;
                     }
                     break;
@@ -1485,8 +1423,7 @@ main(void)
                 //
                 // Fill the list box with the files and directories found.
                 //
-                if(!PopulateFileListBox(true))
-                {
+                if(!PopulateFileListBox(true)) {
                     //
                     // If there were no errors reported, we are ready for
                     // MSC operation.
@@ -1504,10 +1441,8 @@ main(void)
             //
             // If there is no device then just wait for one.
             //
-            case STATE_NO_DEVICE:
-            {
-                if(g_ui32Flags == FLAGS_DEVICE_PRESENT)
-                {
+            case STATE_NO_DEVICE: {
+                if(g_ui32Flags == FLAGS_DEVICE_PRESENT) {
                     //
                     // Empty the list box on the display.
                     //
@@ -1526,13 +1461,11 @@ main(void)
             //
             // An unknown device was connected.
             //
-            case STATE_UNKNOWN_DEVICE:
-            {
+            case STATE_UNKNOWN_DEVICE: {
                 //
                 // If this is a new device then change the status.
                 //
-                if((g_ui32Flags & FLAGS_DEVICE_PRESENT) == 0)
-                {
+                if((g_ui32Flags & FLAGS_DEVICE_PRESENT) == 0) {
                     //
                     // Clear the screen and indicate that an unknown device
                     // is present.
@@ -1551,14 +1484,12 @@ main(void)
             //
             // The connected mass storage device is not reporting ready.
             //
-            case STATE_TIMEOUT_DEVICE:
-            {
+            case STATE_TIMEOUT_DEVICE: {
                 //
                 // If this is the first time in this state then print a
                 // message.
                 //
-                if((g_ui32Flags & FLAGS_DEVICE_PRESENT) == 0)
-                {
+                if((g_ui32Flags & FLAGS_DEVICE_PRESENT) == 0) {
                     //
                     // Clear the screen and indicate that an unknown device
                     // is present.
@@ -1578,12 +1509,10 @@ main(void)
             //
             // Something has caused a power fault.
             //
-            case STATE_POWER_FAULT:
-            {
+            case STATE_POWER_FAULT: {
                 break;
             }
-            default:
-            {
+            default: {
                 break;
             }
         }

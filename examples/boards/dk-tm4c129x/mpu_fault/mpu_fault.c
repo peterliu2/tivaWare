@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -207,19 +207,19 @@ MPUFaultHandler(void)
     // add 2 to the faulted instruction address to get the next
     // instruction address.
     //
-    #if defined(rvmdk)
+#if defined(rvmdk)
     {
         uint32_t puiFaultPC;
 
         puiFaultPC = __current_sp() + 0x18;
         *(uint32_t*)puiFaultPC = *(uint32_t*)puiFaultPC + 2;
     }
-    #else
+#else
     __asm("    mov     r0, sp\n"
           "    ldr     r1, [r0, #0x18]\n"
           "    adds    r1, #2\n"
           "    str     r1, [r0, #0x18]");
-    #endif
+#endif
 }
 
 //*****************************************************************************
@@ -400,12 +400,9 @@ main(void)
     // Verify that the fault occurred, at the expected address.
     //
     if((g_ui32MPUFaultCount == 1) && (g_ui32FaultStatus == 0x82) &&
-       (g_ui32MMAR == 0x100))
-    {
+            (g_ui32MMAR == 0x100)) {
         GrStringDraw(&g_sContext, " OK", -1, 210, 60, 0);
-    }
-    else
-    {
+    } else {
         bFail = 1;
         GrStringDraw(&g_sContext, "NOK", -1, 210, 60, 0);
     }
@@ -422,12 +419,9 @@ main(void)
     // Verify that the fault occurred, at the expected address.
     //
     if((g_ui32MPUFaultCount == 1) && (g_ui32FaultStatus == 0x82) &&
-       (g_ui32MMAR == 0x7820))
-    {
+            (g_ui32MMAR == 0x7820)) {
         GrStringDraw(&g_sContext, " OK", -1, 210, 85, 0);
-    }
-    else
-    {
+    } else {
         bFail = 1;
         GrStringDraw(&g_sContext, "NOK", -1, 210, 85, 0);
     }
@@ -443,12 +437,9 @@ main(void)
     //
     // Verify that the RAM read did not cause a fault.
     //
-    if(g_ui32MPUFaultCount == 0)
-    {
+    if(g_ui32MPUFaultCount == 0) {
         GrStringDraw(&g_sContext, " OK", -1, 210, 110, 0);
-    }
-    else
-    {
+    } else {
         bFail = 1;
         GrStringDraw(&g_sContext, "NOK", -1, 210, 110, 0);
     }
@@ -465,12 +456,9 @@ main(void)
     // Verify that the RAM write caused a fault.
     //
     if((g_ui32MPUFaultCount == 1) && (g_ui32FaultStatus == 0x82) &&
-       (g_ui32MMAR == 0x20008460))
-    {
+            (g_ui32MMAR == 0x20008460)) {
         GrStringDraw(&g_sContext, " OK", -1, 210, 135, 0);
-    }
-    else
-    {
+    } else {
         bFail = 1;
         GrStringDraw(&g_sContext, "NOK", -1, 210, 135, 0);
     }
@@ -478,13 +466,10 @@ main(void)
     //
     // Display the results of the example program.
     //
-    if(bFail)
-    {
+    if(bFail) {
         GrStringDrawCentered(&g_sContext, "Failure!", -1,
                              GrContextDpyWidthGet(&g_sContext) / 2, 220, 0);
-    }
-    else
-    {
+    } else {
         GrStringDrawCentered(&g_sContext, "Success!", -1,
                              GrContextDpyWidthGet(&g_sContext) / 2, 220, 0);
     }
@@ -498,7 +483,6 @@ main(void)
     //
     // Loop forever.
     //
-    while(1)
-    {
+    while(1) {
     }
 }

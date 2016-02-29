@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -59,8 +59,7 @@
 // The current state of the Ethernet connection.
 //
 //*****************************************************************************
-struct
-{
+struct {
     volatile uint32_t ui32Flags;
 
     //
@@ -124,12 +123,12 @@ struct
     volatile enum
     {
         iEthNoConnection,
-            iEthDHCPWait,
-            iEthDNSWait,
-            iEthTCPOpen,
-            iEthTCPWait,
-            iEthSend,
-            iEthIdle
+        iEthDHCPWait,
+        iEthDNSWait,
+        iEthTCPOpen,
+        iEthTCPWait,
+        iEthSend,
+        iEthIdle
     } eState;
 }
 g_sEnet;
@@ -159,8 +158,7 @@ ResetConnection(void)
     //
     // Deallocate the TCP structure if it was already allocated.
     //
-    if(g_sEnet.psTCP != NULL)
-    {
+    if(g_sEnet.psTCP != NULL) {
         //
         // Clear out all of the TCP callbacks.
         //
@@ -197,8 +195,7 @@ DNSServerFound(const char *pcName, struct ip_addr *psIPAddr, void *vpArg)
     //
     // Check if a valid DNS server address was found.
     //
-    if((psIPAddr) && (psIPAddr->addr))
-    {
+    if((psIPAddr) && (psIPAddr->addr)) {
         //
         // Copy the returned IP address into a global IP address.
         //
@@ -208,9 +205,7 @@ DNSServerFound(const char *pcName, struct ip_addr *psIPAddr, void *vpArg)
         // Tell the main program that a DNS address was found.
         //
         HWREGBITW(&g_sEnet.ui32Flags, FLAG_DNS_ADDRFOUND) = 1;
-    }
-    else
-    {
+    } else {
         //
         // Disable the DNS timer.
         //
@@ -264,7 +259,7 @@ TCPReceived(void *pvArg, struct tcp_pcb *psPcb, struct pbuf *psBuf, err_t iErr)
     // Signal event handler that data is available.
     //
     g_sEnet.pfnEvent(ETH_CLIENT_EVENT_RECEIVE, (void *)psBuf->payload,
-            (uint32_t)psBuf->len);
+                     (uint32_t)psBuf->len);
 
     //
     // Indicate that you have received and processed this set of TCP data.
@@ -279,8 +274,7 @@ TCPReceived(void *pvArg, struct tcp_pcb *psPcb, struct pbuf *psBuf, err_t iErr)
     //
     // Free the buffers used since they have been processed.
     //
-    while(psBufCur->len != 0)
-    {
+    while(psBufCur->len != 0) {
         //
         // Indicate that you have received and processed this set of TCP data.
         //
@@ -294,8 +288,7 @@ TCPReceived(void *pvArg, struct tcp_pcb *psPcb, struct pbuf *psBuf, err_t iErr)
         //
         // Terminate if there are no more buffers.
         //
-        if(psBufCur == 0)
-        {
+        if(psBufCur == 0) {
             break;
         }
     }
@@ -359,8 +352,7 @@ TCPConnected(void *pvArg, struct tcp_pcb *psPcb, err_t iErr)
     //
     // Check if there was a TCP error.
     //
-    if(iErr != ERR_OK)
-    {
+    if(iErr != ERR_OK) {
         //
         // Clear out all of the TCP callbacks.
         //
@@ -373,8 +365,7 @@ TCPConnected(void *pvArg, struct tcp_pcb *psPcb, err_t iErr)
         //
         tcp_close(psPcb);
 
-        if(psPcb == g_sEnet.psTCP)
-        {
+        if(psPcb == g_sEnet.psTCP) {
             g_sEnet.psTCP = 0;
         }
 
@@ -429,8 +420,7 @@ EthClientTCPConnect(void)
     //
     HWREGBITW(&g_sEnet.ui32Flags, FLAG_TIMER_TCP_EN) = 1;
 
-    if(g_sEnet.psTCP)
-    {
+    if(g_sEnet.psTCP) {
         //
         // Initially clear out all of the TCP callbacks.
         //
@@ -452,29 +442,23 @@ EthClientTCPConnect(void)
     //
     // Check if you need to go through a proxy.
     //
-    if(g_sEnet.pcProxyName != 0)
-    {
+    if(g_sEnet.pcProxyName != 0) {
         //
         // Attempt to connect through the proxy server.
         //
         eTCPReturnCode = tcp_connect(g_sEnet.psTCP, &g_sEnet.sResolvedIP,
-                g_sEnet.ui16ProxyPort, TCPConnected);
-    }
-    else
-    {
+                                     g_sEnet.ui16ProxyPort, TCPConnected);
+    } else {
         //
         // Attempt to connect to the server directly.
         //
         eTCPReturnCode = tcp_connect(g_sEnet.psTCP, &g_sEnet.sResolvedIP,
-                g_sEnet.ui16HostPort, TCPConnected);
+                                     g_sEnet.ui16HostPort, TCPConnected);
     }
 
-    if((eTCPReturnCode == ERR_OK) || (eTCPReturnCode == ERR_INPROGRESS))
-    {
+    if((eTCPReturnCode == ERR_OK) || (eTCPReturnCode == ERR_INPROGRESS)) {
         return(0);
-    }
-    else
-    {
+    } else {
         return(1);
     }
 }
@@ -530,13 +514,11 @@ EthClientSend(int8_t *pi8Request, uint32_t ui32Size)
     //
     // Check that we have room in the buffer.
     //
-    if (ui32SendSize + ui32Size <= SEND_BUFFER_SIZE)
-    {
+    if (ui32SendSize + ui32Size <= SEND_BUFFER_SIZE) {
         //
         // Fill the send buffer.
         //
-        for (ui32Index = 0; ui32Index < ui32Size; ui32Index++)
-        {
+        for (ui32Index = 0; ui32Index < ui32Size; ui32Index++) {
             g_pui8SendBuff[ui32SendSize + ui32Index] =
                 pi8Request[ui32Index];
         }
@@ -553,13 +535,10 @@ EthClientSend(int8_t *pi8Request, uint32_t ui32Size)
         // into the buffer.
         //
         if (g_sEnet.ui32SendSize != ui32SendSize &&
-            g_sEnet.eState != ui32CurrentState &&
-            ui32CurrentState == iEthSend)
-        {
+                g_sEnet.eState != ui32CurrentState &&
+                ui32CurrentState == iEthSend) {
             g_sEnet.ui32SendIndex = ui32SendSize;
-        }
-        else
-        {
+        } else {
             g_sEnet.ui32SendIndex = 0;
         }
 
@@ -569,9 +548,7 @@ EthClientSend(int8_t *pi8Request, uint32_t ui32Size)
         g_sEnet.eState = iEthSend;
 
         return(ERR_OK);
-    }
-    else
-    {
+    } else {
         //
         // Tell the app we dont have enough memory.
         //
@@ -595,15 +572,12 @@ EthClientDHCPConnect(void)
     //
     // Check if the DHCP has already been started.
     //
-    if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_DHCP_STARTED) == 0)
-    {
+    if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_DHCP_STARTED) == 0) {
         //
         // Set the DCHP started flag.
         //
         HWREGBITW(&g_sEnet.ui32Flags, FLAG_DHCP_STARTED) = 1;
-    }
-    else
-    {
+    } else {
         //
         // If DHCP has already been started, we need to clear the IPs and
         // switch to static.  This forces the LWIP to get new IP address
@@ -636,8 +610,7 @@ EthClientDNSResolve(void)
 {
     err_t iRet;
 
-    if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_TIMER_DNS_EN))
-    {
+    if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_TIMER_DNS_EN)) {
         return(ERR_INPROGRESS);
     }
 
@@ -659,15 +632,12 @@ EthClientDNSResolve(void)
     //
     // Resolve host name.
     //
-    if(g_sEnet.pcProxyName != 0)
-    {
+    if(g_sEnet.pcProxyName != 0) {
         iRet = dns_gethostbyname(g_sEnet.pcProxyName, &g_sEnet.sResolvedIP,
-                DNSServerFound, 0);
-    }
-    else
-    {
+                                 DNSServerFound, 0);
+    } else {
         iRet = dns_gethostbyname(g_sEnet.pcHostName, &g_sEnet.sResolvedIP,
-                DNSServerFound, 0);
+                                 DNSServerFound, 0);
     }
 
     //
@@ -675,8 +645,7 @@ EthClientDNSResolve(void)
     // ERR_INPROGRESS is returned, the DNS request has been queued and will be
     // sent to the DNS server.
     //
-    if(iRet == ERR_OK)
-    {
+    if(iRet == ERR_OK) {
         //
         // Stop calling the DNS timer function.
         //
@@ -745,8 +714,7 @@ EthClientMACAddrGet(uint8_t *pui8MACAddr)
 {
     int32_t iIdx;
 
-    for(iIdx = 0; iIdx < 6; iIdx++)
-    {
+    for(iIdx = 0; iIdx < 6; iIdx++) {
         pui8MACAddr[iIdx] = g_sEnet.pui8MACAddr[iIdx];
     }
 }
@@ -863,8 +831,7 @@ EthClientInit(uint32_t ui32SysClock, tEventFunction pfnEvent)
 void
 EthClientTick(uint32_t ui32TickMS)
 {
-    if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_TIMER_DHCP_EN))
-    {
+    if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_TIMER_DHCP_EN)) {
         lwIPTimer(ui32TickMS);
     }
 }
@@ -881,13 +848,11 @@ lwIPHostTimerHandler(void)
     uint32_t ui32IPAddr;
     err_t eError;
 #if NO_SYS
-    if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_TIMER_DNS_EN))
-    {
+    if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_TIMER_DNS_EN)) {
         dns_tmr();
     }
 
-    if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_TIMER_TCP_EN))
-    {
+    if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_TIMER_TCP_EN)) {
         tcp_tmr();
     }
 #endif // #if NO_SYS
@@ -895,8 +860,7 @@ lwIPHostTimerHandler(void)
     //
     // Check if we need to send.
     //
-    if(g_sEnet.eState == iEthSend)
-    {
+    if(g_sEnet.eState == iEthSend) {
         //
         // Queue the send.
         //
@@ -907,8 +871,7 @@ lwIPHostTimerHandler(void)
         //
         //  Write data for sending (but does not send it immediately).
         //
-        if(eError == ERR_OK)
-        {
+        if(eError == ERR_OK) {
             //
             // Find out what we can send and send it.
             //
@@ -931,8 +894,7 @@ lwIPHostTimerHandler(void)
     // Check for loss of link.
     //
     else if((g_sEnet.eState != iEthNoConnection) &&
-            (lwIPLocalIPAddrGet() == 0xffffffff))
-    {
+            (lwIPLocalIPAddrGet() == 0xffffffff)) {
         //
         // No longer have a link.
         //
@@ -947,21 +909,16 @@ lwIPHostTimerHandler(void)
         // Signal a disconnect event.
         //
         g_sEnet.pfnEvent(ETH_CLIENT_EVENT_DISCONNECT, 0, 0);
-    }
-    else if(g_sEnet.eState == iEthNoConnection)
-    {
+    } else if(g_sEnet.eState == iEthNoConnection) {
         //
         // Once link is detected start DHCP.
         //
         ui32IPAddr = lwIPLocalIPAddrGet();
-        if((ui32IPAddr != 0xffffffff) && (ui32IPAddr == 0))
-        {
+        if((ui32IPAddr != 0xffffffff) && (ui32IPAddr == 0)) {
             EthClientDHCPConnect();
             g_sEnet.eState = iEthDHCPWait;
         }
-    }
-    else if(g_sEnet.eState == iEthDHCPWait)
-    {
+    } else if(g_sEnet.eState == iEthDHCPWait) {
         //
         // Get IP address.
         //
@@ -971,8 +928,7 @@ lwIPHostTimerHandler(void)
         // If IP Address has not yet been assigned, update the display
         // accordingly.
         //
-        if((ui32IPAddr != 0xffffffff) && (ui32IPAddr != 0))
-        {
+        if((ui32IPAddr != 0xffffffff) && (ui32IPAddr != 0)) {
             //
             // Update the DHCP IP address.
             //
@@ -989,15 +945,12 @@ lwIPHostTimerHandler(void)
             //
             g_sEnet.pfnEvent(ETH_CLIENT_EVENT_DHCP, &g_sEnet.sIPAddr.addr, 4);
         }
-    }
-    else if(g_sEnet.eState == iEthDNSWait)
-    {
+    } else if(g_sEnet.eState == iEthDNSWait) {
         //
         // Check to see if the DNS timer has been turned off, which signals
         // that the DNS lookup has failed.
         //
-        if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_TIMER_DNS_EN) == 0)
-        {
+        if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_TIMER_DNS_EN) == 0) {
             //
             // Go back to idle.
             //
@@ -1012,8 +965,7 @@ lwIPHostTimerHandler(void)
         //
         // Check if the host name was resolved.
         //
-        if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_DNS_ADDRFOUND))
-        {
+        if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_DNS_ADDRFOUND)) {
             //
             // Stop calling the DNS timer function.
             //

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -89,8 +89,7 @@ volatile uint32_t g_ui32WaitTicks = 0;
 // the USB ID pin to determine whether a device or a host is connected.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     //
     // No checking is currently pending.
     //
@@ -160,13 +159,11 @@ static tUSBModeCallback g_pfnUSBModeCallback;
 static void
 USBOTGSetMode(tUSBMode iUSBMode)
 {
-    if((g_iDualMode != iUSBMode) || (g_iDualMode == eUSBModeNone))
-    {
+    if((g_iDualMode != iUSBMode) || (g_iDualMode == eUSBModeNone)) {
         //
         // If going from host mode to unconfigured mode then remove power.
         //
-        if((g_iDualMode == eUSBModeHost) && (iUSBMode == eUSBModeNone))
-        {
+        if((g_iDualMode == eUSBModeHost) && (iUSBMode == eUSBModeNone)) {
             //
             // Take the steps to remove power in the of host mode OTG.
             //
@@ -177,8 +174,7 @@ USBOTGSetMode(tUSBMode iUSBMode)
         // If going from device mode to unconfigured mode then end the current
         // session.
         //
-        if((g_iDualMode == eUSBModeDevice) && (iUSBMode == eUSBModeNone))
-        {
+        if((g_iDualMode == eUSBModeDevice) && (iUSBMode == eUSBModeNone)) {
             //
             // End the current session.
             //
@@ -188,16 +184,14 @@ USBOTGSetMode(tUSBMode iUSBMode)
         //
         // Reset the delay whenever returning to eUSBModeNone.
         //
-        if(iUSBMode == eUSBModeNone)
-        {
+        if(iUSBMode == eUSBModeNone) {
             g_ui32WaitTicks = g_ui32PollRate;
         }
 
         //
         // Do we have a mode change callback installed?
         //
-        if((g_pfnUSBModeCallback) && (g_iDualMode != iUSBMode))
-        {
+        if((g_pfnUSBModeCallback) && (g_iDualMode != iUSBMode)) {
             //
             // Inform the callback of the new operating mode.
             //
@@ -276,13 +270,11 @@ USBStackModeSet(uint32_t ui32Index, tUSBMode iUSBMode,
     // If we are being asked to be either a host or device, we will not be
     // trying to auto-detect the mode so make the callback immediately.
     //
-    if((iUSBMode == eUSBModeDevice) || (iUSBMode == eUSBModeHost))
-    {
+    if((iUSBMode == eUSBModeDevice) || (iUSBMode == eUSBModeHost)) {
         //
         // Make sure that a callback was provided.
         //
-        if(g_pfnUSBModeCallback)
-        {
+        if(g_pfnUSBModeCallback) {
             g_pfnUSBModeCallback(0, iUSBMode);
         }
     }
@@ -328,8 +320,7 @@ USB0DualModeIntHandler(void)
     // the host stack to see regardless of whether or not we
     // are actually in host mode at this point.
     //
-    if(ui32Status & USB_HOST_INTS)
-    {
+    if(ui32Status & USB_HOST_INTS) {
         //
         // Call the host's interrupt handler.
         //
@@ -348,10 +339,8 @@ USB0DualModeIntHandler(void)
     // the ui32Status parameter since the USB interrupt register is
     // clear-on-read.
     //
-    switch(g_iUSBMode)
-    {
-        case eUSBModeNone:
-        {
+    switch(g_iUSBMode) {
+        case eUSBModeNone: {
             //
             // No mode is set yet so we have no idea what to do.  Just ignore
             // the interrupt.
@@ -362,8 +351,7 @@ USB0DualModeIntHandler(void)
         //
         // Operating in pure host mode.
         //
-        case eUSBModeHost:
-        {
+        case eUSBModeHost: {
             //
             // Call the host interrupt handler if there is anything still to
             // process.
@@ -376,8 +364,7 @@ USB0DualModeIntHandler(void)
         //
         // Operating in pure device mode.
         //
-        case eUSBModeDevice:
-        {
+        case eUSBModeDevice: {
             //
             // Call the device interrupt handler.
             //
@@ -386,8 +373,7 @@ USB0DualModeIntHandler(void)
             break;
         }
 
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -442,13 +428,13 @@ USBDualModeInit(uint32_t ui32Index)
     // Enable USB Interrupts.
     //
     MAP_USBIntEnableControl(USB0_BASE, USB_INTCTRL_RESET |
-                                       USB_INTCTRL_DISCONNECT |
-                                       USB_INTCTRL_SESSION |
-                                       USB_INTCTRL_BABBLE |
-                                       USB_INTCTRL_CONNECT |
-                                       USB_INTCTRL_RESUME |
-                                       USB_INTCTRL_SUSPEND |
-                                       USB_INTCTRL_VBUS_ERR);
+                            USB_INTCTRL_DISCONNECT |
+                            USB_INTCTRL_SESSION |
+                            USB_INTCTRL_BABBLE |
+                            USB_INTCTRL_CONNECT |
+                            USB_INTCTRL_RESUME |
+                            USB_INTCTRL_SUSPEND |
+                            USB_INTCTRL_VBUS_ERR);
 
     //
     // Enable all endpoint interrupts.
@@ -478,8 +464,7 @@ USBDualModeInit(uint32_t ui32Index)
     // If power enable is automatic then then USBHostPwrEnable() has to be
     // called to allow the USB controller to control the power enable pin.
     //
-    if(USBHCDPowerAutomatic(ui32Index))
-    {
+    if(USBHCDPowerAutomatic(ui32Index)) {
         //
         // This will not turn on power but instead will allow the USB
         // controller to turn on power when needed.
@@ -663,15 +648,15 @@ USBOTGModeInit(uint32_t ui32Index, uint32_t ui32PollingRate,
     // Enable control interrupts.
     //
     MAP_USBIntEnableControl(USB0_BASE, USB_INTCTRL_RESET |
-                                       USB_INTCTRL_DISCONNECT |
-                                       USB_INTCTRL_SESSION |
-                                       USB_INTCTRL_BABBLE |
-                                       USB_INTCTRL_CONNECT |
-                                       USB_INTCTRL_RESUME |
-                                       USB_INTCTRL_SUSPEND |
-                                       USB_INTCTRL_VBUS_ERR |
-                                       USB_INTCTRL_MODE_DETECT |
-                                       USB_INTCTRL_SOF);
+                            USB_INTCTRL_DISCONNECT |
+                            USB_INTCTRL_SESSION |
+                            USB_INTCTRL_BABBLE |
+                            USB_INTCTRL_CONNECT |
+                            USB_INTCTRL_RESUME |
+                            USB_INTCTRL_SUSPEND |
+                            USB_INTCTRL_VBUS_ERR |
+                            USB_INTCTRL_MODE_DETECT |
+                            USB_INTCTRL_SOF);
 
     //
     // Make sure the mode OTG mode and not forced device or host.
@@ -692,8 +677,7 @@ USBOTGModeInit(uint32_t ui32Index, uint32_t ui32PollingRate,
     // If power enable is automatic then then USBHostPwrEnable() has to be
     // called to allow the USB controller to control the power enable pin.
     //
-    if(USBHCDPowerAutomatic(ui32Index))
-    {
+    if(USBHCDPowerAutomatic(ui32Index)) {
         //
         // This will not turn on power but instead will allow the USB
         // controller to turn on power when needed.
@@ -704,12 +688,9 @@ USBOTGModeInit(uint32_t ui32Index, uint32_t ui32PollingRate,
     //
     // Enable the USB interrupt.
     //
-    if(CLASS_IS_TM4C129)
-    {
+    if(CLASS_IS_TM4C129) {
         OS_INT_ENABLE(INT_USB0_TM4C129);
-    }
-    else
-    {
+    } else {
         OS_INT_ENABLE(INT_USB0_TM4C123);
     }
 }
@@ -746,8 +727,7 @@ USBOTGRemovePower(uint32_t ui32Index)
     //
     // Check if the controller is automatically applying power or not.
     //
-    if(USBHCDPowerAutomatic(ui32Index) == 0)
-    {
+    if(USBHCDPowerAutomatic(ui32Index) == 0) {
         //
         // Call the registered event driver to allow it to disable power.
         //
@@ -828,22 +808,19 @@ USB0OTGModeIntHandler(void)
     // control.
     //
     if((ui32Status & USB_INTCTRL_MODE_DETECT) &&
-       (USBHCDPowerAutomatic(0) == 0))
-    {
+            (USBHCDPowerAutomatic(0) == 0)) {
         uint32_t ui32Mode;
 
         ui32Mode = USBModeGet(USB0_BASE);
 
-        switch(ui32Mode)
-        {
+        switch(ui32Mode) {
             //
             // Device is on the A side of the cable and power needs to be
             // applied.
             //
             case USB_OTG_MODE_ASIDE_NPWR:
             case USB_OTG_MODE_ASIDE_SESS:
-            case USB_OTG_MODE_ASIDE_AVAL:
-            {
+            case USB_OTG_MODE_ASIDE_AVAL: {
                 //
                 // Since power is not automatically enabled, call the
                 // registered event handler to allow the application to turn
@@ -859,8 +836,7 @@ USB0OTGModeIntHandler(void)
             //
             // Device is on the B side of the cable and powered.
             //
-            case USB_OTG_MODE_BSIDE_DEV:
-            {
+            case USB_OTG_MODE_BSIDE_DEV: {
                 //
                 // Now in device mode on the B side of the cable and will wait
                 // for a connect before becoming a device.
@@ -873,8 +849,7 @@ USB0OTGModeIntHandler(void)
             //
             // Any other mode detect indicates eUSBModeNone.
             //
-            default:
-            {
+            default: {
                 //
                 // Just inform the application that the mode was not device
                 // or host.
@@ -890,8 +865,7 @@ USB0OTGModeIntHandler(void)
     // If there was a VBUS error then the power should be shut off and the
     // system is reset to waiting for detection again.
     //
-    if(ui32Status & USB_INTCTRL_VBUS_ERR)
-    {
+    if(ui32Status & USB_INTCTRL_VBUS_ERR) {
         //
         // Just inform the application that the mode was not device
         // or host.
@@ -909,8 +883,7 @@ USB0OTGModeIntHandler(void)
     // cable as a device then go back to the IDLE state.
     //
     if((ui32Status & USB_INTCTRL_DISCONNECT) &&
-       (g_eOTGModeState == eUSBOTGModeBDevice))
-    {
+            (g_eOTGModeState == eUSBOTGModeBDevice)) {
         //
         // No longer a device so switch to unconfigured mode.
         //
@@ -928,8 +901,7 @@ USB0OTGModeIntHandler(void)
     // Handle receiving a reset.
     //
     if((ui32Status & USB_INTCTRL_RESET)&&
-       (g_eOTGModeState != eUSBOTGModeBDevice))
-    {
+            (g_eOTGModeState != eUSBOTGModeBDevice)) {
         //
         // Getting a reset interrupt when not already a b side device indicates
         // that a host is resetting the device and the controller should
@@ -947,8 +919,7 @@ USB0OTGModeIntHandler(void)
     // If there is a connect interrupt while the library is waiting for
     // one then move to full host mode state.
     //
-    if(ui32Status & USB_INTCTRL_CONNECT)
-    {
+    if(ui32Status & USB_INTCTRL_CONNECT) {
         //
         // Move to A side host state.
         //
@@ -964,10 +935,8 @@ USB0OTGModeIntHandler(void)
     // Call the correct device or host interrupt handler based on the current
     // mode of operation.
     //
-    switch(g_eOTGModeState)
-    {
-        case eUSBOTGModeAHost:
-        {
+    switch(g_eOTGModeState) {
+        case eUSBOTGModeAHost: {
             //
             // Call the host interrupt handler if there is anything still to
             // process.
@@ -980,8 +949,7 @@ USB0OTGModeIntHandler(void)
         //
         // Operating in pure device mode.
         //
-        case eUSBOTGModeBDevice:
-        {
+        case eUSBOTGModeBDevice: {
             //
             // Call the device interrupt handler.
             //
@@ -989,8 +957,7 @@ USB0OTGModeIntHandler(void)
 
             break;
         }
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -1017,8 +984,7 @@ OTGDeviceDisconnect(uint32_t ui32Index)
     //
     // This function is only valid when called in host mode.
     //
-    if(g_eOTGModeState == eUSBOTGModeAHost)
-    {
+    if(g_eOTGModeState == eUSBOTGModeAHost) {
         //
         // No longer a host so switch to unconfigured mode.
         //
@@ -1053,19 +1019,14 @@ USBOTGMain(uint32_t ui32MsTicks)
 {
     tEventInfo sEvent;
 
-    if(ui32MsTicks > g_ui32WaitTicks)
-    {
+    if(ui32MsTicks > g_ui32WaitTicks) {
         g_ui32WaitTicks = 0;
-    }
-    else
-    {
+    } else {
         g_ui32WaitTicks -= ui32MsTicks;
     }
 
-    switch(g_eOTGModeState)
-    {
-        case eUSBOTGModeIdle:
-        {
+    switch(g_eOTGModeState) {
+        case eUSBOTGModeIdle: {
             g_eOTGModeState = eUSBOTGModeWaitID;
 
             //
@@ -1075,13 +1036,11 @@ USBOTGMain(uint32_t ui32MsTicks)
             break;
         }
         case eUSBOTGModeWait:
-        case eUSBOTGModeWaitID:
-        {
+        case eUSBOTGModeWaitID: {
             //
             // If reached the timeout and polling is enabled then look again.
             //
-            if((g_ui32WaitTicks == 0) && (g_ui32PollRate != 0))
-            {
+            if((g_ui32WaitTicks == 0) && (g_ui32PollRate != 0)) {
                 //
                 // Remove the session request.
                 //
@@ -1096,8 +1055,7 @@ USBOTGMain(uint32_t ui32MsTicks)
                 // Check if the controller is automatically applying power or
                 // not.
                 //
-                if(USBHCDPowerAutomatic(0) == 0)
-                {
+                if(USBHCDPowerAutomatic(0) == 0) {
                     //
                     // Call the registered event driver to allow it to disable
                     // power.
@@ -1114,8 +1072,7 @@ USBOTGMain(uint32_t ui32MsTicks)
             }
             break;
         }
-        case eUSBOTGModeAHost:
-        {
+        case eUSBOTGModeAHost: {
             //
             // Call the host main routine when acting as a host.
             //
@@ -1124,8 +1081,7 @@ USBOTGMain(uint32_t ui32MsTicks)
         }
         case eUSBOTGModeBWaitCon:
         case eUSBOTGModeBDevice:
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -1159,13 +1115,11 @@ USBOTGFeatureSet(uint32_t ui32Index, uint32_t ui32Feature, void *pvFeature)
     // Pass this on to the host and device and indicate false if
     // either fails.
     //
-    if(USBDCDFeatureSet(ui32Index, ui32Feature, pvFeature) == false)
-    {
+    if(USBDCDFeatureSet(ui32Index, ui32Feature, pvFeature) == false) {
         bRetCode = false;
     }
 
-    if(USBHCDFeatureSet(ui32Index, ui32Feature, pvFeature) == false)
-    {
+    if(USBHCDFeatureSet(ui32Index, ui32Feature, pvFeature) == false) {
         bRetCode = false;
     }
 

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2014-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -81,7 +81,7 @@ typedef enum {
 //! This structure defines the status of the received payload.
 //
 //*****************************************************************************
-typedef struct{
+typedef struct {
 
     //
     //! SNEP RX Packet Status
@@ -98,7 +98,7 @@ typedef struct{
     //
     uint8_t *pui8RxDataPtr;
 
-}sNFCP2PRxStatus;
+} sNFCP2PRxStatus;
 
 //*****************************************************************************
 //
@@ -664,8 +664,7 @@ typedef struct{
 //          0x07 Reserved
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     //
     //! Empty Format
     //
@@ -732,8 +731,7 @@ typedef enum
 //       field would be set as well to save space, but not required.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! Message Begin flag
     //
@@ -798,8 +796,7 @@ typedef struct
 // The Payload is set as a pointer into the received buffer.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
 
     //
     //! Metadata about the message
@@ -993,8 +990,7 @@ typedef struct
 // LenLangCode = 6 bytes to determine the Length of Language Code (next field)
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! Flag for UTF Code. 0 = UTF8, 1 = UTF16
     //
@@ -1047,8 +1043,7 @@ typedef struct
 //       the puiText buffer.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
 
     //
     //! Structure to hold StatusByte information
@@ -1140,8 +1135,7 @@ typedef struct
 //          0x24-0xFF RFU Reserved for Future Use, Not Valid Inputs
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
 
     //
     //! Nothing is prepended to puiUTF8String
@@ -1355,8 +1349,7 @@ typedef enum
 // prepended value depending on the ID Code
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! Enumeration of all possible ID codes
     //
@@ -1380,8 +1373,7 @@ typedef struct
 //! Record.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
 
     //
     //! Do Action on Record
@@ -1405,8 +1397,7 @@ typedef enum
 //! This structure defines an Action Record
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
 
     //
     //! Action Record type enumeration
@@ -1446,8 +1437,7 @@ typedef struct
 // Image, Type and size records are not implemented.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
 
     //
     //! message header for Text Record
@@ -1497,34 +1487,34 @@ tStatus NFCP2P_sendPacket(uint8_t *pui8DataPtr, uint32_t ui32DataLength);
 sNFCP2PRxStatus NFCP2P_getReceiveState(void);
 
 bool NFCP2P_NDEFMessageEncoder(sNDEFMessageData sNDEFDataToSend,
-                                        uint8_t  *pui8Buffer,
-                                        uint16_t ui16BufferMaxLength,
-                                        uint32_t *pui32BufferLength);
+                               uint8_t  *pui8Buffer,
+                               uint16_t ui16BufferMaxLength,
+                               uint32_t *pui32BufferLength);
 bool NFCP2P_NDEFMessageDecoder(sNDEFMessageData *psNDEFDataDecoded,
-                                        uint8_t *pui8Buffer,
-                                        uint16_t ui16BufferMaxLength);
+                               uint8_t *pui8Buffer,
+                               uint16_t ui16BufferMaxLength);
 bool NFCP2P_NDEFTextRecordEncoder(sNDEFTextRecord sTextRecord,
-                                        uint8_t  *pui8Buffer,
-                                        uint16_t ui16BufferMaxLength,
-                                        uint32_t *ui32BufferLength);
+                                  uint8_t  *pui8Buffer,
+                                  uint16_t ui16BufferMaxLength,
+                                  uint32_t *ui32BufferLength);
 bool NFCP2P_NDEFTextRecordDecoder(sNDEFTextRecord *sTextRecord,
-                                        uint8_t *pui8Buffer,
-                                        uint32_t  ui32BufferLength);
+                                  uint8_t *pui8Buffer,
+                                  uint32_t  ui32BufferLength);
 bool NFCP2P_NDEFURIRecordEncoder(sNDEFURIRecord sURIRecord,
-                                        uint8_t  *pui8Buffer,
-                                        uint16_t ui16BufferMaxLength,
-                                        uint32_t *ui32BufferLength);
+                                 uint8_t  *pui8Buffer,
+                                 uint16_t ui16BufferMaxLength,
+                                 uint32_t *ui32BufferLength);
 bool NFCP2P_NDEFURIRecordDecoder(sNDEFURIRecord *sURIRecord,
-                                        uint8_t *pui8Buffer,
-                                        uint32_t  ui32BufferLength);
+                                 uint8_t *pui8Buffer,
+                                 uint32_t  ui32BufferLength);
 bool NFCP2P_NDEFSmartPosterRecordEncoder(sNDEFSmartPosterRecord sSmartPoster,
-                                        uint8_t  *pui8Buffer,
-                                        uint16_t ui16BufferMaxLength,
-                                        uint32_t *ui32BufferLength);
+        uint8_t  *pui8Buffer,
+        uint16_t ui16BufferMaxLength,
+        uint32_t *ui32BufferLength);
 bool NFCP2P_NDEFSmartPosterRecordDecoder(sNDEFSmartPosterRecord *sSmartPoster,
-                                        uint8_t *pui8Buffer,
-                                        uint16_t ui16BufferMaxLength,
-                                        uint32_t  ui32BufferLength);
+        uint8_t *pui8Buffer,
+        uint16_t ui16BufferMaxLength,
+        uint32_t  ui32BufferLength);
 
 //*****************************************************************************
 //

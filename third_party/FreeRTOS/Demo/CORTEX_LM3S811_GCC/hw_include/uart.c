@@ -298,8 +298,7 @@ UARTDisable(unsigned long ulBase)
     //
     // Wait for end of TX.
     //
-    while(HWREG(ulBase + UART_O_FR) & UART_FR_BUSY)
-    {
+    while(HWREG(ulBase + UART_O_FR) & UART_FR_BUSY) {
     }
 
     //
@@ -399,15 +398,12 @@ UARTCharNonBlockingGet(unsigned long ulBase)
     //
     // See if there are any characters in the receive FIFO.
     //
-    if(!(HWREG(ulBase + UART_O_FR) & UART_FR_RXFE))
-    {
+    if(!(HWREG(ulBase + UART_O_FR) & UART_FR_RXFE)) {
         //
         // Read and return the next character.
         //
         return(HWREG(ulBase + UART_O_DR));
-    }
-    else
-    {
+    } else {
         //
         // There are no characters, so return a failure.
         //
@@ -442,8 +438,7 @@ UARTCharGet(unsigned long ulBase)
     //
     // Wait until a char is available.
     //
-    while(HWREG(ulBase + UART_O_FR) & UART_FR_RXFE)
-    {
+    while(HWREG(ulBase + UART_O_FR) & UART_FR_RXFE) {
     }
 
     //
@@ -482,8 +477,7 @@ UARTCharNonBlockingPut(unsigned long ulBase, unsigned char ucData)
     //
     // See if there is space in the transmit FIFO.
     //
-    if(!(HWREG(ulBase + UART_O_FR) & UART_FR_TXFF))
-    {
+    if(!(HWREG(ulBase + UART_O_FR) & UART_FR_TXFF)) {
         //
         // Write this character to the transmit FIFO.
         //
@@ -493,9 +487,7 @@ UARTCharNonBlockingPut(unsigned long ulBase, unsigned char ucData)
         // Success.
         //
         return(true);
-    }
-    else
-    {
+    } else {
         //
         // There is no space in the transmit FIFO, so return a failure.
         //
@@ -530,8 +522,7 @@ UARTCharPut(unsigned long ulBase, unsigned char ucData)
     //
     // Wait until space is available.
     //
-    while(HWREG(ulBase + UART_O_FR) & UART_FR_TXFF)
-    {
+    while(HWREG(ulBase + UART_O_FR) & UART_FR_TXFF) {
     }
 
     //
@@ -769,12 +760,9 @@ UARTIntStatus(unsigned long ulBase, tBoolean bMasked)
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return(HWREG(ulBase + UART_O_MIS));
-    }
-    else
-    {
+    } else {
         return(HWREG(ulBase + UART_O_RIS));
     }
 }

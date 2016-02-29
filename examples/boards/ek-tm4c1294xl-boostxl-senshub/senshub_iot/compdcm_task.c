@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -167,8 +167,7 @@ CompDCMAppCallback(void *pvCallbackData, uint_fast8_t ui8Status)
     // If a higher priority task was waiting for a semaphore released by this
     // isr then that high priority task will run when the ISR exits.
     //
-    if(xHigherPriorityTaskWokenTransaction == pdTRUE)
-    {
+    if(xHigherPriorityTaskWokenTransaction == pdTRUE) {
         portYIELD_FROM_ISR(true);
     }
 }
@@ -242,8 +241,7 @@ CompDCMDataEncodeJSON(char *pcBuf, uint32_t ui32BufSize)
     //
     // Convert all floats in the structure to strings.
     //
-    for(ui32Idx = 0; ui32Idx < 3; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < 3; ui32Idx++) {
         uftostr(pcEulerBuf[ui32Idx], 12, 3,
                 g_sCompDCMData.pfEuler[ui32Idx]);
         uftostr(pcAccelerationBuf[ui32Idx], 12, 3,
@@ -261,7 +259,7 @@ CompDCMDataEncodeJSON(char *pcBuf, uint32_t ui32BufSize)
     // since we have four quaternions and three of everything else.
     //
     uftostr(pcQuaternionBuf[ui32Idx], 12, 3,
-                 g_sCompDCMData.pfQuaternion[ui32Idx]);
+            g_sCompDCMData.pfQuaternion[ui32Idx]);
 
     //
     // Merge all the strings together into a single JSON formated string.
@@ -308,16 +306,14 @@ void CompDCMDataPrint(float *pfRPY, float *pfQuaternion)
     pfEulerDegrees[0] = pfRPY[0] * 57.295779513082320876798154814105f;
     pfEulerDegrees[1] = pfRPY[1] * 57.295779513082320876798154814105f;
     pfEulerDegrees[2] = pfRPY[2] * 57.295779513082320876798154814105f;
-    if(pfEulerDegrees[2] < 0)
-    {
+    if(pfEulerDegrees[2] < 0) {
         pfEulerDegrees[2] += 360.0f;
     }
 
     //
     // Convert floats in the structure to strings.
     //
-    for(ui32Idx = 0; ui32Idx < 3; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < 3; ui32Idx++) {
         uftostr(pcEulerBuf[ui32Idx], 12, 3, pfEulerDegrees[ui32Idx]);
         uftostr(pcQuaternionBuf[ui32Idx], 12, 3, pfQuaternion[ui32Idx]);
     }
@@ -352,7 +348,7 @@ void CompDCMDataPrint(float *pfRPY, float *pfQuaternion)
     //
     xSemaphoreGive(g_xUARTSemaphore);
 
-    }
+}
 
 //*****************************************************************************
 //
@@ -379,8 +375,7 @@ IntHandlerGPIOPortM(void)
     //
     // Check if the data ready pin is the one that caused the interrupt.
     //
-    if(ui32Status & GPIO_PIN_3)
-    {
+    if(ui32Status & GPIO_PIN_3) {
         //
         // Give the MPU9150 Data Ready Pin binary semaphore. This will
         // release the main CompDCM task so it can go get the data.
@@ -393,8 +388,7 @@ IntHandlerGPIOPortM(void)
         // If a higher priority task was waiting for this semaphore then this
         // call will make sure it runs immediately after the ISR returns.
         //
-        if(xHigherPriorityTaskWoken == pdTRUE)
-        {
+        if(xHigherPriorityTaskWoken == pdTRUE) {
             portYIELD_FROM_ISR(true);
         }
     }
@@ -448,8 +442,7 @@ CompDCMTask(void *pvParameters)
     //
     // Check for I2C Errors and responds
     //
-    if(g_vui8CompDCMI2CErrorStatus)
-    {
+    if(g_vui8CompDCMI2CErrorStatus) {
         CompDCMAppErrorHandler(__FILE__, __LINE__);
     }
 
@@ -477,8 +470,7 @@ CompDCMTask(void *pvParameters)
     //
     // Check for I2C Errors and responds
     //
-    if(g_vui8CompDCMI2CErrorStatus)
-    {
+    if(g_vui8CompDCMI2CErrorStatus) {
         //
         // Give back the I2C Semaphore so other can use the I2C interface.
         //
@@ -494,8 +486,8 @@ CompDCMTask(void *pvParameters)
     // Configure the data ready interrupt pin output of the MPU9150.
     //
     g_sMPU9150Inst.pui8Data[0] = MPU9150_INT_PIN_CFG_INT_LEVEL |
-                                    MPU9150_INT_PIN_CFG_INT_RD_CLEAR |
-                                    MPU9150_INT_PIN_CFG_LATCH_INT_EN;
+                                 MPU9150_INT_PIN_CFG_INT_RD_CLEAR |
+                                 MPU9150_INT_PIN_CFG_LATCH_INT_EN;
     g_sMPU9150Inst.pui8Data[1] = MPU9150_INT_ENABLE_DATA_RDY_EN;
     MPU9150Write(&g_sMPU9150Inst, MPU9150_O_INT_PIN_CFG,
                  g_sMPU9150Inst.pui8Data, 2, CompDCMAppCallback,
@@ -514,8 +506,7 @@ CompDCMTask(void *pvParameters)
     //
     // Check for I2C Errors and responds
     //
-    if(g_vui8CompDCMI2CErrorStatus)
-    {
+    if(g_vui8CompDCMI2CErrorStatus) {
         CompDCMAppErrorHandler(__FILE__, __LINE__);
     }
 
@@ -531,8 +522,7 @@ CompDCMTask(void *pvParameters)
     //
     ui32CompDCMStarted = 0;
 
-    while(1)
-    {
+    while(1) {
         //
         // wait for the GPIO interrupt that tells us MPU9150 has data.
         //
@@ -561,8 +551,7 @@ CompDCMTask(void *pvParameters)
         //
         // Check for I2C Errors and responds
         //
-        if(g_vui8CompDCMI2CErrorStatus)
-        {
+        if(g_vui8CompDCMI2CErrorStatus) {
             CompDCMAppErrorHandler(__FILE__, __LINE__);
         }
 
@@ -587,8 +576,7 @@ CompDCMTask(void *pvParameters)
         //
         // Check if this is our first data ever.
         //
-        if(ui32CompDCMStarted == 0)
-        {
+        if(ui32CompDCMStarted == 0) {
             //
             // Set flag indicating that DCM is started.
             // Perform the seeding of the DCM with the first data set.
@@ -601,9 +589,7 @@ CompDCMTask(void *pvParameters)
             CompDCMGyroUpdate(&g_sCompDCMInst, pfGyro[0], pfGyro[1],
                               pfGyro[2]);
             CompDCMStart(&g_sCompDCMInst);
-        }
-        else
-        {
+        } else {
             //
             // DCM Is already started.  Perform the incremental update.
             //
@@ -631,8 +617,7 @@ CompDCMTask(void *pvParameters)
             // tasks.
             //
             xSemaphoreTake(g_xCloudDataSemaphore, portMAX_DELAY);
-            for(ui32Idx = 0; ui32Idx < 3; ui32Idx++)
-            {
+            for(ui32Idx = 0; ui32Idx < 3; ui32Idx++) {
                 g_sCompDCMData.pfEuler[ui32Idx] = pfEuler[ui32Idx];
                 g_sCompDCMData.pfQuaternion[ui32Idx] = pfQuaternion[ui32Idx];
                 g_sCompDCMData.pfAngularVelocity[ui32Idx] = pfGyro[ui32Idx];
@@ -667,8 +652,7 @@ CompDCMTaskInit(void)
     // cleared.
     //
     SysCtlPeripheralReset(SYSCTL_PERIPH_GPIOM);
-    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOM))
-    {
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOM)) {
         //
         // Do nothing, waiting.
         //
@@ -701,8 +685,7 @@ CompDCMTaskInit(void)
     //
     if(xTaskCreate(CompDCMTask, (const portCHAR *)"CompDCM   ",
                    COMPDCM_TASK_STACK_SIZE, NULL, tskIDLE_PRIORITY +
-                   PRIORITY_COMPDCM_TASK, g_xCompDCMHandle) != pdTRUE)
-    {
+                   PRIORITY_COMPDCM_TASK, g_xCompDCMHandle) != pdTRUE) {
         //
         // Task creation failed.
         //
@@ -713,8 +696,7 @@ CompDCMTaskInit(void)
     // Check if Semaphore creation was successful.
     //
     if((g_xCompDCMDataReadySemaphore == NULL) ||
-       (g_xCompDCMTransactionCompleteSemaphore == NULL))
-    {
+            (g_xCompDCMTransactionCompleteSemaphore == NULL)) {
         //
         // At least one semaphore was not created successfully.
         //

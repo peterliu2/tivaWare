@@ -126,15 +126,13 @@ FlashErase(unsigned long ulAddress)
     //
     // Wait until the word has been programmed.
     //
-    while(HWREG(FLASH_FMC) & FLASH_FMC_ERASE)
-    {
+    while(HWREG(FLASH_FMC) & FLASH_FMC_ERASE) {
     }
 
     //
     // Return an error if an access violation occurred.
     //
-    if(HWREG(FLASH_FCRIS) & FLASH_FCRIS_ACCESS)
-    {
+    if(HWREG(FLASH_FCRIS) & FLASH_FCRIS_ACCESS) {
         return(-1);
     }
 
@@ -191,8 +189,7 @@ FlashProgram(unsigned long *pulData, unsigned long ulAddress,
     //
     // Loop over the words to be programmed.
     //
-    while(ulCount)
-    {
+    while(ulCount) {
         //
         // Program the next word.
         //
@@ -203,8 +200,7 @@ FlashProgram(unsigned long *pulData, unsigned long ulAddress,
         //
         // Wait until the word has been programmed.
         //
-        while(HWREG(FLASH_FMC) & FLASH_FMC_WRITE)
-        {
+        while(HWREG(FLASH_FMC) & FLASH_FMC_WRITE) {
         }
 
         //
@@ -218,8 +214,7 @@ FlashProgram(unsigned long *pulData, unsigned long ulAddress,
     //
     // Return an error if an access violation occurred.
     //
-    if(HWREG(FLASH_FCRIS) & FLASH_FCRIS_ACCESS)
-    {
+    if(HWREG(FLASH_FCRIS) & FLASH_FCRIS_ACCESS) {
         return(-1);
     }
 
@@ -265,16 +260,14 @@ FlashProtectGet(unsigned long ulAddress)
     ulFMPPE = HWREG(FLASH_FMPPE);
     switch((((ulFMPRE >> (ulAddress / FLASH_PROTECT_SIZE)) &
              FLASH_FMP_BLOCK_0) << 1) |
-           ((ulFMPPE >> (ulAddress / FLASH_PROTECT_SIZE)) & FLASH_FMP_BLOCK_0))
-    {
+            ((ulFMPPE >> (ulAddress / FLASH_PROTECT_SIZE)) & FLASH_FMP_BLOCK_0)) {
         //
         // This block is marked as execute only (i.e. it can not be erased or
         // programmed, and the only reads allowed are via the instruction fecth
         // interface).
         //
         case 0:
-        case 1:
-        {
+        case 1: {
             return(FlashExecuteOnly);
         }
 
@@ -282,8 +275,7 @@ FlashProtectGet(unsigned long ulAddress)
         // This block is marked as read only (i.e. it can not be erased or
         // programmed).
         //
-        case 2:
-        {
+        case 2: {
             return(FlashReadOnly);
         }
 
@@ -291,8 +283,7 @@ FlashProtectGet(unsigned long ulAddress)
         // This block is read/write; it can be read, erased, and programmed.
         //
         case 3:
-        default:
-        {
+        default: {
             return(FlashReadWrite);
         }
     }
@@ -351,13 +342,11 @@ FlashProtectSet(unsigned long ulAddress, tFlashProtection eProtect)
     //
     // Set the protection based on the requested proection.
     //
-    switch(eProtect)
-    {
+    switch(eProtect) {
         //
         // Make this block execute only.
         //
-        case FlashExecuteOnly:
-        {
+        case FlashExecuteOnly: {
             //
             // Turn off the read and program bits for this block.
             //
@@ -373,14 +362,12 @@ FlashProtectSet(unsigned long ulAddress, tFlashProtection eProtect)
         //
         // Make this block read only.
         //
-        case FlashReadOnly:
-        {
+        case FlashReadOnly: {
             //
             // The block can not be made read only if it is execute only.
             //
             if(((ulProtectRE >> ulAddress) & FLASH_FMP_BLOCK_0) !=
-               FLASH_FMP_BLOCK_0)
-            {
+                    FLASH_FMP_BLOCK_0) {
                 return(-1);
             }
 
@@ -399,17 +386,15 @@ FlashProtectSet(unsigned long ulAddress, tFlashProtection eProtect)
         // Make this block read/write.
         //
         case FlashReadWrite:
-        default:
-        {
+        default: {
             //
             // The block can not be made read/write if it is not already
             // read/write.
             //
             if((((ulProtectRE >> ulAddress) & FLASH_FMP_BLOCK_0) !=
-                FLASH_FMP_BLOCK_0) ||
-               (((ulProtectPE >> ulAddress) & FLASH_FMP_BLOCK_0) !=
-                FLASH_FMP_BLOCK_0))
-            {
+                    FLASH_FMP_BLOCK_0) ||
+                    (((ulProtectPE >> ulAddress) & FLASH_FMP_BLOCK_0) !=
+                     FLASH_FMP_BLOCK_0)) {
                 return(-1);
             }
 
@@ -459,8 +444,7 @@ FlashProtectSave(void)
     //
     // Wait until the write has completed.
     //
-    while(HWREG(FLASH_FMC) & FLASH_FMC_COMT)
-    {
+    while(HWREG(FLASH_FMC) & FLASH_FMC_COMT) {
     }
 
     //
@@ -473,8 +457,7 @@ FlashProtectSave(void)
     //
     // Wait until the write has completed.
     //
-    while(HWREG(FLASH_FMC) & FLASH_FMC_COMT)
-    {
+    while(HWREG(FLASH_FMC) & FLASH_FMC_COMT) {
     }
 
     //
@@ -623,12 +606,9 @@ FlashIntGetStatus(tBoolean bMasked)
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return(HWREG(FLASH_FCMISC));
-    }
-    else
-    {
+    } else {
         return(HWREG(FLASH_FCRIS));
     }
 }

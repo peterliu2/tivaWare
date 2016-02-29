@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2007-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -79,248 +79,248 @@
 #define USB_O_CONTIM            0x0000007A  // USB Connect Timing
 #define USB_O_VPLEN             0x0000007B  // USB OTG VBUS Pulse Timing
 #define USB_O_HSEOF             0x0000007C  // USB High-Speed Last Transaction
-                                            // to End of Frame Timing
+// to End of Frame Timing
 #define USB_O_FSEOF             0x0000007D  // USB Full-Speed Last Transaction
-                                            // to End of Frame Timing
+// to End of Frame Timing
 #define USB_O_LSEOF             0x0000007E  // USB Low-Speed Last Transaction
-                                            // to End of Frame Timing
+// to End of Frame Timing
 #define USB_O_TXFUNCADDR0       0x00000080  // USB Transmit Functional Address
-                                            // Endpoint 0
+// Endpoint 0
 #define USB_O_TXHUBADDR0        0x00000082  // USB Transmit Hub Address
-                                            // Endpoint 0
+// Endpoint 0
 #define USB_O_TXHUBPORT0        0x00000083  // USB Transmit Hub Port Endpoint 0
 #define USB_O_TXFUNCADDR1       0x00000088  // USB Transmit Functional Address
-                                            // Endpoint 1
+// Endpoint 1
 #define USB_O_TXHUBADDR1        0x0000008A  // USB Transmit Hub Address
-                                            // Endpoint 1
+// Endpoint 1
 #define USB_O_TXHUBPORT1        0x0000008B  // USB Transmit Hub Port Endpoint 1
 #define USB_O_RXFUNCADDR1       0x0000008C  // USB Receive Functional Address
-                                            // Endpoint 1
+// Endpoint 1
 #define USB_O_RXHUBADDR1        0x0000008E  // USB Receive Hub Address Endpoint
-                                            // 1
+// 1
 #define USB_O_RXHUBPORT1        0x0000008F  // USB Receive Hub Port Endpoint 1
 #define USB_O_TXFUNCADDR2       0x00000090  // USB Transmit Functional Address
-                                            // Endpoint 2
+// Endpoint 2
 #define USB_O_TXHUBADDR2        0x00000092  // USB Transmit Hub Address
-                                            // Endpoint 2
+// Endpoint 2
 #define USB_O_TXHUBPORT2        0x00000093  // USB Transmit Hub Port Endpoint 2
 #define USB_O_RXFUNCADDR2       0x00000094  // USB Receive Functional Address
-                                            // Endpoint 2
+// Endpoint 2
 #define USB_O_RXHUBADDR2        0x00000096  // USB Receive Hub Address Endpoint
-                                            // 2
+// 2
 #define USB_O_RXHUBPORT2        0x00000097  // USB Receive Hub Port Endpoint 2
 #define USB_O_TXFUNCADDR3       0x00000098  // USB Transmit Functional Address
-                                            // Endpoint 3
+// Endpoint 3
 #define USB_O_TXHUBADDR3        0x0000009A  // USB Transmit Hub Address
-                                            // Endpoint 3
+// Endpoint 3
 #define USB_O_TXHUBPORT3        0x0000009B  // USB Transmit Hub Port Endpoint 3
 #define USB_O_RXFUNCADDR3       0x0000009C  // USB Receive Functional Address
-                                            // Endpoint 3
+// Endpoint 3
 #define USB_O_RXHUBADDR3        0x0000009E  // USB Receive Hub Address Endpoint
-                                            // 3
+// 3
 #define USB_O_RXHUBPORT3        0x0000009F  // USB Receive Hub Port Endpoint 3
 #define USB_O_TXFUNCADDR4       0x000000A0  // USB Transmit Functional Address
-                                            // Endpoint 4
+// Endpoint 4
 #define USB_O_TXHUBADDR4        0x000000A2  // USB Transmit Hub Address
-                                            // Endpoint 4
+// Endpoint 4
 #define USB_O_TXHUBPORT4        0x000000A3  // USB Transmit Hub Port Endpoint 4
 #define USB_O_RXFUNCADDR4       0x000000A4  // USB Receive Functional Address
-                                            // Endpoint 4
+// Endpoint 4
 #define USB_O_RXHUBADDR4        0x000000A6  // USB Receive Hub Address Endpoint
-                                            // 4
+// 4
 #define USB_O_RXHUBPORT4        0x000000A7  // USB Receive Hub Port Endpoint 4
 #define USB_O_TXFUNCADDR5       0x000000A8  // USB Transmit Functional Address
-                                            // Endpoint 5
+// Endpoint 5
 #define USB_O_TXHUBADDR5        0x000000AA  // USB Transmit Hub Address
-                                            // Endpoint 5
+// Endpoint 5
 #define USB_O_TXHUBPORT5        0x000000AB  // USB Transmit Hub Port Endpoint 5
 #define USB_O_RXFUNCADDR5       0x000000AC  // USB Receive Functional Address
-                                            // Endpoint 5
+// Endpoint 5
 #define USB_O_RXHUBADDR5        0x000000AE  // USB Receive Hub Address Endpoint
-                                            // 5
+// 5
 #define USB_O_RXHUBPORT5        0x000000AF  // USB Receive Hub Port Endpoint 5
 #define USB_O_TXFUNCADDR6       0x000000B0  // USB Transmit Functional Address
-                                            // Endpoint 6
+// Endpoint 6
 #define USB_O_TXHUBADDR6        0x000000B2  // USB Transmit Hub Address
-                                            // Endpoint 6
+// Endpoint 6
 #define USB_O_TXHUBPORT6        0x000000B3  // USB Transmit Hub Port Endpoint 6
 #define USB_O_RXFUNCADDR6       0x000000B4  // USB Receive Functional Address
-                                            // Endpoint 6
+// Endpoint 6
 #define USB_O_RXHUBADDR6        0x000000B6  // USB Receive Hub Address Endpoint
-                                            // 6
+// 6
 #define USB_O_RXHUBPORT6        0x000000B7  // USB Receive Hub Port Endpoint 6
 #define USB_O_TXFUNCADDR7       0x000000B8  // USB Transmit Functional Address
-                                            // Endpoint 7
+// Endpoint 7
 #define USB_O_TXHUBADDR7        0x000000BA  // USB Transmit Hub Address
-                                            // Endpoint 7
+// Endpoint 7
 #define USB_O_TXHUBPORT7        0x000000BB  // USB Transmit Hub Port Endpoint 7
 #define USB_O_RXFUNCADDR7       0x000000BC  // USB Receive Functional Address
-                                            // Endpoint 7
+// Endpoint 7
 #define USB_O_RXHUBADDR7        0x000000BE  // USB Receive Hub Address Endpoint
-                                            // 7
+// 7
 #define USB_O_RXHUBPORT7        0x000000BF  // USB Receive Hub Port Endpoint 7
 #define USB_O_CSRL0             0x00000102  // USB Control and Status Endpoint
-                                            // 0 Low
+// 0 Low
 #define USB_O_CSRH0             0x00000103  // USB Control and Status Endpoint
-                                            // 0 High
+// 0 High
 #define USB_O_COUNT0            0x00000108  // USB Receive Byte Count Endpoint
-                                            // 0
+// 0
 #define USB_O_TYPE0             0x0000010A  // USB Type Endpoint 0
 #define USB_O_NAKLMT            0x0000010B  // USB NAK Limit
 #define USB_O_TXMAXP1           0x00000110  // USB Maximum Transmit Data
-                                            // Endpoint 1
+// Endpoint 1
 #define USB_O_TXCSRL1           0x00000112  // USB Transmit Control and Status
-                                            // Endpoint 1 Low
+// Endpoint 1 Low
 #define USB_O_TXCSRH1           0x00000113  // USB Transmit Control and Status
-                                            // Endpoint 1 High
+// Endpoint 1 High
 #define USB_O_RXMAXP1           0x00000114  // USB Maximum Receive Data
-                                            // Endpoint 1
+// Endpoint 1
 #define USB_O_RXCSRL1           0x00000116  // USB Receive Control and Status
-                                            // Endpoint 1 Low
+// Endpoint 1 Low
 #define USB_O_RXCSRH1           0x00000117  // USB Receive Control and Status
-                                            // Endpoint 1 High
+// Endpoint 1 High
 #define USB_O_RXCOUNT1          0x00000118  // USB Receive Byte Count Endpoint
-                                            // 1
+// 1
 #define USB_O_TXTYPE1           0x0000011A  // USB Host Transmit Configure Type
-                                            // Endpoint 1
+// Endpoint 1
 #define USB_O_TXINTERVAL1       0x0000011B  // USB Host Transmit Interval
-                                            // Endpoint 1
+// Endpoint 1
 #define USB_O_RXTYPE1           0x0000011C  // USB Host Configure Receive Type
-                                            // Endpoint 1
+// Endpoint 1
 #define USB_O_RXINTERVAL1       0x0000011D  // USB Host Receive Polling
-                                            // Interval Endpoint 1
+// Interval Endpoint 1
 #define USB_O_TXMAXP2           0x00000120  // USB Maximum Transmit Data
-                                            // Endpoint 2
+// Endpoint 2
 #define USB_O_TXCSRL2           0x00000122  // USB Transmit Control and Status
-                                            // Endpoint 2 Low
+// Endpoint 2 Low
 #define USB_O_TXCSRH2           0x00000123  // USB Transmit Control and Status
-                                            // Endpoint 2 High
+// Endpoint 2 High
 #define USB_O_RXMAXP2           0x00000124  // USB Maximum Receive Data
-                                            // Endpoint 2
+// Endpoint 2
 #define USB_O_RXCSRL2           0x00000126  // USB Receive Control and Status
-                                            // Endpoint 2 Low
+// Endpoint 2 Low
 #define USB_O_RXCSRH2           0x00000127  // USB Receive Control and Status
-                                            // Endpoint 2 High
+// Endpoint 2 High
 #define USB_O_RXCOUNT2          0x00000128  // USB Receive Byte Count Endpoint
-                                            // 2
+// 2
 #define USB_O_TXTYPE2           0x0000012A  // USB Host Transmit Configure Type
-                                            // Endpoint 2
+// Endpoint 2
 #define USB_O_TXINTERVAL2       0x0000012B  // USB Host Transmit Interval
-                                            // Endpoint 2
+// Endpoint 2
 #define USB_O_RXTYPE2           0x0000012C  // USB Host Configure Receive Type
-                                            // Endpoint 2
+// Endpoint 2
 #define USB_O_RXINTERVAL2       0x0000012D  // USB Host Receive Polling
-                                            // Interval Endpoint 2
+// Interval Endpoint 2
 #define USB_O_TXMAXP3           0x00000130  // USB Maximum Transmit Data
-                                            // Endpoint 3
+// Endpoint 3
 #define USB_O_TXCSRL3           0x00000132  // USB Transmit Control and Status
-                                            // Endpoint 3 Low
+// Endpoint 3 Low
 #define USB_O_TXCSRH3           0x00000133  // USB Transmit Control and Status
-                                            // Endpoint 3 High
+// Endpoint 3 High
 #define USB_O_RXMAXP3           0x00000134  // USB Maximum Receive Data
-                                            // Endpoint 3
+// Endpoint 3
 #define USB_O_RXCSRL3           0x00000136  // USB Receive Control and Status
-                                            // Endpoint 3 Low
+// Endpoint 3 Low
 #define USB_O_RXCSRH3           0x00000137  // USB Receive Control and Status
-                                            // Endpoint 3 High
+// Endpoint 3 High
 #define USB_O_RXCOUNT3          0x00000138  // USB Receive Byte Count Endpoint
-                                            // 3
+// 3
 #define USB_O_TXTYPE3           0x0000013A  // USB Host Transmit Configure Type
-                                            // Endpoint 3
+// Endpoint 3
 #define USB_O_TXINTERVAL3       0x0000013B  // USB Host Transmit Interval
-                                            // Endpoint 3
+// Endpoint 3
 #define USB_O_RXTYPE3           0x0000013C  // USB Host Configure Receive Type
-                                            // Endpoint 3
+// Endpoint 3
 #define USB_O_RXINTERVAL3       0x0000013D  // USB Host Receive Polling
-                                            // Interval Endpoint 3
+// Interval Endpoint 3
 #define USB_O_TXMAXP4           0x00000140  // USB Maximum Transmit Data
-                                            // Endpoint 4
+// Endpoint 4
 #define USB_O_TXCSRL4           0x00000142  // USB Transmit Control and Status
-                                            // Endpoint 4 Low
+// Endpoint 4 Low
 #define USB_O_TXCSRH4           0x00000143  // USB Transmit Control and Status
-                                            // Endpoint 4 High
+// Endpoint 4 High
 #define USB_O_RXMAXP4           0x00000144  // USB Maximum Receive Data
-                                            // Endpoint 4
+// Endpoint 4
 #define USB_O_RXCSRL4           0x00000146  // USB Receive Control and Status
-                                            // Endpoint 4 Low
+// Endpoint 4 Low
 #define USB_O_RXCSRH4           0x00000147  // USB Receive Control and Status
-                                            // Endpoint 4 High
+// Endpoint 4 High
 #define USB_O_RXCOUNT4          0x00000148  // USB Receive Byte Count Endpoint
-                                            // 4
+// 4
 #define USB_O_TXTYPE4           0x0000014A  // USB Host Transmit Configure Type
-                                            // Endpoint 4
+// Endpoint 4
 #define USB_O_TXINTERVAL4       0x0000014B  // USB Host Transmit Interval
-                                            // Endpoint 4
+// Endpoint 4
 #define USB_O_RXTYPE4           0x0000014C  // USB Host Configure Receive Type
-                                            // Endpoint 4
+// Endpoint 4
 #define USB_O_RXINTERVAL4       0x0000014D  // USB Host Receive Polling
-                                            // Interval Endpoint 4
+// Interval Endpoint 4
 #define USB_O_TXMAXP5           0x00000150  // USB Maximum Transmit Data
-                                            // Endpoint 5
+// Endpoint 5
 #define USB_O_TXCSRL5           0x00000152  // USB Transmit Control and Status
-                                            // Endpoint 5 Low
+// Endpoint 5 Low
 #define USB_O_TXCSRH5           0x00000153  // USB Transmit Control and Status
-                                            // Endpoint 5 High
+// Endpoint 5 High
 #define USB_O_RXMAXP5           0x00000154  // USB Maximum Receive Data
-                                            // Endpoint 5
+// Endpoint 5
 #define USB_O_RXCSRL5           0x00000156  // USB Receive Control and Status
-                                            // Endpoint 5 Low
+// Endpoint 5 Low
 #define USB_O_RXCSRH5           0x00000157  // USB Receive Control and Status
-                                            // Endpoint 5 High
+// Endpoint 5 High
 #define USB_O_RXCOUNT5          0x00000158  // USB Receive Byte Count Endpoint
-                                            // 5
+// 5
 #define USB_O_TXTYPE5           0x0000015A  // USB Host Transmit Configure Type
-                                            // Endpoint 5
+// Endpoint 5
 #define USB_O_TXINTERVAL5       0x0000015B  // USB Host Transmit Interval
-                                            // Endpoint 5
+// Endpoint 5
 #define USB_O_RXTYPE5           0x0000015C  // USB Host Configure Receive Type
-                                            // Endpoint 5
+// Endpoint 5
 #define USB_O_RXINTERVAL5       0x0000015D  // USB Host Receive Polling
-                                            // Interval Endpoint 5
+// Interval Endpoint 5
 #define USB_O_TXMAXP6           0x00000160  // USB Maximum Transmit Data
-                                            // Endpoint 6
+// Endpoint 6
 #define USB_O_TXCSRL6           0x00000162  // USB Transmit Control and Status
-                                            // Endpoint 6 Low
+// Endpoint 6 Low
 #define USB_O_TXCSRH6           0x00000163  // USB Transmit Control and Status
-                                            // Endpoint 6 High
+// Endpoint 6 High
 #define USB_O_RXMAXP6           0x00000164  // USB Maximum Receive Data
-                                            // Endpoint 6
+// Endpoint 6
 #define USB_O_RXCSRL6           0x00000166  // USB Receive Control and Status
-                                            // Endpoint 6 Low
+// Endpoint 6 Low
 #define USB_O_RXCSRH6           0x00000167  // USB Receive Control and Status
-                                            // Endpoint 6 High
+// Endpoint 6 High
 #define USB_O_RXCOUNT6          0x00000168  // USB Receive Byte Count Endpoint
-                                            // 6
+// 6
 #define USB_O_TXTYPE6           0x0000016A  // USB Host Transmit Configure Type
-                                            // Endpoint 6
+// Endpoint 6
 #define USB_O_TXINTERVAL6       0x0000016B  // USB Host Transmit Interval
-                                            // Endpoint 6
+// Endpoint 6
 #define USB_O_RXTYPE6           0x0000016C  // USB Host Configure Receive Type
-                                            // Endpoint 6
+// Endpoint 6
 #define USB_O_RXINTERVAL6       0x0000016D  // USB Host Receive Polling
-                                            // Interval Endpoint 6
+// Interval Endpoint 6
 #define USB_O_TXMAXP7           0x00000170  // USB Maximum Transmit Data
-                                            // Endpoint 7
+// Endpoint 7
 #define USB_O_TXCSRL7           0x00000172  // USB Transmit Control and Status
-                                            // Endpoint 7 Low
+// Endpoint 7 Low
 #define USB_O_TXCSRH7           0x00000173  // USB Transmit Control and Status
-                                            // Endpoint 7 High
+// Endpoint 7 High
 #define USB_O_RXMAXP7           0x00000174  // USB Maximum Receive Data
-                                            // Endpoint 7
+// Endpoint 7
 #define USB_O_RXCSRL7           0x00000176  // USB Receive Control and Status
-                                            // Endpoint 7 Low
+// Endpoint 7 Low
 #define USB_O_RXCSRH7           0x00000177  // USB Receive Control and Status
-                                            // Endpoint 7 High
+// Endpoint 7 High
 #define USB_O_RXCOUNT7          0x00000178  // USB Receive Byte Count Endpoint
-                                            // 7
+// 7
 #define USB_O_TXTYPE7           0x0000017A  // USB Host Transmit Configure Type
-                                            // Endpoint 7
+// Endpoint 7
 #define USB_O_TXINTERVAL7       0x0000017B  // USB Host Transmit Interval
-                                            // Endpoint 7
+// Endpoint 7
 #define USB_O_RXTYPE7           0x0000017C  // USB Host Configure Receive Type
-                                            // Endpoint 7
+// Endpoint 7
 #define USB_O_RXINTERVAL7       0x0000017D  // USB Host Receive Polling
-                                            // Interval Endpoint 7
+// Interval Endpoint 7
 #define USB_O_DMAINTR           0x00000200  // USB DMA Interrupt
 #define USB_O_DMACTL0           0x00000204  // USB DMA Control 0
 #define USB_O_DMAADDR0          0x00000208  // USB DMA Address 0
@@ -347,26 +347,26 @@
 #define USB_O_DMAADDR7          0x00000278  // USB DMA Address 7
 #define USB_O_DMACOUNT7         0x0000027C  // USB DMA Count 7
 #define USB_O_RQPKTCOUNT1       0x00000304  // USB Request Packet Count in
-                                            // Block Transfer Endpoint 1
+// Block Transfer Endpoint 1
 #define USB_O_RQPKTCOUNT2       0x00000308  // USB Request Packet Count in
-                                            // Block Transfer Endpoint 2
+// Block Transfer Endpoint 2
 #define USB_O_RQPKTCOUNT3       0x0000030C  // USB Request Packet Count in
-                                            // Block Transfer Endpoint 3
+// Block Transfer Endpoint 3
 #define USB_O_RQPKTCOUNT4       0x00000310  // USB Request Packet Count in
-                                            // Block Transfer Endpoint 4
+// Block Transfer Endpoint 4
 #define USB_O_RQPKTCOUNT5       0x00000314  // USB Request Packet Count in
-                                            // Block Transfer Endpoint 5
+// Block Transfer Endpoint 5
 #define USB_O_RQPKTCOUNT6       0x00000318  // USB Request Packet Count in
-                                            // Block Transfer Endpoint 6
+// Block Transfer Endpoint 6
 #define USB_O_RQPKTCOUNT7       0x0000031C  // USB Request Packet Count in
-                                            // Block Transfer Endpoint 7
+// Block Transfer Endpoint 7
 #define USB_O_RXDPKTBUFDIS      0x00000340  // USB Receive Double Packet Buffer
-                                            // Disable
+// Disable
 #define USB_O_TXDPKTBUFDIS      0x00000342  // USB Transmit Double Packet
-                                            // Buffer Disable
+// Buffer Disable
 #define USB_O_CTO               0x00000344  // USB Chirp Timeout
 #define USB_O_HHSRTN            0x00000346  // USB High Speed to UTM Operating
-                                            // Delay
+// Delay
 #define USB_O_HSBT              0x00000348  // USB High Speed Time-out Adder
 #define USB_O_LPMATTR           0x00000360  // USB LPM Attributes
 #define USB_O_LPMCNTRL          0x00000362  // USB LPM Control
@@ -375,31 +375,31 @@
 #define USB_O_LPMFADDR          0x00000365  // USB LPM Function Address
 #define USB_O_EPC               0x00000400  // USB External Power Control
 #define USB_O_EPCRIS            0x00000404  // USB External Power Control Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define USB_O_EPCIM             0x00000408  // USB External Power Control
-                                            // Interrupt Mask
+// Interrupt Mask
 #define USB_O_EPCISC            0x0000040C  // USB External Power Control
-                                            // Interrupt Status and Clear
+// Interrupt Status and Clear
 #define USB_O_DRRIS             0x00000410  // USB Device RESUME Raw Interrupt
-                                            // Status
+// Status
 #define USB_O_DRIM              0x00000414  // USB Device RESUME Interrupt Mask
 #define USB_O_DRISC             0x00000418  // USB Device RESUME Interrupt
-                                            // Status and Clear
+// Status and Clear
 #define USB_O_GPCS              0x0000041C  // USB General-Purpose Control and
-                                            // Status
+// Status
 #define USB_O_VDC               0x00000430  // USB VBUS Droop Control
 #define USB_O_VDCRIS            0x00000434  // USB VBUS Droop Control Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define USB_O_VDCIM             0x00000438  // USB VBUS Droop Control Interrupt
-                                            // Mask
+// Mask
 #define USB_O_VDCISC            0x0000043C  // USB VBUS Droop Control Interrupt
-                                            // Status and Clear
+// Status and Clear
 #define USB_O_IDVRIS            0x00000444  // USB ID Valid Detect Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define USB_O_IDVIM             0x00000448  // USB ID Valid Detect Interrupt
-                                            // Mask
+// Mask
 #define USB_O_IDVISC            0x0000044C  // USB ID Valid Detect Interrupt
-                                            // Status and Clear
+// Status and Clear
 #define USB_O_DMASEL            0x00000450  // USB DMA Select
 #define USB_O_PP                0x00000FC0  // USB Peripheral Properties
 #define USB_O_PC                0x00000FC4  // USB Peripheral Configuration
@@ -467,7 +467,7 @@
 #define USB_TXIE_EP2            0x00000004  // TX Endpoint 2 Interrupt Enable
 #define USB_TXIE_EP1            0x00000002  // TX Endpoint 1 Interrupt Enable
 #define USB_TXIE_EP0            0x00000001  // TX and RX Endpoint 0 Interrupt
-                                            // Enable
+// Enable
 
 //*****************************************************************************
 //
@@ -503,9 +503,9 @@
 //
 //*****************************************************************************
 #define USB_IE_VBUSERR          0x00000080  // Enable VBUS Error Interrupt (OTG
-                                            // only)
+// only)
 #define USB_IE_SESREQ           0x00000040  // Enable Session Request (OTG
-                                            // only)
+// only)
 #define USB_IE_DISCON           0x00000020  // Enable Disconnect Interrupt
 #define USB_IE_CONN             0x00000010  // Enable Connect Interrupt
 #define USB_IE_SOF              0x00000008  // Enable Start-of-Frame Interrupt
@@ -1326,7 +1326,7 @@
 #define USB_RXCSRH1_DTWE        0x00000004  // Data Toggle Write Enable
 #define USB_RXCSRH1_DT          0x00000002  // Data Toggle
 #define USB_RXCSRH1_INCOMPRX    0x00000001  // Incomplete RX Transmission
-                                            // Status
+// Status
 
 //*****************************************************************************
 //
@@ -1480,7 +1480,7 @@
 #define USB_RXCSRH2_DTWE        0x00000004  // Data Toggle Write Enable
 #define USB_RXCSRH2_DT          0x00000002  // Data Toggle
 #define USB_RXCSRH2_INCOMPRX    0x00000001  // Incomplete RX Transmission
-                                            // Status
+// Status
 
 //*****************************************************************************
 //
@@ -1634,7 +1634,7 @@
 #define USB_RXCSRH3_DTWE        0x00000004  // Data Toggle Write Enable
 #define USB_RXCSRH3_DT          0x00000002  // Data Toggle
 #define USB_RXCSRH3_INCOMPRX    0x00000001  // Incomplete RX Transmission
-                                            // Status
+// Status
 
 //*****************************************************************************
 //
@@ -1788,7 +1788,7 @@
 #define USB_RXCSRH4_DTWE        0x00000004  // Data Toggle Write Enable
 #define USB_RXCSRH4_DT          0x00000002  // Data Toggle
 #define USB_RXCSRH4_INCOMPRX    0x00000001  // Incomplete RX Transmission
-                                            // Status
+// Status
 
 //*****************************************************************************
 //
@@ -1942,7 +1942,7 @@
 #define USB_RXCSRH5_DTWE        0x00000004  // Data Toggle Write Enable
 #define USB_RXCSRH5_DT          0x00000002  // Data Toggle
 #define USB_RXCSRH5_INCOMPRX    0x00000001  // Incomplete RX Transmission
-                                            // Status
+// Status
 
 //*****************************************************************************
 //
@@ -2096,7 +2096,7 @@
 #define USB_RXCSRH6_DTWE        0x00000004  // Data Toggle Write Enable
 #define USB_RXCSRH6_DT          0x00000002  // Data Toggle
 #define USB_RXCSRH6_INCOMPRX    0x00000001  // Incomplete RX Transmission
-                                            // Status
+// Status
 
 //*****************************************************************************
 //
@@ -2250,7 +2250,7 @@
 #define USB_RXCSRH7_DTWE        0x00000004  // Data Toggle Write Enable
 #define USB_RXCSRH7_DT          0x00000002  // Data Toggle
 #define USB_RXCSRH7_INCOMPRX    0x00000001  // Incomplete RX Transmission
-                                            // Status
+// Status
 
 //*****************************************************************************
 //
@@ -2349,9 +2349,9 @@
 #define USB_DMACTL0_BRSTM_ANY   0x00000000  // Bursts of unspecified length
 #define USB_DMACTL0_BRSTM_INC4  0x00000200  // INCR4 or unspecified length
 #define USB_DMACTL0_BRSTM_INC8  0x00000400  // INCR8, INCR4 or unspecified
-                                            // length
+// length
 #define USB_DMACTL0_BRSTM_INC16 0x00000600  // INCR16, INCR8, INCR4 or
-                                            // unspecified length
+// unspecified length
 #define USB_DMACTL0_ERR         0x00000100  // Bus Error Bit
 #define USB_DMACTL0_EP_M        0x000000F0  // Endpoint number
 #define USB_DMACTL0_IE          0x00000008  // DMA Interrupt Enable
@@ -2386,9 +2386,9 @@
 #define USB_DMACTL1_BRSTM_ANY   0x00000000  // Bursts of unspecified length
 #define USB_DMACTL1_BRSTM_INC4  0x00000200  // INCR4 or unspecified length
 #define USB_DMACTL1_BRSTM_INC8  0x00000400  // INCR8, INCR4 or unspecified
-                                            // length
+// length
 #define USB_DMACTL1_BRSTM_INC16 0x00000600  // INCR16, INCR8, INCR4 or
-                                            // unspecified length
+// unspecified length
 #define USB_DMACTL1_ERR         0x00000100  // Bus Error Bit
 #define USB_DMACTL1_EP_M        0x000000F0  // Endpoint number
 #define USB_DMACTL1_IE          0x00000008  // DMA Interrupt Enable
@@ -2423,9 +2423,9 @@
 #define USB_DMACTL2_BRSTM_ANY   0x00000000  // Bursts of unspecified length
 #define USB_DMACTL2_BRSTM_INC4  0x00000200  // INCR4 or unspecified length
 #define USB_DMACTL2_BRSTM_INC8  0x00000400  // INCR8, INCR4 or unspecified
-                                            // length
+// length
 #define USB_DMACTL2_BRSTM_INC16 0x00000600  // INCR16, INCR8, INCR4 or
-                                            // unspecified length
+// unspecified length
 #define USB_DMACTL2_ERR         0x00000100  // Bus Error Bit
 #define USB_DMACTL2_EP_M        0x000000F0  // Endpoint number
 #define USB_DMACTL2_IE          0x00000008  // DMA Interrupt Enable
@@ -2460,9 +2460,9 @@
 #define USB_DMACTL3_BRSTM_ANY   0x00000000  // Bursts of unspecified length
 #define USB_DMACTL3_BRSTM_INC4  0x00000200  // INCR4 or unspecified length
 #define USB_DMACTL3_BRSTM_INC8  0x00000400  // INCR8, INCR4 or unspecified
-                                            // length
+// length
 #define USB_DMACTL3_BRSTM_INC16 0x00000600  // INCR16, INCR8, INCR4 or
-                                            // unspecified length
+// unspecified length
 #define USB_DMACTL3_ERR         0x00000100  // Bus Error Bit
 #define USB_DMACTL3_EP_M        0x000000F0  // Endpoint number
 #define USB_DMACTL3_IE          0x00000008  // DMA Interrupt Enable
@@ -2497,9 +2497,9 @@
 #define USB_DMACTL4_BRSTM_ANY   0x00000000  // Bursts of unspecified length
 #define USB_DMACTL4_BRSTM_INC4  0x00000200  // INCR4 or unspecified length
 #define USB_DMACTL4_BRSTM_INC8  0x00000400  // INCR8, INCR4 or unspecified
-                                            // length
+// length
 #define USB_DMACTL4_BRSTM_INC16 0x00000600  // INCR16, INCR8, INCR4 or
-                                            // unspecified length
+// unspecified length
 #define USB_DMACTL4_ERR         0x00000100  // Bus Error Bit
 #define USB_DMACTL4_EP_M        0x000000F0  // Endpoint number
 #define USB_DMACTL4_IE          0x00000008  // DMA Interrupt Enable
@@ -2534,9 +2534,9 @@
 #define USB_DMACTL5_BRSTM_ANY   0x00000000  // Bursts of unspecified length
 #define USB_DMACTL5_BRSTM_INC4  0x00000200  // INCR4 or unspecified length
 #define USB_DMACTL5_BRSTM_INC8  0x00000400  // INCR8, INCR4 or unspecified
-                                            // length
+// length
 #define USB_DMACTL5_BRSTM_INC16 0x00000600  // INCR16, INCR8, INCR4 or
-                                            // unspecified length
+// unspecified length
 #define USB_DMACTL5_ERR         0x00000100  // Bus Error Bit
 #define USB_DMACTL5_EP_M        0x000000F0  // Endpoint number
 #define USB_DMACTL5_IE          0x00000008  // DMA Interrupt Enable
@@ -2571,9 +2571,9 @@
 #define USB_DMACTL6_BRSTM_ANY   0x00000000  // Bursts of unspecified length
 #define USB_DMACTL6_BRSTM_INC4  0x00000200  // INCR4 or unspecified length
 #define USB_DMACTL6_BRSTM_INC8  0x00000400  // INCR8, INCR4 or unspecified
-                                            // length
+// length
 #define USB_DMACTL6_BRSTM_INC16 0x00000600  // INCR16, INCR8, INCR4 or
-                                            // unspecified length
+// unspecified length
 #define USB_DMACTL6_ERR         0x00000100  // Bus Error Bit
 #define USB_DMACTL6_EP_M        0x000000F0  // Endpoint number
 #define USB_DMACTL6_IE          0x00000008  // DMA Interrupt Enable
@@ -2608,9 +2608,9 @@
 #define USB_DMACTL7_BRSTM_ANY   0x00000000  // Bursts of unspecified length
 #define USB_DMACTL7_BRSTM_INC4  0x00000200  // INCR4 or unspecified length
 #define USB_DMACTL7_BRSTM_INC8  0x00000400  // INCR8, INCR4 or unspecified
-                                            // length
+// length
 #define USB_DMACTL7_BRSTM_INC16 0x00000600  // INCR16, INCR8, INCR4 or
-                                            // unspecified length
+// unspecified length
 #define USB_DMACTL7_ERR         0x00000100  // Bus Error Bit
 #define USB_DMACTL7_EP_M        0x000000F0  // Endpoint number
 #define USB_DMACTL7_IE          0x00000008  // DMA Interrupt Enable
@@ -2706,19 +2706,19 @@
 //
 //*****************************************************************************
 #define USB_RXDPKTBUFDIS_EP7    0x00000080  // EP7 RX Double-Packet Buffer
-                                            // Disable
+// Disable
 #define USB_RXDPKTBUFDIS_EP6    0x00000040  // EP6 RX Double-Packet Buffer
-                                            // Disable
+// Disable
 #define USB_RXDPKTBUFDIS_EP5    0x00000020  // EP5 RX Double-Packet Buffer
-                                            // Disable
+// Disable
 #define USB_RXDPKTBUFDIS_EP4    0x00000010  // EP4 RX Double-Packet Buffer
-                                            // Disable
+// Disable
 #define USB_RXDPKTBUFDIS_EP3    0x00000008  // EP3 RX Double-Packet Buffer
-                                            // Disable
+// Disable
 #define USB_RXDPKTBUFDIS_EP2    0x00000004  // EP2 RX Double-Packet Buffer
-                                            // Disable
+// Disable
 #define USB_RXDPKTBUFDIS_EP1    0x00000002  // EP1 RX Double-Packet Buffer
-                                            // Disable
+// Disable
 
 //*****************************************************************************
 //
@@ -2727,19 +2727,19 @@
 //
 //*****************************************************************************
 #define USB_TXDPKTBUFDIS_EP7    0x00000080  // EP7 TX Double-Packet Buffer
-                                            // Disable
+// Disable
 #define USB_TXDPKTBUFDIS_EP6    0x00000040  // EP6 TX Double-Packet Buffer
-                                            // Disable
+// Disable
 #define USB_TXDPKTBUFDIS_EP5    0x00000020  // EP5 TX Double-Packet Buffer
-                                            // Disable
+// Disable
 #define USB_TXDPKTBUFDIS_EP4    0x00000010  // EP4 TX Double-Packet Buffer
-                                            // Disable
+// Disable
 #define USB_TXDPKTBUFDIS_EP3    0x00000008  // EP3 TX Double-Packet Buffer
-                                            // Disable
+// Disable
 #define USB_TXDPKTBUFDIS_EP2    0x00000004  // EP2 TX Double-Packet Buffer
-                                            // Disable
+// Disable
 #define USB_TXDPKTBUFDIS_EP1    0x00000002  // EP1 TX Double-Packet Buffer
-                                            // Disable
+// Disable
 
 //*****************************************************************************
 //
@@ -2755,7 +2755,7 @@
 //
 //*****************************************************************************
 #define USB_HHSRTN_HHSRTN_M     0x0000FFFF  // HIgh Speed to UTM Operating
-                                            // Delay
+// Delay
 #define USB_HHSRTN_HHSRTN_S     0
 
 //*****************************************************************************
@@ -2787,20 +2787,20 @@
 #define USB_LPMCNTRL_NAK        0x00000010  // LPM NAK
 #define USB_LPMCNTRL_EN_M       0x0000000C  // LPM Enable
 #define USB_LPMCNTRL_EN_NONE    0x00000000  // LPM and Extended transactions
-                                            // are not supported. In this case,
-                                            // the USB does not respond to LPM
-                                            // transactions and LPM
-                                            // transactions cause a timeout
+// are not supported. In this case,
+// the USB does not respond to LPM
+// transactions and LPM
+// transactions cause a timeout
 #define USB_LPMCNTRL_EN_EXT     0x00000004  // LPM is not supported but
-                                            // extended transactions are
-                                            // supported. In this case, the USB
-                                            // does respond to an LPM
-                                            // transaction with a STALL
+// extended transactions are
+// supported. In this case, the USB
+// does respond to an LPM
+// transaction with a STALL
 #define USB_LPMCNTRL_EN_LPMEXT  0x0000000C  // The USB supports LPM extended
-                                            // transactions. In this case, the
-                                            // USB responds with a NYET or an
-                                            // ACK as determined by the value
-                                            // of TXLPM and other conditions
+// transactions. In this case, the
+// USB responds with a NYET or an
+// ACK as determined by the value
+// of TXLPM and other conditions
 #define USB_LPMCNTRL_RES        0x00000002  // LPM Resume
 #define USB_LPMCNTRL_TXLPM      0x00000001  // Transmit LPM Transaction Enable
 
@@ -2851,13 +2851,13 @@
 #define USB_EPC_PFLTEN          0x00000010  // Power Fault Input Enable
 #define USB_EPC_EPENDE          0x00000004  // EPEN Drive Enable
 #define USB_EPC_EPEN_M          0x00000003  // External Power Supply Enable
-                                            // Configuration
+// Configuration
 #define USB_EPC_EPEN_LOW        0x00000000  // Power Enable Active Low
 #define USB_EPC_EPEN_HIGH       0x00000001  // Power Enable Active High
 #define USB_EPC_EPEN_VBLOW      0x00000002  // Power Enable High if VBUS Low
-                                            // (OTG only)
+// (OTG only)
 #define USB_EPC_EPEN_VBHIGH     0x00000003  // Power Enable High if VBUS High
-                                            // (OTG only)
+// (OTG only)
 
 //*****************************************************************************
 //
@@ -2879,7 +2879,7 @@
 //
 //*****************************************************************************
 #define USB_EPCISC_PF           0x00000001  // USB Power Fault Interrupt Status
-                                            // and Clear
+// and Clear
 
 //*****************************************************************************
 //
@@ -2901,7 +2901,7 @@
 //
 //*****************************************************************************
 #define USB_DRISC_RESUME        0x00000001  // RESUME Interrupt Status and
-                                            // Clear
+// Clear
 
 //*****************************************************************************
 //
@@ -2914,9 +2914,9 @@
 #define USB_GPCS_DEVMOD_DEV     0x00000003  // Force USB0VBUS and USB0ID high
 #define USB_GPCS_DEVMOD_HOSTVBUS                                              \
                                 0x00000004  // Use USB0VBUS and force USB0ID
-                                            // low
+// low
 #define USB_GPCS_DEVMOD_DEVVBUS 0x00000005  // Use USB0VBUS and force USB0ID
-                                            // high
+// high
 #define USB_GPCS_DEVMODOTG      0x00000002  // Enable Device Mode
 #define USB_GPCS_DEVMOD         0x00000001  // Device Mode
 
@@ -2947,7 +2947,7 @@
 //
 //*****************************************************************************
 #define USB_VDCISC_VD           0x00000001  // VBUS Droop Interrupt Status and
-                                            // Clear
+// Clear
 
 //*****************************************************************************
 //
@@ -2955,7 +2955,7 @@
 //
 //*****************************************************************************
 #define USB_IDVRIS_ID           0x00000001  // ID Valid Detect Raw Interrupt
-                                            // Status
+// Status
 
 //*****************************************************************************
 //
@@ -2970,7 +2970,7 @@
 //
 //*****************************************************************************
 #define USB_IDVISC_ID           0x00000001  // ID Valid Detect Interrupt Status
-                                            // and Clear
+// and Clear
 
 //*****************************************************************************
 //
@@ -3004,12 +3004,12 @@
 #define USB_PP_PHY              0x00000010  // PHY Present
 #define USB_PP_TYPE_M           0x0000000F  // Controller Type
 #define USB_PP_TYPE_0           0x00000000  // The first-generation USB
-                                            // controller
+// controller
 #define USB_PP_TYPE_1           0x00000001  // Second-generation USB
-                                            // controller.The controller
-                                            // implemented in post Icestorm
-                                            // devices that use the 3.0 version
-                                            // of the Mentor controller
+// controller.The controller
+// implemented in post Icestorm
+// devices that use the 3.0 version
+// of the Mentor controller
 #define USB_PP_ECNT_S           8
 
 //*****************************************************************************

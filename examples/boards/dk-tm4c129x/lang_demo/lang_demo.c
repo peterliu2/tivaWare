@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -127,8 +127,7 @@ extern const unsigned char g_pui8Custom20pt[];
 // screen.
 //
 //*****************************************************************************
-static const uint32_t g_ui32PanelNames[3] =
-{
+static const uint32_t g_ui32PanelNames[3] = {
     STR_INTRO,
     STR_CONFIG,
     STR_UPDATE
@@ -168,15 +167,13 @@ char g_pcTitle[TITLE_MAX_SIZE];
 // This table holds the array of languages supported.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint16_t ui16Language;
     bool bBreakOnSpace;
 }
 tLanguageParams;
 
-const tLanguageParams g_psLanguageTable[] =
-{
+const tLanguageParams g_psLanguageTable[] = {
     { GrLangEnUS, true },
     { GrLangDe, true },
     { GrLangEsSP, true },
@@ -255,47 +252,45 @@ char g_pcJapanese[MAX_LANGUAGE_NAME_LEN];
 //*****************************************************************************
 tContainerWidget g_psRadioContainers[];
 
-tRadioButtonWidget g_psRadioButtons1[] =
-{
+tRadioButtonWidget g_psRadioButtons1[] = {
     RadioButtonStruct(g_psRadioContainers, g_psRadioButtons1 + 1, 0,
-                      &g_sKentec320x240x16_SSD2119, 18, 54, 120, 25,
-                      RB_STYLE_TEXT | RB_STYLE_SELECTED, 16, 0, ClrSilver,
-                      ClrSilver, FONT_20PT, g_pcEnglish, 0, OnRadioChange),
+    &g_sKentec320x240x16_SSD2119, 18, 54, 120, 25,
+    RB_STYLE_TEXT | RB_STYLE_SELECTED, 16, 0, ClrSilver,
+    ClrSilver, FONT_20PT, g_pcEnglish, 0, OnRadioChange),
     RadioButtonStruct(g_psRadioContainers, g_psRadioButtons1 + 2, 0,
-                      &g_sKentec320x240x16_SSD2119, 18, 82, 120, 25,
-                      RB_STYLE_TEXT, 16, 0, ClrSilver, ClrSilver, FONT_20PT,
-                      g_pcDeutsch, 0, OnRadioChange),
+    &g_sKentec320x240x16_SSD2119, 18, 82, 120, 25,
+    RB_STYLE_TEXT, 16, 0, ClrSilver, ClrSilver, FONT_20PT,
+    g_pcDeutsch, 0, OnRadioChange),
     RadioButtonStruct(g_psRadioContainers, g_psRadioButtons1 + 3, 0,
-                      &g_sKentec320x240x16_SSD2119, 180, 54, 120, 25,
-                      RB_STYLE_TEXT, 16, 0, ClrSilver, ClrSilver, FONT_20PT,
-                      g_pcEspanol, 0, OnRadioChange),
+    &g_sKentec320x240x16_SSD2119, 180, 54, 120, 25,
+    RB_STYLE_TEXT, 16, 0, ClrSilver, ClrSilver, FONT_20PT,
+    g_pcEspanol, 0, OnRadioChange),
     RadioButtonStruct(g_psRadioContainers, g_psRadioButtons1 + 4, 0,
-                      &g_sKentec320x240x16_SSD2119, 180, 82, 120, 25,
-                      RB_STYLE_TEXT, 16, 0, ClrSilver, ClrSilver, FONT_20PT,
-                      g_pcItaliano, 0, OnRadioChange),
+    &g_sKentec320x240x16_SSD2119, 180, 82, 120, 25,
+    RB_STYLE_TEXT, 16, 0, ClrSilver, ClrSilver, FONT_20PT,
+    g_pcItaliano, 0, OnRadioChange),
     RadioButtonStruct(g_psRadioContainers, g_psRadioButtons1 + 5, 0,
-                      &g_sKentec320x240x16_SSD2119, 18, 110, 120, 25,
-                      RB_STYLE_TEXT, 16, 0, ClrSilver, ClrSilver, FONT_20PT,
-                      g_pcChinese, 0, OnRadioChange),
+    &g_sKentec320x240x16_SSD2119, 18, 110, 120, 25,
+    RB_STYLE_TEXT, 16, 0, ClrSilver, ClrSilver, FONT_20PT,
+    g_pcChinese, 0, OnRadioChange),
     RadioButtonStruct(g_psRadioContainers, g_psRadioButtons1 + 6, 0,
-                      &g_sKentec320x240x16_SSD2119, 180, 110, 120, 25,
-                      RB_STYLE_TEXT, 16, 0, ClrSilver, ClrSilver, FONT_20PT,
-                      g_pcKorean, 0, OnRadioChange),
+    &g_sKentec320x240x16_SSD2119, 180, 110, 120, 25,
+    RB_STYLE_TEXT, 16, 0, ClrSilver, ClrSilver, FONT_20PT,
+    g_pcKorean, 0, OnRadioChange),
     RadioButtonStruct(g_psRadioContainers, 0, 0,
-                      &g_sKentec320x240x16_SSD2119, 18, 138, 120, 25,
-                      RB_STYLE_TEXT, 16, 0, ClrSilver, ClrSilver, FONT_20PT,
-                      g_pcJapanese, 0, OnRadioChange),
+    &g_sKentec320x240x16_SSD2119, 18, 138, 120, 25,
+    RB_STYLE_TEXT, 16, 0, ClrSilver, ClrSilver, FONT_20PT,
+    g_pcJapanese, 0, OnRadioChange),
 };
 
 #define NUM_RADIO1_BUTTONS      (sizeof(g_psRadioButtons1) /   \
                                  sizeof(g_psRadioButtons1[0]))
 
-tContainerWidget g_psRadioContainers[] =
-{
+tContainerWidget g_psRadioContainers[] = {
     ContainerStruct(g_psPanels + 1, 0, g_psRadioButtons1,
-                    &g_sKentec320x240x16_SSD2119, 8, 30, 300, 140,
-                    CTR_STYLE_OUTLINE | CTR_STYLE_TEXT, 0, ClrGray, ClrSilver,
-                    FONT_20PT, g_pcLanguage),
+    &g_sKentec320x240x16_SSD2119, 8, 30, 300, 140,
+    CTR_STYLE_OUTLINE | CTR_STYLE_TEXT, 0, ClrGray, ClrSilver,
+    FONT_20PT, g_pcLanguage),
 };
 
 //*****************************************************************************
@@ -304,12 +299,11 @@ tContainerWidget g_psRadioContainers[] =
 // black, overwriting the contents of the previous panel.
 //
 //*****************************************************************************
-tCanvasWidget g_psPanels[] =
-{
+tCanvasWidget g_psPanels[] = {
     CanvasStruct(0, 0, &g_sIntroduction, &g_sKentec320x240x16_SSD2119, 8, 22,
-                 300, 158, CANVAS_STYLE_FILL, ClrBlack, 0, 0, 0, 0, 0, 0),
+    300, 158, CANVAS_STYLE_FILL, ClrBlack, 0, 0, 0, 0, 0, 0),
     CanvasStruct(0, 0, g_psRadioContainers, &g_sKentec320x240x16_SSD2119, 8,
-                 22, 300, 158, CANVAS_STYLE_FILL, ClrBlack, 0, 0, 0, 0, 0, 0),
+    22, 300, 158, CANVAS_STYLE_FILL, ClrBlack, 0, 0, 0, 0, 0, 0),
 };
 
 //*****************************************************************************
@@ -358,8 +352,7 @@ OnPrevious(tWidget *psWidget)
     // There is nothing to be done if the first panel is already being
     // displayed.
     //
-    if(g_ui32Panel == 0)
-    {
+    if(g_ui32Panel == 0) {
         return;
     }
 
@@ -388,8 +381,7 @@ OnPrevious(tWidget *psWidget)
     //
     // See if this is the first panel.
     //
-    if(g_ui32Panel == 0)
-    {
+    if(g_ui32Panel == 0) {
         //
         // Clear the previous button from the display since the first panel is
         // being displayed.
@@ -403,8 +395,7 @@ OnPrevious(tWidget *psWidget)
     //
     // See if the previous panel was the last panel.
     //
-    if(g_ui32Panel == (NUM_PANELS - 2))
-    {
+    if(g_ui32Panel == (NUM_PANELS - 2)) {
         //
         // Display the next button.
         //
@@ -427,8 +418,7 @@ OnNext(tWidget *psWidget)
     // There is nothing to be done if the last panel is already being
     // displayed.
     //
-    if(g_ui32Panel == (NUM_PANELS - 1))
-    {
+    if(g_ui32Panel == (NUM_PANELS - 1)) {
         return;
     }
 
@@ -457,8 +447,7 @@ OnNext(tWidget *psWidget)
     //
     // See if the previous panel was the first panel.
     //
-    if(g_ui32Panel == 1)
-    {
+    if(g_ui32Panel == 1) {
         //
         // Display the previous button.
         //
@@ -471,8 +460,7 @@ OnNext(tWidget *psWidget)
     //
     // See if this is the last panel.
     //
-    if(g_ui32Panel == (NUM_PANELS - 1))
-    {
+    if(g_ui32Panel == (NUM_PANELS - 1)) {
         //
         // Clear the next button from the display since the last panel is being
         // displayed.
@@ -546,8 +534,7 @@ DrawStringWrapped(tContext *psContext, char *pcString,
     // Get a pointer to the terminating zero.
     //
     pcEnd = pcString;
-    while(*pcEnd)
-    {
+    while(*pcEnd) {
         pcEnd++;
     }
 
@@ -561,8 +548,7 @@ DrawStringWrapped(tContext *psContext, char *pcString,
     //
     // Keep processing until we have no more characters to display.
     //
-    do
-    {
+    do {
         //
         // Get the next character in the string.
         //
@@ -572,8 +558,7 @@ DrawStringWrapped(tContext *psContext, char *pcString,
         //
         // Did we reach the end of the string?
         //
-        if(ui32Char)
-        {
+        if(ui32Char) {
             //
             // No - how wide is this character?
             //
@@ -582,14 +567,12 @@ DrawStringWrapped(tContext *psContext, char *pcString,
             //
             // Have we run off the edge of the display?
             //
-            if((ui32StrWidth + ui32CharWidth) > ui32Width)
-            {
+            if((ui32StrWidth + ui32CharWidth) > ui32Width) {
                 //
                 // If we are splitting on spaces, rewind the string pointer to
                 // the byte after the last space.
                 //
-                if(bSplitOnSpace)
-                {
+                if(bSplitOnSpace) {
                     pcString = pcLastSpace;
                 }
 
@@ -611,9 +594,7 @@ DrawStringWrapped(tContext *psContext, char *pcString,
                 // The next string we draw will start at the current position.
                 //
                 pcStart = pcString;
-            }
-            else
-            {
+            } else {
                 //
                 // No - update the width and move on to the next character.
                 //
@@ -623,19 +604,15 @@ DrawStringWrapped(tContext *psContext, char *pcString,
                 //
                 // If this is a space, remember where we are.
                 //
-                if(ui32Char == SPACE_CHAR)
-                {
+                if(ui32Char == SPACE_CHAR) {
                     pcLastSpace = pcString;
                 }
             }
-        }
-        else
-        {
+        } else {
             //
             // Do we have any remaining chunk of string to draw?
             //
-            if(pcStart != pcString)
-            {
+            if(pcStart != pcString) {
                 //
                 // Yes - draw the last section of string.
                 //
@@ -673,8 +650,8 @@ OnIntroPaint(tWidget *psWidget, tContext *psContext)
     //
     GrStringGet(STR_INTRO_1, g_pcBuffer, SCOMP_MAX_STRLEN);
     ui32Lines = DrawStringWrapped(psContext, g_pcBuffer, i32LineHeight, 8,
-                              i32Offset,
-                              g_psLanguageTable[g_ui32LangIdx].bBreakOnSpace);
+                                  i32Offset,
+                                  g_psLanguageTable[g_ui32LangIdx].bBreakOnSpace);
     //
     // Move down by 1/4 of a line between paragraphs.
     //
@@ -685,8 +662,8 @@ OnIntroPaint(tWidget *psWidget, tContext *psContext)
     //
     GrStringGet(STR_INTRO_2, g_pcBuffer, SCOMP_MAX_STRLEN);
     ui32Lines += DrawStringWrapped(psContext, g_pcBuffer, i32LineHeight, 8,
-                              i32Offset + (ui32Lines * i32LineHeight),
-                              g_psLanguageTable[g_ui32LangIdx].bBreakOnSpace);
+                                   i32Offset + (ui32Lines * i32LineHeight),
+                                   g_psLanguageTable[g_ui32LangIdx].bBreakOnSpace);
     //
     // Move down by 1/4 of a line between paragraphs.
     //
@@ -697,8 +674,8 @@ OnIntroPaint(tWidget *psWidget, tContext *psContext)
     //
     GrStringGet(STR_INTRO_3, g_pcBuffer, SCOMP_MAX_STRLEN);
     DrawStringWrapped(psContext, g_pcBuffer, i32LineHeight, 8, i32Offset +
-        (ui32Lines * i32LineHeight),
-        g_psLanguageTable[g_ui32LangIdx].bBreakOnSpace );
+                      (ui32Lines * i32LineHeight),
+                      g_psLanguageTable[g_ui32LangIdx].bBreakOnSpace );
 }
 
 //*****************************************************************************
@@ -712,10 +689,8 @@ OnRadioChange(tWidget *psWidget, uint32_t bSelected)
     //
     // Find the index of this radio button in the first group.
     //
-    for(g_ui32LangIdx = 0; g_ui32LangIdx < NUM_RADIO1_BUTTONS; g_ui32LangIdx++)
-    {
-        if(psWidget == (tWidget *)(g_psRadioButtons1 + g_ui32LangIdx))
-        {
+    for(g_ui32LangIdx = 0; g_ui32LangIdx < NUM_RADIO1_BUTTONS; g_ui32LangIdx++) {
+        if(psWidget == (tWidget *)(g_psRadioButtons1 + g_ui32LangIdx)) {
             break;
         }
     }
@@ -841,8 +816,7 @@ main(void)
     //
     // Loop forever, processing widget messages.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Process any messages in the widget message queue.
         //

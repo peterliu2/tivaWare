@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2007-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -209,8 +209,7 @@ extern void httpd_init(void);
 // files that it serves.
 //
 //*****************************************************************************
-static const char *g_pcConfigSSITags[] =
-{
+static const char *g_pcConfigSSITags[] = {
     "LEDtxt",        // SSI_INDEX_LEDSTATE
     "FormVars",      // SSI_INDEX_FORMVARS
     "speed"          // SSI_INDEX_SPEED
@@ -230,9 +229,9 @@ static const char *g_pcConfigSSITags[] =
 //
 //*****************************************************************************
 static char *ControlCGIHandler(int32_t iIndex, int32_t i32NumParams, char *pcParam[],
-                              char *pcValue[]);
+                               char *pcValue[]);
 static char *SetTextCGIHandler(int32_t iIndex, int32_t i32NumParams, char *pcParam[],
-                              char *pcValue[]);
+                               char *pcValue[]);
 
 //*****************************************************************************
 //
@@ -258,8 +257,7 @@ static int32_t SSIHandler(int32_t iIndex, char *pcInsert, int32_t iInsertLen);
 // process it.
 //
 //*****************************************************************************
-static const tCGI g_psConfigCGIURIs[] =
-{
+static const tCGI g_psConfigCGIURIs[] = {
     { "/iocontrol.cgi", (tCGIHandler)ControlCGIHandler }, // CGI_INDEX_CONTROL
     { "/settxt.cgi", (tCGIHandler)SetTextCGIHandler }     // CGI_INDEX_TEXT
 };
@@ -310,8 +308,7 @@ static const tCGI g_psConfigCGIURIs[] =
 // address.
 //
 //*****************************************************************************
-const int32_t g_ppi32CirclePos[][2] =
-{
+const int32_t g_ppi32CirclePos[][2] = {
     {
         12, 0
     },
@@ -344,8 +341,7 @@ const int32_t g_ppi32CirclePos[][2] =
 // address.
 //
 //*****************************************************************************
-const uint32_t g_pui32CircleColor[] =
-{
+const uint32_t g_pui32CircleColor[] = {
     0x111111,
     0x333333,
     0x555555,
@@ -419,13 +415,12 @@ ControlCGIHandler(int32_t iIndex, int32_t i32NumParams, char *pcParam[], char *p
     //
     i32LEDState = FindCGIParameter("LEDOn", pcParam, i32NumParams);
     i32Speed = GetCGIParam("speed_percent", pcParam, pcValue, i32NumParams,
-                         &bParamError);
+                           &bParamError);
 
     //
     // Was there any error reported by the parameter parser?
     //
-    if(bParamError || (i32Speed < 0) || (i32Speed > 100))
-    {
+    if(bParamError || (i32Speed < 0) || (i32Speed > 100)) {
         return(PARAM_ERROR_RESPONSE);
     }
 
@@ -462,8 +457,7 @@ SetTextCGIHandler(int32_t i32Index, int32_t i32NumParams, char *pcParam[], char 
     //
     // If the parameter was not found, show the error page.
     //
-    if(lStringParam == -1)
-    {
+    if(lStringParam == -1) {
         return(PARAM_ERROR_RESPONSE);
     }
 
@@ -520,8 +514,7 @@ SSIHandler(int32_t iIndex, char *pcInsert, int32_t iInsertLen)
     //
     // Which SSI tag have we been passed?
     //
-    switch(iIndex)
-    {
+    switch(iIndex) {
         case SSI_INDEX_LEDSTATE:
             io_get_ledstate(pcInsert, iInsertLen);
             break;
@@ -629,8 +622,7 @@ lwIPHostTimerHandler(void)
     //
     // See if the IP address has changed.
     //
-    if(ui32NewIPAddress != g_ui32IPAddress)
-    {
+    if(ui32NewIPAddress != g_ui32IPAddress) {
         //
         // Clear the display.
         //
@@ -645,25 +637,20 @@ lwIPHostTimerHandler(void)
         //
         // See if there is an IP address assigned.
         //
-        if(ui32NewIPAddress == 0xffffffff)
-        {
+        if(ui32NewIPAddress == 0xffffffff) {
             //
             // Indicate that there is no link.
             //
             GrStringDrawCentered(&g_sContext, "Waiting for link", -1,
                                  ui32Width / 2, STATUS_Y, false);
-        }
-        else if(ui32NewIPAddress == 0)
-        {
+        } else if(ui32NewIPAddress == 0) {
             //
             // There is no IP address, so indicate that the DHCP process is
             // running.
             //
             GrStringDrawCentered(&g_sContext, "Waiting for IP address", -1,
                                  ui32Width / 2, STATUS_Y, false);
-        }
-        else
-        {
+        } else {
             //
             // Display the new IP address information.
             //
@@ -686,19 +673,17 @@ lwIPHostTimerHandler(void)
     //
     // If there is not an IP address, draw the animated circle.
     //
-    if((ui32NewIPAddress == 0) || (ui32NewIPAddress == 0xffffffff))
-    {
+    if((ui32NewIPAddress == 0) || (ui32NewIPAddress == 0xffffffff)) {
         //
         // Loop through the circles in the animation.
         //
-        for(ui32Idx = 0; ui32Idx < 8; ui32Idx++)
-        {
+        for(ui32Idx = 0; ui32Idx < 8; ui32Idx++) {
             //
             // Draw this circle.
             //
             GrContextForegroundSet(&g_sContext,
                                    g_pui32CircleColor[(g_ui32ColorIdx +
-                                                       ui32Idx) & 7]);
+                                           ui32Idx) & 7]);
             GrCircleFill(&g_sContext,
                          (ui32Width / 2) + g_ppi32CirclePos[ui32Idx][0],
                          STATUS_Y + g_ppi32CirclePos[ui32Idx][1] + 44,
@@ -729,8 +714,8 @@ main(void)
     // Run from the PLL at 120 MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Configure the device pins.
@@ -765,8 +750,7 @@ main(void)
     // USER0 and USER1 registers.
     //
     ROM_FlashUserGet(&ui32User0, &ui32User1);
-    if((ui32User0 == 0xffffffff) || (ui32User1 == 0xffffffff))
-    {
+    if((ui32User0 == 0xffffffff) || (ui32User1 == 0xffffffff)) {
         //
         // We should never get here.  This is an error if the MAC address has
         // not been programmed into the device.  Exit the program.
@@ -780,8 +764,7 @@ main(void)
                              GrContextDpyWidthGet(&g_sContext) / 2,
                              (GrContextDpyHeightGet(&g_sContext) / 2) + 16,
                              false);
-        while(1)
-        {
+        while(1) {
         }
     }
 
@@ -881,13 +864,11 @@ main(void)
     // Loop forever, processing the on-screen animation.  All other work is
     // done in the interrupt handlers.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Wait for a new tick to occur.
         //
-        while(!g_ulFlags)
-        {
+        while(!g_ulFlags) {
             //
             // Do nothing.
             //
@@ -902,8 +883,7 @@ main(void)
         // Update the bar position and check for wrap.
         //
         ui32AnimPos ++;
-        if(ui32AnimPos == ((ANIM_LEFT + ANIM_WIDTH) - 1))
-        {
+        if(ui32AnimPos == ((ANIM_LEFT + ANIM_WIDTH) - 1)) {
             //
             // We've reached the right edge so change color and move back
             // to the left.

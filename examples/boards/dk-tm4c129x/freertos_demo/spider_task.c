@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2009-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -118,8 +118,7 @@ static xQueueHandle g_pControlQueue;
 //     7 => right and up
 //
 //*****************************************************************************
-static const int32_t g_pi32SpiderStepX[8] =
-{
+static const int32_t g_pi32SpiderStepX[8] = {
     1, 1, 0, -1, -1, -1, 0, 1
 };
 
@@ -128,8 +127,7 @@ static const int32_t g_pi32SpiderStepX[8] =
 // The amount the spider moves vertically for each direction of movement.
 //
 //*****************************************************************************
-static const int32_t g_pi32SpiderStepY[8] =
-{
+static const int32_t g_pi32SpiderStepY[8] = {
     0, 1, 1, 1, 0, -1, -1, -1
 };
 
@@ -140,8 +138,7 @@ static const int32_t g_pi32SpiderStepY[8] =
 // and 3 correspond to direction 1 (right and down), etc.
 //
 //*****************************************************************************
-static const uint8_t *g_ppui8SpiderImage[16] =
-{
+static const uint8_t *g_ppui8SpiderImage[16] = {
     g_pui8SpiderR1Image,
     g_pui8SpiderR2Image,
     g_pui8SpiderDR1Image,
@@ -219,15 +216,13 @@ SpiderCollide(int32_t i32Spider, int32_t i32X, int32_t i32Y)
     //
     // Loop through all the spiders.
     //
-    for(i32Idx = 0; i32Idx < MAX_SPIDERS; i32Idx++)
-    {
+    for(i32Idx = 0; i32Idx < MAX_SPIDERS; i32Idx++) {
         //
         // Skip this spider if it is not alive or is the spider that should be
         // ignored.
         //
         if((HWREGBITW(&g_ui32SpiderAlive, i32Idx) == 0) ||
-           (i32Idx == i32Spider))
-        {
+                (i32Idx == i32Spider)) {
             continue;
         }
 
@@ -245,8 +240,7 @@ SpiderCollide(int32_t i32Spider, int32_t i32X, int32_t i32Y)
         //
         // Return this spider index if the point in question collides with it.
         //
-        if((i32DX < SPIDER_WIDTH) && (i32DY < SPIDER_HEIGHT))
-        {
+        if((i32DX < SPIDER_WIDTH) && (i32DY < SPIDER_HEIGHT)) {
             return(i32Idx);
         }
     }
@@ -312,13 +306,11 @@ SpiderTask(void *pvParameters)
     //
     // Loop forever.
     //
-    while(1)
-    {
+    while(1) {
         //
         // See if this spider has been killed.
         //
-        if(HWREGBITW(&g_ui32SpiderDead, i32Spider) == 1)
-        {
+        if(HWREGBITW(&g_ui32SpiderDead, i32Spider) == 1) {
             //
             // Wait for 2 seconds.
             //
@@ -343,8 +335,7 @@ SpiderTask(void *pvParameters)
             //
             // In case it does return, loop forever.
             //
-            while(1)
-            {
+            while(1) {
             }
         }
 
@@ -367,10 +358,9 @@ SpiderTask(void *pvParameters)
         // spider should turn despite not having collided with anything.
         //
         if((i32X < SPIDER_MIN_X) || (i32X > SPIDER_MAX_X) ||
-           (i32Y < SPIDER_MIN_Y) || (i32Y > SPIDER_MAX_Y) ||
-           (SpiderCollide(i32Spider, i32X, i32Y) != -1) ||
-           (RandomNumber() < 0x08000000))
-        {
+                (i32Y < SPIDER_MIN_Y) || (i32Y > SPIDER_MAX_Y) ||
+                (SpiderCollide(i32Spider, i32X, i32Y) != -1) ||
+                (RandomNumber() < 0x08000000)) {
             //
             // Undo the previous movement of the spider.
             //
@@ -388,20 +378,13 @@ SpiderTask(void *pvParameters)
             // turns to the right.  Of each half, it turns a quarter of a turn
             // 12.5% of the time and an eighth of a turn 87.5% of the time.
             //
-            if(ui32Temp < 0x10000000)
-            {
+            if(ui32Temp < 0x10000000) {
                 ui32Dir = (ui32Dir + 2) & 7;
-            }
-            else if(ui32Temp < 0x80000000)
-            {
+            } else if(ui32Temp < 0x80000000) {
                 ui32Dir = (ui32Dir + 1) & 7;
-            }
-            else if(ui32Temp < 0xf0000000)
-            {
+            } else if(ui32Temp < 0xf0000000) {
                 ui32Dir = (ui32Dir - 1) & 7;
-            }
-            else
-            {
+            } else {
                 ui32Dir = (ui32Dir - 2) & 7;
             }
         }
@@ -462,10 +445,8 @@ CreateSpider(int32_t i32X, int32_t i32Y)
     //
     // Search to see if there is a spider task available.
     //
-    for(ui32Spider = 0; ui32Spider < MAX_SPIDERS; ui32Spider++)
-    {
-        if(HWREGBITW(&g_ui32SpiderAlive, ui32Spider) == 0)
-        {
+    for(ui32Spider = 0; ui32Spider < MAX_SPIDERS; ui32Spider++) {
+        if(HWREGBITW(&g_ui32SpiderAlive, ui32Spider) == 0) {
             break;
         }
     }
@@ -474,8 +455,7 @@ CreateSpider(int32_t i32X, int32_t i32Y)
     // Return a failure if no spider tasks are available (in other words, the
     // maximum number of spiders are already alive).
     //
-    if(ui32Spider == MAX_SPIDERS)
-    {
+    if(ui32Spider == MAX_SPIDERS) {
         return(1);
     }
 
@@ -483,12 +463,9 @@ CreateSpider(int32_t i32X, int32_t i32Y)
     // Adjust the starting horizontal position to make sure it is inside the
     // allowable area for the spiders.
     //
-    if(i32X < SPIDER_MIN_X)
-    {
+    if(i32X < SPIDER_MIN_X) {
         i32X = SPIDER_MIN_X;
-    }
-    else if(i32X > SPIDER_MAX_X)
-    {
+    } else if(i32X > SPIDER_MAX_X) {
         i32X = SPIDER_MAX_X;
     }
 
@@ -496,12 +473,9 @@ CreateSpider(int32_t i32X, int32_t i32Y)
     // Adjust the starting vertical position to make sure it is inside the
     // allowable area for the spiders.
     //
-    if(i32Y < SPIDER_MIN_Y)
-    {
+    if(i32Y < SPIDER_MIN_Y) {
         i32Y = SPIDER_MIN_Y;
-    }
-    else if(i32Y > SPIDER_MAX_Y)
-    {
+    } else if(i32Y > SPIDER_MAX_Y) {
         i32Y = SPIDER_MAX_Y;
     }
 
@@ -516,8 +490,7 @@ CreateSpider(int32_t i32X, int32_t i32Y)
     //
     if(xTaskCreate(SpiderTask, (const portCHAR *)"Spider",
                    STACKSIZE_SPIDERTASK, (void *)ui32Spider,
-                   tskIDLE_PRIORITY + PRIORITY_SPIDER_TASK, NULL) != pdTRUE)
-    {
+                   tskIDLE_PRIORITY + PRIORITY_SPIDER_TASK, NULL) != pdTRUE) {
         return(1);
     }
 
@@ -540,8 +513,7 @@ ControlTouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
     //
     // Ignore all messages other than pointer down messages.
     //
-    if(ui32Message != WIDGET_MSG_PTR_DOWN)
-    {
+    if(ui32Message != WIDGET_MSG_PTR_DOWN) {
         return(0);
     }
 
@@ -587,14 +559,12 @@ SpiderTouchCollide(int32_t i32X, int32_t i32Y)
     //
     // Loop through all the spiders.
     //
-    for(i32Idx = 0; i32Idx < MAX_SPIDERS; i32Idx++)
-    {
+    for(i32Idx = 0; i32Idx < MAX_SPIDERS; i32Idx++) {
         //
         // Skip this spider if it is not alive.
         //
         if((HWREGBITW(&g_ui32SpiderAlive, i32Idx) == 0) ||
-           (HWREGBITW(&g_ui32SpiderDead, i32Idx) == 1))
-        {
+                (HWREGBITW(&g_ui32SpiderDead, i32Idx) == 1)) {
             continue;
         }
 
@@ -612,8 +582,7 @@ SpiderTouchCollide(int32_t i32X, int32_t i32Y)
         //
         // See if the point in question collides with this spider.
         //
-        if((i32DX < (SPIDER_WIDTH + 4)) && (i32DY < (SPIDER_HEIGHT + 4)))
-        {
+        if((i32DX < (SPIDER_WIDTH + 4)) && (i32DY < (SPIDER_HEIGHT + 4))) {
             //
             // Compute distance (squared) between this point and the spider.
             //
@@ -623,8 +592,7 @@ SpiderTouchCollide(int32_t i32X, int32_t i32Y)
             // See if this spider is closer to the point in question than any
             // other spider encountered.
             //
-            if(i32DX < i32Dist)
-            {
+            if(i32DX < i32Dist) {
                 //
                 // Save this spider as the new best choice.
                 //
@@ -637,8 +605,7 @@ SpiderTouchCollide(int32_t i32X, int32_t i32Y)
     //
     // Return the best choice, if one was found.
     //
-    if(i32Best != -1)
-    {
+    if(i32Best != -1) {
         return(i32Best);
     }
 
@@ -646,13 +613,11 @@ SpiderTouchCollide(int32_t i32X, int32_t i32Y)
     // Loop through all the spiders.  This time, the spiders that are dead but
     // not cleared from the screen are not ignored.
     //
-    for(i32Idx = 0; i32Idx < MAX_SPIDERS; i32Idx++)
-    {
+    for(i32Idx = 0; i32Idx < MAX_SPIDERS; i32Idx++) {
         //
         // Skip this spider if it is not alive.
         //
-        if(HWREGBITW(&g_ui32SpiderAlive, i32Idx) == 0)
-        {
+        if(HWREGBITW(&g_ui32SpiderAlive, i32Idx) == 0) {
             continue;
         }
 
@@ -670,8 +635,7 @@ SpiderTouchCollide(int32_t i32X, int32_t i32Y)
         //
         // See if the point in question collides with this spider.
         //
-        if((i32DX < (SPIDER_WIDTH + 4)) && (i32DY < (SPIDER_HEIGHT + 4)))
-        {
+        if((i32DX < (SPIDER_WIDTH + 4)) && (i32DY < (SPIDER_HEIGHT + 4))) {
             //
             // Compute distance (squared) between this point and the spider.
             //
@@ -681,8 +645,7 @@ SpiderTouchCollide(int32_t i32X, int32_t i32Y)
             // See if this spider is closer to the point in question than any
             // other spider encountered.
             //
-            if(i32DX < i32Dist)
-            {
+            if(i32DX < i32Dist) {
                 //
                 // Save this spider as the new best choice.
                 //
@@ -726,14 +689,12 @@ ControlTask(void *pvParameters)
     //
     // Loop forever.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Read the next message from the queue.
         //
         if(xQueueReceive(g_pControlQueue, &ui32Message, portMAX_DELAY) ==
-           pdPASS)
-        {
+                pdPASS) {
             //
             // Extract the position of the screen touch from the message.
             //
@@ -744,22 +705,18 @@ ControlTask(void *pvParameters)
             // Ignore this screen touch if it is not inside the spider area.
             //
             if((i32X >= AREA_X) && (i32X < (AREA_X + AREA_WIDTH)) &&
-               (i32Y >= AREA_Y) && (i32Y < (AREA_Y + AREA_HEIGHT)))
-            {
+                    (i32Y >= AREA_Y) && (i32Y < (AREA_Y + AREA_HEIGHT))) {
                 //
                 // See if this position collides with any of the spiders.
                 //
                 i32Spider = SpiderTouchCollide(i32X, i32Y);
-                if(i32Spider == -1)
-                {
+                if(i32Spider == -1) {
                     //
                     // There is no collision, so create a new spider (if
                     // possible) at this position.
                     //
                     CreateSpider(i32X, i32Y);
-                }
-                else
-                {
+                } else {
                     //
                     // There is a collision, so kill this spider.
                     //
@@ -809,8 +766,7 @@ SpiderTaskInit(void)
     // Create a queue for sending messages to the spider control task.
     //
     g_pControlQueue = xQueueCreate(CONTROL_QUEUE_SIZE, CONTROL_QUEUE_SIZE);
-    if(g_pControlQueue == NULL)
-    {
+    if(g_pControlQueue == NULL) {
         return(1);
     }
 
@@ -819,23 +775,21 @@ SpiderTaskInit(void)
     //
     if(xTaskCreate(ControlTask, (const portCHAR *)"ControlTask",
                    STACKSIZE_CONTROLTASK, NULL,
-                   tskIDLE_PRIORITY + PRIORITY_CONTROL_TASK, &g_sSpiderTask) != pdTRUE)
-    {// FIXME
+                   tskIDLE_PRIORITY + PRIORITY_CONTROL_TASK, &g_sSpiderTask) != pdTRUE) {
+        // FIXME
         return(1);
     }
 
     //
     // Create eight spiders initially.
     //
-    for(ui32Idx = 0; ui32Idx < 8; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < 8; ui32Idx++) {
         //
         // Create a spider that is centered vertically and equally spaced
         // horizontally across the display.
         //
         if(CreateSpider((ui32Idx * (AREA_WIDTH / 8)) + (AREA_WIDTH / 16),
-                        (AREA_HEIGHT / 2) + AREA_Y) == 1)
-        {
+                        (AREA_HEIGHT / 2) + AREA_Y) == 1) {
             return(1);
         }
 

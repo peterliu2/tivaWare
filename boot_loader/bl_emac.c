@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -43,7 +43,7 @@
 #include "driverlib/rom.h"
 //
 // Define ROM_SysCtlClockFreqSet() for snowflake RA0. Even though this function
-// is deprecated in RA0 ROM, the function operates correctly when 
+// is deprecated in RA0 ROM, the function operates correctly when
 // SYSCTL_MOSCCTL register is configured correctly prior to calling this
 // function.
 //
@@ -57,7 +57,7 @@
 // Define MAP_GPIOPadConfigSet() for the Boot Loader for Snowflake.
 // This function fails in Snowflake for higher drive strengths, it will work
 // properly for the instances where it is used here in the boot loader.
-// 
+//
 #if defined(TARGET_IS_TM4C129_RA0) ||                                         \
     defined(TARGET_IS_TM4C129_RA1)
 #define ROM_GPIOPadConfigSet                                                  \
@@ -136,8 +136,7 @@ my_memset(void *pvDest, int iChar, size_t i32Length)
     //
     // Fill the buffer with the given character.
     //
-    while(i32Length--)
-    {
+    while(i32Length--) {
         *pi8Buf++ = iChar;
     }
 
@@ -163,8 +162,7 @@ my_memcpy(void *pvDest, const void *pvSrc, size_t i32Length)
     //
     // Copy bytes from the source buffer to the destination buffer.
     //
-    while(i32Length--)
-    {
+    while(i32Length--) {
         *pi8Dest++ = *pi8Src++;
     }
 
@@ -221,8 +219,7 @@ extern void Delay(uint32_t ui32Count);
 // This structure defines the fields in a BOOTP request/reply packet.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // The operation; 1 is a request, 2 is a reply.
     //
@@ -342,8 +339,7 @@ tBOOTPPacket;
 //
 //*****************************************************************************
 #ifdef ENET_MAC_ADDR0
-static struct uip_eth_addr g_sMACAddr =
-{
+static struct uip_eth_addr g_sMACAddr = {
     {
         ENET_MAC_ADDR0,
         ENET_MAC_ADDR1,
@@ -563,8 +559,7 @@ PacketReceive(uint8_t *pui8Buf, int32_t i32BufLen)
     // if this is the last frame in a packet, the receive error bit.
     //
     if(!(g_psRxDescriptor[g_ui32RxDescIndex].ui32CtrlStatus &
-         DES0_RX_STAT_ERR))
-    {
+            DES0_RX_STAT_ERR)) {
         //
         // We have a valid frame so copy the content to the supplied buffer.
         // First check that the "last descriptor" flag is set.  We sized the
@@ -572,8 +567,7 @@ PacketReceive(uint8_t *pui8Buf, int32_t i32BufLen)
         // flag should never be clear at this point but...
         //
         if(g_psRxDescriptor[g_ui32RxDescIndex].ui32CtrlStatus &
-           DES0_RX_STAT_LAST_DESC)
-        {
+                DES0_RX_STAT_LAST_DESC) {
             i32FrameLen =
                 ((g_psRxDescriptor[g_ui32RxDescIndex].ui32CtrlStatus &
                   DES0_RX_STAT_FRAME_LENGTH_M) >>
@@ -584,8 +578,7 @@ PacketReceive(uint8_t *pui8Buf, int32_t i32BufLen)
             // buffer such that it's the same size as the DMA receive buffer
             // but, just in case...
             //
-            if(i32FrameLen > i32BufLen)
-            {
+            if(i32FrameLen > i32BufLen) {
                 i32FrameLen = i32BufLen;
             }
 
@@ -593,8 +586,7 @@ PacketReceive(uint8_t *pui8Buf, int32_t i32BufLen)
             // Copy the data from the DMA receive buffer into the provided
             // frame buffer.
             //
-            for(i32Loop = 0; i32Loop < i32FrameLen; i32Loop++)
-            {
+            for(i32Loop = 0; i32Loop < i32FrameLen; i32Loop++) {
                 pui8Buf[i32Loop] = g_pui8RxBuffer[i32Loop];
             }
         }
@@ -604,8 +596,7 @@ PacketReceive(uint8_t *pui8Buf, int32_t i32BufLen)
     // Move on to the next descriptor in the chain.
     //
     g_ui32RxDescIndex++;
-    if(g_ui32RxDescIndex == NUM_RX_DESCRIPTORS)
-    {
+    if(g_ui32RxDescIndex == NUM_RX_DESCRIPTORS) {
         g_ui32RxDescIndex = 0;
     }
 
@@ -635,8 +626,7 @@ PacketTransmit(uint8_t *pui8Buf, int32_t i32BufLen)
     // Wait for the previous packet to be transmitted.
     //
     while(g_psTxDescriptor[g_ui32TxDescIndex].ui32CtrlStatus &
-          DES0_TX_CTRL_OWN)
-    {
+            DES0_TX_CTRL_OWN) {
     }
 
     //
@@ -644,16 +634,14 @@ PacketTransmit(uint8_t *pui8Buf, int32_t i32BufLen)
     // shouldn't be necessary since the uIP buffer is smaller than our DMA
     // transmit buffer but, just in case...
     //
-    if(i32BufLen > TX_BUFFER_SIZE)
-    {
+    if(i32BufLen > TX_BUFFER_SIZE) {
         i32BufLen = TX_BUFFER_SIZE;
     }
 
     //
     // Copy the packet data into the transmit buffer.
     //
-    for(i32Loop = 0; i32Loop < i32BufLen; i32Loop++)
-    {
+    for(i32Loop = 0; i32Loop < i32BufLen; i32Loop++) {
         g_pui8TxBuffer[i32Loop] = pui8Buf[i32Loop];
     }
 
@@ -661,8 +649,7 @@ PacketTransmit(uint8_t *pui8Buf, int32_t i32BufLen)
     // Move to the next descriptor.
     //
     g_ui32TxDescIndex++;
-    if(g_ui32TxDescIndex == NUM_TX_DESCRIPTORS)
-    {
+    if(g_ui32TxDescIndex == NUM_TX_DESCRIPTORS) {
         g_ui32TxDescIndex = 0;
     }
 
@@ -706,8 +693,7 @@ SendBOOTPRequest(void)
     //
     // Zero fill the BOOTP request packet.
     //
-    for(ui32Idx = 0; ui32Idx < sizeof(tBOOTPPacket); ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < sizeof(tBOOTPPacket); ui32Idx++) {
         pui8Packet[ui32Idx] = 0;
     }
 
@@ -739,8 +725,7 @@ SendBOOTPRequest(void)
     //
     // Fill in the Ethernet MAC address.
     //
-    for(ui32Idx = 0; ui32Idx < 6; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < 6; ui32Idx++) {
         psBOOTP->pui8CHAddr[ui32Idx] = g_sMACAddr.addr[ui32Idx];
     }
 
@@ -749,9 +734,8 @@ SendBOOTPRequest(void)
     //
 #ifdef ENET_BOOTP_SERVER
     for(ui32Idx = 0;
-        (psBOOTP->pcSName[ui32Idx] = ENET_BOOTP_SERVER[ui32Idx]) != 0;
-        ui32Idx++)
-    {
+            (psBOOTP->pcSName[ui32Idx] = ENET_BOOTP_SERVER[ui32Idx]) != 0;
+            ui32Idx++) {
     }
 #endif
 
@@ -782,11 +766,10 @@ ParseBOOTPReply(void)
     // See if this is a reply for our current BOOTP request.
     //
     if((psBOOTP->ui8Op != BOOTP_REPLY) ||
-       (psBOOTP->ui32XID != g_ui32XID) ||
-       (*(uint32_t *)psBOOTP->pui8CHAddr != *(uint32_t *)g_sMACAddr.addr) ||
-       (*(uint16_t *)(psBOOTP->pui8CHAddr + 4) !=
-        *(uint16_t *)(g_sMACAddr.addr + 4)))
-    {
+            (psBOOTP->ui32XID != g_ui32XID) ||
+            (*(uint32_t *)psBOOTP->pui8CHAddr != *(uint32_t *)g_sMACAddr.addr) ||
+            (*(uint16_t *)(psBOOTP->pui8CHAddr + 4) !=
+             *(uint16_t *)(g_sMACAddr.addr + 4))) {
         return(0);
     }
 
@@ -804,10 +787,9 @@ ParseBOOTPReply(void)
     // Save the boot file name.
     //
     for(ui32Idx = 0;
-        ((g_pcFilename[ui32Idx] = psBOOTP->pcFile[ui32Idx]) != 0) &&
-        (ui32Idx < (sizeof(g_pcFilename) - 1));
-        ui32Idx++)
-    {
+            ((g_pcFilename[ui32Idx] = psBOOTP->pcFile[ui32Idx]) != 0) &&
+            (ui32Idx < (sizeof(g_pcFilename) - 1));
+            ui32Idx++) {
     }
     g_pcFilename[ui32Idx] = 0;
 
@@ -848,8 +830,7 @@ SendTFTPError(uint16_t ui16Error, char *pcString)
     //
     // Copy as much of the string as we can fit.
     //
-    while((i32Len < (UIP_APPDATA_SIZE - 1)) && *pcString)
-    {
+    while((i32Len < (UIP_APPDATA_SIZE - 1)) && *pcString) {
         *pui8Packet++ = *pcString++;
         i32Len++;
     }
@@ -897,15 +878,13 @@ SendTFTPGet(void)
     // Copy the file name into the RRQ packet.
     //
     for(ui32Idx = 2, pcFilename = g_pcFilename;
-        (pui8Packet[ui32Idx++] = *pcFilename++) != 0; )
-    {
+            (pui8Packet[ui32Idx++] = *pcFilename++) != 0; ) {
     }
 
     //
     // Set the transfer mode to binary.
     //
-    for(pcFilename = "octet"; (pui8Packet[ui32Idx++] = *pcFilename++) != 0; )
-    {
+    for(pcFilename = "octet"; (pui8Packet[ui32Idx++] = *pcFilename++) != 0; ) {
     }
 
     //
@@ -937,8 +916,7 @@ ParseTFTPData(void)
     // See if this is a TFTP data packet.
     //
     if((pui8Packet[0] != ((TFTP_DATA >> 8) && 0xff)) ||
-       (pui8Packet[1] != (TFTP_DATA & 0xff)))
-    {
+            (pui8Packet[1] != (TFTP_DATA & 0xff))) {
         return(0);
     }
 
@@ -948,8 +926,7 @@ ParseTFTPData(void)
     // TFTP data connection into our connection.  This will ensure that our
     // response will be sent to the correct port.
     //
-    if(g_pConn->rport == HTONS(TFTP_PORT))
-    {
+    if(g_pConn->rport == HTONS(TFTP_PORT)) {
         g_pConn->rport =
             ((struct uip_udpip_hdr *)&uip_buf[UIP_LLH_LEN])->srcport;
     }
@@ -958,8 +935,7 @@ ParseTFTPData(void)
     // See if this is the correct data packet.
     //
     if((pui8Packet[2] != ((g_ui32TFTPBlock >> 8) & 0xff)) ||
-       (pui8Packet[3] != (g_ui32TFTPBlock & 0xff)))
-    {
+            (pui8Packet[3] != (g_ui32TFTPBlock & 0xff))) {
         //
         // Since the wrong data packet was sent, resend the ACK for it since
         // we've already processed it.
@@ -983,16 +959,14 @@ ParseTFTPData(void)
     //
     // Do not program this data into flash if it is beyond the end of flash.
     //
-    if(ui32FlashAddr < g_ui32FlashEnd)
-    {
+    if(ui32FlashAddr < g_ui32FlashEnd) {
         //
         // If this is the first block and we have been provided with a start
         // hook function, call it here to indicate that we are about to begin
         // flashing a new image.
         //
 #ifdef BL_START_FN_HOOK
-        if(g_ui32TFTPBlock == 1)
-        {
+        if(g_ui32TFTPBlock == 1) {
             BL_START_FN_HOOK();
         }
 #endif
@@ -1007,15 +981,13 @@ ParseTFTPData(void)
         // then erase the entire flash.
         //
 #ifdef FLASH_CODE_PROTECTION
-        if(g_ui32TFTPBlock == 1)
-        {
+        if(g_ui32TFTPBlock == 1) {
             //
             // Loop through the pages in the flash, excluding the pages that
             // contain the boot loader and the optional reserved space.
             //
             for(ui32Idx = APP_START_ADDRESS; ui32Idx < g_ui32FlashEnd;
-                ui32Idx += FLASH_PAGE_SIZE)
-            {
+                    ui32Idx += FLASH_PAGE_SIZE) {
                 //
                 // Erase this block of the flash.
                 //
@@ -1031,8 +1003,7 @@ ParseTFTPData(void)
         // be on a flash page boundary, we can be sure that we will hit the
         // start of each page as we receive packets.
         //
-        if(!(ui32FlashAddr & (FLASH_PAGE_SIZE - 1)))
-        {
+        if(!(ui32FlashAddr & (FLASH_PAGE_SIZE - 1))) {
             //
             // Erase this block of the flash.
             //
@@ -1078,15 +1049,12 @@ ParseTFTPData(void)
     //
     // Did we see any error?
     //
-    if(BL_FLASH_ERROR_FN_HOOK())
-    {
+    if(BL_FLASH_ERROR_FN_HOOK()) {
         //
         // Yes - send back an error packet.
         //
         SendTFTPError(2, "Error programming flash.");
-    }
-    else
-    {
+    } else {
         //
         // No errors reported so construct an ACK packet.  The block number
         // field is already correct, so it does not need to be set.
@@ -1104,8 +1072,7 @@ ParseTFTPData(void)
     // If the packet was shorter than TFTP_BLOCK_SIZE bytes then this was the
     // last packet in the file.
     //
-    if(ui32Idx != (TFTP_BLOCK_SIZE + 4))
-    {
+    if(ui32Idx != (TFTP_BLOCK_SIZE + 4)) {
         //
         // If an end signal hook function has been provided, call it here.
         //
@@ -1127,8 +1094,7 @@ LOCAL_EMACPHYRead(uint32_t ui32Base, uint8_t ui8PhyAddr, uint8_t ui8RegAddr)
     //
     // Make sure the MII is idle.
     //
-    while(HWREG(ui32Base + EMAC_O_MIIADDR) & EMAC_MIIADDR_MIIB)
-    {
+    while(HWREG(ui32Base + EMAC_O_MIIADDR) & EMAC_MIIADDR_MIIB) {
     }
 
     //
@@ -1142,8 +1108,7 @@ LOCAL_EMACPHYRead(uint32_t ui32Base, uint8_t ui8PhyAddr, uint8_t ui8RegAddr)
     //
     // Wait for the read to complete.
     //
-    while(HWREG(ui32Base + EMAC_O_MIIADDR) & EMAC_MIIADDR_MIIB)
-    {
+    while(HWREG(ui32Base + EMAC_O_MIIADDR) & EMAC_MIIADDR_MIIB) {
     }
 
     //
@@ -1203,8 +1168,7 @@ wait_for_link:
     // Loop forever.  This loop is explicitly exited when a valid BOOTP reply
     // is received.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Send a BOOTP request.
         //
@@ -1227,16 +1191,14 @@ wait_for_bootp_reply:
         //
         // If the link has been lost, go back to waiting for a link.
         //
-        if(g_ui32Link == 0)
-        {
+        if(g_ui32Link == 0) {
             goto wait_for_link;
         }
-                      
+
         //
         // See if a packet has been received.
         //
-        if(uip_newdata())
-        {
+        if(uip_newdata()) {
             //
             // Clear the new data flag so that this packet will only be
             // examined one time.
@@ -1246,8 +1208,7 @@ wait_for_bootp_reply:
             //
             // See if this is a BOOTP reply.
             //
-            if(ParseBOOTPReply() == 1)
-            {
+            if(ParseBOOTPReply() == 1) {
                 break;
             }
 
@@ -1262,8 +1223,7 @@ wait_for_bootp_reply:
         // the delay time.  This avoids constantly slamming the network with
         // requests.
         //
-        if(g_ui32Delay < (60 * SYSTICKHZ))
-        {
+        if(g_ui32Delay < (60 * SYSTICKHZ)) {
             g_ui32Delay *= 2;
         }
     }
@@ -1305,8 +1265,7 @@ wait_for_bootp_reply:
     // Loop forever.  This loop is explicitly exited when the TFTP transfer has
     // completed.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Set the amount of time to wait for the TFTP data packet.
         //
@@ -1323,16 +1282,14 @@ wait_for_bootp_reply:
         //
         // If the link has been lost, go back to waiting for a link.
         //
-        if(g_ui32Link == 0)
-        {
+        if(g_ui32Link == 0) {
             goto wait_for_link;
         }
-                      
+
         //
         // See if a packet has been received.
         //
-        if(uip_newdata())
-        {
+        if(uip_newdata()) {
             //
             // Clear the new data flag so that this packet will only be
             // examined one time.
@@ -1342,13 +1299,10 @@ wait_for_bootp_reply:
             //
             // See if this is a TFTP data packet.
             //
-            if(ParseTFTPData() == 1)
-            {
+            if(ParseTFTPData() == 1) {
                 break;
             }
-        }
-        else if(g_ui32TFTPRetries < 3)
-        {
+        } else if(g_ui32TFTPRetries < 3) {
             //
             // The transfer timed out, so send a new TFTP read request.
             //
@@ -1363,9 +1317,7 @@ wait_for_bootp_reply:
             // Increment the count of TFTP retries.
             //
             g_ui32TFTPRetries++;
-        }
-        else
-        {
+        } else {
             //
             // The TFTP transfer failed after three retries, so start over.
             //
@@ -1376,16 +1328,14 @@ wait_for_bootp_reply:
     // Wait for the last packet to be transmitted.
     //
     while(g_psTxDescriptor[g_ui32TxDescIndex].ui32CtrlStatus &
-          DES0_TX_CTRL_OWN)
-    {
+            DES0_TX_CTRL_OWN) {
     }
 
     //
     // Wait for a bit to make sure that the final ACK packet is transmitted.
     //
     g_ui32Target = g_ui32Ticks + (SYSTICKHZ / 4);
-    while(g_ui32Ticks < g_ui32Target)
-    {
+    while(g_ui32Ticks < g_ui32Target) {
         PT_YIELD(&g_sThread);
     }
 
@@ -1399,8 +1349,7 @@ wait_for_bootp_reply:
     // The microcontroller should have reset, so this should never be reached.
     // Just in case, loop forever.
     //
-    while(1)
-    {
+    while(1) {
     }
 
     //
@@ -1422,11 +1371,9 @@ LOCAL_EMACPHYConfigSet(uint32_t ui32Base, uint32_t ui32Config)
     // If using the internal PHY, reset it to ensure that new configuration is
     // latched there.
     //
-    if((ui32Config & EMAC_PHY_TYPE_MASK) == EMAC_PHY_TYPE_INTERNAL)
-    {
+    if((ui32Config & EMAC_PHY_TYPE_MASK) == EMAC_PHY_TYPE_INTERNAL) {
         ROM_SysCtlPeripheralReset(SYSCTL_PERIPH_EPHY0);
-        while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_EPHY0))
-        {
+        while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_EPHY0)) {
             //
             // Wait for the PHY reset to complete.
             //
@@ -1442,15 +1389,12 @@ LOCAL_EMACPHYConfigSet(uint32_t ui32Base, uint32_t ui32Config)
     // If using an external RMII PHY, we must set 2 bits in the Ethernet MAC
     // Clock Configuration Register.
     //
-    if((ui32Config & EMAC_PHY_TYPE_MASK) == EMAC_PHY_TYPE_EXTERNAL_RMII)
-    {
+    if((ui32Config & EMAC_PHY_TYPE_MASK) == EMAC_PHY_TYPE_EXTERNAL_RMII) {
         //
         // Select and enable the external clock from the RMII PHY.
         //
         HWREG(EMAC0_BASE + EMAC_O_CC) |= EMAC_CC_CLKEN;
-    }
-    else
-    {
+    } else {
         //
         // Disable the external clock.
         //
@@ -1492,7 +1436,7 @@ EnetReconfig(uint32_t ui32Clock)
     LOCAL_EMACPHYConfigSet(EMAC0_BASE,
                            (EMAC_PHY_TYPE_INTERNAL | EMAC_PHY_INT_MDIX_EN |
                             EMAC_PHY_AN_100B_T_FULL_DUPLEX));
-    
+
 
     //
     // Reset the MAC.
@@ -1503,15 +1447,14 @@ EnetReconfig(uint32_t ui32Clock)
     // Initialize the MAC and set the DMA mode.
     //
     ROM_EMACInit(EMAC0_BASE, ui32Clock,
-             EMAC_BCONFIG_MIXED_BURST | EMAC_BCONFIG_PRIORITY_FIXED, 4, 4, 0);
+                 EMAC_BCONFIG_MIXED_BURST | EMAC_BCONFIG_PRIORITY_FIXED, 4, 4, 0);
 
     //
     // Get the MAC address from the flash user registers.  If it has not been
     // programmed, then use the boot loader default MAC address.
     //
     ROM_FlashUserGet(&ui32User0, &ui32User1);
-    if((ui32User0 == 0xffffffff) || (ui32User1 == 0xffffffff))
-    {
+    if((ui32User0 == 0xffffffff) || (ui32User1 == 0xffffffff)) {
         //
         // MAC address has not been programmed, use default.
         //
@@ -1521,9 +1464,7 @@ EnetReconfig(uint32_t ui32Clock)
         g_sMACAddr.addr[3] = 0x00;
         g_sMACAddr.addr[4] = 0x64;
         g_sMACAddr.addr[5] = 0x00;
-    }
-    else
-    {
+    } else {
         g_sMACAddr.addr[0] = ui32User0 & 0xff;
         g_sMACAddr.addr[1] = (ui32User0 >> 8) & 0xff;
         g_sMACAddr.addr[2] = (ui32User0 >> 16) & 0xff;
@@ -1536,20 +1477,19 @@ EnetReconfig(uint32_t ui32Clock)
     // Set MAC configuration options.
     //
     ROM_EMACConfigSet(EMAC0_BASE,
-                  (EMAC_CONFIG_FULL_DUPLEX | EMAC_CONFIG_CHECKSUM_OFFLOAD |
-                   EMAC_CONFIG_7BYTE_PREAMBLE | EMAC_CONFIG_IF_GAP_96BITS |
-                   EMAC_CONFIG_USE_MACADDR0 | EMAC_CONFIG_SA_FROM_DESCRIPTOR |
-                   EMAC_CONFIG_BO_LIMIT_1024),
-                  (EMAC_MODE_RX_STORE_FORWARD | EMAC_MODE_TX_STORE_FORWARD |
-                   EMAC_MODE_TX_THRESHOLD_64_BYTES |
-                   EMAC_MODE_RX_THRESHOLD_64_BYTES), 0);
+                      (EMAC_CONFIG_FULL_DUPLEX | EMAC_CONFIG_CHECKSUM_OFFLOAD |
+                       EMAC_CONFIG_7BYTE_PREAMBLE | EMAC_CONFIG_IF_GAP_96BITS |
+                       EMAC_CONFIG_USE_MACADDR0 | EMAC_CONFIG_SA_FROM_DESCRIPTOR |
+                       EMAC_CONFIG_BO_LIMIT_1024),
+                      (EMAC_MODE_RX_STORE_FORWARD | EMAC_MODE_TX_STORE_FORWARD |
+                       EMAC_MODE_TX_THRESHOLD_64_BYTES |
+                       EMAC_MODE_RX_THRESHOLD_64_BYTES), 0);
 
     //
     // Initialize each of the transmit descriptors.  Note that we leave the OWN
     // bit clear here since we have not set up any transmissions yet.
     //
-    for(ui32Loop = 0; ui32Loop < NUM_TX_DESCRIPTORS; ui32Loop++)
-    {
+    for(ui32Loop = 0; ui32Loop < NUM_TX_DESCRIPTORS; ui32Loop++) {
         g_psTxDescriptor[ui32Loop].ui32Count =
             (DES1_TX_CTRL_SADDR_INSERT |
              (TX_BUFFER_SIZE << DES1_TX_CTRL_BUFF1_SIZE_S));
@@ -1568,8 +1508,7 @@ EnetReconfig(uint32_t ui32Clock)
     // to make sure that the receiver doesn't start writing anything
     // immediately.
     //
-    for(ui32Loop = 0; ui32Loop < NUM_RX_DESCRIPTORS; ui32Loop++)
-    {
+    for(ui32Loop = 0; ui32Loop < NUM_RX_DESCRIPTORS; ui32Loop++) {
         g_psRxDescriptor[ui32Loop].ui32CtrlStatus = 0;
         g_psRxDescriptor[ui32Loop].ui32Count =
             (DES1_RX_CTRL_CHAINED |
@@ -1604,8 +1543,7 @@ EnetReconfig(uint32_t ui32Clock)
     // Wait for the link to become active.
     //
     while((ROM_EMACPHYRead(EMAC0_BASE, 0, EPHY_BMSR) &
-           EPHY_BMSR_LINKSTAT) == 0)
-    {
+            EPHY_BMSR_LINKSTAT) == 0) {
     }
 
     //
@@ -1613,8 +1551,8 @@ EnetReconfig(uint32_t ui32Clock)
     // packets along with those addressed specifically for us.
     //
     ROM_EMACFrameFilterSet(EMAC0_BASE, (EMAC_FRMFILTER_SADDR |
-                                    EMAC_FRMFILTER_PASS_MULTICAST |
-                                    EMAC_FRMFILTER_PASS_NO_CTRL));
+                                        EMAC_FRMFILTER_PASS_MULTICAST |
+                                        EMAC_FRMFILTER_PASS_NO_CTRL));
 
     //
     // Seed the random number generator from the MAC address.
@@ -1735,8 +1673,7 @@ ConfigureEnet(void)
     ROM_SysCtlPeripheralReset(SYSCTL_PERIPH_EMAC0);
     ROM_SysCtlPeripheralReset(SYSCTL_PERIPH_EPHY0);
 
-    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_EMAC0))
-    {
+    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_EMAC0)) {
     }
 
 }
@@ -1773,16 +1710,14 @@ UpdateBOOTP(void)
     //
     // Main Application Loop.
     //
-    while(1)
-    {
+    while(1) {
         uint32_t ui32Temp;
 
         //
         // See if there is a packet waiting to be read.
         //
         if(!(g_psRxDescriptor[g_ui32RxDescIndex].ui32CtrlStatus &
-             DES0_RX_CTRL_OWN))
-        {
+                DES0_RX_CTRL_OWN)) {
             //
             // Read the packet from the Ethernet controller.
             //
@@ -1792,9 +1727,8 @@ UpdateBOOTP(void)
             // See if this is an IP packet.
             //
             if((uip_len != 0) &&
-               (((struct uip_eth_hdr *)&uip_buf[0])->type ==
-                HTONS(UIP_ETHTYPE_IP)))
-            {
+                    (((struct uip_eth_hdr *)&uip_buf[0])->type ==
+                     HTONS(UIP_ETHTYPE_IP))) {
                 //
                 // Update the ARP tables based on this packet.
                 //
@@ -1809,8 +1743,7 @@ UpdateBOOTP(void)
                 // See if the processing of this packet resulted in a packet to be
                 // sent.
                 //
-                if(uip_len > 0)
-                {
+                if(uip_len > 0) {
                     //
                     // Update the ARP tables based on the packet to be sent.
                     //
@@ -1833,8 +1766,7 @@ UpdateBOOTP(void)
             //
             else if((uip_len != 0) &&
                     (((struct uip_eth_hdr *)&uip_buf[0])->type ==
-                     HTONS(UIP_ETHTYPE_ARP)))
-            {
+                     HTONS(UIP_ETHTYPE_ARP))) {
                 //
                 // Process this packet.
                 //
@@ -1844,8 +1776,7 @@ UpdateBOOTP(void)
                 // See if the processing of this packet resulted in a packet to be
                 // sent.
                 //
-                if(uip_len > 0)
-                {
+                if(uip_len > 0) {
                     //
                     // Send the packet.
                     //
@@ -1862,8 +1793,7 @@ UpdateBOOTP(void)
         //
         // See if the periodic timer has expired.
         //
-        if(g_ui32PeriodicTimer > UIP_PERIODIC_TIMER_MS)
-        {
+        if(g_ui32PeriodicTimer > UIP_PERIODIC_TIMER_MS) {
             //
             // Reset the periodic timer.
             //
@@ -1872,8 +1802,7 @@ UpdateBOOTP(void)
             //
             // Loop through the UDP connections.
             //
-            for(ui32Temp = 0; ui32Temp < UIP_UDP_CONNS; ui32Temp++)
-            {
+            for(ui32Temp = 0; ui32Temp < UIP_UDP_CONNS; ui32Temp++) {
                 //
                 // Perform the periodic processing on this UDP connection.
                 //
@@ -1883,8 +1812,7 @@ UpdateBOOTP(void)
                 // See if the periodic processing of this connection resulted in a
                 // packet to be sent.
                 //
-                if(uip_len > 0)
-                {
+                if(uip_len > 0) {
                     //
                     // Update the ARP tables based on the packet to be sent.
                     //
@@ -1906,8 +1834,7 @@ UpdateBOOTP(void)
         //
         // See if the ARP timer has expired.
         //
-        if(g_ui32ARPTimer > UIP_ARP_TIMER_MS)
-        {
+        if(g_ui32ARPTimer > UIP_ARP_TIMER_MS) {
             //
             // Reset the ARP timer.
             //

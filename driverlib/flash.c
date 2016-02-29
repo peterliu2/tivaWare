@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2005-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -60,8 +60,7 @@
 // Memory Protection Program Enable (FMPPE) register.
 //
 //*****************************************************************************
-static const uint32_t g_pui32FMPPERegs[] =
-{
+static const uint32_t g_pui32FMPPERegs[] = {
     FLASH_FMPPE0,
     FLASH_FMPPE1,
     FLASH_FMPPE2,
@@ -86,8 +85,7 @@ static const uint32_t g_pui32FMPPERegs[] =
 // Memory Protection Read Enable (FMPRE) register.
 //
 //*****************************************************************************
-static const uint32_t g_pui32FMPRERegs[] =
-{
+static const uint32_t g_pui32FMPRERegs[] = {
     FLASH_FMPRE0,
     FLASH_FMPRE1,
     FLASH_FMPRE2,
@@ -149,16 +147,14 @@ FlashErase(uint32_t ui32Address)
     //
     // Wait until the block has been erased.
     //
-    while(HWREG(FLASH_FMC) & FLASH_FMC_ERASE)
-    {
+    while(HWREG(FLASH_FMC) & FLASH_FMC_ERASE) {
     }
 
     //
     // Return an error if an access violation or erase error occurred.
     //
     if(HWREG(FLASH_FCRIS) & (FLASH_FCRIS_ARIS | FLASH_FCRIS_VOLTRIS |
-                             FLASH_FCRIS_ERRIS))
-    {
+                             FLASH_FCRIS_ERRIS)) {
         return(-1);
     }
 
@@ -206,8 +202,7 @@ FlashProgram(uint32_t *pui32Data, uint32_t ui32Address, uint32_t ui32Count)
     //
     // Loop over the words to be programmed.
     //
-    while(ui32Count)
-    {
+    while(ui32Count) {
         //
         // Set the address of this block of words.
         //
@@ -217,8 +212,7 @@ FlashProgram(uint32_t *pui32Data, uint32_t ui32Address, uint32_t ui32Count)
         // Loop over the words in this 32-word block.
         //
         while(((ui32Address & 0x7c) || (HWREG(FLASH_FWBVAL) == 0)) &&
-              (ui32Count != 0))
-        {
+                (ui32Count != 0)) {
             //
             // Write this word into the write buffer.
             //
@@ -235,8 +229,7 @@ FlashProgram(uint32_t *pui32Data, uint32_t ui32Address, uint32_t ui32Count)
         //
         // Wait until the write buffer has been programmed.
         //
-        while(HWREG(FLASH_FMC2) & FLASH_FMC2_WRBUF)
-        {
+        while(HWREG(FLASH_FMC2) & FLASH_FMC2_WRBUF) {
         }
     }
 
@@ -244,8 +237,7 @@ FlashProgram(uint32_t *pui32Data, uint32_t ui32Address, uint32_t ui32Count)
     // Return an error if an access violation occurred.
     //
     if(HWREG(FLASH_FCRIS) & (FLASH_FCRIS_ARIS | FLASH_FCRIS_VOLTRIS |
-                             FLASH_FCRIS_INVDRIS | FLASH_FCRIS_PROGRIS))
-    {
+                             FLASH_FCRIS_INVDRIS | FLASH_FCRIS_PROGRIS)) {
         return(-1);
     }
 
@@ -302,16 +294,14 @@ FlashProtectGet(uint32_t ui32Address)
     // is specified by the address.
     //
     switch((((ui32FMPRE >> (ui32Address / FLASH_PROTECT_SIZE)) & 0x1) << 1) |
-           ((ui32FMPPE >> (ui32Address / FLASH_PROTECT_SIZE)) & 0x1))
-    {
+            ((ui32FMPPE >> (ui32Address / FLASH_PROTECT_SIZE)) & 0x1)) {
         //
         // This block is marked as execute only (that is, it can not be erased
         // or programmed, and the only reads allowed are via the instruction
         // fetch interface).
         //
         case 0:
-        case 1:
-        {
+        case 1: {
             return(FlashExecuteOnly);
         }
 
@@ -319,8 +309,7 @@ FlashProtectGet(uint32_t ui32Address)
         // This block is marked as read only (that is, it can not be erased or
         // programmed).
         //
-        case 2:
-        {
+        case 2: {
             return(FlashReadOnly);
         }
 
@@ -328,8 +317,7 @@ FlashProtectGet(uint32_t ui32Address)
         // This block is read/write; it can be read, erased, and programmed.
         //
         case 3:
-        default:
-        {
+        default: {
             return(FlashReadWrite);
         }
     }
@@ -396,13 +384,11 @@ FlashProtectSet(uint32_t ui32Address, tFlashProtection eProtect)
     //
     // Set the protection based on the requested protection.
     //
-    switch(eProtect)
-    {
+    switch(eProtect) {
         //
         // Make this block execute only.
         //
-        case FlashExecuteOnly:
-        {
+        case FlashExecuteOnly: {
             //
             // Turn off the read and program bits for this block.
             //
@@ -418,13 +404,11 @@ FlashProtectSet(uint32_t ui32Address, tFlashProtection eProtect)
         //
         // Make this block read only.
         //
-        case FlashReadOnly:
-        {
+        case FlashReadOnly: {
             //
             // The block can not be made read only if it is execute only.
             //
-            if(((ui32ProtectRE >> ui32Address) & 0x1) != 0x1)
-            {
+            if(((ui32ProtectRE >> ui32Address) & 0x1) != 0x1) {
                 return(-1);
             }
 
@@ -443,15 +427,13 @@ FlashProtectSet(uint32_t ui32Address, tFlashProtection eProtect)
         // Make this block read/write.
         //
         case FlashReadWrite:
-        default:
-        {
+        default: {
             //
             // The block can not be made read/write if it is not already
             // read/write.
             //
             if((((ui32ProtectRE >> ui32Address) & 0x1) != 0x1) ||
-               (((ui32ProtectPE >> ui32Address) & 0x1) != 0x1))
-            {
+                    (((ui32ProtectPE >> ui32Address) & 0x1) != 0x1)) {
                 return(-1);
             }
 
@@ -495,8 +477,7 @@ FlashProtectSave(void)
     //
     // Save the entire bank of 8 flash protection registers.
     //
-    for(ui32Temp = 0; ui32Temp < 8; ui32Temp++)
-    {
+    for(ui32Temp = 0; ui32Temp < 8; ui32Temp++) {
         //
         // Tell the flash controller to write the flash protection register.
         //
@@ -506,8 +487,7 @@ FlashProtectSave(void)
         //
         // Wait until the write has completed.
         //
-        while(HWREG(FLASH_FMC) & FLASH_FMC_COMT)
-        {
+        while(HWREG(FLASH_FMC) & FLASH_FMC_COMT) {
         }
     }
 
@@ -679,8 +659,7 @@ FlashUserSave(void)
     //
     // Wait until the write has completed.
     //
-    while(HWREG(FLASH_FMC) & FLASH_FMC_COMT)
-    {
+    while(HWREG(FLASH_FMC) & FLASH_FMC_COMT) {
     }
 
     //
@@ -692,8 +671,7 @@ FlashUserSave(void)
     //
     // Wait until the write has completed.
     //
-    while(HWREG(FLASH_FMC) & FLASH_FMC_COMT)
-    {
+    while(HWREG(FLASH_FMC) & FLASH_FMC_COMT) {
     }
 
     //
@@ -860,12 +838,9 @@ FlashIntStatus(bool bMasked)
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return(HWREG(FLASH_FCMISC));
-    }
-    else
-    {
+    } else {
         return(HWREG(FLASH_FCRIS));
     }
 }

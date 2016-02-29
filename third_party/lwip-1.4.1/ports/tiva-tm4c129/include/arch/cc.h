@@ -46,30 +46,30 @@ typedef u8_t                sys_prot_t;
 #endif
 
 #if defined(__arm__) && defined(__ARMCC_VERSION)
-    //
-    // Setup PACKing macros for KEIL/RVMDK Tools
-    //
-    #define PACK_STRUCT_BEGIN __packed
-    #define PACK_STRUCT_STRUCT
-    #define PACK_STRUCT_END
-    #define PACK_STRUCT_FIELD(x) x
+//
+// Setup PACKing macros for KEIL/RVMDK Tools
+//
+#define PACK_STRUCT_BEGIN __packed
+#define PACK_STRUCT_STRUCT
+#define PACK_STRUCT_END
+#define PACK_STRUCT_FIELD(x) x
 #elif defined (__IAR_SYSTEMS_ICC__)
-    //
-    // Setup PACKing macros for IAR Tools
-    //
-    #define PACK_STRUCT_BEGIN
-    #define PACK_STRUCT_STRUCT
-    #define PACK_STRUCT_END
-    #define PACK_STRUCT_FIELD(x) x
-    #define PACK_STRUCT_USE_INCLUDES
+//
+// Setup PACKing macros for IAR Tools
+//
+#define PACK_STRUCT_BEGIN
+#define PACK_STRUCT_STRUCT
+#define PACK_STRUCT_END
+#define PACK_STRUCT_FIELD(x) x
+#define PACK_STRUCT_USE_INCLUDES
 #else
-    //
-    // Setup PACKing macros for GCC Tools
-    //
-    #define PACK_STRUCT_BEGIN
-    #define PACK_STRUCT_STRUCT __attribute__ ((__packed__))
-    #define PACK_STRUCT_END
-    #define PACK_STRUCT_FIELD(x) x
+//
+// Setup PACKing macros for GCC Tools
+//
+#define PACK_STRUCT_BEGIN
+#define PACK_STRUCT_STRUCT __attribute__ ((__packed__))
+#define PACK_STRUCT_END
+#define PACK_STRUCT_FIELD(x) x
 #endif
 
 //*****************************************************************************

@@ -16,7 +16,9 @@
 #endif
 
 #ifndef NO_DUMMY_DECL
-struct internal_state {int dummy;}; /* for buggy compilers */
+struct internal_state {
+    int dummy;
+}; /* for buggy compilers */
 #endif
 
 #ifndef Z_BUFSIZE
@@ -32,7 +34,7 @@ struct internal_state {int dummy;}; /* for buggy compilers */
 
 #ifdef __MVS__
 #  pragma map (fdopen , "\174\174FDOPEN")
-   FILE *fdopen(int, const char *);
+FILE *fdopen(int, const char *);
 #endif
 
 #ifndef STDC
@@ -91,9 +93,9 @@ local uLong  getLong      OF((gz_stream *s));
    zlib error is Z_MEM_ERROR).
 */
 local gzFile gz_open (path, mode, fd)
-    const char *path;
-    const char *mode;
-    int  fd;
+const char *path;
+const char *mode;
+int  fd;
 {
     int err;
     int level = Z_DEFAULT_COMPRESSION; /* compression level */
@@ -137,11 +139,11 @@ local gzFile gz_open (path, mode, fd)
         if (*p >= '0' && *p <= '9') {
             level = *p - '0';
         } else if (*p == 'f') {
-          strategy = Z_FILTERED;
+            strategy = Z_FILTERED;
         } else if (*p == 'h') {
-          strategy = Z_HUFFMAN_ONLY;
+            strategy = Z_HUFFMAN_ONLY;
         } else if (*p == 'R') {
-          strategy = Z_RLE;
+            strategy = Z_RLE;
         } else {
             *m++ = *p; /* copy the mode */
         }
@@ -187,7 +189,7 @@ local gzFile gz_open (path, mode, fd)
         /* Write a very simple .gz header:
          */
         fprintf(s->file, "%c%c%c%c%c%c%c%c%c%c", gz_magic[0], gz_magic[1],
-             Z_DEFLATED, 0 /*flags*/, 0,0,0,0 /*time*/, 0 /*xflags*/, OS_CODE);
+                Z_DEFLATED, 0 /*flags*/, 0,0,0,0 /*time*/, 0 /*xflags*/, OS_CODE);
         s->start = 10L;
         /* We use 10L instead of ftell(s->file) to because ftell causes an
          * fflush on some systems. This version of the library doesn't use
@@ -206,8 +208,8 @@ local gzFile gz_open (path, mode, fd)
      Opens a gzip (.gz) file for reading or writing.
 */
 gzFile ZEXPORT gzopen (path, mode)
-    const char *path;
-    const char *mode;
+const char *path;
+const char *mode;
 {
     return gz_open (path, mode, -1);
 }
@@ -217,8 +219,8 @@ gzFile ZEXPORT gzopen (path, mode)
    to mimic the behavio(u)r of fdopen.
 */
 gzFile ZEXPORT gzdopen (fd, mode)
-    int fd;
-    const char *mode;
+int fd;
+const char *mode;
 {
     char name[46];      /* allow for up to 128-bit integers */
 
@@ -232,9 +234,9 @@ gzFile ZEXPORT gzdopen (fd, mode)
  * Update the compression level and strategy
  */
 int ZEXPORT gzsetparams (file, level, strategy)
-    gzFile file;
-    int level;
-    int strategy;
+gzFile file;
+int level;
+int strategy;
 {
     gz_stream *s = (gz_stream*)file;
 
@@ -259,7 +261,7 @@ int ZEXPORT gzsetparams (file, level, strategy)
    IN assertion: the stream s has been sucessfully opened for reading.
 */
 local int get_byte(s)
-    gz_stream *s;
+gz_stream *s;
 {
     if (s->z_eof) return EOF;
     if (s->stream.avail_in == 0) {
@@ -286,7 +288,7 @@ local int get_byte(s)
        for concatenated .gz files.
 */
 local void check_header(s)
-    gz_stream *s;
+gz_stream *s;
 {
     int method; /* method byte */
     int flags;  /* flags byte */
@@ -312,7 +314,7 @@ local void check_header(s)
 
     /* Peek ahead to check the gzip magic header */
     if (s->stream.next_in[0] != gz_magic[0] ||
-        s->stream.next_in[1] != gz_magic[1]) {
+            s->stream.next_in[1] != gz_magic[1]) {
         s->transparent = 1;
         return;
     }
@@ -348,12 +350,12 @@ local void check_header(s)
     s->z_err = s->z_eof ? Z_DATA_ERROR : Z_OK;
 }
 
- /* ===========================================================================
- * Cleanup then free the given gz_stream. Return a zlib error code.
-   Try freeing in the reverse order of allocations.
- */
+/* ===========================================================================
+* Cleanup then free the given gz_stream. Return a zlib error code.
+  Try freeing in the reverse order of allocations.
+*/
 local int destroy (s)
-    gz_stream *s;
+gz_stream *s;
 {
     int err = Z_OK;
 
@@ -392,9 +394,9 @@ local int destroy (s)
    gzread returns the number of bytes actually read (0 for end of file).
 */
 int ZEXPORT gzread (file, buf, len)
-    gzFile file;
-    voidp buf;
-    unsigned len;
+gzFile file;
+voidp buf;
+unsigned len;
 {
     gz_stream *s = (gz_stream*)file;
     Bytef *start = (Bytef*)buf; /* starting point for crc computation */
@@ -490,7 +492,7 @@ int ZEXPORT gzread (file, buf, len)
     s->crc = crc32(s->crc, start, (uInt)(s->stream.next_out - start));
 
     if (len == s->stream.avail_out &&
-        (s->z_err == Z_DATA_ERROR || s->z_err == Z_ERRNO))
+            (s->z_err == Z_DATA_ERROR || s->z_err == Z_ERRNO))
         return -1;
     return (int)(len - s->stream.avail_out);
 }
@@ -501,7 +503,7 @@ int ZEXPORT gzread (file, buf, len)
    or -1 in case of end of file or error.
 */
 int ZEXPORT gzgetc(file)
-    gzFile file;
+gzFile file;
 {
     unsigned char c;
 
@@ -513,8 +515,8 @@ int ZEXPORT gzgetc(file)
       Push one byte back onto the stream.
 */
 int ZEXPORT gzungetc(c, file)
-    int c;
-    gzFile file;
+int c;
+gzFile file;
 {
     gz_stream *s = (gz_stream*)file;
 
@@ -538,9 +540,9 @@ int ZEXPORT gzungetc(c, file)
       The current implementation is not optimized at all.
 */
 char * ZEXPORT gzgets(file, buf, len)
-    gzFile file;
-    char *buf;
-    int len;
+gzFile file;
+char *buf;
+int len;
 {
     char *b = buf;
     if (buf == Z_NULL || len <= 0) return Z_NULL;
@@ -557,9 +559,9 @@ char * ZEXPORT gzgets(file, buf, len)
    gzwrite returns the number of bytes actually written (0 in case of error).
 */
 int ZEXPORT gzwrite (file, buf, len)
-    gzFile file;
-    voidpc buf;
-    unsigned len;
+gzFile file;
+voidpc buf;
+unsigned len;
 {
     gz_stream *s = (gz_stream*)file;
 
@@ -635,11 +637,11 @@ int ZEXPORTVA gzprintf (gzFile file, const char *format, /* args */ ...)
 #else /* not ANSI C */
 
 int ZEXPORTVA gzprintf (file, format, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10,
-                       a11, a12, a13, a14, a15, a16, a17, a18, a19, a20)
-    gzFile file;
-    const char *format;
-    int a1, a2, a3, a4, a5, a6, a7, a8, a9, a10,
-        a11, a12, a13, a14, a15, a16, a17, a18, a19, a20;
+                        a11, a12, a13, a14, a15, a16, a17, a18, a19, a20)
+gzFile file;
+const char *format;
+int a1, a2, a3, a4, a5, a6, a7, a8, a9, a10,
+    a11, a12, a13, a14, a15, a16, a17, a18, a19, a20;
 {
     char buf[Z_PRINTF_BUFSIZE];
     int len;
@@ -653,7 +655,7 @@ int ZEXPORTVA gzprintf (file, format, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10,
         if (buf[len] == 0) break;
 #  else
     len = sprintf(buf, format, a1, a2, a3, a4, a5, a6, a7, a8,
-                a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20);
+                  a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20);
 #  endif
 #else
 #  ifdef HAS_snprintf_void
@@ -662,7 +664,7 @@ int ZEXPORTVA gzprintf (file, format, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10,
     len = strlen(buf);
 #  else
     len = snprintf(buf, sizeof(buf), format, a1, a2, a3, a4, a5, a6, a7, a8,
-                 a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20);
+                   a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20);
 #  endif
 #endif
     if (len <= 0 || len >= sizeof(buf) || buf[sizeof(buf) - 1] != 0)
@@ -676,8 +678,8 @@ int ZEXPORTVA gzprintf (file, format, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10,
    gzputc returns the value that was written, or -1 in case of error.
 */
 int ZEXPORT gzputc(file, c)
-    gzFile file;
-    int c;
+gzFile file;
+int c;
 {
     unsigned char cc = (unsigned char) c; /* required for big endian systems */
 
@@ -691,8 +693,8 @@ int ZEXPORT gzputc(file, c)
       gzputs returns the number of characters written, or -1 in case of error.
 */
 int ZEXPORT gzputs(file, s)
-    gzFile file;
-    const char *s;
+gzFile file;
+const char *s;
 {
     return gzwrite(file, (char*)s, (unsigned)strlen(s));
 }
@@ -703,8 +705,8 @@ int ZEXPORT gzputs(file, s)
    flush is as in the deflate() function.
 */
 local int do_flush (file, flush)
-    gzFile file;
-    int flush;
+gzFile file;
+int flush;
 {
     uInt len;
     int done = 0;
@@ -744,8 +746,8 @@ local int do_flush (file, flush)
 }
 
 int ZEXPORT gzflush (file, flush)
-     gzFile file;
-     int flush;
+gzFile file;
+int flush;
 {
     gz_stream *s = (gz_stream*)file;
     int err = do_flush (file, flush);
@@ -765,14 +767,14 @@ int ZEXPORT gzflush (file, flush)
       In this version of the library, gzseek can be extremely slow.
 */
 z_off_t ZEXPORT gzseek (file, offset, whence)
-    gzFile file;
-    z_off_t offset;
-    int whence;
+gzFile file;
+z_off_t offset;
+int whence;
 {
     gz_stream *s = (gz_stream*)file;
 
     if (s == NULL || whence == SEEK_END ||
-        s->z_err == Z_ERRNO || s->z_err == Z_DATA_ERROR) {
+            s->z_err == Z_ERRNO || s->z_err == Z_DATA_ERROR) {
         return -1L;
     }
 
@@ -855,7 +857,7 @@ z_off_t ZEXPORT gzseek (file, offset, whence)
      Rewinds input file.
 */
 int ZEXPORT gzrewind (file)
-    gzFile file;
+gzFile file;
 {
     gz_stream *s = (gz_stream*)file;
 
@@ -879,7 +881,7 @@ int ZEXPORT gzrewind (file)
    uncompressed data stream.
 */
 z_off_t ZEXPORT gztell (file)
-    gzFile file;
+gzFile file;
 {
     return gzseek(file, 0L, SEEK_CUR);
 }
@@ -889,7 +891,7 @@ z_off_t ZEXPORT gztell (file)
    input stream, otherwise zero.
 */
 int ZEXPORT gzeof (file)
-    gzFile file;
+gzFile file;
 {
     gz_stream *s = (gz_stream*)file;
 
@@ -906,7 +908,7 @@ int ZEXPORT gzeof (file)
      Returns 1 if reading and doing so transparently, otherwise zero.
 */
 int ZEXPORT gzdirect (file)
-    gzFile file;
+gzFile file;
 {
     gz_stream *s = (gz_stream*)file;
 
@@ -918,8 +920,8 @@ int ZEXPORT gzdirect (file)
    Outputs a long in LSB order to the given file
 */
 local void putLong (file, x)
-    FILE *file;
-    uLong x;
+FILE *file;
+uLong x;
 {
     int n;
     for (n = 0; n < 4; n++) {
@@ -933,7 +935,7 @@ local void putLong (file, x)
    of error.
 */
 local uLong getLong (s)
-    gz_stream *s;
+gz_stream *s;
 {
     uLong x = (uLong)get_byte(s);
     int c;
@@ -951,7 +953,7 @@ local uLong getLong (s)
    and deallocates all the (de)compression state.
 */
 int ZEXPORT gzclose (file)
-    gzFile file;
+gzFile file;
 {
     gz_stream *s = (gz_stream*)file;
 
@@ -985,8 +987,8 @@ int ZEXPORT gzclose (file)
    to get the exact error code.
 */
 const char * ZEXPORT gzerror (file, errnum)
-    gzFile file;
-    int *errnum;
+gzFile file;
+int *errnum;
 {
     char *m;
     gz_stream *s = (gz_stream*)file;
@@ -1015,7 +1017,7 @@ const char * ZEXPORT gzerror (file, errnum)
      Clear the error and end-of-file flags, and do the same for the real file.
 */
 void ZEXPORT gzclearerr (file)
-    gzFile file;
+gzFile file;
 {
     gz_stream *s = (gz_stream*)file;
 

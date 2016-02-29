@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -225,8 +225,7 @@ UpdateCount(uint32_t ui32Count, uint32_t ui32Y)
     //
     // See if the count is at least a billion.
     //
-    if(ui32Count > 999999999)
-    {
+    if(ui32Count > 999999999) {
         //
         // Format the value with commas separating the billions, millions,
         // thousands, and ones.
@@ -239,8 +238,7 @@ UpdateCount(uint32_t ui32Count, uint32_t ui32Y)
     //
     // See if the count is at least a million.
     //
-    else if(ui32Count > 999999)
-    {
+    else if(ui32Count > 999999) {
         //
         // Format the value with commas separating the millions, thousands, and
         // ones.
@@ -253,8 +251,7 @@ UpdateCount(uint32_t ui32Count, uint32_t ui32Y)
     //
     // See if the count is at least a thousand.
     //
-    else if(ui32Count > 999)
-    {
+    else if(ui32Count > 999) {
         //
         // Format the value with a comma separating the thousands and ones.
         //
@@ -265,8 +262,7 @@ UpdateCount(uint32_t ui32Count, uint32_t ui32Y)
     //
     // Otherwise the value is less than a thousand.
     //
-    else
-    {
+    else {
         //
         // Simply print the value.  This will occur in two cases: at startup
         // when the count is 0 and after the 32-bit count has rolled-over.  In
@@ -299,18 +295,15 @@ USBDMSCEventCallback(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgParam,
     //
     g_ui32IdleTimeout = USBMSC_ACTIVITY_TIMEOUT;
 
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // Writing to the device.
         //
-        case USBD_MSC_EVENT_WRITING:
-        {
+        case USBD_MSC_EVENT_WRITING: {
             //
             // Only update if this is a change.
             //
-            if(g_eMSCState != MSC_DEV_WRITE)
-            {
+            if(g_eMSCState != MSC_DEV_WRITE) {
                 //
                 // Go to the write state.
                 //
@@ -328,13 +321,11 @@ USBDMSCEventCallback(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgParam,
         //
         // Reading from the device.
         //
-        case USBD_MSC_EVENT_READING:
-        {
+        case USBD_MSC_EVENT_READING: {
             //
             // Only update if this is a change.
             //
-            if(g_eMSCState != MSC_DEV_READ)
-            {
+            if(g_eMSCState != MSC_DEV_READ) {
                 //
                 // Go to the read state.
                 //
@@ -352,8 +343,7 @@ USBDMSCEventCallback(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgParam,
         //
         // The USB host has disconnected from the device.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             //
             // Go to the disconnected state.
             //
@@ -370,8 +360,7 @@ USBDMSCEventCallback(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgParam,
         //
         // The USB host has connected to the device.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             //
             // Go to the idle state to wait for read/writes.
             //
@@ -381,8 +370,7 @@ USBDMSCEventCallback(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgParam,
         }
 
         case USBD_MSC_EVENT_IDLE:
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -399,8 +387,7 @@ USBDMSCEventCallback(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgParam,
 void
 SysTickHandler(void)
 {
-    if(g_ui32IdleTimeout != 0)
-    {
+    if(g_ui32IdleTimeout != 0) {
         g_ui32IdleTimeout--;
     }
 }
@@ -419,8 +406,8 @@ main(void)
     // Run from the PLL at 120 MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Configure the device pins.
@@ -522,17 +509,13 @@ main(void)
     //
     ui32Read = g_ui32ReadCount;
     ui32Write = g_ui32WriteCount;
-    while(1)
-    {
-        switch(g_eMSCState)
-        {
-            case MSC_DEV_READ:
-            {
+    while(1) {
+        switch(g_eMSCState) {
+            case MSC_DEV_READ: {
                 //
                 // Update the screen if necessary.
                 //
-                if(g_ui32Flags & FLAG_UPDATE_STATUS)
-                {
+                if(g_ui32Flags & FLAG_UPDATE_STATUS) {
                     UpdateStatus("        Reading        ");
                     g_ui32Flags &= ~FLAG_UPDATE_STATUS;
                 }
@@ -540,8 +523,7 @@ main(void)
                 //
                 // If there is no activity then return to the idle state.
                 //
-                if(g_ui32IdleTimeout == 0)
-                {
+                if(g_ui32IdleTimeout == 0) {
                     UpdateStatus("        Idle        ");
                     g_eMSCState = MSC_DEV_IDLE;
                 }
@@ -549,13 +531,11 @@ main(void)
                 break;
             }
 
-            case MSC_DEV_WRITE:
-            {
+            case MSC_DEV_WRITE: {
                 //
                 // Update the screen if necessary.
                 //
-                if(g_ui32Flags & FLAG_UPDATE_STATUS)
-                {
+                if(g_ui32Flags & FLAG_UPDATE_STATUS) {
                     UpdateStatus("        Writing        ");
                     g_ui32Flags &= ~FLAG_UPDATE_STATUS;
                 }
@@ -563,34 +543,29 @@ main(void)
                 //
                 // If there is no activity then return to the idle state.
                 //
-                if(g_ui32IdleTimeout == 0)
-                {
+                if(g_ui32IdleTimeout == 0) {
                     UpdateStatus("        Idle        ");
                     g_eMSCState = MSC_DEV_IDLE;
                 }
                 break;
             }
 
-            case MSC_DEV_DISCONNECTED:
-            {
+            case MSC_DEV_DISCONNECTED: {
                 //
                 // Update the screen if necessary.
                 //
-                if(g_ui32Flags & FLAG_UPDATE_STATUS)
-                {
+                if(g_ui32Flags & FLAG_UPDATE_STATUS) {
                     UpdateStatus("        Disconnected        ");
                     g_ui32Flags &= ~FLAG_UPDATE_STATUS;
                 }
                 break;
             }
 
-            case MSC_DEV_IDLE:
-            {
+            case MSC_DEV_IDLE: {
                 break;
             }
 
-            default:
-            {
+            default: {
                 break;
             }
         }
@@ -598,8 +573,7 @@ main(void)
         //
         // Update the read count if it has changed.
         //
-        if(g_ui32ReadCount != ui32Read)
-        {
+        if(g_ui32ReadCount != ui32Read) {
             ui32Read = g_ui32ReadCount;
             UpdateCount(ui32Read, 138);
         }
@@ -607,8 +581,7 @@ main(void)
         //
         // Update the write count if it has changed.
         //
-        if(g_ui32WriteCount != ui32Write)
-        {
+        if(g_ui32WriteCount != ui32Write) {
             ui32Write = g_ui32WriteCount;
             UpdateCount(ui32Write, 198);
         }

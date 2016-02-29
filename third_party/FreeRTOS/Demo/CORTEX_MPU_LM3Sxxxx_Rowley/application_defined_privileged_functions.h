@@ -74,13 +74,13 @@
 control of the kernel, so run the function in a privileged mode. */
 int MPU_debug_printf( const char *pcMessage )
 {
-portBASE_TYPE xRunningPrivileged = prvRaisePrivilege();
+    portBASE_TYPE xRunningPrivileged = prvRaisePrivilege();
 
-	debug_printf( pcMessage );
+    debug_printf( pcMessage );
 
-	portRESET_PRIVILEGE( xRunningPrivileged );
+    portRESET_PRIVILEGE( xRunningPrivileged );
 
-	return 0;
+    return 0;
 }
 
 #endif /* APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS_H */

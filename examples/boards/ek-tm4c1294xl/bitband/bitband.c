@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -76,8 +76,7 @@ static volatile uint32_t g_ui32Value;
 void
 __error__(char *pcFilename, uint32_t ui32Line)
 {
-    while(1)
-    {
+    while(1) {
         //
         // Hang on runtime error.
         //
@@ -98,20 +97,17 @@ Delay(uint32_t ui32Seconds)
     //
     // Loop while there are more seconds to wait.
     //
-    while(ui32Seconds--)
-    {
+    while(ui32Seconds--) {
         //
         // Wait until the SysTick value is less than 1000.
         //
-        while(ROM_SysTickValueGet() > 1000)
-        {
+        while(ROM_SysTickValueGet() > 1000) {
         }
 
         //
         // Wait until the SysTick value is greater than 1000.
         //
-        while(ROM_SysTickValueGet() < 1000)
-        {
+        while(ROM_SysTickValueGet() < 1000) {
         }
     }
 }
@@ -162,8 +158,8 @@ main(void)
     // Set the clocking to run directly from the crystal at 120MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Initialize the UART interface.
@@ -200,13 +196,12 @@ main(void)
     // Set the value to 0xdecafbad using bit band accesses to each individual
     // bit.
     //
-    for(ui32Idx = 0; ui32Idx < 32; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < 32; ui32Idx++) {
         //
         // Set this bit.
         //
         HWREGBITW(&g_ui32Value, 31 - ui32Idx) = (0xdecafbad >>
-                (31 - ui32Idx)) & 1;
+                                                (31 - ui32Idx)) & 1;
 
         //
         // Print the current value to the UART.
@@ -222,18 +217,15 @@ main(void)
     //
     // Make sure that the value is 0xdecafbad.
     //
-    if(g_ui32Value != 0xdecafbad)
-    {
+    if(g_ui32Value != 0xdecafbad) {
         ui32Errors++;
     }
 
     //
     // Make sure that the individual bits read back correctly.
     //
-    for(ui32Idx = 0; ui32Idx < 32; ui32Idx++)
-    {
-        if(HWREGBITW(&g_ui32Value, ui32Idx) != ((0xdecafbad >> ui32Idx) & 1))
-        {
+    for(ui32Idx = 0; ui32Idx < 32; ui32Idx++) {
+        if(HWREGBITW(&g_ui32Value, ui32Idx) != ((0xdecafbad >> ui32Idx) & 1)) {
             ui32Errors++;
         }
     }
@@ -241,19 +233,15 @@ main(void)
     //
     // Print out the result.
     //
-    if(ui32Errors)
-    {
+    if(ui32Errors) {
         UARTprintf("\nErrors!\n");
-    }
-    else
-    {
+    } else {
         UARTprintf("\nSuccess!\n");
     }
 
     //
     // Loop forever.
     //
-    while(1)
-    {
+    while(1) {
     }
 }

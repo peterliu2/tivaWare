@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -77,8 +77,7 @@ extern "C"
 #define USBH_AUDIO_FORMAT_IN    0x00000001
 #define USBH_AUDIO_FORMAT_OUT   0x00000000
 
-typedef struct
-{
+typedef struct {
     uint8_t ui8Channels;
     uint8_t ui8Bits;
     uint32_t ui32SampleRate;
@@ -103,7 +102,7 @@ typedef void (*tUSBHostAudioCallback)(tUSBHostAudioInstance *psAudioInstance,
 //
 //*****************************************************************************
 extern tUSBHostAudioInstance * USBHostAudioOpen(uint32_t ui32Index,
-                                           tUSBHostAudioCallback pfnCallback);
+        tUSBHostAudioCallback pfnCallback);
 extern void USBHostAudioClose(tUSBHostAudioInstance *psAudioInstance);
 extern int32_t USBHostAudioPlay(tUSBHostAudioInstance *psAudioInstance,
                                 void *pvBuffer, uint32_t ui32Size,
@@ -131,16 +130,16 @@ extern void USBHostAudioVolumeSet(tUSBHostAudioInstance *psAudioInstance,
                                   uint32_t ui32Value);
 
 extern uint32_t USBHostAudioVolumeMaxGet(tUSBHostAudioInstance *psAudioInstance,
-                                         uint32_t ui32Interface,
-                                         uint32_t ui32Channel);
+        uint32_t ui32Interface,
+        uint32_t ui32Channel);
 
 extern uint32_t USBHostAudioVolumeMinGet(tUSBHostAudioInstance *psAudioInstance,
-                                         uint32_t ui32Interface,
-                                         uint32_t ui32Channel);
+        uint32_t ui32Interface,
+        uint32_t ui32Channel);
 
 extern uint32_t USBHostAudioVolumeResGet(tUSBHostAudioInstance *psAudioInstance,
-                                           uint32_t ui32Interface,
-                                           uint32_t ui32Channel);
+        uint32_t ui32Interface,
+        uint32_t ui32Channel);
 extern uint32_t USBHostAudioLPMSleep(tUSBHostAudioInstance *psAudioInstance);
 extern uint32_t USBHostAudioLPMStatus(tUSBHostAudioInstance *psAudioInstance);
 

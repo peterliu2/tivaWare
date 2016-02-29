@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C123G Firmware Package.
 //
 //*****************************************************************************
@@ -56,8 +56,7 @@ static volatile bool g_bUSBDevConnected = false;
 // configures.
 //
 //*****************************************************************************
-static tLineCoding g_sLineCoding =
-{
+static tLineCoding g_sLineCoding = {
     115200, USB_CDC_STOP_BITS_1, USB_CDC_PARITY_NONE, 8
 };
 
@@ -118,13 +117,11 @@ ControlHandler(void *pvCBData, uint32_t ui32Event,
     //
     // Which event are we being asked to process?
     //
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // We are connected to a host and communication is now possible.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             g_bUSBDevConnected = true;
 
             //
@@ -138,8 +135,7 @@ ControlHandler(void *pvCBData, uint32_t ui32Event,
         //
         // The host has disconnected.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             g_bUSBDevConnected = false;
             break;
         }
@@ -147,8 +143,7 @@ ControlHandler(void *pvCBData, uint32_t ui32Event,
         //
         // Return the current serial communication parameters.
         //
-        case USBD_CDC_EVENT_GET_LINE_CODING:
-        {
+        case USBD_CDC_EVENT_GET_LINE_CODING: {
             GetLineCoding(pvMsgData);
             break;
         }
@@ -156,8 +151,7 @@ ControlHandler(void *pvCBData, uint32_t ui32Event,
         //
         // Set the current serial communication parameters.
         //
-        case USBD_CDC_EVENT_SET_LINE_CODING:
-        {
+        case USBD_CDC_EVENT_SET_LINE_CODING: {
             SetLineCoding(pvMsgData);
             break;
         }
@@ -168,8 +162,7 @@ ControlHandler(void *pvCBData, uint32_t ui32Event,
         //
         case USBD_CDC_EVENT_SET_CONTROL_LINE_STATE:
         case USBD_CDC_EVENT_SEND_BREAK:
-        case USBD_CDC_EVENT_CLEAR_BREAK:
-        {
+        case USBD_CDC_EVENT_CLEAR_BREAK: {
             break;
         }
 
@@ -177,16 +170,14 @@ ControlHandler(void *pvCBData, uint32_t ui32Event,
         // Ignore SUSPEND and RESUME for now.
         //
         case USB_EVENT_SUSPEND:
-        case USB_EVENT_RESUME:
-        {
+        case USB_EVENT_RESUME: {
             break;
         }
 
         //
         // An unknown event occurred.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -221,10 +212,8 @@ TxHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
     //
     // Which event have we been sent?
     //
-    switch(ui32Event)
-    {
-        case USB_EVENT_TX_COMPLETE:
-        {
+    switch(ui32Event) {
+        case USB_EVENT_TX_COMPLETE: {
             //
             // Since we are using the USBBuffer, we don't need to do anything
             // here.
@@ -235,8 +224,7 @@ TxHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
         //
         // We don't expect to receive any other events.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -268,13 +256,11 @@ RxHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
     //
     // Which event are we being sent?
     //
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // A new packet has been received.
         //
-        case USB_EVENT_RX_AVAILABLE:
-        {
+        case USB_EVENT_RX_AVAILABLE: {
             //
             // We do not ever expect to receive serial data, so just flush
             // the RX buffer if any data actually comes in.
@@ -288,8 +274,7 @@ RxHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
         // process.  Since there is no actual serial port and we are not
         // processing any RX data, just return 0.
         //
-        case USB_EVENT_DATA_REMAINING:
-        {
+        case USB_EVENT_DATA_REMAINING: {
             return(0);
         }
 
@@ -300,16 +285,14 @@ RxHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
         // this message but this is included just for illustration and
         // completeness.
         //
-        case USB_EVENT_REQUEST_BUFFER:
-        {
+        case USB_EVENT_REQUEST_BUFFER: {
             return(0);
         }
 
         //
         // We don't expect to receive any other events.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -379,16 +362,14 @@ USBSerialWriteRecord(tLogRecord *psRecord)
     // Check the arguments
     //
     ASSERT(psRecord);
-    if(!psRecord)
-    {
+    if(!psRecord) {
         return(1);
     }
 
     //
     // Check state for ready device
     //
-    if(!g_bUSBDevConnected)
-    {
+    if(!g_bUSBDevConnected) {
         return(1);
     }
 
@@ -397,10 +378,8 @@ USBSerialWriteRecord(tLogRecord *psRecord)
     //
     ui32Idx = psRecord->ui16ItemMask;
     ui32ItemCount = 0;
-    while(ui32Idx)
-    {
-        if(ui32Idx & 1)
-        {
+    while(ui32Idx) {
+        if(ui32Idx & 1) {
             ui32ItemCount++;
         }
         ui32Idx >>= 1;
@@ -422,8 +401,7 @@ USBSerialWriteRecord(tLogRecord *psRecord)
     // Compute the checksum over the entire record
     //
     pui16Buf = (uint16_t *)psRecord;
-    for(ui32Idx = 0; ui32Idx < ui32ItemCount; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < ui32ItemCount; ui32Idx++) {
         ui16Checksum += pui16Buf[ui32Idx];
     }
 

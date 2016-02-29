@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -95,8 +95,7 @@ fs_tick(uint32_t ui32TickMS)
     //
     // Check to see if the FAT FS tick needs to run.
     //
-    if(ui32TickCounter >= 10)
-    {
+    if(ui32TickCounter >= 10) {
         ui32TickCounter = 0;
         disk_timerproc();
     }
@@ -120,22 +119,19 @@ fs_open(const char *pcName)
     // Allocate memory for the file system structure.
     //
     psFile = mem_malloc(sizeof(struct fs_file));
-    if(psFile == NULL)
-    {
+    if(psFile == NULL) {
         return(NULL);
     }
 
     //
     // See if a file on the SD card is being requested.
     //
-    if(ustrncmp(pcName, "/sd/", 4) == 0)
-    {
+    if(ustrncmp(pcName, "/sd/", 4) == 0) {
         //
         // Allocate memory for the Fat File system handle.
         //
         psFatFile = mem_malloc(sizeof(FIL));
-        if(psFatFile == NULL)
-        {
+        if(psFatFile == NULL) {
             mem_free(psFile);
             return(NULL);
         }
@@ -144,8 +140,7 @@ fs_open(const char *pcName)
         // Attempt to open the file on the Fat File System.
         //
         fresult = f_open(psFatFile, pcName + 3, FA_READ);
-        if(fresult == FR_OK)
-        {
+        if(fresult == FR_OK) {
             psFile->data = NULL;
             psFile->len = 0;
             psFile->index = 0;
@@ -170,14 +165,12 @@ fs_open(const char *pcName)
     //
     // Begin processing the linked list, looking for the requested file name.
     //
-    while(NULL != psTree)
-    {
+    while(NULL != psTree) {
         //
         // Compare the requested file "name" to the file name in the
         // current node.
         //
-        if(ustrncmp(pcName, (char *)psTree->name, psTree->len) == 0)
-        {
+        if(ustrncmp(pcName, (char *)psTree->name, psTree->len) == 0) {
             //
             // Fill in the data pointer and length values from the
             // linked list node.
@@ -214,8 +207,7 @@ fs_open(const char *pcName)
     // If we didn't find the file, ptTee will be NULL.  Make sure we
     // return a NULL pointer if this happens.
     //
-    if(psTree == NULL)
-    {
+    if(psTree == NULL) {
         mem_free(psFile);
         psFile = NULL;
     }
@@ -237,8 +229,7 @@ fs_close(struct fs_file *psFile)
     //
     // If a Fat file was opened, free its object.
     //
-    if(psFile->pextension)
-    {
+    if(psFile->pextension) {
         mem_free(psFile->pextension);
     }
 
@@ -265,14 +256,12 @@ fs_read(struct fs_file *psFile, char *pcBuffer, int iCount)
     //
     // Check to see if a Fat File was opened and process it.
     //
-    if(psFile->pextension)
-    {
+    if(psFile->pextension) {
         //
         // Read the data.
         //
         fresult = f_read(psFile->pextension, pcBuffer, iCount, &uiBytesRead);
-        if((fresult != FR_OK) || (uiBytesRead == 0))
-        {
+        if((fresult != FR_OK) || (uiBytesRead == 0)) {
             return(-1);
         }
         return((int)uiBytesRead);
@@ -281,8 +270,7 @@ fs_read(struct fs_file *psFile, char *pcBuffer, int iCount)
     //
     // Check to see if more data is available.
     //
-    if(psFile->index == psFile->len)
-    {
+    if(psFile->index == psFile->len) {
         //
         // There is no remaining data.  Return a -1 for EOF indication.
         //
@@ -294,8 +282,7 @@ fs_read(struct fs_file *psFile, char *pcBuffer, int iCount)
     // parameter or the available data in the file system buffer.
     //
     iAvailable = psFile->len - psFile->index;
-    if(iAvailable > iCount)
-    {
+    if(iAvailable > iCount) {
         iAvailable = iCount;
     }
 
@@ -322,8 +309,7 @@ fs_bytes_left(struct fs_file *psFile)
     //
     // Check to see if a Fat File was opened and process it.
     //
-    if(psFile->pextension)
-    {
+    if(psFile->pextension) {
         //
         // Return the number of bytes left to be read from the Fat File.
         //

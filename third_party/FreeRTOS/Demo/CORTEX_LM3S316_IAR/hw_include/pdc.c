@@ -129,8 +129,7 @@ PDCRead(unsigned char ucAddr)
     // If the LCD control register or RAM is being read, then an additional
     // byte needs to be transferred.
     //
-    if((ucAddr == PDC_LCD_CSR) || (ucAddr == PDC_LCD_RAM))
-    {
+    if((ucAddr == PDC_LCD_CSR) || (ucAddr == PDC_LCD_RAM)) {
         //
         // Dummy write to force read.
         //
@@ -276,8 +275,7 @@ PDCLEDRead(void)
 void
 PDCLCDInit(void)
 {
-    unsigned char pucCfg[] =
-    {
+    unsigned char pucCfg[] = {
         0x3C,   // Number of lines = 2 / font = 5x10
         0x08,   // Display off
         0x01,   // Display clear
@@ -295,8 +293,7 @@ PDCLCDInit(void)
     // Wait for 4.1ms by reading the PDC version register enough times to
     // guarantee that amount of time has passed.
     //
-    for(ulIdx = 0; ulIdx < 257; ulIdx++)
-    {
+    for(ulIdx = 0; ulIdx < 257; ulIdx++) {
         PDCRead(PDC_VER);
     }
 
@@ -310,8 +307,7 @@ PDCLCDInit(void)
     // guarantee that amount of time has passed.  This works out to 112us plus
     // overhead.
     //
-    for(ulIdx = 0; ulIdx < 7; ulIdx++)
-    {
+    for(ulIdx = 0; ulIdx < 7; ulIdx++) {
         PDCRead(PDC_VER);
     }
 
@@ -323,13 +319,11 @@ PDCLCDInit(void)
     //
     // Configure the LCD.
     //
-    for(ulIdx = 0; ulIdx < (sizeof(pucCfg) / sizeof(pucCfg[0])); ulIdx++)
-    {
+    for(ulIdx = 0; ulIdx < (sizeof(pucCfg) / sizeof(pucCfg[0])); ulIdx++) {
         //
         // Wait until the LCD has finished executing any previous command.
         //
-        while((PDCRead(PDC_LCD_CSR) & LCD_B_BUSY))
-        {
+        while((PDCRead(PDC_LCD_CSR) & LCD_B_BUSY)) {
         }
 
         //
@@ -394,8 +388,7 @@ PDCLCDClear(void)
     //
     // Wait until the LCD has finished executing any previous command.
     //
-    while((PDCRead(PDC_LCD_CSR) & LCD_B_BUSY))
-    {
+    while((PDCRead(PDC_LCD_CSR) & LCD_B_BUSY)) {
     }
 
     //
@@ -435,8 +428,7 @@ PDCLCDCreateChar(unsigned char ucChar, unsigned char *pucData)
     //
     // Wait until the LCD has finished executing any previous command.
     //
-    while((PDCRead(PDC_LCD_CSR) & LCD_B_BUSY))
-    {
+    while((PDCRead(PDC_LCD_CSR) & LCD_B_BUSY)) {
     }
 
     //
@@ -447,13 +439,11 @@ PDCLCDCreateChar(unsigned char ucChar, unsigned char *pucData)
     //
     // Write the pattern to chacter pattern memory.
     //
-    for(ucChar = 0; ucChar < 8; ucChar++)
-    {
+    for(ucChar = 0; ucChar < 8; ucChar++) {
         //
         // Wait until the LCD has finished executing any previous command.
         //
-        while((PDCRead(PDC_LCD_CSR) & LCD_B_BUSY))
-        {
+        while((PDCRead(PDC_LCD_CSR) & LCD_B_BUSY)) {
         }
 
         //
@@ -493,8 +483,7 @@ PDCLCDSetPos(unsigned char ucX, unsigned char ucY)
     //
     // Wait until the LCD has finished executing any previous command.
     //
-    while((PDCRead(PDC_LCD_CSR) & LCD_B_BUSY))
-    {
+    while((PDCRead(PDC_LCD_CSR) & LCD_B_BUSY)) {
     }
 
     //
@@ -531,13 +520,11 @@ PDCLCDWrite(const char *pcStr, unsigned long ulCount)
     //
     // Write the string to the LCD.
     //
-    while(ulCount--)
-    {
+    while(ulCount--) {
         //
         // Wait until the LCD has finished executing any previous command.
         //
-        while((PDCRead(PDC_LCD_CSR) & LCD_B_BUSY))
-        {
+        while((PDCRead(PDC_LCD_CSR) & LCD_B_BUSY)) {
         }
 
         //
@@ -575,16 +562,11 @@ PDCGPIODirRead(unsigned char ucIdx)
     //
     // Read the requested direction register.
     //
-    if(ucIdx == 0)
-    {
+    if(ucIdx == 0) {
         return(PDCRead(PDC_GPXDIR));
-    }
-    else if(ucIdx == 1)
-    {
+    } else if(ucIdx == 1) {
         return(PDCRead(PDC_GPYDIR));
-    }
-    else
-    {
+    } else {
         return(PDCRead(PDC_GPZDIR));
     }
 }
@@ -618,16 +600,11 @@ PDCGPIODirWrite(unsigned char ucIdx, unsigned char ucValue)
     //
     // Write the requested direction register.
     //
-    if(ucIdx == 0)
-    {
+    if(ucIdx == 0) {
         PDCWrite(PDC_GPXDIR, ucValue);
-    }
-    else if(ucIdx == 1)
-    {
+    } else if(ucIdx == 1) {
         PDCWrite(PDC_GPYDIR, ucValue);
-    }
-    else
-    {
+    } else {
         PDCWrite(PDC_GPZDIR, ucValue);
     }
 }
@@ -660,16 +637,11 @@ PDCGPIORead(unsigned char ucIdx)
     //
     // Read the requested data register.
     //
-    if(ucIdx == 0)
-    {
+    if(ucIdx == 0) {
         return(PDCRead(PDC_GPXDAT));
-    }
-    else if(ucIdx == 1)
-    {
+    } else if(ucIdx == 1) {
         return(PDCRead(PDC_GPYDAT));
-    }
-    else
-    {
+    } else {
         return(PDCRead(PDC_GPZDAT));
     }
 }
@@ -702,16 +674,11 @@ PDCGPIOWrite(unsigned char ucIdx, unsigned char ucValue)
     //
     // Write the requested data register.
     //
-    if(ucIdx == 0)
-    {
+    if(ucIdx == 0) {
         PDCWrite(PDC_GPXDAT, ucValue);
-    }
-    else if(ucIdx == 1)
-    {
+    } else if(ucIdx == 1) {
         PDCWrite(PDC_GPYDAT, ucValue);
-    }
-    else
-    {
+    } else {
         PDCWrite(PDC_GPZDAT, ucValue);
     }
 }

@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Utility Library.
 //
 //*****************************************************************************
@@ -122,14 +122,12 @@ SPIFlashIntHandler(tSPIFlashState *pState)
     //
     // See if the uDMA transmit complete interrupt has asserted.
     //
-    if(ui32Data & SSI_MIS_DMATXMIS)
-    {
+    if(ui32Data & SSI_MIS_DMATXMIS) {
         //
         // Determine the size of the uDMA transfer based on the number of bytes
         // left to write.
         //
-        if(pState->ui32WriteCount > 1024)
-        {
+        if(pState->ui32WriteCount > 1024) {
             //
             // There are more than 1024 bytes left to transfer, so the uDMA
             // transfer that just completed was for a full 1024 bytes.
@@ -140,8 +138,7 @@ SPIFlashIntHandler(tSPIFlashState *pState)
             // If a page program is being performed, then the data buffer
             // pointer needs to be incremented as well.
             //
-            if(pState->ui16Cmd == CMD_PP)
-            {
+            if(pState->ui16Cmd == CMD_PP) {
                 //
                 // Increment the data buffer pointer.
                 //
@@ -150,8 +147,7 @@ SPIFlashIntHandler(tSPIFlashState *pState)
                 //
                 // See if there is more than one byte left to transfer.
                 //
-                if(pState->ui32WriteCount > 1)
-                {
+                if(pState->ui32WriteCount > 1) {
                     //
                     // Configure the uDMA to transmit the next portion of the
                     // data buffer.
@@ -170,17 +166,14 @@ SPIFlashIntHandler(tSPIFlashState *pState)
                     uDMAChannelEnable(pState->ui32TxChannel);
                 }
             }
-        }
-        else
-        {
+        } else {
             //
             // There are 1024 or less bytes left to transfer, so the uDMA
             // transfer that just copmleted was for one less than the remaining
             // transfer count.  If a page program is being performed, then the
             // data buffer pointer needs to be incremented.
             //
-            if(pState->ui16Cmd == CMD_PP)
-            {
+            if(pState->ui16Cmd == CMD_PP) {
                 pState->pui8Buffer += (pState->ui32WriteCount - 1);
             }
 
@@ -201,21 +194,18 @@ SPIFlashIntHandler(tSPIFlashState *pState)
     //
     // See if the uDMA receive complete interrupt has asserted.
     //
-    if(ui32Data & SSI_MIS_DMARXMIS)
-    {
+    if(ui32Data & SSI_MIS_DMARXMIS) {
         //
         // Determine the size of the uDMA transfer based on the number of bytes
         // left to read.
         //
-        if(pState->ui32ReadCount >= 1024)
-        {
+        if(pState->ui32ReadCount >= 1024) {
             //
             // There are 1024 or more bytes left to transfer, so the uDMA
             // transfer that just completed was for a full 1024 bytes.
             //
             pState->ui32ReadCount -= 1024;
-            if(pState->ui32WriteCount != 0)
-            {
+            if(pState->ui32WriteCount != 0) {
                 pState->ui32WriteCount -= 1024;
             }
 
@@ -227,14 +217,12 @@ SPIFlashIntHandler(tSPIFlashState *pState)
             //
             // See if there is additional data to transfer.
             //
-            if(pState->ui32ReadCount != 0)
-            {
+            if(pState->ui32ReadCount != 0) {
                 //
                 // Configure the transmit uDMA if there is more than one byte
                 // left to write.
                 //
-                if(pState->ui32WriteCount > 1)
-                {
+                if(pState->ui32WriteCount > 1) {
                     //
                     // Configure the uDMA to transmit the next portion of the
                     // data buffer.
@@ -273,15 +261,12 @@ SPIFlashIntHandler(tSPIFlashState *pState)
                 // interrupt.
                 //
                 if((pState->ui32ReadCount <= 1024) &&
-                   (pState->ui32WriteCount > 1))
-                {
+                        (pState->ui32WriteCount > 1)) {
                     HWREG(pState->ui32Base + SSI_O_ICR) = SSI_ICR_DMATXIC;
                     HWREG(pState->ui32Base + SSI_O_IM) = SSI_IM_DMATXIM;
                 }
             }
-        }
-        else
-        {
+        } else {
             //
             // There are less than 1024 bytes left to transfer, so the uDMA
             // transfer that copmleted was for the remaining transfer count.
@@ -298,15 +283,13 @@ SPIFlashIntHandler(tSPIFlashState *pState)
     //
     // Drain the receive FIFO is not using uDMA.
     //
-    if(!pState->bUseDMA)
-    {
+    if(!pState->bUseDMA) {
         //
         // Loop while there is more data in the receive FIFO and more data to
         // be read.
         //
         while((pState->ui32ReadCount != 0) &&
-              (MAP_SSIDataGetNonBlocking(pState->ui32Base, &ui32Data) != 0))
-        {
+                (MAP_SSIDataGetNonBlocking(pState->ui32Base, &ui32Data) != 0)) {
             //
             // Save this byte into the data buffer.
             //
@@ -324,18 +307,15 @@ SPIFlashIntHandler(tSPIFlashState *pState)
     // explicitly return to the caller when there is no further work that can
     // be done without stalling.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Determine the current state.
         //
-        switch(pState->ui16State)
-        {
+        switch(pState->ui16State) {
             //
             // The state machine is idle.
             //
-            case STATE_IDLE:
-            {
+            case STATE_IDLE: {
                 //
                 // Return indicating that the state machine is idle.  This
                 // should never happen since no further interrupts should occur
@@ -348,8 +328,7 @@ SPIFlashIntHandler(tSPIFlashState *pState)
             //
             // The state machine is in the command state.
             //
-            case STATE_CMD:
-            {
+            case STATE_CMD: {
                 //
                 // Set the SSI module into write-only mode.
                 //
@@ -358,21 +337,17 @@ SPIFlashIntHandler(tSPIFlashState *pState)
                 //
                 // Attempt to write the command byte into the FIFO.
                 //
-                if(ui32Count == 0)
-                {
+                if(ui32Count == 0) {
                     return(SPI_FLASH_WORKING);
                 }
                 if(MAP_SSIDataPutNonBlocking(pState->ui32Base,
-                                             pState->ui16Cmd) == 0)
-                {
+                                             pState->ui16Cmd) == 0) {
                     //
                     // The command byte could not be written, so return
                     // indicating that the transfer is still in progress.
                     //
                     return(SPI_FLASH_WORKING);
-                }
-                else
-                {
+                } else {
                     //
                     // The command byte has been written, so move to the first
                     // address byte state.
@@ -394,27 +369,22 @@ SPIFlashIntHandler(tSPIFlashState *pState)
             //
             // The state machine is in the first address byte state.
             //
-            case STATE_ADDR1:
-            {
+            case STATE_ADDR1: {
                 //
                 // Attempt to write the first address byte into the FIFO.
                 //
-                if(ui32Count == 0)
-                {
+                if(ui32Count == 0) {
                     return(SPI_FLASH_WORKING);
                 }
                 if(MAP_SSIDataPutNonBlocking(pState->ui32Base,
                                              (pState->ui32Addr >> 16) &
-                                             0xff) == 0)
-                {
+                                             0xff) == 0) {
                     //
                     // The first address byte could not be written, so return
                     // indicating that the transfer is still in progress.
                     //
                     return(SPI_FLASH_WORKING);
-                }
-                else
-                {
+                } else {
                     //
                     // The first address byte has been written, so move to the
                     // second address byte state.
@@ -436,27 +406,22 @@ SPIFlashIntHandler(tSPIFlashState *pState)
             //
             // The state machine is in the second address byte state.
             //
-            case STATE_ADDR2:
-            {
+            case STATE_ADDR2: {
                 //
                 // Attempt to write the second address byte into the FIFO.
                 //
-                if(ui32Count == 0)
-                {
+                if(ui32Count == 0) {
                     return(SPI_FLASH_WORKING);
                 }
                 if(MAP_SSIDataPutNonBlocking(pState->ui32Base,
                                              (pState->ui32Addr >> 8) & 0xff) ==
-                   0)
-                {
+                        0) {
                     //
                     // The second address byte could not be written, so return
                     // indicating that the transfer is still in progress.
                     //
                     return(SPI_FLASH_WORKING);
-                }
-                else
-                {
+                } else {
                     //
                     // The second address byte has been written, so move to the
                     // third address byte state.
@@ -478,48 +443,38 @@ SPIFlashIntHandler(tSPIFlashState *pState)
             //
             // The state machine is in the third address byte state.
             //
-            case STATE_ADDR3:
-            {
+            case STATE_ADDR3: {
                 //
                 // Attempt to write the third address byte into the FIFO.
                 //
-                if(ui32Count == 0)
-                {
+                if(ui32Count == 0) {
                     return(SPI_FLASH_WORKING);
                 }
                 if(MAP_SSIDataPutNonBlocking(pState->ui32Base,
-                                             pState->ui32Addr & 0xff) == 0)
-                {
+                                             pState->ui32Addr & 0xff) == 0) {
                     //
                     // The third address byte could not be written, so return
                     // indicating that the transfer is still in progress.
                     //
                     return(SPI_FLASH_WORKING);
-                }
-                else
-                {
+                } else {
                     //
                     // The third address byte has been written, so determine
                     // the next state based on the command byte.
                     //
-                    if(pState->ui16Cmd == CMD_PP)
-                    {
+                    if(pState->ui16Cmd == CMD_PP) {
                         //
                         // A page program is being performed, so move to the
                         // write data setup state.
                         //
                         pState->ui16State = STATE_WRITE_DATA_SETUP;
-                    }
-                    else if(pState->ui16Cmd == CMD_READ)
-                    {
+                    } else if(pState->ui16Cmd == CMD_READ) {
                         //
                         // A read is being performed, so move to the read data
                         // setup state.
                         //
                         pState->ui16State = STATE_READ_DATA_SETUP;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // The other forms of read (fast read, dual read, and
                         // quad read) all require a dummy byte.  Move to the
@@ -543,25 +498,20 @@ SPIFlashIntHandler(tSPIFlashState *pState)
             //
             // The state machine is in the dummy byte state.
             //
-            case STATE_READ_DUMMY:
-            {
+            case STATE_READ_DUMMY: {
                 //
                 // Attempt to write the dummy byte into the FIFO.
                 //
-                if(ui32Count == 0)
-                {
+                if(ui32Count == 0) {
                     return(SPI_FLASH_WORKING);
                 }
-                if(MAP_SSIDataPutNonBlocking(pState->ui32Base, 0) == 0)
-                {
+                if(MAP_SSIDataPutNonBlocking(pState->ui32Base, 0) == 0) {
                     //
                     // THe dummy byte could not be written, so return
                     // indicating that the transfer is still in progress.
                     //
                     return(SPI_FLASH_WORKING);
-                }
-                else
-                {
+                } else {
                     //
                     // The dummy byte has been written, so move to the read
                     // data setup state.
@@ -583,29 +533,23 @@ SPIFlashIntHandler(tSPIFlashState *pState)
             //
             // The state machine is in the read data setup state.
             //
-            case STATE_READ_DATA_SETUP:
-            {
+            case STATE_READ_DATA_SETUP: {
                 //
                 // Set the SSI module into the appropriate mode based on the
                 // command byte.
                 //
-                if(pState->ui16Cmd == CMD_DREAD)
-                {
+                if(pState->ui16Cmd == CMD_DREAD) {
                     //
                     // Bi-SPI read mode is used for the dual read command.
                     //
                     MAP_SSIAdvModeSet(pState->ui32Base, SSI_ADV_MODE_BI_READ);
-                }
-                else if(pState->ui16Cmd == CMD_QREAD)
-                {
+                } else if(pState->ui16Cmd == CMD_QREAD) {
                     //
                     // Quad-SPI read mode is used for the quad read command.
                     //
                     MAP_SSIAdvModeSet(pState->ui32Base,
                                       SSI_ADV_MODE_QUAD_READ);
-                }
-                else
-                {
+                } else {
                     //
                     // Advanced read/write mode is used for the read and fast
                     // read commands.
@@ -617,8 +561,7 @@ SPIFlashIntHandler(tSPIFlashState *pState)
                 //
                 // See if a single byte is being transferred.
                 //
-                if(pState->ui32ReadCount == 1)
-                {
+                if(pState->ui32ReadCount == 1) {
                     //
                     // Disable the use of uDMA.
                     //
@@ -634,8 +577,7 @@ SPIFlashIntHandler(tSPIFlashState *pState)
                 //
                 // See if uDMA has been requested for this transfer.
                 //
-                else if(!pState->bUseDMA || (pState->ui32ReadCount < 4))
-                {
+                else if(!pState->bUseDMA || (pState->ui32ReadCount < 4)) {
                     //
                     // Disable the use of uDMA.
                     //
@@ -650,8 +592,7 @@ SPIFlashIntHandler(tSPIFlashState *pState)
                 //
                 // This transfer should use uDMA.
                 //
-                else
-                {
+                else {
                     //
                     // If the transfer is larger than 1024 bytes, enable the
                     // uDMA receive complete interrupt which will be used to
@@ -659,12 +600,9 @@ SPIFlashIntHandler(tSPIFlashState *pState)
                     // enable the uDMA transmit complete interrupt which will
                     // be used to complete the transaction.
                     //
-                    if(pState->ui32ReadCount > 1024)
-                    {
+                    if(pState->ui32ReadCount > 1024) {
                         HWREG(pState->ui32Base + SSI_O_IM) = SSI_IM_DMARXIM;
-                    }
-                    else
-                    {
+                    } else {
                         HWREG(pState->ui32Base + SSI_O_IM) = SSI_IM_DMATXIM;
                     }
 
@@ -760,24 +698,20 @@ SPIFlashIntHandler(tSPIFlashState *pState)
             //
             // The state machine is in the read data state.
             //
-            case STATE_READ_DATA:
-            {
+            case STATE_READ_DATA: {
                 //
                 // Loop while there is more than one byte left to write.
                 //
-                while(pState->ui32WriteCount != 1)
-                {
+                while(pState->ui32WriteCount != 1) {
                     //
                     // Dummy bytes are written into the FIFO in order to
                     // trigger the read operation.  Attempt to write another
                     // dummy byte into the FIFO.
                     //
-                    if(ui32Count == 0)
-                    {
+                    if(ui32Count == 0) {
                         return(SPI_FLASH_WORKING);
                     }
-                    if(MAP_SSIDataPutNonBlocking(pState->ui32Base, 0) == 0)
-                    {
+                    if(MAP_SSIDataPutNonBlocking(pState->ui32Base, 0) == 0) {
                         //
                         // The dummy byte could not be written, so return
                         // indicating that the transfer is still in progress.
@@ -810,13 +744,11 @@ SPIFlashIntHandler(tSPIFlashState *pState)
             //
             // The state machine is in the uDMA read data state.
             //
-            case STATE_READ_DATA_DMA:
-            {
+            case STATE_READ_DATA_DMA: {
                 //
                 // See if the write count is greater than one.
                 //
-                if(pState->ui32WriteCount > 1)
-                {
+                if(pState->ui32WriteCount > 1) {
                     //
                     // Return indicating that the transfer is still in
                     // progress.
@@ -849,24 +781,20 @@ SPIFlashIntHandler(tSPIFlashState *pState)
             //
             // The state machine is in the data read end state.
             //
-            case STATE_READ_DATA_END:
-            {
+            case STATE_READ_DATA_END: {
                 //
                 // See if the final dummy byte still needs to be written.
                 //
-                if(pState->ui32WriteCount != 0)
-                {
+                if(pState->ui32WriteCount != 0) {
                     //
                     // Attempt to write the final dummy byte into the FIFO and
                     // mark it as the end of the frame.
                     //
-                    if(ui32Count == 0)
-                    {
+                    if(ui32Count == 0) {
                         return(SPI_FLASH_WORKING);
                     }
                     if(MAP_SSIAdvDataPutFrameEndNonBlocking(pState->ui32Base,
-                                                            0) == 0)
-                    {
+                                                            0) == 0) {
                         //
                         // The dummy byte could not be written, so return
                         // indicating that the transfer is still in progress.
@@ -890,8 +818,7 @@ SPIFlashIntHandler(tSPIFlashState *pState)
                 // Return indicating that the transfer is still in progress if
                 // there are still data bytes to be read.
                 //
-                if(pState->ui32ReadCount != 0)
-                {
+                if(pState->ui32ReadCount != 0) {
                     return(SPI_FLASH_WORKING);
                 }
 
@@ -919,13 +846,11 @@ SPIFlashIntHandler(tSPIFlashState *pState)
             //
             // The state machine is in the write data setup state.
             //
-            case STATE_WRITE_DATA_SETUP:
-            {
+            case STATE_WRITE_DATA_SETUP: {
                 //
                 // See if a single data byte is being transferred.
                 //
-                if(pState->ui32WriteCount == 1)
-                {
+                if(pState->ui32WriteCount == 1) {
                     //
                     // Disable the use of uDMA.
                     //
@@ -941,8 +866,7 @@ SPIFlashIntHandler(tSPIFlashState *pState)
                 //
                 // See if uDMA has been requested for this transfer.
                 //
-                else if(!pState->bUseDMA || (pState->ui32WriteCount < 4))
-                {
+                else if(!pState->bUseDMA || (pState->ui32WriteCount < 4)) {
                     //
                     // Disable the use of uDMA.
                     //
@@ -957,8 +881,7 @@ SPIFlashIntHandler(tSPIFlashState *pState)
                 //
                 // This transfer should use uDMA.
                 //
-                else
-                {
+                else {
                     //
                     // Enable the uDMA transmit complete interrupt.
                     //
@@ -1024,23 +947,19 @@ SPIFlashIntHandler(tSPIFlashState *pState)
             //
             // The state machine is in the write data state.
             //
-            case STATE_WRITE_DATA:
-            {
+            case STATE_WRITE_DATA: {
                 //
                 // Loop while there is more than one byte left to write.
                 //
-                while(pState->ui32WriteCount != 1)
-                {
+                while(pState->ui32WriteCount != 1) {
                     //
                     // Attempt to write the next data byte into the FIFO.
                     //
-                    if(ui32Count == 0)
-                    {
+                    if(ui32Count == 0) {
                         return(SPI_FLASH_WORKING);
                     }
                     if(MAP_SSIDataPutNonBlocking(pState->ui32Base,
-                                                 *(pState->pui8Buffer)) == 0)
-                    {
+                                                 *(pState->pui8Buffer)) == 0) {
                         //
                         // The next data byte could not be written, so return
                         // indicating that the transfer is still in progress.
@@ -1075,13 +994,11 @@ SPIFlashIntHandler(tSPIFlashState *pState)
             //
             // The state machine is in the uDMA write data state.
             //
-            case STATE_WRITE_DATA_DMA:
-            {
+            case STATE_WRITE_DATA_DMA: {
                 //
                 // See if the write count is greater than one.
                 //
-                if(pState->ui32WriteCount > 1)
-                {
+                if(pState->ui32WriteCount > 1) {
                     //
                     // Return indicating that the transfer is still in
                     // progress.
@@ -1114,15 +1031,13 @@ SPIFlashIntHandler(tSPIFlashState *pState)
             //
             // The state machine is in the write data end state.
             //
-            case STATE_WRITE_DATA_END:
-            {
+            case STATE_WRITE_DATA_END: {
                 //
                 // Attempt to write the final data byte into the FIFO.
                 //
                 if(MAP_SSIAdvDataPutFrameEndNonBlocking(pState->ui32Base,
-                                                      *(pState->pui8Buffer)) ==
-                   0)
-                {
+                                                        *(pState->pui8Buffer)) ==
+                        0) {
                     //
                     // The final data byte could not be written, so return
                     // indicating that the transfer is still in progress.
@@ -1268,8 +1183,7 @@ SPIFlashPageProgram(uint32_t ui32Base, uint32_t ui32Addr,
     //
     // Loop while there is more than one data byte left to be sent.
     //
-    while(ui32Count-- != 1)
-    {
+    while(ui32Count-- != 1) {
         //
         // Send the next data byte.
         //
@@ -1377,8 +1291,7 @@ SPIFlashRead(uint32_t ui32Base, uint32_t ui32Addr, uint8_t *pui8Data,
     //
     // Drain any residual data from the receive FIFO.
     //
-    while(MAP_SSIDataGetNonBlocking(ui32Base, &ui32Trash) != 0)
-    {
+    while(MAP_SSIDataGetNonBlocking(ui32Base, &ui32Trash) != 0) {
     }
 
     //
@@ -1408,15 +1321,12 @@ SPIFlashRead(uint32_t ui32Base, uint32_t ui32Addr, uint8_t *pui8Data,
     //
     // See if there is a single byte to be read.
     //
-    if(ui32Count == 1)
-    {
+    if(ui32Count == 1) {
         //
         // Perform a single dummy write, marking it as the end of the frame.
         //
         MAP_SSIAdvDataPutFrameEnd(ui32Base, 0);
-    }
-    else
-    {
+    } else {
         //
         // Perform a dummy write to prime the loop.
         //
@@ -1425,8 +1335,7 @@ SPIFlashRead(uint32_t ui32Base, uint32_t ui32Addr, uint8_t *pui8Data,
         //
         // Loop while there is more than one byte left to be read.
         //
-        while(--ui32Count != 1)
-        {
+        while(--ui32Count != 1) {
             //
             // Perform a dummy write to keep the transmit FIFO from going
             // empty.
@@ -1517,8 +1426,7 @@ SPIFlashReadNonBlocking(tSPIFlashState *pState, uint32_t ui32Base,
     //
     // Drain any residual data from the receive FIFO.
     //
-    while(MAP_SSIDataGetNonBlocking(ui32Base, &ui32Trash) != 0)
-    {
+    while(MAP_SSIDataGetNonBlocking(ui32Base, &ui32Trash) != 0) {
     }
 
     //
@@ -1591,8 +1499,7 @@ SPIFlashReadStatus(uint32_t ui32Base)
     //
     // Drain any residual data from the receive FIFO.
     //
-    while(MAP_SSIDataGetNonBlocking(ui32Base, &ui32Data) != 0)
-    {
+    while(MAP_SSIDataGetNonBlocking(ui32Base, &ui32Data) != 0) {
     }
 
     //
@@ -1686,8 +1593,7 @@ SPIFlashFastRead(uint32_t ui32Base, uint32_t ui32Addr, uint8_t *pui8Data,
     //
     // Drain any residual data from the receive FIFO.
     //
-    while(MAP_SSIDataGetNonBlocking(ui32Base, &ui32Trash) != 0)
-    {
+    while(MAP_SSIDataGetNonBlocking(ui32Base, &ui32Trash) != 0) {
     }
 
     //
@@ -1722,15 +1628,12 @@ SPIFlashFastRead(uint32_t ui32Base, uint32_t ui32Addr, uint8_t *pui8Data,
     //
     // See if there is a single byte to be read.
     //
-    if(ui32Count == 1)
-    {
+    if(ui32Count == 1) {
         //
         // Perform a single dummy write, marking it as the end of the frame.
         //
         MAP_SSIAdvDataPutFrameEnd(ui32Base, 0);
-    }
-    else
-    {
+    } else {
         //
         // Perform a dummy write to prime the loop.
         //
@@ -1739,8 +1642,7 @@ SPIFlashFastRead(uint32_t ui32Base, uint32_t ui32Addr, uint8_t *pui8Data,
         //
         // Loop while there is more than one byte left to be read.
         //
-        while(--ui32Count != 1)
-        {
+        while(--ui32Count != 1) {
             //
             // Perform a dummy write to keep the transmit FIFO from going
             // empty.
@@ -1834,8 +1736,7 @@ SPIFlashFastReadNonBlocking(tSPIFlashState *pState, uint32_t ui32Base,
     //
     // Drain any residual data from the receive FIFO.
     //
-    while(MAP_SSIDataGetNonBlocking(ui32Base, &ui32Trash) != 0)
-    {
+    while(MAP_SSIDataGetNonBlocking(ui32Base, &ui32Trash) != 0) {
     }
 
     //
@@ -1926,8 +1827,7 @@ SPIFlashDualRead(uint32_t ui32Base, uint32_t ui32Addr, uint8_t *pui8Data,
     //
     // Drain any residual data from the receive FIFO.
     //
-    while(MAP_SSIDataGetNonBlocking(ui32Base, &ui32Trash) != 0)
-    {
+    while(MAP_SSIDataGetNonBlocking(ui32Base, &ui32Trash) != 0) {
     }
 
     //
@@ -1963,15 +1863,12 @@ SPIFlashDualRead(uint32_t ui32Base, uint32_t ui32Addr, uint8_t *pui8Data,
     //
     // See if there is a single byte to be read.
     //
-    if(ui32Count == 1)
-    {
+    if(ui32Count == 1) {
         //
         // Perform a single dummy write, marking it as the end of the frame.
         //
         MAP_SSIAdvDataPutFrameEnd(ui32Base, 0);
-    }
-    else
-    {
+    } else {
         //
         // Perform a dummy write to prime the loop.
         //
@@ -1980,8 +1877,7 @@ SPIFlashDualRead(uint32_t ui32Base, uint32_t ui32Addr, uint8_t *pui8Data,
         //
         // Loop while there is more than one byte left to be read.
         //
-        while(--ui32Count != 1)
-        {
+        while(--ui32Count != 1) {
             //
             // Perform a dummy write to keep the transmit FIFO from going
             // empty.
@@ -2072,8 +1968,7 @@ SPIFlashDualReadNonBlocking(tSPIFlashState *pState, uint32_t ui32Base,
     //
     // Drain any residual data from the receive FIFO.
     //
-    while(MAP_SSIDataGetNonBlocking(ui32Base, &ui32Trash) != 0)
-    {
+    while(MAP_SSIDataGetNonBlocking(ui32Base, &ui32Trash) != 0) {
     }
 
     //
@@ -2164,8 +2059,7 @@ SPIFlashQuadRead(uint32_t ui32Base, uint32_t ui32Addr, uint8_t *pui8Data,
     //
     // Drain any residual data from the receive FIFO.
     //
-    while(MAP_SSIDataGetNonBlocking(ui32Base, &ui32Trash) != 0)
-    {
+    while(MAP_SSIDataGetNonBlocking(ui32Base, &ui32Trash) != 0) {
     }
 
     //
@@ -2201,15 +2095,12 @@ SPIFlashQuadRead(uint32_t ui32Base, uint32_t ui32Addr, uint8_t *pui8Data,
     //
     // See if there is a single byte to be read.
     //
-    if(ui32Count == 1)
-    {
+    if(ui32Count == 1) {
         //
         // Perform a single dummy write, marking it as the end of the frame.
         //
         MAP_SSIAdvDataPutFrameEnd(ui32Base, 0);
-    }
-    else
-    {
+    } else {
         //
         // Perform a dummy write to prime the loop.
         //
@@ -2218,8 +2109,7 @@ SPIFlashQuadRead(uint32_t ui32Base, uint32_t ui32Addr, uint8_t *pui8Data,
         //
         // Loop while there is more than one byte left to be read.
         //
-        while(--ui32Count != 1)
-        {
+        while(--ui32Count != 1) {
             //
             // Perform a dummy write to keep the transmit FIFO from going
             // empty.
@@ -2310,8 +2200,7 @@ SPIFlashQuadReadNonBlocking(tSPIFlashState *pState, uint32_t ui32Base,
     //
     // Drain any residual data from the receive FIFO.
     //
-    while(MAP_SSIDataGetNonBlocking(ui32Base, &ui32Trash) != 0)
-    {
+    while(MAP_SSIDataGetNonBlocking(ui32Base, &ui32Trash) != 0) {
     }
 
     //
@@ -2367,8 +2256,7 @@ SPIFlashReadID(uint32_t ui32Base, uint8_t *pui8ManufacturerID,
     //
     // Drain any residual data from the receive FIFO.
     //
-    while(MAP_SSIDataGetNonBlocking(ui32Base, &ui32Data1) != 0)
-    {
+    while(MAP_SSIDataGetNonBlocking(ui32Base, &ui32Data1) != 0) {
     }
 
     //

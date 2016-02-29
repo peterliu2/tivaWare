@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C123GXL Firmware Package.
 //
 //*****************************************************************************
@@ -122,10 +122,8 @@ TI_CAPT_Update_Baseline(const tSensor* psSensor, uint8_t ui8NumberOfAverages)
     // and average the results in to the baseline number stored in the main
     // baseline tracking array.
     //
-    for(ui8Loop = 0; ui8Loop < ui8NumberOfAverages; ui8Loop++)
-    {
-        for(ui8Loop2 = 0; ui8Loop2 < psSensor->ui8NumElements; ui8Loop2++)
-        {
+    for(ui8Loop = 0; ui8Loop < ui8NumberOfAverages; ui8Loop++) {
+        for(ui8Loop2 = 0; ui8Loop2 < psSensor->ui8NumElements; ui8Loop2++) {
             //
             // Take a capacitance measurement.
             //
@@ -136,8 +134,8 @@ TI_CAPT_Update_Baseline(const tSensor* psSensor, uint8_t ui8NumberOfAverages)
             // samples more heavily than older samples.
             //
             g_ui32Baselines[ui8Loop2 + psSensor->ui32BaseOffset] =
-                  ((g_pui32MeasCount[ui8Loop2] / 2) +
-                   (g_ui32Baselines[ui8Loop2 + psSensor->ui32BaseOffset] / 2));
+                ((g_pui32MeasCount[ui8Loop2] / 2) +
+                 (g_ui32Baselines[ui8Loop2 + psSensor->ui32BaseOffset] / 2));
         }
     }
 }
@@ -178,12 +176,9 @@ TI_CAPT_Reset_Tracking(void)
 void
 TI_CAPT_Update_Tracking_DOI(bool bDirection)
 {
-    if(bDirection)
-    {
+    if(bDirection) {
         g_ui32CtsStatusReg |= DOI_INC;
-    }
-    else
-    {
+    } else {
         g_ui32CtsStatusReg &= ~DOI_INC;
     }
 }
@@ -213,15 +208,15 @@ TI_CAPT_Update_Tracking_DOI(bool bDirection)
 void
 TI_CAPT_Update_Tracking_Rate(uint8_t ui8Rate)
 {
-  //
-  // Clear the old tracking rates.
-  //
-  g_ui32CtsStatusReg &= ~(TRIDOI_FAST + TRADOI_VSLOW);
+    //
+    // Clear the old tracking rates.
+    //
+    g_ui32CtsStatusReg &= ~(TRIDOI_FAST + TRADOI_VSLOW);
 
-  //
-  // Update with new tracking rates.
-  //
-  g_ui32CtsStatusReg |= (ui8Rate & 0xF0);
+    //
+    // Update with new tracking rates.
+    //
+    g_ui32CtsStatusReg |= (ui8Rate & 0xF0);
 }
 
 //*****************************************************************************
@@ -281,8 +276,7 @@ TI_CAPT_Custom(const tSensor* psSensor, uint32_t* pui32DeltaCnt)
     //
     // Loop over the elements in the sensor
     //
-    for (ui8Loop = 0; ui8Loop < (psSensor->ui8NumElements); ui8Loop++)
-    {
+    for (ui8Loop = 0; ui8Loop < (psSensor->ui8NumElements); ui8Loop++) {
         //
         // Obtain the relevant data for this element, including its baseline
         // count, threshold, and its most recent raw count.
@@ -295,19 +289,15 @@ TI_CAPT_Custom(const tSensor* psSensor, uint32_t* pui32DeltaCnt)
         // Use our direction of interest to figure out how to interpret the
         // relationship between raw count, baseline, and threshold.
         //
-        if(!(g_ui32CtsStatusReg & DOI_MASK))
-        {
+        if(!(g_ui32CtsStatusReg & DOI_MASK)) {
             //
             // If our direction of interest is DECREASING, meaning that
             // DECREASED count values correspond to touch events, we will use
             // the following formula to obtain the delta count.
             //
-            if(ui32BaseCount > ui32RawCount)
-            {
+            if(ui32BaseCount > ui32RawCount) {
                 pui32DeltaCnt[ui8Loop] = ui32BaseCount - ui32RawCount;
-            }
-            else
-            {
+            } else {
                 pui32DeltaCnt[ui8Loop] = 0;
             }
 
@@ -317,28 +307,20 @@ TI_CAPT_Custom(const tSensor* psSensor, uint32_t* pui32DeltaCnt)
             // higher than (baseline + threshold) prevents the baseline from
             // changing too quickly.
             //
-            if(ui32RawCount > (ui32BaseCount + ui32Threshold))
-            {
+            if(ui32RawCount > (ui32BaseCount + ui32Threshold)) {
                 ui32BoundedRawCount = ui32BaseCount + ui32Threshold;
-            }
-            else
-            {
+            } else {
                 ui32BoundedRawCount = ui32RawCount;
             }
-        }
-        else if(g_ui32CtsStatusReg & DOI_MASK)
-        {
+        } else if(g_ui32CtsStatusReg & DOI_MASK) {
             //
             // If our direction of interest is INCREASING, meaning that
             // INCREASED count values correspond to touch events, we will use
             // the following formula to obtain a delta count.
             //
-            if(ui32RawCount > ui32BaseCount)
-            {
+            if(ui32RawCount > ui32BaseCount) {
                 pui32DeltaCnt[ui8Loop] = ui32RawCount - ui32BaseCount;
-            }
-            else
-            {
+            } else {
                 pui32DeltaCnt[ui8Loop] = 0;
             }
 
@@ -348,12 +330,9 @@ TI_CAPT_Custom(const tSensor* psSensor, uint32_t* pui32DeltaCnt)
             // lower than (baseline - threshold) prevents the baseline from
             // changing too quickly.
             //
-            if(ui32RawCount < (ui32BaseCount - ui32Threshold))
-            {
+            if(ui32RawCount < (ui32BaseCount - ui32Threshold)) {
                 ui32BoundedRawCount = ui32BaseCount - ui32Threshold;
-            }
-            else
-            {
+            } else {
                 ui32BoundedRawCount = ui32RawCount;
             }
         }
@@ -364,8 +343,7 @@ TI_CAPT_Custom(const tSensor* psSensor, uint32_t* pui32DeltaCnt)
         // measurements. This all depends on the delta count, the threshold,
         // and whether an event has been seen recently.
         //
-        if(pui32DeltaCnt[ui8Loop] > ui32Threshold)
-        {
+        if(pui32DeltaCnt[ui8Loop] > ui32Threshold) {
             //
             // Our delta was above the threshold, which means we have a touch
             // event. Record this in the g_ui32CtsStatusReg so it can be used
@@ -375,22 +353,18 @@ TI_CAPT_Custom(const tSensor* psSensor, uint32_t* pui32DeltaCnt)
             //
             g_ui32CtsStatusReg |= EVNT;
             g_ui32CtsStatusReg |= PAST_EVNT;
-        }
-        else if(!(g_ui32CtsStatusReg & PAST_EVNT))
-        {
+        } else if(!(g_ui32CtsStatusReg & PAST_EVNT)) {
             //
             // If we didn't trigger an event above, and we haven't seen an
             // event recently, we need to do baseline tracking. Calculate the
             // correct baseline tracking factor here.
             //
-            if(pui32DeltaCnt[ui8Loop] > 0)
-            {
+            if(pui32DeltaCnt[ui8Loop] > 0) {
                 //
                 // If we had a positive delta count, we use the IN
                 // direction-of-interest tracking factor
                 //
-                switch(g_ui32CtsStatusReg & TRIDOI_FAST)
-                {
+                switch(g_ui32CtsStatusReg & TRIDOI_FAST) {
                     //
                     // Special case for "very slow": only move in increments of
                     // one.
@@ -406,12 +380,9 @@ TI_CAPT_Custom(const tSensor* psSensor, uint32_t* pui32DeltaCnt)
                         // Move the base count one value towards the bounded
                         // raw count.
                         //
-                        if(ui32BoundedRawCount > ui32BaseCount)
-                        {
+                        if(ui32BoundedRawCount > ui32BaseCount) {
                             ui32BaseCount++;
-                        }
-                        else
-                        {
+                        } else {
                             ui32BaseCount--;
                         }
                         break;
@@ -434,9 +405,7 @@ TI_CAPT_Custom(const tSensor* psSensor, uint32_t* pui32DeltaCnt)
                         //
                         ui32TrackingFactor = 0;
                 }
-            }
-            else
-            {
+            } else {
                 //
                 // If we had a zero or negative delta count, set the delta
                 // count to zero, and use the AGAINST direction-of-interest
@@ -444,8 +413,7 @@ TI_CAPT_Custom(const tSensor* psSensor, uint32_t* pui32DeltaCnt)
                 //
                 pui32DeltaCnt[ui8Loop] = 0;
 
-                switch ((g_ui32CtsStatusReg & TRADOI_VSLOW))
-                {
+                switch ((g_ui32CtsStatusReg & TRADOI_VSLOW)) {
                     case TRADOI_FAST:
                         ui32TrackingFactor = 2;
                         break;
@@ -473,8 +441,7 @@ TI_CAPT_Custom(const tSensor* psSensor, uint32_t* pui32DeltaCnt)
             // factor, and write our new calculated baseline back to the global
             // array.
             //
-            if(ui32TrackingFactor)
-            {
+            if(ui32TrackingFactor) {
                 ui32BaseCount = ((ui32BaseCount * (ui32TrackingFactor - 1) +
                                   ui32BoundedRawCount) / (ui32TrackingFactor));
             }
@@ -489,8 +456,7 @@ TI_CAPT_Custom(const tSensor* psSensor, uint32_t* pui32DeltaCnt)
     // clear the PAST_EVNT flag to avoid interfering with future calls of this
     // function.
     //
-    if(!(g_ui32CtsStatusReg & EVNT))
-    {
+    if(!(g_ui32CtsStatusReg & EVNT)) {
         g_ui32CtsStatusReg &= ~PAST_EVNT;
     }
 }
@@ -531,8 +497,7 @@ TI_CAPT_Button(const tSensor *psSensor)
     //
     // Check to see if any threshold-crossing events were recorded.
     //
-    if(g_ui32CtsStatusReg & EVNT)
-    {
+    if(g_ui32CtsStatusReg & EVNT) {
         //
         // If so, the button is being pressed. Return a 1. Otherwise return a
         // zero.
@@ -578,14 +543,11 @@ TI_CAPT_Buttons(const tSensor *psSensor)
     // (normalized by maximum response), and return a pointer to that element
     // back to the caller.
     //
-    if(g_ui32CtsStatusReg & EVNT)
-    {
+    if(g_ui32CtsStatusReg & EVNT) {
         ui8Index = Dominant_Element(psSensor, g_pui32MeasCount);
 
         return(psSensor->psElement[ui8Index]);
-    }
-    else
-    {
+    } else {
         //
         // If there were no touch events at all, return a zero.
         //
@@ -643,8 +605,7 @@ TI_CAPT_Slider(const tSensor *psSensor)
     // active. If not, we can skip the calculations and simply return an
     // illegal position.
     //
-    if(g_ui32CtsStatusReg & EVNT)
-    {
+    if(g_ui32CtsStatusReg & EVNT) {
         //
         // If we did have a touch event, normalize the responses and find the
         // index of the dominant element.
@@ -660,18 +621,13 @@ TI_CAPT_Slider(const tSensor *psSensor)
         // the first and last elements carefully here, as they have fewer
         // neighbors.
         //
-        if(ui8Index == 0)
-        {
+        if(ui8Index == 0) {
             ui32ThresholdCheck = (g_pui32MeasCount[ui8Index] +
                                   g_pui32MeasCount[ui8Index + 1]);
-        }
-        else if(ui8Index == (ui8NumElements - 1))
-        {
+        } else if(ui8Index == (ui8NumElements - 1)) {
             ui32ThresholdCheck = (g_pui32MeasCount[ui8Index] +
                                   g_pui32MeasCount[ui8Index - 1]);
-        }
-        else
-        {
+        } else {
             ui32ThresholdCheck = (g_pui32MeasCount[ui8Index] +
                                   g_pui32MeasCount[ui8Index + 1] +
                                   g_pui32MeasCount[ui8Index - 1]);
@@ -683,8 +639,7 @@ TI_CAPT_Slider(const tSensor *psSensor)
         // the physical slider. This means we should stop our calculation here
         // and return an illegal position value.
         //
-        if(ui32ThresholdCheck < ui32SensorThreshold)
-        {
+        if(ui32ThresholdCheck < ui32SensorThreshold) {
             return ILLEGAL_SLIDER_WHEEL_POSITION;
         }
 
@@ -702,47 +657,36 @@ TI_CAPT_Slider(const tSensor *psSensor)
         // first and last sensors in the slider are special cases, as each of
         // them only has one adjacent element.
         //
-        if(ui8Index == 0)
-        {
+        if(ui8Index == 0) {
             //
             // Special case for the first element in the array. If the adjacent
             // sensor is responding, push the position toward that element
             // accordingly. Otherwise, push the position away from that element
             // based on the magnitude of the response from sensor zero.
             //
-            if(g_pui32MeasCount[ui8Index + 1])
-            {
+            if(g_pui32MeasCount[ui8Index + 1]) {
                 ui32SliderPosition += ((g_pui32MeasCount[ui8Index + 1] *
                                         ui8PointsPerElement) / 100);
-            }
-            else
-            {
+            } else {
                 ui32SliderPosition = ((g_pui32MeasCount[ui8Index] *
                                        ui8PointsPerElement) / 200);
             }
-        }
-        else if(ui8Index == (ui8NumElements - 1))
-        {
+        } else if(ui8Index == (ui8NumElements - 1)) {
             //
             // Special case for the last element in the array. If the adjacent
             // sensor is responding, push the position toward that element
             // accordingly. Otherwise, push the position away from that element
             // based on the magnitude of the response of the last element.
             //
-            if(g_pui32MeasCount[ui8Index - 1])
-            {
+            if(g_pui32MeasCount[ui8Index - 1]) {
                 ui32SliderPosition -= ((g_pui32MeasCount[ui8Index - 1] *
                                         ui8PointsPerElement) / 100);
-            }
-            else
-            {
+            } else {
                 ui32SliderPosition = ui8Points;
                 ui32SliderPosition -= ((g_pui32MeasCount[ui8Index] *
                                         ui8PointsPerElement) / 200);
             }
-        }
-        else
-        {
+        } else {
             //
             // All other elements will have two neighbors, so push the position
             // towards based on the response of the adjacent sensors only.
@@ -759,9 +703,7 @@ TI_CAPT_Slider(const tSensor *psSensor)
         //
         return ui32SliderPosition;
 
-    }
-    else
-    {
+    } else {
         //
         // We didn't register any touch events at all, so return an illegal
         // slider position
@@ -822,8 +764,7 @@ TI_CAPT_Wheel(const tSensor* psSensor)
     // active. If not, we can skip the calculations and simply return an
     // illegal position.
     //
-    if(g_ui32CtsStatusReg & EVNT)
-    {
+    if(g_ui32CtsStatusReg & EVNT) {
         //
         // If we did have a touch event, normalize the responses and find the
         // index of the dominant element.
@@ -839,20 +780,15 @@ TI_CAPT_Wheel(const tSensor* psSensor)
         // the first and last elements carefully, as their neighbors wrap
         // around the array boundary.
         //
-        if(ui8Index == 0)
-        {
+        if(ui8Index == 0) {
             ui32ThresholdCheck = (g_pui32MeasCount[ui8Index] +
                                   g_pui32MeasCount[ui8Index + 1] +
                                   g_pui32MeasCount[ui8NumElements - 1]);
-        }
-        else if(ui8Index == (ui8NumElements - 1))
-        {
+        } else if(ui8Index == (ui8NumElements - 1)) {
             ui32ThresholdCheck = (g_pui32MeasCount[ui8Index] +
                                   g_pui32MeasCount[ui8Index - 1] +
                                   g_pui32MeasCount[0]);
-        }
-        else
-        {
+        } else {
             ui32ThresholdCheck = (g_pui32MeasCount[ui8Index] +
                                   g_pui32MeasCount[ui8Index + 1] +
                                   g_pui32MeasCount[ui8Index - 1]);
@@ -864,8 +800,7 @@ TI_CAPT_Wheel(const tSensor* psSensor)
         // the physical wheel. This means we should stop our calculation here
         // and return an illegal position value.
         //
-        if(ui32ThresholdCheck < ui32SensorThreshold)
-        {
+        if(ui32ThresholdCheck < ui32SensorThreshold) {
             return ILLEGAL_SLIDER_WHEEL_POSITION;
         }
 
@@ -883,8 +818,7 @@ TI_CAPT_Wheel(const tSensor* psSensor)
         // first and last sensors in the wheel are special cases, as each of
         // them only has one adjacent element.
         //
-        if(ui8Index == 0)
-        {
+        if(ui8Index == 0) {
             //
             // Special case for the first element in the array, which requires
             // wrapping of the index.
@@ -894,9 +828,7 @@ TI_CAPT_Wheel(const tSensor* psSensor)
 
             ui32WheelPosition -= ((g_pui32MeasCount[ui8NumElements - 1] *
                                    ui8PointsPerElement) / 100);
-        }
-        else if(ui8Index == (ui8NumElements - 1))
-        {
+        } else if(ui8Index == (ui8NumElements - 1)) {
             //
             // Special case for the last element in the array, which requires
             // wrapping of the index.
@@ -906,9 +838,7 @@ TI_CAPT_Wheel(const tSensor* psSensor)
 
             ui32WheelPosition -= ((g_pui32MeasCount[ui8Index - 1] *
                                    ui8PointsPerElement) / 100);
-        }
-        else
-        {
+        } else {
             //
             // No wrapping necessary, so just push the position based on the
             // measurements of the adjacent elements
@@ -925,9 +855,7 @@ TI_CAPT_Wheel(const tSensor* psSensor)
         //
         return ui32WheelPosition;
 
-    }
-    else
-    {
+    } else {
         //
         // We didn't register any touch events at all, so return an illegal
         // wheel position
@@ -987,8 +915,7 @@ Dominant_Element(const tSensor *psSensor, uint32_t* pui32DeltaCnt)
     // element, and keep track of the element with the highest normalized
     // response.
     //
-    for(ui8Loop = 0; ui8Loop < psSensor->ui8NumElements; ui8Loop++)
-    {
+    for(ui8Loop = 0; ui8Loop < psSensor->ui8NumElements; ui8Loop++) {
         //
         // Retrieve the threshold and maximum response for this element, and
         // calculate the full dynamic range.
@@ -1005,13 +932,11 @@ Dominant_Element(const tSensor *psSensor, uint32_t* pui32DeltaCnt)
         // If so, further calculations are necessary. If not, the normalized
         // value is zero.
         //
-        if(pui32DeltaCnt[ui8Loop] >= ui32ElementThreshold)
-        {
+        if(pui32DeltaCnt[ui8Loop] >= ui32ElementThreshold) {
             //
             // Limit the delta count for this element to it's maximum response.
             //
-            if(pui32DeltaCnt[ui8Loop] > (ui32ElementMaxResponse))
-            {
+            if(pui32DeltaCnt[ui8Loop] > (ui32ElementMaxResponse)) {
                 pui32DeltaCnt[ui8Loop] = ui32ElementMaxResponse;
             }
 
@@ -1031,14 +956,11 @@ Dominant_Element(const tSensor *psSensor, uint32_t* pui32DeltaCnt)
             // If this normalized delta count is the highest seen so far,
             // record the index of the element.
             //
-            if(pui32DeltaCnt[ui8Loop] > ui32HighestNormalizedDelta)
-            {
+            if(pui32DeltaCnt[ui8Loop] > ui32HighestNormalizedDelta) {
                 ui32HighestNormalizedDelta = pui32DeltaCnt[ui8Loop];
                 ui8DominantElement = ui8Loop;
             }
-        }
-        else
-        {
+        } else {
             pui32DeltaCnt[ui8Loop] = 0;
         }
     }

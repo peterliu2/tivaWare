@@ -132,8 +132,7 @@ CharToHex(char *pcSrc, uint32_t ui32Len, uint8_t *pcDst)
     // Check if the soruce and destination buffers are valid.  If so return
     // error.
     //
-    if((pcSrc == NULL) || (pcDst == NULL))
-    {
+    if((pcSrc == NULL) || (pcDst == NULL)) {
         return 0;
     }
 
@@ -146,21 +145,17 @@ CharToHex(char *pcSrc, uint32_t ui32Len, uint8_t *pcDst)
     //
     // Convert all the hex characters in the source buffer into integers.
     //
-    while(ui32CharAvailable)
-    {
+    while(ui32CharAvailable) {
         //
         // Check if 8 or more characters are available in the buffer.
         //
-        if(ui32CharAvailable > 7)
-        {
+        if(ui32CharAvailable > 7) {
             //
             // Yes - then process 8 characters at a time since "ustrtoul"
             // function can convert only upto 8 characters in one go.
             //
             ui32CharToProcess = 8;
-        }
-        else
-        {
+        } else {
             //
             // No - then process the remaining characters.
             //
@@ -173,8 +168,7 @@ CharToHex(char *pcSrc, uint32_t ui32Len, uint8_t *pcDst)
         // pcTemp[0:1].  This is done so that copying the output of "ustrtoul"
         // function into destination bufer becomes easy.
         //
-        for(ui32Index = 0; ui32Index < ui32CharToProcess; ui32Index += 2)
-        {
+        for(ui32Index = 0; ui32Index < ui32CharToProcess; ui32Index += 2) {
             pcTemp[ui32Index + 1] = pcSrc[(ui32CharToProcess - 1) - ui32Index];
             pcTemp[ui32Index] = pcSrc[(ui32CharToProcess - 1) -
                                       (ui32Index + 1)];
@@ -195,8 +189,7 @@ CharToHex(char *pcSrc, uint32_t ui32Len, uint8_t *pcDst)
         //
         // Copy the hex digits into the destination buffer.
         //
-        while(ui32OutCode)
-        {
+        while(ui32OutCode) {
             *pcDst = (ui32OutCode & 0xFF);
             pcDst++;
             ui32OutCode = (ui32OutCode >> 8);
@@ -234,8 +227,7 @@ Cmd_reset(int argc, char *argv[])
     //
     // Wait for the peipheral to be ready
     //
-    while(!MAP_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0))
-    {
+    while(!MAP_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0)) {
     }
 
     //
@@ -290,8 +282,7 @@ Cmd_algo(int argc, char *argv[])
     //
     // Check if correct arguments are passed.
     //
-    if((argc < 4) || (argc > 5))
-    {
+    if((argc < 4) || (argc > 5)) {
         //
         // Error.  Print help message and return.
         //
@@ -302,23 +293,16 @@ Cmd_algo(int argc, char *argv[])
     //
     // Validate and process the value passed to <Mode> argument.
     //
-    if((ustrncmp("ecb", argv[1], 3) == 0))
-    {
+    if((ustrncmp("ecb", argv[1], 3) == 0)) {
         ui32Mode = AES_CFG_MODE_ECB;
         bIVRequired = false;
-    }
-    else if((ustrncmp("cbc", argv[1], 3) == 0))
-    {
+    } else if((ustrncmp("cbc", argv[1], 3) == 0)) {
         ui32Mode = AES_CFG_MODE_CBC;
         bIVRequired = true;
-    }
-    else if((ustrncmp("cfb", argv[1], 3) == 0))
-    {
+    } else if((ustrncmp("cfb", argv[1], 3) == 0)) {
         ui32Mode = AES_CFG_MODE_CFB;
         bIVRequired = true;
-    }
-    else
-    {
+    } else {
         //
         // Error - Wrong value passed to <Mode> argument.  Print help message
         // and return.
@@ -332,13 +316,11 @@ Cmd_algo(int argc, char *argv[])
     //
     // Validate and process the value passed to the optional (IV) argument.
     //
-    if(bIVRequired == false)
-    {
+    if(bIVRequired == false) {
         //
         // For modes that don't need IV, check if IV is passed.
         //
-        if(argc > 4)
-        {
+        if(argc > 4) {
             //
             // Yes - This is an Error.  Print help message and return.
             //
@@ -347,14 +329,11 @@ Cmd_algo(int argc, char *argv[])
             PrintHelpCmdAlgo();
             return 0;
         }
-    }
-    else
-    {
+    } else {
         //
         // For modes that require IV, check if IV is passed.
         //
-        if(argc < 5)
-        {
+        if(argc < 5) {
             //
             // No - This is an Error.  Print help message and return.
             //
@@ -368,8 +347,7 @@ Cmd_algo(int argc, char *argv[])
         // An IV value is passed.  Check if the value is valid.
         //
         ui32StrLen = ustrlen(argv[4]);
-        if(ui32StrLen != 32)
-        {
+        if(ui32StrLen != 32) {
             //
             // Invalid value.  Print help message and return.
             //
@@ -381,8 +359,7 @@ Cmd_algo(int argc, char *argv[])
         //
         // Convert the IV from string to HEX.
         //
-        if(!(CharToHex(argv[4], ui32StrLen, &g_pui8AESIVData[0])))
-        {
+        if(!(CharToHex(argv[4], ui32StrLen, &g_pui8AESIVData[0]))) {
             //
             // Invalid value.  Print help message and return.
             //
@@ -396,8 +373,7 @@ Cmd_algo(int argc, char *argv[])
     // Validate and process the value passed to <Key_Size> argument.
     //
     ui32KeySize = ustrtoul(argv[2], 0, 10);
-    if((ui32KeySize != 128) && (ui32KeySize != 192) && (ui32KeySize != 256))
-    {
+    if((ui32KeySize != 128) && (ui32KeySize != 192) && (ui32KeySize != 256)) {
         //
         // Error - Wrong value passed to <Key_Size> argument.  Print help
         // message and return.
@@ -419,8 +395,7 @@ Cmd_algo(int argc, char *argv[])
     // Validate and process the value passed to <Direction> argument.
     //
     ui32Direction = ustrtoul(argv[3], 0, 10);
-    if((ui32Direction != 0) && (ui32Direction != 1))
-    {
+    if((ui32Direction != 0) && (ui32Direction != 1)) {
         //
         // Error - Wrong value passed to <Direction> argument.  Print help
         // message and return.
@@ -435,7 +410,7 @@ Cmd_algo(int argc, char *argv[])
     // Copy the <Direction> argument value into a variable.
     //
     ui32Direction = (ui32Direction) ? AES_CFG_DIR_ENCRYPT :
-                                      AES_CFG_DIR_DECRYPT;
+                    AES_CFG_DIR_DECRYPT;
 
     //
     // Set-up the AES module with the necessary parameters.
@@ -484,8 +459,7 @@ Cmd_key(int argc, char *argv[])
     //
     // Check if correct arguments are sent.
     //
-    if(argc < 2)
-    {
+    if(argc < 2) {
         //
         // Error.  Print help message and return.
         //
@@ -496,13 +470,11 @@ Cmd_key(int argc, char *argv[])
     //
     // Is the optional (hex) parameter entered?
     //
-    if(ustrcmp("hex", argv[1]) == 0 )
-    {
+    if(ustrcmp("hex", argv[1]) == 0 ) {
         //
         // Yes - Check if only one paramter follows (hex).
         //
-        if(argc > 3)
-        {
+        if(argc > 3) {
             //
             // Error.  Print help message and return.
             //
@@ -515,27 +487,23 @@ Cmd_key(int argc, char *argv[])
         // Does the KEY, entered, have even number of characters?
         //
         ui32StrLen = ustrlen(argv[2]);
-        if((ui32StrLen % 2) != 0)
-        {
+        if((ui32StrLen % 2) != 0) {
             //
             // No - Error!  Print error message and return.
             //
             UARTprintf("\nODD number of characters entered for KEY.  KEY "
-                        "should contain EVEN number of characters.\n");
+                       "should contain EVEN number of characters.\n");
             return 0;
         }
 
         //
         // Now convert input HEX stream into a number.
         //
-        if(!(CharToHex(argv[2], ui32StrLen, (uint8_t *)g_pcAESKey)))
-        {
+        if(!(CharToHex(argv[2], ui32StrLen, (uint8_t *)g_pcAESKey))) {
             UARTprintf("\nKey has non-hex characters.\n");
             return 0;
         }
-    }
-    else
-    {
+    } else {
         //
         // Since the optional parameter (hex) was not entered, assume that user
         // has entered KEY in plain text.  Copy the first value, after the
@@ -545,8 +513,7 @@ Cmd_key(int argc, char *argv[])
         ui32Index = 1;
         ustrncpy(g_pcAESKey, argv[ui32Index], sizeof(g_pcAESKey));
         ui32Index++;
-        while(ui32Index < argc)
-        {
+        while(ui32Index < argc) {
             strcat(g_pcAESKey," ");
             strcat(g_pcAESKey, argv[ui32Index]);
             ui32Index++;
@@ -586,8 +553,7 @@ Cmd_data(int argc, char *argv[])
     //
     // Check if correct arguments are sent.
     //
-    if(argc < 2)
-    {
+    if(argc < 2) {
         //
         // Error.  Print help message and return.
         //
@@ -598,21 +564,18 @@ Cmd_data(int argc, char *argv[])
     //
     // Null the string before reading any data
     //
-    for(ui32Index = 0 ; ui32Index < AES_DATA_SIZE ; ui32Index++)
-    {
+    for(ui32Index = 0 ; ui32Index < AES_DATA_SIZE ; ui32Index++) {
         g_pcAESEncryptDataIn[ui32Index] = 0x0;
     }
 
     //
     // Is the optional (hex) parameter entered?
     //
-    if(ustrcmp("hex",argv[1]) == 0 )
-    {
+    if(ustrcmp("hex",argv[1]) == 0 ) {
         //
         // Yes - Check if only one paramter follows (hex).
         //
-        if(argc > 3)
-        {
+        if(argc > 3) {
             //
             // Error.  Print help message and return.
             //
@@ -625,8 +588,7 @@ Cmd_data(int argc, char *argv[])
         // Does the DATA, entered, have even number of characters?
         //
         ui32StrLen = ustrlen(argv[2]);
-        if((ui32StrLen % 2) != 0)
-        {
+        if((ui32StrLen % 2) != 0) {
             //
             // No - Error!  Print error message and return.
             //
@@ -643,14 +605,11 @@ Cmd_data(int argc, char *argv[])
         //
         // Now convert input HEX stream to a number.
         //
-        if(!(CharToHex(argv[2], ui32StrLen, (uint8_t *)g_pcAESEncryptDataIn)))
-        {
+        if(!(CharToHex(argv[2], ui32StrLen, (uint8_t *)g_pcAESEncryptDataIn))) {
             UARTprintf("\nData has non-hex characters.\n");
             return 0;
         }
-    }
-    else
-    {
+    } else {
         //
         // Clear the hex string length
         //
@@ -666,8 +625,7 @@ Cmd_data(int argc, char *argv[])
         ustrncpy(g_pcAESEncryptDataIn, argv[ui32Index],
                  sizeof(g_pcAESEncryptDataIn));
         ui32Index++;
-        while(ui32Index < argc)
-        {
+        while(ui32Index < argc) {
             strcat(g_pcAESEncryptDataIn," ");
             strcat(g_pcAESEncryptDataIn, argv[ui32Index]);
             ui32Index++;
@@ -693,8 +651,7 @@ Cmd_process(int argc, char *argv[])
     //
     // Check if correct parameters were passed.
     //
-    if(argc != 1)
-    {
+    if(argc != 1) {
         //
         // No - Print error message and exit.
         //
@@ -706,8 +663,7 @@ Cmd_process(int argc, char *argv[])
     //
     // Check if initialization vector is required.
     //
-    if(g_bIVRequired)
-    {
+    if(g_bIVRequired) {
         //
         // Yes - Write the initial value.
         //
@@ -722,12 +678,9 @@ Cmd_process(int argc, char *argv[])
     //
     // Get the length of the data.
     //
-    if(g_ui32StringLength == 0)
-    {
+    if(g_ui32StringLength == 0) {
         ui32StringLength = ustrlen(g_pcAESEncryptDataIn);
-    }
-    else
-    {
+    } else {
         ui32StringLength = g_ui32StringLength;
     }
 
@@ -741,7 +694,7 @@ Cmd_process(int argc, char *argv[])
     // Copy the data to AES module and begin the encryption/decryption.
     //
     MAP_AESDataProcess(AES_BASE, (uint32_t *)g_pcAESEncryptDataIn,
-                   (uint32_t *)g_pui8AESEncryptDataOut, ui32StringLength);
+                       (uint32_t *)g_pui8AESEncryptDataOut, ui32StringLength);
 
     //
     // Copy the encrypted/decrypted output from a 32-bit pointer to an 8-bit
@@ -757,22 +710,15 @@ Cmd_process(int argc, char *argv[])
     //
     // Print the final encrypted/decrypted output.
     //
-    if(!g_bProcessDirection)
-    {
+    if(!g_bProcessDirection) {
         UARTprintf("\nENCRYPTED OUTPUT\n");
-    }
-    else
-    {
+    } else {
         UARTprintf("\nDEECRYPTED OUTPUT\n");
     }
-    for(ui32Index = 0 ; ui32Index < ui32DataBlock ; ui32Index++, pui8Ptr++)
-    {
-        if(i32DataLine == (ui32Index / 16))
-        {
+    for(ui32Index = 0 ; ui32Index < ui32DataBlock ; ui32Index++, pui8Ptr++) {
+        if(i32DataLine == (ui32Index / 16)) {
             UARTprintf("%02x ", *pui8Ptr);
-        }
-        else
-        {
+        } else {
             i32DataLine = (ui32Index / 16);
             UARTprintf("\n%07x0 : %02x ", i32DataLine, *pui8Ptr);
         }
@@ -810,8 +756,7 @@ Cmd_help(int argc, char *argv[])
     // Enter a loop to read each entry from the command table.  The end of the
     // table has been reached when the command name is NULL.
     //
-    while(psEntry->pcCmd)
-    {
+    while(psEntry->pcCmd) {
         //
         // Print the command name and the brief description.
         //
@@ -876,26 +821,33 @@ InitConsole(void)
 // brief description.
 //
 //*****************************************************************************
-tCmdLineEntry g_psCmdTable[] =
-{
+tCmdLineEntry g_psCmdTable[] = {
     { "help",   Cmd_help,   " Display list of commands" },
     { "?",      Cmd_help,   " Display list of commands" },
     { "h",      Cmd_help,   " Display list of commands" },
     { "reset",  Cmd_reset,  " Reset the Crypto Modules" },
-    { "algo",   Cmd_algo,   " Select AES algorithm, key length,"
-                            " encrypt/decrypt and IV\n\t     Syntax:"
-                            "algo <Mode> <Key_size> <Direction> <IV>\n\t     "
-                            " For more help enter \"algo\" at prompt" },
-    { "key",    Cmd_key,    " Enter Key for Encryption\n\t     Syntax:"
-                            "key (hex) <KEY>\n\t      For more help enter"
-                            " \"key\" at prompt" },
-    { "data",   Cmd_data,   " Enter Data for Encryption\n\t     Syntax:"
-                            "data (hex) <DATA>\n\t      For more help enter"
-                            " \"data\" at prompt" },
-    { "process",Cmd_process," Output encrypted/decrypted data based on:\n\t "
-                            "   * algo - set AES algorithm\n\t "
-                            "   * key - enter key\n\t "
-                            "   * data - enter data to encrypt or decrypt" },
+    {
+        "algo",   Cmd_algo,   " Select AES algorithm, key length,"
+        " encrypt/decrypt and IV\n\t     Syntax:"
+        "algo <Mode> <Key_size> <Direction> <IV>\n\t     "
+        " For more help enter \"algo\" at prompt"
+    },
+    {
+        "key",    Cmd_key,    " Enter Key for Encryption\n\t     Syntax:"
+        "key (hex) <KEY>\n\t      For more help enter"
+        " \"key\" at prompt"
+    },
+    {
+        "data",   Cmd_data,   " Enter Data for Encryption\n\t     Syntax:"
+        "data (hex) <DATA>\n\t      For more help enter"
+        " \"data\" at prompt"
+    },
+    {
+        "process",Cmd_process," Output encrypted/decrypted data based on:\n\t "
+        "   * algo - set AES algorithm\n\t "
+        "   * key - enter key\n\t "
+        "   * data - enter data to encrypt or decrypt"
+    },
     { 0, 0, 0 }
 };
 
@@ -925,8 +877,7 @@ main(void)
     //
     // Wait for the peripheral to be ready.
     //
-    while(!MAP_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0))
-    {
+    while(!MAP_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0)) {
     }
 
     //
@@ -950,8 +901,7 @@ main(void)
     // Enter an infinite loop for reading and processing commands from the
     // user.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Begin command prompt.
         //
@@ -971,16 +921,14 @@ main(void)
         //
         // Handle the case of bad command.
         //
-        if(iStatus == CMDLINE_BAD_CMD)
-        {
+        if(iStatus == CMDLINE_BAD_CMD) {
             UARTprintf("Bad command!\n");
         }
 
         //
         // Handle the case of too many arguments.
         //
-        else if(iStatus == CMDLINE_TOO_MANY_ARGS)
-        {
+        else if(iStatus == CMDLINE_TOO_MANY_ARGS) {
             UARTprintf("Too many arguments for command processor!\n");
         }
     }

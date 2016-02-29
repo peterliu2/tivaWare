@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -71,8 +71,7 @@ SSITRF79x0GenericWrite(unsigned char const *pucBuffer, unsigned int uiLength)
 {
     uint32_t ulDummyData;
 
-    while(uiLength > 0)
-    {
+    while(uiLength > 0) {
         //
         // Write address/command/data and clear SSI register of dummy data.
         //
@@ -103,8 +102,7 @@ SSITRF79x0DummyWrite(unsigned char const *pucBuffer, unsigned int uiLength)
 {
     uint32_t ulDummyData;
 
-    while(uiLength > 0)
-    {
+    while(uiLength > 0) {
         //
         // Write address/command/data and clear SSI register of dummy data.
         //
@@ -130,8 +128,7 @@ SSITRF79x0GenericRead(unsigned char *pucBuffer, unsigned int uiLength)
 {
     uint32_t ulData;
 
-    while(uiLength > 0)
-    {
+    while(uiLength > 0) {
         //
         // Write dummy data for SSI clock and read data from SSI register.
         //
@@ -250,8 +247,7 @@ SSITRF79x0Init(void)
                            SSI_FRF_MOTO_MODE_0, SSI_MODE_MASTER, SSI_CLK_RATE,
                            8);
 
-    if(RF_DAUGHTER_TRF7970)
-    {
+    if(RF_DAUGHTER_TRF7970) {
         //
         // Switch from SPH=0 to SPH=1.  Required for TRF7970.
         //
@@ -455,12 +451,11 @@ SSITRF79x0ReadRegister(unsigned char ucAddress)
 
     SSITRF79x0GenericWrite(&ucAddress, 1);
 
-    if(RF_DAUGHTER_TRF7960)
-    {
-    	//
-    	// Switch from SPH=0 to SPH=1.
-    	//
-    	HWREG(TRF79X0_SSI_BASE + SSI_O_CR0) |= SSI_CR0_SPH;
+    if(RF_DAUGHTER_TRF7960) {
+        //
+        // Switch from SPH=0 to SPH=1.
+        //
+        HWREG(TRF79X0_SSI_BASE + SSI_O_CR0) |= SSI_CR0_SPH;
     }
 
     //
@@ -468,8 +463,7 @@ SSITRF79x0ReadRegister(unsigned char ucAddress)
     //
     SSITRF79x0GenericRead(&ucData, 1);
 
-    if(RF_DAUGHTER_TRF7960)
-    {
+    if(RF_DAUGHTER_TRF7960) {
         //
         // Switch from SPH=1 to SPH=0.
         //
@@ -525,8 +519,7 @@ SSITRF79x0ReadContinuousStart(unsigned char ucAddress)
 
     SSITRF79x0GenericWrite(&ucAddress, 1);
 
-    if(RF_DAUGHTER_TRF7960)
-    {
+    if(RF_DAUGHTER_TRF7960) {
         //
         // Switch from SPH=0 to SPH=1.
         //
@@ -565,8 +558,7 @@ SSITRF79x0ReadContinuousData(unsigned char *pucBuffer, unsigned int uiLength)
 void
 SSITRF79x0ReadContinuousStop(void)
 {
-    if(RF_DAUGHTER_TRF7960)
-    {
+    if(RF_DAUGHTER_TRF7960) {
         //
         // Switch from SPH=1 to SPH=0.
         //
@@ -646,13 +638,10 @@ SSITRF79x0WriteDirectCommand(unsigned char ucCommand)
     pucCommand[0] = ucCommand;
     pucCommand[1] = SSI_NO_DATA;
 
-    if(ucCommand == TRF79X0_RESET_FIFO_CMD)
-    {
-    	SSITRF79x0GenericWrite(pucCommand, sizeof(pucCommand));
-    }
-    else
-    {
-    	SSITRF79x0GenericWrite(pucCommand, 1);
+    if(ucCommand == TRF79X0_RESET_FIFO_CMD) {
+        SSITRF79x0GenericWrite(pucCommand, sizeof(pucCommand));
+    } else {
+        SSITRF79x0GenericWrite(pucCommand, 1);
     }
 
     //
@@ -757,7 +746,7 @@ SSITRF79x0WriteResetFifoDirectCommand(unsigned char ucCommand)
 //
 //*****************************************************************************
 void SSITRF79x0WritePacket(uint8_t *pui8Buffer, uint8_t ui8CRCBit, \
-    uint8_t ui8TotalLength, uint8_t ui8PayloadLength, bool bHeaderEnable)
+                           uint8_t ui8TotalLength, uint8_t ui8PayloadLength, bool bHeaderEnable)
 {
     uint8_t ui8LengthLowerNibble = (ui8TotalLength & 0x0F) << 4;
     uint8_t ui8LengthHigherNibble = (ui8TotalLength & 0xF0) >> 4;
@@ -768,40 +757,37 @@ void SSITRF79x0WritePacket(uint8_t *pui8Buffer, uint8_t ui8CRCBit, \
     //
     SSITRF79x0ChipSelectAssert();
 
-    if(bHeaderEnable == true)
-    {
-    // RESET FIFO
-    //while (!(IFG2 & UCB0TXIFG));        // USCI_B0 TX buffer ready?
-    pui8HeaderData[0] = 0x8F;                   // Previous data to TX, RX
-    SSITRF79x0GenericWrite(pui8HeaderData,1);
-    //while(UCB0STAT & UCBUSY);
+    if(bHeaderEnable == true) {
+        // RESET FIFO
+        //while (!(IFG2 & UCB0TXIFG));        // USCI_B0 TX buffer ready?
+        pui8HeaderData[0] = 0x8F;                   // Previous data to TX, RX
+        SSITRF79x0GenericWrite(pui8HeaderData,1);
+        //while(UCB0STAT & UCBUSY);
 
-    // CRC COMMAND
-    //while (!(IFG2 & UCB0TXIFG));        // USCI_B0 TX buffer ready?
-    pui8HeaderData[0] = 0x90 | (ui8CRCBit & 0x01);    // Previous data to TX, RX
-    SSITRF79x0GenericWrite(pui8HeaderData,1);
-    //while(UCB0STAT & UCBUSY);
+        // CRC COMMAND
+        //while (!(IFG2 & UCB0TXIFG));        // USCI_B0 TX buffer ready?
+        pui8HeaderData[0] = 0x90 | (ui8CRCBit & 0x01);    // Previous data to TX, RX
+        SSITRF79x0GenericWrite(pui8HeaderData,1);
+        //while(UCB0STAT & UCBUSY);
 
-    // WRITE TO LENGTH REG
-    //while (!(IFG2 & UCB0TXIFG));        // USCI_B0 TX buffer ready?
-    pui8HeaderData[0] = 0x3D;
-    SSITRF79x0GenericWrite(pui8HeaderData,1);
-    //while(UCB0STAT & UCBUSY);
+        // WRITE TO LENGTH REG
+        //while (!(IFG2 & UCB0TXIFG));        // USCI_B0 TX buffer ready?
+        pui8HeaderData[0] = 0x3D;
+        SSITRF79x0GenericWrite(pui8HeaderData,1);
+        //while(UCB0STAT & UCBUSY);
 
-    // LENGTH HIGH Nibble
-    //while (!(IFG2 & UCB0TXIFG));        // USCI_B0 TX buffer ready?
-    pui8HeaderData[0] = ui8LengthHigherNibble;   // Previous data to TX, RX
-    SSITRF79x0GenericWrite(pui8HeaderData,1);
-    //while(UCB0STAT & UCBUSY);
+        // LENGTH HIGH Nibble
+        //while (!(IFG2 & UCB0TXIFG));        // USCI_B0 TX buffer ready?
+        pui8HeaderData[0] = ui8LengthHigherNibble;   // Previous data to TX, RX
+        SSITRF79x0GenericWrite(pui8HeaderData,1);
+        //while(UCB0STAT & UCBUSY);
 
-    // LENGTH LOW Nibble
-    //while (!(IFG2 & UCB0TXIFG));        // USCI_B0 TX buffer ready?
-    pui8HeaderData[0] = ui8LengthLowerNibble;    // Previous data to TX, RX
-    SSITRF79x0GenericWrite(pui8HeaderData,1);
-    //while(UCB0STAT & UCBUSY);
-    }
-    else
-    {
+        // LENGTH LOW Nibble
+        //while (!(IFG2 & UCB0TXIFG));        // USCI_B0 TX buffer ready?
+        pui8HeaderData[0] = ui8LengthLowerNibble;    // Previous data to TX, RX
+        SSITRF79x0GenericWrite(pui8HeaderData,1);
+        //while(UCB0STAT & UCBUSY);
+    } else {
         //while (!(IFG2 & UCB0TXIFG));        // USCI_B0 TX buffer ready?
         pui8HeaderData[0] = 0x3F;
         SSITRF79x0GenericWrite(pui8HeaderData,1);

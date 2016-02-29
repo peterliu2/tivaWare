@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -31,17 +31,17 @@
 //
 //*****************************************************************************
 #define KXTI9_O_XOUT_HFP_L      0x00        // X-axis high-pass data LSB
-                                            // register
+// register
 #define KXTI9_O_XOUT_HFP_H      0x01        // X-axis high-pass data MSB
-                                            // register
+// register
 #define KXTI9_O_YOUT_HFP_L      0x02        // Y-axis high-pass data LSB
-                                            // register
+// register
 #define KXTI9_O_YOUT_HFP_H      0x03        // Y-axis high-pass data MSB
-                                            // register
+// register
 #define KXTI9_O_ZOUT_HFP_L      0x04        // Z-axis high-pass data LSB
-                                            // register
+// register
 #define KXTI9_O_ZOUT_HFP_H      0x05        // Z-axis high-pass data MSB
-                                            // register
+// register
 #define KXTI9_O_XOUT_L          0x06        // X-axis data LSB register
 #define KXTI9_O_XOUT_H          0x07        // X-axis data MSB register
 #define KXTI9_O_YOUT_L          0x08        // Y-axis data LSB register
@@ -92,7 +92,7 @@
 //
 //*****************************************************************************
 #define KXTI9_XOUT_HPF_L_M      0xF0        // Bits [3:0] of high-pass filtered
-                                            // X-axis data
+// X-axis data
 #define KXTI9_XOUT_HPF_L_S      4
 
 //*****************************************************************************
@@ -102,7 +102,7 @@
 //
 //*****************************************************************************
 #define KXTI9_XOUT_HPF_H_M      0xFF        // Bits [11:4] of high-pass
-                                            // filtered X-axis data
+// filtered X-axis data
 #define KXTI9_XOUT_HPF_H_S      0
 
 //*****************************************************************************
@@ -112,7 +112,7 @@
 //
 //*****************************************************************************
 #define KXTI9_YOUT_HPF_L_M      0xF0        // Bits [3:0] of high-pass filtered
-                                            // Y-axis data
+// Y-axis data
 #define KXTI9_YOUT_HPF_L_S      4
 
 //*****************************************************************************
@@ -122,7 +122,7 @@
 //
 //*****************************************************************************
 #define KXTI9_YOUT_HPF_H_M      0xFF        // Bits [11:4] of high-pass
-                                            // filtered Y-axis data
+// filtered Y-axis data
 #define KXTI9_YOUT_HPF_H_S      0
 
 //*****************************************************************************
@@ -132,7 +132,7 @@
 //
 //*****************************************************************************
 #define KXTI9_ZOUT_HPF_L_M      0xF0        // Bits [3:0] of high-pass filtered
-                                            // Z-axis data
+// Z-axis data
 #define KXTI9_ZOUT_HPF_L_S      4
 
 //*****************************************************************************
@@ -142,7 +142,7 @@
 //
 //*****************************************************************************
 #define KXTI9_ZOUT_HPF_H_M      0xFF        // Bits [11:4] of high-pass
-                                            // filtered Z-axis data
+// filtered Z-axis data
 #define KXTI9_ZOUT_HPF_H_S      0
 
 //*****************************************************************************
@@ -313,7 +313,7 @@
 //
 //*****************************************************************************
 #define KXTI9_CTRL2_OTDTH       0x80        // Output data rate selection for
-                                            // directional tap
+// directional tap
 #define KXTI9_CTRL2_LEM         0x20        // Left state tilt enable
 #define KXTI9_CTRL2_RIM         0x10        // Right state tilt enable
 #define KXTI9_CTRL2_DOM         0x08        // Down state tilt enable
@@ -328,20 +328,20 @@
 //*****************************************************************************
 #define KXTI9_CTRL3_SRST        0x80        // Initiate software reset
 #define KXTI9_CTRL3_OTP_M       0x60        // Output data rate for tilt
-                                            // position
+// position
 #define KXTI9_CTRL3_OTP_1_6HZ   0x00        // Data rate is 1.6Hz
 #define KXTI9_CTRL3_OTP_6_3HZ   0x01        // Data rate is 6.3Hz
 #define KXTI9_CTRL3_OTP_12_5HZ  0x02        // Data rate is 12.5Hz
 #define KXTI9_CTRL3_OTP_50HZ    0x03        // Data rate is 50Hz
 #define KXTI9_CTRL3_OWUF_M      0x60        // Output data rate for motion
-                                            // detection and high-pass outputs
+// detection and high-pass outputs
 #define KXTI9_CTRL3_OWUF_25HZ   0x00        // Data rate is 25Hz
 #define KXTI9_CTRL3_OWUF_50HZ   0x01        // Data rate is 50Hz
 #define KXTI9_CTRL3_OWUF_100HZ  0x02        // Data rate is 100Hz
 #define KXTI9_CTRL3_OWUF_200HZ  0x03        // Data rate is 200Hz
 #define KXTI9_CTRL3_DCST        0x10        // Digital communication self-test
 #define KXTI9_CTRL3_OTDT_M      0x0C        // Encoding values change based on
-                                            // value of OTDTH bit
+// value of OTDTH bit
 #define KXTI9_CTRL3_OTDT_0      0x00        // Encoding 0 is 50Hz or 12.5Hz
 #define KXTI9_CTRL3_OTDT_1      0x01        // Encoding 1 is 100Hz or 25Hz
 #define KXTI9_CTRL3_OTDT_2      0x02        // Encoding 2 is 200Hz or 800Hz
@@ -360,7 +360,7 @@
 #define KXTI9_INT_CTRL1_IEA     0x10        // Interrupt pin polarity
 #define KXTI9_INT_CTRL1_IEL     0x08        // Interrupt pin response
 #define KXTI9_INT_CTRL1_IEU     0x04        // Interrupt pin alternative
-                                            // response
+// response
 
 //*****************************************************************************
 //
@@ -393,7 +393,7 @@
 //
 //*****************************************************************************
 #define KXTI9_DATA_CTRL_HPFRO_M 0x30        // High-pass filter roll-off
-                                            // frequency
+// frequency
 #define KXTI9_DATA_CTRL_HPFRO_50HZ                                            \
                                 0x00        // Roll-off at 50Hz
 #define KXTI9_DATA_CTRL_HPFRO_100HZ                                           \
@@ -403,28 +403,28 @@
 #define KXTI9_DATA_CTRL_HPFRO_400HZ                                           \
                                 0x03        // Roll-off at 400Hz
 #define KXTI9_DATA_CTRL_OSA_M   0x07        // Output data rate and roll-off
-                                            // for low-pass filter outputs
+// for low-pass filter outputs
 #define KXTI9_DATA_CTRL_OSA_12_5HZ                                            \
                                 0x00        // 12.5Hz data rate, 6.25Hz LPF
-                                            // roll-off
+// roll-off
 #define KXTI9_DATA_CTRL_OSA_25HZ                                              \
                                 0x01        // 25Hz data rate, 12.5Hz LPF
-                                            // roll-off
+// roll-off
 #define KXTI9_DATA_CTRL_OSA_50HZ                                              \
                                 0x02        // 50Hz data rate, 25Hz LPF
-                                            // roll-off
+// roll-off
 #define KXTI9_DATA_CTRL_OSA_100HZ                                             \
                                 0x03        // 100Hz data rate, 50Hz LPF
-                                            // roll-off
+// roll-off
 #define KXTI9_DATA_CTRL_OSA_200HZ                                             \
                                 0x04        // 200Hz data rate, 100Hz LPF
-                                            // roll-off
+// roll-off
 #define KXTI9_DATA_CTRL_OSA_400HZ                                             \
                                 0x05        // 400Hz data rate, 200Hz LPF
-                                            // roll-off
+// roll-off
 #define KXTI9_DATA_CTRL_OSA_800HZ                                             \
                                 0x06        // 800Hz data rate, 400Hz LPF
-                                            // roll-off
+// roll-off
 #define KXTI9_DATA_CTRL_HPFRO_S 4
 #define KXTI9_DATA_CTRL_OSA_S   0
 
@@ -574,7 +574,7 @@
 //
 //*****************************************************************************
 #define KXTI9_SELF_TEST_M       0xFF        // Writing 0xCA enables MEMS
-                                            // self-test
+// self-test
 #define KXTI9_SELF_TEST_S       0
 
 //*****************************************************************************
@@ -602,7 +602,7 @@
 //
 //*****************************************************************************
 #define KXTI9_HYST_SET_RES_M    0xE0        // Factory set value - do not
-                                            // change
+// change
 #define KXTI9_HYST_SET_HYST_M   0x1F        // Hysteresis angle
 #define KXTI9_HYST_SET_RES_S    5
 #define KXTI9_HYST_SET_HYST_S   0

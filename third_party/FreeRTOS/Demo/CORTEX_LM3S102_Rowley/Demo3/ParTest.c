@@ -82,9 +82,8 @@
 /* Hardware specific include files. */
 #include "DriverLib.h"
 
-static const unsigned long ulLEDs[] =
-{
-	GPIO_PIN_6, GPIO_PIN_1, GPIO_PIN_0
+static const unsigned long ulLEDs[] = {
+    GPIO_PIN_6, GPIO_PIN_1, GPIO_PIN_0
 };
 
 #define partstLED_PINS ( GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_6 )
@@ -94,56 +93,47 @@ static const unsigned long ulLEDs[] =
 /*-----------------------------------------------------------*/
 void vParTestInitialise( void )
 {
-portBASE_TYPE xLED;
+    portBASE_TYPE xLED;
 
-	/* The LED's are on port B. */
+    /* The LED's are on port B. */
     GPIODirModeSet( GPIO_PORTB_BASE, partstLED_PINS, GPIO_DIR_MODE_OUT );
 
-	for( xLED = 0; xLED < partstMAX_OUTPUT_LED; xLED++ )
-	{
-		vParTestSetLED( xLED, pdFALSE );
-	}
+    for( xLED = 0; xLED < partstMAX_OUTPUT_LED; xLED++ ) {
+        vParTestSetLED( xLED, pdFALSE );
+    }
 }
 /*-----------------------------------------------------------*/
 
 void vParTestSetLED( unsigned portBASE_TYPE uxLED, signed portBASE_TYPE xValue )
 {
-	vTaskSuspendAll();
-	{
-		if( uxLED < partstMAX_OUTPUT_LED )
-		{
-			if( xValue == pdFALSE )
-			{
-				GPIOPinWrite( GPIO_PORTB_BASE, ulLEDs[ uxLED ], ulLEDs[ uxLED ] );
-			}
-			else
-			{
-				GPIOPinWrite( GPIO_PORTB_BASE, ulLEDs[ uxLED ], ~ulLEDs[ uxLED ] );
-			}
-		}	
-	}
-	xTaskResumeAll();
+    vTaskSuspendAll();
+    {
+        if( uxLED < partstMAX_OUTPUT_LED ) {
+            if( xValue == pdFALSE ) {
+                GPIOPinWrite( GPIO_PORTB_BASE, ulLEDs[ uxLED ], ulLEDs[ uxLED ] );
+            } else {
+                GPIOPinWrite( GPIO_PORTB_BASE, ulLEDs[ uxLED ], ~ulLEDs[ uxLED ] );
+            }
+        }
+    }
+    xTaskResumeAll();
 }
 /*-----------------------------------------------------------*/
 
 void vParTestToggleLED( unsigned portBASE_TYPE uxLED )
 {
-portBASE_TYPE xCurrentValue;
+    portBASE_TYPE xCurrentValue;
 
-	vTaskSuspendAll();
-	{
-		if( uxLED < partstMAX_OUTPUT_LED )
-		{
-			xCurrentValue = GPIOPinRead( GPIO_PORTB_BASE, ulLEDs[ uxLED ] );
-			if( xCurrentValue )
-			{
-				GPIOPinWrite( GPIO_PORTB_BASE, ulLEDs[ uxLED ], ~ulLEDs[ uxLED ] );
-			}
-			else
-			{
-				GPIOPinWrite( GPIO_PORTB_BASE, ulLEDs[ uxLED ], ulLEDs[ uxLED ] );
-			}
-		}
-	}
-	xTaskResumeAll();
+    vTaskSuspendAll();
+    {
+        if( uxLED < partstMAX_OUTPUT_LED ) {
+            xCurrentValue = GPIOPinRead( GPIO_PORTB_BASE, ulLEDs[ uxLED ] );
+            if( xCurrentValue ) {
+                GPIOPinWrite( GPIO_PORTB_BASE, ulLEDs[ uxLED ], ~ulLEDs[ uxLED ] );
+            } else {
+                GPIOPinWrite( GPIO_PORTB_BASE, ulLEDs[ uxLED ], ulLEDs[ uxLED ] );
+            }
+        }
+    }
+    xTaskResumeAll();
 }

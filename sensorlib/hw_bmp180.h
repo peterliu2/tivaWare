@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -67,7 +67,7 @@
 //
 //*****************************************************************************
 #define BMP180_AC1_MSB_M        0xFF        // MSB of AC1 calibration
-                                            // coefficient
+// coefficient
 #define BMP180_AC1_MSB_S        0
 
 //*****************************************************************************
@@ -77,7 +77,7 @@
 //
 //*****************************************************************************
 #define BMP180_AC1_LSB_M        0xFF        // LSB of AC1 calibration
-                                            // coefficient
+// coefficient
 #define BMP180_AC1_LSB_S        0
 
 //*****************************************************************************
@@ -87,7 +87,7 @@
 //
 //*****************************************************************************
 #define BMP180_AC2_MSB_M        0xFF        // MSB of AC2 calibration
-                                            // coefficient
+// coefficient
 #define BMP180_AC2_MSB_S        0
 
 //*****************************************************************************
@@ -97,7 +97,7 @@
 //
 //*****************************************************************************
 #define BMP180_AC2_LSB_M        0xFF        // LSB of AC2 calibration
-                                            // coefficient
+// coefficient
 #define BMP180_AC2_LSB_S        0
 
 //*****************************************************************************
@@ -107,7 +107,7 @@
 //
 //*****************************************************************************
 #define BMP180_AC3_MSB_M        0xFF        // MSB of AC3 calibration
-                                            // coefficient
+// coefficient
 #define BMP180_AC3_MSB_S        0
 
 //*****************************************************************************
@@ -117,7 +117,7 @@
 //
 //*****************************************************************************
 #define BMP180_AC3_LSB_M        0xFF        // LSB of AC3 calibration
-                                            // coefficient
+// coefficient
 #define BMP180_AC3_LSB_S        0
 
 //*****************************************************************************
@@ -127,7 +127,7 @@
 //
 //*****************************************************************************
 #define BMP180_AC4_MSB_M        0xFF        // MSB of AC4 calibration
-                                            // coefficient
+// coefficient
 #define BMP180_AC4_MSB_S        0
 
 //*****************************************************************************
@@ -137,7 +137,7 @@
 //
 //*****************************************************************************
 #define BMP180_AC4_LSB_M        0xFF        // LSB of AC4 calibration
-                                            // coefficient
+// coefficient
 #define BMP180_AC4_LSB_S        0
 
 //*****************************************************************************
@@ -147,7 +147,7 @@
 //
 //*****************************************************************************
 #define BMP180_AC5_MSB_M        0xFF        // MSB of AC5 calibration
-                                            // coefficient
+// coefficient
 #define BMP180_AC5_MSB_S        0
 
 //*****************************************************************************
@@ -157,7 +157,7 @@
 //
 //*****************************************************************************
 #define BMP180_AC5_LSB_M        0xFF        // LSB of AC5 calibration
-                                            // coefficient
+// coefficient
 #define BMP180_AC5_LSB_S        0
 
 //*****************************************************************************
@@ -167,7 +167,7 @@
 //
 //*****************************************************************************
 #define BMP180_AC6_MSB_M        0xFF        // MSB of AC6 calibration
-                                            // coefficient
+// coefficient
 #define BMP180_AC6_MSB_S        0
 
 //*****************************************************************************
@@ -177,7 +177,7 @@
 //
 //*****************************************************************************
 #define BMP180_AC6_LSB_M        0xFF        // LSB of AC6 calibration
-                                            // coefficient
+// coefficient
 #define BMP180_AC6_LSB_S        0
 
 //*****************************************************************************
@@ -187,7 +187,7 @@
 //
 //*****************************************************************************
 #define BMP180_B1_MSB_M         0xFF        // MSB of B1 calibration
-                                            // coefficient
+// coefficient
 #define BMP180_B1_MSB_S         0
 
 //*****************************************************************************
@@ -197,7 +197,7 @@
 //
 //*****************************************************************************
 #define BMP180_B1_LSB_M         0xFF        // LSB of B1 calibration
-                                            // coefficient
+// coefficient
 #define BMP180_B1_LSB_S         0
 
 //*****************************************************************************
@@ -207,7 +207,7 @@
 //
 //*****************************************************************************
 #define BMP180_B2_MSB_M         0xFF        // MSB of B2 calibration
-                                            // coefficient
+// coefficient
 #define BMP180_B2_MSB_S         0
 
 //*****************************************************************************
@@ -217,7 +217,7 @@
 //
 //*****************************************************************************
 #define BMP180_B2_LSB_M         0xFF        // LSB of B2 calibration
-                                            // coefficient
+// coefficient
 #define BMP180_B2_LSB_S         0
 
 //*****************************************************************************
@@ -227,7 +227,7 @@
 //
 //*****************************************************************************
 #define BMP180_MB_MSB_M         0xFF        // MSB of MB calibration
-                                            // coefficient
+// coefficient
 #define BMP180_MB_MSB_S         0
 
 //*****************************************************************************
@@ -237,7 +237,7 @@
 //
 //*****************************************************************************
 #define BMP180_MB_LSB_M         0xFF        // LSB of MB calibration
-                                            // coefficient
+// coefficient
 #define BMP180_MB_LSB_S         0
 
 //*****************************************************************************
@@ -247,7 +247,7 @@
 //
 //*****************************************************************************
 #define BMP180_MC_MSB_M         0xFF        // MSB of MC calibration
-                                            // coefficient
+// coefficient
 #define BMP180_MC_MSB_S         0
 
 //*****************************************************************************
@@ -257,7 +257,7 @@
 //
 //*****************************************************************************
 #define BMP180_MC_LSB_M         0xFF        // LSB of MC calibration
-                                            // coefficient
+// coefficient
 #define BMP180_MC_LSB_S         0
 
 //*****************************************************************************
@@ -267,7 +267,7 @@
 //
 //*****************************************************************************
 #define BMP180_MD_MSB_M         0xFF        // MSB of MD calibration
-                                            // coefficient
+// coefficient
 #define BMP180_MD_MSB_S         0
 
 //*****************************************************************************
@@ -277,7 +277,7 @@
 //
 //*****************************************************************************
 #define BMP180_MD_LSB_M         0xFF        // LSB of MD calibration
-                                            // coefficient
+// coefficient
 #define BMP180_MD_LSB_S         0
 
 //*****************************************************************************

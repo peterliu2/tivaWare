@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -163,8 +163,7 @@ volatile uint32_t g_ui32ScreenSaver;
 // State information for the toggle buttons used in the settings panel.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // The outside area of the button.
     //
@@ -214,8 +213,7 @@ tContext g_sContext;
 // The flash parameter block structure.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // Reserved space used by the flash program block code.
     //
@@ -258,8 +256,7 @@ sParameters;
 // The defaults for the flash and application settings.
 //
 //*****************************************************************************
-static const sParameters g_sDefaultParams =
-{
+static const sParameters g_sDefaultParams = {
     0,
     {"Custom City Name"},
     {"your.proxy.com"},
@@ -279,8 +276,7 @@ static sParameters g_sConfig;
 // The state of each city panel.
 //
 //*****************************************************************************
-struct
-{
+struct {
     //
     // The last update time for this city.
     //
@@ -306,8 +302,7 @@ g_psCityInfo[NUM_CITIES];
 //
 // The list of city names.
 //
-static const char *g_ppcCityNames[NUM_CITIES - 1] =
-{
+static const char *g_ppcCityNames[NUM_CITIES - 1] = {
     "Austin, TX",
     "Beijing, China",
     "Berlin, Germany",
@@ -455,8 +450,7 @@ extern tCanvasWidget g_sStatusPanel;
 //
 // The temperature toggle button.
 //
-const tButtonToggle sTempToggle =
-{
+const tButtonToggle sTempToggle = {
     {12, 90, 164, 117},
     {14, 92, 54, 115},
     "C",
@@ -481,8 +475,7 @@ RectangularButton(g_sTempUnit, &g_sStatusPanel, 0, 0,
 //
 // The proxy toggle button.
 //
-const tButtonToggle sProxyToggle =
-{
+const tButtonToggle sProxyToggle = {
     //
     // Outer border of button.
     //
@@ -505,18 +498,18 @@ const tButtonToggle sProxyToggle =
 // The actual button widget that receives the press events.
 //
 RectangularButton(g_sProxyEnable, &g_sStatusPanel, &g_sTempUnit, 0,
-       &g_sKentec320x240x16_SSD2119, 14, 62, 40, 24,
-       0, ClrDarkGray, ClrDarkGray, ClrDarkGray,
-       ClrDarkGray, 0, 0, 0, 0, 0 ,0 , ProxyEnable);
+                  &g_sKentec320x240x16_SSD2119, 14, 62, 40, 24,
+                  0, ClrDarkGray, ClrDarkGray, ClrDarkGray,
+                  ClrDarkGray, 0, 0, 0, 0, 0 ,0 , ProxyEnable);
 
 //
 // The button that receives press events for text entry.
 //
 RectangularButton(g_sProxyAddr, &g_sStatusPanel, &g_sProxyEnable, 0,
-       &g_sKentec320x240x16_SSD2119, 118, 60, 190, 28,
-       PB_STYLE_FILL | PB_STYLE_TEXT | PB_STYLE_RELEASE_NOTIFY, ClrLightGrey,
-       ClrLightGrey, ClrWhite, ClrGray, g_psFontCmss16,
-       g_sConfig.pcProxy, 0, 0, 0 ,0 , OnProxyEntry);
+                  &g_sKentec320x240x16_SSD2119, 118, 60, 190, 28,
+                  PB_STYLE_FILL | PB_STYLE_TEXT | PB_STYLE_RELEASE_NOTIFY, ClrLightGrey,
+                  ClrLightGrey, ClrWhite, ClrGray, g_psFontCmss16,
+                  g_sConfig.pcProxy, 0, 0, 0 ,0 , OnProxyEntry);
 
 //*****************************************************************************
 //
@@ -527,8 +520,7 @@ RectangularButton(g_sProxyAddr, &g_sStatusPanel, &g_sProxyEnable, 0,
 //
 // The custom city toggle button.
 //
-const tButtonToggle sCustomToggle =
-{
+const tButtonToggle sCustomToggle = {
     //
     // Outer border of button.
     //
@@ -548,18 +540,18 @@ const tButtonToggle sCustomToggle =
 // The actual button widget that receives the press events.
 //
 RectangularButton(g_sCustomEnable, &g_sStatusPanel, &g_sProxyAddr, 0,
-       &g_sKentec320x240x16_SSD2119, 14, 32, 40, 24,
-       0, ClrLightGrey, ClrLightGrey, ClrLightGrey,
-       ClrBlack, 0, 0, 0, 0, 0 ,0 , CustomEnable);
+                  &g_sKentec320x240x16_SSD2119, 14, 32, 40, 24,
+                  0, ClrLightGrey, ClrLightGrey, ClrLightGrey,
+                  ClrBlack, 0, 0, 0, 0, 0 ,0 , CustomEnable);
 
 //
 // The text entry button for the custom city.
 //
 RectangularButton(g_sCustomCity, &g_sStatusPanel, &g_sCustomEnable, 0,
-       &g_sKentec320x240x16_SSD2119, 118, 30, 190, 28,
-       PB_STYLE_FILL | PB_STYLE_TEXT | PB_STYLE_RELEASE_NOTIFY, ClrLightGrey,
-       ClrLightGrey, ClrWhite, ClrGray, g_psFontCmss16,
-       g_sConfig.pcCustomCity, 0, 0, 0 ,0 , OnCustomEntry);
+                  &g_sKentec320x240x16_SSD2119, 118, 30, 190, 28,
+                  PB_STYLE_FILL | PB_STYLE_TEXT | PB_STYLE_RELEASE_NOTIFY, ClrLightGrey,
+                  ClrLightGrey, ClrWhite, ClrGray, g_psFontCmss16,
+                  g_sConfig.pcCustomCity, 0, 0, 0 ,0 , OnCustomEntry);
 
 //
 // MAC Address display.
@@ -671,16 +663,14 @@ Canvas(g_sKeyboardBackground, WIDGET_ROOT, 0, &g_sKeyboardText,
 #define SCREEN_SETTINGS         1
 #define SCREEN_KEYBOARD         2
 
-static struct
-{
+static struct {
     tWidget *psWidget;
     uint32_t ui32Up;
     uint32_t ui32Down;
     uint32_t ui32Left;
     uint32_t ui32Right;
 }
-g_sScreens[NUM_SCREENS] =
-{
+g_sScreens[NUM_SCREENS] = {
     {
         (tWidget *)&g_sMainBackground,
         SCREEN_MAIN, SCREEN_SETTINGS, SCREEN_MAIN, SCREEN_MAIN
@@ -705,8 +695,7 @@ static uint32_t g_i32ScreenIdx;
 // The state of the direction control for the application.
 //
 //*****************************************************************************
-static struct
-{
+static struct {
     //
     // The initial touch location.
     //
@@ -716,8 +705,7 @@ static struct
     //
     // The current movement that was detected.
     //
-    enum
-    {
+    enum {
         iSwipeUp,
         iSwipeDown,
         iSwipeLeft,
@@ -738,8 +726,7 @@ g_sSwipe;
 // The screen buttons state structure.
 //
 //*****************************************************************************
-struct
-{
+struct {
     //
     // Indicates if an on-screen buttons are enabled.
     //
@@ -778,8 +765,7 @@ TempCtoF(int32_t i32Temp)
     //
     // Only convert if measurements are not in Celsius.
     //
-    if(g_sConfig.bCelsius == false)
-    {
+    if(g_sConfig.bCelsius == false) {
         i32Temp = ((i32Temp * 9) / 5) + 32;
     }
 
@@ -809,15 +795,13 @@ ResetCity(uint32_t ui32Idx)
     //
     // Make sure to copy the name into the string for a custom city.
     //
-    if(ui32Idx == NUM_CITIES - 1)
-    {
+    if(ui32Idx == NUM_CITIES - 1) {
         //
         // Custom city is in another list.
         //
         g_psCityInfo[ui32Idx].pcName = g_sConfig.pcCustomCity;
 
-        if(g_ui32CityActive == ui32Idx)
-        {
+        if(g_ui32CityActive == ui32Idx) {
             //
             // Update the custom city name.
             //
@@ -827,13 +811,10 @@ ResetCity(uint32_t ui32Idx)
         //
         // The custom city only needs an update if enabled.
         //
-        if(g_sConfig.bCustomEnabled)
-        {
+        if(g_sConfig.bCustomEnabled) {
             g_psCityInfo[ui32Idx].bNeedsUpdate = true;
         }
-    }
-    else
-    {
+    } else {
         g_psCityInfo[ui32Idx].pcName = g_ppcCityNames[ui32Idx];
         g_psCityInfo[ui32Idx].bNeedsUpdate = true;
     }
@@ -850,25 +831,21 @@ HandleKeyboard(void)
     //
     // Nothing to do if the keyboard is not active.
     //
-    if(g_i32ScreenIdx != SCREEN_KEYBOARD)
-    {
+    if(g_i32ScreenIdx != SCREEN_KEYBOARD) {
         return;
     }
 
     //
     // If the mid value is hit then clear the cursor.
     //
-    if(g_ui32CursorDelay == KEYBOARD_BLINK_RATE / 2)
-    {
+    if(g_ui32CursorDelay == KEYBOARD_BLINK_RATE / 2) {
         GrContextForegroundSet(&g_sContext, ClrBlack);
 
         //
         // Keep the counter moving now that the clearing has been handled.
         //
         g_ui32CursorDelay--;
-    }
-    else if(g_ui32CursorDelay == 0)
-    {
+    } else if(g_ui32CursorDelay == 0) {
         GrContextForegroundSet(&g_sContext, ClrWhite);
 
         //
@@ -876,9 +853,7 @@ HandleKeyboard(void)
         // handled.
         //
         g_ui32CursorDelay = KEYBOARD_BLINK_RATE;
-    }
-    else
-    {
+    } else {
         return;
     }
 
@@ -897,22 +872,19 @@ HandleKeyboard(void)
 static void
 DrawButtons(int32_t i32Offset, bool bClear)
 {
-    static const tRectangle sRectTop =
-    {
+    static const tRectangle sRectTop = {
         140,
         BG_MIN_Y,
         171,
         BG_MIN_Y + 10,
     };
-    static const tRectangle sRectRight =
-    {
+    static const tRectangle sRectRight = {
         BG_MAX_X - 11,
         BG_MIN_Y - 20 + ((BG_MAX_Y - BG_MIN_Y) / 2),
         BG_MAX_X,
         BG_MIN_Y - 20 + ((BG_MAX_Y - BG_MIN_Y) / 2) + 40,
     };
-    static const tRectangle sRectLeft =
-    {
+    static const tRectangle sRectLeft = {
         BG_MIN_X,
         BG_MIN_Y - 20 + ((BG_MAX_Y - BG_MIN_Y) / 2),
         BG_MIN_X + 10,
@@ -922,24 +894,21 @@ DrawButtons(int32_t i32Offset, bool bClear)
     //
     // Only draw if they are enabled.
     //
-    if(g_sButtons.bEnabled == false)
-    {
+    if(g_sButtons.bEnabled == false) {
         return;
     }
 
     //
     // Draw the three pop up buttons.
     //
-    if(g_i32ScreenIdx == SCREEN_MAIN)
-    {
+    if(g_i32ScreenIdx == SCREEN_MAIN) {
         GrContextForegroundSet(&g_sContext, ClrBlack);
         GrContextBackgroundSet(&g_sContext, ClrGray);
 
         GrRectFill(&g_sContext, &sRectRight);
         GrRectFill(&g_sContext, &sRectLeft);
 
-        if(bClear == false)
-        {
+        if(bClear == false) {
             GrLineDrawH(&g_sContext, 140, 171, BG_MIN_Y + 10 + i32Offset);
 
             GrImageDraw(&g_sContext, g_pui8DownTabImage, 140,
@@ -953,18 +922,13 @@ DrawButtons(int32_t i32Offset, bool bClear)
                                    BG_MIN_X - i32Offset,
                                    BG_MIN_Y - 20 + ((BG_MAX_Y - BG_MIN_Y) / 2),
                                    1);
-        }
-        else
-        {
+        } else {
             GrRectFill(&g_sContext, &sRectTop);
         }
-    }
-    else if(g_i32ScreenIdx == SCREEN_SETTINGS)
-    {
+    } else if(g_i32ScreenIdx == SCREEN_SETTINGS) {
         GrContextForegroundSet(&g_sContext, ClrGray);
         GrContextBackgroundSet(&g_sContext, ClrWhite);
-        if(bClear == false)
-        {
+        if(bClear == false) {
             GrLineDrawH(&g_sContext, 140, 171, BG_MAX_Y - 11 - i32Offset);
             GrImageDraw(&g_sContext, g_pui8UpTabImage, 140,
                         BG_MAX_Y - 10 - i32Offset);
@@ -992,29 +956,23 @@ ButtonsDisable(void)
 static void
 DrawIcon(uint32_t ui32Idx)
 {
-    if(g_psCityInfo[ui32Idx].sReport.pui8Image)
-    {
+    if(g_psCityInfo[ui32Idx].sReport.pui8Image) {
         if((g_psCityInfo[ui32Idx].sReport.ui32Time >
-            g_psCityInfo[ui32Idx].sReport.ui32SunRise) &&
-           (g_psCityInfo[ui32Idx].sReport.ui32Time <
-            g_psCityInfo[ui32Idx].sReport.ui32SunSet))
-        {
+                g_psCityInfo[ui32Idx].sReport.ui32SunRise) &&
+                (g_psCityInfo[ui32Idx].sReport.ui32Time <
+                 g_psCityInfo[ui32Idx].sReport.ui32SunSet)) {
             GrTransparentImageDraw(&g_sContext, g_pui8SunImage,
                                    176, 65, 0);
 
-            if(g_psCityInfo[ui32Idx].sReport.pui8Image != g_pui8SunImage)
-            {
+            if(g_psCityInfo[ui32Idx].sReport.pui8Image != g_pui8SunImage) {
                 GrTransparentImageDraw(&g_sContext,
                                        g_psCityInfo[ui32Idx].sReport.pui8Image,
                                        176, 80, 0);
             }
-        }
-        else
-        {
+        } else {
             GrTransparentImageDraw(&g_sContext, g_pui8MoonImage,
                                    176, 65, 0);
-            if(g_psCityInfo[ui32Idx].sReport.pui8Image != g_pui8SunImage)
-            {
+            if(g_psCityInfo[ui32Idx].sReport.pui8Image != g_pui8SunImage) {
                 GrTransparentImageDraw(&g_sContext,
                                        g_psCityInfo[ui32Idx].sReport.pui8Image,
                                        176, 80, 0);
@@ -1035,24 +993,18 @@ AnimatePanel(uint32_t ui32Color)
 
     GrContextForegroundSet(&g_sContext, ui32Color);
 
-    if(g_i32ScreenIdx == SCREEN_SETTINGS)
-    {
-        for(i32Idx = BG_MIN_Y; i32Idx < BG_MAX_Y; i32Idx++)
-        {
+    if(g_i32ScreenIdx == SCREEN_SETTINGS) {
+        for(i32Idx = BG_MIN_Y; i32Idx < BG_MAX_Y; i32Idx++) {
             GrLineDrawH(&g_sContext, BG_MIN_X, BG_MAX_X, i32Idx);
 
-            if(i32Idx == 58)
-            {
-                if(g_sConfig.bCustomEnabled)
-                {
+            if(i32Idx == 58) {
+                if(g_sConfig.bCustomEnabled) {
                     //
                     // Draw the text black for the custom city when it is
                     // enabled.
                     //
                     PushButtonTextColorSet(&g_sCustomCity, ClrBlack);
-                }
-                else
-                {
+                } else {
                     //
                     // Gray out the text entry for the custom city when it is
                     // disabled.
@@ -1063,18 +1015,13 @@ AnimatePanel(uint32_t ui32Color)
                 DrawToggle(&sCustomToggle, g_sConfig.bCustomEnabled);
                 GrContextForegroundSet(&g_sContext, ui32Color);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 88)
-            {
-                if(g_sConfig.bProxyEnabled)
-                {
+            } else if(i32Idx == 88) {
+                if(g_sConfig.bProxyEnabled) {
                     //
                     // Enable text entry area for the proxy text entry.
                     //
                     PushButtonTextColorSet(&g_sProxyAddr, ClrBlack);
-                }
-                else
-                {
+                } else {
                     //
                     // Gray out the text entry area for the proxy text entry.
                     //
@@ -1084,56 +1031,38 @@ AnimatePanel(uint32_t ui32Color)
                 WidgetPaint((tWidget *)&g_sProxyAddr);
                 GrContextForegroundSet(&g_sContext, ui32Color);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 116)
-            {
+            } else if(i32Idx == 116) {
                 DrawToggle(&sTempToggle, g_sConfig.bCelsius);
                 WidgetPaint((tWidget *)&g_sTempUnit);
                 GrContextForegroundSet(&g_sContext, ui32Color);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 200)
-            {
+            } else if(i32Idx == 200) {
                 WidgetPaint((tWidget *)&g_sMACAddr);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 220)
-            {
+            } else if(i32Idx == 220) {
                 WidgetPaint((tWidget *)&g_sIPAddr);
                 WidgetMessageQueueProcess();
             }
 
             SysCtlDelay(SCREEN_ANIMATE_DELAY);
         }
-    }
-    else if(g_i32ScreenIdx == SCREEN_MAIN)
-    {
-        for(i32Idx = BG_MAX_Y; i32Idx >= BG_MIN_Y; i32Idx--)
-        {
+    } else if(g_i32ScreenIdx == SCREEN_MAIN) {
+        for(i32Idx = BG_MAX_Y; i32Idx >= BG_MIN_Y; i32Idx--) {
             GrLineDrawH(&g_sContext, BG_MIN_X, BG_MAX_X, i32Idx);
 
-            if(i32Idx == 175)
-            {
+            if(i32Idx == 175) {
                 WidgetPaint((tWidget *)&g_sTempHighLow);
                 WidgetPaint((tWidget *)&g_sTemp);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 140)
-            {
+            } else if(i32Idx == 140) {
                 WidgetPaint((tWidget *)&g_sHumidity);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 110)
-            {
+            } else if(i32Idx == 110) {
                 WidgetPaint((tWidget *)&g_sStatus);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 65)
-            {
+            } else if(i32Idx == 65) {
                 DrawIcon(g_ui32CityActive);
-            }
-            else if(i32Idx == 40)
-            {
+            } else if(i32Idx == 40) {
                 WidgetPaint((tWidget *)&g_sCityName);
                 WidgetMessageQueueProcess();
             }
@@ -1151,61 +1080,49 @@ AnimatePanel(uint32_t ui32Color)
 void
 AnimateButtons(bool bInit)
 {
-    if(bInit)
-    {
+    if(bInit) {
         g_sButtons.i32X = 0;
         g_sButtons.i32Y = 0;
         g_sButtons.bEnabled = true;
         g_sButtons.bActive = false;
         g_sButtons.ui32Delay = 0;
-    }
-    else if(g_sButtons.bEnabled == false)
-    {
+    } else if(g_sButtons.bEnabled == false) {
         //
         // Just return if the buttons are not on screen.
         //
         return;
     }
 
-    if(g_sButtons.ui32Delay == 0)
-    {
+    if(g_sButtons.ui32Delay == 0) {
         g_sButtons.ui32Delay = 6;
 
         GrContextForegroundSet(&g_sContext, ClrBlack);
         GrContextBackgroundSet(&g_sContext, ClrGray);
 
-        if((bInit == false) || (g_sButtons.bActive == true))
-        {
+        if((bInit == false) || (g_sButtons.bActive == true)) {
             //
             // Update the buttons.
             //
             DrawButtons(g_sButtons.i32X - g_sButtons.i32Y, true);
 
-            if(g_sButtons.i32X < 3)
-            {
+            if(g_sButtons.i32X < 3) {
                 g_sButtons.i32X++;
-            }
-            else
-            {
+            } else {
                 g_sButtons.i32Y++;
             }
         }
 
-        if(g_sButtons.bActive == false)
-        {
+        if(g_sButtons.bActive == false) {
             //
             // Update the buttons.
             //
             DrawButtons(g_sButtons.i32X - g_sButtons.i32Y, false);
 
-            if(g_sButtons.i32Y >= 3)
-            {
+            if(g_sButtons.i32Y >= 3) {
                 g_sButtons.bActive = true;
                 g_sButtons.ui32Delay = 200;
             }
-        }
-        else if(g_i32ScreenIdx == SCREEN_MAIN)
-        {
+        } else if(g_i32ScreenIdx == SCREEN_MAIN) {
             ButtonsDisable();
         }
     }
@@ -1219,8 +1136,7 @@ AnimateButtons(bool bInit)
 void
 ClearScreen(tContext *psContext)
 {
-    static const tRectangle sRect =
-    {
+    static const tRectangle sRect = {
         0,
         0,
         319,
@@ -1238,8 +1154,7 @@ ClearScreen(tContext *psContext)
 void
 ClearBackground(tContext *psContext)
 {
-    static const tRectangle sRect =
-    {
+    static const tRectangle sRect = {
         BG_MIN_X,
         BG_MIN_Y,
         BG_MAX_X,
@@ -1259,12 +1174,9 @@ UpdateIPAddress(char *pcAddr, uint32_t ipAddr)
 {
     uint8_t *pui8Temp = (uint8_t *)&ipAddr;
 
-    if(ipAddr == 0)
-    {
+    if(ipAddr == 0) {
         ustrncpy(pcAddr, "IP: ---.---.---.---", sizeof(g_pcIPAddr));
-    }
-    else
-    {
+    } else {
         usprintf(pcAddr,"IP: %d.%d.%d.%d", pui8Temp[0], pui8Temp[1],
                  pui8Temp[2], pui8Temp[3]);
     }
@@ -1272,8 +1184,7 @@ UpdateIPAddress(char *pcAddr, uint32_t ipAddr)
     //
     // If the status panel is active then update the address.
     //
-    if(g_i32ScreenIdx == SCREEN_SETTINGS)
-    {
+    if(g_i32ScreenIdx == SCREEN_SETTINGS) {
         WidgetPaint((tWidget *)&g_sIPAddr);
     }
 }
@@ -1289,8 +1200,7 @@ ProxyEnable(tWidget *psWidget)
     //
     // If a city was waiting to be updated then reset its data.
     //
-    if(g_iState != STATE_CONNECTED_IDLE)
-    {
+    if(g_iState != STATE_CONNECTED_IDLE) {
         ResetCity(g_ui32CityUpdating);
     }
 
@@ -1302,8 +1212,7 @@ ProxyEnable(tWidget *psWidget)
     //
     // Toggle the proxy setting.
     //
-    if(g_sConfig.bProxyEnabled)
-    {
+    if(g_sConfig.bProxyEnabled) {
         g_sConfig.bProxyEnabled = false;
 
         //
@@ -1317,9 +1226,7 @@ ProxyEnable(tWidget *psWidget)
         // Gray out the text entry area for the proxy text entry.
         //
         PushButtonTextColorSet(&g_sProxyAddr, ClrGray);
-    }
-    else
-    {
+    } else {
         g_sConfig.bProxyEnabled = true;
 
         //
@@ -1357,8 +1264,7 @@ CustomEnable(tWidget *psWidget)
     //
     // Toggle the custom city toggle button.
     //
-    if(g_sConfig.bCustomEnabled)
-    {
+    if(g_sConfig.bCustomEnabled) {
         g_sConfig.bCustomEnabled = false;
 
         //
@@ -1371,8 +1277,7 @@ CustomEnable(tWidget *psWidget)
         //
         ResetCity(NUM_CITIES - 1);
 
-        if(g_ui32CityActive == (NUM_CITIES - 1))
-        {
+        if(g_ui32CityActive == (NUM_CITIES - 1)) {
             //
             // Move to the first city in the list.
             //
@@ -1384,9 +1289,7 @@ CustomEnable(tWidget *psWidget)
             //
             UpdateCity(g_ui32CityActive, false);
         }
-    }
-    else
-    {
+    } else {
         g_sConfig.bCustomEnabled = true;
 
         //
@@ -1415,17 +1318,13 @@ CustomEnable(tWidget *psWidget)
 void
 KeyEvent(tWidget *psWidget, uint32_t ui32Key, uint32_t ui32Event)
 {
-    switch(ui32Key)
-    {
+    switch(ui32Key) {
         //
         // Look for a backspace key press.
         //
-        case UNICODE_BACKSPACE:
-        {
-            if(ui32Event == KEYBOARD_EVENT_PRESS)
-            {
-                if(g_ui32StringIdx != 0)
-                {
+        case UNICODE_BACKSPACE: {
+            if(ui32Event == KEYBOARD_EVENT_PRESS) {
+                if(g_ui32StringIdx != 0) {
                     g_ui32StringIdx--;
                     g_pcKeyStr[g_ui32StringIdx] = 0;
                 }
@@ -1444,10 +1343,8 @@ KeyEvent(tWidget *psWidget, uint32_t ui32Key, uint32_t ui32Event)
         // Look for an enter/return key press.  This will exit the keyboard and
         // return to the current active screen.
         //
-        case UNICODE_RETURN:
-        {
-            if(ui32Event == KEYBOARD_EVENT_RELEASE)
-            {
+        case UNICODE_RETURN: {
+            if(ui32Event == KEYBOARD_EVENT_RELEASE) {
                 //
                 // Get rid of the keyboard widget.
                 //
@@ -1464,18 +1361,15 @@ KeyEvent(tWidget *psWidget, uint32_t ui32Key, uint32_t ui32Event)
                 // string the re-enable the proxy.
                 //
                 if((!g_sConfig.bProxyEnabled) &&
-                   (g_pcKeyStr == g_sConfig.pcProxy))
-                {
+                        (g_pcKeyStr == g_sConfig.pcProxy)) {
                     //
                     // Enable the proxy since it has just been updated.  This
                     // also restarts DHCP for a new address.
                     //
                     g_sConfig.bProxyEnabled = true;
                     EthClientProxySet(g_sConfig.pcProxy);
-                }
-                else if((!g_sConfig.bCustomEnabled) &&
-                        (g_pcKeyStr == g_sConfig.pcCustomCity))
-                {
+                } else if((!g_sConfig.bCustomEnabled) &&
+                          (g_pcKeyStr == g_sConfig.pcCustomCity)) {
                     //
                     // If the custom city string was being modified then make
                     // sure to update it.
@@ -1490,8 +1384,7 @@ KeyEvent(tWidget *psWidget, uint32_t ui32Key, uint32_t ui32Event)
                     //
                     // Update the city with the reset values.
                     //
-                    if(g_ui32CityActive == (NUM_CITIES - 1))
-                    {
+                    if(g_ui32CityActive == (NUM_CITIES - 1)) {
                         UpdateCity(g_ui32CityActive, false);
                     }
                 }
@@ -1500,13 +1393,10 @@ KeyEvent(tWidget *psWidget, uint32_t ui32Key, uint32_t ui32Event)
                 // If returning to the main screen then re-draw the frame to
                 // indicate the main screen.
                 //
-                if(g_i32ScreenIdx == SCREEN_MAIN)
-                {
+                if(g_i32ScreenIdx == SCREEN_MAIN) {
                     FrameDraw(&g_sContext, "qs-weather");
                     WidgetPaint(g_sScreens[g_i32ScreenIdx].psWidget);
-                }
-                else
-                {
+                } else {
                     //
                     // Returning to the settings screen.
                     //
@@ -1533,17 +1423,14 @@ KeyEvent(tWidget *psWidget, uint32_t ui32Key, uint32_t ui32Event)
         //
         // If the key is not special then update the text string.
         //
-        default:
-        {
-            if(ui32Event == KEYBOARD_EVENT_PRESS)
-            {
+        default: {
+            if(ui32Event == KEYBOARD_EVENT_PRESS) {
                 //
                 // If the proxy is enabled and we get a key stroke then disable
                 // the proxy and wait for the new proxy string.
                 //
                 if((g_sConfig.bProxyEnabled) &&
-                   (g_pcKeyStr == g_sConfig.pcProxy))
-                {
+                        (g_pcKeyStr == g_sConfig.pcProxy)) {
                     //
                     // Disable proxy while updating the proxy string.  This
                     // starts DHCP for a new address.
@@ -1552,8 +1439,7 @@ KeyEvent(tWidget *psWidget, uint32_t ui32Key, uint32_t ui32Event)
                     EthClientProxySet(0);
                 }
                 if((g_sConfig.bCustomEnabled) &&
-                   (g_pcKeyStr == g_sConfig.pcCustomCity))
-                {
+                        (g_pcKeyStr == g_sConfig.pcCustomCity)) {
                     //
                     // Temporarily disable custom city while it is being
                     // modified.
@@ -1569,8 +1455,7 @@ KeyEvent(tWidget *psWidget, uint32_t ui32Key, uint32_t ui32Event)
                 //
                 // Set the string to the current string to be updated.
                 //
-                if(g_ui32StringIdx == 0)
-                {
+                if(g_ui32StringIdx == 0) {
                     CanvasTextSet(&g_sKeyboardText, g_pcKeyStr);
                 }
                 g_pcKeyStr[g_ui32StringIdx] = (char)ui32Key;
@@ -1617,15 +1502,12 @@ DrawToggle(const tButtonToggle *psButton, bool bOn)
     GrContextForegroundSet(&g_sContext, ClrDarkGray);
     GrRectFill(&g_sContext, &psButton->sRectButton);
 
-    if(bOn)
-    {
+    if(bOn) {
         sRect.i16XMin += 2;
         sRect.i16YMin += 2;
         sRect.i16XMax -= 15;
         sRect.i16YMax -= 2;
-    }
-    else
-    {
+    } else {
         sRect.i16XMin += 15;
         sRect.i16YMin += 2;
         sRect.i16XMax -= 2;
@@ -1641,19 +1523,15 @@ DrawToggle(const tButtonToggle *psButton, bool bOn)
     i16X = sRect.i16XMin + ((sRect.i16XMax - sRect.i16XMin) / 2);
     i16Y = sRect.i16YMin + ((sRect.i16YMax - sRect.i16YMin) / 2);
 
-    if(bOn)
-    {
+    if(bOn) {
         GrStringDrawCentered(&g_sContext, psButton->pcOn, -1, i16X, i16Y,
                              true);
-    }
-    else
-    {
+    } else {
         GrStringDrawCentered(&g_sContext, psButton->pcOff, -1, i16X, i16Y,
                              true);
     }
 
-    if(psButton->pcLabel)
-    {
+    if(psButton->pcLabel) {
         GrStringDraw(&g_sContext, psButton->pcLabel, -1,
                      psButton->sRectButton.i16XMax + 2,
                      psButton->sRectButton.i16YMin + 6,
@@ -1672,13 +1550,10 @@ OnTempUnit(tWidget *psWidget)
     //
     // Toggle the Celsius state.
     //
-    if(g_sConfig.bCelsius)
-    {
+    if(g_sConfig.bCelsius) {
         g_sConfig.bCelsius = false;
 
-    }
-    else
-    {
+    } else {
         g_sConfig.bCelsius = true;
     }
 
@@ -1705,8 +1580,7 @@ OnProxyEntry(tWidget *psWidget)
     //
     // Only respond if the proxy has been enabled.
     //
-    if(g_sConfig.bProxyEnabled)
-    {
+    if(g_sConfig.bProxyEnabled) {
         //
         // Disable swiping while the keyboard is active.
         //
@@ -1759,8 +1633,7 @@ OnCustomEntry(tWidget *psWidget)
     //
     // Only respond if the custom has been enabled.
     //
-    if(g_sConfig.bCustomEnabled)
-    {
+    if(g_sConfig.bCustomEnabled) {
         //
         // Disable swiping while the keyboard is active.
         //
@@ -1827,27 +1700,21 @@ UpdateMACAddr(void)
 void
 WeatherEvent(uint32_t ui32Event, void* pvData, uint32_t ui32Param)
 {
-    if(ui32Event == ETH_EVENT_RECEIVE)
-    {
+    if(ui32Event == ETH_EVENT_RECEIVE) {
         //
         // Let the main loop update the city.
         //
         g_iState = STATE_UPDATE_CITY;
 
         g_psCityInfo[g_ui32CityUpdating].ui32LastUpdate =
-                            g_psCityInfo[g_ui32CityUpdating].sReport.ui32Time;
-    }
-    else if(ui32Event == ETH_EVENT_INVALID_REQ)
-    {
+            g_psCityInfo[g_ui32CityUpdating].sReport.ui32Time;
+    } else if(ui32Event == ETH_EVENT_INVALID_REQ) {
         g_psCityInfo[g_ui32CityUpdating].sReport.pcDescription = g_pcNotFound;
         g_iState = STATE_UPDATE_CITY;
-    }
-    else if(ui32Event == ETH_EVENT_CLOSE)
-    {
-        if(g_iState == STATE_WAIT_DATA)
-        {
+    } else if(ui32Event == ETH_EVENT_CLOSE) {
+        if(g_iState == STATE_WAIT_DATA) {
             g_psCityInfo[g_ui32CityUpdating].sReport.pcDescription =
-                                                                g_pcServerBusy;
+                g_pcServerBusy;
 
             g_iState = STATE_UPDATE_CITY;
         }
@@ -1857,8 +1724,7 @@ WeatherEvent(uint32_t ui32Event, void* pvData, uint32_t ui32Param)
     // If the update indicated no time, then just set the time to a value
     // to indicate that at least the update occurred.
     //
-    if(g_psCityInfo[g_ui32CityUpdating].ui32LastUpdate == 0)
-    {
+    if(g_psCityInfo[g_ui32CityUpdating].ui32LastUpdate == 0) {
         //
         // Failed to update for some reason.
         //
@@ -1882,21 +1748,18 @@ SysTickIntHandler(void)
     //
     // Handle the delay between accesses to the weather server.
     //
-    if(g_ui32Delay != 0)
-    {
+    if(g_ui32Delay != 0) {
         g_ui32Delay--;
     }
 
-    if(g_sButtons.ui32Delay != 0)
-    {
+    if(g_sButtons.ui32Delay != 0) {
         g_sButtons.ui32Delay--;
     }
 
     //
     // Timeout for the screen saver.
     //
-    if(g_ui32ScreenSaver != 0)
-    {
+    if(g_ui32ScreenSaver != 0) {
         g_ui32ScreenSaver--;
     }
 
@@ -1904,8 +1767,7 @@ SysTickIntHandler(void)
     // Stop updating until the toggle event points have been handled.
     //
     if((g_ui32CursorDelay != 0) &&
-       (g_ui32CursorDelay != (KEYBOARD_BLINK_RATE / 2)))
-    {
+            (g_ui32CursorDelay != (KEYBOARD_BLINK_RATE / 2))) {
         g_ui32CursorDelay--;
     }
 }
@@ -1918,22 +1780,18 @@ SysTickIntHandler(void)
 void
 EnetEvents(uint32_t ui32Event, void *pvData, uint32_t ui32Param)
 {
-    if(ui32Event == ETH_EVENT_CONNECT)
-    {
+    if(ui32Event == ETH_EVENT_CONNECT) {
         g_iState = STATE_NEW_CONNECTION;
 
         //
         // Update the string version of the address.
         //
         UpdateIPAddress(g_pcIPAddr, EthClientAddrGet());
-    }
-    else if(ui32Event == ETH_EVENT_DISCONNECT)
-    {
+    } else if(ui32Event == ETH_EVENT_DISCONNECT) {
         //
         // If a city was waiting to be updated then reset its data.
         //
-        if(g_iState != STATE_CONNECTED_IDLE)
-        {
+        if(g_iState != STATE_CONNECTED_IDLE) {
             ResetCity(g_ui32CityUpdating);
         }
 
@@ -1964,12 +1822,9 @@ UpdateCity(uint32_t ui32Idx, bool bDraw)
     //
     bIntDisabled = IntMasterDisable();
 
-    if(g_sConfig.bCelsius)
-    {
+    if(g_sConfig.bCelsius) {
         cUnits = 'C';
-    }
-    else
-    {
+    } else {
         cUnits = 'F';
     }
 
@@ -1981,12 +1836,9 @@ UpdateCity(uint32_t ui32Idx, bool bDraw)
     //
     // Check if the humidity value is valid.
     //
-    if(g_psCityInfo[ui32Idx].sReport.i32Humidity == INVALID_INT)
-    {
+    if(g_psCityInfo[ui32Idx].sReport.i32Humidity == INVALID_INT) {
         usprintf(g_pcHumidity, "Humidity: --%%");
-    }
-    else
-    {
+    } else {
         usprintf(g_pcHumidity, "Humidity: %d%%",
                  g_psCityInfo[ui32Idx].sReport.i32Humidity);
     }
@@ -1994,21 +1846,16 @@ UpdateCity(uint32_t ui32Idx, bool bDraw)
     //
     // Copy the updated description.
     //
-    if(g_psCityInfo[ui32Idx].sReport.pcDescription)
-    {
+    if(g_psCityInfo[ui32Idx].sReport.pcDescription) {
         ustrncpy(g_pcStatus, g_psCityInfo[ui32Idx].sReport.pcDescription,
                  sizeof(g_pcStatus));
-    }
-    else if((g_ui32CityUpdating == g_ui32CityActive) &&
-            (g_iState != STATE_NOT_CONNECTED))
-    {
+    } else if((g_ui32CityUpdating == g_ui32CityActive) &&
+              (g_iState != STATE_NOT_CONNECTED)) {
         //
         // Waiting on data for this city.
         //
         ustrncpy(g_pcStatus, g_pcWaitData, sizeof(g_pcStatus));
-    }
-    else
-    {
+    } else {
         //
         // No current status.
         //
@@ -2019,15 +1866,12 @@ UpdateCity(uint32_t ui32Idx, bool bDraw)
     //
     // Check if the temperature value is valid.
     //
-    if(g_psCityInfo[ui32Idx].sReport.i32Temp == INVALID_INT)
-    {
+    if(g_psCityInfo[ui32Idx].sReport.i32Temp == INVALID_INT) {
         usprintf(g_pcTemp, "--%c", cUnits);
         usprintf(g_pcTempHighLow, "--/--%c",
                  TempCtoF(g_psCityInfo[ui32Idx].sReport.i32TempHigh),
                  TempCtoF(g_psCityInfo[ui32Idx].sReport.i32TempLow), cUnits);
-    }
-    else
-    {
+    } else {
         usprintf(g_pcTemp, "%d%c",
                  TempCtoF(g_psCityInfo[ui32Idx].sReport.i32Temp), cUnits);
         usprintf(g_pcTempHighLow, "%d/%d%c",
@@ -2038,8 +1882,7 @@ UpdateCity(uint32_t ui32Idx, bool bDraw)
     //
     // Update the screen contents if requested.
     //
-    if(bDraw)
-    {
+    if(bDraw) {
         GrContextForegroundSet(&g_sContext, BG_COLOR_MAIN);
         ClearBackground(&g_sContext);
         WidgetPaint((tWidget *)&g_sCityName);
@@ -2053,8 +1896,7 @@ UpdateCity(uint32_t ui32Idx, bool bDraw)
         DrawButtons(0, false);
     }
 
-    if(bIntDisabled == false)
-    {
+    if(bIntDisabled == false) {
         IntMasterEnable();
     }
 }
@@ -2075,15 +1917,12 @@ TouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
     //
     g_ui32ScreenSaver =  60 * SYSTEM_TICK_S;
 
-    if(g_sSwipe.bEnable)
-    {
-        switch(ui32Message)
-        {
+    if(g_sSwipe.bEnable) {
+        switch(ui32Message) {
             //
             // The user has just touched the screen.
             //
-            case WIDGET_MSG_PTR_DOWN:
-            {
+            case WIDGET_MSG_PTR_DOWN: {
                 //
                 // Save this press location.
                 //
@@ -2099,8 +1938,7 @@ TouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
             //
             // The user has moved the touch location on the screen.
             //
-            case WIDGET_MSG_PTR_MOVE:
-            {
+            case WIDGET_MSG_PTR_MOVE: {
                 //
                 // Done handling this message.
                 //
@@ -2110,8 +1948,7 @@ TouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
             //
             // The user is no longer touching the screen.
             //
-            case WIDGET_MSG_PTR_UP:
-            {
+            case WIDGET_MSG_PTR_UP: {
                 //
                 // Indicate that no key is being pressed.
                 //
@@ -2122,42 +1959,28 @@ TouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
                 // Dead zone for just a button press.
                 //
                 if(((i32XDiff < SWIPE_MIN_DIFF) &&
-                    (i32XDiff > -SWIPE_MIN_DIFF)) &&
-                   ((i32YDiff < SWIPE_MIN_DIFF) &&
-                    (i32YDiff > -SWIPE_MIN_DIFF)))
-                {
-                    if(g_sButtons.bActive)
-                    {
+                        (i32XDiff > -SWIPE_MIN_DIFF)) &&
+                        ((i32YDiff < SWIPE_MIN_DIFF) &&
+                         (i32YDiff > -SWIPE_MIN_DIFF))) {
+                    if(g_sButtons.bActive) {
                         //
                         // Reset the delay.
                         //
                         g_sButtons.ui32Delay = 200;
 
-                        if(i32X < 30)
-                        {
+                        if(i32X < 30) {
                             g_sSwipe.eMovement = iSwipeRight;
-                        }
-                        else if(i32X > 290)
-                        {
+                        } else if(i32X > 290) {
                             g_sSwipe.eMovement = iSwipeLeft;
-                        }
-                        else if(i32Y < 40)
-                        {
+                        } else if(i32Y < 40) {
                             g_sSwipe.eMovement = iSwipeDown;
-                        }
-                        else if(i32Y > 200)
-                        {
+                        } else if(i32Y > 200) {
                             g_sSwipe.eMovement = iSwipeUp;
-                        }
-                        else
-                        {
+                        } else {
                             g_sSwipe.eMovement = iSwipeNone;
                         }
-                    }
-                    else
-                    {
-                        if(g_i32ScreenIdx == SCREEN_MAIN)
-                        {
+                    } else {
+                        if(g_i32ScreenIdx == SCREEN_MAIN) {
                             AnimateButtons(true);
                         }
                     }
@@ -2167,25 +1990,16 @@ TouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
                 //
                 // If Y movement dominates then this is an up/down motion.
                 //
-                if(i32YDiff/i32XDiff)
-                {
-                    if(i32YDiff < 0)
-                    {
+                if(i32YDiff/i32XDiff) {
+                    if(i32YDiff < 0) {
                         g_sSwipe.eMovement = iSwipeUp;
-                    }
-                    else
-                    {
+                    } else {
                         g_sSwipe.eMovement = iSwipeDown;
                     }
-                }
-                else
-                {
-                    if(i32XDiff > 0)
-                    {
+                } else {
+                    if(i32XDiff > 0) {
                         g_sSwipe.eMovement = iSwipeRight;
-                    }
-                    else
-                    {
+                    } else {
                         g_sSwipe.eMovement = iSwipeLeft;
                     }
                 }
@@ -2213,47 +2027,35 @@ HandleMovement(void)
     uint32_t ui32NumCities;
     uint32_t ui32NewIdx;
 
-    if(g_sSwipe.eMovement != iSwipeNone)
-    {
-        if(g_sConfig.bCustomEnabled)
-        {
+    if(g_sSwipe.eMovement != iSwipeNone) {
+        if(g_sConfig.bCustomEnabled) {
             ui32NumCities = NUM_CITIES;
-        }
-        else
-        {
+        } else {
             ui32NumCities = NUM_CITIES - 1;
         }
 
-        switch(g_sSwipe.eMovement)
-        {
-            case iSwipeUp:
-            {
+        switch(g_sSwipe.eMovement) {
+            case iSwipeUp: {
                 ui32NewIdx = g_sScreens[g_i32ScreenIdx].ui32Up;
 
                 break;
             }
-            case iSwipeDown:
-            {
+            case iSwipeDown: {
                 ui32NewIdx = g_sScreens[g_i32ScreenIdx].ui32Down;
 
                 break;
             }
-            case iSwipeRight:
-            {
+            case iSwipeRight: {
                 ui32NewIdx = g_sScreens[g_i32ScreenIdx].ui32Left;
 
                 //
                 // Check if on main screen.
                 //
-                if(g_i32ScreenIdx == SCREEN_MAIN)
-                {
-                    if(g_ui32CityActive == 0)
-                    {
+                if(g_i32ScreenIdx == SCREEN_MAIN) {
+                    if(g_ui32CityActive == 0) {
                         g_ui32CityActive = ui32NumCities - 1;
 
-                    }
-                    else
-                    {
+                    } else {
                         g_ui32CityActive--;
                     }
 
@@ -2262,21 +2064,16 @@ HandleMovement(void)
 
                 break;
             }
-            case iSwipeLeft:
-            {
+            case iSwipeLeft: {
                 ui32NewIdx = g_sScreens[g_i32ScreenIdx].ui32Right;
 
                 //
                 // Check if on main screen.
                 //
-                if(g_i32ScreenIdx == SCREEN_MAIN)
-                {
-                    if(g_ui32CityActive >= ui32NumCities - 1)
-                    {
+                if(g_i32ScreenIdx == SCREEN_MAIN) {
+                    if(g_ui32CityActive >= ui32NumCities - 1) {
                         g_ui32CityActive = 0;
-                    }
-                    else
-                    {
+                    } else {
                         g_ui32CityActive++;
                     }
 
@@ -2285,8 +2082,7 @@ HandleMovement(void)
 
                 break;
             }
-            default:
-            {
+            default: {
                 ui32NewIdx = g_i32ScreenIdx;
                 break;
             }
@@ -2295,8 +2091,7 @@ HandleMovement(void)
         //
         // Check if the panel has changed.
         //
-        if(ui32NewIdx != g_i32ScreenIdx)
-        {
+        if(ui32NewIdx != g_i32ScreenIdx) {
             //
             // Remove the current widget.
             //
@@ -2311,8 +2106,7 @@ HandleMovement(void)
             //
             ButtonsDisable();
 
-            if(g_i32ScreenIdx == SCREEN_MAIN)
-            {
+            if(g_i32ScreenIdx == SCREEN_MAIN) {
                 //
                 // Update the frame.
                 //
@@ -2332,14 +2126,11 @@ HandleMovement(void)
                 // If returning to the main screen then see if the settings
                 // should be saved.
                 //
-                if(g_sConfig.bSave)
-                {
+                if(g_sConfig.bSave) {
                     g_sConfig.bSave = false;
                     FlashPBSave((uint8_t *)&g_sConfig);
                 }
-            }
-            else
-            {
+            } else {
                 //
                 // Update the frame.
                 //
@@ -2395,8 +2186,7 @@ TIWelcome(void)
     //
     // Copy the default palette from the image.
     //
-    for(i32Idx = 0; i32Idx < (g_pui8TIImage[5] * 3); i32Idx++)
-    {
+    for(i32Idx = 0; i32Idx < (g_pui8TIImage[5] * 3); i32Idx++) {
         g_pui8TIImagePalette[i32Idx] = g_pui8TIImage[6 + i32Idx];
     }
 
@@ -2405,21 +2195,19 @@ TIWelcome(void)
     //
     i32Step = 0xf;
 
-    while(i32Step > 0)
-    {
+    while(i32Step > 0) {
         //
         // Shift the palette of the image.
         //
-        for(i32Idx = 0; i32Idx < g_pui8TIImage[5]; i32Idx++)
-        {
+        for(i32Idx = 0; i32Idx < g_pui8TIImage[5]; i32Idx++) {
             g_pui8TIImage[6 + (i32Idx * 3)] =
-                    PaletteScale(g_pui8TIImagePalette[i32Idx * 3], i32Step);
+                PaletteScale(g_pui8TIImagePalette[i32Idx * 3], i32Step);
             g_pui8TIImage[7 + (i32Idx * 3)] =
-                    PaletteScale(g_pui8TIImagePalette[(i32Idx * 3) + 1],
-                                 i32Step);
+                PaletteScale(g_pui8TIImagePalette[(i32Idx * 3) + 1],
+                             i32Step);
             g_pui8TIImage[8 + (i32Idx * 3)] =
-                    PaletteScale(g_pui8TIImagePalette[(i32Idx * 3) + 2],
-                                 i32Step);
+                PaletteScale(g_pui8TIImagePalette[(i32Idx * 3) + 2],
+                             i32Step);
         }
 
         //
@@ -2450,8 +2238,7 @@ TIWelcome(void)
     //
     // Clear the screen from top and bottom while fading out the logo.
     //
-    for(i32Line = 0; i32Line < 119; i32Line++)
-    {
+    for(i32Line = 0; i32Line < 119; i32Line++) {
         //
         // Erase from the top and bottom of the screen.
         //
@@ -2462,22 +2249,20 @@ TIWelcome(void)
         // Fade the palette every 5th line and stop when the line draws cross
         // the image.
         //
-        if(((i32Line % 5) == 0) && (i32Line < 75))
-        {
+        if(((i32Line % 5) == 0) && (i32Line < 75)) {
             //
             // Shift the palette of the image.
             //
-            for(i32Idx = 0; i32Idx < g_pui8TIImage[5]; i32Idx++)
-            {
+            for(i32Idx = 0; i32Idx < g_pui8TIImage[5]; i32Idx++) {
                 g_pui8TIImage[6 + (i32Idx * 3)] =
-                        PaletteScale(g_pui8TIImagePalette[i32Idx * 3],
-                                     i32Step);
+                    PaletteScale(g_pui8TIImagePalette[i32Idx * 3],
+                                 i32Step);
                 g_pui8TIImage[7 + (i32Idx * 3)] =
-                        PaletteScale(g_pui8TIImagePalette[(i32Idx * 3) + 1],
-                                     i32Step);
+                    PaletteScale(g_pui8TIImagePalette[(i32Idx * 3) + 1],
+                                 i32Step);
                 g_pui8TIImage[8 + (i32Idx * 3)] =
-                        PaletteScale(g_pui8TIImagePalette[(i32Idx * 3) + 2],
-                                     i32Step);
+                    PaletteScale(g_pui8TIImagePalette[(i32Idx * 3) + 2],
+                                 i32Step);
 
             }
 
@@ -2504,8 +2289,7 @@ TIWelcome(void)
     //
     // "erase" the final line towards the middle.
     //
-    for(i32Line = 0; i32Line < 159; i32Line++)
-    {
+    for(i32Line = 0; i32Line < 159; i32Line++) {
         GrPixelDraw(&g_sContext,i32Line, 119);
         GrPixelDraw(&g_sContext,319- i32Line, 119);
         SysCtlDelay(g_ui32SysClock/2400);
@@ -2527,8 +2311,7 @@ TIWelcome(void)
 int
 main(void)
 {
-    enum
-    {
+    enum {
         eRequestIdle,
         eRequestUpdate,
         eRequestForecast,
@@ -2544,8 +2327,8 @@ main(void)
     // Run from the PLL at 120 MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Configure the device pins.
@@ -2608,20 +2391,16 @@ main(void)
     //
     // Use the defaults if no settings were found.
     //
-    if(pParams == 0)
-    {
+    if(pParams == 0) {
         g_sConfig = g_sDefaultParams;
-    }
-    else
-    {
+    } else {
         g_sConfig = *pParams;
     }
 
     //
     // Initialize all of the cities.
     //
-    for(i32City = 0; i32City < NUM_CITIES; i32City++)
-    {
+    for(i32City = 0; i32City < NUM_CITIES; i32City++) {
         ResetCity(i32City);
     }
 
@@ -2657,13 +2436,10 @@ main(void)
     IntPrioritySet(INT_EMAC0, ETHERNET_INT_PRIORITY);
     IntPrioritySet(FAULT_SYSTICK, SYSTICK_INT_PRIORITY);
 
-    if(g_sConfig.bProxyEnabled)
-    {
+    if(g_sConfig.bProxyEnabled) {
         EthClientProxySet(g_sConfig.pcProxy);
         EthClientInit(EnetEvents);
-    }
-    else
-    {
+    } else {
         EthClientProxySet(0);
         EthClientInit(EnetEvents);
     }
@@ -2690,33 +2466,26 @@ main(void)
     //
     // Loop forever.  All the work is done in interrupt handlers.
     //
-    while(1)
-    {
-        if(g_iState == STATE_NEW_CONNECTION)
-        {
+    while(1) {
+        if(g_iState == STATE_NEW_CONNECTION) {
             iRequest = eRequestIdle;
 
             g_iState = STATE_CONNECTED_IDLE;
-        }
-        else if(g_iState == STATE_CONNECTED_IDLE)
-        {
-            if(iRequest == eRequestIdle)
-            {
+        } else if(g_iState == STATE_CONNECTED_IDLE) {
+            if(iRequest == eRequestIdle) {
                 //
                 // If this city needs updating then start an update.
                 //
                 if((g_psCityInfo[g_ui32CityUpdating].bNeedsUpdate) &&
-                   ((g_ui32CityUpdating < NUM_CITIES - 1) ||
-                    (g_sConfig.bCustomEnabled == true)))
-                {
+                        ((g_ui32CityUpdating < NUM_CITIES - 1) ||
+                         (g_sConfig.bCustomEnabled == true))) {
                     iRequest = eRequestUpdate;
 
                     //
                     // Change the status to updating if on the main screen.
                     //
                     if((g_ui32CityUpdating == g_ui32CityActive) &&
-                       (g_i32ScreenIdx == SCREEN_MAIN))
-                    {
+                            (g_i32ScreenIdx == SCREEN_MAIN)) {
                         //
                         // Display the waiting message.
                         //
@@ -2725,33 +2494,26 @@ main(void)
                     }
                 }
 
-                if(iRequest != eRequestUpdate)
-                {
+                if(iRequest != eRequestUpdate) {
                     //
                     // If the custom city is enabled and it needs updating,
                     // then update it first.
                     //
                     if((g_psCityInfo[NUM_CITIES - 1].bNeedsUpdate) &&
-                       (g_sConfig.bCustomEnabled == true))
-                    {
+                            (g_sConfig.bCustomEnabled == true)) {
                         g_ui32CityUpdating = NUM_CITIES - 1;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Move on to the next city to see if it needs to be
                         // updated on the next pass.
                         //
                         g_ui32CityUpdating++;
                     }
-                    if(g_ui32CityUpdating >= NUM_CITIES)
-                    {
+                    if(g_ui32CityUpdating >= NUM_CITIES) {
                         g_ui32CityUpdating = 0;
                     }
                 }
-            }
-            else if(iRequest == eRequestUpdate)
-            {
+            } else if(iRequest == eRequestUpdate) {
                 g_iState = STATE_WAIT_DATA;
 
                 //
@@ -2765,9 +2527,7 @@ main(void)
                                 WeatherEvent);
 
                 iRequest = eRequestForecast;
-            }
-            else if(iRequest == eRequestForecast)
-            {
+            } else if(iRequest == eRequestForecast) {
                 g_iState = STATE_WAIT_DATA;
 
                 //
@@ -2781,9 +2541,7 @@ main(void)
                                WeatherEvent);
 
                 iRequest = eRequestCurrent;
-            }
-            else if(iRequest == eRequestCurrent)
-            {
+            } else if(iRequest == eRequestCurrent) {
                 //
                 // Return to the idle request state.
                 //
@@ -2794,27 +2552,20 @@ main(void)
                 //
                 g_psCityInfo[g_ui32CityUpdating].bNeedsUpdate = false;
             }
-        }
-        else if(g_iState == STATE_UPDATE_CITY)
-        {
-            if(iRequest == eRequestCurrent)
-            {
+        } else if(g_iState == STATE_UPDATE_CITY) {
+            if(iRequest == eRequestCurrent) {
                 //
                 // If the city is the current active city and the the
                 // application is on the main screen then update the screen
                 // and not just the values.
                 //
-                if(g_ui32CityUpdating == g_ui32CityActive)
-                {
+                if(g_ui32CityUpdating == g_ui32CityActive) {
                     //
                     // Update the current city.
                     //
-                    if(g_i32ScreenIdx == SCREEN_MAIN)
-                    {
+                    if(g_i32ScreenIdx == SCREEN_MAIN) {
                         UpdateCity(g_ui32CityUpdating, true);
-                    }
-                    else
-                    {
+                    } else {
                         UpdateCity(g_ui32CityUpdating, false);
                     }
                 }
@@ -2834,25 +2585,19 @@ main(void)
             // 10ms * 10 is a 1 second delay between updates.
             //
             g_ui32Delay = SYSTEM_TICK_MS * 10;
-        }
-        else if(g_iState == STATE_WAIT_NICE)
-        {
+        } else if(g_iState == STATE_WAIT_NICE) {
             //
             // Wait for the "nice" delay to not hit the server too often.
             //
-            if(g_ui32Delay == 0)
-            {
+            if(g_ui32Delay == 0) {
                 g_iState = STATE_CONNECTED_IDLE;
             }
-        }
-        else if(g_iState == STATE_WAIT_DATA)
-        {
+        } else if(g_iState == STATE_WAIT_DATA) {
             //
             // If no data has been received by the timeout then close the
             // connection.
             //
-            if(g_ui32Delay == 0)
-            {
+            if(g_ui32Delay == 0) {
                 //
                 // Close out the current connection.
                 //
@@ -2878,8 +2623,7 @@ main(void)
         //
         // If nothing has happened for awhile, then move to a new city.
         //
-        if(g_ui32ScreenSaver == 0)
-        {
+        if(g_ui32ScreenSaver == 0) {
             //
             // Reset the timeout for 10s to update the screen more often.
             //

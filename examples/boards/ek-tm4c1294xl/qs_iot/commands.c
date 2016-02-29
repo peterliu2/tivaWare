@@ -4,20 +4,20 @@
 //
 // Copyright (c) YEAR Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -43,25 +43,34 @@
 // brief description.
 //
 //*****************************************************************************
-tCmdLineEntry g_psCmdTable[] =
-{
+tCmdLineEntry g_psCmdTable[] = {
     { "help",        Cmd_help,        ": Display list of commands" },
     { "h",           Cmd_help,        ": alias for help" },
     { "?",           Cmd_help,        ": alias for help" },
-    { "stats",       Cmd_stats,       ": Display collected stats for this"
-                                      " board" },
+    {
+        "stats",       Cmd_stats,       ": Display collected stats for this"
+        " board"
+    },
     { "activate",    Cmd_activate,    ": Get a CIK from exosite"},
     { "clear",       Cmd_clear,       ": Clear the display "},
-    { "led",         Cmd_led,         ": Toggle LEDs. Type \"led help\" for "
-                                      "more info."},
-    { "connect",     Cmd_connect,     ": Tries to establish a connection with "
-                                      "exosite."},
+    {
+        "led",         Cmd_led,         ": Toggle LEDs. Type \"led help\" for "
+        "more info."
+    },
+    {
+        "connect",     Cmd_connect,     ": Tries to establish a connection with "
+        "exosite."
+    },
     { "getmac",      Cmd_getmac,      ": Prints the current MAC address."},
     { "setproxy",    Cmd_setproxy,    ": Setup or change proxy configuration."},
-    { "setemail",    Cmd_setemail,    ": Change the email address used for "
-                                      "alerts."},
-    { "alert",       Cmd_alert,       ": Send an alert to the saved email "
-                                      "address."},
+    {
+        "setemail",    Cmd_setemail,    ": Change the email address used for "
+        "alerts."
+    },
+    {
+        "alert",       Cmd_alert,       ": Send an alert to the saved email "
+        "address."
+    },
     { "tictactoe",   Cmd_tictactoe,   ": Play tic-tac-toe!"},
     { 0, 0, 0 }
 };
@@ -71,8 +80,7 @@ tCmdLineEntry g_psCmdTable[] =
 // Array of possible alert messages.
 //
 //*****************************************************************************
-char *g_ppcAlertMessages[] =
-{
+char *g_ppcAlertMessages[] = {
     "Hello World!!",
     "Testing Exosite scripting features.",
     "Log into Exosite for a quick game of tic-tac-toe!"
@@ -106,8 +114,7 @@ Cmd_help(int argc, char *argv[])
     // Enter a loop to read each entry from the command table.  The end of the
     // table has been reached when the command name is NULL.
     //
-    while(pEntry->pcCmd)
-    {
+    while(pEntry->pcCmd) {
         //
         // Print the command name and the brief description.
         //
@@ -157,8 +164,7 @@ Cmd_activate(int argc, char *argv[])
     // Attempt to acquire a new CIK from Exosite. If successful, update the
     // global state variables to notify the main application.
     //
-    if(ProvisionCIK())
-    {
+    if(ProvisionCIK()) {
         //
         // Set the state to "online" with zero missed sync operations.
         //
@@ -187,8 +193,7 @@ Cmd_led(int argc, char *argv[])
     // (like the first character of help), print out information about the
     // usage of this command.
     //
-    if(argc < 3 || ((argc == 2) && (argv[1][0] == 'h')))
-    {
+    if(argc < 3 || ((argc == 2) && (argv[1][0] == 'h'))) {
         UARTprintf("LED command usage:\n\n");
         UARTprintf("Specify an LED name (d1 or d2) and a state (on or off),\n");
         UARTprintf("separated by a space.\n\n");
@@ -198,26 +203,21 @@ Cmd_led(int argc, char *argv[])
         return 0;
     }
 
-    else if(argv[1][1] == '1')
-    {
+    else if(argv[1][1] == '1') {
         //
         // If the second letter of the second argument is a 3, assume the user
         // is trying to interact with led d3.
         //
         pui32LEDValue = &g_ui32LEDD1;
         g_sLEDD1.eReadWriteType = READ_WRITE;
-    }
-    else if(argv[1][1] == '2')
-    {
+    } else if(argv[1][1] == '2') {
         //
         // If the second letter of the second argument is a 4, assume the user
         // is trying to interact with led d4.
         //
         pui32LEDValue = &g_ui32LEDD2;
         g_sLEDD2.eReadWriteType = READ_WRITE;
-    }
-    else
-    {
+    } else {
         UARTprintf("Invalid LED name.\n");
         return 0;
     }
@@ -244,21 +244,17 @@ Cmd_connect(int argc, char *argv[])
     // Set the flags to restart the connection to exosite. The main application
     // loop should handle the actual connection.
     //
-    if(g_bOnline)
-    {
+    if(g_bOnline) {
         UARTprintf("Already connected. ");
         UARTprintf("Type 'stats' to see data for this board.\n");
-    }
-    else
-    {
+    } else {
         UARTprintf("Connecting to Exosite...\r");
 
         //
         // If a CIK was found, try to sync with Exosite. This should tell us if
         // the CIK is valid or not.
         //
-        if(SyncWithExosite(g_psDeviceStatistics))
-        {
+        if(SyncWithExosite(g_psDeviceStatistics)) {
             //
             // If the sync worked, the CIK is valid. Alert the caller.
             //
@@ -266,9 +262,7 @@ Cmd_connect(int argc, char *argv[])
             g_bOnline = true;
             g_ui32LinkRetries = 0;
             return 0;
-        }
-        else
-        {
+        } else {
             UARTprintf("Sync failed.                 \n");
         }
     }
@@ -314,17 +308,14 @@ Cmd_setproxy(int argc, char *argv[])
     //
     // Check the number of arguments.
     //
-    if((argc == 2) && (ustrcmp("off",argv[1]) == 0 ))
-    {
+    if((argc == 2) && (ustrcmp("off",argv[1]) == 0 )) {
         g_bUseProxy = false;
         g_pcProxyAddress[0] = 0;
         g_ui16ProxyPort = 0;
 
         UARTprintf("Attempting to re-establish link with Exosite.\n\n");
         g_bOnline = LocateValidCIK();
-    }
-    else if(argc == 3)
-    {
+    } else if(argc == 3) {
         //
         // Otherwise, copy the user-defined location into the global variable.
         //
@@ -345,9 +336,7 @@ Cmd_setproxy(int argc, char *argv[])
         UARTprintf("Attempting to re-establish link with Exosite.\n\n");
         g_bOnline = LocateValidCIK();
 
-    }
-    else
-    {
+    } else {
         UARTprintf("\nProxy configuration help:\n");
         UARTprintf("    The setproxy command changes the proxy behavior of"
                    "this board.\n");
@@ -390,16 +379,13 @@ Cmd_setemail(int argc, char *argv[])
     //
     // Check the number of arguments.
     //
-    if(argc < 2)
-    {
+    if(argc < 2) {
         //
         // If there was no second term, prompt the user to enter one next time.
         //
         UARTprintf("Not enough arguments. Please enter an email address.\n");
         UARTprintf("For example \"setemail yourname@example.com\"");
-    }
-    else
-    {
+    } else {
         //
         // Otherwise, copy the user-defined location into the global variable.
         //
@@ -436,23 +422,19 @@ Cmd_alert(int argc, char *argv[])
     //
     // Check the number of arguments.
     //
-    if(argc < 2)
-    {
+    if(argc < 2) {
         //
         // If there was no second term, prompt the user to enter one next time.
         //
         UARTprintf("Please specify the alert you want to send:\n");
-        for(ui32Index = 0; ui32Index < NUM_ALERTS; ui32Index++)
-        {
+        for(ui32Index = 0; ui32Index < NUM_ALERTS; ui32Index++) {
             //
             // Print a list of the available alert messages.
             //
             UARTprintf("alert %d: %s\n", ui32Index,
                        g_ppcAlertMessages[ui32Index]);
         }
-    }
-    else
-    {
+    } else {
         ui32Index = ustrtoul(argv[1], NULL, 0);
         ustrncpy(g_pcAlert, g_ppcAlertMessages[ui32Index], 140);
         g_sAlert.eReadWriteType = READ_WRITE;

@@ -102,8 +102,7 @@ DiagFlen(int iHandle)
 void
 DiagExit(int iRet)
 {
-    while(1)
-    {
+    while(1) {
     }
 }
 

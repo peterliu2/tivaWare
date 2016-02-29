@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -61,8 +61,7 @@
 // Instance data for a single loaded font.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // The FATfs file object associated with the font.
     //
@@ -122,8 +121,7 @@ tFontFile g_sFontFile;
 // FAT file system driver.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     FRESULT iFResult;
     char *pcResultStr;
 }
@@ -143,8 +141,7 @@ tFresultString;
 // printing to the console.
 //
 //*****************************************************************************
-tFresultString g_psFresultStrings[] =
-{
+tFresultString g_psFresultStrings[] = {
     FRESULT_ENTRY(FR_OK),
     FRESULT_ENTRY(FR_DISK_ERR),
     FRESULT_ENTRY(FR_INT_ERR),
@@ -194,15 +191,15 @@ static void FATWrapperFontInfoGet(uint8_t *pui8FontID,
                                   uint8_t *pui8Height,
                                   uint8_t *pui8Baseline);
 static const uint8_t *FATWrapperFontGlyphDataGet(
-                                  uint8_t *pui8FontID,
-                                  uint32_t ui32CodePoint,
-                                  uint8_t *pui8Width);
+    uint8_t *pui8FontID,
+    uint32_t ui32CodePoint,
+    uint8_t *pui8Width);
 static uint16_t FATWrapperFontCodepageGet(uint8_t *pui8FontID);
 static uint16_t FATWrapperFontNumBlocksGet(uint8_t *pui8FontID);
 static uint32_t FATWrapperFontBlockCodepointsGet(
-                                  uint8_t *pui8FontID,
-                                  uint16_t ui16BlockIndex,
-                                  uint32_t *pui32Start);
+    uint8_t *pui8FontID,
+    uint16_t ui16BlockIndex,
+    uint32_t *pui32Start);
 
 //*****************************************************************************
 //
@@ -210,8 +207,7 @@ static uint32_t FATWrapperFontBlockCodepointsGet(
 // for this font.
 //
 //*****************************************************************************
-const tFontAccessFuncs g_sFATFontAccessFuncs =
-{
+const tFontAccessFuncs g_sFATFontAccessFuncs = {
     FATWrapperFontInfoGet,
     FATWrapperFontGlyphDataGet,
     FATWrapperFontCodepageGet,
@@ -235,14 +231,12 @@ StringFromFresult(FRESULT iFResult)
     // Enter a loop to search the error code table for a matching
     // error code.
     //
-    for(ui32Idx = 0; ui32Idx < NUM_FRESULT_CODES; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < NUM_FRESULT_CODES; ui32Idx++) {
         //
         // If a match is found, then return the string name of the
         // error code.
         //
-        if(g_psFresultStrings[ui32Idx].iFResult == iFResult)
-        {
+        if(g_psFresultStrings[ui32Idx].iFResult == iFResult) {
             return(g_psFresultStrings[ui32Idx].pcResultStr);
         }
     }
@@ -363,15 +357,13 @@ FATWrapperFontBlockHeaderGet(FIL *psFile, tFontBlock *psBlock,
     // Set the file pointer to the position of the block header we want.
     //
     iFResult = f_lseek(psFile, sizeof(tFontWide) +
-                      (sizeof(tFontBlock) * ui32Index));
-    if(iFResult == FR_OK)
-    {
+                       (sizeof(tFontBlock) * ui32Index));
+    if(iFResult == FR_OK) {
         //
         // Now read the block header.
         //
         iFResult = f_read(psFile, psBlock, sizeof(tFontBlock), &uiRead);
-        if((iFResult == FR_OK) && (uiRead == sizeof(tFontBlock)))
-        {
+        if((iFResult == FR_OK) && (uiRead == sizeof(tFontBlock))) {
             return(true);
         }
     }
@@ -411,8 +403,7 @@ FATWrapperFontBlockCodepointsGet(uint8_t *pui8FontID,
     //
     // Have we been passed a valid block index?
     //
-    if(ui16BlockIndex >= psFont->sFontHeader.ui16NumBlocks)
-    {
+    if(ui16BlockIndex >= psFont->sFontHeader.ui16NumBlocks) {
         //
         // No - return an error.
         //
@@ -422,29 +413,23 @@ FATWrapperFontBlockCodepointsGet(uint8_t *pui8FontID,
     //
     // Is this block header cached?
     //
-    if(ui16BlockIndex < MAX_FONT_BLOCKS)
-    {
+    if(ui16BlockIndex < MAX_FONT_BLOCKS) {
         //
         // Yes - return the information from our cached copy.
         //
         *pui32Start = psFont->psBlocks[ui16BlockIndex].ui32StartCodepoint;
         return(psFont->psBlocks[ui16BlockIndex].ui32NumCodepoints);
-    }
-    else
-    {
+    } else {
         //
         // We don't have the block header cached so read it from the
         // SDCard.  First move the file pointer to the expected position.
         //
         bRetcode = FATWrapperFontBlockHeaderGet(&psFont->sFile, &sBlock,
                                                 ui16BlockIndex);
-        if(bRetcode)
-        {
+        if(bRetcode) {
             *pui32Start = sBlock.ui32StartCodepoint;
             return(sBlock.ui32NumCodepoints);
-        }
-        else
-        {
+        } else {
             UARTprintf("Error reading block header!\n");
         }
     }
@@ -485,8 +470,7 @@ FATWrapperFontGlyphDataGet(uint8_t *pui8FontID,
     //
     // If passed a NULL codepoint, return immediately.
     //
-    if(!ui32Codepoint)
-    {
+    if(!ui32Codepoint) {
         return(0);
     }
 
@@ -501,8 +485,7 @@ FATWrapperFontGlyphDataGet(uint8_t *pui8FontID,
     // Look for the trivial case - do we have this glyph in our glyph store
     // already?
     //
-    if(psFont->ui32CurrentGlyph == ui32Codepoint)
-    {
+    if(psFont->ui32CurrentGlyph == ui32Codepoint) {
         //
         // We struck gold - we already have this glyph in our buffer.  Return
         // the width (from the second byte of the data) and a pointer to the
@@ -515,19 +498,14 @@ FATWrapperFontGlyphDataGet(uint8_t *pui8FontID,
     //
     // First find the block that contains the glyph we've been asked for.
     //
-    for(ui32Loop = 0; ui32Loop < psFont->sFontHeader.ui16NumBlocks; ui32Loop++)
-    {
-        if(ui32Loop < MAX_FONT_BLOCKS)
-        {
+    for(ui32Loop = 0; ui32Loop < psFont->sFontHeader.ui16NumBlocks; ui32Loop++) {
+        if(ui32Loop < MAX_FONT_BLOCKS) {
             psBlock = &psFont->psBlocks[ui32Loop];
-        }
-        else
-        {
+        } else {
             bRetcode = FATWrapperFontBlockHeaderGet(&psFont->sFile, &sBlock,
                                                     ui32Loop);
             psBlock = &sBlock;
-            if(!bRetcode)
-            {
+            if(!bRetcode) {
                 //
                 // We failed to read the block header so return an error.
                 //
@@ -539,24 +517,22 @@ FATWrapperFontGlyphDataGet(uint8_t *pui8FontID,
         // Does the requested character exist in this block?
         //
         if((ui32Codepoint >= (psBlock->ui32StartCodepoint)) &&
-          ((ui32Codepoint < (psBlock->ui32StartCodepoint +
-            psBlock->ui32NumCodepoints))))
-        {
+                ((ui32Codepoint < (psBlock->ui32StartCodepoint +
+                                   psBlock->ui32NumCodepoints)))) {
             //
             // The glyph is in this block. Calculate the offset of it's
             // glyph table entry in the file.
             //
             ui32TableOffset = psBlock->ui32GlyphTableOffset +
-                            ((ui32Codepoint - psBlock->ui32StartCodepoint) *
-                            sizeof(uint32_t));
+                              ((ui32Codepoint - psBlock->ui32StartCodepoint) *
+                               sizeof(uint32_t));
 
             //
             // Move the file pointer to the offset position.
             //
             iFResult = f_lseek(&psFont->sFile, ui32TableOffset);
 
-            if(iFResult != FR_OK)
-            {
+            if(iFResult != FR_OK) {
                 return(0);
             }
 
@@ -564,15 +540,14 @@ FATWrapperFontGlyphDataGet(uint8_t *pui8FontID,
             // Read the glyph data offset.
             //
             iFResult = f_read(&psFont->sFile, &ui32GlyphOffset,
-                             sizeof(uint32_t), &uiRead);
+                              sizeof(uint32_t), &uiRead);
 
             //
             // Return if there was an error or if the offset is 0 (which
             // indicates that the character is not included in the font.
             //
             if((iFResult != FR_OK) || (uiRead != sizeof(uint32_t)) ||
-                !ui32GlyphOffset)
-            {
+                    !ui32GlyphOffset) {
                 return(0);
             }
 
@@ -583,10 +558,9 @@ FATWrapperFontGlyphDataGet(uint8_t *pui8FontID,
             // here).
             //
             iFResult = f_lseek(&psFont->sFile, (psBlock->ui32GlyphTableOffset +
-                              ui32GlyphOffset));
+                                                ui32GlyphOffset));
 
-            if(iFResult != FR_OK)
-            {
+            if(iFResult != FR_OK) {
                 return(0);
             }
 
@@ -597,8 +571,7 @@ FATWrapperFontGlyphDataGet(uint8_t *pui8FontID,
             iFResult = f_read(&psFont->sFile, psFont->pui8GlyphStore, 1,
                               &uiRead);
 
-            if((iFResult != FR_OK) || !uiRead)
-            {
+            if((iFResult != FR_OK) || !uiRead) {
                 return(0);
             }
 
@@ -609,8 +582,7 @@ FATWrapperFontGlyphDataGet(uint8_t *pui8FontID,
                               psFont->pui8GlyphStore[0] - 1, &uiRead);
 
             if((iFResult != FR_OK) ||
-               (uiRead != (psFont->pui8GlyphStore[0] - 1)))
-            {
+                    (uiRead != (psFont->pui8GlyphStore[0] - 1))) {
                 return(0);
             }
 
@@ -650,13 +622,12 @@ FATFontWrapperInit(void)
     // Mount the file system, using logical disk 0.
     //
     iFResult = f_mount(0, &g_sFatFs);
-    if(iFResult != FR_OK)
-    {
+    if(iFResult != FR_OK) {
         //
         // We failed to mount the volume.  Tell the user and return an error.
         //
         UARTprintf("f_mount error: %s (%d)\n", StringFromFresult(iFResult),
-                iFResult);
+                   iFResult);
         return(false);
     }
 
@@ -714,8 +685,7 @@ FATFontWrapperLoad(char *pcFilename)
     //
     // Make sure a font is not already open.
     //
-    if(g_sFontFile.bInUse)
-    {
+    if(g_sFontFile.bInUse) {
         //
         // Oops - someone tried to load a new font without unloading the
         // previous one.
@@ -728,8 +698,7 @@ FATFontWrapperLoad(char *pcFilename)
     // Try to open the file whose name we've been given.
     //
     iFResult = f_open(&g_sFontFile.sFile, pcFilename, FA_READ);
-    if(iFResult != FR_OK)
-    {
+    if(iFResult != FR_OK) {
         //
         // We can't open the file.  Either the file doesn't exist or there is
         // no SDCard installed.  Regardless, return an error.
@@ -745,15 +714,13 @@ FATFontWrapperLoad(char *pcFilename)
     //
     iFResult = f_read(&g_sFontFile.sFile, &g_sFontFile.sFontHeader,
                       sizeof(tFontWide), &uiRead);
-    if((iFResult == FR_OK) && (uiRead == sizeof(tFontWide)))
-    {
+    if((iFResult == FR_OK) && (uiRead == sizeof(tFontWide))) {
         //
         // We read the font header.  Is the format correct? We only support
         // wide fonts via wrappers.
         //
         if((g_sFontFile.sFontHeader.ui8Format != FONT_FMT_WIDE_UNCOMPRESSED) &&
-           (g_sFontFile.sFontHeader.ui8Format != FONT_FMT_WIDE_PIXEL_RLE))
-        {
+                (g_sFontFile.sFontHeader.ui8Format != FONT_FMT_WIDE_PIXEL_RLE)) {
             //
             // This is not a supported font format.
             //
@@ -774,26 +741,21 @@ FATFontWrapperLoad(char *pcFilename)
 
         iFResult = f_read(&g_sFontFile.sFile, &g_sFontFile.psBlocks, uiToRead,
                           &uiRead);
-        if((iFResult == FR_OK) && (uiRead == uiToRead))
-        {
+        if((iFResult == FR_OK) && (uiRead == uiToRead)) {
             //
             // All is well.  Tell the caller the font was opened successfully.
             //
             UARTprintf("Font %s opened successfully.\n", pcFilename);
             g_sFontFile.bInUse = true;
             return((uint8_t *)&g_sFontFile);
-        }
-        else
-        {
+        } else {
             UARTprintf("Error %s (%d) reading block headers. Read %d, exp %d "
                        "bytes.\n", StringFromFresult(iFResult), iFResult,
                        uiRead, uiToRead);
             f_close(&g_sFontFile.sFile);
             return(0);
         }
-    }
-    else
-    {
+    } else {
         //
         // We received an error while reading the file header so fail the call.
         //
@@ -834,8 +796,7 @@ void FATFontWrapperUnload(uint8_t *pui8FontID)
     //
     // Make sure a font is already open.  If not, just return.
     //
-    if(!psFont->bInUse)
-    {
+    if(!psFont->bInUse) {
         return;
     }
 
@@ -844,8 +805,7 @@ void FATFontWrapperUnload(uint8_t *pui8FontID)
     //
     UARTprintf("Unloading font... \n");
     iFResult = f_close(&psFont->sFile);
-    if(iFResult != FR_OK)
-    {
+    if(iFResult != FR_OK) {
         UARTprintf("Error %s (%d) from f_close.\n", StringFromFresult(iFResult),
                    iFResult);
     }

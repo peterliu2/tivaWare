@@ -7,13 +7,13 @@
 * The authors hereby grant permission to use, copy, modify, distribute,
 * and license this software and its documentation for any purpose, provided
 * that existing copyright notices are retained in all copies and that this
-* notice and the following disclaimer are included verbatim in any 
+* notice and the following disclaimer are included verbatim in any
 * distributions. No written agreement, license, or royalty fee is required
 * for any of the authorized uses.
 *
 * THIS SOFTWARE IS PROVIDED BY THE CONTRIBUTORS *AS IS* AND ANY EXPRESS OR
 * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-* OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+* OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
 * IN NO EVENT SHALL THE CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
 * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
 * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
@@ -163,10 +163,10 @@ typedef u_char  ext_accm[32];
  * What to do with network protocol (NP) packets.
  */
 enum NPmode {
-  NPMODE_PASS,        /* pass the packet through */
-  NPMODE_DROP,        /* silently drop the packet */
-  NPMODE_ERROR,       /* return an error */
-  NPMODE_QUEUE        /* save it up for later. */
+    NPMODE_PASS,        /* pass the packet through */
+    NPMODE_DROP,        /* silently drop the packet */
+    NPMODE_ERROR,       /* return an error */
+    NPMODE_QUEUE        /* save it up for later. */
 };
 
 /*
@@ -254,8 +254,8 @@ struct protent {
 #if PPP_ADDITIONAL_CALLBACKS
     /* Print a packet in readable form */
     int  (*printpkt) (u_char *pkt, int len,
-              void (*printer) (void *, char *, ...),
-              void *arg);
+                      void (*printer) (void *, char *, ...),
+                      void *arg);
     /* Process a received data packet */
     void (*datainput) (int unit, u_char *pkt, int len);
 #endif /* PPP_ADDITIONAL_CALLBACKS */
@@ -276,27 +276,27 @@ struct protent {
  * the last NP packet was sent or received.
  */
 struct ppp_idle {
-  u_short xmit_idle;      /* seconds since last NP packet sent */
-  u_short recv_idle;      /* seconds since last NP packet received */
+    u_short xmit_idle;      /* seconds since last NP packet sent */
+    u_short recv_idle;      /* seconds since last NP packet received */
 };
 
 struct ppp_settings {
 
-  u_int  disable_defaultip : 1;       /* Don't use hostname for default IP addrs */
-  u_int  auth_required     : 1;       /* Peer is required to authenticate */
-  u_int  explicit_remote   : 1;       /* remote_name specified with remotename opt */
-  u_int  refuse_pap        : 1;       /* Don't wanna auth. ourselves with PAP */
-  u_int  refuse_chap       : 1;       /* Don't wanna auth. ourselves with CHAP */
-  u_int  usehostname       : 1;       /* Use hostname for our_name */
-  u_int  usepeerdns        : 1;       /* Ask peer for DNS adds */
+    u_int  disable_defaultip : 1;       /* Don't use hostname for default IP addrs */
+    u_int  auth_required     : 1;       /* Peer is required to authenticate */
+    u_int  explicit_remote   : 1;       /* remote_name specified with remotename opt */
+    u_int  refuse_pap        : 1;       /* Don't wanna auth. ourselves with PAP */
+    u_int  refuse_chap       : 1;       /* Don't wanna auth. ourselves with CHAP */
+    u_int  usehostname       : 1;       /* Use hostname for our_name */
+    u_int  usepeerdns        : 1;       /* Ask peer for DNS adds */
 
-  u_short idle_time_limit;            /* Shut down link if idle for this long */
-  int  maxconnect;                    /* Maximum connect time (seconds) */
+    u_short idle_time_limit;            /* Shut down link if idle for this long */
+    int  maxconnect;                    /* Maximum connect time (seconds) */
 
-  char user       [MAXNAMELEN   + 1]; /* Username for PAP */
-  char passwd     [MAXSECRETLEN + 1]; /* Password for PAP, secret for CHAP */
-  char our_name   [MAXNAMELEN   + 1]; /* Our name for authentication purposes */
-  char remote_name[MAXNAMELEN   + 1]; /* Peer's name for authentication */
+    char user       [MAXNAMELEN   + 1]; /* Username for PAP */
+    char passwd     [MAXSECRETLEN + 1]; /* Password for PAP, secret for CHAP */
+    char our_name   [MAXNAMELEN   + 1]; /* Our name for authentication purposes */
+    char remote_name[MAXNAMELEN   + 1]; /* Peer's name for authentication */
 };
 
 /*****************************
@@ -356,7 +356,7 @@ int  sifdefaultroute (int, u32_t, u32_t);
 int  cifdefaultroute (int, u32_t, u32_t);
 
 /* Get appropriate netmask for address */
-u32_t GetMask (u32_t); 
+u32_t GetMask (u32_t);
 
 #endif /* PPP_SUPPORT */
 

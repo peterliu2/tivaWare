@@ -6,20 +6,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -66,8 +66,7 @@ static void Status3(tWidget *psWidget);
 // The global UI state.
 //
 //*****************************************************************************
-static struct
-{
+static struct {
     uint32_t ui32Indicators;
 }
 g_sUIState;
@@ -121,41 +120,41 @@ Canvas(g_sBackground, WIDGET_ROOT, 0, &g_sStatusPanel,
 // Right button in mouse mode and Num Lock in keyboard mode.
 //
 RectangularButton(g_sStatus3, &g_sStatusPanel, 0, 0,
-       &g_sKentec320x240x16_SSD2119, BG_MIN_X + 250,
-       BG_MAX_Y - STATUS_HEIGHT + 4, 50, BUTTON_HEIGHT,
-       PB_STYLE_FILL | PB_STYLE_TEXT |
-       PB_STYLE_RELEASE_NOTIFY, ClrLightGrey, ClrDarkGray, 0,
-       ClrBlack, g_psFontCmss16, "Right", 0, 0, 0 ,0 , Status3);
+                  &g_sKentec320x240x16_SSD2119, BG_MIN_X + 250,
+                  BG_MAX_Y - STATUS_HEIGHT + 4, 50, BUTTON_HEIGHT,
+                  PB_STYLE_FILL | PB_STYLE_TEXT |
+                  PB_STYLE_RELEASE_NOTIFY, ClrLightGrey, ClrDarkGray, 0,
+                  ClrBlack, g_psFontCmss16, "Right", 0, 0, 0 ,0 , Status3);
 
 //
 // Middle button in mouse mode and Scroll Lock in keyboard mode.
 //
 RectangularButton(g_sStatus2, &g_sStatusPanel, &g_sStatus3, 0,
-       &g_sKentec320x240x16_SSD2119, BG_MIN_X + 196,
-       BG_MAX_Y - STATUS_HEIGHT + 4, 50, BUTTON_HEIGHT,
-       PB_STYLE_FILL | PB_STYLE_TEXT |
-       PB_STYLE_RELEASE_NOTIFY, ClrLightGrey, ClrDarkGray, 0,
-       ClrBlack, g_psFontCmss16, "Middle", 0, 0, 0 ,0 , Status2);
+                  &g_sKentec320x240x16_SSD2119, BG_MIN_X + 196,
+                  BG_MAX_Y - STATUS_HEIGHT + 4, 50, BUTTON_HEIGHT,
+                  PB_STYLE_FILL | PB_STYLE_TEXT |
+                  PB_STYLE_RELEASE_NOTIFY, ClrLightGrey, ClrDarkGray, 0,
+                  ClrBlack, g_psFontCmss16, "Middle", 0, 0, 0 ,0 , Status2);
 
 //
 // Left button in mouse mode and Caps Lock in keyboard mode.
 //
 RectangularButton(g_sStatus1, &g_sStatusPanel, &g_sStatus2, 0,
-       &g_sKentec320x240x16_SSD2119, BG_MIN_X + 142,
-       BG_MAX_Y - STATUS_HEIGHT + 4, 50, BUTTON_HEIGHT,
-       PB_STYLE_FILL | PB_STYLE_TEXT |
-       PB_STYLE_RELEASE_NOTIFY, ClrLightGrey, ClrDarkGray, 0,
-       ClrBlack, g_psFontCmss16, "Left", 0, 0, 0 ,0 , Status1);
+                  &g_sKentec320x240x16_SSD2119, BG_MIN_X + 142,
+                  BG_MAX_Y - STATUS_HEIGHT + 4, 50, BUTTON_HEIGHT,
+                  PB_STYLE_FILL | PB_STYLE_TEXT |
+                  PB_STYLE_RELEASE_NOTIFY, ClrLightGrey, ClrDarkGray, 0,
+                  ClrBlack, g_psFontCmss16, "Left", 0, 0, 0 ,0 , Status1);
 
 //
 // The mode toggle button.
 //
 RectangularButton(g_sToggle, &g_sStatusPanel, &g_sStatus1, 0,
-       &g_sKentec320x240x16_SSD2119, BG_MIN_X + 4,
-       BG_MAX_Y - STATUS_HEIGHT + 4, 80, BUTTON_HEIGHT,
-       PB_STYLE_FILL | PB_STYLE_TEXT | PB_STYLE_RELEASE_NOTIFY, ClrLightGrey,
-       ClrDarkGray, 0, ClrBlack, g_psFontCmss16, "Mouse", 0, 0, 0 ,0 ,
-       ToggleMode);
+                  &g_sKentec320x240x16_SSD2119, BG_MIN_X + 4,
+                  BG_MAX_Y - STATUS_HEIGHT + 4, 80, BUTTON_HEIGHT,
+                  PB_STYLE_FILL | PB_STYLE_TEXT | PB_STYLE_RELEASE_NOTIFY, ClrLightGrey,
+                  ClrDarkGray, 0, ClrBlack, g_psFontCmss16, "Mouse", 0, 0, 0 ,0 ,
+                  ToggleMode);
 
 //
 // Background of the status area behind the buttons.
@@ -178,13 +177,10 @@ tUIState g_eState;
 void
 UIKeyEvent(tWidget *psWidget, uint32_t ui32Key, uint32_t ui32Event)
 {
-    if(ui32Event == KEYBOARD_EVENT_PRESS)
-    {
+    if(ui32Event == KEYBOARD_EVENT_PRESS) {
         USBKeyboardUpdate(0, ui32Key, true);
 
-    }
-    else if(ui32Event == KEYBOARD_EVENT_RELEASE)
-    {
+    } else if(ui32Event == KEYBOARD_EVENT_RELEASE) {
         USBKeyboardUpdate(0, ui32Key, false);
     }
 }
@@ -197,13 +193,10 @@ UIKeyEvent(tWidget *psWidget, uint32_t ui32Key, uint32_t ui32Event)
 void
 UIUpdateCapsLock(void)
 {
-    if(g_sUIState.ui32Indicators & UI_STATUS_KEY_CAPS)
-    {
+    if(g_sUIState.ui32Indicators & UI_STATUS_KEY_CAPS) {
         PushButtonTextSet(&g_sStatus1, "CAPS");
         PushButtonTextColorSet(&g_sStatus1, ClrRed);
-    }
-    else
-    {
+    } else {
         PushButtonTextSet(&g_sStatus1, "caps");
         PushButtonTextColorSet(&g_sStatus1, ClrBlack);
     }
@@ -214,23 +207,19 @@ UIUpdateCapsLock(void)
 void
 UICapsLock(bool bEnable)
 {
-    if(bEnable)
-    {
+    if(bEnable) {
         //
         // Enable caps lock.
         //
         g_sUIState.ui32Indicators |= UI_STATUS_KEY_CAPS;
-    }
-    else
-    {
+    } else {
         //
         // Disable caps lock.
         //
         g_sUIState.ui32Indicators &= ~UI_STATUS_KEY_CAPS;
     }
 
-    if(g_sUIState.ui32Indicators & UI_STATUS_KEYBOARD)
-    {
+    if(g_sUIState.ui32Indicators & UI_STATUS_KEYBOARD) {
         UIUpdateCapsLock();
     }
 }
@@ -243,13 +232,10 @@ UICapsLock(bool bEnable)
 void
 UIUpdateScrollLock(void)
 {
-    if(g_sUIState.ui32Indicators & UI_STATUS_KEY_SCROLL)
-    {
+    if(g_sUIState.ui32Indicators & UI_STATUS_KEY_SCROLL) {
         PushButtonTextSet(&g_sStatus2, "SCROLL");
         PushButtonTextColorSet(&g_sStatus2, ClrRed);
-    }
-    else
-    {
+    } else {
         PushButtonTextSet(&g_sStatus2, "scroll");
         PushButtonTextColorSet(&g_sStatus2, ClrBlack);
     }
@@ -260,23 +246,19 @@ UIUpdateScrollLock(void)
 void
 UIScrollLock(bool bEnable)
 {
-    if(bEnable)
-    {
+    if(bEnable) {
         //
         // Enable caps lock.
         //
         g_sUIState.ui32Indicators |= UI_STATUS_KEY_SCROLL;
-    }
-    else
-    {
+    } else {
         //
         // Disable caps lock.
         //
         g_sUIState.ui32Indicators &= ~UI_STATUS_KEY_SCROLL;
     }
 
-    if(g_sUIState.ui32Indicators & UI_STATUS_KEYBOARD)
-    {
+    if(g_sUIState.ui32Indicators & UI_STATUS_KEYBOARD) {
         UIUpdateScrollLock();
     }
 }
@@ -289,13 +271,10 @@ UIScrollLock(bool bEnable)
 void
 UIUpdateNumLock(void)
 {
-    if(g_sUIState.ui32Indicators & UI_STATUS_KEY_NUM)
-    {
+    if(g_sUIState.ui32Indicators & UI_STATUS_KEY_NUM) {
         PushButtonTextSet(&g_sStatus3, "NUM");
         PushButtonTextColorSet(&g_sStatus3, ClrRed);
-    }
-    else
-    {
+    } else {
         PushButtonTextSet(&g_sStatus3, "num");
         PushButtonTextColorSet(&g_sStatus3, ClrBlack);
     }
@@ -306,23 +285,19 @@ UIUpdateNumLock(void)
 void
 UINumLock(bool bEnable)
 {
-    if(bEnable)
-    {
+    if(bEnable) {
         //
         // Enable caps lock.
         //
         g_sUIState.ui32Indicators |= UI_STATUS_KEY_NUM;
-    }
-    else
-    {
+    } else {
         //
         // Disable caps lock.
         //
         g_sUIState.ui32Indicators &= ~UI_STATUS_KEY_NUM;
     }
 
-    if(g_sUIState.ui32Indicators & UI_STATUS_KEYBOARD)
-    {
+    if(g_sUIState.ui32Indicators & UI_STATUS_KEYBOARD) {
         UIUpdateNumLock();
     }
 }
@@ -335,8 +310,7 @@ UINumLock(bool bEnable)
 void
 UIUpdateStatus(uint32_t ui32Indicators)
 {
-    if(g_eState == UI_NOT_CONNECTED)
-    {
+    if(g_eState == UI_NOT_CONNECTED) {
         PushButtonTextSet(&g_sToggle, "---");
 
         PushButtonTextColorSet(&g_sStatus1, ClrBlack);
@@ -348,8 +322,7 @@ UIUpdateStatus(uint32_t ui32Indicators)
         PushButtonTextColorSet(&g_sStatus3, ClrBlack);
         PushButtonTextSet(&g_sStatus3, "---");
 
-        if(ui32Indicators & UI_STATUS_KEYBOARD)
-        {
+        if(ui32Indicators & UI_STATUS_KEYBOARD) {
             WidgetRemove((tWidget *)&g_sKeyboard);
         }
 
@@ -361,8 +334,7 @@ UIUpdateStatus(uint32_t ui32Indicators)
     //
     // See if there is a change to update.
     //
-    if(ui32Indicators == g_sUIState.ui32Indicators)
-    {
+    if(ui32Indicators == g_sUIState.ui32Indicators) {
         return;
     }
 
@@ -370,13 +342,11 @@ UIUpdateStatus(uint32_t ui32Indicators)
     // Was there a global change in the keyboard/mouse state.
     //
     if(((ui32Indicators ^ g_sUIState.ui32Indicators) & UI_STATUS_KEYBOARD) ||
-       (ui32Indicators & UI_STATUS_UPDATE))
-    {
+            (ui32Indicators & UI_STATUS_UPDATE)) {
         //
         // Update to keyboard mode or mouse mode for the UI.
         //
-        if(ui32Indicators & UI_STATUS_KEYBOARD)
-        {
+        if(ui32Indicators & UI_STATUS_KEYBOARD) {
             PushButtonTextSet(&g_sToggle, "Keyboard");
             WidgetPaint((tWidget *)&g_sToggle);
             UIUpdateCapsLock();
@@ -386,9 +356,7 @@ UIUpdateStatus(uint32_t ui32Indicators)
             WidgetAdd(WIDGET_ROOT, (tWidget *)&g_sKeyboard);
 
             WidgetPaint((tWidget *)&g_sKeyboard);
-        }
-        else
-        {
+        } else {
             //
             // Switch back to a mouse UI.
             //
@@ -424,8 +392,7 @@ UIUpdateStatus(uint32_t ui32Indicators)
 static void
 ToggleMode(tWidget *psWidget)
 {
-    if(g_eState == UI_CONNECTED)
-    {
+    if(g_eState == UI_CONNECTED) {
         UIUpdateStatus(g_sUIState.ui32Indicators ^ UI_STATUS_KEYBOARD);
     }
 }
@@ -433,17 +400,12 @@ ToggleMode(tWidget *psWidget)
 void
 UIMode(tUIState eState)
 {
-    if(g_eState != UI_CONNECTED)
-    {
-        if(eState == UI_CONNECTED)
-        {
+    if(g_eState != UI_CONNECTED) {
+        if(eState == UI_CONNECTED) {
             UIUpdateStatus(g_sUIState.ui32Indicators | UI_STATUS_UPDATE);
         }
-    }
-    else if(g_eState == UI_CONNECTED)
-    {
-        if(eState == UI_NOT_CONNECTED)
-        {
+    } else if(g_eState == UI_CONNECTED) {
+        if(eState == UI_NOT_CONNECTED) {
             UIUpdateStatus(g_sUIState.ui32Indicators & ~UI_STATUS_UPDATE);
         }
     }
@@ -460,13 +422,11 @@ UIMode(tUIState eState)
 static void
 Status1(tWidget *psWidget)
 {
-    if(g_eState == UI_CONNECTED)
-    {
+    if(g_eState == UI_CONNECTED) {
         //
         // Toggle the state of the first status button.
         //
-        if(g_sUIState.ui32Indicators & UI_STATUS_KEYBOARD)
-        {
+        if(g_sUIState.ui32Indicators & UI_STATUS_KEYBOARD) {
             //
             // Toggle the state of the caps lock.
             //
@@ -475,9 +435,7 @@ Status1(tWidget *psWidget)
             UIUpdateCapsLock();
 
             USBKeyboardUpdate(0, UI_CAPS_LOCK, true);
-        }
-        else
-        {
+        } else {
             USBMouseUpdate(0, 0, 0x01);
         }
     }
@@ -491,13 +449,11 @@ Status1(tWidget *psWidget)
 static void
 Status2(tWidget *psWidget)
 {
-    if(g_eState == UI_CONNECTED)
-    {
+    if(g_eState == UI_CONNECTED) {
         //
         // Toggle the state of the first status button.
         //
-        if(g_sUIState.ui32Indicators & UI_STATUS_KEYBOARD)
-        {
+        if(g_sUIState.ui32Indicators & UI_STATUS_KEYBOARD) {
             //
             // Toggle the state of the caps lock.
             //
@@ -506,9 +462,7 @@ Status2(tWidget *psWidget)
             UIUpdateScrollLock();
 
             USBKeyboardUpdate(0, UI_SCROLL_LOCK, true);
-        }
-        else
-        {
+        } else {
             USBMouseUpdate(0, 0, 0x04);
         }
     }
@@ -522,13 +476,11 @@ Status2(tWidget *psWidget)
 static void
 Status3(tWidget *psWidget)
 {
-    if(g_eState == UI_CONNECTED)
-    {
+    if(g_eState == UI_CONNECTED) {
         //
         // Toggle the state of the first status button.
         //
-        if(g_sUIState.ui32Indicators & UI_STATUS_KEYBOARD)
-        {
+        if(g_sUIState.ui32Indicators & UI_STATUS_KEYBOARD) {
             //
             // Toggle the state of the caps lock.
             //
@@ -536,16 +488,13 @@ Status3(tWidget *psWidget)
 
             UIUpdateNumLock();
             USBKeyboardUpdate(0, UI_NUM_LOCK, true);
-        }
-        else
-        {
+        } else {
             USBMouseUpdate(0, 0, 0x02);
         }
     }
 }
 
-static struct
-{
+static struct {
     int32_t i32XLast;
     int32_t i32YLast;
     int8_t i8Buttons;
@@ -567,16 +516,13 @@ UITouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
     int32_t i32XDiff, i32YDiff;
 
     if(((g_sUIState.ui32Indicators & UI_STATUS_KEYBOARD) == 0) &&
-       ((i32Y > BG_MIN_Y) && (i32Y < (BG_MAX_Y - STATUS_HEIGHT))))
-    {
+            ((i32Y > BG_MIN_Y) && (i32Y < (BG_MAX_Y - STATUS_HEIGHT)))) {
 
-        switch(ui32Message)
-        {
+        switch(ui32Message) {
             //
             // .
             //
-            case WIDGET_MSG_PTR_DOWN:
-            {
+            case WIDGET_MSG_PTR_DOWN: {
                 sMouseState.i32XLast = i32X;
                 sMouseState.i32YLast = i32Y;
 
@@ -589,28 +535,21 @@ UITouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
 
             // The touchscreen is no longer being pressed.
             //
-            case WIDGET_MSG_PTR_UP:
-            {
+            case WIDGET_MSG_PTR_UP: {
                 sMouseState.bPressed = false;
 
-                if(ui32PressCount > g_ui32SysTickCount)
-                {
+                if(ui32PressCount > g_ui32SysTickCount) {
                     ui32PressCount = ui32PressCount - g_ui32SysTickCount;
-                }
-                else
-                {
+                } else {
                     ui32PressCount = g_ui32SysTickCount - ui32PressCount;
                 }
 
-                if(ui32PressCount < 20)
-                {
+                if(ui32PressCount < 20) {
                     //
                     // Ensure that all buttons are not pressed.
                     //
                     sMouseState.i8Buttons = 0x01;
-                }
-                else
-                {
+                } else {
                     //
                     // Ensure that all buttons are not pressed.
                     //
@@ -628,8 +567,7 @@ UITouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
             //
             // The touch position has moved.
             //
-            case WIDGET_MSG_PTR_MOVE:
-            {
+            case WIDGET_MSG_PTR_MOVE: {
                 //
                 // Send the difference not the absolute value.
                 //
@@ -649,14 +587,11 @@ UITouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
 
                 break;
             }
-            default:
-            {
+            default: {
                 break;
             }
         }
-    }
-    else
-    {
+    } else {
         WidgetPointerMessage(ui32Message, i32X, i32Y);
     }
 
@@ -707,12 +642,9 @@ UIMain(void)
 {
     WidgetMessageQueueProcess();
 
-    if(g_sUIState.ui32Indicators & UI_STATUS_KEYBOARD)
-    {
+    if(g_sUIState.ui32Indicators & UI_STATUS_KEYBOARD) {
 
-    }
-    else
-    {
+    } else {
         USBMouseMain();
     }
 }

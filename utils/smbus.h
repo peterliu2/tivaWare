@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Utility Library.
 //
 //*****************************************************************************
@@ -49,8 +49,7 @@ extern "C"
 //! information, please refer to the SMBus Specification.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! Device capabilities field.  This 8-bit field reports generic SMBus
     //! capabilities such as address type for ARP.
@@ -108,8 +107,7 @@ tSMBusUDID;
 //! Master and slave instances require unique configuration structures.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The SMBus Unique Device ID (UDID) for this SMBus instance.  If
     //! operating as a host, master-only, or on a bus that does not use Address
@@ -274,8 +272,7 @@ tSMBus;
 // ! Return codes.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     SMBUS_OK = 0,               // General "OK" return code
     SMBUS_TIMEOUT,              // Master detected bus timeout from slave
     SMBUS_PERIPHERAL_BUSY,      // The I2C peripheral is currently in use
@@ -288,18 +285,18 @@ typedef enum
     SMBUS_MASTER_ERROR,         // Error occurred in the master ISR
     SMBUS_SLAVE_ERROR,          // Error occurred in the slave ISR
     SMBUS_SLAVE_QCMD_0,         // Slave transaction is Quick Command with
-                                // data value 0.
+    // data value 0.
     SMBUS_SLAVE_QCMD_1,         // Slave transaction is Quick Command with
-                                // data value 1.
+    // data value 1.
     SMBUS_SLAVE_FIRST_BYTE,     // The first byte has been received
     SMBUS_SLAVE_ADDR_PRIMARY,   // Primary address was detected
     SMBUS_SLAVE_ADDR_SECONDARY, // Secondary address was detected
     SMBUS_TRANSFER_IN_PROGRESS, // A transfer is currently in progress
     SMBUS_TRANSFER_COMPLETE,    // The last active transfer is complete
     SMBUS_SLAVE_NOT_READY,      // A slave transmit has been requested, but is
-                                // not ready (TX buffer not set).
+    // not ready (TX buffer not set).
     SMBUS_FIFO_ERROR,           // A master receive operation did not receive
-                                // enough data from the slave.
+    // enough data from the slave.
 }
 tSMBusStatus;
 
@@ -350,47 +347,47 @@ extern void SMBusARPUDIDPacketDecode(tSMBusUDID *pUDID,
 extern uint8_t SMBusRxPacketSizeGet(tSMBus *psSMBus);
 extern void SMBusUDIDDataGet(tSMBus *psSMBus, tSMBusUDID *pUDID);
 extern tSMBusStatus SMBusMasterQuickCommand(tSMBus *psSMBus,
-                                            uint8_t ui8TargetAddress,
-                                            bool bData);
+        uint8_t ui8TargetAddress,
+        bool bData);
 extern tSMBusStatus SMBusMasterByteSend(tSMBus *psSMBus,
                                         uint8_t ui8TargetAddress,
                                         uint8_t ui8Data);
 extern tSMBusStatus SMBusMasterByteReceive(tSMBus *psSMBus,
-                                           uint8_t ui8TargetAddress,
-                                           uint8_t *pui8Data);
+        uint8_t ui8TargetAddress,
+        uint8_t *pui8Data);
 extern tSMBusStatus SMBusMasterByteWordWrite(tSMBus *psSMBus,
-                                             uint8_t ui8TargetAddress,
-                                             uint8_t ui8Command,
-                                             uint8_t *pui8Data,
-                                             uint8_t ui8Size);
+        uint8_t ui8TargetAddress,
+        uint8_t ui8Command,
+        uint8_t *pui8Data,
+        uint8_t ui8Size);
 extern tSMBusStatus SMBusMasterBlockWrite(tSMBus *psSMBus,
-                                          uint8_t ui8TargetAddress,
-                                          uint8_t ui8Command,
-                                          uint8_t *pui8Data,
-                                          uint8_t ui8Size);
+        uint8_t ui8TargetAddress,
+        uint8_t ui8Command,
+        uint8_t *pui8Data,
+        uint8_t ui8Size);
 extern tSMBusStatus SMBusMasterByteWordRead(tSMBus *psSMBus,
-                                            uint8_t ui8TargetAddress,
-                                            uint8_t ui8Command,
-                                            uint8_t *pui8Data,
-                                            uint8_t ui8Size);
+        uint8_t ui8TargetAddress,
+        uint8_t ui8Command,
+        uint8_t *pui8Data,
+        uint8_t ui8Size);
 extern tSMBusStatus SMBusMasterBlockRead(tSMBus *psSMBus,
-                                         uint8_t ui8TargetAddress,
-                                         uint8_t ui8Command,
-                                         uint8_t *pui8Data);
+        uint8_t ui8TargetAddress,
+        uint8_t ui8Command,
+        uint8_t *pui8Data);
 extern tSMBusStatus SMBusMasterProcessCall(tSMBus *psSMBus,
-                                           uint8_t ui8TargetAddress,
-                                           uint8_t ui8Command,
-                                           uint8_t *pui8TxData,
-                                           uint8_t *pui8RxData);
+        uint8_t ui8TargetAddress,
+        uint8_t ui8Command,
+        uint8_t *pui8TxData,
+        uint8_t *pui8RxData);
 extern tSMBusStatus SMBusMasterBlockProcessCall(tSMBus *psSMBus,
-                                                uint8_t ui8TargetAddress,
-                                                uint8_t ui8Command,
-                                                uint8_t *pui8TxData,
-                                                uint8_t ui8TxSize,
-                                                uint8_t *pui8RxData);
+        uint8_t ui8TargetAddress,
+        uint8_t ui8Command,
+        uint8_t *pui8TxData,
+        uint8_t ui8TxSize,
+        uint8_t *pui8RxData);
 extern tSMBusStatus SMBusMasterHostNotify(tSMBus *psSMBus,
-                                          uint8_t ui8OwnSlaveAddress,
-                                          uint8_t *pui8Data);
+        uint8_t ui8OwnSlaveAddress,
+        uint8_t *pui8Data);
 extern tSMBusStatus SMBusMasterI2CWrite(tSMBus *psSMBus,
                                         uint8_t ui8TargetAddress,
                                         uint8_t *pui8Data,
@@ -400,23 +397,23 @@ extern tSMBusStatus SMBusMasterI2CRead(tSMBus *psSMBus,
                                        uint8_t *pui8Data,
                                        uint8_t ui8Size);
 extern tSMBusStatus SMBusMasterI2CWriteRead(tSMBus *psSMBus,
-                                            uint8_t ui8TargetAddress,
-                                            uint8_t *pui8TxData,
-                                            uint8_t ui8TxSize,
-                                            uint8_t *pui8RxData,
-                                            uint8_t ui8RxSize);
+        uint8_t ui8TargetAddress,
+        uint8_t *pui8TxData,
+        uint8_t ui8TxSize,
+        uint8_t *pui8RxData,
+        uint8_t ui8RxSize);
 extern tSMBusStatus SMBusMasterARPGetUDIDGen(tSMBus *psSMBus,
-                                             uint8_t *pui8Data);
+        uint8_t *pui8Data);
 extern tSMBusStatus SMBusMasterARPGetUDIDDir(tSMBus *psSMBus,
-                                             uint8_t ui8TargetAddress,
-                                             uint8_t *pui8Data);
+        uint8_t ui8TargetAddress,
+        uint8_t *pui8Data);
 extern tSMBusStatus SMBusMasterARPResetDeviceGen(tSMBus *psSMBus);
 extern tSMBusStatus SMBusMasterARPResetDeviceDir(tSMBus *psSMBus,
-                                                 uint8_t ui8TargetAddress);
+        uint8_t ui8TargetAddress);
 extern tSMBusStatus SMBusMasterARPAssignAddress(tSMBus *psSMBus,
-                                                uint8_t *pui8Data);
+        uint8_t *pui8Data);
 extern tSMBusStatus SMBusMasterARPNotifyMaster(tSMBus *psSMBus,
-                                               uint8_t *pui8Data);
+        uint8_t *pui8Data);
 extern tSMBusStatus SMBusMasterARPPrepareToARP(tSMBus *psSMBus);
 extern tSMBusStatus SMBusMasterIntProcess(tSMBus *psSMBus);
 extern void SMBusMasterIntEnable(tSMBus *psSMBus);

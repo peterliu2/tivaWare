@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2007-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Utility Library.
 //
 //*****************************************************************************
@@ -91,14 +91,12 @@ CmdLineProcess(char *pcCmdLine)
     //
     // Advance through the command line until a zero character is found.
     //
-    while(*pcChar)
-    {
+    while(*pcChar) {
         //
         // If there is a space, then replace it with a zero, and set the flag
         // to search for the next argument.
         //
-        if(*pcChar == ' ')
-        {
+        if(*pcChar == ' ') {
             *pcChar = 0;
             bFindArg = true;
         }
@@ -107,21 +105,18 @@ CmdLineProcess(char *pcCmdLine)
         // Otherwise it is not a space, so it must be a character that is part
         // of an argument.
         //
-        else
-        {
+        else {
             //
             // If bFindArg is set, then that means we are looking for the start
             // of the next argument.
             //
-            if(bFindArg)
-            {
+            if(bFindArg) {
                 //
                 // As long as the maximum number of arguments has not been
                 // reached, then save the pointer to the start of this new arg
                 // in the argv array, and increment the count of args, argc.
                 //
-                if(ui8Argc < CMDLINE_MAX_ARGS)
-                {
+                if(ui8Argc < CMDLINE_MAX_ARGS) {
                     g_ppcArgv[ui8Argc] = pcChar;
                     ui8Argc++;
                     bFindArg = false;
@@ -131,8 +126,7 @@ CmdLineProcess(char *pcCmdLine)
                 // The maximum number of arguments has been reached so return
                 // the error.
                 //
-                else
-                {
+                else {
                     return(CMDLINE_TOO_MANY_ARGS);
                 }
             }
@@ -147,8 +141,7 @@ CmdLineProcess(char *pcCmdLine)
     //
     // If one or more arguments was found, then process the command.
     //
-    if(ui8Argc)
-    {
+    if(ui8Argc) {
         //
         // Start at the beginning of the command table, to look for a matching
         // command.
@@ -159,15 +152,13 @@ CmdLineProcess(char *pcCmdLine)
         // Search through the command table until a null command string is
         // found, which marks the end of the table.
         //
-        while(psCmdEntry->pcCmd)
-        {
+        while(psCmdEntry->pcCmd) {
             //
             // If this command entry command string matches argv[0], then call
             // the function for this command, passing the command line
             // arguments.
             //
-            if(!strcmp(g_ppcArgv[0], psCmdEntry->pcCmd))
-            {
+            if(!strcmp(g_ppcArgv[0], psCmdEntry->pcCmd)) {
                 return(psCmdEntry->pfnCmd(ui8Argc, g_ppcArgv));
             }
 

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2009-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -32,8 +32,7 @@
 // A blank image used to erase a spider that has been smashed.
 //
 //*****************************************************************************
-const uint8_t g_pui8SpiderBlankImage[] =
-{
+const uint8_t g_pui8SpiderBlankImage[] = {
     IMAGE_FMT_1BPP_COMP,
     24, 0,
     24, 0,
@@ -46,8 +45,7 @@ const uint8_t g_pui8SpiderBlankImage[] =
 // The first image of the spider facing left.
 //
 //*****************************************************************************
-const uint8_t g_pui8SpiderL1Image[] =
-{
+const uint8_t g_pui8SpiderL1Image[] = {
     IMAGE_FMT_8BPP_COMP,
     24, 0,
     24, 0,
@@ -334,8 +332,7 @@ const uint8_t g_pui8SpiderL1Image[] =
 // The second image of the spider facing left.
 //
 //*****************************************************************************
-const uint8_t g_pui8SpiderL2Image[] =
-{
+const uint8_t g_pui8SpiderL2Image[] = {
     IMAGE_FMT_8BPP_COMP,
     24, 0,
     24, 0,
@@ -622,8 +619,7 @@ const uint8_t g_pui8SpiderL2Image[] =
 // The first image of the spider facing right.
 //
 //*****************************************************************************
-const uint8_t g_pui8SpiderR1Image[] =
-{
+const uint8_t g_pui8SpiderR1Image[] = {
     IMAGE_FMT_8BPP_COMP,
     24, 0,
     24, 0,
@@ -909,8 +905,7 @@ const uint8_t g_pui8SpiderR1Image[] =
 // The second image of the spider facing right.
 //
 //*****************************************************************************
-const uint8_t g_pui8SpiderR2Image[] =
-{
+const uint8_t g_pui8SpiderR2Image[] = {
     IMAGE_FMT_8BPP_COMP,
     24, 0,
     24, 0,
@@ -1197,8 +1192,7 @@ const uint8_t g_pui8SpiderR2Image[] =
 // The first image of the spider facing up.
 //
 //*****************************************************************************
-const uint8_t g_pui8SpiderU1Image[] =
-{
+const uint8_t g_pui8SpiderU1Image[] = {
     IMAGE_FMT_8BPP_COMP,
     24, 0,
     24, 0,
@@ -1484,8 +1478,7 @@ const uint8_t g_pui8SpiderU1Image[] =
 // The second image of the spider facing up.
 //
 //*****************************************************************************
-const uint8_t g_pui8SpiderU2Image[] =
-{
+const uint8_t g_pui8SpiderU2Image[] = {
     IMAGE_FMT_8BPP_COMP,
     24, 0,
     24, 0,
@@ -1770,8 +1763,7 @@ const uint8_t g_pui8SpiderU2Image[] =
 // The first image of the spider facing down.
 //
 //*****************************************************************************
-const uint8_t g_pui8SpiderD1Image[] =
-{
+const uint8_t g_pui8SpiderD1Image[] = {
     IMAGE_FMT_8BPP_COMP,
     24, 0,
     24, 0,
@@ -2056,8 +2048,7 @@ const uint8_t g_pui8SpiderD1Image[] =
 // The second image of the spider facing down.
 //
 //*****************************************************************************
-const uint8_t g_pui8SpiderD2Image[] =
-{
+const uint8_t g_pui8SpiderD2Image[] = {
     IMAGE_FMT_8BPP_COMP,
     24, 0,
     24, 0,
@@ -2342,8 +2333,7 @@ const uint8_t g_pui8SpiderD2Image[] =
 // The first image of the spider facing up and left.
 //
 //*****************************************************************************
-const uint8_t g_pui8SpiderUL1Image[] =
-{
+const uint8_t g_pui8SpiderUL1Image[] = {
     IMAGE_FMT_8BPP_COMP,
     24, 0,
     24, 0,
@@ -2625,8 +2615,7 @@ const uint8_t g_pui8SpiderUL1Image[] =
 // The second image of the spider facing up and left.
 //
 //*****************************************************************************
-const uint8_t g_pui8SpiderUL2Image[] =
-{
+const uint8_t g_pui8SpiderUL2Image[] = {
     IMAGE_FMT_8BPP_COMP,
     24, 0,
     24, 0,
@@ -2908,8 +2897,7 @@ const uint8_t g_pui8SpiderUL2Image[] =
 // The first image of the spider facing up and right.
 //
 //*****************************************************************************
-const uint8_t g_pui8SpiderUR1Image[] =
-{
+const uint8_t g_pui8SpiderUR1Image[] = {
     IMAGE_FMT_8BPP_COMP,
     24, 0,
     24, 0,
@@ -3191,8 +3179,7 @@ const uint8_t g_pui8SpiderUR1Image[] =
 // The second image of the spider facing up and right.
 //
 //*****************************************************************************
-const uint8_t g_pui8SpiderUR2Image[] =
-{
+const uint8_t g_pui8SpiderUR2Image[] = {
     IMAGE_FMT_8BPP_COMP,
     24, 0,
     24, 0,
@@ -3474,8 +3461,7 @@ const uint8_t g_pui8SpiderUR2Image[] =
 // The first image of the spider facing down and left.
 //
 //*****************************************************************************
-const uint8_t g_pui8SpiderDL1Image[] =
-{
+const uint8_t g_pui8SpiderDL1Image[] = {
     IMAGE_FMT_8BPP_COMP,
     24, 0,
     24, 0,
@@ -3757,8 +3743,7 @@ const uint8_t g_pui8SpiderDL1Image[] =
 // The second image of the spider facing down and left.
 //
 //*****************************************************************************
-const uint8_t g_pui8SpiderDL2Image[] =
-{
+const uint8_t g_pui8SpiderDL2Image[] = {
     IMAGE_FMT_8BPP_COMP,
     24, 0,
     24, 0,
@@ -4040,8 +4025,7 @@ const uint8_t g_pui8SpiderDL2Image[] =
 // The first image of the spider facing down and right.
 //
 //*****************************************************************************
-const uint8_t g_pui8SpiderDR1Image[] =
-{
+const uint8_t g_pui8SpiderDR1Image[] = {
     IMAGE_FMT_8BPP_COMP,
     24, 0,
     24, 0,
@@ -4323,8 +4307,7 @@ const uint8_t g_pui8SpiderDR1Image[] =
 // The second image of the spider facing down and right.
 //
 //*****************************************************************************
-const uint8_t g_pui8SpiderDR2Image[] =
-{
+const uint8_t g_pui8SpiderDR2Image[] = {
     IMAGE_FMT_8BPP_COMP,
     24, 0,
     24, 0,

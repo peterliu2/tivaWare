@@ -6,8 +6,7 @@
 //
 //***************************************************************************
 
-static const uint8_t data_404_htm[] =
-{
+static const uint8_t data_404_htm[] = {
     /* /404.htm */
     0x2f, 0x34, 0x30, 0x34, 0x2e, 0x68, 0x74, 0x6d,
     0x00,
@@ -42,8 +41,7 @@ static const uint8_t data_404_htm[] =
     0x0a,
 };
 
-static const uint8_t data_block_htm[] =
-{
+static const uint8_t data_block_htm[] = {
     /* /block.htm */
     0x2f, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x2e, 0x68,
     0x74, 0x6d, 0x00,
@@ -128,11 +126,10 @@ static const uint8_t data_block_htm[] =
     0x65, 0x6e, 0x74, 0x65, 0x72, 0x3e, 0x0a, 0x3c,
     0x2f, 0x62, 0x6f, 0x64, 0x79, 0x3e, 0x0a, 0x3c,
     0x2f, 0x68, 0x74, 0x6d, 0x6c, 0x3e, 0x0a, 0x0a,
-   
+
 };
 
-static const uint8_t data_connect_htm[] =
-{
+static const uint8_t data_connect_htm[] = {
     /* /connect.htm */
     0x2f, 0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74,
     0x2e, 0x68, 0x74, 0x6d, 0x00,
@@ -464,8 +461,7 @@ static const uint8_t data_connect_htm[] =
     0x2f, 0x68, 0x74, 0x6d, 0x6c, 0x3e, 0x0a,
 };
 
-static const uint8_t data_family_htm[] =
-{
+static const uint8_t data_family_htm[] = {
     /* /family.htm */
     0x2f, 0x66, 0x61, 0x6d, 0x69, 0x6c, 0x79, 0x2e,
     0x68, 0x74, 0x6d, 0x00,
@@ -682,11 +678,10 @@ static const uint8_t data_family_htm[] =
     0x65, 0x3e, 0x0a, 0x3c, 0x62, 0x72, 0x3e, 0x0a,
     0x3c, 0x2f, 0x62, 0x6f, 0x64, 0x79, 0x3e, 0x0a,
     0x3c, 0x2f, 0x68, 0x74, 0x6d, 0x6c, 0x3e, 0x0a,
-   
+
 };
 
-static const uint8_t data_favicon_ico[] =
-{
+static const uint8_t data_favicon_ico[] = {
     /* /favicon.ico */
     0x2f, 0x66, 0x61, 0x76, 0x69, 0x63, 0x6f, 0x6e,
     0x2e, 0x69, 0x63, 0x6f, 0x00,
@@ -907,8 +902,7 @@ static const uint8_t data_favicon_ico[] =
     0xff, 0xff, 0xf0, 0xff, 0xff, 0xff,
 };
 
-static const uint8_t data_footer_htm[] =
-{
+static const uint8_t data_footer_htm[] = {
     /* /footer.htm */
     0x2f, 0x66, 0x6f, 0x6f, 0x74, 0x65, 0x72, 0x2e,
     0x68, 0x74, 0x6d, 0x00,
@@ -1022,8 +1016,7 @@ static const uint8_t data_footer_htm[] =
     0x6c, 0x3e, 0x0a,
 };
 
-static const uint8_t data_freertos_htm[] =
-{
+static const uint8_t data_freertos_htm[] = {
     /* /freertos.htm */
     0x2f, 0x66, 0x72, 0x65, 0x65, 0x72, 0x74, 0x6f,
     0x73, 0x2e, 0x68, 0x74, 0x6d, 0x00,
@@ -1211,8 +1204,7 @@ static const uint8_t data_freertos_htm[] =
     0x3e, 0x0d, 0x0a,
 };
 
-static const uint8_t data_header_htm[] =
-{
+static const uint8_t data_header_htm[] = {
     /* /header.htm */
     0x2f, 0x68, 0x65, 0x61, 0x64, 0x65, 0x72, 0x2e,
     0x68, 0x74, 0x6d, 0x00,
@@ -1350,8 +1342,7 @@ static const uint8_t data_header_htm[] =
     0x68, 0x74, 0x6d, 0x6c, 0x3e, 0x0a,
 };
 
-static const uint8_t data_images_apps_jpg[] =
-{
+static const uint8_t data_images_apps_jpg[] = {
     /* /images/apps.jpg */
     0x2f, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x73, 0x2f,
     0x61, 0x70, 0x70, 0x73, 0x2e, 0x6a, 0x70, 0x67,
@@ -8335,8 +8326,7 @@ static const uint8_t data_images_apps_jpg[] =
     0x22, 0x22, 0x02, 0x22, 0x20, 0xff, 0xd9,
 };
 
-static const uint8_t data_images_c_c_c_communicate_small_jpg[] =
-{
+static const uint8_t data_images_c_c_c_communicate_small_jpg[] = {
     /* /images/c-c-c-communicate-small.jpg */
     0x2f, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x73, 0x2f,
     0x63, 0x2d, 0x63, 0x2d, 0x63, 0x2d, 0x63, 0x6f,
@@ -9344,17 +9334,16 @@ static const uint8_t data_images_c_c_c_communicate_small_jpg[] =
     0xa0, 0x28, 0xa2, 0x8a, 0x02, 0x8a, 0x28, 0xa0,
     0x28, 0xa2, 0x8a, 0x02, 0x8a, 0x28, 0xa0, 0x28,
     0xa2, 0x8a, 0x02, 0x8a, 0x28, 0xa0, 0xff, 0xd9,
-   
+
 };
 
-static const uint8_t data_images_c_c_c_connect_small_jpg[] =
-{
+static const uint8_t data_images_c_c_c_connect_small_jpg[] = {
     /* /images/c-c-c-connect-small.jpg */
     0x2f, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x73, 0x2f,
     0x63, 0x2d, 0x63, 0x2d, 0x63, 0x2d, 0x63, 0x6f,
     0x6e, 0x6e, 0x65, 0x63, 0x74, 0x2d, 0x73, 0x6d,
     0x61, 0x6c, 0x6c, 0x2e, 0x6a, 0x70, 0x67, 0x00,
-   
+
     0xff, 0xd8, 0xff, 0xe1, 0x00, 0x18, 0x45, 0x78,
     0x69, 0x66, 0x00, 0x00, 0x49, 0x49, 0x2a, 0x00,
     0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -10386,14 +10375,13 @@ static const uint8_t data_images_c_c_c_connect_small_jpg[] =
     0x7f, 0xff, 0xd9,
 };
 
-static const uint8_t data_images_c_c_c_control_small_jpg[] =
-{
+static const uint8_t data_images_c_c_c_control_small_jpg[] = {
     /* /images/c-c-c-control-small.jpg */
     0x2f, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x73, 0x2f,
     0x63, 0x2d, 0x63, 0x2d, 0x63, 0x2d, 0x63, 0x6f,
     0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x2d, 0x73, 0x6d,
     0x61, 0x6c, 0x6c, 0x2e, 0x6a, 0x70, 0x67, 0x00,
-   
+
     0xff, 0xd8, 0xff, 0xe1, 0x00, 0x18, 0x45, 0x78,
     0x69, 0x66, 0x00, 0x00, 0x49, 0x49, 0x2a, 0x00,
     0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -11317,8 +11305,7 @@ static const uint8_t data_images_c_c_c_control_small_jpg[] =
     0x3f, 0xff, 0xd9,
 };
 
-static const uint8_t data_images_cortex_jpg[] =
-{
+static const uint8_t data_images_cortex_jpg[] = {
     /* /images/cortex.jpg */
     0x2f, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x73, 0x2f,
     0x63, 0x6f, 0x72, 0x74, 0x65, 0x78, 0x2e, 0x6a,
@@ -12122,8 +12109,7 @@ static const uint8_t data_images_cortex_jpg[] =
     0xab, 0xb4, 0x50, 0x07, 0xff, 0xd9,
 };
 
-static const uint8_t data_images_freertos_jpg[] =
-{
+static const uint8_t data_images_freertos_jpg[] = {
     /* /images/freertos.jpg */
     0x2f, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x73, 0x2f,
     0x66, 0x72, 0x65, 0x65, 0x72, 0x74, 0x6f, 0x73,
@@ -12589,8 +12575,7 @@ static const uint8_t data_images_freertos_jpg[] =
     0x8a, 0x28, 0xa0, 0x0f, 0xff, 0xd9,
 };
 
-static const uint8_t data_images_mcu_side_by_side_jpg[] =
-{
+static const uint8_t data_images_mcu_side_by_side_jpg[] = {
     /* /images/mcu_side-by-side.jpg */
     0x2f, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x73, 0x2f,
     0x6d, 0x63, 0x75, 0x5f, 0x73, 0x69, 0x64, 0x65,
@@ -22295,8 +22280,7 @@ static const uint8_t data_images_mcu_side_by_side_jpg[] =
     0x22, 0x0f, 0xff, 0xd9,
 };
 
-static const uint8_t data_images_ti_gif[] =
-{
+static const uint8_t data_images_ti_gif[] = {
     /* /images/ti.gif */
     0x2f, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x73, 0x2f,
     0x74, 0x69, 0x2e, 0x67, 0x69, 0x66, 0x00,
@@ -22392,8 +22376,7 @@ static const uint8_t data_images_ti_gif[] =
     0x00, 0x00, 0x3b,
 };
 
-static const uint8_t data_images_tiva_jpg[] =
-{
+static const uint8_t data_images_tiva_jpg[] = {
     /* /images/tiva.jpg */
     0x2f, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x73, 0x2f,
     0x74, 0x69, 0x76, 0x61, 0x2e, 0x6a, 0x70, 0x67,
@@ -42869,8 +42852,7 @@ static const uint8_t data_images_tiva_jpg[] =
     0xbd, 0xdf, 0x1d, 0x11, 0x07, 0xff, 0xd9,
 };
 
-static const uint8_t data_images_tiva_globe_small_gif[] =
-{
+static const uint8_t data_images_tiva_globe_small_gif[] = {
     /* /images/tiva_globe-small.gif */
     0x2f, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x73, 0x2f,
     0x74, 0x69, 0x76, 0x61, 0x5f, 0x67, 0x6c, 0x6f,
@@ -44799,8 +44781,7 @@ static const uint8_t data_images_tiva_globe_small_gif[] =
     0x44, 0x00, 0x00, 0x3b,
 };
 
-static const uint8_t data_images_ti_logo_gif[] =
-{
+static const uint8_t data_images_ti_logo_gif[] = {
     /* /images/ti_logo.gif */
     0x2f, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x73, 0x2f,
     0x74, 0x69, 0x5f, 0x6c, 0x6f, 0x67, 0x6f, 0x2e,
@@ -45218,8 +45199,7 @@ static const uint8_t data_images_ti_logo_gif[] =
     0x8f, 0x32, 0x01, 0x11, 0x00, 0x00, 0x3b,
 };
 
-static const uint8_t data_index_htm[] =
-{
+static const uint8_t data_index_htm[] = {
     /* /index.htm */
     0x2f, 0x69, 0x6e, 0x64, 0x65, 0x78, 0x2e, 0x68,
     0x74, 0x6d, 0x00,
@@ -45321,11 +45301,10 @@ static const uint8_t data_index_htm[] =
     0x0a, 0x0a,
 };
 
-static const uint8_t data_io_ssi[] =
-{
+static const uint8_t data_io_ssi[] = {
     /* /io.ssi */
     0x2f, 0x69, 0x6f, 0x2e, 0x73, 0x73, 0x69, 0x00,
-   
+
     0x3c, 0x21, 0x2d, 0x2d, 0x20, 0x43, 0x6f, 0x70,
     0x79, 0x72, 0x69, 0x67, 0x68, 0x74, 0x20, 0x28,
     0x63, 0x29, 0x20, 0x32, 0x30, 0x30, 0x39, 0x2d,
@@ -45509,8 +45488,7 @@ static const uint8_t data_io_ssi[] =
     0x6d, 0x6c, 0x3e, 0x0d, 0x0a,
 };
 
-static const uint8_t data_lwipstat_ssi[] =
-{
+static const uint8_t data_lwipstat_ssi[] = {
     /* /lwipstat.ssi */
     0x2f, 0x6c, 0x77, 0x69, 0x70, 0x73, 0x74, 0x61,
     0x74, 0x2e, 0x73, 0x73, 0x69, 0x00,
@@ -46002,8 +45980,7 @@ static const uint8_t data_lwipstat_ssi[] =
     0x6c, 0x3e, 0x0a,
 };
 
-static const uint8_t data_perror_htm[] =
-{
+static const uint8_t data_perror_htm[] = {
     /* /perror.htm */
     0x2f, 0x70, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x2e,
     0x68, 0x74, 0x6d, 0x00,
@@ -46091,8 +46068,7 @@ static const uint8_t data_perror_htm[] =
     0x0a,
 };
 
-static const uint8_t data_side_htm[] =
-{
+static const uint8_t data_side_htm[] = {
     /* /side.htm */
     0x2f, 0x73, 0x69, 0x64, 0x65, 0x2e, 0x68, 0x74,
     0x6d, 0x00,
@@ -46206,8 +46182,7 @@ static const uint8_t data_side_htm[] =
     0x0a,
 };
 
-static const uint8_t data_styles_css[] =
-{
+static const uint8_t data_styles_css[] = {
     /* /styles.css */
     0x2f, 0x73, 0x74, 0x79, 0x6c, 0x65, 0x73, 0x2e,
     0x63, 0x73, 0x73, 0x00,
@@ -46272,11 +46247,10 @@ static const uint8_t data_styles_css[] =
     0x35, 0x30, 0x25, 0x3b, 0x0a, 0x7d, 0x0a,
 };
 
-static const uint8_t data_ti_htm[] =
-{
+static const uint8_t data_ti_htm[] = {
     /* /ti.htm */
     0x2f, 0x74, 0x69, 0x2e, 0x68, 0x74, 0x6d, 0x00,
-   
+
     0x3c, 0x21, 0x2d, 0x2d, 0x20, 0x43, 0x6f, 0x70,
     0x79, 0x72, 0x69, 0x67, 0x68, 0x74, 0x20, 0x28,
     0x63, 0x29, 0x20, 0x32, 0x30, 0x31, 0x33, 0x2d,
@@ -46490,264 +46464,238 @@ static const uint8_t data_ti_htm[] =
     0x2f, 0x68, 0x74, 0x6d, 0x6c, 0x3e, 0x0a,
 };
 
-const struct fsdata_file file_ti_htm[] =
-{
-	{
-		NULL,
-		data_ti_htm,
-		data_ti_htm + 8,
-		sizeof(data_ti_htm) - 8
-	}
+const struct fsdata_file file_ti_htm[] = {
+    {
+        NULL,
+        data_ti_htm,
+        data_ti_htm + 8,
+        sizeof(data_ti_htm) - 8
+    }
 };
 
-const struct fsdata_file file_styles_css[] =
-{
-	{
-		file_ti_htm,
-		data_styles_css,
-		data_styles_css + 12,
-		sizeof(data_styles_css) - 12
-	}
+const struct fsdata_file file_styles_css[] = {
+    {
+        file_ti_htm,
+        data_styles_css,
+        data_styles_css + 12,
+        sizeof(data_styles_css) - 12
+    }
 };
 
-const struct fsdata_file file_side_htm[] =
-{
-	{
-		file_styles_css,
-		data_side_htm,
-		data_side_htm + 10,
-		sizeof(data_side_htm) - 10
-	}
+const struct fsdata_file file_side_htm[] = {
+    {
+        file_styles_css,
+        data_side_htm,
+        data_side_htm + 10,
+        sizeof(data_side_htm) - 10
+    }
 };
 
-const struct fsdata_file file_perror_htm[] =
-{
-	{
-		file_side_htm,
-		data_perror_htm,
-		data_perror_htm + 12,
-		sizeof(data_perror_htm) - 12
-	}
+const struct fsdata_file file_perror_htm[] = {
+    {
+        file_side_htm,
+        data_perror_htm,
+        data_perror_htm + 12,
+        sizeof(data_perror_htm) - 12
+    }
 };
 
-const struct fsdata_file file_lwipstat_ssi[] =
-{
-	{
-		file_perror_htm,
-		data_lwipstat_ssi,
-		data_lwipstat_ssi + 14,
-		sizeof(data_lwipstat_ssi) - 14
-	}
+const struct fsdata_file file_lwipstat_ssi[] = {
+    {
+        file_perror_htm,
+        data_lwipstat_ssi,
+        data_lwipstat_ssi + 14,
+        sizeof(data_lwipstat_ssi) - 14
+    }
 };
 
-const struct fsdata_file file_io_ssi[] =
-{
-	{
-		file_lwipstat_ssi,
-		data_io_ssi,
-		data_io_ssi + 8,
-		sizeof(data_io_ssi) - 8
-	}
+const struct fsdata_file file_io_ssi[] = {
+    {
+        file_lwipstat_ssi,
+        data_io_ssi,
+        data_io_ssi + 8,
+        sizeof(data_io_ssi) - 8
+    }
 };
 
-const struct fsdata_file file_index_htm[] =
-{
-	{
-		file_io_ssi,
-		data_index_htm,
-		data_index_htm + 11,
-		sizeof(data_index_htm) - 11
-	}
+const struct fsdata_file file_index_htm[] = {
+    {
+        file_io_ssi,
+        data_index_htm,
+        data_index_htm + 11,
+        sizeof(data_index_htm) - 11
+    }
 };
 
-const struct fsdata_file file_images_ti_logo_gif[] =
-{
-	{
-		file_index_htm,
-		data_images_ti_logo_gif,
-		data_images_ti_logo_gif + 20,
-		sizeof(data_images_ti_logo_gif) - 20
-	}
+const struct fsdata_file file_images_ti_logo_gif[] = {
+    {
+        file_index_htm,
+        data_images_ti_logo_gif,
+        data_images_ti_logo_gif + 20,
+        sizeof(data_images_ti_logo_gif) - 20
+    }
 };
 
-const struct fsdata_file file_images_tiva_globe_small_gif[] =
-{
-	{
-		file_images_ti_logo_gif,
-		data_images_tiva_globe_small_gif,
-		data_images_tiva_globe_small_gif + 29,
-		sizeof(data_images_tiva_globe_small_gif) - 29
-	}
+const struct fsdata_file file_images_tiva_globe_small_gif[] = {
+    {
+        file_images_ti_logo_gif,
+        data_images_tiva_globe_small_gif,
+        data_images_tiva_globe_small_gif + 29,
+        sizeof(data_images_tiva_globe_small_gif) - 29
+    }
 };
 
-const struct fsdata_file file_images_tiva_jpg[] =
-{
-	{
-		file_images_tiva_globe_small_gif,
-		data_images_tiva_jpg,
-		data_images_tiva_jpg + 17,
-		sizeof(data_images_tiva_jpg) - 17
-	}
+const struct fsdata_file file_images_tiva_jpg[] = {
+    {
+        file_images_tiva_globe_small_gif,
+        data_images_tiva_jpg,
+        data_images_tiva_jpg + 17,
+        sizeof(data_images_tiva_jpg) - 17
+    }
 };
 
-const struct fsdata_file file_images_ti_gif[] =
-{
-	{
-		file_images_tiva_jpg,
-		data_images_ti_gif,
-		data_images_ti_gif + 15,
-		sizeof(data_images_ti_gif) - 15
-	}
+const struct fsdata_file file_images_ti_gif[] = {
+    {
+        file_images_tiva_jpg,
+        data_images_ti_gif,
+        data_images_ti_gif + 15,
+        sizeof(data_images_ti_gif) - 15
+    }
 };
 
-const struct fsdata_file file_images_mcu_side_by_side_jpg[] =
-{
-	{
-		file_images_ti_gif,
-		data_images_mcu_side_by_side_jpg,
-		data_images_mcu_side_by_side_jpg + 29,
-		sizeof(data_images_mcu_side_by_side_jpg) - 29
-	}
+const struct fsdata_file file_images_mcu_side_by_side_jpg[] = {
+    {
+        file_images_ti_gif,
+        data_images_mcu_side_by_side_jpg,
+        data_images_mcu_side_by_side_jpg + 29,
+        sizeof(data_images_mcu_side_by_side_jpg) - 29
+    }
 };
 
-const struct fsdata_file file_images_freertos_jpg[] =
-{
-	{
-		file_images_mcu_side_by_side_jpg,
-		data_images_freertos_jpg,
-		data_images_freertos_jpg + 21,
-		sizeof(data_images_freertos_jpg) - 21
-	}
+const struct fsdata_file file_images_freertos_jpg[] = {
+    {
+        file_images_mcu_side_by_side_jpg,
+        data_images_freertos_jpg,
+        data_images_freertos_jpg + 21,
+        sizeof(data_images_freertos_jpg) - 21
+    }
 };
 
-const struct fsdata_file file_images_cortex_jpg[] =
-{
-	{
-		file_images_freertos_jpg,
-		data_images_cortex_jpg,
-		data_images_cortex_jpg + 19,
-		sizeof(data_images_cortex_jpg) - 19
-	}
+const struct fsdata_file file_images_cortex_jpg[] = {
+    {
+        file_images_freertos_jpg,
+        data_images_cortex_jpg,
+        data_images_cortex_jpg + 19,
+        sizeof(data_images_cortex_jpg) - 19
+    }
 };
 
-const struct fsdata_file file_images_c_c_c_control_small_jpg[] =
-{
-	{
-		file_images_cortex_jpg,
-		data_images_c_c_c_control_small_jpg,
-		data_images_c_c_c_control_small_jpg + 32,
-		sizeof(data_images_c_c_c_control_small_jpg) - 32
-	}
+const struct fsdata_file file_images_c_c_c_control_small_jpg[] = {
+    {
+        file_images_cortex_jpg,
+        data_images_c_c_c_control_small_jpg,
+        data_images_c_c_c_control_small_jpg + 32,
+        sizeof(data_images_c_c_c_control_small_jpg) - 32
+    }
 };
 
-const struct fsdata_file file_images_c_c_c_connect_small_jpg[] =
-{
-	{
-		file_images_c_c_c_control_small_jpg,
-		data_images_c_c_c_connect_small_jpg,
-		data_images_c_c_c_connect_small_jpg + 32,
-		sizeof(data_images_c_c_c_connect_small_jpg) - 32
-	}
+const struct fsdata_file file_images_c_c_c_connect_small_jpg[] = {
+    {
+        file_images_c_c_c_control_small_jpg,
+        data_images_c_c_c_connect_small_jpg,
+        data_images_c_c_c_connect_small_jpg + 32,
+        sizeof(data_images_c_c_c_connect_small_jpg) - 32
+    }
 };
 
-const struct fsdata_file file_images_c_c_c_communicate_small_jpg[] =
-{
-	{
-		file_images_c_c_c_connect_small_jpg,
-		data_images_c_c_c_communicate_small_jpg,
-		data_images_c_c_c_communicate_small_jpg + 36,
-		sizeof(data_images_c_c_c_communicate_small_jpg) - 36
-	}
+const struct fsdata_file file_images_c_c_c_communicate_small_jpg[] = {
+    {
+        file_images_c_c_c_connect_small_jpg,
+        data_images_c_c_c_communicate_small_jpg,
+        data_images_c_c_c_communicate_small_jpg + 36,
+        sizeof(data_images_c_c_c_communicate_small_jpg) - 36
+    }
 };
 
-const struct fsdata_file file_images_apps_jpg[] =
-{
-	{
-		file_images_c_c_c_communicate_small_jpg,
-		data_images_apps_jpg,
-		data_images_apps_jpg + 17,
-		sizeof(data_images_apps_jpg) - 17
-	}
+const struct fsdata_file file_images_apps_jpg[] = {
+    {
+        file_images_c_c_c_communicate_small_jpg,
+        data_images_apps_jpg,
+        data_images_apps_jpg + 17,
+        sizeof(data_images_apps_jpg) - 17
+    }
 };
 
-const struct fsdata_file file_header_htm[] =
-{
-	{
-		file_images_apps_jpg,
-		data_header_htm,
-		data_header_htm + 12,
-		sizeof(data_header_htm) - 12
-	}
+const struct fsdata_file file_header_htm[] = {
+    {
+        file_images_apps_jpg,
+        data_header_htm,
+        data_header_htm + 12,
+        sizeof(data_header_htm) - 12
+    }
 };
 
-const struct fsdata_file file_freertos_htm[] =
-{
-	{
-		file_header_htm,
-		data_freertos_htm,
-		data_freertos_htm + 14,
-		sizeof(data_freertos_htm) - 14
-	}
+const struct fsdata_file file_freertos_htm[] = {
+    {
+        file_header_htm,
+        data_freertos_htm,
+        data_freertos_htm + 14,
+        sizeof(data_freertos_htm) - 14
+    }
 };
 
-const struct fsdata_file file_footer_htm[] =
-{
-	{
-		file_freertos_htm,
-		data_footer_htm,
-		data_footer_htm + 12,
-		sizeof(data_footer_htm) - 12
-	}
+const struct fsdata_file file_footer_htm[] = {
+    {
+        file_freertos_htm,
+        data_footer_htm,
+        data_footer_htm + 12,
+        sizeof(data_footer_htm) - 12
+    }
 };
 
-const struct fsdata_file file_favicon_ico[] =
-{
-	{
-		file_footer_htm,
-		data_favicon_ico,
-		data_favicon_ico + 13,
-		sizeof(data_favicon_ico) - 13
-	}
+const struct fsdata_file file_favicon_ico[] = {
+    {
+        file_footer_htm,
+        data_favicon_ico,
+        data_favicon_ico + 13,
+        sizeof(data_favicon_ico) - 13
+    }
 };
 
-const struct fsdata_file file_family_htm[] =
-{
-	{
-		file_favicon_ico,
-		data_family_htm,
-		data_family_htm + 12,
-		sizeof(data_family_htm) - 12
-	}
+const struct fsdata_file file_family_htm[] = {
+    {
+        file_favicon_ico,
+        data_family_htm,
+        data_family_htm + 12,
+        sizeof(data_family_htm) - 12
+    }
 };
 
-const struct fsdata_file file_connect_htm[] =
-{
-	{
-		file_family_htm,
-		data_connect_htm,
-		data_connect_htm + 13,
-		sizeof(data_connect_htm) - 13
-	}
+const struct fsdata_file file_connect_htm[] = {
+    {
+        file_family_htm,
+        data_connect_htm,
+        data_connect_htm + 13,
+        sizeof(data_connect_htm) - 13
+    }
 };
 
-const struct fsdata_file file_block_htm[] =
-{
-	{
-		file_connect_htm,
-		data_block_htm,
-		data_block_htm + 11,
-		sizeof(data_block_htm) - 11
-	}
+const struct fsdata_file file_block_htm[] = {
+    {
+        file_connect_htm,
+        data_block_htm,
+        data_block_htm + 11,
+        sizeof(data_block_htm) - 11
+    }
 };
 
-const struct fsdata_file file_404_htm[] =
-{
-	{
-		file_block_htm,
-		data_404_htm,
-		data_404_htm + 9,
-		sizeof(data_404_htm) - 9
-	}
+const struct fsdata_file file_404_htm[] = {
+    {
+        file_block_htm,
+        data_404_htm,
+        data_404_htm + 9,
+        sizeof(data_404_htm) - 9
+    }
 };
 
 #define FS_ROOT file_404_htm

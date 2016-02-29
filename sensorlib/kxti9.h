@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -41,8 +41,7 @@ extern "C"
 // The structure that defines the internal state of the KXTI9 driver.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // The pointer to the I2C master interface instance used to communicate
     // with the KXTI9.
@@ -70,7 +69,7 @@ typedef struct
     // The current operating range (g force) of the KXTI9.
     //
     uint8_t ui8Range;
-    
+
     uint8_t ui8NewRange;
 
     //
@@ -94,8 +93,7 @@ typedef struct
     // read-modify-write operations.  Since only one operation can be active at
     // a time, it is safe to re-use the memory in this manner.
     //
-    union
-    {
+    union {
         //
         // A buffer used to store the write portion of a register read.
         //
@@ -104,8 +102,7 @@ typedef struct
         //
         // The write state used to write register values.
         //
-        struct
-        {
+        struct {
             //
             // The buffer that is being written to the KXTI9.
             //
@@ -145,10 +142,10 @@ extern uint_fast8_t KXTI9Write(tKXTI9 *psInst, uint_fast8_t ui8Reg,
                                tSensorCallback *pfnCallback,
                                void *pvCallbackData);
 extern uint_fast8_t KXTI9ReadModifyWrite(tKXTI9 *psInst, uint_fast8_t ui8Reg,
-                                         uint_fast8_t ui8Mask,
-                                         uint_fast8_t ui8Value,
-                                         tSensorCallback *pfnCallback,
-                                         void *pvCallbackData);
+        uint_fast8_t ui8Mask,
+        uint_fast8_t ui8Value,
+        tSensorCallback *pfnCallback,
+        void *pvCallbackData);
 extern uint_fast8_t KXTI9DataRead(tKXTI9 *psInst,
                                   tSensorCallback *pfnCallback,
                                   void *pvCallbackData);

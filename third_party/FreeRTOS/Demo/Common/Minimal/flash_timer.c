@@ -99,42 +99,40 @@ static void prvLEDTimerCallback( TimerHandle_t xTimer );
 
 void vStartLEDFlashTimers( UBaseType_t uxNumberOfLEDs )
 {
-UBaseType_t uxLEDTimer;
-TimerHandle_t xTimer;
+    UBaseType_t uxLEDTimer;
+    TimerHandle_t xTimer;
 
-	/* Create and start the requested number of timers. */
-	for( uxLEDTimer = 0; uxLEDTimer < uxNumberOfLEDs; ++uxLEDTimer )
-	{
-		/* Create the timer. */
-		xTimer = xTimerCreate( 	"Flasher",								/* A text name, purely to help debugging. */
-								ledFLASH_RATE_BASE * ( uxLEDTimer + 1 ),/* The timer period, which is a multiple of ledFLASH_RATE_BASE. */
-								pdTRUE,									/* This is an auto-reload timer, so xAutoReload is set to pdTRUE. */
-								( void * ) uxLEDTimer,					/* The ID is used to identify the timer within the timer callback function, as each timer uses the same callback. */
-								prvLEDTimerCallback						/* Each timer uses the same callback. */
-							  );
+    /* Create and start the requested number of timers. */
+    for( uxLEDTimer = 0; uxLEDTimer < uxNumberOfLEDs; ++uxLEDTimer ) {
+        /* Create the timer. */
+        xTimer = xTimerCreate( 	"Flasher",								/* A text name, purely to help debugging. */
+                                ledFLASH_RATE_BASE * ( uxLEDTimer + 1 ),/* The timer period, which is a multiple of ledFLASH_RATE_BASE. */
+                                pdTRUE,									/* This is an auto-reload timer, so xAutoReload is set to pdTRUE. */
+                                ( void * ) uxLEDTimer,					/* The ID is used to identify the timer within the timer callback function, as each timer uses the same callback. */
+                                prvLEDTimerCallback						/* Each timer uses the same callback. */
+                             );
 
-		/* If the timer was created successfully, attempt to start it.  If the
-		scheduler has not yet been started then the timer command queue must
-		be long enough to hold each command sent to it until such time that the
-		scheduler is started.  The timer command queue length is set by
-		configTIMER_QUEUE_LENGTH in FreeRTOSConfig.h. */
-		if( xTimer != NULL )
-		{
-			xTimerStart( xTimer, ledDONT_BLOCK );
-		}
-	}
+        /* If the timer was created successfully, attempt to start it.  If the
+        scheduler has not yet been started then the timer command queue must
+        be long enough to hold each command sent to it until such time that the
+        scheduler is started.  The timer command queue length is set by
+        configTIMER_QUEUE_LENGTH in FreeRTOSConfig.h. */
+        if( xTimer != NULL ) {
+            xTimerStart( xTimer, ledDONT_BLOCK );
+        }
+    }
 }
 /*-----------------------------------------------------------*/
 
 static void prvLEDTimerCallback( TimerHandle_t xTimer )
 {
-BaseType_t xTimerID;
+    BaseType_t xTimerID;
 
-	/* The timer ID is used to identify the timer that has actually expired as
-	each timer uses the same callback.  The ID is then also used as the number
-	of the LED that is to be toggled. */
-	xTimerID = ( BaseType_t ) pvTimerGetTimerID( xTimer );
-	vParTestToggleLED( xTimerID );
+    /* The timer ID is used to identify the timer that has actually expired as
+    each timer uses the same callback.  The ID is then also used as the number
+    of the LED that is to be toggled. */
+    xTimerID = ( BaseType_t ) pvTimerGetTimerID( xTimer );
+    vParTestToggleLED( xTimerID );
 }
 
 

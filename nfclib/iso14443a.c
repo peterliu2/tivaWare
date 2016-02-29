@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -137,8 +137,7 @@ static struct ISO14443AAnticolState g_sAnticolState;
 // This structure stores the UID that we're currently working on.
 //
 //*****************************************************************************
-struct ISO14443AAnticolState
-{
+struct ISO14443AAnticolState {
     //
     // This field stores the raw responses that the anti-collision is actually
     // performed over, e.g. 3 times 5 bytes.  Same goes for \e ucCollisions.
@@ -204,8 +203,8 @@ ISO14443ASetupRegisters(void)
     // Configure the Special Settings Register.
     //
     TRF79x0WriteRegister(TRF79X0_RX_SPECIAL_SETTINGS_REG,
-       (TRF79x0ReadRegister(TRF79X0_RX_SPECIAL_SETTINGS_REG) & 0x0f) |
-        TRF79X0_RX_SP_SET_M848);
+                         (TRF79x0ReadRegister(TRF79X0_RX_SPECIAL_SETTINGS_REG) & 0x0f) |
+                         TRF79X0_RX_SP_SET_M848);
 
     //
     // Configure the Test Settings Register.
@@ -321,14 +320,12 @@ ISO14443AREQA(unsigned char ucCmd, int *piATQA)
     TRF79x0Transceive(&ucCmd, 0, 7, pucResponse, &uiRxSize, 0,
                       TRF79X0_TRANSCEIVE_NO_CRC);
 
-    if(uiRxSize == 2)
-    {
+    if(uiRxSize == 2) {
         //
         // Valid ATQA received, return it as an integer.  Was transmitted
         // LSByte first.
         //
-        if(piATQA != NULL)
-        {
+        if(piATQA != NULL) {
             *piATQA = pucResponse[0] | (pucResponse[1] << 8);
         }
 
@@ -336,49 +333,38 @@ ISO14443AREQA(unsigned char ucCmd, int *piATQA)
         // Return true if one of the lower 5 bits was set.
         //
         return((pucResponse[0] & 0x1F) != 0);
-    }
-    else
-    {
+    } else {
         //
         // No valid ATQA received.
         //
-        if(piATQA != NULL)
-        {
+        if(piATQA != NULL) {
             *piATQA = -1;
         }
 
-        if(uiRxSize == 0)
-        {
+        if(uiRxSize == 0) {
             //
             // No response at all -> no card with bit-frame anti-collision.
             //
             return(0);
-        }
-        else
-        {
+        } else {
             //
             // Probably some collision.
             //
             iColPos = TRF79x0GetCollisionPosition();
 
-            if(iColPos > 5)
-            {
+            if(iColPos > 5) {
                 //
                 // Collision not within the first 5 bits, return true if one of
                 // the lower 5 bits was set.
                 //
                 return((pucResponse[0] & 0x1F) != 0);
-            }
-            else if(iColPos > 0 && iColPos <= 5)
-            {
+            } else if(iColPos > 0 && iColPos <= 5) {
                 //
                 // Collision within the first 5 bits, so at least one of them
                 // was 1.
                 //
                 return(1);
-            }
-            else
-            {
+            } else {
                 //
                 // No collision, but only 1 byte sent?  That card's not right.
                 //
@@ -425,8 +411,7 @@ ISO14443ADoAnticol(struct ISO14443AAnticolState *psState, unsigned char *pucUID,
 
     iCascadeLevel = 1;
 
-    while(iCascadeLevel < 4)
-    {
+    while(iCascadeLevel < 4) {
         //
         // Already known bits for this cascade level, e.g. not including
         // the possible 5 bytes * 8 bits/byte for the lower levels.
@@ -436,8 +421,7 @@ ISO14443ADoAnticol(struct ISO14443AAnticolState *psState, unsigned char *pucUID,
         //
         // Clamp to a full cascade level.
         //
-        if(iValidBits > 40)
-        {
+        if(iValidBits > 40) {
             iValidBits = 40;
         }
 
@@ -460,25 +444,20 @@ ISO14443ADoAnticol(struct ISO14443AAnticolState *psState, unsigned char *pucUID,
         // Prepare command for this level: ANTICOLLISION if less than a full 5
         // bytes for the current cascade level, SELECT otherwise.
         //
-        switch (iCascadeLevel)
-        {
-            case 1:
-            {
+        switch (iCascadeLevel) {
+            case 1: {
                 pucCmd[0] = 0x93;
                 break;
             }
-            case 2:
-            {
+            case 2: {
                 pucCmd[0] = 0x95;
                 break;
             }
-            case 3:
-            {
+            case 3: {
                 pucCmd[0] = 0x97;
                 break;
             }
-            default:
-            {
+            default: {
                 break;
             }
         }
@@ -502,8 +481,7 @@ ISO14443ADoAnticol(struct ISO14443AAnticolState *psState, unsigned char *pucUID,
         //
         uiRxSize = 5;
 
-        if(iNVB != 0x70)
-        {
+        if(iNVB != 0x70) {
             //
             // Anti-collision command.
             //
@@ -511,22 +489,18 @@ ISO14443ADoAnticol(struct ISO14443AAnticolState *psState, unsigned char *pucUID,
                               pucResponse, &uiRxSize, NULL,
                               TRF79X0_TRANSCEIVE_NO_CRC);
 
-            if(uiRxSize == 0)
-            {
+            if(uiRxSize == 0) {
                 return(0);
             }
 
             iCollPosition = TRF79x0GetCollisionPosition();
 
-            if(iCollPosition < 0)
-            {
+            if(iCollPosition < 0) {
                 //
                 // No collision occurred, add full response data to known bits.
                 //
                 iCollPosition = 40;
-            }
-            else
-            {
+            } else {
                 //
                 // Collision occurred, only add the part that was received
                 // correctly.
@@ -542,8 +516,7 @@ ISO14443ADoAnticol(struct ISO14443AAnticolState *psState, unsigned char *pucUID,
             //
             // Bounds check the results and return 0 if it was invalid.
             //
-            if(iCollPosition < 0 || iCollPosition > 40)
-            {
+            if(iCollPosition < 0 || iCollPosition > 40) {
                 return(0);
             }
 
@@ -567,8 +540,7 @@ ISO14443ADoAnticol(struct ISO14443AAnticolState *psState, unsigned char *pucUID,
             //
             iMaskPosition = iCollPosition - (iValidBits / 8) * 8;
 
-            if(iMaskPosition % 8)
-            {
+            if(iMaskPosition % 8) {
                 //
                 // Need to construct a mask for iMaskPosition%8 bits and
                 // apply it at iMaskPosition/8.
@@ -580,8 +552,7 @@ ISO14443ADoAnticol(struct ISO14443AAnticolState *psState, unsigned char *pucUID,
             // Merge in up to iMaskPosition/8 (rounded up) byte into response
             // at index iBitPos/8 (rounded down).
             //
-            for(iIdx = 0; iIdx < (iMaskPosition + 7) / 8; iIdx++)
-            {
+            for(iIdx = 0; iIdx < (iMaskPosition + 7) / 8; iIdx++) {
                 psState->ucUID[(psState->iBitPos / 8) + iIdx] |=
                     pucResponse[iIdx];
             }
@@ -591,8 +562,7 @@ ISO14443ADoAnticol(struct ISO14443AAnticolState *psState, unsigned char *pucUID,
             //
             // Only within this cascade level:
             //
-            if(psState->iBitPos % 40 != 0)
-            {
+            if(psState->iBitPos % 40 != 0) {
                 //
                 // Mark backtracking point.
                 //
@@ -604,9 +574,7 @@ ISO14443ADoAnticol(struct ISO14443AAnticolState *psState, unsigned char *pucUID,
                 //
                 psState->iBitPos += 1;
             }
-        }
-        else
-        {
+        } else {
             //
             // Select command.
             //
@@ -614,33 +582,26 @@ ISO14443ADoAnticol(struct ISO14443AAnticolState *psState, unsigned char *pucUID,
                               pucResponse, &uiRxSize, NULL,
                               TRF79X0_TRANSCEIVE_CRC);
 
-            if(uiRxSize == 1)
-            {
+            if(uiRxSize == 1) {
                 //
                 // SAK received.
                 //
-                if(pucResponse[0] & 0x04)
-                {
+                if(pucResponse[0] & 0x04) {
                     //
                     // UID not complete, increase cascade level.
                     //
                     iCascadeLevel++;
 
-                    if(iCascadeLevel > 3)
-                    {
+                    if(iCascadeLevel > 3) {
                         break;
                     }
-                }
-                else
-                {
+                } else {
                     //
                     // UID complete, return.
                     //
                     break;
                 }
-            }
-            else
-            {
+            } else {
                 //
                 // Some error, card not selected.
                 //
@@ -654,8 +615,7 @@ ISO14443ADoAnticol(struct ISO14443AAnticolState *psState, unsigned char *pucUID,
     //
     // Some error, not fully selected.
     //
-    if(((psState->iBitPos % 40) != 0) || (psState->iBitPos == 0))
-    {
+    if(((psState->iBitPos % 40) != 0) || (psState->iBitPos == 0)) {
         return(0);
     }
 
@@ -663,16 +623,14 @@ ISO14443ADoAnticol(struct ISO14443AAnticolState *psState, unsigned char *pucUID,
     // Fully selected a card.  pucResponse[0] should be from the last
     // transaction, of a SELECT command, and therefore contain the SAK
     //
-    if(pucSAK != NULL)
-    {
+    if(pucSAK != NULL) {
         *pucSAK = pucResponse[0];
     }
 
     //
     // If requested, return the UID, without cascade tag and BCC.
     //
-    if(pucUID != NULL && puiUIDSize != NULL)
-    {
+    if(pucUID != NULL && puiUIDSize != NULL) {
         iMaxLength = *puiUIDSize;
         iPos = 0;
         *puiUIDSize = 0;
@@ -682,15 +640,12 @@ ISO14443ADoAnticol(struct ISO14443AAnticolState *psState, unsigned char *pucUID,
         // copied for each level except for the last, where the first 4 bytes
         // need to be copied.
         //
-        for(iPos = 0; iPos < psState->iBitPos / 8; iPos += 5)
-        {
-            if(iPos + 5 < psState->iBitPos / 8)
-            {
+        for(iPos = 0; iPos < psState->iBitPos / 8; iPos += 5) {
+            if(iPos + 5 < psState->iBitPos / 8) {
                 //
                 // Not the last cascade level.
                 //
-                if(*puiUIDSize + 3 > iMaxLength)
-                {
+                if(*puiUIDSize + 3 > iMaxLength) {
                     //
                     // Not enough space
                     //
@@ -704,14 +659,11 @@ ISO14443ADoAnticol(struct ISO14443AAnticolState *psState, unsigned char *pucUID,
                 memcpy(pucUID + *puiUIDSize, psState->ucUID + iPos + 1, 3);
 
                 *puiUIDSize += 3;
-            }
-            else
-            {
+            } else {
                 //
                 // Last cascade level.
                 //
-                if(*puiUIDSize + 4 > iMaxLength)
-                {
+                if(*puiUIDSize + 4 > iMaxLength) {
                     //
                     // Not enough space.
                     //
@@ -767,8 +719,7 @@ ISO14443ASelectFirst(unsigned char ucCmd, unsigned char *pucUID,
     //
     // Wake up all or only new tags.
     //
-    if(ISO14443AREQA(ucCmd, NULL) == 0)
-    {
+    if(ISO14443AREQA(ucCmd, NULL) == 0) {
         //
         // No tag with support for bit frame anti-collision found.
         //
@@ -808,8 +759,7 @@ ISO14443ASelectNext(unsigned char ucCmd, unsigned char *pucUID,
     // find the first bit that's set in collisions, walk into the 1 direction,
     // clear the collision indicator and set iBitPos to that position.
     //
-    while(--g_sAnticolState.iBitPos > 0)
-    {
+    while(--g_sAnticolState.iBitPos > 0) {
         //
         // Clear UID bit at this position to clean the state.
         //
@@ -817,8 +767,7 @@ ISO14443ASelectNext(unsigned char ucCmd, unsigned char *pucUID,
             ~(1 << (g_sAnticolState.iBitPos % 8));
 
         if(g_sAnticolState.ucCollisions[g_sAnticolState.iBitPos / 8] &
-           (1 << (g_sAnticolState.iBitPos % 8)))
-        {
+                (1 << (g_sAnticolState.iBitPos % 8))) {
             //
             // This is our new starting point, set UID bit to walk into the
             // 1 direction.
@@ -850,16 +799,14 @@ ISO14443ASelectNext(unsigned char ucCmd, unsigned char *pucUID,
     //
     // No further backtracking points -> no other cards.
     //
-    if(g_sAnticolState.iBitPos <= 0)
-    {
+    if(g_sAnticolState.iBitPos <= 0) {
         return(0);
     }
 
     //
     // Wake up all or only new tags.
     //
-    if(!ISO14443AREQA(ucCmd, NULL))
-    {
+    if(!ISO14443AREQA(ucCmd, NULL)) {
         //
         // No tag with support for bit frame anti-collision found.
         //
@@ -895,8 +842,7 @@ ISO14443ASelect(unsigned char const *pucUID, unsigned int uiUIDSize,
     //
     // Check if the given UID size is supported.
     //
-    if((uiUIDSize != 4) && (uiUIDSize != 7) && (uiUIDSize != 10))
-    {
+    if((uiUIDSize != 4) && (uiUIDSize != 7) && (uiUIDSize != 10)) {
         return(0);
     }
 
@@ -905,13 +851,11 @@ ISO14443ASelect(unsigned char const *pucUID, unsigned int uiUIDSize,
     //
     sState.iBitPos = 0;
 
-    for(iPos = 0; iPos < uiUIDSize;)
-    {
+    for(iPos = 0; iPos < uiUIDSize;) {
         //
         // Check if this is the final cascade level.
         //
-        if(iPos + 4 < uiUIDSize)
-        {
+        if(iPos + 4 < uiUIDSize) {
             //
             // If this was not the final cascade level then add a cascade tag.
             //
@@ -926,9 +870,7 @@ ISO14443ASelect(unsigned char const *pucUID, unsigned int uiUIDSize,
             // Increment position in UID.
             //
             iPos += 3;
-        }
-        else
-        {
+        } else {
             //
             // For the final cascade level just copy four bytes of UID.
             //
@@ -945,8 +887,7 @@ ISO14443ASelect(unsigned char const *pucUID, unsigned int uiUIDSize,
         //
         sState.ucUID[sState.iBitPos / 8 + 4] = 0;
 
-        for(iIdx = 0; iIdx < 4; iIdx++)
-        {
+        for(iIdx = 0; iIdx < 4; iIdx++) {
             sState.ucUID[sState.iBitPos / 8 + 4] ^=
                 sState.ucUID[sState.iBitPos / 8 + iIdx];
         }
@@ -960,8 +901,7 @@ ISO14443ASelect(unsigned char const *pucUID, unsigned int uiUIDSize,
     //
     // Always wake up all cards.
     //
-    if(!ISO14443AREQA(ISO14443A_WUPA, NULL))
-    {
+    if(!ISO14443AREQA(ISO14443A_WUPA, NULL)) {
         //
         // No tag with support for bit frame anti-collision found.
         //
@@ -1015,8 +955,7 @@ ISO14443ACheckParity(const unsigned short * const pusData, const long lSize)
 
     iFailed = 0;
 
-    for(iIdx = 0; iIdx < lSize; iIdx++)
-    {
+    for(iIdx = 0; iIdx < lSize; iIdx++) {
         iFailed |= (pusData[iIdx] >> 8) ^ ParityByte(pusData[iIdx] & 0xff);
     }
 
@@ -1038,8 +977,7 @@ ISO14443ACalculateParity(unsigned short * const pusData, const long lSize)
 {
     int iIdx;
 
-    for(iIdx = 0; iIdx < lSize; iIdx++)
-    {
+    for(iIdx = 0; iIdx < lSize; iIdx++) {
         pusData[iIdx] = (pusData[iIdx] & 0xff) |
                         (ParityByte(pusData[iIdx] & 0xff) << 8);
     }
@@ -1059,19 +997,16 @@ CalculateCRC(const unsigned short * const pusData, const long lSize)
 
     usCrc = 0x6363;
 
-    for(iIdx = 0; iIdx < lSize; iIdx++)
-    {
+    for(iIdx = 0; iIdx < lSize; iIdx++) {
         ucByte = pusData[iIdx] & 0xff;
 
-        for(iBit = 0; iBit < 8; iBit++)
-        {
+        for(iBit = 0; iBit < 8; iBit++) {
             ucBit = (usCrc ^ ucByte) & 1;
 
             ucByte >>= 1;
             usCrc >>= 1;
 
-            if(ucBit)
-            {
+            if(ucBit) {
                 usCrc ^= 0x8408;
             }
         }
@@ -1097,16 +1032,14 @@ ISO14443ACheckCRC(const unsigned short * const pusData, const long lSize)
 {
     unsigned short usCrc;
 
-    if(lSize < 2)
-    {
+    if(lSize < 2) {
         return(0);
     }
 
     usCrc = CalculateCRC(pusData, lSize - 2);
 
     if(((usCrc & 0xff) == (pusData[lSize - 2] & 0xff)) &&
-       (((usCrc >> 8) & 0xff) == (pusData[lSize - 1] & 0xff)))
-    {
+            (((usCrc >> 8) & 0xff) == (pusData[lSize - 1] & 0xff))) {
         return(1);
     }
     return(0);

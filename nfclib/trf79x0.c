@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -109,8 +109,7 @@ extern uint32_t g_ui32SysClk;
 // that.
 //
 //*****************************************************************************
-static volatile struct
-{
+static volatile struct {
     //
     // This stores the contents of the IRQ status register at the most recent
     // IRQ.  However, the contents of this field are not reliable since IRQs
@@ -170,8 +169,7 @@ g_sIRQState;
 // TRF79x0FIFOWrite().
 //
 //*****************************************************************************
-static volatile struct
-{
+static volatile struct {
     //
     // Pointer to the next byte to be transmitted
     //
@@ -189,8 +187,7 @@ static volatile struct
 // FIFO read algorithm in the IRQ handler.  It is set up by TRF79x0Receive().
 //
 //*****************************************************************************
-static volatile struct
-{
+static volatile struct {
     //
     // Pointer to write the next received byte to.
     //
@@ -233,8 +230,7 @@ TRF79x0Init(void)
     //
     SysCtlPeripheralEnable(TRF79X0_EN_PERIPH);
     SysCtlPeripheralEnable(TRF79X0_IRQ_PERIPH);
-    if(g_eRFDaughterType != RF_DAUGHTER_TRF7970ABP)
-    {
+    if(g_eRFDaughterType != RF_DAUGHTER_TRF7970ABP) {
         SysCtlPeripheralEnable(TRF79X0_MOD_PERIPH);
         SysCtlPeripheralEnable(TRF79X0_EN2_PERIPH);
         SysCtlPeripheralEnable(TRF79X0_ASKOK_PERIPH);
@@ -249,8 +245,7 @@ TRF79x0Init(void)
     // Set the EN, EN2, MOD, and ASKOK pins as outputs.
     //
     GPIOPinTypeGPIOOutput(TRF79X0_EN_BASE, TRF79X0_EN_PIN);
-    if(g_eRFDaughterType != RF_DAUGHTER_TRF7970ABP)
-    {
+    if(g_eRFDaughterType != RF_DAUGHTER_TRF7970ABP) {
         GPIOPinTypeGPIOOutput(TRF79X0_EN2_BASE, TRF79X0_EN2_PIN);
         GPIOPinTypeGPIOOutput(TRF79X0_MOD_BASE, TRF79X0_MOD_PIN);
         GPIOPinTypeGPIOOutput(TRF79X0_ASKOK_BASE, TRF79X0_ASKOK_PIN);
@@ -259,8 +254,7 @@ TRF79x0Init(void)
     //
     // Set the MOD and ASKOK pins to start with a low value.
     //
-    if(g_eRFDaughterType != RF_DAUGHTER_TRF7970ABP)
-    {
+    if(g_eRFDaughterType != RF_DAUGHTER_TRF7970ABP) {
         GPIOPinWrite(TRF79X0_MOD_BASE, TRF79X0_MOD_PIN, 0);
         GPIOPinWrite(TRF79X0_ASKOK_BASE, TRF79X0_ASKOK_PIN, 0);
     }
@@ -312,8 +306,7 @@ TRF79x0Init(void)
     // Initialize the TRF7970 with a software initialization command, idle
     // command, and set the modulator control register to
     //
-    if(RF_DAUGHTER_TRF7970)
-    {
+    if(RF_DAUGHTER_TRF7970) {
         TRF79x0DirectCommand(TRF79X0_SOFT_INIT_CMD);
         TRF79x0DirectCommand(TRF79X0_IDLE_CMD);
     }
@@ -356,8 +349,7 @@ TRF79x0SetMode(tTRF79x0TRFMode eMode, tTRF79x0Frequency eFrequency)
     g_selected_mode = eMode;
     g_selected_frequency = eFrequency;
 
-    if(g_selected_mode == P2P_PASSIVE_TARGET_MODE)
-    {
+    if(g_selected_mode == P2P_PASSIVE_TARGET_MODE) {
         //
         // Register 01h. ISO Control Register
         //
@@ -368,9 +360,7 @@ TRF79x0SetMode(tTRF79x0TRFMode eMode, tTRF79x0Frequency eFrequency)
         } else if (eFrequency == FREQ_424_KBPS) {
             TRF79x0WriteRegister(TRF79X0_ISO_CONTROL_REG, 0x23);
         }
-    }
-    else if(g_selected_mode == P2P_INITATIOR_MODE)
-    {
+    } else if(g_selected_mode == P2P_INITATIOR_MODE) {
         if (eFrequency == FREQ_106_KBPS) {
             TRF79x0WriteRegister(TRF79X0_ISO_CONTROL_REG, 0x31);
         } else if (eFrequency == FREQ_212_KBPS) {
@@ -437,8 +427,7 @@ void TRF79x0IRQPinInterruptHandler(void)
     //
     // check if IRQ pin is high
     //
-    if(ui32IRQGPIOBankIntStatus & TRF79X0_IRQ_PIN)
-    {
+    if(ui32IRQGPIOBankIntStatus & TRF79X0_IRQ_PIN) {
         //
         // Clear the asserted interrupts.
         //
@@ -463,16 +452,14 @@ FIFOTransmitSomeBytes(unsigned int uiMaxLength)
 {
     unsigned int uiLength;
 
-    if(g_sTXState.uiBytesRemaining > 0)
-    {
+    if(g_sTXState.uiBytesRemaining > 0) {
         //
         // There are some bytes in g_sTXState that still need to
         // be sent.
         //
         uiLength = g_sTXState.uiBytesRemaining;
 
-        if(uiLength > uiMaxLength)
-        {
+        if(uiLength > uiMaxLength) {
             //
             // Clamp number of bytes to be sent to parameter uiMaxLength,
             // which is 12 for the initial call with an empty FIFO and
@@ -484,15 +471,13 @@ FIFOTransmitSomeBytes(unsigned int uiMaxLength)
         //
         // Send the data in a continuous write to the FIFO "register".
         //
-        if(RF_DAUGHTER_TRF7960)
-        {
+        if(RF_DAUGHTER_TRF7960) {
             SSITRF79x0WriteContinuousStart(TRF79X0_FIFO_REG);
             SSITRF79x0WriteContinuousData(g_sTXState.pucBuffer, uiLength);
             SSITRF79x0WriteContinuousStop();
         }
 
-        if(RF_DAUGHTER_TRF7970)
-        {
+        if(RF_DAUGHTER_TRF7970) {
             SSITRF79x0WriteContinuousData(g_sTXState.pucBuffer, uiLength);
             SSITRF79x0WriteContinuousStop();
         }
@@ -569,8 +554,7 @@ TRF79x0GetCollisionPosition(void)
     //
     // If there were no collisions detected then just return.
     //
-    if(!g_sIRQState.ucCollisionDetected)
-    {
+    if(!g_sIRQState.ucCollisionDetected) {
         return(-1);
     }
 
@@ -704,17 +688,14 @@ TRF79x0IRQWaitTimeout(unsigned long ulCondition, unsigned long ulTimeout)
     //
     // If timeout was not set or not reached, return true.
     //
-    if(ulTimeout == 0)
-    {
+    if(ulTimeout == 0) {
         return(1);
     }
 
     ulTime = 0;
 
-    while((g_sIRQState.uiIrqCauses & ulCondition) == 0)
-    {
-        if(ulTimeout == ulTime)
-        {
+    while((g_sIRQState.uiIrqCauses & ulCondition) == 0) {
+        if(ulTimeout == ulTime) {
             //
             // Abort if timeout is set and reached.
             //
@@ -735,12 +716,9 @@ TRF79x0IRQWaitTimeout(unsigned long ulCondition, unsigned long ulTimeout)
     //
     // If timeout was set and reached: return false.
     //
-    if(ulTimeout == ulTime)
-    {
+    if(ulTimeout == ulTime) {
         return 1;
-    }
-    else
-    {
+    } else {
         return 0;
     }
 }
@@ -1062,7 +1040,7 @@ tStatus TRF79x0Init2(tTRF79x0TRFMode eMode, tTRF79x0Frequency eFrequency)
 //
 //*****************************************************************************
 tStatus TRF79x0WriteFIFO(uint8_t *pui8Buffer, tTRF79x0CRC eCRCBit,
-                            uint8_t ui8Length)
+                         uint8_t ui8Length)
 {
     tStatus eStatus;
     tTRF79x0IRQFlag irq_flag = IRQ_STATUS_IDLE;
@@ -1079,8 +1057,7 @@ tStatus TRF79x0WriteFIFO(uint8_t *pui8Buffer, tTRF79x0CRC eCRCBit,
 
     remaining_bytes = ui8Length - ui8PayloadLength;
 
-    if(g_selected_mode == P2P_ACTIVE_TARGET_MODE)
-    {
+    if(g_selected_mode == P2P_ACTIVE_TARGET_MODE) {
         //
         // Register 01h. ISO Control Register
         //
@@ -1093,8 +1070,7 @@ tStatus TRF79x0WriteFIFO(uint8_t *pui8Buffer, tTRF79x0CRC eCRCBit,
         }
     }
 
-    if (IRQ_IS_SET())
-    {
+    if (IRQ_IS_SET()) {
         //
         // Read IRQ Register
         //
@@ -1102,15 +1078,14 @@ tStatus TRF79x0WriteFIFO(uint8_t *pui8Buffer, tTRF79x0CRC eCRCBit,
     }
 
     SSITRF79x0WritePacket(pui8Buffer, eCRCBit, ui8Length, ui8PayloadLength, \
-                            true);
+                          true);
 
     while (irq_flag != IRQ_STATUS_TX_COMPLETE) {
         // Workaround for Type A commands - check the IRQ within 10 mS to
         // refill FIFO
         if(g_selected_mode == CARD_EMULATION_TYPE_A)
             irq_flag = TRF79x0IRQHandler(10);
-        else
-        {
+        else {
             // No workaround needed, implement a longer timeout, allowing for
             // FIFO IRQ to handle the FIFO levels
             irq_flag = TRF79x0IRQHandler(100);
@@ -1120,8 +1095,7 @@ tStatus TRF79x0WriteFIFO(uint8_t *pui8Buffer, tTRF79x0CRC eCRCBit,
             eStatus = STATUS_FAIL;
             break;
         } else if (irq_flag == IRQ_STATUS_TX_COMPLETE) {
-            if(g_selected_mode == P2P_ACTIVE_TARGET_MODE)
-            {
+            if(g_selected_mode == P2P_ACTIVE_TARGET_MODE) {
                 //
                 // Delay 1uS
                 //
@@ -1139,7 +1113,7 @@ tStatus TRF79x0WriteFIFO(uint8_t *pui8Buffer, tTRF79x0CRC eCRCBit,
             }
             eStatus = STATUS_SUCCESS;
         } else if ((irq_flag == IRQ_STATUS_FIFO_HIGH_OR_LOW
-                || irq_flag == IRQ_STATUS_TIME_OUT) && remaining_bytes > 0) {
+                    || irq_flag == IRQ_STATUS_TIME_OUT) && remaining_bytes > 0) {
             // Modify the pointer to point to the next address of data for
             // payload larger than 127 bytes
             pui8Buffer = pui8Buffer + ui8PayloadLength;
@@ -1159,7 +1133,7 @@ tStatus TRF79x0WriteFIFO(uint8_t *pui8Buffer, tTRF79x0CRC eCRCBit,
             remaining_bytes = remaining_bytes - ui8PayloadLength;
 
             SSITRF79x0WritePacket(pui8Buffer, eCRCBit, ui8Length, \
-                                    ui8PayloadLength, false);
+                                  ui8PayloadLength, false);
         }
     }
 
@@ -1188,12 +1162,9 @@ TRF79x0IRQHandler(uint16_t ui16TimeOut)
 
     //volatile uint8_t x;
 
-    if (IRQ_IS_SET())
-    {
+    if (IRQ_IS_SET()) {
         g_irq_flag = 0x01;
-    }
-    else
-    {
+    } else {
         g_irq_flag = 0x00;
         //
         // Initialize a ui16TimeOut timeout
@@ -1224,7 +1195,7 @@ TRF79x0IRQHandler(uint16_t ui16TimeOut)
     } else {
 
         TRF79x0ReadRegisterContinuous(TRF79X0_NFC_TARGET_PROTOCOL_REG, \
-                                        pui8TargetProtocol, 2);
+                                      pui8TargetProtocol, 2);
 
         //
         // Read IRQ Register
@@ -1242,22 +1213,21 @@ TRF79x0IRQHandler(uint16_t ui16TimeOut)
                 ui8FifoIndex = 0;
 
                 while ((ui8FifoStatusLength > 0) &&
-                        (g_fifo_bytes_received < NFC_FIFO_SIZE))
-                {
+                        (g_fifo_bytes_received < NFC_FIFO_SIZE)) {
 
                     //
                     // Update the received bytes
                     //
                     g_fifo_bytes_received += ui8FifoStatusLength;
-                    #ifdef DEBUG
+#ifdef DEBUG
                     //DebugPrintf("%d\n",g_fifo_bytes_received);
-                    #endif
+#endif
 
                     //
                     // Read the FIFO Data
                     //
                     TRF79x0ReadRegisterContinuous(TRF79X0_FIFO_REG,
-                        &g_fifo_buffer[ui8FifoIndex], ui8FifoStatusLength);
+                                                  &g_fifo_buffer[ui8FifoIndex], ui8FifoStatusLength);
 
                     ui8PacketLength = g_fifo_buffer[0];
 
@@ -1266,8 +1236,7 @@ TRF79x0IRQHandler(uint16_t ui16TimeOut)
                     //
                     ui8FifoIndex = ui8FifoIndex + ui8FifoStatusLength;
 
-                    if (!IRQ_IS_SET())
-                    {
+                    if (!IRQ_IS_SET()) {
                         g_irq_flag = 0;
                     }
 
@@ -1275,14 +1244,12 @@ TRF79x0IRQHandler(uint16_t ui16TimeOut)
                     // Type F - P2P Workaround
                     //
                     if((g_selected_mode == P2P_PASSIVE_TARGET_MODE) ||
-                        (g_selected_mode == P2P_INITATIOR_MODE))
-                    {
+                            (g_selected_mode == P2P_INITATIOR_MODE)) {
                         //
                         // Check if we have received all the bytes defined in
                         // the first packet.
                         //
-                        if(g_fifo_buffer[0] == g_fifo_bytes_received)
-                        {
+                        if(g_fifo_buffer[0] == g_fifo_bytes_received) {
                             eIRQStatus = IRQ_STATUS_RX_COMPLETE;
                             break;
                         }
@@ -1291,20 +1258,18 @@ TRF79x0IRQHandler(uint16_t ui16TimeOut)
                         // go read out the FIFO status register to ensure we do
                         // not get an overflow flag.
                         //
-                        else
-                        {
+                        else {
                             //
                             // Initialize a 1 mS timeout
                             //
                             ui16TimeOut = 0x01;
                             TimerSet(ui16TimeOut, (uint8_t*) &g_time_out_flag);
 
-                            while(g_irq_flag == 0x00 && g_time_out_flag == 0x00)
-                            {
+                            while(g_irq_flag == 0x00 && g_time_out_flag == 0x00) {
                                 //
                                 // Enable Low Power Mode 0
                                 //
-                               // __bis_SR_register(LPM0_bits);
+                                // __bis_SR_register(LPM0_bits);
                             }
 
                             //
@@ -1313,13 +1278,10 @@ TRF79x0IRQHandler(uint16_t ui16TimeOut)
                             TimerDisable(TIMER0_BASE, TIMER_A);
                         }
 
-                    }
-                    else
-                    {
+                    } else {
                         while ((g_irq_flag == 0) && (
                                     (uint8_t) g_fifo_bytes_received !=
-                                                            ui8PacketLength))
-                        {
+                                    ui8PacketLength)) {
                             //
                             // Enable Low Power Mode 0
                             //
@@ -1328,13 +1290,13 @@ TRF79x0IRQHandler(uint16_t ui16TimeOut)
                     }
 
                     TRF79x0ReadRegisterContinuous(TRF79X0_IRQ_STATUS_REG,
-                                                    pui8IRQBuffer, 2);
+                                                  pui8IRQBuffer, 2);
 
                     //
                     // Read the FIFO status and FIFO into g_nfc_buffer
                     //
                     ui8FifoStatusLength =
-                                TRF79x0ReadRegister(TRF79X0_FIFO_STATUS_REG);
+                        TRF79x0ReadRegister(TRF79X0_FIFO_STATUS_REG);
                     //
                     // Mask off the lower 7 bits.
                     //
@@ -1344,14 +1306,10 @@ TRF79x0IRQHandler(uint16_t ui16TimeOut)
                 //TRF79x0ResetFifoCommand();
 
                 eIRQStatus = IRQ_STATUS_RX_COMPLETE;
-            }
-            else if (pui8IRQBuffer[0] & IRQ_STATUS_TX_COMPLETE)
-            {
+            } else if (pui8IRQBuffer[0] & IRQ_STATUS_TX_COMPLETE) {
                 eIRQStatus = IRQ_STATUS_FIFO_HIGH_OR_LOW;
             }
-        }
-        else if (pui8IRQBuffer[0] == IRQ_STATUS_RX_COMPLETE)
-        {
+        } else if (pui8IRQBuffer[0] == IRQ_STATUS_RX_COMPLETE) {
 
             //
             // Read the FIFO status and FIFO into g_nfc_buffer
@@ -1363,7 +1321,7 @@ TRF79x0IRQHandler(uint16_t ui16TimeOut)
                 // Read the FIFO Data
                 //
                 TRF79x0ReadRegisterContinuous(TRF79X0_FIFO_REG, g_fifo_buffer,
-                        ui8FifoStatusLength);
+                                              ui8FifoStatusLength);
 
                 g_fifo_bytes_received = ui8FifoStatusLength;
             } else {
@@ -1376,30 +1334,28 @@ TRF79x0IRQHandler(uint16_t ui16TimeOut)
             if ((pui8TargetProtocol[0] == 0xC9
                     && g_selected_mode == CARD_EMULATION_TYPE_A)
                     || (pui8TargetProtocol[0] == 0xC5
-                            && g_selected_mode == CARD_EMULATION_TYPE_B)
+                        && g_selected_mode == CARD_EMULATION_TYPE_B)
                     || (pui8TargetProtocol[0] == 0xD2
-                            && g_selected_mode == P2P_PASSIVE_TARGET_MODE
-                            && g_selected_frequency == FREQ_212_KBPS)
+                        && g_selected_mode == P2P_PASSIVE_TARGET_MODE
+                        && g_selected_frequency == FREQ_212_KBPS)
                     || (pui8TargetProtocol[0] == 0xD3
-                            && g_selected_mode == P2P_PASSIVE_TARGET_MODE
-                            && g_selected_frequency == FREQ_424_KBPS)
+                        && g_selected_mode == P2P_PASSIVE_TARGET_MODE
+                        && g_selected_frequency == FREQ_424_KBPS)
                     || (pui8TargetProtocol[0] == 0xD2
-                            && g_selected_mode == P2P_ACTIVE_TARGET_MODE
-                            && g_selected_frequency == FREQ_212_KBPS)
+                        && g_selected_mode == P2P_ACTIVE_TARGET_MODE
+                        && g_selected_frequency == FREQ_212_KBPS)
                     || (pui8TargetProtocol[0] == 0xD3
-                            && g_selected_mode == P2P_ACTIVE_TARGET_MODE
-                            && g_selected_frequency == FREQ_424_KBPS)
-                    || (g_selected_mode == P2P_INITATIOR_MODE))
-            {
+                        && g_selected_mode == P2P_ACTIVE_TARGET_MODE
+                        && g_selected_frequency == FREQ_424_KBPS)
+                    || (g_selected_mode == P2P_INITATIOR_MODE)) {
                 eIRQStatus = IRQ_STATUS_RX_COMPLETE;
                 if(g_selected_mode == P2P_INITATIOR_MODE ||
-                   g_selected_mode == P2P_PASSIVE_TARGET_MODE)
+                        g_selected_mode == P2P_PASSIVE_TARGET_MODE)
                     //
                     // 500 microsecond // TR0
                     //
                     SysCtlDelay(g_ulDelayms / 2);
-            }
-            else
+            } else
                 TRF79x0Init2(g_selected_mode, g_selected_frequency);
 
         } else if (pui8IRQBuffer[0] & IRQ_STATUS_COLLISION_AVOID_FINISHED) {
@@ -1407,41 +1363,30 @@ TRF79x0IRQHandler(uint16_t ui16TimeOut)
         } else if (pui8IRQBuffer[0] & IRQ_STATUS_RX_COMPLETE) {
             // Handle the case for P2P Initiator Mode where IRQ is triggered
             // with value 0xC0 - TODO
-            if(pui8IRQBuffer[0] & IRQ_STATUS_TX_COMPLETE)
-            {
+            if(pui8IRQBuffer[0] & IRQ_STATUS_TX_COMPLETE) {
 
-            }
-            else if(pui8IRQBuffer[0] & IRQ_STATUS_PROTOCOL_ERROR)
-            {
+            } else if(pui8IRQBuffer[0] & IRQ_STATUS_PROTOCOL_ERROR) {
                 TRF79x0Init2(g_selected_mode, g_selected_frequency);
-            }
-            else
-            {
+            } else {
                 //
                 // Read the FIFO status and FIFO into g_nfc_buffer
                 //
                 ui8FifoStatusLength =
-                                TRF79x0ReadRegister(TRF79X0_FIFO_STATUS_REG);
+                    TRF79x0ReadRegister(TRF79X0_FIFO_STATUS_REG);
 
                 TRF79x0ResetFifoCommand();
             }
-        }
-        else if (pui8IRQBuffer[0] & IRQ_STATUS_PROTOCOL_ERROR
-                || pui8IRQBuffer[0] & IRQ_STATUS_COLLISION_ERROR)
-        {
+        } else if (pui8IRQBuffer[0] & IRQ_STATUS_PROTOCOL_ERROR
+                   || pui8IRQBuffer[0] & IRQ_STATUS_COLLISION_ERROR) {
             eIRQStatus = IRQ_STATUS_PROTOCOL_ERROR;
             TRF79x0Init2(g_selected_mode, g_selected_frequency);
-        }
-        else if (pui8IRQBuffer[0] & IRQ_STATUS_TX_COMPLETE)
-        {
+        } else if (pui8IRQBuffer[0] & IRQ_STATUS_TX_COMPLETE) {
 
             // Reset FIFO CMD + Dummy byte
             TRF79x0ResetFifoCommand();
 
             eIRQStatus = IRQ_STATUS_TX_COMPLETE;
-        }
-        else if (pui8IRQBuffer[0] & IRQ_STATUS_RF_FIELD_CHANGE)
-        {
+        } else if (pui8IRQBuffer[0] & IRQ_STATUS_RF_FIELD_CHANGE) {
 
             eIRQStatus = IRQ_STATUS_RF_FIELD_CHANGE;
         }
@@ -1597,8 +1542,7 @@ TRF79x0Transmit(unsigned char const *pucData, unsigned int uiLength,
     pucLengthRegs[0] = (uiLength >> 4) & 0xff;
     pucLengthRegs[1] = (uiLength & 0xf) << 4;
 
-    if(uiBits > 0)
-    {
+    if(uiBits > 0) {
         //
         // Last byte is incomplete.
         //
@@ -1620,15 +1564,13 @@ TRF79x0Transmit(unsigned char const *pucData, unsigned int uiLength,
     // separately enabling it in TRF79x0WriteFIFO makes for more logical
     // function separation.
     //
-    if(RF_DAUGHTER_TRF7960)
-    {
+    if(RF_DAUGHTER_TRF7960) {
         SSITRF79x0WriteContinuousStart(TRF79X0_TX_LENGTH_BYTE1_REG);
         SSITRF79x0WriteContinuousData(pucLengthRegs, sizeof(pucLengthRegs));
         SSITRF79x0WriteContinuousStop();
     }
 
-    if(RF_DAUGHTER_TRF7970)
-    {
+    if(RF_DAUGHTER_TRF7970) {
         SSITRF79x0WriteContinuousData(pucLengthRegs, sizeof(pucLengthRegs));
     }
 
@@ -1780,16 +1722,13 @@ TRF79x0Transceive(unsigned char const *pucTXBuf, unsigned int uiTXLen,
 
     ucISOState = TRF79x0ReadRegister(TRF79X0_ISO_CONTROL_REG);
 
-    if(uiFlags & TRF79X0_TRANSCEIVE_RX_CRC)
-    {
+    if(uiFlags & TRF79X0_TRANSCEIVE_RX_CRC) {
         //
         // Receive with CRC.
         //
         TRF79x0WriteRegister(TRF79X0_ISO_CONTROL_REG,
                              ucISOState & ~TRF79X0_ISO_CONTROL_RX_CRC_N);
-    }
-    else
-    {
+    } else {
         //
         // Receive without CRC.
         //
@@ -1797,19 +1736,15 @@ TRF79x0Transceive(unsigned char const *pucTXBuf, unsigned int uiTXLen,
                              ucISOState | TRF79X0_ISO_CONTROL_RX_CRC_N);
     }
 
-    if(RF_DAUGHTER_TRF7960)
-    {
+    if(RF_DAUGHTER_TRF7960) {
         TRF79x0DirectCommand(TRF79X0_RESET_FIFO_CMD);
 
-        if(uiFlags & TRF79X0_TRANSCEIVE_TX_CRC)
-        {
+        if(uiFlags & TRF79X0_TRANSCEIVE_TX_CRC) {
             //
             // Transmit with CRC.
             //
             TRF79x0DirectCommand(TRF79X0_TRANSMIT_CRC_CMD);
-        }
-        else
-        {
+        } else {
             //
             // Transmit without CRC.
             //
@@ -1836,8 +1771,7 @@ TRF79x0Transceive(unsigned char const *pucTXBuf, unsigned int uiTXLen,
         //
         iRXEnabled = 0;
 
-        if((pucRXBuf != 0) && (puiRXLen != 0) && (*puiRXLen > 0))
-        {
+        if((pucRXBuf != 0) && (puiRXLen != 0) && (*puiRXLen > 0)) {
             TRF79x0Receive(pucRXBuf, puiRXLen);
             iRXEnabled = 1;
         }
@@ -1860,8 +1794,7 @@ TRF79x0Transceive(unsigned char const *pucTXBuf, unsigned int uiTXLen,
         //
         // If receive is enabled, wait for receive end.
         //
-        if(iRXEnabled)
-        {
+        if(iRXEnabled) {
             TRF79x0IRQWaitTimeout(TRF79X0_WAIT_RXEND, TRF79X0_RX_TIMEOUT);
 
             //
@@ -1871,22 +1804,18 @@ TRF79x0Transceive(unsigned char const *pucTXBuf, unsigned int uiTXLen,
         }
     }
 
-    if(RF_DAUGHTER_TRF7970)
-    {
+    if(RF_DAUGHTER_TRF7970) {
         //
         // Prepare SELECT command
         //
         ucBuf[0] = TRF79X0_CONTROL_CMD | TRF79X0_RESET_FIFO_CMD;
 
-        if(uiFlags & TRF79X0_TRANSCEIVE_TX_CRC)
-        {
+        if(uiFlags & TRF79X0_TRANSCEIVE_TX_CRC) {
             //
             // Transmit with CRC.
             //
             ucBuf[1] = TRF79X0_CONTROL_CMD | TRF79X0_TRANSMIT_CRC_CMD;
-        }
-        else
-        {
+        } else {
             //
             // Transmit without CRC.
             //
@@ -1913,8 +1842,7 @@ TRF79x0Transceive(unsigned char const *pucTXBuf, unsigned int uiTXLen,
         //
         iRXEnabled = 0;
 
-        if((pucRXBuf != 0) && (puiRXLen != 0) && (*puiRXLen > 0))
-        {
+        if((pucRXBuf != 0) && (puiRXLen != 0) && (*puiRXLen > 0)) {
             TRF79x0Receive(pucRXBuf, puiRXLen);
             iRXEnabled = 1;
         }
@@ -1948,8 +1876,7 @@ TRF79x0Transceive(unsigned char const *pucTXBuf, unsigned int uiTXLen,
         //
         // If receive is enabled, wait for receive end.
         //
-        if(iRXEnabled)
-        {
+        if(iRXEnabled) {
             TRF79x0IRQWaitTimeout(TRF79X0_WAIT_RXEND, TRF79X0_RX_TIMEOUT);
 
             //

@@ -5,23 +5,23 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -33,7 +33,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -198,8 +198,7 @@ uint16_t *g_pui16Palette;
 #define NUM_PAL_ENTRIES 16
 #endif
 
-const uint32_t g_pulSrcPalette[NUM_PAL_ENTRIES] =
-{
+const uint32_t g_pulSrcPalette[NUM_PAL_ENTRIES] = {
     ClrBlack,
     ClrWhite,
     ClrRed,
@@ -247,8 +246,7 @@ static volatile uint32_t g_ui32UnderflowCount;
 // The image of the TI logo.
 //
 //*****************************************************************************
-const unsigned char g_pucLogo[] =
-{
+const unsigned char g_pucLogo[] = {
     IMAGE_FMT_4BPP_COMP,
     80, 0,
     75, 0,
@@ -383,8 +381,7 @@ __error__(char *pcFilename, unsigned long ulLine)
     //
     // A runtime error was detected so stop here to allow debug.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Hang.
         //
@@ -411,16 +408,14 @@ LCDIntHandler(void)
     //
     // Increment the frame counter if necessary.
     //
-    if(ui32Status & LCD_INT_EOF0)
-    {
+    if(ui32Status & LCD_INT_EOF0) {
         g_ui32FrameCounter++;
     }
 
     //
     // If we saw an underflow interrupt, restart the raster.
     //
-    if(ui32Status & LCD_INT_UNDERFLOW)
-    {
+    if(ui32Status & LCD_INT_UNDERFLOW) {
         g_ui32UnderflowCount++;
         LCDRasterEnable(LCD0_BASE);
     }
@@ -493,8 +488,8 @@ DisplayInit(uint32_t ui32SysClkHz)
     // Set the output format for the raster interface.
     //
     MAP_LCDRasterConfigSet(LCD0_BASE, (RASTER_FMT_ACTIVE_PALETTIZED_16BIT |
-                           RASTER_NIBBLE_MODE_ENABLED |
-                           RASTER_READ_ORDER_REVERSED), 0);
+                                       RASTER_NIBBLE_MODE_ENABLED |
+                                       RASTER_READ_ORDER_REVERSED), 0);
 
 
     MAP_LCDRasterTimingSet(LCD0_BASE, &(g_psDisplayMode->sTiming));
@@ -507,8 +502,7 @@ DisplayInit(uint32_t ui32SysClkHz)
     //
     // If the chosen display has an initialization function, call it now.
     //
-    if(g_psDisplayMode->pfnInitDisplay)
-    {
+    if(g_psDisplayMode->pfnInitDisplay) {
         g_psDisplayMode->pfnInitDisplay(ui32SysClkHz);
     }
 
@@ -547,7 +541,7 @@ DisplayInit(uint32_t ui32SysClkHz)
     // Enable the LCD interrupts.
     //
     MAP_LCDIntEnable(LCD0_BASE, (LCD_INT_DMA_DONE | LCD_INT_SYNC_LOST |
-                     LCD_INT_UNDERFLOW | LCD_INT_EOF0));
+                                 LCD_INT_UNDERFLOW | LCD_INT_EOF0));
 
     MAP_IntEnable(INT_LCD0);
 
@@ -613,17 +607,16 @@ DrawLinePattern(uint32_t ui32Color)
     //
     // Draw a pattern of lines.
     //
-    for(i32Loop = 0; i32Loop < 20; i32Loop++)
-    {
+    for(i32Loop = 0; i32Loop < 20; i32Loop++) {
         GrLineDraw(&g_sContext, 0, i32YInc * i32Loop, i32XInc * i32Loop,
-               (GrContextDpyHeightGet(&g_sContext) - 1));
+                   (GrContextDpyHeightGet(&g_sContext) - 1));
         GrLineDraw(&g_sContext,
-               (GrContextDpyWidthGet(&g_sContext) - 1),
-               (GrContextDpyHeightGet(&g_sContext) -
-                       (i32YInc * i32Loop + 1)),
-               (GrContextDpyWidthGet(&g_sContext) -
-                       (i32XInc * i32Loop + 1)),
-                0);
+                   (GrContextDpyWidthGet(&g_sContext) - 1),
+                   (GrContextDpyHeightGet(&g_sContext) -
+                    (i32YInc * i32Loop + 1)),
+                   (GrContextDpyWidthGet(&g_sContext) -
+                    (i32XInc * i32Loop + 1)),
+                   0);
     }
 }
 
@@ -691,8 +684,7 @@ main(void)
     //
     // Was the SDRAM found?
     //
-    if(!g_pui16SDRAM)
-    {
+    if(!g_pui16SDRAM) {
         UARTprintf("Application requires SDRAM but this is not present!\n");
         while(1);
     }
@@ -743,8 +735,8 @@ main(void)
     //
     GrContextForegroundSet(&g_sContext, ClrYellow);
     GrCircleDraw(&g_sContext, GrContextDpyWidthGet(&g_sContext) / 2,
-                    GrContextDpyHeightGet(&g_sContext) / 2,
-                    GrContextDpyWidthGet(&g_sContext) / 5);
+                 GrContextDpyHeightGet(&g_sContext) / 2,
+                 GrContextDpyWidthGet(&g_sContext) / 5);
 
     //
     // Determine where to put the logo image so that it is slightly below the
@@ -787,8 +779,7 @@ main(void)
     //
     // Loop forever.
     //
-    while(1)
-    {
+    while(1) {
         //
         // We just sit here and do nothing.
         //

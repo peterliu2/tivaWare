@@ -99,7 +99,7 @@
 //
 #ifndef __IAR_SYSTEMS_ASM__
 extern volatile unsigned long g_vulRunTimeStatsCountValue;
-#endif 
+#endif
 #define configGENERATE_RUN_TIME_STATS       1
 #define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS()                              \
                                             g_vulRunTimeStatsCountValue = 0ul

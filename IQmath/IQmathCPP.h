@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva IQmath Library.
 //
 //*****************************************************************************
@@ -48,8 +48,7 @@
 // The C++ class for the various IQ formats.
 //
 //*****************************************************************************
-struct iq
-{
+struct iq {
     //
     // Constructors.
     //
@@ -94,8 +93,7 @@ struct iq
     _iq val;
 };
 
-struct iq30
-{
+struct iq30 {
     //
     // Constructors.
     //
@@ -140,8 +138,7 @@ struct iq30
     _iq30 val;
 };
 
-struct iq29
-{
+struct iq29 {
     //
     // Constructors.
     //
@@ -186,8 +183,7 @@ struct iq29
     _iq29 val;
 };
 
-struct iq28
-{
+struct iq28 {
     //
     // Constructors.
     //
@@ -232,8 +228,7 @@ struct iq28
     _iq28 val;
 };
 
-struct iq27
-{
+struct iq27 {
     //
     // Constructors.
     //
@@ -278,8 +273,7 @@ struct iq27
     _iq27 val;
 };
 
-struct iq26
-{
+struct iq26 {
     //
     // Constructors.
     //
@@ -324,8 +318,7 @@ struct iq26
     _iq26 val;
 };
 
-struct iq25
-{
+struct iq25 {
     //
     // Constructors.
     //
@@ -370,8 +363,7 @@ struct iq25
     _iq25 val;
 };
 
-struct iq24
-{
+struct iq24 {
     //
     // Constructors.
     //
@@ -416,8 +408,7 @@ struct iq24
     _iq24 val;
 };
 
-struct iq23
-{
+struct iq23 {
     //
     // Constructors.
     //
@@ -462,8 +453,7 @@ struct iq23
     _iq23 val;
 };
 
-struct iq22
-{
+struct iq22 {
     //
     // Constructors.
     //
@@ -508,8 +498,7 @@ struct iq22
     _iq22 val;
 };
 
-struct iq21
-{
+struct iq21 {
     //
     // Constructors.
     //
@@ -554,8 +543,7 @@ struct iq21
     _iq21 val;
 };
 
-struct iq20
-{
+struct iq20 {
     //
     // Constructors.
     //
@@ -600,8 +588,7 @@ struct iq20
     _iq20 val;
 };
 
-struct iq19
-{
+struct iq19 {
     //
     // Constructors.
     //
@@ -646,8 +633,7 @@ struct iq19
     _iq19 val;
 };
 
-struct iq18
-{
+struct iq18 {
     //
     // Constructors.
     //
@@ -692,8 +678,7 @@ struct iq18
     _iq18 val;
 };
 
-struct iq17
-{
+struct iq17 {
     //
     // Constructors.
     //
@@ -738,8 +723,7 @@ struct iq17
     _iq17 val;
 };
 
-struct iq16
-{
+struct iq16 {
     //
     // Constructors.
     //
@@ -784,8 +768,7 @@ struct iq16
     _iq16 val;
 };
 
-struct iq15
-{
+struct iq15 {
     //
     // Constructors.
     //
@@ -830,8 +813,7 @@ struct iq15
     _iq15 val;
 };
 
-struct iq14
-{
+struct iq14 {
     //
     // Constructors.
     //
@@ -876,8 +858,7 @@ struct iq14
     _iq14 val;
 };
 
-struct iq13
-{
+struct iq13 {
     //
     // Constructors.
     //
@@ -922,8 +903,7 @@ struct iq13
     _iq13 val;
 };
 
-struct iq12
-{
+struct iq12 {
     //
     // Constructors.
     //
@@ -968,8 +948,7 @@ struct iq12
     _iq12 val;
 };
 
-struct iq11
-{
+struct iq11 {
     //
     // Constructors.
     //
@@ -1014,8 +993,7 @@ struct iq11
     _iq11 val;
 };
 
-struct iq10
-{
+struct iq10 {
     //
     // Constructors.
     //
@@ -1060,8 +1038,7 @@ struct iq10
     _iq10 val;
 };
 
-struct iq9
-{
+struct iq9 {
     //
     // Constructors.
     //
@@ -1106,8 +1083,7 @@ struct iq9
     _iq9 val;
 };
 
-struct iq8
-{
+struct iq8 {
     //
     // Constructors.
     //
@@ -1152,8 +1128,7 @@ struct iq8
     _iq8 val;
 };
 
-struct iq7
-{
+struct iq7 {
     //
     // Constructors.
     //
@@ -1198,8 +1173,7 @@ struct iq7
     _iq7 val;
 };
 
-struct iq6
-{
+struct iq6 {
     //
     // Constructors.
     //
@@ -1244,8 +1218,7 @@ struct iq6
     _iq6 val;
 };
 
-struct iq5
-{
+struct iq5 {
     //
     // Constructors.
     //
@@ -1290,8 +1263,7 @@ struct iq5
     _iq5 val;
 };
 
-struct iq4
-{
+struct iq4 {
     //
     // Constructors.
     //
@@ -1336,8 +1308,7 @@ struct iq4
     _iq4 val;
 };
 
-struct iq3
-{
+struct iq3 {
     //
     // Constructors.
     //
@@ -1382,8 +1353,7 @@ struct iq3
     _iq3 val;
 };
 
-struct iq2
-{
+struct iq2 {
     //
     // Constructors.
     //
@@ -1428,8 +1398,7 @@ struct iq2
     _iq2 val;
 };
 
-struct iq1
-{
+struct iq1 {
     //
     // Constructors.
     //
@@ -1516,74 +1485,260 @@ struct iq1
 // Convert a IQ number to a floating point value.
 //
 //*****************************************************************************
-inline float IQ30toF(const iq30 &A) { return(_IQ30toF(A.val)); }
-inline float IQ29toF(const iq29 &A) { return(_IQ29toF(A.val)); }
-inline float IQ28toF(const iq28 &A) { return(_IQ28toF(A.val)); }
-inline float IQ27toF(const iq27 &A) { return(_IQ27toF(A.val)); }
-inline float IQ26toF(const iq26 &A) { return(_IQ26toF(A.val)); }
-inline float IQ25toF(const iq25 &A) { return(_IQ25toF(A.val)); }
-inline float IQ24toF(const iq24 &A) { return(_IQ24toF(A.val)); }
-inline float IQ23toF(const iq23 &A) { return(_IQ23toF(A.val)); }
-inline float IQ22toF(const iq22 &A) { return(_IQ22toF(A.val)); }
-inline float IQ21toF(const iq21 &A) { return(_IQ21toF(A.val)); }
-inline float IQ20toF(const iq20 &A) { return(_IQ20toF(A.val)); }
-inline float IQ19toF(const iq19 &A) { return(_IQ19toF(A.val)); }
-inline float IQ18toF(const iq18 &A) { return(_IQ18toF(A.val)); }
-inline float IQ17toF(const iq17 &A) { return(_IQ17toF(A.val)); }
-inline float IQ16toF(const iq16 &A) { return(_IQ16toF(A.val)); }
-inline float IQ15toF(const iq15 &A) { return(_IQ15toF(A.val)); }
-inline float IQ14toF(const iq14 &A) { return(_IQ14toF(A.val)); }
-inline float IQ13toF(const iq13 &A) { return(_IQ13toF(A.val)); }
-inline float IQ12toF(const iq12 &A) { return(_IQ12toF(A.val)); }
-inline float IQ11toF(const iq11 &A) { return(_IQ11toF(A.val)); }
-inline float IQ10toF(const iq10 &A) { return(_IQ10toF(A.val)); }
-inline float IQ9toF(const iq9 &A)   { return(_IQ9toF(A.val)); }
-inline float IQ8toF(const iq8 &A)   { return(_IQ8toF(A.val)); }
-inline float IQ7toF(const iq7 &A)   { return(_IQ7toF(A.val)); }
-inline float IQ6toF(const iq6 &A)   { return(_IQ6toF(A.val)); }
-inline float IQ5toF(const iq5 &A)   { return(_IQ5toF(A.val)); }
-inline float IQ4toF(const iq4 &A)   { return(_IQ4toF(A.val)); }
-inline float IQ3toF(const iq3 &A)   { return(_IQ3toF(A.val)); }
-inline float IQ2toF(const iq2 &A)   { return(_IQ2toF(A.val)); }
-inline float IQ1toF(const iq1 &A)   { return(_IQ1toF(A.val)); }
-inline float IQtoF(const iq &A)     { return(_IQtoF(A.val)); }
+inline float IQ30toF(const iq30 &A)
+{
+    return(_IQ30toF(A.val));
+}
+inline float IQ29toF(const iq29 &A)
+{
+    return(_IQ29toF(A.val));
+}
+inline float IQ28toF(const iq28 &A)
+{
+    return(_IQ28toF(A.val));
+}
+inline float IQ27toF(const iq27 &A)
+{
+    return(_IQ27toF(A.val));
+}
+inline float IQ26toF(const iq26 &A)
+{
+    return(_IQ26toF(A.val));
+}
+inline float IQ25toF(const iq25 &A)
+{
+    return(_IQ25toF(A.val));
+}
+inline float IQ24toF(const iq24 &A)
+{
+    return(_IQ24toF(A.val));
+}
+inline float IQ23toF(const iq23 &A)
+{
+    return(_IQ23toF(A.val));
+}
+inline float IQ22toF(const iq22 &A)
+{
+    return(_IQ22toF(A.val));
+}
+inline float IQ21toF(const iq21 &A)
+{
+    return(_IQ21toF(A.val));
+}
+inline float IQ20toF(const iq20 &A)
+{
+    return(_IQ20toF(A.val));
+}
+inline float IQ19toF(const iq19 &A)
+{
+    return(_IQ19toF(A.val));
+}
+inline float IQ18toF(const iq18 &A)
+{
+    return(_IQ18toF(A.val));
+}
+inline float IQ17toF(const iq17 &A)
+{
+    return(_IQ17toF(A.val));
+}
+inline float IQ16toF(const iq16 &A)
+{
+    return(_IQ16toF(A.val));
+}
+inline float IQ15toF(const iq15 &A)
+{
+    return(_IQ15toF(A.val));
+}
+inline float IQ14toF(const iq14 &A)
+{
+    return(_IQ14toF(A.val));
+}
+inline float IQ13toF(const iq13 &A)
+{
+    return(_IQ13toF(A.val));
+}
+inline float IQ12toF(const iq12 &A)
+{
+    return(_IQ12toF(A.val));
+}
+inline float IQ11toF(const iq11 &A)
+{
+    return(_IQ11toF(A.val));
+}
+inline float IQ10toF(const iq10 &A)
+{
+    return(_IQ10toF(A.val));
+}
+inline float IQ9toF(const iq9 &A)
+{
+    return(_IQ9toF(A.val));
+}
+inline float IQ8toF(const iq8 &A)
+{
+    return(_IQ8toF(A.val));
+}
+inline float IQ7toF(const iq7 &A)
+{
+    return(_IQ7toF(A.val));
+}
+inline float IQ6toF(const iq6 &A)
+{
+    return(_IQ6toF(A.val));
+}
+inline float IQ5toF(const iq5 &A)
+{
+    return(_IQ5toF(A.val));
+}
+inline float IQ4toF(const iq4 &A)
+{
+    return(_IQ4toF(A.val));
+}
+inline float IQ3toF(const iq3 &A)
+{
+    return(_IQ3toF(A.val));
+}
+inline float IQ2toF(const iq2 &A)
+{
+    return(_IQ2toF(A.val));
+}
+inline float IQ1toF(const iq1 &A)
+{
+    return(_IQ1toF(A.val));
+}
+inline float IQtoF(const iq &A)
+{
+    return(_IQtoF(A.val));
+}
 
 //*****************************************************************************
 //
 // Convert an IQ number to a double-precision floating point value.
 //
 //*****************************************************************************
-inline double IQ30toD(const iq30 &A) { return(_IQ30toD(A.val)); }
-inline double IQ29toD(const iq29 &A) { return(_IQ29toD(A.val)); }
-inline double IQ28toD(const iq28 &A) { return(_IQ28toD(A.val)); }
-inline double IQ27toD(const iq27 &A) { return(_IQ27toD(A.val)); }
-inline double IQ26toD(const iq26 &A) { return(_IQ26toD(A.val)); }
-inline double IQ25toD(const iq25 &A) { return(_IQ25toD(A.val)); }
-inline double IQ24toD(const iq24 &A) { return(_IQ24toD(A.val)); }
-inline double IQ23toD(const iq23 &A) { return(_IQ23toD(A.val)); }
-inline double IQ22toD(const iq22 &A) { return(_IQ22toD(A.val)); }
-inline double IQ21toD(const iq21 &A) { return(_IQ21toD(A.val)); }
-inline double IQ20toD(const iq20 &A) { return(_IQ20toD(A.val)); }
-inline double IQ19toD(const iq19 &A) { return(_IQ19toD(A.val)); }
-inline double IQ18toD(const iq18 &A) { return(_IQ18toD(A.val)); }
-inline double IQ17toD(const iq17 &A) { return(_IQ17toD(A.val)); }
-inline double IQ16toD(const iq16 &A) { return(_IQ16toD(A.val)); }
-inline double IQ15toD(const iq15 &A) { return(_IQ15toD(A.val)); }
-inline double IQ14toD(const iq14 &A) { return(_IQ14toD(A.val)); }
-inline double IQ13toD(const iq13 &A) { return(_IQ13toD(A.val)); }
-inline double IQ12toD(const iq12 &A) { return(_IQ12toD(A.val)); }
-inline double IQ11toD(const iq11 &A) { return(_IQ11toD(A.val)); }
-inline double IQ10toD(const iq10 &A) { return(_IQ10toD(A.val)); }
-inline double IQ9toD(const iq9 &A)   { return(_IQ9toD(A.val)); }
-inline double IQ8toD(const iq8 &A)   { return(_IQ8toD(A.val)); }
-inline double IQ7toD(const iq7 &A)   { return(_IQ7toD(A.val)); }
-inline double IQ6toD(const iq6 &A)   { return(_IQ6toD(A.val)); }
-inline double IQ5toD(const iq5 &A)   { return(_IQ5toD(A.val)); }
-inline double IQ4toD(const iq4 &A)   { return(_IQ4toD(A.val)); }
-inline double IQ3toD(const iq3 &A)   { return(_IQ3toD(A.val)); }
-inline double IQ2toD(const iq2 &A)   { return(_IQ2toD(A.val)); }
-inline double IQ1toD(const iq1 &A)   { return(_IQ1toD(A.val)); }
-inline double IQtoD(const iq &A)     { return(_IQtoD(A.val)); }
+inline double IQ30toD(const iq30 &A)
+{
+    return(_IQ30toD(A.val));
+}
+inline double IQ29toD(const iq29 &A)
+{
+    return(_IQ29toD(A.val));
+}
+inline double IQ28toD(const iq28 &A)
+{
+    return(_IQ28toD(A.val));
+}
+inline double IQ27toD(const iq27 &A)
+{
+    return(_IQ27toD(A.val));
+}
+inline double IQ26toD(const iq26 &A)
+{
+    return(_IQ26toD(A.val));
+}
+inline double IQ25toD(const iq25 &A)
+{
+    return(_IQ25toD(A.val));
+}
+inline double IQ24toD(const iq24 &A)
+{
+    return(_IQ24toD(A.val));
+}
+inline double IQ23toD(const iq23 &A)
+{
+    return(_IQ23toD(A.val));
+}
+inline double IQ22toD(const iq22 &A)
+{
+    return(_IQ22toD(A.val));
+}
+inline double IQ21toD(const iq21 &A)
+{
+    return(_IQ21toD(A.val));
+}
+inline double IQ20toD(const iq20 &A)
+{
+    return(_IQ20toD(A.val));
+}
+inline double IQ19toD(const iq19 &A)
+{
+    return(_IQ19toD(A.val));
+}
+inline double IQ18toD(const iq18 &A)
+{
+    return(_IQ18toD(A.val));
+}
+inline double IQ17toD(const iq17 &A)
+{
+    return(_IQ17toD(A.val));
+}
+inline double IQ16toD(const iq16 &A)
+{
+    return(_IQ16toD(A.val));
+}
+inline double IQ15toD(const iq15 &A)
+{
+    return(_IQ15toD(A.val));
+}
+inline double IQ14toD(const iq14 &A)
+{
+    return(_IQ14toD(A.val));
+}
+inline double IQ13toD(const iq13 &A)
+{
+    return(_IQ13toD(A.val));
+}
+inline double IQ12toD(const iq12 &A)
+{
+    return(_IQ12toD(A.val));
+}
+inline double IQ11toD(const iq11 &A)
+{
+    return(_IQ11toD(A.val));
+}
+inline double IQ10toD(const iq10 &A)
+{
+    return(_IQ10toD(A.val));
+}
+inline double IQ9toD(const iq9 &A)
+{
+    return(_IQ9toD(A.val));
+}
+inline double IQ8toD(const iq8 &A)
+{
+    return(_IQ8toD(A.val));
+}
+inline double IQ7toD(const iq7 &A)
+{
+    return(_IQ7toD(A.val));
+}
+inline double IQ6toD(const iq6 &A)
+{
+    return(_IQ6toD(A.val));
+}
+inline double IQ5toD(const iq5 &A)
+{
+    return(_IQ5toD(A.val));
+}
+inline double IQ4toD(const iq4 &A)
+{
+    return(_IQ4toD(A.val));
+}
+inline double IQ3toD(const iq3 &A)
+{
+    return(_IQ3toD(A.val));
+}
+inline double IQ2toD(const iq2 &A)
+{
+    return(_IQ2toD(A.val));
+}
+inline double IQ1toD(const iq1 &A)
+{
+    return(_IQ1toD(A.val));
+}
+inline double IQtoD(const iq &A)
+{
+    return(_IQtoD(A.val));
+}
 
 //*****************************************************************************
 //
@@ -2339,9 +2494,9 @@ IQtoQ15(const iq &A)
 inline iq
 Q15toIQ(long A)
 {
-   iq B;
-   B.val = _Q15toIQ(A);
-   return(B);
+    iq B;
+    B.val = _Q15toIQ(A);
+    return(B);
 }
 
 inline long
@@ -2353,9 +2508,9 @@ IQtoQ14(const iq &A)
 inline iq
 Q14toIQ(long A)
 {
-   iq B;
-   B.val = _Q14toIQ(A);
-   return(B);
+    iq B;
+    B.val = _Q14toIQ(A);
+    return(B);
 }
 
 inline long
@@ -2367,9 +2522,9 @@ IQtoQ13(const iq &A)
 inline iq
 Q13toIQ(long A)
 {
-   iq B;
-   B.val = _Q13toIQ(A);
-   return(B);
+    iq B;
+    B.val = _Q13toIQ(A);
+    return(B);
 }
 
 inline long
@@ -2381,9 +2536,9 @@ IQtoQ12(const iq &A)
 inline iq
 Q12toIQ(long A)
 {
-   iq B;
-   B.val = _Q12toIQ(A);
-   return(B);
+    iq B;
+    B.val = _Q12toIQ(A);
+    return(B);
 }
 
 inline long
@@ -2395,9 +2550,9 @@ IQtoQ11(const iq &A)
 inline iq
 Q11toIQ(long A)
 {
-   iq B;
-   B.val = _Q11toIQ(A);
-   return(B);
+    iq B;
+    B.val = _Q11toIQ(A);
+    return(B);
 }
 
 inline long
@@ -2409,9 +2564,9 @@ IQtoQ10(const iq &A)
 inline iq
 Q10toIQ(long A)
 {
-   iq B;
-   B.val = _Q10toIQ(A);
-   return(B);
+    iq B;
+    B.val = _Q10toIQ(A);
+    return(B);
 }
 
 inline long
@@ -2423,9 +2578,9 @@ IQtoQ9(const iq &A)
 inline iq
 Q9toIQ(long A)
 {
-   iq B;
-   B.val = _Q9toIQ(A);
-   return(B);
+    iq B;
+    B.val = _Q9toIQ(A);
+    return(B);
 }
 
 inline long
@@ -2437,9 +2592,9 @@ IQtoQ8(const iq &A)
 inline iq
 Q8toIQ(long A)
 {
-   iq B;
-   B.val = _Q8toIQ(A);
-   return(B);
+    iq B;
+    B.val = _Q8toIQ(A);
+    return(B);
 }
 
 inline long
@@ -2451,9 +2606,9 @@ IQtoQ7(const iq &A)
 inline iq
 Q7toIQ(long A)
 {
-   iq B;
-   B.val = _Q7toIQ(A);
-   return(B);
+    iq B;
+    B.val = _Q7toIQ(A);
+    return(B);
 }
 
 inline long
@@ -2465,9 +2620,9 @@ IQtoQ6(const iq &A)
 inline iq
 Q6toIQ(long A)
 {
-   iq B;
-   B.val = _Q6toIQ(A);
-   return(B);
+    iq B;
+    B.val = _Q6toIQ(A);
+    return(B);
 }
 
 inline long
@@ -2479,9 +2634,9 @@ IQtoQ5(const iq &A)
 inline iq
 Q5toIQ(long A)
 {
-   iq B;
-   B.val = _Q5toIQ(A);
-   return(B);
+    iq B;
+    B.val = _Q5toIQ(A);
+    return(B);
 }
 
 inline long
@@ -2493,9 +2648,9 @@ IQtoQ4(const iq &A)
 inline iq
 Q4toIQ(long A)
 {
-   iq B;
-   B.val = _Q4toIQ(A);
-   return(B);
+    iq B;
+    B.val = _Q4toIQ(A);
+    return(B);
 }
 
 inline long
@@ -2507,9 +2662,9 @@ IQtoQ3(const iq &A)
 inline iq
 Q3toIQ(long A)
 {
-   iq B;
-   B.val = _Q3toIQ(A);
-   return(B);
+    iq B;
+    B.val = _Q3toIQ(A);
+    return(B);
 }
 
 inline long
@@ -2521,9 +2676,9 @@ IQtoQ2(const iq &A)
 inline iq
 Q2toIQ(long A)
 {
-   iq B;
-   B.val = _Q2toIQ(A);
-   return(B);
+    iq B;
+    B.val = _Q2toIQ(A);
+    return(B);
 }
 
 inline long
@@ -2535,9 +2690,9 @@ IQtoQ1(const iq &A)
 inline iq
 Q1toIQ(long A)
 {
-   iq B;
-   B.val = _Q1toIQ(A);
-   return(B);
+    iq B;
+    B.val = _Q1toIQ(A);
+    return(B);
 }
 
 
@@ -2740,249 +2895,249 @@ IQtoa(char *A, const char *B, const iq &C)
 inline iq30
 atoIQ30(const char *A)
 {
-   iq30 B;
-   B.val = _atoIQ30(A);
-   return(B);
+    iq30 B;
+    B.val = _atoIQ30(A);
+    return(B);
 }
 
 inline iq29
 atoIQ29(const char *A)
 {
-   iq29 B;
-   B.val = _atoIQ29(A);
-   return(B);
+    iq29 B;
+    B.val = _atoIQ29(A);
+    return(B);
 }
 
 inline iq28
 atoIQ28(const char *A)
 {
-   iq28 B;
-   B.val = _atoIQ28(A);
-   return(B);
+    iq28 B;
+    B.val = _atoIQ28(A);
+    return(B);
 }
 
 inline iq27
 atoIQ27(const char *A)
 {
-   iq27 B;
-   B.val = _atoIQ27(A);
-   return(B);
+    iq27 B;
+    B.val = _atoIQ27(A);
+    return(B);
 }
 
 inline iq26
 atoIQ26(const char *A)
 {
-   iq26 B;
-   B.val = _atoIQ26(A);
-   return(B);
+    iq26 B;
+    B.val = _atoIQ26(A);
+    return(B);
 }
 
 inline iq25
 atoIQ25(const char *A)
 {
-   iq25 B;
-   B.val = _atoIQ25(A);
-   return(B);
+    iq25 B;
+    B.val = _atoIQ25(A);
+    return(B);
 }
 
 inline iq24
 atoIQ24(const char *A)
 {
-   iq24 B;
-   B.val = _atoIQ24(A);
-   return(B);
+    iq24 B;
+    B.val = _atoIQ24(A);
+    return(B);
 }
 
 inline iq23
 atoIQ23(const char *A)
 {
-   iq23 B;
-   B.val = _atoIQ23(A);
-   return(B);
+    iq23 B;
+    B.val = _atoIQ23(A);
+    return(B);
 }
 
 inline iq22
 atoIQ22(const char *A)
 {
-   iq22 B;
-   B.val = _atoIQ22(A);
-   return(B);
+    iq22 B;
+    B.val = _atoIQ22(A);
+    return(B);
 }
 
 inline iq21
 atoIQ21(const char *A)
 {
-   iq21 B;
-   B.val = _atoIQ21(A);
-   return(B);
+    iq21 B;
+    B.val = _atoIQ21(A);
+    return(B);
 }
 
 inline iq20
 atoIQ20(const char *A)
 {
-   iq20 B;
-   B.val = _atoIQ20(A);
-   return(B);
+    iq20 B;
+    B.val = _atoIQ20(A);
+    return(B);
 }
 
 inline iq19
 atoIQ19(const char *A)
 {
-   iq19 B;
-   B.val = _atoIQ19(A);
-   return(B);
+    iq19 B;
+    B.val = _atoIQ19(A);
+    return(B);
 }
 
 inline iq18
 atoIQ18(const char *A)
 {
-   iq18 B;
-   B.val = _atoIQ18(A);
-   return(B);
+    iq18 B;
+    B.val = _atoIQ18(A);
+    return(B);
 }
 
 inline iq17
 atoIQ17(const char *A)
 {
-   iq17 B;
-   B.val = _atoIQ17(A);
-   return(B);
+    iq17 B;
+    B.val = _atoIQ17(A);
+    return(B);
 }
 
 inline iq16
 atoIQ16(const char *A)
 {
-   iq16 B;
-   B.val = _atoIQ16(A);
-   return(B);
+    iq16 B;
+    B.val = _atoIQ16(A);
+    return(B);
 }
 
 inline iq15
 atoIQ15(const char *A)
 {
-   iq15 B;
-   B.val = _atoIQ15(A);
-   return(B);
+    iq15 B;
+    B.val = _atoIQ15(A);
+    return(B);
 }
 
 inline iq14
 atoIQ14(const char *A)
 {
-   iq14 B;
-   B.val = _atoIQ14(A);
-   return(B);
+    iq14 B;
+    B.val = _atoIQ14(A);
+    return(B);
 }
 
 inline iq13
 atoIQ13(const char *A)
 {
-   iq13 B;
-   B.val = _atoIQ13(A);
-   return(B);
+    iq13 B;
+    B.val = _atoIQ13(A);
+    return(B);
 }
 
 inline iq12
 atoIQ12(const char *A)
 {
-   iq12 B;
-   B.val = _atoIQ12(A);
-   return(B);
+    iq12 B;
+    B.val = _atoIQ12(A);
+    return(B);
 }
 
 inline iq11
 atoIQ11(const char *A)
 {
-   iq11 B;
-   B.val = _atoIQ11(A);
-   return(B);
+    iq11 B;
+    B.val = _atoIQ11(A);
+    return(B);
 }
 
 inline iq10
 atoIQ10(const char *A)
 {
-   iq10 B;
-   B.val = _atoIQ10(A);
-   return(B);
+    iq10 B;
+    B.val = _atoIQ10(A);
+    return(B);
 }
 
 inline iq9
 atoIQ9(const char *A)
 {
-   iq9 B;
-   B.val = _atoIQ9(A);
-   return(B);
+    iq9 B;
+    B.val = _atoIQ9(A);
+    return(B);
 }
 
 inline iq8
 atoIQ8(const char *A)
 {
-   iq8 B;
-   B.val = _atoIQ8(A);
-   return(B);
+    iq8 B;
+    B.val = _atoIQ8(A);
+    return(B);
 }
 
 inline iq7
 atoIQ7(const char *A)
 {
-   iq7 B;
-   B.val = _atoIQ7(A);
-   return(B);
+    iq7 B;
+    B.val = _atoIQ7(A);
+    return(B);
 }
 
 inline iq6
 atoIQ6(const char *A)
 {
-   iq6 B;
-   B.val = _atoIQ6(A);
-   return(B);
+    iq6 B;
+    B.val = _atoIQ6(A);
+    return(B);
 }
 
 inline iq5
 atoIQ5(const char *A)
 {
-   iq5 B;
-   B.val = _atoIQ5(A);
-   return(B);
+    iq5 B;
+    B.val = _atoIQ5(A);
+    return(B);
 }
 
 inline iq4
 atoIQ4(const char *A)
 {
-   iq4 B;
-   B.val = _atoIQ4(A);
-   return(B);
+    iq4 B;
+    B.val = _atoIQ4(A);
+    return(B);
 }
 
 inline iq3
 atoIQ3(const char *A)
 {
-   iq3 B;
-   B.val = _atoIQ3(A);
-   return(B);
+    iq3 B;
+    B.val = _atoIQ3(A);
+    return(B);
 }
 
 inline iq2
 atoIQ2(const char *A)
 {
-   iq2 B;
-   B.val = _atoIQ2(A);
-   return(B);
+    iq2 B;
+    B.val = _atoIQ2(A);
+    return(B);
 }
 
 inline iq1
 atoIQ1(const char *A)
 {
-   iq1 B;
-   B.val = _atoIQ1(A);
-   return(B);
+    iq1 B;
+    B.val = _atoIQ1(A);
+    return(B);
 }
 
 inline iq
 atoIQ(const char *A)
 {
-   iq B;
-   B.val = _atoIQ(A);
-   return(B);
+    iq B;
+    B.val = _atoIQ(A);
+    return(B);
 }
 
 //*****************************************************************************
@@ -3184,249 +3339,249 @@ IQint(const iq &A)
 inline iq30
 IQ30frac(const iq30 &A)
 {
-   iq30 B;
-   B.val = _IQ30frac(A.val);
-   return(B);
+    iq30 B;
+    B.val = _IQ30frac(A.val);
+    return(B);
 }
 
 inline iq29
 IQ29frac(const iq29 &A)
 {
-   iq29 B;
-   B.val = _IQ29frac(A.val);
-   return(B);
+    iq29 B;
+    B.val = _IQ29frac(A.val);
+    return(B);
 }
 
 inline iq28
 IQ28frac(const iq28 &A)
 {
-   iq28 B;
-   B.val = _IQ28frac(A.val);
-   return(B);
+    iq28 B;
+    B.val = _IQ28frac(A.val);
+    return(B);
 }
 
 inline iq27
 IQ27frac(const iq27 &A)
 {
-   iq27 B;
-   B.val = _IQ27frac(A.val);
-   return(B);
+    iq27 B;
+    B.val = _IQ27frac(A.val);
+    return(B);
 }
 
 inline iq26
 IQ26frac(const iq26 &A)
 {
-   iq26 B;
-   B.val = _IQ26frac(A.val);
-   return(B);
+    iq26 B;
+    B.val = _IQ26frac(A.val);
+    return(B);
 }
 
 inline iq25
 IQ25frac(const iq25 &A)
 {
-   iq25 B;
-   B.val = _IQ25frac(A.val);
-   return(B);
+    iq25 B;
+    B.val = _IQ25frac(A.val);
+    return(B);
 }
 
 inline iq24
 IQ24frac(const iq24 &A)
 {
-   iq24 B;
-   B.val = _IQ24frac(A.val);
-   return(B);
+    iq24 B;
+    B.val = _IQ24frac(A.val);
+    return(B);
 }
 
 inline iq23
 IQ23frac(const iq23 &A)
 {
-   iq23 B;
-   B.val = _IQ23frac(A.val);
-   return(B);
+    iq23 B;
+    B.val = _IQ23frac(A.val);
+    return(B);
 }
 
 inline iq22
 IQ22frac(const iq22 &A)
 {
-   iq22 B;
-   B.val = _IQ22frac(A.val);
-   return(B);
+    iq22 B;
+    B.val = _IQ22frac(A.val);
+    return(B);
 }
 
 inline iq21
 IQ21frac(const iq21 &A)
 {
-   iq21 B;
-   B.val = _IQ21frac(A.val);
-   return(B);
+    iq21 B;
+    B.val = _IQ21frac(A.val);
+    return(B);
 }
 
 inline iq20
 IQ20frac(const iq20 &A)
 {
-   iq20 B;
-   B.val = _IQ20frac(A.val);
-   return(B);
+    iq20 B;
+    B.val = _IQ20frac(A.val);
+    return(B);
 }
 
 inline iq19
 IQ19frac(const iq19 &A)
 {
-   iq19 B;
-   B.val = _IQ19frac(A.val);
-   return(B);
+    iq19 B;
+    B.val = _IQ19frac(A.val);
+    return(B);
 }
 
 inline iq18
 IQ18frac(const iq18 &A)
 {
-   iq18 B;
-   B.val = _IQ18frac(A.val);
-   return(B);
+    iq18 B;
+    B.val = _IQ18frac(A.val);
+    return(B);
 }
 
 inline iq17
 IQ17frac(const iq17 &A)
 {
-   iq17 B;
-   B.val = _IQ17frac(A.val);
-   return(B);
+    iq17 B;
+    B.val = _IQ17frac(A.val);
+    return(B);
 }
 
 inline iq16
 IQ16frac(const iq16 &A)
 {
-   iq16 B;
-   B.val = _IQ16frac(A.val);
-   return(B);
+    iq16 B;
+    B.val = _IQ16frac(A.val);
+    return(B);
 }
 
 inline iq15
 IQ15frac(const iq15 &A)
 {
-   iq15 B;
-   B.val = _IQ15frac(A.val);
-   return(B);
+    iq15 B;
+    B.val = _IQ15frac(A.val);
+    return(B);
 }
 
 inline iq14
 IQ14frac(const iq14 &A)
 {
-   iq14 B;
-   B.val = _IQ14frac(A.val);
-   return(B);
+    iq14 B;
+    B.val = _IQ14frac(A.val);
+    return(B);
 }
 
 inline iq13
 IQ13frac(const iq13 &A)
 {
-   iq13 B;
-   B.val = _IQ13frac(A.val);
-   return(B);
+    iq13 B;
+    B.val = _IQ13frac(A.val);
+    return(B);
 }
 
 inline iq12
 IQ12frac(const iq12 &A)
 {
-   iq12 B;
-   B.val = _IQ12frac(A.val);
-   return(B);
+    iq12 B;
+    B.val = _IQ12frac(A.val);
+    return(B);
 }
 
 inline iq11
 IQ11frac(const iq11 &A)
 {
-   iq11 B;
-   B.val = _IQ11frac(A.val);
-   return(B);
+    iq11 B;
+    B.val = _IQ11frac(A.val);
+    return(B);
 }
 
 inline iq10
 IQ10frac(const iq10 &A)
 {
-   iq10 B;
-   B.val = _IQ10frac(A.val);
-   return(B);
+    iq10 B;
+    B.val = _IQ10frac(A.val);
+    return(B);
 }
 
 inline iq9
 IQ9frac(const iq9 &A)
 {
-   iq9 B;
-   B.val = _IQ9frac(A.val);
-   return(B);
+    iq9 B;
+    B.val = _IQ9frac(A.val);
+    return(B);
 }
 
 inline iq8
 IQ8frac(const iq8 &A)
 {
-   iq8 B;
-   B.val = _IQ8frac(A.val);
-   return(B);
+    iq8 B;
+    B.val = _IQ8frac(A.val);
+    return(B);
 }
 
 inline iq7
 IQ7frac(const iq7 &A)
 {
-   iq7 B;
-   B.val = _IQ7frac(A.val);
-   return(B);
+    iq7 B;
+    B.val = _IQ7frac(A.val);
+    return(B);
 }
 
 inline iq6
 IQ6frac(const iq6 &A)
 {
-   iq6 B;
-   B.val = _IQ6frac(A.val);
-   return(B);
+    iq6 B;
+    B.val = _IQ6frac(A.val);
+    return(B);
 }
 
 inline iq5
 IQ5frac(const iq5 &A)
 {
-   iq5 B;
-   B.val = _IQ5frac(A.val);
-   return(B);
+    iq5 B;
+    B.val = _IQ5frac(A.val);
+    return(B);
 }
 
 inline iq4
 IQ4frac(const iq4 &A)
 {
-   iq4 B;
-   B.val = _IQ4frac(A.val);
-   return(B);
+    iq4 B;
+    B.val = _IQ4frac(A.val);
+    return(B);
 }
 
 inline iq3
 IQ3frac(const iq3 &A)
 {
-   iq3 B;
-   B.val = _IQ3frac(A.val);
-   return(B);
+    iq3 B;
+    B.val = _IQ3frac(A.val);
+    return(B);
 }
 
 inline iq2
 IQ2frac(const iq2 &A)
 {
-   iq2 B;
-   B.val = _IQ2frac(A.val);
-   return(B);
+    iq2 B;
+    B.val = _IQ2frac(A.val);
+    return(B);
 }
 
 inline iq1
 IQ1frac(const iq1 &A)
 {
-   iq1 B;
-   B.val = _IQ1frac(A.val);
-   return(B);
+    iq1 B;
+    B.val = _IQ1frac(A.val);
+    return(B);
 }
 
 inline iq
 IQfrac(const iq &A)
 {
-   iq B;
-   B.val = _IQfrac(A.val);
-   return(B);
+    iq B;
+    B.val = _IQfrac(A.val);
+    return(B);
 }
 
 //*****************************************************************************
@@ -3437,249 +3592,249 @@ IQfrac(const iq &A)
 inline iq30
 IQ30rmpy(const iq30 &A, const iq30 &B)
 {
-   iq30 C;
-   C.val = _IQ30rmpy(A.val, B.val);
-   return(C);
+    iq30 C;
+    C.val = _IQ30rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq29
 IQ29rmpy(const iq29 &A, const iq29 &B)
 {
-   iq29 C;
-   C.val = _IQ29rmpy(A.val, B.val);
-   return(C);
+    iq29 C;
+    C.val = _IQ29rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq28
 IQ28rmpy(const iq28 &A, const iq28 &B)
 {
-   iq28 C;
-   C.val = _IQ28rmpy(A.val, B.val);
-   return(C);
+    iq28 C;
+    C.val = _IQ28rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq27
 IQ27rmpy(const iq27 &A, const iq27 &B)
 {
-   iq27 C;
-   C.val = _IQ27rmpy(A.val, B.val);
-   return(C);
+    iq27 C;
+    C.val = _IQ27rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq26
 IQ26rmpy(const iq26 &A, const iq26 &B)
 {
-   iq26 C;
-   C.val = _IQ26rmpy(A.val, B.val);
-   return(C);
+    iq26 C;
+    C.val = _IQ26rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq25
 IQ25rmpy(const iq25 &A, const iq25 &B)
 {
-   iq25 C;
-   C.val = _IQ25rmpy(A.val, B.val);
-   return(C);
+    iq25 C;
+    C.val = _IQ25rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq24
 IQ24rmpy(const iq24 &A, const iq24 &B)
 {
-   iq24 C;
-   C.val = _IQ24rmpy(A.val, B.val);
-   return(C);
+    iq24 C;
+    C.val = _IQ24rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq23
 IQ23rmpy(const iq23 &A, const iq23 &B)
 {
-   iq23 C;
-   C.val = _IQ23rmpy(A.val, B.val);
-   return(C);
+    iq23 C;
+    C.val = _IQ23rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq22
 IQ22rmpy(const iq22 &A, const iq22 &B)
 {
-   iq22 C;
-   C.val = _IQ22rmpy(A.val, B.val);
-   return(C);
+    iq22 C;
+    C.val = _IQ22rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq21
 IQ21rmpy(const iq21 &A, const iq21 &B)
 {
-   iq21 C;
-   C.val = _IQ21rmpy(A.val, B.val);
-   return(C);
+    iq21 C;
+    C.val = _IQ21rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq20
 IQ20rmpy(const iq20 &A, const iq20 &B)
 {
-   iq20 C;
-   C.val = _IQ20rmpy(A.val, B.val);
-   return(C);
+    iq20 C;
+    C.val = _IQ20rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq19
 IQ19rmpy(const iq19 &A, const iq19 &B)
 {
-   iq19 C;
-   C.val = _IQ19rmpy(A.val, B.val);
-   return(C);
+    iq19 C;
+    C.val = _IQ19rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq18
 IQ18rmpy(const iq18 &A, const iq18 &B)
 {
-   iq18 C;
-   C.val = _IQ18rmpy(A.val, B.val);
-   return(C);
+    iq18 C;
+    C.val = _IQ18rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq17
 IQ17rmpy(const iq17 &A, const iq17 &B)
 {
-   iq17 C;
-   C.val = _IQ17rmpy(A.val, B.val);
-   return(C);
+    iq17 C;
+    C.val = _IQ17rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq16
 IQ16rmpy(const iq16 &A, const iq16 &B)
 {
-   iq16 C;
-   C.val = _IQ16rmpy(A.val, B.val);
-   return(C);
+    iq16 C;
+    C.val = _IQ16rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq15
 IQ15rmpy(const iq15 &A, const iq15 &B)
 {
-   iq15 C;
-   C.val = _IQ15rmpy(A.val, B.val);
-   return(C);
+    iq15 C;
+    C.val = _IQ15rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq14
 IQ14rmpy(const iq14 &A, const iq14 &B)
 {
-   iq14 C;
-   C.val = _IQ14rmpy(A.val, B.val);
-   return(C);
+    iq14 C;
+    C.val = _IQ14rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq13
 IQ13rmpy(const iq13 &A, const iq13 &B)
 {
-   iq13 C;
-   C.val = _IQ13rmpy(A.val, B.val);
-   return(C);
+    iq13 C;
+    C.val = _IQ13rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq12
 IQ12rmpy(const iq12 &A, const iq12 &B)
 {
-   iq12 C;
-   C.val = _IQ12rmpy(A.val, B.val);
-   return(C);
+    iq12 C;
+    C.val = _IQ12rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq11
 IQ11rmpy(const iq11 &A, const iq11 &B)
 {
-   iq11 C;
-   C.val = _IQ11rmpy(A.val, B.val);
-   return(C);
+    iq11 C;
+    C.val = _IQ11rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq10
 IQ10rmpy(const iq10 &A, const iq10 &B)
 {
-   iq10 C;
-   C.val = _IQ10rmpy(A.val, B.val);
-   return(C);
+    iq10 C;
+    C.val = _IQ10rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq9
 IQ9rmpy(const iq9 &A, const iq9 &B)
 {
-   iq9 C;
-   C.val = _IQ9rmpy(A.val, B.val);
-   return(C);
+    iq9 C;
+    C.val = _IQ9rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq8
 IQ8rmpy(const iq8 &A, const iq8 &B)
 {
-   iq8 C;
-   C.val = _IQ8rmpy(A.val, B.val);
-   return(C);
+    iq8 C;
+    C.val = _IQ8rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq7
 IQ7rmpy(const iq7 &A, const iq7 &B)
 {
-   iq7 C;
-   C.val = _IQ7rmpy(A.val, B.val);
-   return(C);
+    iq7 C;
+    C.val = _IQ7rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq6
 IQ6rmpy(const iq6 &A, const iq6 &B)
 {
-   iq6 C;
-   C.val = _IQ6rmpy(A.val, B.val);
-   return(C);
+    iq6 C;
+    C.val = _IQ6rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq5
 IQ5rmpy(const iq5 &A, const iq5 &B)
 {
-   iq5 C;
-   C.val = _IQ5rmpy(A.val, B.val);
-   return(C);
+    iq5 C;
+    C.val = _IQ5rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq4
 IQ4rmpy(const iq4 &A, const iq4 &B)
 {
-   iq4 C;
-   C.val = _IQ4rmpy(A.val, B.val);
-   return(C);
+    iq4 C;
+    C.val = _IQ4rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq3
 IQ3rmpy(const iq3 &A, const iq3 &B)
 {
-   iq3 C;
-   C.val = _IQ3rmpy(A.val, B.val);
-   return(C);
+    iq3 C;
+    C.val = _IQ3rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq2
 IQ2rmpy(const iq2 &A, const iq2 &B)
 {
-   iq2 C;
-   C.val = _IQ2rmpy(A.val, B.val);
-   return(C);
+    iq2 C;
+    C.val = _IQ2rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq1
 IQ1rmpy(const iq1 &A, const iq1 &B)
 {
-   iq1 C;
-   C.val = _IQ1rmpy(A.val, B.val);
-   return(C);
+    iq1 C;
+    C.val = _IQ1rmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq
 IQrmpy(const iq &A, const iq &B)
 {
-   iq C;
-   C.val = _IQrmpy(A.val, B.val);
-   return(C);
+    iq C;
+    C.val = _IQrmpy(A.val, B.val);
+    return(C);
 }
 
 //*****************************************************************************
@@ -3690,249 +3845,249 @@ IQrmpy(const iq &A, const iq &B)
 inline iq30
 IQ30rsmpy(const iq30 &A, const iq30 &B)
 {
-   iq30 C;
-   C.val = _IQ30rsmpy(A.val, B.val);
-   return(C);
+    iq30 C;
+    C.val = _IQ30rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq29
 IQ29rsmpy(const iq29 &A, const iq29 &B)
 {
-   iq29 C;
-   C.val = _IQ29rsmpy(A.val, B.val);
-   return(C);
+    iq29 C;
+    C.val = _IQ29rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq28
 IQ28rsmpy(const iq28 &A, const iq28 &B)
 {
-   iq28 C;
-   C.val = _IQ28rsmpy(A.val, B.val);
-   return(C);
+    iq28 C;
+    C.val = _IQ28rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq27
 IQ27rsmpy(const iq27 &A, const iq27 &B)
 {
-   iq27 C;
-   C.val = _IQ27rsmpy(A.val, B.val);
-   return(C);
+    iq27 C;
+    C.val = _IQ27rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq26
 IQ26rsmpy(const iq26 &A, const iq26 &B)
 {
-   iq26 C;
-   C.val = _IQ26rsmpy(A.val, B.val);
-   return(C);
+    iq26 C;
+    C.val = _IQ26rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq25
 IQ25rsmpy(const iq25 &A, const iq25 &B)
 {
-   iq25 C;
-   C.val = _IQ25rsmpy(A.val, B.val);
-   return(C);
+    iq25 C;
+    C.val = _IQ25rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq24
 IQ24rsmpy(const iq24 &A, const iq24 &B)
 {
-   iq24 C;
-   C.val = _IQ24rsmpy(A.val, B.val);
-   return(C);
+    iq24 C;
+    C.val = _IQ24rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq23
 IQ23rsmpy(const iq23 &A, const iq23 &B)
 {
-   iq23 C;
-   C.val = _IQ23rsmpy(A.val, B.val);
-   return(C);
+    iq23 C;
+    C.val = _IQ23rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq22
 IQ22rsmpy(const iq22 &A, const iq22 &B)
 {
-   iq22 C;
-   C.val = _IQ22rsmpy(A.val, B.val);
-   return(C);
+    iq22 C;
+    C.val = _IQ22rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq21
 IQ21rsmpy(const iq21 &A, const iq21 &B)
 {
-   iq21 C;
-   C.val = _IQ21rsmpy(A.val, B.val);
-   return(C);
+    iq21 C;
+    C.val = _IQ21rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq20
 IQ20rsmpy(const iq20 &A, const iq20 &B)
 {
-   iq20 C;
-   C.val = _IQ20rsmpy(A.val, B.val);
-   return(C);
+    iq20 C;
+    C.val = _IQ20rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq19
 IQ19rsmpy(const iq19 &A, const iq19 &B)
 {
-   iq19 C;
-   C.val = _IQ19rsmpy(A.val, B.val);
-   return(C);
+    iq19 C;
+    C.val = _IQ19rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq18
 IQ18rsmpy(const iq18 &A, const iq18 &B)
 {
-   iq18 C;
-   C.val = _IQ18rsmpy(A.val, B.val);
-   return(C);
+    iq18 C;
+    C.val = _IQ18rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq17
 IQ17rsmpy(const iq17 &A, const iq17 &B)
 {
-   iq17 C;
-   C.val = _IQ17rsmpy(A.val, B.val);
-   return(C);
+    iq17 C;
+    C.val = _IQ17rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq16
 IQ16rsmpy(const iq16 &A, const iq16 &B)
 {
-   iq16 C;
-   C.val = _IQ16rsmpy(A.val, B.val);
-   return(C);
+    iq16 C;
+    C.val = _IQ16rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq15
 IQ15rsmpy(const iq15 &A, const iq15 &B)
 {
-   iq15 C;
-   C.val = _IQ15rsmpy(A.val, B.val);
-   return(C);
+    iq15 C;
+    C.val = _IQ15rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq14
 IQ14rsmpy(const iq14 &A, const iq14 &B)
 {
-   iq14 C;
-   C.val = _IQ14rsmpy(A.val, B.val);
-   return(C);
+    iq14 C;
+    C.val = _IQ14rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq13
 IQ13rsmpy(const iq13 &A, const iq13 &B)
 {
-   iq13 C;
-   C.val = _IQ13rsmpy(A.val, B.val);
-   return(C);
+    iq13 C;
+    C.val = _IQ13rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq12
 IQ12rsmpy(const iq12 &A, const iq12 &B)
 {
-   iq12 C;
-   C.val = _IQ12rsmpy(A.val, B.val);
-   return(C);
+    iq12 C;
+    C.val = _IQ12rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq11
 IQ11rsmpy(const iq11 &A, const iq11 &B)
 {
-   iq11 C;
-   C.val = _IQ11rsmpy(A.val, B.val);
-   return(C);
+    iq11 C;
+    C.val = _IQ11rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq10
 IQ10rsmpy(const iq10 &A, const iq10 &B)
 {
-   iq10 C;
-   C.val = _IQ10rsmpy(A.val, B.val);
-   return(C);
+    iq10 C;
+    C.val = _IQ10rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq9
 IQ9rsmpy(const iq9 &A, const iq9 &B)
 {
-   iq9 C;
-   C.val = _IQ9rsmpy(A.val, B.val);
-   return(C);
+    iq9 C;
+    C.val = _IQ9rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq8
 IQ8rsmpy(const iq8 &A, const iq8 &B)
 {
-   iq8 C;
-   C.val = _IQ8rsmpy(A.val, B.val);
-   return(C);
+    iq8 C;
+    C.val = _IQ8rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq7
 IQ7rsmpy(const iq7 &A, const iq7 &B)
 {
-   iq7 C;
-   C.val = _IQ7rsmpy(A.val, B.val);
-   return(C);
+    iq7 C;
+    C.val = _IQ7rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq6
 IQ6rsmpy(const iq6 &A, const iq6 &B)
 {
-   iq6 C;
-   C.val = _IQ6rsmpy(A.val, B.val);
-   return(C);
+    iq6 C;
+    C.val = _IQ6rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq5
 IQ5rsmpy(const iq5 &A, const iq5 &B)
 {
-   iq5 C;
-   C.val = _IQ5rsmpy(A.val, B.val);
-   return(C);
+    iq5 C;
+    C.val = _IQ5rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq4
 IQ4rsmpy(const iq4 &A, const iq4 &B)
 {
-   iq4 C;
-   C.val = _IQ4rsmpy(A.val, B.val);
-   return(C);
+    iq4 C;
+    C.val = _IQ4rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq3
 IQ3rsmpy(const iq3 &A, const iq3 &B)
 {
-   iq3 C;
-   C.val = _IQ3rsmpy(A.val, B.val);
-   return(C);
+    iq3 C;
+    C.val = _IQ3rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq2
 IQ2rsmpy(const iq2 &A, const iq2 &B)
 {
-   iq2 C;
-   C.val = _IQ2rsmpy(A.val, B.val);
-   return(C);
+    iq2 C;
+    C.val = _IQ2rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq1
 IQ1rsmpy(const iq1 &A, const iq1 &B)
 {
-   iq1 C;
-   C.val = _IQ1rsmpy(A.val, B.val);
-   return(C);
+    iq1 C;
+    C.val = _IQ1rsmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq
 IQrsmpy(const iq &A, const iq &B)
 {
-   iq C;
-   C.val = _IQrsmpy(A.val, B.val);
-   return(C);
+    iq C;
+    C.val = _IQrsmpy(A.val, B.val);
+    return(C);
 }
 
 //*****************************************************************************
@@ -4012,489 +4167,489 @@ IQrsmpy(const iq &A, const iq &B)
 inline iq30
 IQ30mpyI32(const iq30 &A, long B)
 {
-   iq30 C;
-   C.val = (A.val * B);
-   return(C);
+    iq30 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq30
 IQ30mpyI32(long A, const iq30 &B)
 {
-   iq30 C;
-   C.val = (A * B.val);
-   return(C);
+    iq30 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq29
 IQ29mpyI32(const iq29 &A, long B)
 {
-   iq29 C;
-   C.val = (A.val * B);
-   return(C);
+    iq29 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq29
 IQ29mpyI32(long A, const iq29 &B)
 {
-   iq29 C;
-   C.val = (A * B.val);
-   return(C);
+    iq29 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq28
 IQ28mpyI32(const iq28 &A, long B)
 {
-   iq28 C;
-   C.val = (A.val * B);
-   return(C);
+    iq28 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq28
 IQ28mpyI32(long A, const iq28 &B)
 {
-   iq28 C;
-   C.val = (A * B.val);
-   return(C);
+    iq28 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq27
 IQ27mpyI32(const iq27 &A, long B)
 {
-   iq27 C;
-   C.val = (A.val * B);
-   return(C);
+    iq27 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq27
 IQ27mpyI32(long A, const iq27 &B)
 {
-   iq27 C;
-   C.val = (A * B.val);
-   return(C);
+    iq27 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq26
 IQ26mpyI32(const iq26 &A, long B)
 {
-   iq26 C;
-   C.val = (A.val * B);
-   return(C);
+    iq26 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq26
 IQ26mpyI32(long A, const iq26 &B)
 {
-   iq26 C;
-   C.val = (A * B.val);
-   return(C);
+    iq26 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq25
 IQ25mpyI32(const iq25 &A, long B)
 {
-   iq25 C;
-   C.val = (A.val * B);
-   return(C);
+    iq25 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq25
 IQ25mpyI32(long A, const iq25 &B)
 {
-   iq25 C;
-   C.val = (A * B.val);
-   return(C);
+    iq25 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq24
 IQ24mpyI32(const iq24 &A, long B)
 {
-   iq24 C;
-   C.val = (A.val * B);
-   return(C);
+    iq24 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq24
 IQ24mpyI32(long A, const iq24 &B)
 {
-   iq24 C;
-   C.val = (A * B.val);
-   return(C);
+    iq24 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq23
 IQ23mpyI32(const iq23 &A, long B)
 {
-   iq23 C;
-   C.val = (A.val * B);
-   return(C);
+    iq23 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq23
 IQ23mpyI32(long A, const iq23 &B)
 {
-   iq23 C;
-   C.val = (A * B.val);
-   return(C);
+    iq23 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq22
 IQ22mpyI32(const iq22 &A, long B)
 {
-   iq22 C;
-   C.val = (A.val * B);
-   return(C);
+    iq22 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq22
 IQ22mpyI32(long A, const iq22 &B)
 {
-   iq22 C;
-   C.val = (A * B.val);
-   return(C);
+    iq22 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq21
 IQ21mpyI32(const iq21 &A, long B)
 {
-   iq21 C;
-   C.val = (A.val * B);
-   return(C);
+    iq21 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq21
 IQ21mpyI32(long A, const iq21 &B)
 {
-   iq21 C;
-   C.val = (A * B.val);
-   return(C);
+    iq21 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq20
 IQ20mpyI32(const iq20 &A, long B)
 {
-   iq20 C;
-   C.val = (A.val * B);
-   return(C);
+    iq20 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq20
 IQ20mpyI32(long A, const iq20 &B)
 {
-   iq20 C;
-   C.val = (A * B.val);
-   return(C);
+    iq20 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq19
 IQ19mpyI32(const iq19 &A, long B)
 {
-   iq19 C;
-   C.val = (A.val * B);
-   return(C);
+    iq19 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq19
 IQ19mpyI32(long A, const iq19 &B)
 {
-   iq19 C;
-   C.val = (A * B.val);
-   return(C);
+    iq19 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq18
 IQ18mpyI32(const iq18 &A, long B)
 {
-   iq18 C;
-   C.val = (A.val * B);
-   return(C);
+    iq18 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq18
 IQ18mpyI32(long A, const iq18 &B)
 {
-   iq18 C;
-   C.val = (A * B.val);
-   return(C);
+    iq18 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq17
 IQ17mpyI32(const iq17 &A, long B)
 {
-   iq17 C;
-   C.val = (A.val * B);
-   return(C);
+    iq17 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq17
 IQ17mpyI32(long A, const iq17 &B)
 {
-   iq17 C;
-   C.val = (A * B.val);
-   return(C);
+    iq17 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq16
 IQ16mpyI32(const iq16 &A, long B)
 {
-   iq16 C;
-   C.val = (A.val * B);
-   return(C);
+    iq16 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq16
 IQ16mpyI32(long A, const iq16 &B)
 {
-   iq16 C;
-   C.val = (A * B.val);
-   return(C);
+    iq16 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq15
 IQ15mpyI32(const iq15 &A, long B)
 {
-   iq15 C;
-   C.val = (A.val * B);
-   return(C);
+    iq15 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq15
 IQ15mpyI32(long A, const iq15 &B)
 {
-   iq15 C;
-   C.val = (A * B.val);
-   return(C);
+    iq15 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq14
 IQ14mpyI32(const iq14 &A, long B)
 {
-   iq14 C;
-   C.val = (A.val * B);
-   return(C);
+    iq14 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq14
 IQ14mpyI32(long A, const iq14 &B)
 {
-   iq14 C;
-   C.val = (A * B.val);
-   return(C);
+    iq14 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq13
 IQ13mpyI32(const iq13 &A, long B)
 {
-   iq13 C;
-   C.val = (A.val * B);
-   return(C);
+    iq13 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq13
 IQ13mpyI32(long A, const iq13 &B)
 {
-   iq13 C;
-   C.val = (A * B.val);
-   return(C);
+    iq13 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq12
 IQ12mpyI32(const iq12 &A, long B)
 {
-   iq12 C;
-   C.val = (A.val * B);
-   return(C);
+    iq12 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq12
 IQ12mpyI32(long A, const iq12 &B)
 {
-   iq12 C;
-   C.val = (A * B.val);
-   return(C);
+    iq12 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq11
 IQ11mpyI32(const iq11 &A, long B)
 {
-   iq11 C;
-   C.val = (A.val * B);
-   return(C);
+    iq11 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq11
 IQ11mpyI32(long A, const iq11 &B)
 {
-   iq11 C;
-   C.val = (A * B.val);
-   return(C);
+    iq11 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq10
 IQ10mpyI32(const iq10 &A, long B)
 {
-   iq10 C;
-   C.val = (A.val * B);
-   return(C);
+    iq10 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq10
 IQ10mpyI32(long A, const iq10 &B)
 {
-   iq10 C;
-   C.val = (A * B.val);
-   return(C);
+    iq10 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq9
 IQ9mpyI32(const iq9 &A, long B)
 {
-   iq9 C;
-   C.val = (A.val * B);
-   return(C);
+    iq9 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq9
 IQ9mpyI32(long A, const iq9 &B)
 {
-   iq9 C;
-   C.val = (A * B.val);
-   return(C);
+    iq9 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq8
 IQ8mpyI32(const iq8 &A, long B)
 {
-   iq8 C;
-   C.val = (A.val * B);
-   return(C);
+    iq8 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq8
 IQ8mpyI32(long A, const iq8 &B)
 {
-   iq8 C;
-   C.val = (A * B.val);
-   return(C);
+    iq8 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq7
 IQ7mpyI32(const iq7 &A, long B)
 {
-   iq7 C;
-   C.val = (A.val * B);
-   return(C);
+    iq7 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq7
 IQ7mpyI32(long A, const iq7 &B)
 {
-   iq7 C;
-   C.val = (A * B.val);
-   return(C);
+    iq7 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq6
 IQ6mpyI32(const iq6 &A, long B)
 {
-   iq6 C;
-   C.val = (A.val * B);
-   return(C);
+    iq6 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq6
 IQ6mpyI32(long A, const iq6 &B)
 {
-   iq6 C;
-   C.val = (A * B.val);
-   return(C);
+    iq6 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq5
 IQ5mpyI32(const iq5 &A, long B)
 {
-   iq5 C;
-   C.val = (A.val * B);
-   return(C);
+    iq5 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq5
 IQ5mpyI32(long A, const iq5 &B)
 {
-   iq5 C;
-   C.val = (A * B.val);
-   return(C);
+    iq5 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq4
 IQ4mpyI32(const iq4 &A, long B)
 {
-   iq4 C;
-   C.val = (A.val * B);
-   return(C);
+    iq4 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq4
 IQ4mpyI32(long A, const iq4 &B)
 {
-   iq4 C;
-   C.val = (A * B.val);
-   return(C);
+    iq4 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq3
 IQ3mpyI32(const iq3 &A, long B)
 {
-   iq3 C;
-   C.val = (A.val * B);
-   return(C);
+    iq3 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq3
 IQ3mpyI32(long A, const iq3 &B)
 {
-   iq3 C;
-   C.val = (A * B.val);
-   return(C);
+    iq3 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq2
 IQ2mpyI32(const iq2 &A, long B)
 {
-   iq2 C;
-   C.val = (A.val * B);
-   return(C);
+    iq2 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq2
 IQ2mpyI32(long A, const iq2 &B)
 {
-   iq2 C;
-   C.val = (A * B.val);
-   return(C);
+    iq2 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq1
 IQ1mpyI32(const iq1 &A, long B)
 {
-   iq1 C;
-   C.val = (A.val * B);
-   return(C);
+    iq1 C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 inline iq1
 IQ1mpyI32(long A, const iq1 &B)
 {
-   iq1 C;
-   C.val = (A * B.val);
-   return(C);
+    iq1 C;
+    C.val = (A * B.val);
+    return(C);
 }
 
 inline iq
 IQmpyI32(const iq &A, long B)
 {
-   iq C;
-   C.val = (A.val * B);
-   return(C);
+    iq C;
+    C.val = (A.val * B);
+    return(C);
 }
 
 //*****************************************************************************
@@ -4882,527 +5037,527 @@ IQmpyI32int(long A, const iq &B)
 inline iq30
 IQ30mpyI32frac(const iq30 &A, long B)
 {
-   iq30 C;
-   C.val = _IQ30mpyI32frac(A.val, B);
-   return(C);
+    iq30 C;
+    C.val = _IQ30mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq30
 IQ30mpyI32frac(long A, const iq30 &B)
 {
-   iq30 C;
-   C.val = _IQ30mpyI32frac(B.val, A);
-   return(C);
+    iq30 C;
+    C.val = _IQ30mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq29
 IQ29mpyI32frac(const iq29 &A, long B)
 {
-   iq29 C;
-   C.val = _IQ29mpyI32frac(A.val, B);
-   return(C);
+    iq29 C;
+    C.val = _IQ29mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq29
 IQ29mpyI32frac(long A, const iq29 &B)
 {
-   iq29 C;
-   C.val = _IQ29mpyI32frac(B.val, A);
-   return(C);
+    iq29 C;
+    C.val = _IQ29mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq28
 IQ28mpyI32frac(const iq28 &A, long B)
 {
-   iq28 C;
-   C.val = _IQ28mpyI32frac(A.val, B);
-   return(C);
+    iq28 C;
+    C.val = _IQ28mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq28
 IQ28mpyI32frac(long A, const iq28 &B)
 {
-   iq28 C;
-   C.val = _IQ28mpyI32frac(B.val, A);
-   return(C);
+    iq28 C;
+    C.val = _IQ28mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq27
 IQ27mpyI32frac(const iq27 &A, long B)
 {
-   iq27 C;
-   C.val = _IQ27mpyI32frac(A.val, B);
-   return(C);
+    iq27 C;
+    C.val = _IQ27mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq27
 IQ27mpyI32frac(long A, const iq27 &B)
 {
-   iq27 C;
-   C.val = _IQ27mpyI32frac(B.val, A);
-   return(C);
+    iq27 C;
+    C.val = _IQ27mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq26
 IQ26mpyI32frac(const iq26 &A, long B)
 {
-   iq26 C;
-   C.val = _IQ26mpyI32frac(A.val, B);
-   return(C);
+    iq26 C;
+    C.val = _IQ26mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq26
 IQ26mpyI32frac(long A, const iq26 &B)
 {
-   iq26 C;
-   C.val = _IQ26mpyI32frac(B.val, A);
-   return(C);
+    iq26 C;
+    C.val = _IQ26mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq25
 IQ25mpyI32frac(const iq25 &A, long B)
 {
-   iq25 C;
-   C.val = _IQ25mpyI32frac(A.val, B);
-   return(C);
+    iq25 C;
+    C.val = _IQ25mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq25
 IQ25mpyI32frac(long A, const iq25 &B)
 {
-   iq25 C;
-   C.val = _IQ25mpyI32frac(B.val, A);
-   return(C);
+    iq25 C;
+    C.val = _IQ25mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq24
 IQ24mpyI32frac(const iq24 &A, long B)
 {
-   iq24 C;
-   C.val = _IQ24mpyI32frac(A.val, B);
-   return(C);
+    iq24 C;
+    C.val = _IQ24mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq24
 IQ24mpyI32frac(long A, const iq24 &B)
 {
-   iq24 C;
-   C.val = _IQ24mpyI32frac(B.val, A);
-   return(C);
+    iq24 C;
+    C.val = _IQ24mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq23
 IQ23mpyI32frac(const iq23 &A, long B)
 {
-   iq23 C;
-   C.val = _IQ23mpyI32frac(A.val, B);
-   return(C);
+    iq23 C;
+    C.val = _IQ23mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq23
 IQ23mpyI32frac(long A, const iq23 &B)
 {
-   iq23 C;
-   C.val = _IQ23mpyI32frac(B.val, A);
-   return(C);
+    iq23 C;
+    C.val = _IQ23mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq22
 IQ22mpyI32frac(const iq22 &A, long B)
 {
-   iq22 C;
-   C.val = _IQ22mpyI32frac(A.val, B);
-   return(C);
+    iq22 C;
+    C.val = _IQ22mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq22
 IQ22mpyI32frac(long A, const iq22 &B)
 {
-   iq22 C;
-   C.val = _IQ22mpyI32frac(B.val, A);
-   return(C);
+    iq22 C;
+    C.val = _IQ22mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq21
 IQ21mpyI32frac(const iq21 &A, long B)
 {
-   iq21 C;
-   C.val = _IQ21mpyI32frac(A.val, B);
-   return(C);
+    iq21 C;
+    C.val = _IQ21mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq21
 IQ21mpyI32frac(long A, const iq21 &B)
 {
-   iq21 C;
-   C.val = _IQ21mpyI32frac(B.val, A);
-   return(C);
+    iq21 C;
+    C.val = _IQ21mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq20
 IQ20mpyI32frac(const iq20 &A, long B)
 {
-   iq20 C;
-   C.val = _IQ20mpyI32frac(A.val, B);
-   return(C);
+    iq20 C;
+    C.val = _IQ20mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq20
 IQ20mpyI32frac(long A, const iq20 &B)
 {
-   iq20 C;
-   C.val = _IQ20mpyI32frac(B.val, A);
-   return(C);
+    iq20 C;
+    C.val = _IQ20mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq19
 IQ19mpyI32frac(const iq19 &A, long B)
 {
-   iq19 C;
-   C.val = _IQ19mpyI32frac(A.val, B);
-   return(C);
+    iq19 C;
+    C.val = _IQ19mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq19
 IQ19mpyI32frac(long A, const iq19 &B)
 {
-   iq19 C;
-   C.val = _IQ19mpyI32frac(B.val, A);
-   return(C);
+    iq19 C;
+    C.val = _IQ19mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq18
 IQ18mpyI32frac(const iq18 &A, long B)
 {
-   iq18 C;
-   C.val = _IQ18mpyI32frac(A.val, B);
-   return(C);
+    iq18 C;
+    C.val = _IQ18mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq18
 IQ18mpyI32frac(long A, const iq18 &B)
 {
-   iq18 C;
-   C.val = _IQ18mpyI32frac(B.val, A);
-   return(C);
+    iq18 C;
+    C.val = _IQ18mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq17
 IQ17mpyI32frac(const iq17 &A, long B)
 {
-   iq17 C;
-   C.val = _IQ17mpyI32frac(A.val, B);
-   return(C);
+    iq17 C;
+    C.val = _IQ17mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq17
 IQ17mpyI32frac(long A, const iq17 &B)
 {
-   iq17 C;
-   C.val = _IQ17mpyI32frac(B.val, A);
-   return(C);
+    iq17 C;
+    C.val = _IQ17mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq16
 IQ16mpyI32frac(const iq16 &A, long B)
 {
-   iq16 C;
-   C.val = _IQ16mpyI32frac(A.val, B);
-   return(C);
+    iq16 C;
+    C.val = _IQ16mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq16
 IQ16mpyI32frac(long A, const iq16 &B)
 {
-   iq16 C;
-   C.val = _IQ16mpyI32frac(B.val, A);
-   return(C);
+    iq16 C;
+    C.val = _IQ16mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq15
 IQ15mpyI32frac(const iq15 &A, long B)
 {
-   iq15 C;
-   C.val = _IQ15mpyI32frac(A.val, B);
-   return(C);
+    iq15 C;
+    C.val = _IQ15mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq15
 IQ15mpyI32frac(long A, const iq15 &B)
 {
-   iq15 C;
-   C.val = _IQ15mpyI32frac(B.val, A);
-   return(C);
+    iq15 C;
+    C.val = _IQ15mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq14
 IQ14mpyI32frac(const iq14 &A, long B)
 {
-   iq14 C;
-   C.val = _IQ14mpyI32frac(A.val, B);
-   return(C);
+    iq14 C;
+    C.val = _IQ14mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq14
 IQ14mpyI32frac(long A, const iq14 &B)
 {
-   iq14 C;
-   C.val = _IQ14mpyI32frac(B.val, A);
-   return(C);
+    iq14 C;
+    C.val = _IQ14mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq13
 IQ13mpyI32frac(const iq13 &A, long B)
 {
-   iq13 C;
-   C.val = _IQ13mpyI32frac(A.val, B);
-   return(C);
+    iq13 C;
+    C.val = _IQ13mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq13
 IQ13mpyI32frac(long A, const iq13 &B)
 {
-   iq13 C;
-   C.val = _IQ13mpyI32frac(B.val, A);
-   return(C);
+    iq13 C;
+    C.val = _IQ13mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq12
 IQ12mpyI32frac(const iq12 &A, long B)
 {
-   iq12 C;
-   C.val = _IQ12mpyI32frac(A.val, B);
-   return(C);
+    iq12 C;
+    C.val = _IQ12mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq12
 IQ12mpyI32frac(long A, const iq12 &B)
 {
-   iq12 C;
-   C.val = _IQ12mpyI32frac(B.val, A);
-   return(C);
+    iq12 C;
+    C.val = _IQ12mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq11
 IQ11mpyI32frac(const iq11 &A, long B)
 {
-   iq11 C;
-   C.val = _IQ11mpyI32frac(A.val, B);
-   return(C);
+    iq11 C;
+    C.val = _IQ11mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq11
 IQ11mpyI32frac(long A, const iq11 &B)
 {
-   iq11 C;
-   C.val = _IQ11mpyI32frac(B.val, A);
-   return(C);
+    iq11 C;
+    C.val = _IQ11mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq10
 IQ10mpyI32frac(const iq10 &A, long B)
 {
-   iq10 C;
-   C.val = _IQ10mpyI32frac(A.val, B);
-   return(C);
+    iq10 C;
+    C.val = _IQ10mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq10
 IQ10mpyI32frac(long A, const iq10 &B)
 {
-   iq10 C;
-   C.val = _IQ10mpyI32frac(B.val, A);
-   return(C);
+    iq10 C;
+    C.val = _IQ10mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq9
 IQ9mpyI32frac(const iq9 &A, long B)
 {
-   iq9 C;
-   C.val = _IQ9mpyI32frac(A.val, B);
-   return(C);
+    iq9 C;
+    C.val = _IQ9mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq9
 IQ9mpyI32frac(long A, const iq9 &B)
 {
-   iq9 C;
-   C.val = _IQ9mpyI32frac(B.val, A);
-   return(C);
+    iq9 C;
+    C.val = _IQ9mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq8
 IQ8mpyI32frac(const iq8 &A, long B)
 {
-   iq8 C;
-   C.val = _IQ8mpyI32frac(A.val, B);
-   return(C);
+    iq8 C;
+    C.val = _IQ8mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq8
 IQ8mpyI32frac(long A, const iq8 &B)
 {
-   iq8 C;
-   C.val = _IQ8mpyI32frac(B.val, A);
-   return(C);
+    iq8 C;
+    C.val = _IQ8mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq7
 IQ7mpyI32frac(const iq7 &A, long B)
 {
-   iq7 C;
-   C.val = _IQ7mpyI32frac(A.val, B);
-   return(C);
+    iq7 C;
+    C.val = _IQ7mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq7
 IQ7mpyI32frac(long A, const iq7 &B)
 {
-   iq7 C;
-   C.val = _IQ7mpyI32frac(B.val, A);
-   return(C);
+    iq7 C;
+    C.val = _IQ7mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq6
 IQ6mpyI32frac(const iq6 &A, long B)
 {
-   iq6 C;
-   C.val = _IQ6mpyI32frac(A.val, B);
-   return(C);
+    iq6 C;
+    C.val = _IQ6mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq6
 IQ6mpyI32frac(long A, const iq6 &B)
 {
-   iq6 C;
-   C.val = _IQ6mpyI32frac(B.val, A);
-   return(C);
+    iq6 C;
+    C.val = _IQ6mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq5
 IQ5mpyI32frac(const iq5 &A, long B)
 {
-   iq5 C;
-   C.val = _IQ5mpyI32frac(A.val, B);
-   return(C);
+    iq5 C;
+    C.val = _IQ5mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq5
 IQ5mpyI32frac(long A, const iq5 &B)
 {
-   iq5 C;
-   C.val = _IQ5mpyI32frac(B.val, A);
-   return(C);
+    iq5 C;
+    C.val = _IQ5mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq4
 IQ4mpyI32frac(const iq4 &A, long B)
 {
-   iq4 C;
-   C.val = _IQ4mpyI32frac(A.val, B);
-   return(C);
+    iq4 C;
+    C.val = _IQ4mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq4
 IQ4mpyI32frac(long A, const iq4 &B)
 {
-   iq4 C;
-   C.val = _IQ4mpyI32frac(B.val, A);
-   return(C);
+    iq4 C;
+    C.val = _IQ4mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq3
 IQ3mpyI32frac(const iq3 &A, long B)
 {
-   iq3 C;
-   C.val = _IQ3mpyI32frac(A.val, B);
-   return(C);
+    iq3 C;
+    C.val = _IQ3mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq3
 IQ3mpyI32frac(long A, const iq3 &B)
 {
-   iq3 C;
-   C.val = _IQ3mpyI32frac(B.val, A);
-   return(C);
+    iq3 C;
+    C.val = _IQ3mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq2
 IQ2mpyI32frac(const iq2 &A, long B)
 {
-   iq2 C;
-   C.val = _IQ2mpyI32frac(A.val, B);
-   return(C);
+    iq2 C;
+    C.val = _IQ2mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq2
 IQ2mpyI32frac(long A, const iq2 &B)
 {
-   iq2 C;
-   C.val = _IQ2mpyI32frac(B.val, A);
-   return(C);
+    iq2 C;
+    C.val = _IQ2mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq1
 IQ1mpyI32frac(const iq1 &A, long B)
 {
-   iq1 C;
-   C.val = _IQ1mpyI32frac(A.val, B);
-   return(C);
+    iq1 C;
+    C.val = _IQ1mpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq1
 IQ1mpyI32frac(long A, const iq1 &B)
 {
-   iq1 C;
-   C.val = _IQ1mpyI32frac(B.val, A);
-   return(C);
+    iq1 C;
+    C.val = _IQ1mpyI32frac(B.val, A);
+    return(C);
 }
 
 
 inline iq
 IQmpyI32frac(const iq &A, long B)
 {
-   iq C;
-   C.val = _IQmpyI32frac(A.val, B);
-   return(C);
+    iq C;
+    C.val = _IQmpyI32frac(A.val, B);
+    return(C);
 }
 
 inline iq
 IQmpyI32frac(long A, const iq &B)
 {
-   iq C;
-   C.val = _IQmpyI32frac(B.val, A);
-   return(C);
+    iq C;
+    C.val = _IQmpyI32frac(B.val, A);
+    return(C);
 }
 
 //*****************************************************************************
@@ -5413,241 +5568,241 @@ IQmpyI32frac(long A, const iq &B)
 inline iq29
 IQ29sin(const iq29 &A)
 {
-   iq29 B;
-   B.val = _IQ29sin(A.val);
-   return(B);
+    iq29 B;
+    B.val = _IQ29sin(A.val);
+    return(B);
 }
 
 inline iq28
 IQ28sin(const iq28 &A)
 {
-   iq28 B;
-   B.val = _IQ28sin(A.val);
-   return(B);
+    iq28 B;
+    B.val = _IQ28sin(A.val);
+    return(B);
 }
 
 inline iq27
 IQ27sin(const iq27 &A)
 {
-   iq27 B;
-   B.val = _IQ27sin(A.val);
-   return(B);
+    iq27 B;
+    B.val = _IQ27sin(A.val);
+    return(B);
 }
 
 inline iq26
 IQ26sin(const iq26 &A)
 {
-   iq26 B;
-   B.val = _IQ26sin(A.val);
-   return(B);
+    iq26 B;
+    B.val = _IQ26sin(A.val);
+    return(B);
 }
 
 inline iq25
 IQ25sin(const iq25 &A)
 {
-   iq25 B;
-   B.val = _IQ25sin(A.val);
-   return(B);
+    iq25 B;
+    B.val = _IQ25sin(A.val);
+    return(B);
 }
 
 inline iq24
 IQ24sin(const iq24 &A)
 {
-   iq24 B;
-   B.val = _IQ24sin(A.val);
-   return(B);
+    iq24 B;
+    B.val = _IQ24sin(A.val);
+    return(B);
 }
 
 inline iq23
 IQ23sin(const iq23 &A)
 {
-   iq23 B;
-   B.val = _IQ23sin(A.val);
-   return(B);
+    iq23 B;
+    B.val = _IQ23sin(A.val);
+    return(B);
 }
 
 inline iq22
 IQ22sin(const iq22 &A)
 {
-   iq22 B;
-   B.val = _IQ22sin(A.val);
-   return(B);
+    iq22 B;
+    B.val = _IQ22sin(A.val);
+    return(B);
 }
 
 inline iq21
 IQ21sin(const iq21 &A)
 {
-   iq21 B;
-   B.val = _IQ21sin(A.val);
-   return(B);
+    iq21 B;
+    B.val = _IQ21sin(A.val);
+    return(B);
 }
 
 inline iq20
 IQ20sin(const iq20 &A)
 {
-   iq20 B;
-   B.val = _IQ20sin(A.val);
-   return(B);
+    iq20 B;
+    B.val = _IQ20sin(A.val);
+    return(B);
 }
 
 inline iq19
 IQ19sin(const iq19 &A)
 {
-   iq19 B;
-   B.val = _IQ19sin(A.val);
-   return(B);
+    iq19 B;
+    B.val = _IQ19sin(A.val);
+    return(B);
 }
 
 inline iq18
 IQ18sin(const iq18 &A)
 {
-   iq18 B;
-   B.val = _IQ18sin(A.val);
-   return(B);
+    iq18 B;
+    B.val = _IQ18sin(A.val);
+    return(B);
 }
 
 inline iq17
 IQ17sin(const iq17 &A)
 {
-   iq17 B;
-   B.val = _IQ17sin(A.val);
-   return(B);
+    iq17 B;
+    B.val = _IQ17sin(A.val);
+    return(B);
 }
 
 inline iq16
 IQ16sin(const iq16 &A)
 {
-   iq16 B;
-   B.val = _IQ16sin(A.val);
-   return(B);
+    iq16 B;
+    B.val = _IQ16sin(A.val);
+    return(B);
 }
 
 inline iq15
 IQ15sin(const iq15 &A)
 {
-   iq15 B;
-   B.val = _IQ15sin(A.val);
-   return(B);
+    iq15 B;
+    B.val = _IQ15sin(A.val);
+    return(B);
 }
 
 inline iq14
 IQ14sin(const iq14 &A)
 {
-   iq14 B;
-   B.val = _IQ14sin(A.val);
-   return(B);
+    iq14 B;
+    B.val = _IQ14sin(A.val);
+    return(B);
 }
 
 inline iq13
 IQ13sin(const iq13 &A)
 {
-   iq13 B;
-   B.val = _IQ13sin(A.val);
-   return(B);
+    iq13 B;
+    B.val = _IQ13sin(A.val);
+    return(B);
 }
 
 inline iq12
 IQ12sin(const iq12 &A)
 {
-   iq12 B;
-   B.val = _IQ12sin(A.val);
-   return(B);
+    iq12 B;
+    B.val = _IQ12sin(A.val);
+    return(B);
 }
 
 inline iq11
 IQ11sin(const iq11 &A)
 {
-   iq11 B;
-   B.val = _IQ11sin(A.val);
-   return(B);
+    iq11 B;
+    B.val = _IQ11sin(A.val);
+    return(B);
 }
 
 inline iq10
 IQ10sin(const iq10 &A)
 {
-   iq10 B;
-   B.val = _IQ10sin(A.val);
-   return(B);
+    iq10 B;
+    B.val = _IQ10sin(A.val);
+    return(B);
 }
 
 inline iq9
 IQ9sin(const iq9 &A)
 {
-   iq9 B;
-   B.val = _IQ9sin(A.val);
-   return(B);
+    iq9 B;
+    B.val = _IQ9sin(A.val);
+    return(B);
 }
 
 inline iq8
 IQ8sin(const iq8 &A)
 {
-   iq8 B;
-   B.val = _IQ8sin(A.val);
-   return(B);
+    iq8 B;
+    B.val = _IQ8sin(A.val);
+    return(B);
 }
 
 inline iq7
 IQ7sin(const iq7 &A)
 {
-   iq7 B;
-   B.val = _IQ7sin(A.val);
-   return(B);
+    iq7 B;
+    B.val = _IQ7sin(A.val);
+    return(B);
 }
 
 inline iq6
 IQ6sin(const iq6 &A)
 {
-   iq6 B;
-   B.val = _IQ6sin(A.val);
-   return(B);
+    iq6 B;
+    B.val = _IQ6sin(A.val);
+    return(B);
 }
 
 inline iq5
 IQ5sin(const iq5 &A)
 {
-   iq5 B;
-   B.val = _IQ5sin(A.val);
-   return(B);
+    iq5 B;
+    B.val = _IQ5sin(A.val);
+    return(B);
 }
 
 inline iq4
 IQ4sin(const iq4 &A)
 {
-   iq4 B;
-   B.val = _IQ4sin(A.val);
-   return(B);
+    iq4 B;
+    B.val = _IQ4sin(A.val);
+    return(B);
 }
 
 inline iq3
 IQ3sin(const iq3 &A)
 {
-   iq3 B;
-   B.val = _IQ3sin(A.val);
-   return(B);
+    iq3 B;
+    B.val = _IQ3sin(A.val);
+    return(B);
 }
 
 inline iq2
 IQ2sin(const iq2 &A)
 {
-   iq2 B;
-   B.val = _IQ2sin(A.val);
-   return(B);
+    iq2 B;
+    B.val = _IQ2sin(A.val);
+    return(B);
 }
 
 inline iq1
 IQ1sin(const iq1 &A)
 {
-   iq1 B;
-   B.val = _IQ1sin(A.val);
-   return(B);
+    iq1 B;
+    B.val = _IQ1sin(A.val);
+    return(B);
 }
 
 inline iq
 IQsin(const iq &A)
 {
-   iq B;
-   B.val = _IQsin(A.val);
-   return(B);
+    iq B;
+    B.val = _IQsin(A.val);
+    return(B);
 }
 
 //*****************************************************************************
@@ -5658,249 +5813,249 @@ IQsin(const iq &A)
 inline iq30
 IQ30sinPU(const iq30 &A)
 {
-   iq30 B;
-   B.val = _IQ30sinPU(A.val);
-   return(B);
+    iq30 B;
+    B.val = _IQ30sinPU(A.val);
+    return(B);
 }
 
 inline iq29
 IQ29sinPU(const iq29 &A)
 {
-   iq29 B;
-   B.val = _IQ29sinPU(A.val);
-   return(B);
+    iq29 B;
+    B.val = _IQ29sinPU(A.val);
+    return(B);
 }
 
 inline iq28
 IQ28sinPU(const iq28 &A)
 {
-   iq28 B;
-   B.val = _IQ28sinPU(A.val);
-   return(B);
+    iq28 B;
+    B.val = _IQ28sinPU(A.val);
+    return(B);
 }
 
 inline iq27
 IQ27sinPU(const iq27 &A)
 {
-   iq27 B;
-   B.val = _IQ27sinPU(A.val);
-   return(B);
+    iq27 B;
+    B.val = _IQ27sinPU(A.val);
+    return(B);
 }
 
 inline iq26
 IQ26sinPU(const iq26 &A)
 {
-   iq26 B;
-   B.val = _IQ26sinPU(A.val);
-   return(B);
+    iq26 B;
+    B.val = _IQ26sinPU(A.val);
+    return(B);
 }
 
 inline iq25
 IQ25sinPU(const iq25 &A)
 {
-   iq25 B;
-   B.val = _IQ25sinPU(A.val);
-   return(B);
+    iq25 B;
+    B.val = _IQ25sinPU(A.val);
+    return(B);
 }
 
 inline iq24
 IQ24sinPU(const iq24 &A)
 {
-   iq24 B;
-   B.val = _IQ24sinPU(A.val);
-   return(B);
+    iq24 B;
+    B.val = _IQ24sinPU(A.val);
+    return(B);
 }
 
 inline iq23
 IQ23sinPU(const iq23 &A)
 {
-   iq23 B;
-   B.val = _IQ23sinPU(A.val);
-   return(B);
+    iq23 B;
+    B.val = _IQ23sinPU(A.val);
+    return(B);
 }
 
 inline iq22
 IQ22sinPU(const iq22 &A)
 {
-   iq22 B;
-   B.val = _IQ22sinPU(A.val);
-   return(B);
+    iq22 B;
+    B.val = _IQ22sinPU(A.val);
+    return(B);
 }
 
 inline iq21
 IQ21sinPU(const iq21 &A)
 {
-   iq21 B;
-   B.val = _IQ21sinPU(A.val);
-   return(B);
+    iq21 B;
+    B.val = _IQ21sinPU(A.val);
+    return(B);
 }
 
 inline iq20
 IQ20sinPU(const iq20 &A)
 {
-   iq20 B;
-   B.val = _IQ20sinPU(A.val);
-   return(B);
+    iq20 B;
+    B.val = _IQ20sinPU(A.val);
+    return(B);
 }
 
 inline iq19
 IQ19sinPU(const iq19 &A)
 {
-   iq19 B;
-   B.val = _IQ19sinPU(A.val);
-   return(B);
+    iq19 B;
+    B.val = _IQ19sinPU(A.val);
+    return(B);
 }
 
 inline iq18
 IQ18sinPU(const iq18 &A)
 {
-   iq18 B;
-   B.val = _IQ18sinPU(A.val);
-   return(B);
+    iq18 B;
+    B.val = _IQ18sinPU(A.val);
+    return(B);
 }
 
 inline iq17
 IQ17sinPU(const iq17 &A)
 {
-   iq17 B;
-   B.val = _IQ17sinPU(A.val);
-   return(B);
+    iq17 B;
+    B.val = _IQ17sinPU(A.val);
+    return(B);
 }
 
 inline iq16
 IQ16sinPU(const iq16 &A)
 {
-   iq16 B;
-   B.val = _IQ16sinPU(A.val);
-   return(B);
+    iq16 B;
+    B.val = _IQ16sinPU(A.val);
+    return(B);
 }
 
 inline iq15
 IQ15sinPU(const iq15 &A)
 {
-   iq15 B;
-   B.val = _IQ15sinPU(A.val);
-   return(B);
+    iq15 B;
+    B.val = _IQ15sinPU(A.val);
+    return(B);
 }
 
 inline iq14
 IQ14sinPU(const iq14 &A)
 {
-   iq14 B;
-   B.val = _IQ14sinPU(A.val);
-   return(B);
+    iq14 B;
+    B.val = _IQ14sinPU(A.val);
+    return(B);
 }
 
 inline iq13
 IQ13sinPU(const iq13 &A)
 {
-   iq13 B;
-   B.val = _IQ13sinPU(A.val);
-   return(B);
+    iq13 B;
+    B.val = _IQ13sinPU(A.val);
+    return(B);
 }
 
 inline iq12
 IQ12sinPU(const iq12 &A)
 {
-   iq12 B;
-   B.val = _IQ12sinPU(A.val);
-   return(B);
+    iq12 B;
+    B.val = _IQ12sinPU(A.val);
+    return(B);
 }
 
 inline iq11
 IQ11sinPU(const iq11 &A)
 {
-   iq11 B;
-   B.val = _IQ11sinPU(A.val);
-   return(B);
+    iq11 B;
+    B.val = _IQ11sinPU(A.val);
+    return(B);
 }
 
 inline iq10
 IQ10sinPU(const iq10 &A)
 {
-   iq10 B;
-   B.val = _IQ10sinPU(A.val);
-   return(B);
+    iq10 B;
+    B.val = _IQ10sinPU(A.val);
+    return(B);
 }
 
 inline iq9
 IQ9sinPU(const iq9 &A)
 {
-   iq9 B;
-   B.val = _IQ9sinPU(A.val);
-   return(B);
+    iq9 B;
+    B.val = _IQ9sinPU(A.val);
+    return(B);
 }
 
 inline iq8
 IQ8sinPU(const iq8 &A)
 {
-   iq8 B;
-   B.val = _IQ8sinPU(A.val);
-   return(B);
+    iq8 B;
+    B.val = _IQ8sinPU(A.val);
+    return(B);
 }
 
 inline iq7
 IQ7sinPU(const iq7 &A)
 {
-   iq7 B;
-   B.val = _IQ7sinPU(A.val);
-   return(B);
+    iq7 B;
+    B.val = _IQ7sinPU(A.val);
+    return(B);
 }
 
 inline iq6
 IQ6sinPU(const iq6 &A)
 {
-   iq6 B;
-   B.val = _IQ6sinPU(A.val);
-   return(B);
+    iq6 B;
+    B.val = _IQ6sinPU(A.val);
+    return(B);
 }
 
 inline iq5
 IQ5sinPU(const iq5 &A)
 {
-   iq5 B;
-   B.val = _IQ5sinPU(A.val);
-   return(B);
+    iq5 B;
+    B.val = _IQ5sinPU(A.val);
+    return(B);
 }
 
 inline iq4
 IQ4sinPU(const iq4 &A)
 {
-   iq4 B;
-   B.val = _IQ4sinPU(A.val);
-   return(B);
+    iq4 B;
+    B.val = _IQ4sinPU(A.val);
+    return(B);
 }
 
 inline iq3
 IQ3sinPU(const iq3 &A)
 {
-   iq3 B;
-   B.val = _IQ3sinPU(A.val);
-   return(B);
+    iq3 B;
+    B.val = _IQ3sinPU(A.val);
+    return(B);
 }
 
 inline iq2
 IQ2sinPU(const iq2 &A)
 {
-   iq2 B;
-   B.val = _IQ2sinPU(A.val);
-   return(B);
+    iq2 B;
+    B.val = _IQ2sinPU(A.val);
+    return(B);
 }
 
 inline iq1
 IQ1sinPU(const iq1 &A)
 {
-   iq1 B;
-   B.val = _IQ1sinPU(A.val);
-   return(B);
+    iq1 B;
+    B.val = _IQ1sinPU(A.val);
+    return(B);
 }
 
 inline iq
 IQsinPU(const iq &A)
 {
-   iq B;
-   B.val = _IQsinPU(A.val);
-   return(B);
+    iq B;
+    B.val = _IQsinPU(A.val);
+    return(B);
 }
 
 //*****************************************************************************
@@ -5911,241 +6066,241 @@ IQsinPU(const iq &A)
 inline iq29
 IQ29asin(const iq29 &A)
 {
-   iq29 B;
-   B.val = _IQ29asin(A.val);
-   return(B);
+    iq29 B;
+    B.val = _IQ29asin(A.val);
+    return(B);
 }
 
 inline iq28
 IQ28asin(const iq28 &A)
 {
-   iq28 B;
-   B.val = _IQ28asin(A.val);
-   return(B);
+    iq28 B;
+    B.val = _IQ28asin(A.val);
+    return(B);
 }
 
 inline iq27
 IQ27asin(const iq27 &A)
 {
-   iq27 B;
-   B.val = _IQ27asin(A.val);
-   return(B);
+    iq27 B;
+    B.val = _IQ27asin(A.val);
+    return(B);
 }
 
 inline iq26
 IQ26asin(const iq26 &A)
 {
-   iq26 B;
-   B.val = _IQ26asin(A.val);
-   return(B);
+    iq26 B;
+    B.val = _IQ26asin(A.val);
+    return(B);
 }
 
 inline iq25
 IQ25asin(const iq25 &A)
 {
-   iq25 B;
-   B.val = _IQ25asin(A.val);
-   return(B);
+    iq25 B;
+    B.val = _IQ25asin(A.val);
+    return(B);
 }
 
 inline iq24
 IQ24asin(const iq24 &A)
 {
-   iq24 B;
-   B.val = _IQ24asin(A.val);
-   return(B);
+    iq24 B;
+    B.val = _IQ24asin(A.val);
+    return(B);
 }
 
 inline iq23
 IQ23asin(const iq23 &A)
 {
-   iq23 B;
-   B.val = _IQ23asin(A.val);
-   return(B);
+    iq23 B;
+    B.val = _IQ23asin(A.val);
+    return(B);
 }
 
 inline iq22
 IQ22asin(const iq22 &A)
 {
-   iq22 B;
-   B.val = _IQ22asin(A.val);
-   return(B);
+    iq22 B;
+    B.val = _IQ22asin(A.val);
+    return(B);
 }
 
 inline iq21
 IQ21asin(const iq21 &A)
 {
-   iq21 B;
-   B.val = _IQ21asin(A.val);
-   return(B);
+    iq21 B;
+    B.val = _IQ21asin(A.val);
+    return(B);
 }
 
 inline iq20
 IQ20asin(const iq20 &A)
 {
-   iq20 B;
-   B.val = _IQ20asin(A.val);
-   return(B);
+    iq20 B;
+    B.val = _IQ20asin(A.val);
+    return(B);
 }
 
 inline iq19
 IQ19asin(const iq19 &A)
 {
-   iq19 B;
-   B.val = _IQ19asin(A.val);
-   return(B);
+    iq19 B;
+    B.val = _IQ19asin(A.val);
+    return(B);
 }
 
 inline iq18
 IQ18asin(const iq18 &A)
 {
-   iq18 B;
-   B.val = _IQ18asin(A.val);
-   return(B);
+    iq18 B;
+    B.val = _IQ18asin(A.val);
+    return(B);
 }
 
 inline iq17
 IQ17asin(const iq17 &A)
 {
-   iq17 B;
-   B.val = _IQ17asin(A.val);
-   return(B);
+    iq17 B;
+    B.val = _IQ17asin(A.val);
+    return(B);
 }
 
 inline iq16
 IQ16asin(const iq16 &A)
 {
-   iq16 B;
-   B.val = _IQ16asin(A.val);
-   return(B);
+    iq16 B;
+    B.val = _IQ16asin(A.val);
+    return(B);
 }
 
 inline iq15
 IQ15asin(const iq15 &A)
 {
-   iq15 B;
-   B.val = _IQ15asin(A.val);
-   return(B);
+    iq15 B;
+    B.val = _IQ15asin(A.val);
+    return(B);
 }
 
 inline iq14
 IQ14asin(const iq14 &A)
 {
-   iq14 B;
-   B.val = _IQ14asin(A.val);
-   return(B);
+    iq14 B;
+    B.val = _IQ14asin(A.val);
+    return(B);
 }
 
 inline iq13
 IQ13asin(const iq13 &A)
 {
-   iq13 B;
-   B.val = _IQ13asin(A.val);
-   return(B);
+    iq13 B;
+    B.val = _IQ13asin(A.val);
+    return(B);
 }
 
 inline iq12
 IQ12asin(const iq12 &A)
 {
-   iq12 B;
-   B.val = _IQ12asin(A.val);
-   return(B);
+    iq12 B;
+    B.val = _IQ12asin(A.val);
+    return(B);
 }
 
 inline iq11
 IQ11asin(const iq11 &A)
 {
-   iq11 B;
-   B.val = _IQ11asin(A.val);
-   return(B);
+    iq11 B;
+    B.val = _IQ11asin(A.val);
+    return(B);
 }
 
 inline iq10
 IQ10asin(const iq10 &A)
 {
-   iq10 B;
-   B.val = _IQ10asin(A.val);
-   return(B);
+    iq10 B;
+    B.val = _IQ10asin(A.val);
+    return(B);
 }
 
 inline iq9
 IQ9asin(const iq9 &A)
 {
-   iq9 B;
-   B.val = _IQ9asin(A.val);
-   return(B);
+    iq9 B;
+    B.val = _IQ9asin(A.val);
+    return(B);
 }
 
 inline iq8
 IQ8asin(const iq8 &A)
 {
-   iq8 B;
-   B.val = _IQ8asin(A.val);
-   return(B);
+    iq8 B;
+    B.val = _IQ8asin(A.val);
+    return(B);
 }
 
 inline iq7
 IQ7asin(const iq7 &A)
 {
-   iq7 B;
-   B.val = _IQ7asin(A.val);
-   return(B);
+    iq7 B;
+    B.val = _IQ7asin(A.val);
+    return(B);
 }
 
 inline iq6
 IQ6asin(const iq6 &A)
 {
-   iq6 B;
-   B.val = _IQ6asin(A.val);
-   return(B);
+    iq6 B;
+    B.val = _IQ6asin(A.val);
+    return(B);
 }
 
 inline iq5
 IQ5asin(const iq5 &A)
 {
-   iq5 B;
-   B.val = _IQ5asin(A.val);
-   return(B);
+    iq5 B;
+    B.val = _IQ5asin(A.val);
+    return(B);
 }
 
 inline iq4
 IQ4asin(const iq4 &A)
 {
-   iq4 B;
-   B.val = _IQ4asin(A.val);
-   return(B);
+    iq4 B;
+    B.val = _IQ4asin(A.val);
+    return(B);
 }
 
 inline iq3
 IQ3asin(const iq3 &A)
 {
-   iq3 B;
-   B.val = _IQ3asin(A.val);
-   return(B);
+    iq3 B;
+    B.val = _IQ3asin(A.val);
+    return(B);
 }
 
 inline iq2
 IQ2asin(const iq2 &A)
 {
-   iq2 B;
-   B.val = _IQ2asin(A.val);
-   return(B);
+    iq2 B;
+    B.val = _IQ2asin(A.val);
+    return(B);
 }
 
 inline iq1
 IQ1asin(const iq1 &A)
 {
-   iq1 B;
-   B.val = _IQ1asin(A.val);
-   return(B);
+    iq1 B;
+    B.val = _IQ1asin(A.val);
+    return(B);
 }
 
 inline iq
 IQasin(const iq &A)
 {
-   iq B;
-   B.val = _IQasin(A.val);
-   return(B);
+    iq B;
+    B.val = _IQasin(A.val);
+    return(B);
 }
 
 //*****************************************************************************
@@ -6156,241 +6311,241 @@ IQasin(const iq &A)
 inline iq29
 IQ29cos(const iq29 &A)
 {
-   iq29 B;
-   B.val = _IQ29cos(A.val);
-   return(B);
+    iq29 B;
+    B.val = _IQ29cos(A.val);
+    return(B);
 }
 
 inline iq28
 IQ28cos(const iq28 &A)
 {
-   iq28 B;
-   B.val = _IQ28cos(A.val);
-   return(B);
+    iq28 B;
+    B.val = _IQ28cos(A.val);
+    return(B);
 }
 
 inline iq27
 IQ27cos(const iq27 &A)
 {
-   iq27 B;
-   B.val = _IQ27cos(A.val);
-   return(B);
+    iq27 B;
+    B.val = _IQ27cos(A.val);
+    return(B);
 }
 
 inline iq26
 IQ26cos(const iq26 &A)
 {
-   iq26 B;
-   B.val = _IQ26cos(A.val);
-   return(B);
+    iq26 B;
+    B.val = _IQ26cos(A.val);
+    return(B);
 }
 
 inline iq25
 IQ25cos(const iq25 &A)
 {
-   iq25 B;
-   B.val = _IQ25cos(A.val);
-   return(B);
+    iq25 B;
+    B.val = _IQ25cos(A.val);
+    return(B);
 }
 
 inline iq24
 IQ24cos(const iq24 &A)
 {
-   iq24 B;
-   B.val = _IQ24cos(A.val);
-   return(B);
+    iq24 B;
+    B.val = _IQ24cos(A.val);
+    return(B);
 }
 
 inline iq23
 IQ23cos(const iq23 &A)
 {
-   iq23 B;
-   B.val = _IQ23cos(A.val);
-   return(B);
+    iq23 B;
+    B.val = _IQ23cos(A.val);
+    return(B);
 }
 
 inline iq22
 IQ22cos(const iq22 &A)
 {
-   iq22 B;
-   B.val = _IQ22cos(A.val);
-   return(B);
+    iq22 B;
+    B.val = _IQ22cos(A.val);
+    return(B);
 }
 
 inline iq21
 IQ21cos(const iq21 &A)
 {
-   iq21 B;
-   B.val = _IQ21cos(A.val);
-   return(B);
+    iq21 B;
+    B.val = _IQ21cos(A.val);
+    return(B);
 }
 
 inline iq20
 IQ20cos(const iq20 &A)
 {
-   iq20 B;
-   B.val = _IQ20cos(A.val);
-   return(B);
+    iq20 B;
+    B.val = _IQ20cos(A.val);
+    return(B);
 }
 
 inline iq19
 IQ19cos(const iq19 &A)
 {
-   iq19 B;
-   B.val = _IQ19cos(A.val);
-   return(B);
+    iq19 B;
+    B.val = _IQ19cos(A.val);
+    return(B);
 }
 
 inline iq18
 IQ18cos(const iq18 &A)
 {
-   iq18 B;
-   B.val = _IQ18cos(A.val);
-   return(B);
+    iq18 B;
+    B.val = _IQ18cos(A.val);
+    return(B);
 }
 
 inline iq17
 IQ17cos(const iq17 &A)
 {
-   iq17 B;
-   B.val = _IQ17cos(A.val);
-   return(B);
+    iq17 B;
+    B.val = _IQ17cos(A.val);
+    return(B);
 }
 
 inline iq16
 IQ16cos(const iq16 &A)
 {
-   iq16 B;
-   B.val = _IQ16cos(A.val);
-   return(B);
+    iq16 B;
+    B.val = _IQ16cos(A.val);
+    return(B);
 }
 
 inline iq15
 IQ15cos(const iq15 &A)
 {
-   iq15 B;
-   B.val = _IQ15cos(A.val);
-   return(B);
+    iq15 B;
+    B.val = _IQ15cos(A.val);
+    return(B);
 }
 
 inline iq14
 IQ14cos(const iq14 &A)
 {
-   iq14 B;
-   B.val = _IQ14cos(A.val);
-   return(B);
+    iq14 B;
+    B.val = _IQ14cos(A.val);
+    return(B);
 }
 
 inline iq13
 IQ13cos(const iq13 &A)
 {
-   iq13 B;
-   B.val = _IQ13cos(A.val);
-   return(B);
+    iq13 B;
+    B.val = _IQ13cos(A.val);
+    return(B);
 }
 
 inline iq12
 IQ12cos(const iq12 &A)
 {
-   iq12 B;
-   B.val = _IQ12cos(A.val);
-   return(B);
+    iq12 B;
+    B.val = _IQ12cos(A.val);
+    return(B);
 }
 
 inline iq11
 IQ11cos(const iq11 &A)
 {
-   iq11 B;
-   B.val = _IQ11cos(A.val);
-   return(B);
+    iq11 B;
+    B.val = _IQ11cos(A.val);
+    return(B);
 }
 
 inline iq10
 IQ10cos(const iq10 &A)
 {
-   iq10 B;
-   B.val = _IQ10cos(A.val);
-   return(B);
+    iq10 B;
+    B.val = _IQ10cos(A.val);
+    return(B);
 }
 
 inline iq9
 IQ9cos(const iq9 &A)
 {
-   iq9 B;
-   B.val = _IQ9cos(A.val);
-   return(B);
+    iq9 B;
+    B.val = _IQ9cos(A.val);
+    return(B);
 }
 
 inline iq8
 IQ8cos(const iq8 &A)
 {
-   iq8 B;
-   B.val = _IQ8cos(A.val);
-   return(B);
+    iq8 B;
+    B.val = _IQ8cos(A.val);
+    return(B);
 }
 
 inline iq7
 IQ7cos(const iq7 &A)
 {
-   iq7 B;
-   B.val = _IQ7cos(A.val);
-   return(B);
+    iq7 B;
+    B.val = _IQ7cos(A.val);
+    return(B);
 }
 
 inline iq6
 IQ6cos(const iq6 &A)
 {
-   iq6 B;
-   B.val = _IQ6cos(A.val);
-   return(B);
+    iq6 B;
+    B.val = _IQ6cos(A.val);
+    return(B);
 }
 
 inline iq5
 IQ5cos(const iq5 &A)
 {
-   iq5 B;
-   B.val = _IQ5cos(A.val);
-   return(B);
+    iq5 B;
+    B.val = _IQ5cos(A.val);
+    return(B);
 }
 
 inline iq4
 IQ4cos(const iq4 &A)
 {
-   iq4 B;
-   B.val = _IQ4cos(A.val);
-   return(B);
+    iq4 B;
+    B.val = _IQ4cos(A.val);
+    return(B);
 }
 
 inline iq3
 IQ3cos(const iq3 &A)
 {
-   iq3 B;
-   B.val = _IQ3cos(A.val);
-   return(B);
+    iq3 B;
+    B.val = _IQ3cos(A.val);
+    return(B);
 }
 
 inline iq2
 IQ2cos(const iq2 &A)
 {
-   iq2 B;
-   B.val = _IQ2cos(A.val);
-   return(B);
+    iq2 B;
+    B.val = _IQ2cos(A.val);
+    return(B);
 }
 
 inline iq1
 IQ1cos(const iq1 &A)
 {
-   iq1 B;
-   B.val = _IQ1cos(A.val);
-   return(B);
+    iq1 B;
+    B.val = _IQ1cos(A.val);
+    return(B);
 }
 
 inline iq
 IQcos(const iq &A)
 {
-   iq B;
-   B.val = _IQcos(A.val);
-   return(B);
+    iq B;
+    B.val = _IQcos(A.val);
+    return(B);
 }
 
 //*****************************************************************************
@@ -6401,249 +6556,249 @@ IQcos(const iq &A)
 inline iq30
 IQ30cosPU(const iq30 &A)
 {
-   iq30 B;
-   B.val = _IQ30cosPU(A.val);
-   return(B);
+    iq30 B;
+    B.val = _IQ30cosPU(A.val);
+    return(B);
 }
 
 inline iq29
 IQ29cosPU(const iq29 &A)
 {
-   iq29 B;
-   B.val = _IQ29cosPU(A.val);
-   return(B);
+    iq29 B;
+    B.val = _IQ29cosPU(A.val);
+    return(B);
 }
 
 inline iq28
 IQ28cosPU(const iq28 &A)
 {
-   iq28 B;
-   B.val = _IQ28cosPU(A.val);
-   return(B);
+    iq28 B;
+    B.val = _IQ28cosPU(A.val);
+    return(B);
 }
 
 inline iq27
 IQ27cosPU(const iq27 &A)
 {
-   iq27 B;
-   B.val = _IQ27cosPU(A.val);
-   return(B);
+    iq27 B;
+    B.val = _IQ27cosPU(A.val);
+    return(B);
 }
 
 inline iq26
 IQ26cosPU(const iq26 &A)
 {
-   iq26 B;
-   B.val = _IQ26cosPU(A.val);
-   return(B);
+    iq26 B;
+    B.val = _IQ26cosPU(A.val);
+    return(B);
 }
 
 inline iq25
 IQ25cosPU(const iq25 &A)
 {
-   iq25 B;
-   B.val = _IQ25cosPU(A.val);
-   return(B);
+    iq25 B;
+    B.val = _IQ25cosPU(A.val);
+    return(B);
 }
 
 inline iq24
 IQ24cosPU(const iq24 &A)
 {
-   iq24 B;
-   B.val = _IQ24cosPU(A.val);
-   return(B);
+    iq24 B;
+    B.val = _IQ24cosPU(A.val);
+    return(B);
 }
 
 inline iq23
 IQ23cosPU(const iq23 &A)
 {
-   iq23 B;
-   B.val = _IQ23cosPU(A.val);
-   return(B);
+    iq23 B;
+    B.val = _IQ23cosPU(A.val);
+    return(B);
 }
 
 inline iq22
 IQ22cosPU(const iq22 &A)
 {
-   iq22 B;
-   B.val = _IQ22cosPU(A.val);
-   return(B);
+    iq22 B;
+    B.val = _IQ22cosPU(A.val);
+    return(B);
 }
 
 inline iq21
 IQ21cosPU(const iq21 &A)
 {
-   iq21 B;
-   B.val = _IQ21cosPU(A.val);
-   return(B);
+    iq21 B;
+    B.val = _IQ21cosPU(A.val);
+    return(B);
 }
 
 inline iq20
 IQ20cosPU(const iq20 &A)
 {
-   iq20 B;
-   B.val = _IQ20cosPU(A.val);
-   return(B);
+    iq20 B;
+    B.val = _IQ20cosPU(A.val);
+    return(B);
 }
 
 inline iq19
 IQ19cosPU(const iq19 &A)
 {
-   iq19 B;
-   B.val = _IQ19cosPU(A.val);
-   return(B);
+    iq19 B;
+    B.val = _IQ19cosPU(A.val);
+    return(B);
 }
 
 inline iq18
 IQ18cosPU(const iq18 &A)
 {
-   iq18 B;
-   B.val = _IQ18cosPU(A.val);
-   return(B);
+    iq18 B;
+    B.val = _IQ18cosPU(A.val);
+    return(B);
 }
 
 inline iq17
 IQ17cosPU(const iq17 &A)
 {
-   iq17 B;
-   B.val = _IQ17cosPU(A.val);
-   return(B);
+    iq17 B;
+    B.val = _IQ17cosPU(A.val);
+    return(B);
 }
 
 inline iq16
 IQ16cosPU(const iq16 &A)
 {
-   iq16 B;
-   B.val = _IQ16cosPU(A.val);
-   return(B);
+    iq16 B;
+    B.val = _IQ16cosPU(A.val);
+    return(B);
 }
 
 inline iq15
 IQ15cosPU(const iq15 &A)
 {
-   iq15 B;
-   B.val = _IQ15cosPU(A.val);
-   return(B);
+    iq15 B;
+    B.val = _IQ15cosPU(A.val);
+    return(B);
 }
 
 inline iq14
 IQ14cosPU(const iq14 &A)
 {
-   iq14 B;
-   B.val = _IQ14cosPU(A.val);
-   return(B);
+    iq14 B;
+    B.val = _IQ14cosPU(A.val);
+    return(B);
 }
 
 inline iq13
 IQ13cosPU(const iq13 &A)
 {
-   iq13 B;
-   B.val = _IQ13cosPU(A.val);
-   return(B);
+    iq13 B;
+    B.val = _IQ13cosPU(A.val);
+    return(B);
 }
 
 inline iq12
 IQ12cosPU(const iq12 &A)
 {
-   iq12 B;
-   B.val = _IQ12cosPU(A.val);
-   return(B);
+    iq12 B;
+    B.val = _IQ12cosPU(A.val);
+    return(B);
 }
 
 inline iq11
 IQ11cosPU(const iq11 &A)
 {
-   iq11 B;
-   B.val = _IQ11cosPU(A.val);
-   return(B);
+    iq11 B;
+    B.val = _IQ11cosPU(A.val);
+    return(B);
 }
 
 inline iq10
 IQ10cosPU(const iq10 &A)
 {
-   iq10 B;
-   B.val = _IQ10cosPU(A.val);
-   return(B);
+    iq10 B;
+    B.val = _IQ10cosPU(A.val);
+    return(B);
 }
 
 inline iq9
 IQ9cosPU(const iq9 &A)
 {
-   iq9 B;
-   B.val = _IQ9cosPU(A.val);
-   return(B);
+    iq9 B;
+    B.val = _IQ9cosPU(A.val);
+    return(B);
 }
 
 inline iq8
 IQ8cosPU(const iq8 &A)
 {
-   iq8 B;
-   B.val = _IQ8cosPU(A.val);
-   return(B);
+    iq8 B;
+    B.val = _IQ8cosPU(A.val);
+    return(B);
 }
 
 inline iq7
 IQ7cosPU(const iq7 &A)
 {
-   iq7 B;
-   B.val = _IQ7cosPU(A.val);
-   return(B);
+    iq7 B;
+    B.val = _IQ7cosPU(A.val);
+    return(B);
 }
 
 inline iq6
 IQ6cosPU(const iq6 &A)
 {
-   iq6 B;
-   B.val = _IQ6cosPU(A.val);
-   return(B);
+    iq6 B;
+    B.val = _IQ6cosPU(A.val);
+    return(B);
 }
 
 inline iq5
 IQ5cosPU(const iq5 &A)
 {
-   iq5 B;
-   B.val = _IQ5cosPU(A.val);
-   return(B);
+    iq5 B;
+    B.val = _IQ5cosPU(A.val);
+    return(B);
 }
 
 inline iq4
 IQ4cosPU(const iq4 &A)
 {
-   iq4 B;
-   B.val = _IQ4cosPU(A.val);
-   return(B);
+    iq4 B;
+    B.val = _IQ4cosPU(A.val);
+    return(B);
 }
 
 inline iq3
 IQ3cosPU(const iq3 &A)
 {
-   iq3 B;
-   B.val = _IQ3cosPU(A.val);
-   return(B);
+    iq3 B;
+    B.val = _IQ3cosPU(A.val);
+    return(B);
 }
 
 inline iq2
 IQ2cosPU(const iq2 &A)
 {
-   iq2 B;
-   B.val = _IQ2cosPU(A.val);
-   return(B);
+    iq2 B;
+    B.val = _IQ2cosPU(A.val);
+    return(B);
 }
 
 inline iq1
 IQ1cosPU(const iq1 &A)
 {
-   iq1 B;
-   B.val = _IQ1cosPU(A.val);
-   return(B);
+    iq1 B;
+    B.val = _IQ1cosPU(A.val);
+    return(B);
 }
 
 inline iq
 IQcosPU(const iq &A)
 {
-   iq B;
-   B.val = _IQcosPU(A.val);
-   return(B);
+    iq B;
+    B.val = _IQcosPU(A.val);
+    return(B);
 }
 
 //*****************************************************************************
@@ -6654,241 +6809,241 @@ IQcosPU(const iq &A)
 inline iq29
 IQ29acos(const iq29 &A)
 {
-   iq29 B;
-   B.val = _IQ29acos(A.val);
-   return(B);
+    iq29 B;
+    B.val = _IQ29acos(A.val);
+    return(B);
 }
 
 inline iq28
 IQ28acos(const iq28 &A)
 {
-   iq28 B;
-   B.val = _IQ28acos(A.val);
-   return(B);
+    iq28 B;
+    B.val = _IQ28acos(A.val);
+    return(B);
 }
 
 inline iq27
 IQ27acos(const iq27 &A)
 {
-   iq27 B;
-   B.val = _IQ27acos(A.val);
-   return(B);
+    iq27 B;
+    B.val = _IQ27acos(A.val);
+    return(B);
 }
 
 inline iq26
 IQ26acos(const iq26 &A)
 {
-   iq26 B;
-   B.val = _IQ26acos(A.val);
-   return(B);
+    iq26 B;
+    B.val = _IQ26acos(A.val);
+    return(B);
 }
 
 inline iq25
 IQ25acos(const iq25 &A)
 {
-   iq25 B;
-   B.val = _IQ25acos(A.val);
-   return(B);
+    iq25 B;
+    B.val = _IQ25acos(A.val);
+    return(B);
 }
 
 inline iq24
 IQ24acos(const iq24 &A)
 {
-   iq24 B;
-   B.val = _IQ24acos(A.val);
-   return(B);
+    iq24 B;
+    B.val = _IQ24acos(A.val);
+    return(B);
 }
 
 inline iq23
 IQ23acos(const iq23 &A)
 {
-   iq23 B;
-   B.val = _IQ23acos(A.val);
-   return(B);
+    iq23 B;
+    B.val = _IQ23acos(A.val);
+    return(B);
 }
 
 inline iq22
 IQ22acos(const iq22 &A)
 {
-   iq22 B;
-   B.val = _IQ22acos(A.val);
-   return(B);
+    iq22 B;
+    B.val = _IQ22acos(A.val);
+    return(B);
 }
 
 inline iq21
 IQ21acos(const iq21 &A)
 {
-   iq21 B;
-   B.val = _IQ21acos(A.val);
-   return(B);
+    iq21 B;
+    B.val = _IQ21acos(A.val);
+    return(B);
 }
 
 inline iq20
 IQ20acos(const iq20 &A)
 {
-   iq20 B;
-   B.val = _IQ20acos(A.val);
-   return(B);
+    iq20 B;
+    B.val = _IQ20acos(A.val);
+    return(B);
 }
 
 inline iq19
 IQ19acos(const iq19 &A)
 {
-   iq19 B;
-   B.val = _IQ19acos(A.val);
-   return(B);
+    iq19 B;
+    B.val = _IQ19acos(A.val);
+    return(B);
 }
 
 inline iq18
 IQ18acos(const iq18 &A)
 {
-   iq18 B;
-   B.val = _IQ18acos(A.val);
-   return(B);
+    iq18 B;
+    B.val = _IQ18acos(A.val);
+    return(B);
 }
 
 inline iq17
 IQ17acos(const iq17 &A)
 {
-   iq17 B;
-   B.val = _IQ17acos(A.val);
-   return(B);
+    iq17 B;
+    B.val = _IQ17acos(A.val);
+    return(B);
 }
 
 inline iq16
 IQ16acos(const iq16 &A)
 {
-   iq16 B;
-   B.val = _IQ16acos(A.val);
-   return(B);
+    iq16 B;
+    B.val = _IQ16acos(A.val);
+    return(B);
 }
 
 inline iq15
 IQ15acos(const iq15 &A)
 {
-   iq15 B;
-   B.val = _IQ15acos(A.val);
-   return(B);
+    iq15 B;
+    B.val = _IQ15acos(A.val);
+    return(B);
 }
 
 inline iq14
 IQ14acos(const iq14 &A)
 {
-   iq14 B;
-   B.val = _IQ14acos(A.val);
-   return(B);
+    iq14 B;
+    B.val = _IQ14acos(A.val);
+    return(B);
 }
 
 inline iq13
 IQ13acos(const iq13 &A)
 {
-   iq13 B;
-   B.val = _IQ13acos(A.val);
-   return(B);
+    iq13 B;
+    B.val = _IQ13acos(A.val);
+    return(B);
 }
 
 inline iq12
 IQ12acos(const iq12 &A)
 {
-   iq12 B;
-   B.val = _IQ12acos(A.val);
-   return(B);
+    iq12 B;
+    B.val = _IQ12acos(A.val);
+    return(B);
 }
 
 inline iq11
 IQ11acos(const iq11 &A)
 {
-   iq11 B;
-   B.val = _IQ11acos(A.val);
-   return(B);
+    iq11 B;
+    B.val = _IQ11acos(A.val);
+    return(B);
 }
 
 inline iq10
 IQ10acos(const iq10 &A)
 {
-   iq10 B;
-   B.val = _IQ10acos(A.val);
-   return(B);
+    iq10 B;
+    B.val = _IQ10acos(A.val);
+    return(B);
 }
 
 inline iq9
 IQ9acos(const iq9 &A)
 {
-   iq9 B;
-   B.val = _IQ9acos(A.val);
-   return(B);
+    iq9 B;
+    B.val = _IQ9acos(A.val);
+    return(B);
 }
 
 inline iq8
 IQ8acos(const iq8 &A)
 {
-   iq8 B;
-   B.val = _IQ8acos(A.val);
-   return(B);
+    iq8 B;
+    B.val = _IQ8acos(A.val);
+    return(B);
 }
 
 inline iq7
 IQ7acos(const iq7 &A)
 {
-   iq7 B;
-   B.val = _IQ7acos(A.val);
-   return(B);
+    iq7 B;
+    B.val = _IQ7acos(A.val);
+    return(B);
 }
 
 inline iq6
 IQ6acos(const iq6 &A)
 {
-   iq6 B;
-   B.val = _IQ6acos(A.val);
-   return(B);
+    iq6 B;
+    B.val = _IQ6acos(A.val);
+    return(B);
 }
 
 inline iq5
 IQ5acos(const iq5 &A)
 {
-   iq5 B;
-   B.val = _IQ5acos(A.val);
-   return(B);
+    iq5 B;
+    B.val = _IQ5acos(A.val);
+    return(B);
 }
 
 inline iq4
 IQ4acos(const iq4 &A)
 {
-   iq4 B;
-   B.val = _IQ4acos(A.val);
-   return(B);
+    iq4 B;
+    B.val = _IQ4acos(A.val);
+    return(B);
 }
 
 inline iq3
 IQ3acos(const iq3 &A)
 {
-   iq3 B;
-   B.val = _IQ3acos(A.val);
-   return(B);
+    iq3 B;
+    B.val = _IQ3acos(A.val);
+    return(B);
 }
 
 inline iq2
 IQ2acos(const iq2 &A)
 {
-   iq2 B;
-   B.val = _IQ2acos(A.val);
-   return(B);
+    iq2 B;
+    B.val = _IQ2acos(A.val);
+    return(B);
 }
 
 inline iq1
 IQ1acos(const iq1 &A)
 {
-   iq1 B;
-   B.val = _IQ1acos(A.val);
-   return(B);
+    iq1 B;
+    B.val = _IQ1acos(A.val);
+    return(B);
 }
 
 inline iq
 IQacos(const iq &A)
 {
-   iq B;
-   B.val = _IQacos(A.val);
-   return(B);
+    iq B;
+    B.val = _IQacos(A.val);
+    return(B);
 }
 
 //*****************************************************************************
@@ -6899,241 +7054,241 @@ IQacos(const iq &A)
 inline iq29
 IQ29atan2(const iq29 &A, iq29 &B)
 {
-   iq29 C;
-   C.val = _IQ29atan2(A.val, B.val);
-   return(C);
+    iq29 C;
+    C.val = _IQ29atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq28
 IQ28atan2(const iq28 &A, iq28 &B)
 {
-   iq28 C;
-   C.val = _IQ28atan2(A.val, B.val);
-   return(C);
+    iq28 C;
+    C.val = _IQ28atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq27
 IQ27atan2(const iq27 &A, iq27 &B)
 {
-   iq27 C;
-   C.val = _IQ27atan2(A.val, B.val);
-   return(C);
+    iq27 C;
+    C.val = _IQ27atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq26
 IQ26atan2(const iq26 &A, iq26 &B)
 {
-   iq26 C;
-   C.val = _IQ26atan2(A.val, B.val);
-   return(C);
+    iq26 C;
+    C.val = _IQ26atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq25
 IQ25atan2(const iq25 &A, iq25 &B)
 {
-   iq25 C;
-   C.val = _IQ25atan2(A.val, B.val);
-   return(C);
+    iq25 C;
+    C.val = _IQ25atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq24
 IQ24atan2(const iq24 &A, iq24 &B)
 {
-   iq24 C;
-   C.val = _IQ24atan2(A.val, B.val);
-   return(C);
+    iq24 C;
+    C.val = _IQ24atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq23
 IQ23atan2(const iq23 &A, iq23 &B)
 {
-   iq23 C;
-   C.val = _IQ23atan2(A.val, B.val);
-   return(C);
+    iq23 C;
+    C.val = _IQ23atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq22
 IQ22atan2(const iq22 &A, iq22 &B)
 {
-   iq22 C;
-   C.val = _IQ22atan2(A.val, B.val);
-   return(C);
+    iq22 C;
+    C.val = _IQ22atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq21
 IQ21atan2(const iq21 &A, iq21 &B)
 {
-   iq21 C;
-   C.val = _IQ21atan2(A.val, B.val);
-   return(C);
+    iq21 C;
+    C.val = _IQ21atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq20
 IQ20atan2(const iq20 &A, iq20 &B)
 {
-   iq20 C;
-   C.val = _IQ20atan2(A.val, B.val);
-   return(C);
+    iq20 C;
+    C.val = _IQ20atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq19
 IQ19atan2(const iq19 &A, iq19 &B)
 {
-   iq19 C;
-   C.val = _IQ19atan2(A.val, B.val);
-   return(C);
+    iq19 C;
+    C.val = _IQ19atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq18
 IQ18atan2(const iq18 &A, iq18 &B)
 {
-   iq18 C;
-   C.val = _IQ18atan2(A.val, B.val);
-   return(C);
+    iq18 C;
+    C.val = _IQ18atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq17
 IQ17atan2(const iq17 &A, iq17 &B)
 {
-   iq17 C;
-   C.val = _IQ17atan2(A.val, B.val);
-   return(C);
+    iq17 C;
+    C.val = _IQ17atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq16
 IQ16atan2(const iq16 &A, iq16 &B)
 {
-   iq16 C;
-   C.val = _IQ16atan2(A.val, B.val);
-   return(C);
+    iq16 C;
+    C.val = _IQ16atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq15
 IQ15atan2(const iq15 &A, iq15 &B)
 {
-   iq15 C;
-   C.val = _IQ15atan2(A.val, B.val);
-   return(C);
+    iq15 C;
+    C.val = _IQ15atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq14
 IQ14atan2(const iq14 &A, iq14 &B)
 {
-   iq14 C;
-   C.val = _IQ14atan2(A.val, B.val);
-   return(C);
+    iq14 C;
+    C.val = _IQ14atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq13
 IQ13atan2(const iq13 &A, iq13 &B)
 {
-   iq13 C;
-   C.val = _IQ13atan2(A.val, B.val);
-   return(C);
+    iq13 C;
+    C.val = _IQ13atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq12
 IQ12atan2(const iq12 &A, iq12 &B)
 {
-   iq12 C;
-   C.val = _IQ12atan2(A.val, B.val);
-   return(C);
+    iq12 C;
+    C.val = _IQ12atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq11
 IQ11atan2(const iq11 &A, iq11 &B)
 {
-   iq11 C;
-   C.val = _IQ11atan2(A.val, B.val);
-   return(C);
+    iq11 C;
+    C.val = _IQ11atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq10
 IQ10atan2(const iq10 &A, iq10 &B)
 {
-   iq10 C;
-   C.val = _IQ10atan2(A.val, B.val);
-   return(C);
+    iq10 C;
+    C.val = _IQ10atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq9
 IQ9atan2(const iq9 &A, iq9 &B)
 {
-   iq9 C;
-   C.val = _IQ9atan2(A.val, B.val);
-   return(C);
+    iq9 C;
+    C.val = _IQ9atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq8
 IQ8atan2(const iq8 &A, iq8 &B)
 {
-   iq8 C;
-   C.val = _IQ8atan2(A.val, B.val);
-   return(C);
+    iq8 C;
+    C.val = _IQ8atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq7
 IQ7atan2(const iq7 &A, iq7 &B)
 {
-   iq7 C;
-   C.val = _IQ7atan2(A.val, B.val);
-   return(C);
+    iq7 C;
+    C.val = _IQ7atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq6
 IQ6atan2(const iq6 &A, iq6 &B)
 {
-   iq6 C;
-   C.val = _IQ6atan2(A.val, B.val);
-   return(C);
+    iq6 C;
+    C.val = _IQ6atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq5
 IQ5atan2(const iq5 &A, iq5 &B)
 {
-   iq5 C;
-   C.val = _IQ5atan2(A.val, B.val);
-   return(C);
+    iq5 C;
+    C.val = _IQ5atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq4
 IQ4atan2(const iq4 &A, iq4 &B)
 {
-   iq4 C;
-   C.val = _IQ4atan2(A.val, B.val);
-   return(C);
+    iq4 C;
+    C.val = _IQ4atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq3
 IQ3atan2(const iq3 &A, iq3 &B)
 {
-   iq3 C;
-   C.val = _IQ3atan2(A.val, B.val);
-   return(C);
+    iq3 C;
+    C.val = _IQ3atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq2
 IQ2atan2(const iq2 &A, iq2 &B)
 {
-   iq2 C;
-   C.val = _IQ2atan2(A.val, B.val);
-   return(C);
+    iq2 C;
+    C.val = _IQ2atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq1
 IQ1atan2(const iq1 &A, iq1 &B)
 {
-   iq1 C;
-   C.val = _IQ1atan2(A.val, B.val);
-   return(C);
+    iq1 C;
+    C.val = _IQ1atan2(A.val, B.val);
+    return(C);
 }
 
 inline iq
 IQatan2(const iq &A, iq &B)
 {
-   iq C;
-   C.val = _IQatan2(A.val, B.val);
-   return(C);
+    iq C;
+    C.val = _IQatan2(A.val, B.val);
+    return(C);
 }
 
 //*****************************************************************************
@@ -7145,249 +7300,249 @@ IQatan2(const iq &A, iq &B)
 inline iq30
 IQ30atan2PU(const iq30 &A, const iq30 &B)
 {
-   iq30 C;
-   C.val = _IQ30atan2PU(A.val, B.val);
-   return(C);
+    iq30 C;
+    C.val = _IQ30atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq29
 IQ29atan2PU(const iq29 &A, const iq29 &B)
 {
-   iq29 C;
-   C.val = _IQ29atan2PU(A.val, B.val);
-   return(C);
+    iq29 C;
+    C.val = _IQ29atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq28
 IQ28atan2PU(const iq28 &A, const iq28 &B)
 {
-   iq28 C;
-   C.val = _IQ28atan2PU(A.val, B.val);
-   return(C);
+    iq28 C;
+    C.val = _IQ28atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq27
 IQ27atan2PU(const iq27 &A, const iq27 &B)
 {
-   iq27 C;
-   C.val = _IQ27atan2PU(A.val, B.val);
-   return(C);
+    iq27 C;
+    C.val = _IQ27atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq26
 IQ26atan2PU(const iq26 &A, const iq26 &B)
 {
-   iq26 C;
-   C.val = _IQ26atan2PU(A.val, B.val);
-   return(C);
+    iq26 C;
+    C.val = _IQ26atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq25
 IQ25atan2PU(const iq25 &A, const iq25 &B)
 {
-   iq25 C;
-   C.val = _IQ25atan2PU(A.val, B.val);
-   return(C);
+    iq25 C;
+    C.val = _IQ25atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq24
 IQ24atan2PU(const iq24 &A, const iq24 &B)
 {
-   iq24 C;
-   C.val = _IQ24atan2PU(A.val, B.val);
-   return(C);
+    iq24 C;
+    C.val = _IQ24atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq23
 IQ23atan2PU(const iq23 &A, const iq23 &B)
 {
-   iq23 C;
-   C.val = _IQ23atan2PU(A.val, B.val);
-   return(C);
+    iq23 C;
+    C.val = _IQ23atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq22
 IQ22atan2PU(const iq22 &A, const iq22 &B)
 {
-   iq22 C;
-   C.val = _IQ22atan2PU(A.val, B.val);
-   return(C);
+    iq22 C;
+    C.val = _IQ22atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq21
 IQ21atan2PU(const iq21 &A, const iq21 &B)
 {
-   iq21 C;
-   C.val = _IQ21atan2PU(A.val, B.val);
-   return(C);
+    iq21 C;
+    C.val = _IQ21atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq20
 IQ20atan2PU(const iq20 &A, const iq20 &B)
 {
-   iq20 C;
-   C.val = _IQ20atan2PU(A.val, B.val);
-   return(C);
+    iq20 C;
+    C.val = _IQ20atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq19
 IQ19atan2PU(const iq19 &A, const iq19 &B)
 {
-   iq19 C;
-   C.val = _IQ19atan2PU(A.val, B.val);
-   return(C);
+    iq19 C;
+    C.val = _IQ19atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq18
 IQ18atan2PU(const iq18 &A, const iq18 &B)
 {
-   iq18 C;
-   C.val = _IQ18atan2PU(A.val, B.val);
-   return(C);
+    iq18 C;
+    C.val = _IQ18atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq17
 IQ17atan2PU(const iq17 &A, const iq17 &B)
 {
-   iq17 C;
-   C.val = _IQ17atan2PU(A.val, B.val);
-   return(C);
+    iq17 C;
+    C.val = _IQ17atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq16
 IQ16atan2PU(const iq16 &A, const iq16 &B)
 {
-   iq16 C;
-   C.val = _IQ16atan2PU(A.val, B.val);
-   return(C);
+    iq16 C;
+    C.val = _IQ16atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq15
 IQ15atan2PU(const iq15 &A, const iq15 &B)
 {
-   iq15 C;
-   C.val = _IQ15atan2PU(A.val, B.val);
-   return(C);
+    iq15 C;
+    C.val = _IQ15atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq14
 IQ14atan2PU(const iq14 &A, const iq14 &B)
 {
-   iq14 C;
-   C.val = _IQ14atan2PU(A.val, B.val);
-   return(C);
+    iq14 C;
+    C.val = _IQ14atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq13
 IQ13atan2PU(const iq13 &A, const iq13 &B)
 {
-   iq13 C;
-   C.val = _IQ13atan2PU(A.val, B.val);
-   return(C);
+    iq13 C;
+    C.val = _IQ13atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq12
 IQ12atan2PU(const iq12 &A, const iq12 &B)
 {
-   iq12 C;
-   C.val = _IQ12atan2PU(A.val, B.val);
-   return(C);
+    iq12 C;
+    C.val = _IQ12atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq11
 IQ11atan2PU(const iq11 &A, const iq11 &B)
 {
-   iq11 C;
-   C.val = _IQ11atan2PU(A.val, B.val);
-   return(C);
+    iq11 C;
+    C.val = _IQ11atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq10
 IQ10atan2PU(const iq10 &A, const iq10 &B)
 {
-   iq10 C;
-   C.val = _IQ10atan2PU(A.val, B.val);
-   return(C);
+    iq10 C;
+    C.val = _IQ10atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq9
 IQ9atan2PU(const iq9 &A, const iq9 &B)
 {
-   iq9 C;
-   C.val = _IQ9atan2PU(A.val, B.val);
-   return(C);
+    iq9 C;
+    C.val = _IQ9atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq8
 IQ8atan2PU(const iq8 &A, const iq8 &B)
 {
-   iq8 C;
-   C.val = _IQ8atan2PU(A.val, B.val);
-   return(C);
+    iq8 C;
+    C.val = _IQ8atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq7
 IQ7atan2PU(const iq7 &A, const iq7 &B)
 {
-   iq7 C;
-   C.val = _IQ7atan2PU(A.val, B.val);
-   return(C);
+    iq7 C;
+    C.val = _IQ7atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq6
 IQ6atan2PU(const iq6 &A, const iq6 &B)
 {
-   iq6 C;
-   C.val = _IQ6atan2PU(A.val, B.val);
-   return(C);
+    iq6 C;
+    C.val = _IQ6atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq5
 IQ5atan2PU(const iq5 &A, const iq5 &B)
 {
-   iq5 C;
-   C.val = _IQ5atan2PU(A.val, B.val);
-   return(C);
+    iq5 C;
+    C.val = _IQ5atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq4
 IQ4atan2PU(const iq4 &A, const iq4 &B)
 {
-   iq4 C;
-   C.val = _IQ4atan2PU(A.val, B.val);
-   return(C);
+    iq4 C;
+    C.val = _IQ4atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq3
 IQ3atan2PU(const iq3 &A, const iq3 &B)
 {
-   iq3 C;
-   C.val = _IQ3atan2PU(A.val, B.val);
-   return(C);
+    iq3 C;
+    C.val = _IQ3atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq2
 IQ2atan2PU(const iq2 &A, const iq2 &B)
 {
-   iq2 C;
-   C.val = _IQ2atan2PU(A.val, B.val);
-   return(C);
+    iq2 C;
+    C.val = _IQ2atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq1
 IQ1atan2PU(const iq1 &A, const iq1 &B)
 {
-   iq1 C;
-   C.val = _IQ1atan2PU(A.val, B.val);
-   return(C);
+    iq1 C;
+    C.val = _IQ1atan2PU(A.val, B.val);
+    return(C);
 }
 
 inline iq
 IQatan2PU(const iq &A, const iq &B)
 {
-   iq C;
-   C.val = _IQatan2PU(A.val, B.val);
-   return(C);
+    iq C;
+    C.val = _IQatan2PU(A.val, B.val);
+    return(C);
 }
 
 //*****************************************************************************
@@ -7434,249 +7589,249 @@ IQatan2PU(const iq &A, const iq &B)
 inline iq30
 IQ30sqrt(const iq30 &A)
 {
-   iq30 B;
-   B.val = _IQ30sqrt(A.val);
-   return(B);
+    iq30 B;
+    B.val = _IQ30sqrt(A.val);
+    return(B);
 }
 
 inline iq29
 IQ29sqrt(const iq29 &A)
 {
-   iq29 B;
-   B.val = _IQ29sqrt(A.val);
-   return(B);
+    iq29 B;
+    B.val = _IQ29sqrt(A.val);
+    return(B);
 }
 
 inline iq28
 IQ28sqrt(const iq28 &A)
 {
-   iq28 B;
-   B.val = _IQ28sqrt(A.val);
-   return(B);
+    iq28 B;
+    B.val = _IQ28sqrt(A.val);
+    return(B);
 }
 
 inline iq27
 IQ27sqrt(const iq27 &A)
 {
-   iq27 B;
-   B.val = _IQ27sqrt(A.val);
-   return(B);
+    iq27 B;
+    B.val = _IQ27sqrt(A.val);
+    return(B);
 }
 
 inline iq26
 IQ26sqrt(const iq26 &A)
 {
-   iq26 B;
-   B.val = _IQ26sqrt(A.val);
-   return(B);
+    iq26 B;
+    B.val = _IQ26sqrt(A.val);
+    return(B);
 }
 
 inline iq25
 IQ25sqrt(const iq25 &A)
 {
-   iq25 B;
-   B.val = _IQ25sqrt(A.val);
-   return(B);
+    iq25 B;
+    B.val = _IQ25sqrt(A.val);
+    return(B);
 }
 
 inline iq24
 IQ24sqrt(const iq24 &A)
 {
-   iq24 B;
-   B.val = _IQ24sqrt(A.val);
-   return(B);
+    iq24 B;
+    B.val = _IQ24sqrt(A.val);
+    return(B);
 }
 
 inline iq23
 IQ23sqrt(const iq23 &A)
 {
-   iq23 B;
-   B.val = _IQ23sqrt(A.val);
-   return(B);
+    iq23 B;
+    B.val = _IQ23sqrt(A.val);
+    return(B);
 }
 
 inline iq22
 IQ22sqrt(const iq22 &A)
 {
-   iq22 B;
-   B.val = _IQ22sqrt(A.val);
-   return(B);
+    iq22 B;
+    B.val = _IQ22sqrt(A.val);
+    return(B);
 }
 
 inline iq21
 IQ21sqrt(const iq21 &A)
 {
-   iq21 B;
-   B.val = _IQ21sqrt(A.val);
-   return(B);
+    iq21 B;
+    B.val = _IQ21sqrt(A.val);
+    return(B);
 }
 
 inline iq20
 IQ20sqrt(const iq20 &A)
 {
-   iq20 B;
-   B.val = _IQ20sqrt(A.val);
-   return(B);
+    iq20 B;
+    B.val = _IQ20sqrt(A.val);
+    return(B);
 }
 
 inline iq19
 IQ19sqrt(const iq19 &A)
 {
-   iq19 B;
-   B.val = _IQ19sqrt(A.val);
-   return(B);
+    iq19 B;
+    B.val = _IQ19sqrt(A.val);
+    return(B);
 }
 
 inline iq18
 IQ18sqrt(const iq18 &A)
 {
-   iq18 B;
-   B.val = _IQ18sqrt(A.val);
-   return(B);
+    iq18 B;
+    B.val = _IQ18sqrt(A.val);
+    return(B);
 }
 
 inline iq17
 IQ17sqrt(const iq17 &A)
 {
-   iq17 B;
-   B.val = _IQ17sqrt(A.val);
-   return(B);
+    iq17 B;
+    B.val = _IQ17sqrt(A.val);
+    return(B);
 }
 
 inline iq16
 IQ16sqrt(const iq16 &A)
 {
-   iq16 B;
-   B.val = _IQ16sqrt(A.val);
-   return(B);
+    iq16 B;
+    B.val = _IQ16sqrt(A.val);
+    return(B);
 }
 
 inline iq15
 IQ15sqrt(const iq15 &A)
 {
-   iq15 B;
-   B.val = _IQ15sqrt(A.val);
-   return(B);
+    iq15 B;
+    B.val = _IQ15sqrt(A.val);
+    return(B);
 }
 
 inline iq14
 IQ14sqrt(const iq14 &A)
 {
-   iq14 B;
-   B.val = _IQ14sqrt(A.val);
-   return(B);
+    iq14 B;
+    B.val = _IQ14sqrt(A.val);
+    return(B);
 }
 
 inline iq13
 IQ13sqrt(const iq13 &A)
 {
-   iq13 B;
-   B.val = _IQ13sqrt(A.val);
-   return(B);
+    iq13 B;
+    B.val = _IQ13sqrt(A.val);
+    return(B);
 }
 
 inline iq12
 IQ12sqrt(const iq12 &A)
 {
-   iq12 B;
-   B.val = _IQ12sqrt(A.val);
-   return(B);
+    iq12 B;
+    B.val = _IQ12sqrt(A.val);
+    return(B);
 }
 
 inline iq11
 IQ11sqrt(const iq11 &A)
 {
-   iq11 B;
-   B.val = _IQ11sqrt(A.val);
-   return(B);
+    iq11 B;
+    B.val = _IQ11sqrt(A.val);
+    return(B);
 }
 
 inline iq10
 IQ10sqrt(const iq10 &A)
 {
-   iq10 B;
-   B.val = _IQ10sqrt(A.val);
-   return(B);
+    iq10 B;
+    B.val = _IQ10sqrt(A.val);
+    return(B);
 }
 
 inline iq9
 IQ9sqrt(const iq9 &A)
 {
-   iq9 B;
-   B.val = _IQ9sqrt(A.val);
-   return(B);
+    iq9 B;
+    B.val = _IQ9sqrt(A.val);
+    return(B);
 }
 
 inline iq8
 IQ8sqrt(const iq8 &A)
 {
-   iq8 B;
-   B.val = _IQ8sqrt(A.val);
-   return(B);
+    iq8 B;
+    B.val = _IQ8sqrt(A.val);
+    return(B);
 }
 
 inline iq7
 IQ7sqrt(const iq7 &A)
 {
-   iq7 B;
-   B.val = _IQ7sqrt(A.val);
-   return(B);
+    iq7 B;
+    B.val = _IQ7sqrt(A.val);
+    return(B);
 }
 
 inline iq6
 IQ6sqrt(const iq6 &A)
 {
-   iq6 B;
-   B.val = _IQ6sqrt(A.val);
-   return(B);
+    iq6 B;
+    B.val = _IQ6sqrt(A.val);
+    return(B);
 }
 
 inline iq5
 IQ5sqrt(const iq5 &A)
 {
-   iq5 B;
-   B.val = _IQ5sqrt(A.val);
-   return(B);
+    iq5 B;
+    B.val = _IQ5sqrt(A.val);
+    return(B);
 }
 
 inline iq4
 IQ4sqrt(const iq4 &A)
 {
-   iq4 B;
-   B.val = _IQ4sqrt(A.val);
-   return(B);
+    iq4 B;
+    B.val = _IQ4sqrt(A.val);
+    return(B);
 }
 
 inline iq3
 IQ3sqrt(const iq3 &A)
 {
-   iq3 B;
-   B.val = _IQ3sqrt(A.val);
-   return(B);
+    iq3 B;
+    B.val = _IQ3sqrt(A.val);
+    return(B);
 }
 
 inline iq2
 IQ2sqrt(const iq2 &A)
 {
-   iq2 B;
-   B.val = _IQ2sqrt(A.val);
-   return(B);
+    iq2 B;
+    B.val = _IQ2sqrt(A.val);
+    return(B);
 }
 
 inline iq1
 IQ1sqrt(const iq1 &A)
 {
-   iq1 B;
-   B.val = _IQ1sqrt(A.val);
-   return(B);
+    iq1 B;
+    B.val = _IQ1sqrt(A.val);
+    return(B);
 }
 
 inline iq
 IQsqrt(const iq &A)
 {
-   iq B;
-   B.val = _IQsqrt(A.val);
-   return(B);
+    iq B;
+    B.val = _IQsqrt(A.val);
+    return(B);
 }
 
 //*****************************************************************************
@@ -7687,249 +7842,249 @@ IQsqrt(const iq &A)
 inline iq30
 IQ30isqrt(const iq30 &A)
 {
-   iq30 B;
-   B.val = _IQ30isqrt(A.val);
-   return(B);
+    iq30 B;
+    B.val = _IQ30isqrt(A.val);
+    return(B);
 }
 
 inline iq29
 IQ29isqrt(const iq29 &A)
 {
-   iq29 B;
-   B.val = _IQ29isqrt(A.val);
-   return(B);
+    iq29 B;
+    B.val = _IQ29isqrt(A.val);
+    return(B);
 }
 
 inline iq28
 IQ28isqrt(const iq28 &A)
 {
-   iq28 B;
-   B.val = _IQ28isqrt(A.val);
-   return(B);
+    iq28 B;
+    B.val = _IQ28isqrt(A.val);
+    return(B);
 }
 
 inline iq27
 IQ27isqrt(const iq27 &A)
 {
-   iq27 B;
-   B.val = _IQ27isqrt(A.val);
-   return(B);
+    iq27 B;
+    B.val = _IQ27isqrt(A.val);
+    return(B);
 }
 
 inline iq26
 IQ26isqrt(const iq26 &A)
 {
-   iq26 B;
-   B.val = _IQ26isqrt(A.val);
-   return(B);
+    iq26 B;
+    B.val = _IQ26isqrt(A.val);
+    return(B);
 }
 
 inline iq25
 IQ25isqrt(const iq25 &A)
 {
-   iq25 B;
-   B.val = _IQ25isqrt(A.val);
-   return(B);
+    iq25 B;
+    B.val = _IQ25isqrt(A.val);
+    return(B);
 }
 
 inline iq24
 IQ24isqrt(const iq24 &A)
 {
-   iq24 B;
-   B.val = _IQ24isqrt(A.val);
-   return(B);
+    iq24 B;
+    B.val = _IQ24isqrt(A.val);
+    return(B);
 }
 
 inline iq23
 IQ23isqrt(const iq23 &A)
 {
-   iq23 B;
-   B.val = _IQ23isqrt(A.val);
-   return(B);
+    iq23 B;
+    B.val = _IQ23isqrt(A.val);
+    return(B);
 }
 
 inline iq22
 IQ22isqrt(const iq22 &A)
 {
-   iq22 B;
-   B.val = _IQ22isqrt(A.val);
-   return(B);
+    iq22 B;
+    B.val = _IQ22isqrt(A.val);
+    return(B);
 }
 
 inline iq21
 IQ21isqrt(const iq21 &A)
 {
-   iq21 B;
-   B.val = _IQ21isqrt(A.val);
-   return(B);
+    iq21 B;
+    B.val = _IQ21isqrt(A.val);
+    return(B);
 }
 
 inline iq20
 IQ20isqrt(const iq20 &A)
 {
-   iq20 B;
-   B.val = _IQ20isqrt(A.val);
-   return(B);
+    iq20 B;
+    B.val = _IQ20isqrt(A.val);
+    return(B);
 }
 
 inline iq19
 IQ19isqrt(const iq19 &A)
 {
-   iq19 B;
-   B.val = _IQ19isqrt(A.val);
-   return(B);
+    iq19 B;
+    B.val = _IQ19isqrt(A.val);
+    return(B);
 }
 
 inline iq18
 IQ18isqrt(const iq18 &A)
 {
-   iq18 B;
-   B.val = _IQ18isqrt(A.val);
-   return(B);
+    iq18 B;
+    B.val = _IQ18isqrt(A.val);
+    return(B);
 }
 
 inline iq17
 IQ17isqrt(const iq17 &A)
 {
-   iq17 B;
-   B.val = _IQ17isqrt(A.val);
-   return(B);
+    iq17 B;
+    B.val = _IQ17isqrt(A.val);
+    return(B);
 }
 
 inline iq16
 IQ16isqrt(const iq16 &A)
 {
-   iq16 B;
-   B.val = _IQ16isqrt(A.val);
-   return(B);
+    iq16 B;
+    B.val = _IQ16isqrt(A.val);
+    return(B);
 }
 
 inline iq15
 IQ15isqrt(const iq15 &A)
 {
-   iq15 B;
-   B.val = _IQ15isqrt(A.val);
-   return(B);
+    iq15 B;
+    B.val = _IQ15isqrt(A.val);
+    return(B);
 }
 
 inline iq14
 IQ14isqrt(const iq14 &A)
 {
-   iq14 B;
-   B.val = _IQ14isqrt(A.val);
-   return(B);
+    iq14 B;
+    B.val = _IQ14isqrt(A.val);
+    return(B);
 }
 
 inline iq13
 IQ13isqrt(const iq13 &A)
 {
-   iq13 B;
-   B.val = _IQ13isqrt(A.val);
-   return(B);
+    iq13 B;
+    B.val = _IQ13isqrt(A.val);
+    return(B);
 }
 
 inline iq12
 IQ12isqrt(const iq12 &A)
 {
-   iq12 B;
-   B.val = _IQ12isqrt(A.val);
-   return(B);
+    iq12 B;
+    B.val = _IQ12isqrt(A.val);
+    return(B);
 }
 
 inline iq11
 IQ11isqrt(const iq11 &A)
 {
-   iq11 B;
-   B.val = _IQ11isqrt(A.val);
-   return(B);
+    iq11 B;
+    B.val = _IQ11isqrt(A.val);
+    return(B);
 }
 
 inline iq10
 IQ10isqrt(const iq10 &A)
 {
-   iq10 B;
-   B.val = _IQ10isqrt(A.val);
-   return(B);
+    iq10 B;
+    B.val = _IQ10isqrt(A.val);
+    return(B);
 }
 
 inline iq9
 IQ9isqrt(const iq9 &A)
 {
-   iq9 B;
-   B.val = _IQ9isqrt(A.val);
-   return(B);
+    iq9 B;
+    B.val = _IQ9isqrt(A.val);
+    return(B);
 }
 
 inline iq8
 IQ8isqrt(const iq8 &A)
 {
-   iq8 B;
-   B.val = _IQ8isqrt(A.val);
-   return(B);
+    iq8 B;
+    B.val = _IQ8isqrt(A.val);
+    return(B);
 }
 
 inline iq7
 IQ7isqrt(const iq7 &A)
 {
-   iq7 B;
-   B.val = _IQ7isqrt(A.val);
-   return(B);
+    iq7 B;
+    B.val = _IQ7isqrt(A.val);
+    return(B);
 }
 
 inline iq6
 IQ6isqrt(const iq6 &A)
 {
-   iq6 B;
-   B.val = _IQ6isqrt(A.val);
-   return(B);
+    iq6 B;
+    B.val = _IQ6isqrt(A.val);
+    return(B);
 }
 
 inline iq5
 IQ5isqrt(const iq5 &A)
 {
-   iq5 B;
-   B.val = _IQ5isqrt(A.val);
-   return(B);
+    iq5 B;
+    B.val = _IQ5isqrt(A.val);
+    return(B);
 }
 
 inline iq4
 IQ4isqrt(const iq4 &A)
 {
-   iq4 B;
-   B.val = _IQ4isqrt(A.val);
-   return(B);
+    iq4 B;
+    B.val = _IQ4isqrt(A.val);
+    return(B);
 }
 
 inline iq3
 IQ3isqrt(const iq3 &A)
 {
-   iq3 B;
-   B.val = _IQ3isqrt(A.val);
-   return(B);
+    iq3 B;
+    B.val = _IQ3isqrt(A.val);
+    return(B);
 }
 
 inline iq2
 IQ2isqrt(const iq2 &A)
 {
-   iq2 B;
-   B.val = _IQ2isqrt(A.val);
-   return(B);
+    iq2 B;
+    B.val = _IQ2isqrt(A.val);
+    return(B);
 }
 
 inline iq1
 IQ1isqrt(const iq1 &A)
 {
-   iq1 B;
-   B.val = _IQ1isqrt(A.val);
-   return(B);
+    iq1 B;
+    B.val = _IQ1isqrt(A.val);
+    return(B);
 }
 
 inline iq
 IQisqrt(const iq &A)
 {
-   iq B;
-   B.val = _IQisqrt(A.val);
-   return(B);
+    iq B;
+    B.val = _IQisqrt(A.val);
+    return(B);
 }
 
 //*****************************************************************************
@@ -7940,249 +8095,249 @@ IQisqrt(const iq &A)
 inline iq30
 IQ30exp(const iq30 &A)
 {
-   iq30 B;
-   B.val = _IQ30exp(A.val);
-   return(B);
+    iq30 B;
+    B.val = _IQ30exp(A.val);
+    return(B);
 }
 
 inline iq29
 IQ29exp(const iq29 &A)
 {
-   iq29 B;
-   B.val = _IQ29exp(A.val);
-   return(B);
+    iq29 B;
+    B.val = _IQ29exp(A.val);
+    return(B);
 }
 
 inline iq28
 IQ28exp(const iq28 &A)
 {
-   iq28 B;
-   B.val = _IQ28exp(A.val);
-   return(B);
+    iq28 B;
+    B.val = _IQ28exp(A.val);
+    return(B);
 }
 
 inline iq27
 IQ27exp(const iq27 &A)
 {
-   iq27 B;
-   B.val = _IQ27exp(A.val);
-   return(B);
+    iq27 B;
+    B.val = _IQ27exp(A.val);
+    return(B);
 }
 
 inline iq26
 IQ26exp(const iq26 &A)
 {
-   iq26 B;
-   B.val = _IQ26exp(A.val);
-   return(B);
+    iq26 B;
+    B.val = _IQ26exp(A.val);
+    return(B);
 }
 
 inline iq25
 IQ25exp(const iq25 &A)
 {
-   iq25 B;
-   B.val = _IQ25exp(A.val);
-   return(B);
+    iq25 B;
+    B.val = _IQ25exp(A.val);
+    return(B);
 }
 
 inline iq24
 IQ24exp(const iq24 &A)
 {
-   iq24 B;
-   B.val = _IQ24exp(A.val);
-   return(B);
+    iq24 B;
+    B.val = _IQ24exp(A.val);
+    return(B);
 }
 
 inline iq23
 IQ23exp(const iq23 &A)
 {
-   iq23 B;
-   B.val = _IQ23exp(A.val);
-   return(B);
+    iq23 B;
+    B.val = _IQ23exp(A.val);
+    return(B);
 }
 
 inline iq22
 IQ22exp(const iq22 &A)
 {
-   iq22 B;
-   B.val = _IQ22exp(A.val);
-   return(B);
+    iq22 B;
+    B.val = _IQ22exp(A.val);
+    return(B);
 }
 
 inline iq21
 IQ21exp(const iq21 &A)
 {
-   iq21 B;
-   B.val = _IQ21exp(A.val);
-   return(B);
+    iq21 B;
+    B.val = _IQ21exp(A.val);
+    return(B);
 }
 
 inline iq20
 IQ20exp(const iq20 &A)
 {
-   iq20 B;
-   B.val = _IQ20exp(A.val);
-   return(B);
+    iq20 B;
+    B.val = _IQ20exp(A.val);
+    return(B);
 }
 
 inline iq19
 IQ19exp(const iq19 &A)
 {
-   iq19 B;
-   B.val = _IQ19exp(A.val);
-   return(B);
+    iq19 B;
+    B.val = _IQ19exp(A.val);
+    return(B);
 }
 
 inline iq18
 IQ18exp(const iq18 &A)
 {
-   iq18 B;
-   B.val = _IQ18exp(A.val);
-   return(B);
+    iq18 B;
+    B.val = _IQ18exp(A.val);
+    return(B);
 }
 
 inline iq17
 IQ17exp(const iq17 &A)
 {
-   iq17 B;
-   B.val = _IQ17exp(A.val);
-   return(B);
+    iq17 B;
+    B.val = _IQ17exp(A.val);
+    return(B);
 }
 
 inline iq16
 IQ16exp(const iq16 &A)
 {
-   iq16 B;
-   B.val = _IQ16exp(A.val);
-   return(B);
+    iq16 B;
+    B.val = _IQ16exp(A.val);
+    return(B);
 }
 
 inline iq15
 IQ15exp(const iq15 &A)
 {
-   iq15 B;
-   B.val = _IQ15exp(A.val);
-   return(B);
+    iq15 B;
+    B.val = _IQ15exp(A.val);
+    return(B);
 }
 
 inline iq14
 IQ14exp(const iq14 &A)
 {
-   iq14 B;
-   B.val = _IQ14exp(A.val);
-   return(B);
+    iq14 B;
+    B.val = _IQ14exp(A.val);
+    return(B);
 }
 
 inline iq13
 IQ13exp(const iq13 &A)
 {
-   iq13 B;
-   B.val = _IQ13exp(A.val);
-   return(B);
+    iq13 B;
+    B.val = _IQ13exp(A.val);
+    return(B);
 }
 
 inline iq12
 IQ12exp(const iq12 &A)
 {
-   iq12 B;
-   B.val = _IQ12exp(A.val);
-   return(B);
+    iq12 B;
+    B.val = _IQ12exp(A.val);
+    return(B);
 }
 
 inline iq11
 IQ11exp(const iq11 &A)
 {
-   iq11 B;
-   B.val = _IQ11exp(A.val);
-   return(B);
+    iq11 B;
+    B.val = _IQ11exp(A.val);
+    return(B);
 }
 
 inline iq10
 IQ10exp(const iq10 &A)
 {
-   iq10 B;
-   B.val = _IQ10exp(A.val);
-   return(B);
+    iq10 B;
+    B.val = _IQ10exp(A.val);
+    return(B);
 }
 
 inline iq9
 IQ9exp(const iq9 &A)
 {
-   iq9 B;
-   B.val = _IQ9exp(A.val);
-   return(B);
+    iq9 B;
+    B.val = _IQ9exp(A.val);
+    return(B);
 }
 
 inline iq8
 IQ8exp(const iq8 &A)
 {
-   iq8 B;
-   B.val = _IQ8exp(A.val);
-   return(B);
+    iq8 B;
+    B.val = _IQ8exp(A.val);
+    return(B);
 }
 
 inline iq7
 IQ7exp(const iq7 &A)
 {
-   iq7 B;
-   B.val = _IQ7exp(A.val);
-   return(B);
+    iq7 B;
+    B.val = _IQ7exp(A.val);
+    return(B);
 }
 
 inline iq6
 IQ6exp(const iq6 &A)
 {
-   iq6 B;
-   B.val = _IQ6exp(A.val);
-   return(B);
+    iq6 B;
+    B.val = _IQ6exp(A.val);
+    return(B);
 }
 
 inline iq5
 IQ5exp(const iq5 &A)
 {
-   iq5 B;
-   B.val = _IQ5exp(A.val);
-   return(B);
+    iq5 B;
+    B.val = _IQ5exp(A.val);
+    return(B);
 }
 
 inline iq4
 IQ4exp(const iq4 &A)
 {
-   iq4 B;
-   B.val = _IQ4exp(A.val);
-   return(B);
+    iq4 B;
+    B.val = _IQ4exp(A.val);
+    return(B);
 }
 
 inline iq3
 IQ3exp(const iq3 &A)
 {
-   iq3 B;
-   B.val = _IQ3exp(A.val);
-   return(B);
+    iq3 B;
+    B.val = _IQ3exp(A.val);
+    return(B);
 }
 
 inline iq2
 IQ2exp(const iq2 &A)
 {
-   iq2 B;
-   B.val = _IQ2exp(A.val);
-   return(B);
+    iq2 B;
+    B.val = _IQ2exp(A.val);
+    return(B);
 }
 
 inline iq1
 IQ1exp(const iq1 &A)
 {
-   iq1 B;
-   B.val = _IQ1exp(A.val);
-   return(B);
+    iq1 B;
+    B.val = _IQ1exp(A.val);
+    return(B);
 }
 
 inline iq
 IQexp(const iq &A)
 {
-   iq B;
-   B.val = _IQexp(A.val);
-   return(B);
+    iq B;
+    B.val = _IQexp(A.val);
+    return(B);
 }
 
 //*****************************************************************************
@@ -8193,249 +8348,249 @@ IQexp(const iq &A)
 inline iq30
 IQ30exp2(const iq30 &A)
 {
-   iq30 B;
-   B.val = _IQ30exp2(A.val);
-   return(B);
+    iq30 B;
+    B.val = _IQ30exp2(A.val);
+    return(B);
 }
 
 inline iq29
 IQ29exp2(const iq29 &A)
 {
-   iq29 B;
-   B.val = _IQ29exp2(A.val);
-   return(B);
+    iq29 B;
+    B.val = _IQ29exp2(A.val);
+    return(B);
 }
 
 inline iq28
 IQ28exp2(const iq28 &A)
 {
-   iq28 B;
-   B.val = _IQ28exp2(A.val);
-   return(B);
+    iq28 B;
+    B.val = _IQ28exp2(A.val);
+    return(B);
 }
 
 inline iq27
 IQ27exp2(const iq27 &A)
 {
-   iq27 B;
-   B.val = _IQ27exp2(A.val);
-   return(B);
+    iq27 B;
+    B.val = _IQ27exp2(A.val);
+    return(B);
 }
 
 inline iq26
 IQ26exp2(const iq26 &A)
 {
-   iq26 B;
-   B.val = _IQ26exp2(A.val);
-   return(B);
+    iq26 B;
+    B.val = _IQ26exp2(A.val);
+    return(B);
 }
 
 inline iq25
 IQ25exp2(const iq25 &A)
 {
-   iq25 B;
-   B.val = _IQ25exp2(A.val);
-   return(B);
+    iq25 B;
+    B.val = _IQ25exp2(A.val);
+    return(B);
 }
 
 inline iq24
 IQ24exp2(const iq24 &A)
 {
-   iq24 B;
-   B.val = _IQ24exp2(A.val);
-   return(B);
+    iq24 B;
+    B.val = _IQ24exp2(A.val);
+    return(B);
 }
 
 inline iq23
 IQ23exp2(const iq23 &A)
 {
-   iq23 B;
-   B.val = _IQ23exp2(A.val);
-   return(B);
+    iq23 B;
+    B.val = _IQ23exp2(A.val);
+    return(B);
 }
 
 inline iq22
 IQ22exp2(const iq22 &A)
 {
-   iq22 B;
-   B.val = _IQ22exp2(A.val);
-   return(B);
+    iq22 B;
+    B.val = _IQ22exp2(A.val);
+    return(B);
 }
 
 inline iq21
 IQ21exp2(const iq21 &A)
 {
-   iq21 B;
-   B.val = _IQ21exp2(A.val);
-   return(B);
+    iq21 B;
+    B.val = _IQ21exp2(A.val);
+    return(B);
 }
 
 inline iq20
 IQ20exp2(const iq20 &A)
 {
-   iq20 B;
-   B.val = _IQ20exp2(A.val);
-   return(B);
+    iq20 B;
+    B.val = _IQ20exp2(A.val);
+    return(B);
 }
 
 inline iq19
 IQ19exp2(const iq19 &A)
 {
-   iq19 B;
-   B.val = _IQ19exp2(A.val);
-   return(B);
+    iq19 B;
+    B.val = _IQ19exp2(A.val);
+    return(B);
 }
 
 inline iq18
 IQ18exp2(const iq18 &A)
 {
-   iq18 B;
-   B.val = _IQ18exp2(A.val);
-   return(B);
+    iq18 B;
+    B.val = _IQ18exp2(A.val);
+    return(B);
 }
 
 inline iq17
 IQ17exp2(const iq17 &A)
 {
-   iq17 B;
-   B.val = _IQ17exp2(A.val);
-   return(B);
+    iq17 B;
+    B.val = _IQ17exp2(A.val);
+    return(B);
 }
 
 inline iq16
 IQ16exp2(const iq16 &A)
 {
-   iq16 B;
-   B.val = _IQ16exp2(A.val);
-   return(B);
+    iq16 B;
+    B.val = _IQ16exp2(A.val);
+    return(B);
 }
 
 inline iq15
 IQ15exp2(const iq15 &A)
 {
-   iq15 B;
-   B.val = _IQ15exp2(A.val);
-   return(B);
+    iq15 B;
+    B.val = _IQ15exp2(A.val);
+    return(B);
 }
 
 inline iq14
 IQ14exp2(const iq14 &A)
 {
-   iq14 B;
-   B.val = _IQ14exp2(A.val);
-   return(B);
+    iq14 B;
+    B.val = _IQ14exp2(A.val);
+    return(B);
 }
 
 inline iq13
 IQ13exp2(const iq13 &A)
 {
-   iq13 B;
-   B.val = _IQ13exp2(A.val);
-   return(B);
+    iq13 B;
+    B.val = _IQ13exp2(A.val);
+    return(B);
 }
 
 inline iq12
 IQ12exp2(const iq12 &A)
 {
-   iq12 B;
-   B.val = _IQ12exp2(A.val);
-   return(B);
+    iq12 B;
+    B.val = _IQ12exp2(A.val);
+    return(B);
 }
 
 inline iq11
 IQ11exp2(const iq11 &A)
 {
-   iq11 B;
-   B.val = _IQ11exp2(A.val);
-   return(B);
+    iq11 B;
+    B.val = _IQ11exp2(A.val);
+    return(B);
 }
 
 inline iq10
 IQ10exp2(const iq10 &A)
 {
-   iq10 B;
-   B.val = _IQ10exp2(A.val);
-   return(B);
+    iq10 B;
+    B.val = _IQ10exp2(A.val);
+    return(B);
 }
 
 inline iq9
 IQ9exp2(const iq9 &A)
 {
-   iq9 B;
-   B.val = _IQ9exp2(A.val);
-   return(B);
+    iq9 B;
+    B.val = _IQ9exp2(A.val);
+    return(B);
 }
 
 inline iq8
 IQ8exp2(const iq8 &A)
 {
-   iq8 B;
-   B.val = _IQ8exp2(A.val);
-   return(B);
+    iq8 B;
+    B.val = _IQ8exp2(A.val);
+    return(B);
 }
 
 inline iq7
 IQ7exp2(const iq7 &A)
 {
-   iq7 B;
-   B.val = _IQ7exp2(A.val);
-   return(B);
+    iq7 B;
+    B.val = _IQ7exp2(A.val);
+    return(B);
 }
 
 inline iq6
 IQ6exp2(const iq6 &A)
 {
-   iq6 B;
-   B.val = _IQ6exp2(A.val);
-   return(B);
+    iq6 B;
+    B.val = _IQ6exp2(A.val);
+    return(B);
 }
 
 inline iq5
 IQ5exp2(const iq5 &A)
 {
-   iq5 B;
-   B.val = _IQ5exp2(A.val);
-   return(B);
+    iq5 B;
+    B.val = _IQ5exp2(A.val);
+    return(B);
 }
 
 inline iq4
 IQ4exp2(const iq4 &A)
 {
-   iq4 B;
-   B.val = _IQ4exp2(A.val);
-   return(B);
+    iq4 B;
+    B.val = _IQ4exp2(A.val);
+    return(B);
 }
 
 inline iq3
 IQ3exp2(const iq3 &A)
 {
-   iq3 B;
-   B.val = _IQ3exp2(A.val);
-   return(B);
+    iq3 B;
+    B.val = _IQ3exp2(A.val);
+    return(B);
 }
 
 inline iq2
 IQ2exp2(const iq2 &A)
 {
-   iq2 B;
-   B.val = _IQ2exp2(A.val);
-   return(B);
+    iq2 B;
+    B.val = _IQ2exp2(A.val);
+    return(B);
 }
 
 inline iq1
 IQ1exp2(const iq1 &A)
 {
-   iq1 B;
-   B.val = _IQ1exp2(A.val);
-   return(B);
+    iq1 B;
+    B.val = _IQ1exp2(A.val);
+    return(B);
 }
 
 inline iq
 IQexp2(const iq &A)
 {
-   iq B;
-   B.val = _IQexp2(A.val);
-   return(B);
+    iq B;
+    B.val = _IQexp2(A.val);
+    return(B);
 }
 
 //*****************************************************************************
@@ -8446,249 +8601,249 @@ IQexp2(const iq &A)
 inline iq30
 IQ30mag(const iq30 &A, const iq30 &B)
 {
-   iq30 C;
-   C.val = _IQ30mag(A.val, B.val);
-   return(C);
+    iq30 C;
+    C.val = _IQ30mag(A.val, B.val);
+    return(C);
 }
 
 inline iq29
 IQ29mag(const iq29 &A, const iq29 &B)
 {
-   iq29 C;
-   C.val = _IQ29mag(A.val, B.val);
-   return(C);
+    iq29 C;
+    C.val = _IQ29mag(A.val, B.val);
+    return(C);
 }
 
 inline iq28
 IQ28mag(const iq28 &A, const iq28 &B)
 {
-   iq28 C;
-   C.val = _IQ28mag(A.val, B.val);
-   return(C);
+    iq28 C;
+    C.val = _IQ28mag(A.val, B.val);
+    return(C);
 }
 
 inline iq27
 IQ27mag(const iq27 &A, const iq27 &B)
 {
-   iq27 C;
-   C.val = _IQ27mag(A.val, B.val);
-   return(C);
+    iq27 C;
+    C.val = _IQ27mag(A.val, B.val);
+    return(C);
 }
 
 inline iq26
 IQ26mag(const iq26 &A, const iq26 &B)
 {
-   iq26 C;
-   C.val = _IQ26mag(A.val, B.val);
-   return(C);
+    iq26 C;
+    C.val = _IQ26mag(A.val, B.val);
+    return(C);
 }
 
 inline iq25
 IQ25mag(const iq25 &A, const iq25 &B)
 {
-   iq25 C;
-   C.val = _IQ25mag(A.val, B.val);
-   return(C);
+    iq25 C;
+    C.val = _IQ25mag(A.val, B.val);
+    return(C);
 }
 
 inline iq24
 IQ24mag(const iq24 &A, const iq24 &B)
 {
-   iq24 C;
-   C.val = _IQ24mag(A.val, B.val);
-   return(C);
+    iq24 C;
+    C.val = _IQ24mag(A.val, B.val);
+    return(C);
 }
 
 inline iq23
 IQ23mag(const iq23 &A, const iq23 &B)
 {
-   iq23 C;
-   C.val = _IQ23mag(A.val, B.val);
-   return(C);
+    iq23 C;
+    C.val = _IQ23mag(A.val, B.val);
+    return(C);
 }
 
 inline iq22
 IQ22mag(const iq22 &A, const iq22 &B)
 {
-   iq22 C;
-   C.val = _IQ22mag(A.val, B.val);
-   return(C);
+    iq22 C;
+    C.val = _IQ22mag(A.val, B.val);
+    return(C);
 }
 
 inline iq21
 IQ21mag(const iq21 &A, const iq21 &B)
 {
-   iq21 C;
-   C.val = _IQ21mag(A.val, B.val);
-   return(C);
+    iq21 C;
+    C.val = _IQ21mag(A.val, B.val);
+    return(C);
 }
 
 inline iq20
 IQ20mag(const iq20 &A, const iq20 &B)
 {
-   iq20 C;
-   C.val = _IQ20mag(A.val, B.val);
-   return(C);
+    iq20 C;
+    C.val = _IQ20mag(A.val, B.val);
+    return(C);
 }
 
 inline iq19
 IQ19mag(const iq19 &A, const iq19 &B)
 {
-   iq19 C;
-   C.val = _IQ19mag(A.val, B.val);
-   return(C);
+    iq19 C;
+    C.val = _IQ19mag(A.val, B.val);
+    return(C);
 }
 
 inline iq18
 IQ18mag(const iq18 &A, const iq18 &B)
 {
-   iq18 C;
-   C.val = _IQ18mag(A.val, B.val);
-   return(C);
+    iq18 C;
+    C.val = _IQ18mag(A.val, B.val);
+    return(C);
 }
 
 inline iq17
 IQ17mag(const iq17 &A, const iq17 &B)
 {
-   iq17 C;
-   C.val = _IQ17mag(A.val, B.val);
-   return(C);
+    iq17 C;
+    C.val = _IQ17mag(A.val, B.val);
+    return(C);
 }
 
 inline iq16
 IQ16mag(const iq16 &A, const iq16 &B)
 {
-   iq16 C;
-   C.val = _IQ16mag(A.val, B.val);
-   return(C);
+    iq16 C;
+    C.val = _IQ16mag(A.val, B.val);
+    return(C);
 }
 
 inline iq15
 IQ15mag(const iq15 &A, const iq15 &B)
 {
-   iq15 C;
-   C.val = _IQ15mag(A.val, B.val);
-   return(C);
+    iq15 C;
+    C.val = _IQ15mag(A.val, B.val);
+    return(C);
 }
 
 inline iq14
 IQ14mag(const iq14 &A, const iq14 &B)
 {
-   iq14 C;
-   C.val = _IQ14mag(A.val, B.val);
-   return(C);
+    iq14 C;
+    C.val = _IQ14mag(A.val, B.val);
+    return(C);
 }
 
 inline iq13
 IQ13mag(const iq13 &A, const iq13 &B)
 {
-   iq13 C;
-   C.val = _IQ13mag(A.val, B.val);
-   return(C);
+    iq13 C;
+    C.val = _IQ13mag(A.val, B.val);
+    return(C);
 }
 
 inline iq12
 IQ12mag(const iq12 &A, const iq12 &B)
 {
-   iq12 C;
-   C.val = _IQ12mag(A.val, B.val);
-   return(C);
+    iq12 C;
+    C.val = _IQ12mag(A.val, B.val);
+    return(C);
 }
 
 inline iq11
 IQ11mag(const iq11 &A, const iq11 &B)
 {
-   iq11 C;
-   C.val = _IQ11mag(A.val, B.val);
-   return(C);
+    iq11 C;
+    C.val = _IQ11mag(A.val, B.val);
+    return(C);
 }
 
 inline iq10
 IQ10mag(const iq10 &A, const iq10 &B)
 {
-   iq10 C;
-   C.val = _IQ10mag(A.val, B.val);
-   return(C);
+    iq10 C;
+    C.val = _IQ10mag(A.val, B.val);
+    return(C);
 }
 
 inline iq9
 IQ9mag(const iq9 &A, const iq9 &B)
 {
-   iq9 C;
-   C.val = _IQ9mag(A.val, B.val);
-   return(C);
+    iq9 C;
+    C.val = _IQ9mag(A.val, B.val);
+    return(C);
 }
 
 inline iq8
 IQ8mag(const iq8 &A, const iq8 &B)
 {
-   iq8 C;
-   C.val = _IQ8mag(A.val, B.val);
-   return(C);
+    iq8 C;
+    C.val = _IQ8mag(A.val, B.val);
+    return(C);
 }
 
 inline iq7
 IQ7mag(const iq7 &A, const iq7 &B)
 {
-   iq7 C;
-   C.val = _IQ7mag(A.val, B.val);
-   return(C);
+    iq7 C;
+    C.val = _IQ7mag(A.val, B.val);
+    return(C);
 }
 
 inline iq6
 IQ6mag(const iq6 &A, const iq6 &B)
 {
-   iq6 C;
-   C.val = _IQ6mag(A.val, B.val);
-   return(C);
+    iq6 C;
+    C.val = _IQ6mag(A.val, B.val);
+    return(C);
 }
 
 inline iq5
 IQ5mag(const iq5 &A, const iq5 &B)
 {
-   iq5 C;
-   C.val = _IQ5mag(A.val, B.val);
-   return(C);
+    iq5 C;
+    C.val = _IQ5mag(A.val, B.val);
+    return(C);
 }
 
 inline iq4
 IQ4mag(const iq4 &A, const iq4 &B)
 {
-   iq4 C;
-   C.val = _IQ4mag(A.val, B.val);
-   return(C);
+    iq4 C;
+    C.val = _IQ4mag(A.val, B.val);
+    return(C);
 }
 
 inline iq3
 IQ3mag(const iq3 &A, const iq3 &B)
 {
-   iq3 C;
-   C.val = _IQ3mag(A.val, B.val);
-   return(C);
+    iq3 C;
+    C.val = _IQ3mag(A.val, B.val);
+    return(C);
 }
 
 inline iq2
 IQ2mag(const iq2 &A, const iq2 &B)
 {
-   iq2 C;
-   C.val = _IQ2mag(A.val, B.val);
-   return(C);
+    iq2 C;
+    C.val = _IQ2mag(A.val, B.val);
+    return(C);
 }
 
 inline iq1
 IQ1mag(const iq1 &A, const iq1 &B)
 {
-   iq1 C;
-   C.val = _IQ1mag(A.val, B.val);
-   return(C);
+    iq1 C;
+    C.val = _IQ1mag(A.val, B.val);
+    return(C);
 }
 
 inline iq
 IQmag(const iq &A, const iq &B)
 {
-   iq C;
-   C.val = _IQmag(A.val, B.val);
-   return(C);
+    iq C;
+    C.val = _IQmag(A.val, B.val);
+    return(C);
 }
 
 //*****************************************************************************
@@ -8699,177 +8854,177 @@ IQmag(const iq &A, const iq &B)
 inline iq30
 IQ30abs(const iq30 &A)
 {
-   iq30 B;
-   B.val = _IQ30abs(A.val);
-   return(B);
+    iq30 B;
+    B.val = _IQ30abs(A.val);
+    return(B);
 }
 
 inline iq29
 IQ29abs(const iq29 &A)
 {
-   iq29 B;
-   B.val = _IQ29abs(A.val);
-   return(B);
+    iq29 B;
+    B.val = _IQ29abs(A.val);
+    return(B);
 }
 
 inline iq28
 IQ28abs(const iq28 &A)
 {
-   iq28 B;
-   B.val = _IQ28abs(A.val);
-   return(B);
+    iq28 B;
+    B.val = _IQ28abs(A.val);
+    return(B);
 }
 
 inline iq27
 IQ27abs(const iq27 &A)
 {
-   iq27 B;
-   B.val = _IQ27abs(A.val);
-   return(B);
+    iq27 B;
+    B.val = _IQ27abs(A.val);
+    return(B);
 }
 
 inline iq26
 IQ26abs(const iq26 &A)
 {
-   iq26 B;
-   B.val = _IQ26abs(A.val);
-   return(B);
+    iq26 B;
+    B.val = _IQ26abs(A.val);
+    return(B);
 }
 
 inline iq25
 IQ25abs(const iq25 &A)
 {
-   iq25 B;
-   B.val = _IQ25abs(A.val);
-   return(B);
+    iq25 B;
+    B.val = _IQ25abs(A.val);
+    return(B);
 }
 
 inline iq24
 IQ24abs(const iq24 &A)
 {
-   iq24 B;
-   B.val = _IQ24abs(A.val);
-   return(B);
+    iq24 B;
+    B.val = _IQ24abs(A.val);
+    return(B);
 }
 
 inline iq23
 IQ23abs(const iq23 &A)
 {
-   iq23 B;
-   B.val = _IQ23abs(A.val);
-   return(B);
+    iq23 B;
+    B.val = _IQ23abs(A.val);
+    return(B);
 }
 
 inline iq22
 IQ22abs(const iq22 &A)
 {
-   iq22 B;
-   B.val = _IQ22abs(A.val);
-   return(B);
+    iq22 B;
+    B.val = _IQ22abs(A.val);
+    return(B);
 }
 
 inline iq21
 IQ21abs(const iq21 &A)
 {
-   iq21 B;
-   B.val = _IQ21abs(A.val);
-   return(B);
+    iq21 B;
+    B.val = _IQ21abs(A.val);
+    return(B);
 }
 
 inline iq20
 IQ20abs(const iq20 &A)
 {
-   iq20 B;
-   B.val = _IQ20abs(A.val);
-   return(B);
+    iq20 B;
+    B.val = _IQ20abs(A.val);
+    return(B);
 }
 
 inline iq19
 IQ19abs(const iq19 &A)
 {
-   iq19 B;
-   B.val = _IQ19abs(A.val);
-   return(B);
+    iq19 B;
+    B.val = _IQ19abs(A.val);
+    return(B);
 }
 
 inline iq18
 IQ18abs(const iq18 &A)
 {
-   iq18 B;
-   B.val = _IQ18abs(A.val);
-   return(B);
+    iq18 B;
+    B.val = _IQ18abs(A.val);
+    return(B);
 }
 
 inline iq17
 IQ17abs(const iq17 &A)
 {
-   iq17 B;
-   B.val = _IQ17abs(A.val);
-   return(B);
+    iq17 B;
+    B.val = _IQ17abs(A.val);
+    return(B);
 }
 
 inline iq16
 IQ16abs(const iq16 &A)
 {
-   iq16 B;
-   B.val = _IQ16abs(A.val);
-   return(B);
+    iq16 B;
+    B.val = _IQ16abs(A.val);
+    return(B);
 }
 
 inline iq15
 IQ15abs(const iq15 &A)
 {
-   iq15 B;
-   B.val = _IQ15abs(A.val);
-   return(B);
+    iq15 B;
+    B.val = _IQ15abs(A.val);
+    return(B);
 }
 
 inline iq14
 IQ14abs(const iq14 &A)
 {
-   iq14 B;
-   B.val = _IQ14abs(A.val);
-   return(B);
+    iq14 B;
+    B.val = _IQ14abs(A.val);
+    return(B);
 }
 
 inline iq13
 IQ13abs(const iq13 &A)
 {
-   iq13 B;
-   B.val = _IQ13abs(A.val);
-   return(B);
+    iq13 B;
+    B.val = _IQ13abs(A.val);
+    return(B);
 }
 
 inline iq12
 IQ12abs(const iq12 &A)
 {
-   iq12 B;
-   B.val = _IQ12abs(A.val);
-   return(B);
+    iq12 B;
+    B.val = _IQ12abs(A.val);
+    return(B);
 }
 
 inline iq11
 IQ11abs(const iq11 &A)
 {
-   iq11 B;
-   B.val = _IQ11abs(A.val);
-   return(B);
+    iq11 B;
+    B.val = _IQ11abs(A.val);
+    return(B);
 }
 
 inline iq10
 IQ10abs(const iq10 &A)
 {
-   iq10 B;
-   B.val = _IQ10abs(A.val);
-   return(B);
+    iq10 B;
+    B.val = _IQ10abs(A.val);
+    return(B);
 }
 
 inline iq
 IQabs(const iq &A)
 {
-   iq B;
-   B.val = _IQabs(A.val);
-   return(B);
+    iq B;
+    B.val = _IQabs(A.val);
+    return(B);
 }
 
 //*****************************************************************************
@@ -8880,218 +9035,218 @@ IQabs(const iq &A)
 inline iq30 &
 iq30::operator=(const iq30 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq29 &
 iq29::operator=(const iq29 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq28 &
 iq28::operator=(const iq28 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq27 &
 iq27::operator=(const iq27 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq26 &
 iq26::operator=(const iq26 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq25 &
 iq25::operator=(const iq25 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq24 &
 iq24::operator=(const iq24 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq23 &
 iq23::operator=(const iq23 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq22 &
 iq22::operator=(const iq22 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq21 &
 iq21::operator=(const iq21 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq20 &
 iq20::operator=(const iq20 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq19 &
 iq19::operator=(const iq19 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq18 &
 iq18::operator=(const iq18 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq17 &
 iq17::operator=(const iq17 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq16 &
 iq16::operator=(const iq16 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq15 &
 iq15::operator=(const iq15 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq14 &
 iq14::operator=(const iq14 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq13 &
 iq13::operator=(const iq13 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq12 &
 iq12::operator=(const iq12 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq11 &
 iq11::operator=(const iq11 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq10 &
 iq10::operator=(const iq10 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq9 &
 iq9::operator=(const iq9 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq8 &
 iq8::operator=(const iq8 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq7 &
 iq7::operator=(const iq7 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq6 &
 iq6::operator=(const iq6 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq5 &
 iq5::operator=(const iq5 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq4 &
 iq4::operator=(const iq4 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq3 &
 iq3::operator=(const iq3 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq2 &
 iq2::operator=(const iq2 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq1 &
 iq1::operator=(const iq1 &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 inline iq &
 iq::operator=(const iq &A)
 {
-   val = A.val;
-   return(*this);
+    val = A.val;
+    return(*this);
 }
 
 //*****************************************************************************
@@ -9102,466 +9257,466 @@ iq::operator=(const iq &A)
 inline iq30
 operator+(const iq30 &A, const iq30 &B)
 {
-   iq30 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq30 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq30 &
 iq30::operator+=(const iq30 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq29
 operator+(const iq29 &A, const iq29 &B)
 {
-   iq29 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq29 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq29 &
 iq29::operator+=(const iq29 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq28
 operator+(const iq28 &A, const iq28 &B)
 {
-   iq28 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq28 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq28 &
 iq28::operator+=(const iq28 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq27
 operator+(const iq27 &A, const iq27 &B)
 {
-   iq27 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq27 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq27 &
 iq27::operator+=(const iq27 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq26
 operator+(const iq26 &A, const iq26 &B)
 {
-   iq26 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq26 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq26 &
 iq26::operator+=(const iq26 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq25
 operator+(const iq25 &A, const iq25 &B)
 {
-   iq25 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq25 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq25 &
 iq25::operator+=(const iq25 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq24
 operator+(const iq24 &A, const iq24 &B)
 {
-   iq24 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq24 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq24 &
 iq24::operator+=(const iq24 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq23
 operator+(const iq23 &A, const iq23 &B)
 {
-   iq23 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq23 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq23 &
 iq23::operator+=(const iq23 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq22
 operator+(const iq22 &A, const iq22 &B)
 {
-   iq22 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq22 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq22 &
 iq22::operator+=(const iq22 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq21
 operator+(const iq21 &A, const iq21 &B)
 {
-   iq21 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq21 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq21 &
 iq21::operator+=(const iq21 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq20
 operator+(const iq20 &A, const iq20 &B)
 {
-   iq20 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq20 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq20 &
 iq20::operator+=(const iq20 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq19
 operator+(const iq19 &A, const iq19 &B)
 {
-   iq19 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq19 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq19 &
 iq19::operator+=(const iq19 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq18
 operator+(const iq18 &A, const iq18 &B)
 {
-   iq18 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq18 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq18 &
 iq18::operator+=(const iq18 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq17
 operator+(const iq17 &A, const iq17 &B)
 {
-   iq17 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq17 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq17 &
 iq17::operator+=(const iq17 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq16
 operator+(const iq16 &A, const iq16 &B)
 {
-   iq16 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq16 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq16 &
 iq16::operator+=(const iq16 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq15
 operator+(const iq15 &A, const iq15 &B)
 {
-   iq15 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq15 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq15 &
 iq15::operator+=(const iq15 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq14
 operator+(const iq14 &A, const iq14 &B)
 {
-   iq14 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq14 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq14 &
 iq14::operator+=(const iq14 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq13
 operator+(const iq13 &A, const iq13 &B)
 {
-   iq13 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq13 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq13 &
 iq13::operator+=(const iq13 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq12
 operator+(const iq12 &A, const iq12 &B)
 {
-   iq12 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq12 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq12 &
 iq12::operator+=(const iq12 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq11
 operator+(const iq11 &A, const iq11 &B)
 {
-   iq11 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq11 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq11 &
 iq11::operator+=(const iq11 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq10
 operator+(const iq10 &A, const iq10 &B)
 {
-   iq10 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq10 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq10 &
 iq10::operator+=(const iq10 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq9
 operator+(const iq9 &A, const iq9 &B)
 {
-   iq9 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq9 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq9 &
 iq9::operator+=(const iq9 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq8
 operator+(const iq8 &A, const iq8 &B)
 {
-   iq8 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq8 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq8 &
 iq8::operator+=(const iq8 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq7
 operator+(const iq7 &A, const iq7 &B)
 {
-   iq7 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq7 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq7 &
 iq7::operator+=(const iq7 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq6
 operator+(const iq6 &A, const iq6 &B)
 {
-   iq6 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq6 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq6 &
 iq6::operator+=(const iq6 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq5
 operator+(const iq5 &A, const iq5 &B)
 {
-   iq5 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq5 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq5 &
 iq5::operator+=(const iq5 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq4
 operator+(const iq4 &A, const iq4 &B)
 {
-   iq4 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq4 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq4 &
 iq4::operator+=(const iq4 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq3
 operator+(const iq3 &A, const iq3 &B)
 {
-   iq3 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq3 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq3 &
 iq3::operator+=(const iq3 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq2
 operator+(const iq2 &A, const iq2 &B)
 {
-   iq2 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq2 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq2 &
 iq2::operator+=(const iq2 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq1
 operator+(const iq1 &A, const iq1 &B)
 {
-   iq1 C;
-   C.val = A.val + B.val;
-   return(C);
+    iq1 C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq1 &
 iq1::operator+=(const iq1 &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 inline iq
 operator+(const iq &A, const iq &B)
 {
-   iq C;
-   C.val = A.val + B.val;
-   return(C);
+    iq C;
+    C.val = A.val + B.val;
+    return(C);
 }
 
 inline iq &
 iq::operator+=(const iq &A)
 {
-   val += A.val;
-   return(*this);
+    val += A.val;
+    return(*this);
 }
 
 //*****************************************************************************
@@ -9572,714 +9727,714 @@ iq::operator+=(const iq &A)
 inline iq30
 operator-(const iq30 &A, const iq30 &B)
 {
-   iq30 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq30 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq30
 operator-(const iq30 &A)
 {
-   iq30 B;
-   B.val = - A.val;
-   return(B);
+    iq30 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq30 &
 iq30::operator-=(const iq30 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq29
 operator-(const iq29 &A, const iq29 &B)
 {
-   iq29 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq29 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq29
 operator-(const iq29 &A)
 {
-   iq29 B;
-   B.val = - A.val;
-   return(B);
+    iq29 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq29 &
 iq29::operator-=(const iq29 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq28
 operator-(const iq28 &A, const iq28 &B)
 {
-   iq28 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq28 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq28
 operator-(const iq28 &A)
 {
-   iq28 B;
-   B.val = - A.val;
-   return(B);
+    iq28 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq28 &
 iq28::operator-=(const iq28 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq27
 operator-(const iq27 &A, const iq27 &B)
 {
-   iq27 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq27 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq27
 operator-(const iq27 &A)
 {
-   iq27 B;
-   B.val = - A.val;
-   return(B);
+    iq27 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq27 &
 iq27::operator-=(const iq27 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq26
 operator-(const iq26 &A, const iq26 &B)
 {
-   iq26 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq26 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq26
 operator-(const iq26 &A)
 {
-   iq26 B;
-   B.val = - A.val;
-   return(B);
+    iq26 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq26 &
 iq26::operator-=(const iq26 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq25
 operator-(const iq25 &A, const iq25 &B)
 {
-   iq25 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq25 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq25
 operator-(const iq25 &A)
 {
-   iq25 B;
-   B.val = - A.val;
-   return(B);
+    iq25 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq25 &
 iq25::operator-=(const iq25 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq24
 operator-(const iq24 &A, const iq24 &B)
 {
-   iq24 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq24 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq24
 operator-(const iq24 &A)
 {
-   iq24 B;
-   B.val = - A.val;
-   return(B);
+    iq24 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq24 &
 iq24::operator-=(const iq24 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq23
 operator-(const iq23 &A, const iq23 &B)
 {
-   iq23 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq23 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq23
 operator-(const iq23 &A)
 {
-   iq23 B;
-   B.val = - A.val;
-   return(B);
+    iq23 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq23 &
 iq23::operator-=(const iq23 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq22
 operator-(const iq22 &A, const iq22 &B)
 {
-   iq22 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq22 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq22
 operator-(const iq22 &A)
 {
-   iq22 B;
-   B.val = - A.val;
-   return(B);
+    iq22 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq22 &
 iq22::operator-=(const iq22 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq21
 operator-(const iq21 &A, const iq21 &B)
 {
-   iq21 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq21 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq21
 operator-(const iq21 &A)
 {
-   iq21 B;
-   B.val = - A.val;
-   return(B);
+    iq21 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq21 &
 iq21::operator-=(const iq21 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq20
 operator-(const iq20 &A, const iq20 &B)
 {
-   iq20 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq20 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq20
 operator-(const iq20 &A)
 {
-   iq20 B;
-   B.val = - A.val;
-   return(B);
+    iq20 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq20 &
 iq20::operator-=(const iq20 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq19
 operator-(const iq19 &A, const iq19 &B)
 {
-   iq19 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq19 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq19
 operator-(const iq19 &A)
 {
-   iq19 B;
-   B.val = - A.val;
-   return(B);
+    iq19 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq19 &
 iq19::operator-=(const iq19 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq18
 operator-(const iq18 &A, const iq18 &B)
 {
-   iq18 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq18 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq18
 operator-(const iq18 &A)
 {
-   iq18 B;
-   B.val = - A.val;
-   return(B);
+    iq18 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq18 &
 iq18::operator-=(const iq18 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq17
 operator-(const iq17 &A, const iq17 &B)
 {
-   iq17 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq17 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq17
 operator-(const iq17 &A)
 {
-   iq17 B;
-   B.val = - A.val;
-   return(B);
+    iq17 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq17 &
 iq17::operator-=(const iq17 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq16
 operator-(const iq16 &A, const iq16 &B)
 {
-   iq16 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq16 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq16
 operator-(const iq16 &A)
 {
-   iq16 B;
-   B.val = - A.val;
-   return(B);
+    iq16 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq16 &
 iq16::operator-=(const iq16 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq15
 operator-(const iq15 &A, const iq15 &B)
 {
-   iq15 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq15 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq15
 operator-(const iq15 &A)
 {
-   iq15 B;
-   B.val = - A.val;
-   return(B);
+    iq15 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq15 &
 iq15::operator-=(const iq15 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq14
 operator-(const iq14 &A, const iq14 &B)
 {
-   iq14 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq14 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq14
 operator-(const iq14 &A)
 {
-   iq14 B;
-   B.val = - A.val;
-   return(B);
+    iq14 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq14 &
 iq14::operator-=(const iq14 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq13
 operator-(const iq13 &A, const iq13 &B)
 {
-   iq13 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq13 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq13
 operator-(const iq13 &A)
 {
-   iq13 B;
-   B.val = - A.val;
-   return(B);
+    iq13 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq13 &
 iq13::operator-=(const iq13 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq12
 operator-(const iq12 &A, const iq12 &B)
 {
-   iq12 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq12 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq12
 operator-(const iq12 &A)
 {
-   iq12 B;
-   B.val = - A.val;
-   return(B);
+    iq12 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq12 &
 iq12::operator-=(const iq12 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq11
 operator-(const iq11 &A, const iq11 &B)
 {
-   iq11 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq11 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq11
 operator-(const iq11 &A)
 {
-   iq11 B;
-   B.val = - A.val;
-   return(B);
+    iq11 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq11 &
 iq11::operator-=(const iq11 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq10
 operator-(const iq10 &A, const iq10 &B)
 {
-   iq10 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq10 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq10
 operator-(const iq10 &A)
 {
-   iq10 B;
-   B.val = - A.val;
-   return(B);
+    iq10 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq10 &
 iq10::operator-=(const iq10 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq9
 operator-(const iq9 &A, const iq9 &B)
 {
-   iq9 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq9 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq9
 operator-(const iq9 &A)
 {
-   iq9 B;
-   B.val = - A.val;
-   return(B);
+    iq9 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq9 &
 iq9::operator-=(const iq9 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq8
 operator-(const iq8 &A, const iq8 &B)
 {
-   iq8 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq8 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq8
 operator-(const iq8 &A)
 {
-   iq8 B;
-   B.val = - A.val;
-   return(B);
+    iq8 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq8 &
 iq8::operator-=(const iq8 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq7
 operator-(const iq7 &A, const iq7 &B)
 {
-   iq7 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq7 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq7
 operator-(const iq7 &A)
 {
-   iq7 B;
-   B.val = - A.val;
-   return(B);
+    iq7 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq7 &
 iq7::operator-=(const iq7 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq6
 operator-(const iq6 &A, const iq6 &B)
 {
-   iq6 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq6 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq6
 operator-(const iq6 &A)
 {
-   iq6 B;
-   B.val = - A.val;
-   return(B);
+    iq6 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq6 &
 iq6::operator-=(const iq6 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq5
 operator-(const iq5 &A, const iq5 &B)
 {
-   iq5 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq5 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq5
 operator-(const iq5 &A)
 {
-   iq5 B;
-   B.val = - A.val;
-   return(B);
+    iq5 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq5 &
 iq5::operator-=(const iq5 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq4
 operator-(const iq4 &A, const iq4 &B)
 {
-   iq4 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq4 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq4
 operator-(const iq4 &A)
 {
-   iq4 B;
-   B.val = - A.val;
-   return(B);
+    iq4 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq4 &
 iq4::operator-=(const iq4 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq3
 operator-(const iq3 &A, const iq3 &B)
 {
-   iq3 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq3 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq3
 operator-(const iq3 &A)
 {
-   iq3 B;
-   B.val = - A.val;
-   return(B);
+    iq3 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq3 &
 iq3::operator-=(const iq3 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq2
 operator-(const iq2 &A, const iq2 &B)
 {
-   iq2 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq2 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq2
 operator-(const iq2 &A)
 {
-   iq2 B;
-   B.val = - A.val;
-   return(B);
+    iq2 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq2 &
 iq2::operator-=(const iq2 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq1
 operator-(const iq1 &A, const iq1 &B)
 {
-   iq1 C;
-   C.val = A.val - B.val;
-   return(C);
+    iq1 C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq1
 operator-(const iq1 &A)
 {
-   iq1 B;
-   B.val = - A.val;
-   return(B);
+    iq1 B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq1 &
 iq1::operator-=(const iq1 &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 inline iq
 operator-(const iq &A, const iq &B)
 {
-   iq C;
-   C.val = A.val - B.val;
-   return(C);
+    iq C;
+    C.val = A.val - B.val;
+    return(C);
 }
 
 inline iq
 operator-(const iq &A)
 {
-   iq B;
-   B.val = - A.val;
-   return(B);
+    iq B;
+    B.val = - A.val;
+    return(B);
 }
 
 inline iq &
 iq::operator-=(const iq &A)
 {
-   val -= A.val;
-   return(*this);
+    val -= A.val;
+    return(*this);
 }
 
 //*****************************************************************************
@@ -10290,466 +10445,466 @@ iq::operator-=(const iq &A)
 inline iq30
 operator*(const iq30 &A, const iq30 &B)
 {
-   iq30 C;
-   C.val = _IQ30mpy(A.val, B.val);
-   return(C);
+    iq30 C;
+    C.val = _IQ30mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq30 &
 iq30::operator*=(const iq30 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq29
 operator*(const iq29 &A, const iq29 &B)
 {
-   iq29 C;
-   C.val = _IQ29mpy(A.val, B.val);
-   return(C);
+    iq29 C;
+    C.val = _IQ29mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq29 &
 iq29::operator*=(const iq29 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq28
 operator*(const iq28 &A, const iq28 &B)
 {
-   iq28 C;
-   C.val = _IQ28mpy(A.val, B.val);
-   return(C);
+    iq28 C;
+    C.val = _IQ28mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq28 &
 iq28::operator*=(const iq28 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq27
 operator*(const iq27 &A, const iq27 &B)
 {
-   iq27 C;
-   C.val = _IQ27mpy(A.val, B.val);
-   return(C);
+    iq27 C;
+    C.val = _IQ27mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq27 &
 iq27::operator*=(const iq27 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq26
 operator*(const iq26 &A, const iq26 &B)
 {
-   iq26 C;
-   C.val = _IQ26mpy(A.val, B.val);
-   return(C);
+    iq26 C;
+    C.val = _IQ26mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq26 &
 iq26::operator*=(const iq26 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq25
 operator*(const iq25 &A, const iq25 &B)
 {
-   iq25 C;
-   C.val = _IQ25mpy(A.val, B.val);
-   return(C);
+    iq25 C;
+    C.val = _IQ25mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq25 &
 iq25::operator*=(const iq25 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq24
 operator*(const iq24 &A, const iq24 &B)
 {
-   iq24 C;
-   C.val = _IQ24mpy(A.val, B.val);
-   return(C);
+    iq24 C;
+    C.val = _IQ24mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq24 &
 iq24::operator*=(const iq24 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq23
 operator*(const iq23 &A, const iq23 &B)
 {
-   iq23 C;
-   C.val = _IQ23mpy(A.val, B.val);
-   return(C);
+    iq23 C;
+    C.val = _IQ23mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq23 &
 iq23::operator*=(const iq23 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq22
 operator*(const iq22 &A, const iq22 &B)
 {
-   iq22 C;
-   C.val = _IQ22mpy(A.val, B.val);
-   return(C);
+    iq22 C;
+    C.val = _IQ22mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq22 &
 iq22::operator*=(const iq22 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq21
 operator*(const iq21 &A, const iq21 &B)
 {
-   iq21 C;
-   C.val = _IQ21mpy(A.val, B.val);
-   return(C);
+    iq21 C;
+    C.val = _IQ21mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq21 &
 iq21::operator*=(const iq21 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq20
 operator*(const iq20 &A, const iq20 &B)
 {
-   iq20 C;
-   C.val = _IQ20mpy(A.val, B.val);
-   return(C);
+    iq20 C;
+    C.val = _IQ20mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq20 &
 iq20::operator*=(const iq20 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq19
 operator*(const iq19 &A, const iq19 &B)
 {
-   iq19 C;
-   C.val = _IQ19mpy(A.val, B.val);
-   return(C);
+    iq19 C;
+    C.val = _IQ19mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq19 &
 iq19::operator*=(const iq19 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq18
 operator*(const iq18 &A, const iq18 &B)
 {
-   iq18 C;
-   C.val = _IQ18mpy(A.val, B.val);
-   return(C);
+    iq18 C;
+    C.val = _IQ18mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq18 &
 iq18::operator*=(const iq18 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq17
 operator*(const iq17 &A, const iq17 &B)
 {
-   iq17 C;
-   C.val = _IQ17mpy(A.val, B.val);
-   return(C);
+    iq17 C;
+    C.val = _IQ17mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq17 &
 iq17::operator*=(const iq17 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq16
 operator*(const iq16 &A, const iq16 &B)
 {
-   iq16 C;
-   C.val = _IQ16mpy(A.val, B.val);
-   return(C);
+    iq16 C;
+    C.val = _IQ16mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq16 &
 iq16::operator*=(const iq16 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq15
 operator*(const iq15 &A, const iq15 &B)
 {
-   iq15 C;
-   C.val = _IQ15mpy(A.val, B.val);
-   return(C);
+    iq15 C;
+    C.val = _IQ15mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq15 &
 iq15::operator*=(const iq15 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq14
 operator*(const iq14 &A, const iq14 &B)
 {
-   iq14 C;
-   C.val = _IQ14mpy(A.val, B.val);
-   return(C);
+    iq14 C;
+    C.val = _IQ14mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq14 &
 iq14::operator*=(const iq14 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq13
 operator*(const iq13 &A, const iq13 &B)
 {
-   iq13 C;
-   C.val = _IQ13mpy(A.val, B.val);
-   return(C);
+    iq13 C;
+    C.val = _IQ13mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq13 &
 iq13::operator*=(const iq13 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq12
 operator*(const iq12 &A, const iq12 &B)
 {
-   iq12 C;
-   C.val = _IQ12mpy(A.val, B.val);
-   return(C);
+    iq12 C;
+    C.val = _IQ12mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq12 &
 iq12::operator*=(const iq12 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq11
 operator*(const iq11 &A, const iq11 &B)
 {
-   iq11 C;
-   C.val = _IQ11mpy(A.val, B.val);
-   return(C);
+    iq11 C;
+    C.val = _IQ11mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq11 &
 iq11::operator*=(const iq11 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq10
 operator*(const iq10 &A, const iq10 &B)
 {
-   iq10 C;
-   C.val = _IQ10mpy(A.val, B.val);
-   return(C);
+    iq10 C;
+    C.val = _IQ10mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq10 &
 iq10::operator*=(const iq10 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq9
 operator*(const iq9 &A, const iq9 &B)
 {
-   iq9 C;
-   C.val = _IQ9mpy(A.val, B.val);
-   return(C);
+    iq9 C;
+    C.val = _IQ9mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq9 &
 iq9::operator*=(const iq9 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq8
 operator*(const iq8 &A, const iq8 &B)
 {
-   iq8 C;
-   C.val = _IQ8mpy(A.val, B.val);
-   return(C);
+    iq8 C;
+    C.val = _IQ8mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq8 &
 iq8::operator*=(const iq8 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq7
 operator*(const iq7 &A, const iq7 &B)
 {
-   iq7 C;
-   C.val = _IQ7mpy(A.val, B.val);
-   return(C);
+    iq7 C;
+    C.val = _IQ7mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq7 &
 iq7::operator*=(const iq7 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq6
 operator*(const iq6 &A, const iq6 &B)
 {
-   iq6 C;
-   C.val = _IQ6mpy(A.val, B.val);
-   return(C);
+    iq6 C;
+    C.val = _IQ6mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq6 &
 iq6::operator*=(const iq6 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq5
 operator*(const iq5 &A, const iq5 &B)
 {
-   iq5 C;
-   C.val = _IQ5mpy(A.val, B.val);
-   return(C);
+    iq5 C;
+    C.val = _IQ5mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq5 &
 iq5::operator*=(const iq5 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq4
 operator*(const iq4 &A, const iq4 &B)
 {
-   iq4 C;
-   C.val = _IQ4mpy(A.val, B.val);
-   return(C);
+    iq4 C;
+    C.val = _IQ4mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq4 &
 iq4::operator*=(const iq4 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq3
 operator*(const iq3 &A, const iq3 &B)
 {
-   iq3 C;
-   C.val = _IQ3mpy(A.val, B.val);
-   return(C);
+    iq3 C;
+    C.val = _IQ3mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq3 &
 iq3::operator*=(const iq3 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq2
 operator*(const iq2 &A, const iq2 &B)
 {
-   iq2 C;
-   C.val = _IQ2mpy(A.val, B.val);
-   return(C);
+    iq2 C;
+    C.val = _IQ2mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq2 &
 iq2::operator*=(const iq2 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq1
 operator*(const iq1 &A, const iq1 &B)
 {
-   iq1 C;
-   C.val = _IQ1mpy(A.val, B.val);
-   return(C);
+    iq1 C;
+    C.val = _IQ1mpy(A.val, B.val);
+    return(C);
 }
 
 inline iq1 &
 iq1::operator*=(const iq1 &A)
 {
-   val = _IQ30mpy(val, A.val);
-   return(*this);
+    val = _IQ30mpy(val, A.val);
+    return(*this);
 }
 
 inline iq
 operator*(const iq &A, const iq &B)
 {
-   iq C;
-   C.val = _IQmpy(A.val, B.val);
-   return(C);
+    iq C;
+    C.val = _IQmpy(A.val, B.val);
+    return(C);
 }
 
 inline iq &
 iq::operator*=(const iq &A)
 {
-   val = _IQmpy(val, A.val);
-   return(*this);
+    val = _IQmpy(val, A.val);
+    return(*this);
 }
 
 //*****************************************************************************
@@ -10760,466 +10915,466 @@ iq::operator*=(const iq &A)
 inline iq30
 operator/(const iq30 &A, const iq30 &B)
 {
-   iq30 C;
-   C.val = _IQ30div(A.val, B.val);
-   return(C);
+    iq30 C;
+    C.val = _IQ30div(A.val, B.val);
+    return(C);
 }
 
 inline iq30 &
 iq30::operator/=(const iq30 &A)
 {
-   val = _IQ30div(val, A.val);
-   return(*this);
+    val = _IQ30div(val, A.val);
+    return(*this);
 }
 
 inline iq29
 operator/(const iq29 &A, const iq29 &B)
 {
-   iq29 C;
-   C.val = _IQ29div(A.val, B.val);
-   return(C);
+    iq29 C;
+    C.val = _IQ29div(A.val, B.val);
+    return(C);
 }
 
 inline iq29 &
 iq29::operator/=(const iq29 &A)
 {
-   val = _IQ29div(val, A.val);
-   return(*this);
+    val = _IQ29div(val, A.val);
+    return(*this);
 }
 
 inline iq28
 operator/(const iq28 &A, const iq28 &B)
 {
-   iq28 C;
-   C.val = _IQ28div(A.val, B.val);
-   return(C);
+    iq28 C;
+    C.val = _IQ28div(A.val, B.val);
+    return(C);
 }
 
 inline iq28 &
 iq28::operator/=(const iq28 &A)
 {
-   val = _IQ28div(val, A.val);
-   return(*this);
+    val = _IQ28div(val, A.val);
+    return(*this);
 }
 
 inline iq27
 operator/(const iq27 &A, const iq27 &B)
 {
-   iq27 C;
-   C.val = _IQ27div(A.val, B.val);
-   return(C);
+    iq27 C;
+    C.val = _IQ27div(A.val, B.val);
+    return(C);
 }
 
 inline iq27 &
 iq27::operator/=(const iq27 &A)
 {
-   val = _IQ27div(val, A.val);
-   return(*this);
+    val = _IQ27div(val, A.val);
+    return(*this);
 }
 
 inline iq26
 operator/(const iq26 &A, const iq26 &B)
 {
-   iq26 C;
-   C.val = _IQ26div(A.val, B.val);
-   return(C);
+    iq26 C;
+    C.val = _IQ26div(A.val, B.val);
+    return(C);
 }
 
 inline iq26 &
 iq26::operator/=(const iq26 &A)
 {
-   val = _IQ26div(val, A.val);
-   return(*this);
+    val = _IQ26div(val, A.val);
+    return(*this);
 }
 
 inline iq25
 operator/(const iq25 &A, const iq25 &B)
 {
-   iq25 C;
-   C.val = _IQ25div(A.val, B.val);
-   return(C);
+    iq25 C;
+    C.val = _IQ25div(A.val, B.val);
+    return(C);
 }
 
 inline iq25 &
 iq25::operator/=(const iq25 &A)
 {
-   val = _IQ25div(val, A.val);
-   return(*this);
+    val = _IQ25div(val, A.val);
+    return(*this);
 }
 
 inline iq24
 operator/(const iq24 &A, const iq24 &B)
 {
-   iq24 C;
-   C.val = _IQ24div(A.val, B.val);
-   return(C);
+    iq24 C;
+    C.val = _IQ24div(A.val, B.val);
+    return(C);
 }
 
 inline iq24 &
 iq24::operator/=(const iq24 &A)
 {
-   val = _IQ24div(val, A.val);
-   return(*this);
+    val = _IQ24div(val, A.val);
+    return(*this);
 }
 
 inline iq23
 operator/(const iq23 &A, const iq23 &B)
 {
-   iq23 C;
-   C.val = _IQ23div(A.val, B.val);
-   return(C);
+    iq23 C;
+    C.val = _IQ23div(A.val, B.val);
+    return(C);
 }
 
 inline iq23 &
 iq23::operator/=(const iq23 &A)
 {
-   val = _IQ23div(val, A.val);
-   return(*this);
+    val = _IQ23div(val, A.val);
+    return(*this);
 }
 
 inline iq22
 operator/(const iq22 &A, const iq22 &B)
 {
-   iq22 C;
-   C.val = _IQ22div(A.val, B.val);
-   return(C);
+    iq22 C;
+    C.val = _IQ22div(A.val, B.val);
+    return(C);
 }
 
 inline iq22 &
 iq22::operator/=(const iq22 &A)
 {
-   val = _IQ22div(val, A.val);
-   return(*this);
+    val = _IQ22div(val, A.val);
+    return(*this);
 }
 
 inline iq21
 operator/(const iq21 &A, const iq21 &B)
 {
-   iq21 C;
-   C.val = _IQ21div(A.val, B.val);
-   return(C);
+    iq21 C;
+    C.val = _IQ21div(A.val, B.val);
+    return(C);
 }
 
 inline iq21 &
 iq21::operator/=(const iq21 &A)
 {
-   val = _IQ21div(val, A.val);
-   return(*this);
+    val = _IQ21div(val, A.val);
+    return(*this);
 }
 
 inline iq20
 operator/(const iq20 &A, const iq20 &B)
 {
-   iq20 C;
-   C.val = _IQ20div(A.val, B.val);
-   return(C);
+    iq20 C;
+    C.val = _IQ20div(A.val, B.val);
+    return(C);
 }
 
 inline iq20 &
 iq20::operator/=(const iq20 &A)
 {
-   val = _IQ20div(val, A.val);
-   return(*this);
+    val = _IQ20div(val, A.val);
+    return(*this);
 }
 
 inline iq19
 operator/(const iq19 &A, const iq19 &B)
 {
-   iq19 C;
-   C.val = _IQ19div(A.val, B.val);
-   return(C);
+    iq19 C;
+    C.val = _IQ19div(A.val, B.val);
+    return(C);
 }
 
 inline iq19 &
 iq19::operator/=(const iq19 &A)
 {
-   val = _IQ19div(val, A.val);
-   return(*this);
+    val = _IQ19div(val, A.val);
+    return(*this);
 }
 
 inline iq18
 operator/(const iq18 &A, const iq18 &B)
 {
-   iq18 C;
-   C.val = _IQ18div(A.val, B.val);
-   return(C);
+    iq18 C;
+    C.val = _IQ18div(A.val, B.val);
+    return(C);
 }
 
 inline iq18 &
 iq18::operator/=(const iq18 &A)
 {
-   val = _IQ18div(val, A.val);
-   return(*this);
+    val = _IQ18div(val, A.val);
+    return(*this);
 }
 
 inline iq17
 operator/(const iq17 &A, const iq17 &B)
 {
-   iq17 C;
-   C.val = _IQ17div(A.val, B.val);
-   return(C);
+    iq17 C;
+    C.val = _IQ17div(A.val, B.val);
+    return(C);
 }
 
 inline iq17 &
 iq17::operator/=(const iq17 &A)
 {
-   val = _IQ17div(val, A.val);
-   return(*this);
+    val = _IQ17div(val, A.val);
+    return(*this);
 }
 
 inline iq16
 operator/(const iq16 &A, const iq16 &B)
 {
-   iq16 C;
-   C.val = _IQ16div(A.val, B.val);
-   return(C);
+    iq16 C;
+    C.val = _IQ16div(A.val, B.val);
+    return(C);
 }
 
 inline iq16 &
 iq16::operator/=(const iq16 &A)
 {
-   val = _IQ16div(val, A.val);
-   return(*this);
+    val = _IQ16div(val, A.val);
+    return(*this);
 }
 
 inline iq15
 operator/(const iq15 &A, const iq15 &B)
 {
-   iq15 C;
-   C.val = _IQ15div(A.val, B.val);
-   return(C);
+    iq15 C;
+    C.val = _IQ15div(A.val, B.val);
+    return(C);
 }
 
 inline iq15 &
 iq15::operator/=(const iq15 &A)
 {
-   val = _IQ15div(val, A.val);
-   return(*this);
+    val = _IQ15div(val, A.val);
+    return(*this);
 }
 
 inline iq14
 operator/(const iq14 &A, const iq14 &B)
 {
-   iq14 C;
-   C.val = _IQ14div(A.val, B.val);
-   return(C);
+    iq14 C;
+    C.val = _IQ14div(A.val, B.val);
+    return(C);
 }
 
 inline iq14 &
 iq14::operator/=(const iq14 &A)
 {
-   val = _IQ14div(val, A.val);
-   return(*this);
+    val = _IQ14div(val, A.val);
+    return(*this);
 }
 
 inline iq13
 operator/(const iq13 &A, const iq13 &B)
 {
-   iq13 C;
-   C.val = _IQ13div(A.val, B.val);
-   return(C);
+    iq13 C;
+    C.val = _IQ13div(A.val, B.val);
+    return(C);
 }
 
 inline iq13 &
 iq13::operator/=(const iq13 &A)
 {
-   val = _IQ13div(val, A.val);
-   return(*this);
+    val = _IQ13div(val, A.val);
+    return(*this);
 }
 
 inline iq12
 operator/(const iq12 &A, const iq12 &B)
 {
-   iq12 C;
-   C.val = _IQ12div(A.val, B.val);
-   return(C);
+    iq12 C;
+    C.val = _IQ12div(A.val, B.val);
+    return(C);
 }
 
 inline iq12 &
 iq12::operator/=(const iq12 &A)
 {
-   val = _IQ12div(val, A.val);
-   return(*this);
+    val = _IQ12div(val, A.val);
+    return(*this);
 }
 
 inline iq11
 operator/(const iq11 &A, const iq11 &B)
 {
-   iq11 C;
-   C.val = _IQ11div(A.val, B.val);
-   return(C);
+    iq11 C;
+    C.val = _IQ11div(A.val, B.val);
+    return(C);
 }
 
 inline iq11 &
 iq11::operator/=(const iq11 &A)
 {
-   val = _IQ11div(val, A.val);
-   return(*this);
+    val = _IQ11div(val, A.val);
+    return(*this);
 }
 
 inline iq10
 operator/(const iq10 &A, const iq10 &B)
 {
-   iq10 C;
-   C.val = _IQ10div(A.val, B.val);
-   return(C);
+    iq10 C;
+    C.val = _IQ10div(A.val, B.val);
+    return(C);
 }
 
 inline iq10 &
 iq10::operator/=(const iq10 &A)
 {
-   val = _IQ10div(val, A.val);
-   return(*this);
+    val = _IQ10div(val, A.val);
+    return(*this);
 }
 
 inline iq9
 operator/(const iq9 &A, const iq9 &B)
 {
-   iq9 C;
-   C.val = _IQ9div(A.val, B.val);
-   return(C);
+    iq9 C;
+    C.val = _IQ9div(A.val, B.val);
+    return(C);
 }
 
 inline iq9 &
 iq9::operator/=(const iq9 &A)
 {
-   val = _IQ9div(val, A.val);
-   return(*this);
+    val = _IQ9div(val, A.val);
+    return(*this);
 }
 
 inline iq8
 operator/(const iq8 &A, const iq8 &B)
 {
-   iq8 C;
-   C.val = _IQ8div(A.val, B.val);
-   return(C);
+    iq8 C;
+    C.val = _IQ8div(A.val, B.val);
+    return(C);
 }
 
 inline iq8 &
 iq8::operator/=(const iq8 &A)
 {
-   val = _IQ8div(val, A.val);
-   return(*this);
+    val = _IQ8div(val, A.val);
+    return(*this);
 }
 
 inline iq7
 operator/(const iq7 &A, const iq7 &B)
 {
-   iq7 C;
-   C.val = _IQ7div(A.val, B.val);
-   return(C);
+    iq7 C;
+    C.val = _IQ7div(A.val, B.val);
+    return(C);
 }
 
 inline iq7 &
 iq7::operator/=(const iq7 &A)
 {
-   val = _IQ7div(val, A.val);
-   return(*this);
+    val = _IQ7div(val, A.val);
+    return(*this);
 }
 
 inline iq6
 operator/(const iq6 &A, const iq6 &B)
 {
-   iq6 C;
-   C.val = _IQ6div(A.val, B.val);
-   return(C);
+    iq6 C;
+    C.val = _IQ6div(A.val, B.val);
+    return(C);
 }
 
 inline iq6 &
 iq6::operator/=(const iq6 &A)
 {
-   val = _IQ6div(val, A.val);
-   return(*this);
+    val = _IQ6div(val, A.val);
+    return(*this);
 }
 
 inline iq5
 operator/(const iq5 &A, const iq5 &B)
 {
-   iq5 C;
-   C.val = _IQ5div(A.val, B.val);
-   return(C);
+    iq5 C;
+    C.val = _IQ5div(A.val, B.val);
+    return(C);
 }
 
 inline iq5 &
 iq5::operator/=(const iq5 &A)
 {
-   val = _IQ5div(val, A.val);
-   return(*this);
+    val = _IQ5div(val, A.val);
+    return(*this);
 }
 
 inline iq4
 operator/(const iq4 &A, const iq4 &B)
 {
-   iq4 C;
-   C.val = _IQ4div(A.val, B.val);
-   return(C);
+    iq4 C;
+    C.val = _IQ4div(A.val, B.val);
+    return(C);
 }
 
 inline iq4 &
 iq4::operator/=(const iq4 &A)
 {
-   val = _IQ4div(val, A.val);
-   return(*this);
+    val = _IQ4div(val, A.val);
+    return(*this);
 }
 
 inline iq3
 operator/(const iq3 &A, const iq3 &B)
 {
-   iq3 C;
-   C.val = _IQ3div(A.val, B.val);
-   return(C);
+    iq3 C;
+    C.val = _IQ3div(A.val, B.val);
+    return(C);
 }
 
 inline iq3 &
 iq3::operator/=(const iq3 &A)
 {
-   val = _IQ3div(val, A.val);
-   return(*this);
+    val = _IQ3div(val, A.val);
+    return(*this);
 }
 
 inline iq2
 operator/(const iq2 &A, const iq2 &B)
 {
-   iq2 C;
-   C.val = _IQ2div(A.val, B.val);
-   return(C);
+    iq2 C;
+    C.val = _IQ2div(A.val, B.val);
+    return(C);
 }
 
 inline iq2 &
 iq2::operator/=(const iq2 &A)
 {
-   val = _IQ2div(val, A.val);
-   return(*this);
+    val = _IQ2div(val, A.val);
+    return(*this);
 }
 
 inline iq1
 operator/(const iq1 &A, const iq1 &B)
 {
-   iq1 C;
-   C.val = _IQ1div(A.val, B.val);
-   return(C);
+    iq1 C;
+    C.val = _IQ1div(A.val, B.val);
+    return(C);
 }
 
 inline iq1 &
 iq1::operator/=(const iq1 &A)
 {
-   val = _IQ1div(val, A.val);
-   return(*this);
+    val = _IQ1div(val, A.val);
+    return(*this);
 }
 
 inline iq
 operator/(const iq &A, const iq &B)
 {
-   iq C;
-   C.val = _IQdiv(A.val, B.val);
-   return(C);
+    iq C;
+    C.val = _IQdiv(A.val, B.val);
+    return(C);
 }
 
 inline iq &
 iq::operator/=(const iq &A)
 {
-   val = _IQdiv(val, A.val);
-   return(*this);
+    val = _IQdiv(val, A.val);
+    return(*this);
 }
 
 //*****************************************************************************
@@ -12712,7 +12867,7 @@ operator&&(const iq &A, const iq &B)
 inline bool
 operator||(const iq &A, const iq &B)
 {
-     return(A.val || B.val);
+    return(A.val || B.val);
 }
 
 //*****************************************************************************
@@ -12723,466 +12878,466 @@ operator||(const iq &A, const iq &B)
 inline iq30
 operator&(const iq30 &A, const long &B)
 {
-   iq30 C;
-   C.val = A.val & B;
-   return(C);
+    iq30 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq30 &
 iq30::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq29
 operator&(const iq29 &A, const long &B)
 {
-   iq29 C;
-   C.val = A.val & B;
-   return(C);
+    iq29 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq29 &
 iq29::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq28
 operator&(const iq28 &A, const long &B)
 {
-   iq28 C;
-   C.val = A.val & B;
-   return(C);
+    iq28 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq28 &
 iq28::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq27
 operator&(const iq27 &A, const long &B)
 {
-   iq27 C;
-   C.val = A.val & B;
-   return(C);
+    iq27 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq27 &
 iq27::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq26
 operator&(const iq26 &A, const long &B)
 {
-   iq26 C;
-   C.val = A.val & B;
-   return(C);
+    iq26 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq26 &
 iq26::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq25
 operator&(const iq25 &A, const long &B)
 {
-   iq25 C;
-   C.val = A.val & B;
-   return(C);
+    iq25 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq25 &
 iq25::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq24
 operator&(const iq24 &A, const long &B)
 {
-   iq24 C;
-   C.val = A.val & B;
-   return(C);
+    iq24 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq24 &
 iq24::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq23
 operator&(const iq23 &A, const long &B)
 {
-   iq23 C;
-   C.val = A.val & B;
-   return(C);
+    iq23 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq23 &
 iq23::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq22
 operator&(const iq22 &A, const long &B)
 {
-   iq22 C;
-   C.val = A.val & B;
-   return(C);
+    iq22 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq22 &
 iq22::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq21
 operator&(const iq21 &A, const long &B)
 {
-   iq21 C;
-   C.val = A.val & B;
-   return(C);
+    iq21 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq21 &
 iq21::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq20
 operator&(const iq20 &A, const long &B)
 {
-   iq20 C;
-   C.val = A.val & B;
-   return(C);
+    iq20 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq20 &
 iq20::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq19
 operator&(const iq19 &A, const long &B)
 {
-   iq19 C;
-   C.val = A.val & B;
-   return(C);
+    iq19 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq19 &
 iq19::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq18
 operator&(const iq18 &A, const long &B)
 {
-   iq18 C;
-   C.val = A.val & B;
-   return(C);
+    iq18 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq18 &
 iq18::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq17
 operator&(const iq17 &A, const long &B)
 {
-   iq17 C;
-   C.val = A.val & B;
-   return(C);
+    iq17 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq17 &
 iq17::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq16
 operator&(const iq16 &A, const long &B)
 {
-   iq16 C;
-   C.val = A.val & B;
-   return(C);
+    iq16 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq16 &
 iq16::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq15
 operator&(const iq15 &A, const long &B)
 {
-   iq15 C;
-   C.val = A.val & B;
-   return(C);
+    iq15 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq15 &
 iq15::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq14
 operator&(const iq14 &A, const long &B)
 {
-   iq14 C;
-   C.val = A.val & B;
-   return(C);
+    iq14 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq14 &
 iq14::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq13
 operator&(const iq13 &A, const long &B)
 {
-   iq13 C;
-   C.val = A.val & B;
-   return(C);
+    iq13 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq13 &
 iq13::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq12
 operator&(const iq12 &A, const long &B)
 {
-   iq12 C;
-   C.val = A.val & B;
-   return(C);
+    iq12 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq12 &
 iq12::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq11
 operator&(const iq11 &A, const long &B)
 {
-   iq11 C;
-   C.val = A.val & B;
-   return(C);
+    iq11 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq11 &
 iq11::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq10
 operator&(const iq10 &A, const long &B)
 {
-   iq10 C;
-   C.val = A.val & B;
-   return(C);
+    iq10 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq10 &
 iq10::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq9
 operator&(const iq9 &A, const long &B)
 {
-   iq9 C;
-   C.val = A.val & B;
-   return(C);
+    iq9 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq9 &
 iq9::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq8
 operator&(const iq8 &A, const long &B)
 {
-   iq8 C;
-   C.val = A.val & B;
-   return(C);
+    iq8 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq8 &
 iq8::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq7
 operator&(const iq7 &A, const long &B)
 {
-   iq7 C;
-   C.val = A.val & B;
-   return(C);
+    iq7 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq7 &
 iq7::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq6
 operator&(const iq6 &A, const long &B)
 {
-   iq6 C;
-   C.val = A.val & B;
-   return(C);
+    iq6 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq6 &
 iq6::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq5
 operator&(const iq5 &A, const long &B)
 {
-   iq5 C;
-   C.val = A.val & B;
-   return(C);
+    iq5 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq5 &
 iq5::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq4
 operator&(const iq4 &A, const long &B)
 {
-   iq4 C;
-   C.val = A.val & B;
-   return(C);
+    iq4 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq4 &
 iq4::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq3
 operator&(const iq3 &A, const long &B)
 {
-   iq3 C;
-   C.val = A.val & B;
-   return(C);
+    iq3 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq3 &
 iq3::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq2
 operator&(const iq2 &A, const long &B)
 {
-   iq2 C;
-   C.val = A.val & B;
-   return(C);
+    iq2 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq2 &
 iq2::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq1
 operator&(const iq1 &A, const long &B)
 {
-   iq1 C;
-   C.val = A.val & B;
-   return(C);
+    iq1 C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq1 &
 iq1::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 inline iq
 operator&(const iq &A, const long &B)
 {
-   iq C;
-   C.val = A.val & B;
-   return(C);
+    iq C;
+    C.val = A.val & B;
+    return(C);
 }
 
 inline iq &
 iq::operator&=(const long &A)
 {
-   val &= A;
-   return(*this);
+    val &= A;
+    return(*this);
 }
 
 //*****************************************************************************
@@ -13193,466 +13348,466 @@ iq::operator&=(const long &A)
 inline iq30
 operator|(const iq30 &A, const long &B)
 {
-   iq30 C;
-   C.val = A.val | B;
-   return(C);
+    iq30 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq30 &
 iq30::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq29
 operator|(const iq29 &A, const long &B)
 {
-   iq29 C;
-   C.val = A.val | B;
-   return(C);
+    iq29 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq29 &
 iq29::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq28
 operator|(const iq28 &A, const long &B)
 {
-   iq28 C;
-   C.val = A.val | B;
-   return(C);
+    iq28 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq28 &
 iq28::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq27
 operator|(const iq27 &A, const long &B)
 {
-   iq27 C;
-   C.val = A.val | B;
-   return(C);
+    iq27 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq27 &
 iq27::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq26
 operator|(const iq26 &A, const long &B)
 {
-   iq26 C;
-   C.val = A.val | B;
-   return(C);
+    iq26 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq26 &
 iq26::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq25
 operator|(const iq25 &A, const long &B)
 {
-   iq25 C;
-   C.val = A.val | B;
-   return(C);
+    iq25 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq25 &
 iq25::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq24
 operator|(const iq24 &A, const long &B)
 {
-   iq24 C;
-   C.val = A.val | B;
-   return(C);
+    iq24 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq24 &
 iq24::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq23
 operator|(const iq23 &A, const long &B)
 {
-   iq23 C;
-   C.val = A.val | B;
-   return(C);
+    iq23 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq23 &
 iq23::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq22
 operator|(const iq22 &A, const long &B)
 {
-   iq22 C;
-   C.val = A.val | B;
-   return(C);
+    iq22 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq22 &
 iq22::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq21
 operator|(const iq21 &A, const long &B)
 {
-   iq21 C;
-   C.val = A.val | B;
-   return(C);
+    iq21 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq21 &
 iq21::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq20
 operator|(const iq20 &A, const long &B)
 {
-   iq20 C;
-   C.val = A.val | B;
-   return(C);
+    iq20 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq20 &
 iq20::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq19
 operator|(const iq19 &A, const long &B)
 {
-   iq19 C;
-   C.val = A.val | B;
-   return(C);
+    iq19 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq19 &
 iq19::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq18
 operator|(const iq18 &A, const long &B)
 {
-   iq18 C;
-   C.val = A.val | B;
-   return(C);
+    iq18 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq18 &
 iq18::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq17
 operator|(const iq17 &A, const long &B)
 {
-   iq17 C;
-   C.val = A.val | B;
-   return(C);
+    iq17 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq17 &
 iq17::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq16
 operator|(const iq16 &A, const long &B)
 {
-   iq16 C;
-   C.val = A.val | B;
-   return(C);
+    iq16 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq16 &
 iq16::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq15
 operator|(const iq15 &A, const long &B)
 {
-   iq15 C;
-   C.val = A.val | B;
-   return(C);
+    iq15 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq15 &
 iq15::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq14
 operator|(const iq14 &A, const long &B)
 {
-   iq14 C;
-   C.val = A.val | B;
-   return(C);
+    iq14 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq14 &
 iq14::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq13
 operator|(const iq13 &A, const long &B)
 {
-   iq13 C;
-   C.val = A.val | B;
-   return(C);
+    iq13 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq13 &
 iq13::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq12
 operator|(const iq12 &A, const long &B)
 {
-   iq12 C;
-   C.val = A.val | B;
-   return(C);
+    iq12 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq12 &
 iq12::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq11
 operator|(const iq11 &A, const long &B)
 {
-   iq11 C;
-   C.val = A.val | B;
-   return(C);
+    iq11 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq11 &
 iq11::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq10
 operator|(const iq10 &A, const long &B)
 {
-   iq10 C;
-   C.val = A.val | B;
-   return(C);
+    iq10 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq10 &
 iq10::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq9
 operator|(const iq9 &A, const long &B)
 {
-   iq9 C;
-   C.val = A.val | B;
-   return(C);
+    iq9 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq9 &
 iq9::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq8
 operator|(const iq8 &A, const long &B)
 {
-   iq8 C;
-   C.val = A.val | B;
-   return(C);
+    iq8 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq8 &
 iq8::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq7
 operator|(const iq7 &A, const long &B)
 {
-   iq7 C;
-   C.val = A.val | B;
-   return(C);
+    iq7 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq7 &
 iq7::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq6
 operator|(const iq6 &A, const long &B)
 {
-   iq6 C;
-   C.val = A.val | B;
-   return(C);
+    iq6 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq6 &
 iq6::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq5
 operator|(const iq5 &A, const long &B)
 {
-   iq5 C;
-   C.val = A.val | B;
-   return(C);
+    iq5 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq5 &
 iq5::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq4
 operator|(const iq4 &A, const long &B)
 {
-   iq4 C;
-   C.val = A.val | B;
-   return(C);
+    iq4 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq4 &
 iq4::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq3
 operator|(const iq3 &A, const long &B)
 {
-   iq3 C;
-   C.val = A.val | B;
-   return(C);
+    iq3 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq3 &
 iq3::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq2
 operator|(const iq2 &A, const long &B)
 {
-   iq2 C;
-   C.val = A.val | B;
-   return(C);
+    iq2 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq2 &
 iq2::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq1
 operator|(const iq1 &A, const long &B)
 {
-   iq1 C;
-   C.val = A.val | B;
-   return(C);
+    iq1 C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq1 &
 iq1::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 inline iq
 operator|(const iq &A, const long &B)
 {
-   iq C;
-   C.val = A.val | B;
-   return(C);
+    iq C;
+    C.val = A.val | B;
+    return(C);
 }
 
 inline iq &
 iq::operator|=(const long &A)
 {
-   val |= A;
-   return(*this);
+    val |= A;
+    return(*this);
 }
 
 //*****************************************************************************
@@ -13663,466 +13818,466 @@ iq::operator|=(const long &A)
 inline iq30
 operator^(const iq30 &A, const long &B)
 {
-   iq30 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq30 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq30 &
 iq30::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq29
 operator^(const iq29 &A, const long &B)
 {
-   iq29 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq29 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq29 &
 iq29::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq28
 operator^(const iq28 &A, const long &B)
 {
-   iq28 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq28 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq28 &
 iq28::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq27
 operator^(const iq27 &A, const long &B)
 {
-   iq27 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq27 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq27 &
 iq27::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq26
 operator^(const iq26 &A, const long &B)
 {
-   iq26 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq26 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq26 &
 iq26::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq25
 operator^(const iq25 &A, const long &B)
 {
-   iq25 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq25 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq25 &
 iq25::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq24
 operator^(const iq24 &A, const long &B)
 {
-   iq24 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq24 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq24 &
 iq24::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq23
 operator^(const iq23 &A, const long &B)
 {
-   iq23 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq23 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq23 &
 iq23::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq22
 operator^(const iq22 &A, const long &B)
 {
-   iq22 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq22 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq22 &
 iq22::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq21
 operator^(const iq21 &A, const long &B)
 {
-   iq21 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq21 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq21 &
 iq21::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq20
 operator^(const iq20 &A, const long &B)
 {
-   iq20 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq20 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq20 &
 iq20::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq19
 operator^(const iq19 &A, const long &B)
 {
-   iq19 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq19 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq19 &
 iq19::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq18
 operator^(const iq18 &A, const long &B)
 {
-   iq18 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq18 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq18 &
 iq18::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq17
 operator^(const iq17 &A, const long &B)
 {
-   iq17 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq17 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq17 &
 iq17::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq16
 operator^(const iq16 &A, const long &B)
 {
-   iq16 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq16 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq16 &
 iq16::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq15
 operator^(const iq15 &A, const long &B)
 {
-   iq15 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq15 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq15 &
 iq15::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq14
 operator^(const iq14 &A, const long &B)
 {
-   iq14 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq14 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq14 &
 iq14::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq13
 operator^(const iq13 &A, const long &B)
 {
-   iq13 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq13 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq13 &
 iq13::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq12
 operator^(const iq12 &A, const long &B)
 {
-   iq12 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq12 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq12 &
 iq12::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq11
 operator^(const iq11 &A, const long &B)
 {
-   iq11 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq11 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq11 &
 iq11::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq10
 operator^(const iq10 &A, const long &B)
 {
-   iq10 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq10 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq10 &
 iq10::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq9
 operator^(const iq9 &A, const long &B)
 {
-   iq9 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq9 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq9 &
 iq9::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq8
 operator^(const iq8 &A, const long &B)
 {
-   iq8 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq8 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq8 &
 iq8::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq7
 operator^(const iq7 &A, const long &B)
 {
-   iq7 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq7 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq7 &
 iq7::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq6
 operator^(const iq6 &A, const long &B)
 {
-   iq6 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq6 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq6 &
 iq6::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq5
 operator^(const iq5 &A, const long &B)
 {
-   iq5 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq5 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq5 &
 iq5::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq4
 operator^(const iq4 &A, const long &B)
 {
-   iq4 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq4 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq4 &
 iq4::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq3
 operator^(const iq3 &A, const long &B)
 {
-   iq3 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq3 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq3 &
 iq3::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq2
 operator^(const iq2 &A, const long &B)
 {
-   iq2 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq2 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq2 &
 iq2::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq1
 operator^(const iq1 &A, const long &B)
 {
-   iq1 C;
-   C.val = A.val ^ B;
-   return(C);
+    iq1 C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq1 &
 iq1::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 inline iq
 operator^(const iq &A, const long &B)
 {
-   iq C;
-   C.val = A.val ^ B;
-   return(C);
+    iq C;
+    C.val = A.val ^ B;
+    return(C);
 }
 
 inline iq &
 iq::operator^=(const long &A)
 {
-   val ^= A;
-   return(*this);
+    val ^= A;
+    return(*this);
 }
 
 //*****************************************************************************

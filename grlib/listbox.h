@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Graphics Library.
 //
 //*****************************************************************************
@@ -48,8 +48,7 @@ extern "C"
 //! The structure that describes a listbox widget.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The generic widget information.
     //
@@ -731,7 +730,7 @@ tListBoxWidget sName =                                                        \
 //
 //*****************************************************************************
 extern int32_t ListBoxMsgProc(tWidget *psWidget, uint32_t ui32Msg,
-                          uint32_t ui32Param1, uint32_t ui32Param2);
+                              uint32_t ui32Param1, uint32_t ui32Param2);
 extern void ListBoxInit(tListBoxWidget *psWidget, const tDisplay *psDisplay,
                         const char **ppcText, uint16_t ui16MaxEntries,
                         uint16_t ui16PopulatedEntries,

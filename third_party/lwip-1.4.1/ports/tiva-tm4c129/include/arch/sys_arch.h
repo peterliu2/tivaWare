@@ -52,14 +52,14 @@
 
 ///* A structure to hold the variables for a sys_sem_t. */
 typedef struct {
-  xQueueHandle queue;
-  signed char buffer[sizeof(void *) + portQUEUE_OVERHEAD_BYTES];
+    xQueueHandle queue;
+    signed char buffer[sizeof(void *) + portQUEUE_OVERHEAD_BYTES];
 } sem_t;
 
 /* A structure to hold the variables for a sys_mbox_t. */
 typedef struct {
-  xQueueHandle queue;
-  signed char buffer[(sizeof(void *) * MBOX_MAX) + portQUEUE_OVERHEAD_BYTES];
+    xQueueHandle queue;
+    signed char buffer[(sizeof(void *) * MBOX_MAX) + portQUEUE_OVERHEAD_BYTES];
 } mbox_t;
 
 /* Typedefs for the various port-specific types. */

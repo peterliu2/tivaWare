@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -31,8 +31,7 @@
 // The image of the TI symbol.
 //
 //*****************************************************************************
-const uint8_t g_pui8Logo[] =
-{
+const uint8_t g_pui8Logo[] = {
     IMAGE_FMT_4BPP_COMP,
     50, 0,
     50, 0,
@@ -105,8 +104,7 @@ const uint8_t g_pui8Logo[] =
 // This is the image of a red LED that is turned off.
 //
 //*****************************************************************************
-const uint8_t g_pui8LightOff[] =
-{
+const uint8_t g_pui8LightOff[] = {
     IMAGE_FMT_4BPP_COMP,
     20, 0,
     20, 0,
@@ -152,8 +150,7 @@ const uint8_t g_pui8LightOff[] =
 // This is the image of a red LED that is turned on.
 //
 //*****************************************************************************
-const uint8_t g_pui8LightOn[] =
-{
+const uint8_t g_pui8LightOn[] = {
     IMAGE_FMT_4BPP_COMP,
     20, 0,
     20, 0,
@@ -198,8 +195,7 @@ const uint8_t g_pui8LightOn[] =
 // This is the image of the blue push button background.
 //
 //*****************************************************************************
-const uint8_t g_pui8Blue50x50[] =
-{
+const uint8_t g_pui8Blue50x50[] = {
     IMAGE_FMT_4BPP_COMP,
     50, 0,
     50, 0,
@@ -270,8 +266,7 @@ const uint8_t g_pui8Blue50x50[] =
 // are pressed.
 //
 //*****************************************************************************
-const uint8_t g_pui8Blue50x50Press[] =
-{
+const uint8_t g_pui8Blue50x50Press[] = {
     IMAGE_FMT_4BPP_COMP,
     50, 0,
     50, 0,
@@ -341,8 +336,7 @@ const uint8_t g_pui8Blue50x50Press[] =
 // Vertical "Temperature" image used in the slider widget example.
 //
 //*****************************************************************************
-const uint8_t g_pui8GettingHotter28x148[] =
-{
+const uint8_t g_pui8GettingHotter28x148[] = {
     IMAGE_FMT_8BPP_COMP,
     28, 0,
     148, 0,
@@ -554,8 +548,7 @@ const uint8_t g_pui8GettingHotter28x148[] =
 // Background version of vertical "Temperature" image.
 //
 //*****************************************************************************
-const uint8_t g_pui8GettingHotter28x148Mono[] =
-{
+const uint8_t g_pui8GettingHotter28x148Mono[] = {
     IMAGE_FMT_4BPP_COMP,
     28, 0,
     148, 0,
@@ -659,8 +652,7 @@ const uint8_t g_pui8GettingHotter28x148Mono[] =
 // Green horizontal slider image.
 //
 //*****************************************************************************
-const uint8_t g_pui8GreenSlider195x37[] =
-{
+const uint8_t g_pui8GreenSlider195x37[] = {
     IMAGE_FMT_8BPP_COMP,
     195, 0,
     37, 0,
@@ -896,8 +888,7 @@ const uint8_t g_pui8GreenSlider195x37[] =
 // Red horizontal slider image.
 //
 //*****************************************************************************
-const uint8_t g_pui8RedSlider195x37[] =
-{
+const uint8_t g_pui8RedSlider195x37[] = {
     IMAGE_FMT_8BPP_COMP,
     195, 0,
     37, 0,

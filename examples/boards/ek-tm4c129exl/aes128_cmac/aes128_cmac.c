@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C129EXL Firmware Package.
 //
 //*****************************************************************************
@@ -47,7 +47,7 @@
 //! CMAC mode.  A series of test vectors are authenticated.
 //!
 //! This module is also capable of CBC-MAC mode, but this has been determined
-//! to be insecure when using variable message lengths.  CMAC is now 
+//! to be insecure when using variable message lengths.  CMAC is now
 //! recommended instead by NIST.
 //!
 //! Please note that the use of interrupts and uDMA is not required for the
@@ -80,31 +80,29 @@ tDMAControlTable g_psDMAControlTable[64] __attribute__((aligned(1024)));
 //*****************************************************************************
 //
 // Test cases from the NIST SP 800-38B document.
-// The data in these test cases have been modified to be in big endian 
+// The data in these test cases have been modified to be in big endian
 // format as required by the AES module.  This was done to simplify writes
 // and comparisons.  When operations need to be performed on the data, the
 // endianness is swapped.
 //
 //*****************************************************************************
-typedef struct AESTestVectorStruct
-{
+typedef struct AESTestVectorStruct {
     uint32_t ui32Length;
     uint32_t pui32Message[16];
     uint32_t pui32Tag[4];
 }
 tAESCMACTestVector;
 
-tAESCMACTestVector g_psAESCMACTestVectors[] =
-{
+tAESCMACTestVector g_psAESCMACTestVectors[] = {
     //
     // Test Case #1
     // Empty message check.  Since there is no message, it must be
     // padded with a one and 127 zeros.  Also, a zero cannot be
-    // written into the length register in this mode, so we just 
+    // written into the length register in this mode, so we just
     // write a 1 as the length to signify an incomplete block.
     // Any value from 1 to 15 would have worked in this case.
     // Incomplete blocks are XOR'd with subkey2 rather than subkey1.
-    // 
+    //
     {
         1,
         { 0x00000080, 0x00000000, 0x00000000, 0x00000000 },
@@ -120,7 +118,7 @@ tAESCMACTestVector g_psAESCMACTestVectors[] =
         { 0xe2bec16b, 0x969f402e, 0x117e3de9, 0x2a179373 },
         { 0xb4160a07, 0x44414d6b, 0x9ddd9bf7, 0x7c284ad0 }
     },
-    
+
     //
     // Test Case #3
     // Since the message is not a multiple of 128 bits, there must
@@ -129,9 +127,11 @@ tAESCMACTestVector g_psAESCMACTestVectors[] =
     //
     {
         40,
-        { 0xe2bec16b, 0x969f402e, 0x117e3de9, 0x2a179373,
-          0x578a2dae, 0x9cac031e, 0xac6fb79e, 0x518eaf45,
-          0x461cc830, 0x11e45ca3, 0x00000080, 0x00000000 },
+        {
+            0xe2bec16b, 0x969f402e, 0x117e3de9, 0x2a179373,
+            0x578a2dae, 0x9cac031e, 0xac6fb79e, 0x518eaf45,
+            0x461cc830, 0x11e45ca3, 0x00000080, 0x00000000
+        },
         { 0x4767a6df, 0x30e69ade, 0x6132ca30, 0x27c89714 }
     },
 
@@ -140,10 +140,12 @@ tAESCMACTestVector g_psAESCMACTestVectors[] =
     //
     {
         64,
-        { 0xe2bec16b, 0x969f402e, 0x117e3de9, 0x2a179373,
-          0x578a2dae, 0x9cac031e, 0xac6fb79e, 0x518eaf45,
-          0x461cc830, 0x11e45ca3, 0x19c1fbe5, 0xef520a1a,
-          0x45249ff6, 0x179b4fdf, 0x7b412bad, 0x10376ce6 },
+        {
+            0xe2bec16b, 0x969f402e, 0x117e3de9, 0x2a179373,
+            0x578a2dae, 0x9cac031e, 0xac6fb79e, 0x518eaf45,
+            0x461cc830, 0x11e45ca3, 0x19c1fbe5, 0xef520a1a,
+            0x45249ff6, 0x179b4fdf, 0x7b412bad, 0x10376ce6
+        },
         { 0xbfbef051, 0x929d3b7e, 0x177449fc, 0xfe3c3679 }
     }
 };
@@ -151,8 +153,7 @@ tAESCMACTestVector g_psAESCMACTestVectors[] =
 //
 // The following key is used for all of the above test cases.
 //
-uint32_t g_pui32AES128Key[4] =
-{
+uint32_t g_pui32AES128Key[4] = {
     0x16157e2b, 0xa6d2ae28, 0x8815f7ab, 0x3c4fcf09
 };
 
@@ -181,12 +182,9 @@ LengthRoundUp(uint32_t ui32Length)
     uint32_t ui32Remainder;
 
     ui32Remainder = ui32Length % 16;
-    if(ui32Remainder == 0)
-    {
+    if(ui32Remainder == 0) {
         return(ui32Length);
-    }
-    else
-    {
+    } else {
         return(ui32Length + (16 - ui32Remainder));
     }
 }
@@ -197,20 +195,19 @@ LengthRoundUp(uint32_t ui32Length)
 //
 //*****************************************************************************
 void
-EndiannessSwap(uint32_t *pui32Input, uint32_t *pui32Output, 
-              uint32_t ui32Length)
+EndiannessSwap(uint32_t *pui32Input, uint32_t *pui32Output,
+               uint32_t ui32Length)
 {
     uint32_t ui32Count;
-    
+
     //
     // For each word, swap the endianness.
     //
-    for(ui32Count = 0; ui32Count < ui32Length; ui32Count++)
-    {
+    for(ui32Count = 0; ui32Count < ui32Length; ui32Count++) {
         pui32Output[ui32Count] = ((pui32Input[ui32Count] & 0x000000ff) << 24) |
                                  ((pui32Input[ui32Count] & 0x0000ff00) << 8) |
                                  ((pui32Input[ui32Count] & 0x00ff0000) >> 8) |
-                                 ((pui32Input[ui32Count] & 0xff000000) >> 24);   
+                                 ((pui32Input[ui32Count] & 0xff000000) >> 24);
 
     }
 }
@@ -242,53 +239,45 @@ AESIntHandler(void)
     //
     // Print a different message depending on the interrupt source.
     //
-    if(ui32IntStatus & AES_INT_CONTEXT_IN)
-    {
+    if(ui32IntStatus & AES_INT_CONTEXT_IN) {
         ROM_AESIntDisable(AES_BASE, AES_INT_CONTEXT_IN);
         g_bContextInIntFlag = true;
         UARTprintf(" Context input registers are ready.\n");
     }
-    if(ui32IntStatus & AES_INT_DATA_IN)
-    {
+    if(ui32IntStatus & AES_INT_DATA_IN) {
         ROM_AESIntDisable(AES_BASE, AES_INT_DATA_IN);
         g_bDataInIntFlag = true;
         UARTprintf(" Data FIFO is ready to receive data.\n");
     }
-    if(ui32IntStatus & AES_INT_CONTEXT_OUT)
-    {
+    if(ui32IntStatus & AES_INT_CONTEXT_OUT) {
         ROM_AESIntDisable(AES_BASE, AES_INT_CONTEXT_OUT);
         g_bContextOutIntFlag = true;
         UARTprintf(" Context output registers are ready.\n");
     }
-    if(ui32IntStatus & AES_INT_DATA_OUT)
-    {
+    if(ui32IntStatus & AES_INT_DATA_OUT) {
         ROM_AESIntDisable(AES_BASE, AES_INT_DATA_OUT);
         g_bDataOutIntFlag = true;
         UARTprintf(" Data FIFO is ready to provide data.\n");
     }
-    if(ui32IntStatus & AES_INT_DMA_CONTEXT_IN)
-    {
+    if(ui32IntStatus & AES_INT_DMA_CONTEXT_IN) {
         ROM_AESIntClear(AES_BASE, AES_INT_DMA_CONTEXT_IN);
         g_bContextInDMADoneIntFlag = true;
         UARTprintf(" DMA completed a context write to the internal\n");
         UARTprintf(" registers.\n");
     }
-    if(ui32IntStatus & AES_INT_DMA_DATA_IN)
-    {
+    if(ui32IntStatus & AES_INT_DMA_DATA_IN) {
         ROM_AESIntClear(AES_BASE, AES_INT_DMA_DATA_IN);
         g_bDataInDMADoneIntFlag = true;
         UARTprintf(" DMA has written the last word of input data to\n");
         UARTprintf(" the internal FIFO of the engine.\n");
     }
-    if(ui32IntStatus & AES_INT_DMA_CONTEXT_OUT)
-    {
+    if(ui32IntStatus & AES_INT_DMA_CONTEXT_OUT) {
         ROM_AESIntClear(AES_BASE, AES_INT_DMA_CONTEXT_OUT);
         g_bContextOutDMADoneIntFlag = true;
         UARTprintf(" DMA completed the output context movement from\n");
         UARTprintf(" the internal registers.\n");
     }
-    if(ui32IntStatus & AES_INT_DMA_DATA_OUT)
-    {
+    if(ui32IntStatus & AES_INT_DMA_DATA_OUT) {
         ROM_AESIntClear(AES_BASE, AES_INT_DMA_DATA_OUT);
         g_bDataOutDMADoneIntFlag = true;
         UARTprintf(" DMA has written the last word of process result.\n");
@@ -334,12 +323,12 @@ AES128ECBEncrypt(uint32_t *pui32Src, uint32_t *pui32Dst, uint32_t *pui32Key,
 //
 //*****************************************************************************
 bool
-AES128CMACSubkeyGet(uint32_t *pui32Key, uint32_t *pui32Input, 
+AES128CMACSubkeyGet(uint32_t *pui32Key, uint32_t *pui32Input,
                     uint32_t *pui32Subkey)
 {
     uint32_t pui32Output[4];
     uint32_t pui32SwappedInput[4];
-    int32_t i32Idx;   
+    int32_t i32Idx;
     bool bCarry;
 
     //
@@ -355,8 +344,7 @@ AES128CMACSubkeyGet(uint32_t *pui32Key, uint32_t *pui32Input,
     // shifted bits.
     //
     bCarry = false;
-    for(i32Idx = 3; i32Idx >= 0; i32Idx--)
-    {
+    for(i32Idx = 3; i32Idx >= 0; i32Idx--) {
         //
         // Shift the word.
         //
@@ -365,8 +353,7 @@ AES128CMACSubkeyGet(uint32_t *pui32Key, uint32_t *pui32Input,
         //
         // If there was a carry from the previous word.
         //
-        if(bCarry)
-        {
+        if(bCarry) {
             pui32Output[i32Idx] |= 0x1;
             bCarry = false;
         }
@@ -374,12 +361,11 @@ AES128CMACSubkeyGet(uint32_t *pui32Key, uint32_t *pui32Input,
         //
         // Check to see if we need to carry to the next word.
         //
-        if(pui32SwappedInput[i32Idx] & 0x80000000)
-        {   
+        if(pui32SwappedInput[i32Idx] & 0x80000000) {
             bCarry = true;
         }
     }
-   
+
     //
     // Swap the endianness back to little endian.
     //
@@ -388,8 +374,7 @@ AES128CMACSubkeyGet(uint32_t *pui32Key, uint32_t *pui32Input,
     //
     // XOR in the Rb constant if the MSB is 1.
     //
-    if(pui32SwappedInput[0] & 0x80000000)
-    {
+    if(pui32SwappedInput[0] & 0x80000000) {
         pui32Subkey[3] ^= 0x87000000;
     }
 
@@ -402,7 +387,7 @@ AES128CMACSubkeyGet(uint32_t *pui32Key, uint32_t *pui32Input,
 //
 //*****************************************************************************
 bool
-AES128CMACAuth(uint32_t *pui32Src, uint32_t *pui32Key, uint32_t *pui32Tag, 
+AES128CMACAuth(uint32_t *pui32Src, uint32_t *pui32Key, uint32_t *pui32Tag,
                uint32_t ui32Length, bool bUseDMA)
 {
     uint32_t pui32Subkey1[4];
@@ -436,7 +421,7 @@ AES128CMACAuth(uint32_t *pui32Src, uint32_t *pui32Key, uint32_t *pui32Tag,
     pui32Zero[3] = 0x00000000;
 
     //
-    // Encrypt the zero string. 
+    // Encrypt the zero string.
     //
     AES128ECBEncrypt(pui32Zero, pui32EncZero, pui32Key, 16);
 
@@ -486,8 +471,7 @@ AES128CMACAuth(uint32_t *pui32Src, uint32_t *pui32Key, uint32_t *pui32Tag,
     // Depending on the argument, perform the encryption
     // with or without uDMA.
     //
-    if(bUseDMA)
-    {
+    if(bUseDMA) {
         //
         // Enable DMA interrupts.
         //
@@ -519,12 +503,12 @@ AES128CMACAuth(uint32_t *pui32Src, uint32_t *pui32Key, uint32_t *pui32Tag,
         // Write the length registers to start the process.
         //
         ROM_AESLengthSet(AES_BASE, (uint64_t)ui32Length);
-        
+
         //
         // Enable the DMA channel to start the transfer.  This must be done after
-        // writing the length to prevent data from copying before the context is 
+        // writing the length to prevent data from copying before the context is
         // truly ready.
-        // 
+        //
         ROM_uDMAChannelEnable(UDMA_CH14_AES0DIN);
 
         //
@@ -535,17 +519,14 @@ AES128CMACAuth(uint32_t *pui32Src, uint32_t *pui32Key, uint32_t *pui32Tag,
         //
         // Wait for the data in DMA done interrupt.
         //
-        while(!g_bDataInDMADoneIntFlag)
-        {
+        while(!g_bDataInDMADoneIntFlag) {
         }
 
         //
         // Read out the tag.
         //
         ROM_AESTagRead(AES_BASE, pui32Tag);
-    }
-    else
-    {
+    } else {
         //
         // Perform the authentication.
         //
@@ -568,8 +549,7 @@ AESInit(void)
     //
     // Check that the CCM peripheral is present.
     //
-    if(!ROM_SysCtlPeripheralPresent(SYSCTL_PERIPH_CCM0))
-    {
+    if(!ROM_SysCtlPeripheralPresent(SYSCTL_PERIPH_CCM0)) {
         UARTprintf("No CCM peripheral found!\n");
 
         //
@@ -587,15 +567,13 @@ AESInit(void)
     // Wait for the peripheral to be ready.
     //
     ui32Loop = 0;
-    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0))
-    {
+    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0)) {
         //
         // Increment our poll counter.
         //
         ui32Loop++;
 
-        if(ui32Loop > CCM_LOOP_TIMEOUT)
-        {
+        if(ui32Loop > CCM_LOOP_TIMEOUT) {
             //
             // Timed out, notify and spin.
             //
@@ -617,15 +595,13 @@ AESInit(void)
     // Wait for the peripheral to be ready again.
     //
     ui32Loop = 0;
-    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0))
-    {
+    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0)) {
         //
         // Increment our poll counter.
         //
         ui32Loop++;
 
-        if(ui32Loop > CCM_LOOP_TIMEOUT)
-        {
+        if(ui32Loop > CCM_LOOP_TIMEOUT) {
             //
             // Timed out, spin.
             //
@@ -670,7 +646,7 @@ ConfigureUART(void)
 
 //*****************************************************************************
 //
-// This example authenticates blocks of plaintext using AES128 in CMAC mode.  
+// This example authenticates blocks of plaintext using AES128 in CMAC mode.
 // It does the encryption first without uDMA and then with uDMA.  The results
 // are checked after each operation.
 //
@@ -681,7 +657,7 @@ main(void)
     uint32_t *pui32ExpTag, *pui32Message;
     uint32_t ui32Errors, ui32Idx, ui32Length, pui32Tag[4], ui32SysClock;
     uint8_t ui8Vector;
-    
+
     //
     // Run from the PLL at 120 MHz.
     //
@@ -699,8 +675,7 @@ main(void)
     // Initialize local variables.
     //
     ui32Errors = 0;
-    for(ui32Idx = 0; ui32Idx < 4; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < 4; ui32Idx++) {
         pui32Tag[ui32Idx] = 0;
     }
 
@@ -720,9 +695,9 @@ main(void)
     // Enable debug output on UART0 and print a welcome message.
     //
     ConfigureUART();
-	UARTprintf("\033[2J\033[H");
+    UARTprintf("\033[2J\033[H");
     UARTprintf("Starting AES128 CMAC encryption demo.\n");
-    
+
     //
     // Enable the uDMA module.
     //
@@ -737,8 +712,7 @@ main(void)
     //
     // Initialize the CCM and AES modules.
     //
-    if(!AESInit())
-    {
+    if(!AESInit()) {
         UARTprintf("Initialization of the AES module failed.\n");
         ui32Errors |= 0x00000001;
     }
@@ -747,11 +721,10 @@ main(void)
     // Loop through all the given vectors.
     //
     for(ui8Vector = 0;
-        (ui8Vector < 
-         (sizeof(g_psAESCMACTestVectors) / sizeof(g_psAESCMACTestVectors[0]))) &&
-        (ui32Errors == 0);
-        ui8Vector++)
-    {
+            (ui8Vector <
+             (sizeof(g_psAESCMACTestVectors) / sizeof(g_psAESCMACTestVectors[0]))) &&
+            (ui32Errors == 0);
+            ui8Vector++) {
         UARTprintf("Starting vector #%d\n", ui8Vector);
 
         //
@@ -760,7 +733,7 @@ main(void)
         ui32Length = g_psAESCMACTestVectors[ui8Vector].ui32Length;
         pui32Message = g_psAESCMACTestVectors[ui8Vector].pui32Message;
         pui32ExpTag = g_psAESCMACTestVectors[ui8Vector].pui32Tag;
-        
+
         //
         // Perform the encryption without uDMA.
         //
@@ -771,10 +744,8 @@ main(void)
         //
         // Check the result.
         //
-        for(ui32Idx = 0; ui32Idx < 4; ui32Idx++)
-        {
-            if(pui32Tag[ui32Idx] != pui32ExpTag[ui32Idx])
-            {
+        for(ui32Idx = 0; ui32Idx < 4; ui32Idx++) {
+            if(pui32Tag[ui32Idx] != pui32ExpTag[ui32Idx]) {
                 UARTprintf("Tag mismatch on word %d. Exp: 0x%x, Act: "
                            "0x%x\n", ui32Idx, pui32ExpTag[ui32Idx],
                            pui32Tag[ui32Idx]);
@@ -785,16 +756,14 @@ main(void)
         //
         // Clear the array containing the tag.
         //
-        for(ui32Idx = 0; ui32Idx < 4; ui32Idx++)
-        {
+        for(ui32Idx = 0; ui32Idx < 4; ui32Idx++) {
             pui32Tag[ui32Idx] = 0;
         }
 
         //
         // Only use DMA with the vectors that have data.
         //
-        if(ui32Length != 0)
-        {
+        if(ui32Length != 0) {
             //
             // Perform the encryption with uDMA.
             //
@@ -805,10 +774,8 @@ main(void)
             //
             // Check the result.
             //
-            for(ui32Idx = 0; ui32Idx < 4; ui32Idx++)
-            {
-                if(pui32Tag[ui32Idx] != pui32ExpTag[ui32Idx])
-                {
+            for(ui32Idx = 0; ui32Idx < 4; ui32Idx++) {
+                if(pui32Tag[ui32Idx] != pui32ExpTag[ui32Idx]) {
                     UARTprintf("Tag mismatch on word %d. Exp: 0x%x, Act: "
                                "0x%x\n", ui32Idx, pui32ExpTag[ui32Idx],
                                pui32Tag[ui32Idx]);
@@ -819,8 +786,7 @@ main(void)
             //
             // Clear the array containing the tag.
             //
-            for(ui32Idx = 0; ui32Idx < 4; ui32Idx++)
-            {
+            for(ui32Idx = 0; ui32Idx < 4; ui32Idx++) {
                 pui32Tag[ui32Idx] = 0;
             }
         }
@@ -829,19 +795,15 @@ main(void)
     //
     // Finished.
     //
-    if(ui32Errors)
-    {
+    if(ui32Errors) {
         UARTprintf("Demo failed with error code 0x%x.\n", ui32Errors);
         LEDWrite(CLP_D3 | CLP_D4, CLP_D4);
-    }
-    else
-    {
+    } else {
         UARTprintf("Demo completed successfully.\n");
         LEDWrite(CLP_D3 | CLP_D4, CLP_D3);
-        
+
     }
 
-    while(1)
-    {
+    while(1) {
     }
 }

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-LM4F232 Firmware Package.
 //
 //*****************************************************************************
@@ -69,8 +69,7 @@ DECLARE_EVENT_DRIVER(g_sUSBEventDriver, 0, 0, USBHCDEvents);
 // This structure holds the state information for the USB audio device.
 //
 //*****************************************************************************
-static struct
-{
+static struct {
     //
     // Save the application provided callback function.
     //
@@ -139,8 +138,7 @@ static struct
 // In this case, only the host audio class is loaded.
 //
 //*****************************************************************************
-static tUSBHostClassDriver const * const g_ppHostClassDrivers[] =
-{
+static tUSBHostClassDriver const * const g_ppHostClassDrivers[] = {
     &g_sUSBHostAudioClassDriver
     ,&g_sUSBEventDriver
 };
@@ -186,13 +184,11 @@ AudioCallback(tUSBHostAudioInstance *psAudioInstance,
               uint32_t ui32MsgParam,
               void *pvBuffer)
 {
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // New USB audio device has been enabled.
         //
-        case USBH_AUDIO_EVENT_OPEN:
-        {
+        case USBH_AUDIO_EVENT_OPEN: {
             //
             // Set the EVENT_OPEN flag and let the main routine handle it.
             //
@@ -204,8 +200,7 @@ AudioCallback(tUSBHostAudioInstance *psAudioInstance,
         //
         // USB audio device has been removed.
         //
-        case USBH_AUDIO_EVENT_CLOSE:
-        {
+        case USBH_AUDIO_EVENT_CLOSE: {
             //
             // Set the EVENT_CLOSE flag and let the main routine handle it.
             //
@@ -213,8 +208,7 @@ AudioCallback(tUSBHostAudioInstance *psAudioInstance,
 
             break;
         }
-        default:
-        {
+        default: {
         }
     }
 }
@@ -310,8 +304,7 @@ USBSoundVolumeSet(uint32_t ui32Percent)
     //
     // Ignore volume changes if there is no device present.
     //
-    if(g_sAudioState.eState == STATE_DEVICE_READY)
-    {
+    if(g_sAudioState.eState == STATE_DEVICE_READY) {
         //
         // Scale the voltage percentage to the decibel range provided by the
         // USB audio device.
@@ -352,8 +345,7 @@ USBSoundVolumeGet(uint32_t ui32Channel)
     //
     // Ignore volume request if there is no device present.
     //
-    if(g_sAudioState.eState == STATE_DEVICE_READY)
-    {
+    if(g_sAudioState.eState == STATE_DEVICE_READY) {
         ui32Volume = USBHostAudioVolumeGet(g_psAudioInstance, 0, ui32Channel);
     }
 
@@ -385,8 +377,7 @@ USBSoundOutputFormatSet(uint32_t ui32SampleRate,
     //
     // Just return if there is no device at this time.
     //
-    if(g_sAudioState.eState != STATE_DEVICE_READY)
-    {
+    if(g_sAudioState.eState != STATE_DEVICE_READY) {
         return(1);
     }
 
@@ -422,8 +413,7 @@ USBSoundInputFormatSet(uint32_t ui32SampleRate,
     //
     // Just return if there is no device at this time.
     //
-    if(g_sAudioState.eState != STATE_DEVICE_READY)
-    {
+    if(g_sAudioState.eState != STATE_DEVICE_READY) {
         return(0);
     }
 
@@ -445,13 +435,12 @@ USBSoundInputFormatSet(uint32_t ui32SampleRate,
 //*****************************************************************************
 uint32_t
 USBSoundOutputFormatGet(uint32_t ui32SampleRate, uint32_t ui32Bits,
-                     uint32_t ui32Channels)
+                        uint32_t ui32Channels)
 {
     //
     // Just return if there is no device at this time.
     //
-    if(g_sAudioState.eState != STATE_DEVICE_READY)
-    {
+    if(g_sAudioState.eState != STATE_DEVICE_READY) {
         return(0);
     }
 
@@ -472,13 +461,12 @@ USBSoundOutputFormatGet(uint32_t ui32SampleRate, uint32_t ui32Bits,
 //*****************************************************************************
 uint32_t
 USBSoundInputFormatGet(uint32_t ui32SampleRate, uint32_t ui32Bits,
-                    uint32_t ui32Channels)
+                       uint32_t ui32Channels)
 {
     //
     // Just return if there is no device at this time.
     //
-    if(g_sAudioState.eState != STATE_DEVICE_READY)
-    {
+    if(g_sAudioState.eState != STATE_DEVICE_READY) {
         return(0);
     }
 
@@ -513,13 +501,11 @@ USBHCDEvents(void *pvData)
     //
     psEventInfo = (tEventInfo *)pvData;
 
-    switch(psEventInfo->ui32Event)
-    {
+    switch(psEventInfo->ui32Event) {
         //
         // Unknown device detected.
         //
-        case USB_EVENT_UNKNOWN_CONNECTED:
-        {
+        case USB_EVENT_UNKNOWN_CONNECTED: {
             //
             // An unknown device was detected.
             //
@@ -528,8 +514,7 @@ USBHCDEvents(void *pvData)
             //
             // Call the general event handler if present.
             //
-            if(g_sAudioState.pfnCallbackEvent)
-            {
+            if(g_sAudioState.pfnCallbackEvent) {
                 g_sAudioState.pfnCallbackEvent(SOUND_EVENT_UNKNOWN_DEV, 1);
             }
 
@@ -539,30 +524,24 @@ USBHCDEvents(void *pvData)
         //
         // Device unplugged.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             //
             // Handle the case where an unknown device is disconnected.
             //
-            if(g_sAudioState.eState == STATE_UNKNOWN_DEVICE)
-            {
+            if(g_sAudioState.eState == STATE_UNKNOWN_DEVICE) {
                 g_sAudioState.eState = STATE_NO_DEVICE;
 
                 //
                 // Call the general event handler if present.
                 //
-                if(g_sAudioState.pfnCallbackEvent)
-                {
+                if(g_sAudioState.pfnCallbackEvent) {
                     g_sAudioState.pfnCallbackEvent(SOUND_EVENT_UNKNOWN_DEV, 0);
                 }
-            }
-            else
-            {
+            } else {
                 //
                 // Call the general event handler if present.
                 //
-                if(g_sAudioState.pfnCallbackEvent)
-                {
+                if(g_sAudioState.pfnCallbackEvent) {
                     g_sAudioState.pfnCallbackEvent(SOUND_EVENT_DISCONNECT, 0);
                 }
             }
@@ -573,8 +552,7 @@ USBHCDEvents(void *pvData)
         //
         // A power fault has occurred.
         //
-        case USB_EVENT_POWER_FAULT:
-        {
+        case USB_EVENT_POWER_FAULT: {
             //
             // No power means no device is present.
             //
@@ -582,8 +560,7 @@ USBHCDEvents(void *pvData)
 
             break;
         }
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -602,16 +579,14 @@ USBHostAudioCallback(tUSBHostAudioInstance *psAudioInstance,
     //
     // Only call the callback if it is actually present.
     //
-    if(g_sAudioState.pfnCallbackOut)
-    {
+    if(g_sAudioState.pfnCallbackOut) {
         g_sAudioState.pfnCallbackOut(pvBuffer, ui32Event);
     }
 
     //
     // Only call the callback if it is actually present.
     //
-    if(g_sAudioState.pfnCallbackIn)
-    {
+    if(g_sAudioState.pfnCallbackIn) {
         g_sAudioState.pfnCallbackIn(pvBuffer, ui32Event);
     }
 }
@@ -638,8 +613,7 @@ USBSoundBufferOut(const void *pvBuffer, uint32_t ui32Size,
     // If there is no device present or there is a pending buffer then just
     // return with a failure.
     //
-    if(g_sAudioState.eState != STATE_DEVICE_READY)
-    {
+    if(g_sAudioState.eState != STATE_DEVICE_READY) {
         return(0);
     }
 
@@ -678,8 +652,7 @@ USBSoundBufferIn(const void *pvBuffer, uint32_t ui32Size,
     // If there is no device present or there is a pending buffer then just
     // return with a failure.
     //
-    if(g_sAudioState.eState != STATE_DEVICE_READY)
-    {
+    if(g_sAudioState.eState != STATE_DEVICE_READY) {
         return(0);
     }
 
@@ -706,8 +679,7 @@ GetVolumeParameters(void)
 {
     uint32_t ui32Max, ui32Min, ui32Res, ui32Channel;
 
-    for(ui32Channel = 0; ui32Channel < 3; ui32Channel++)
-    {
+    for(ui32Channel = 0; ui32Channel < 3; ui32Channel++) {
         ui32Max = USBHostAudioVolumeMaxGet(g_psAudioInstance, 0, ui32Channel);
         ui32Min = USBHostAudioVolumeMinGet(g_psAudioInstance, 0, ui32Channel);
         ui32Res = USBHostAudioVolumeResGet(g_psAudioInstance, 0, ui32Channel);
@@ -732,24 +704,20 @@ USBMain(uint32_t ui32Ticks)
     //
     USBOTGMain(ui32Ticks);
 
-    switch(g_sAudioState.eState)
-    {
+    switch(g_sAudioState.eState) {
         //
         // This is the running state where buttons are checked and the
         // screen is updated.
         //
-        case STATE_DEVICE_READY:
-        {
-            if(HWREGBITW(&g_sAudioState.ui32EventFlags, EVENT_CLOSE))
-            {
+        case STATE_DEVICE_READY: {
+            if(HWREGBITW(&g_sAudioState.ui32EventFlags, EVENT_CLOSE)) {
                 HWREGBITW(&g_sAudioState.ui32EventFlags, EVENT_CLOSE) = 0;
                 g_sAudioState.eState = STATE_NO_DEVICE;
 
                 //
                 // Call the general event handler if present.
                 //
-                if(g_sAudioState.pfnCallbackEvent)
-                {
+                if(g_sAudioState.pfnCallbackEvent) {
                     g_sAudioState.pfnCallbackEvent(SOUND_EVENT_DISCONNECT, 0);
                 }
             }
@@ -759,10 +727,8 @@ USBMain(uint32_t ui32Ticks)
         //
         // If there is no device then just wait for one.
         //
-        case STATE_NO_DEVICE:
-        {
-            if(HWREGBITW(&g_sAudioState.ui32EventFlags, EVENT_OPEN))
-            {
+        case STATE_NO_DEVICE: {
+            if(HWREGBITW(&g_sAudioState.ui32EventFlags, EVENT_OPEN)) {
                 g_sAudioState.eState = STATE_DEVICE_READY;
 
                 HWREGBITW(&g_sAudioState.ui32EventFlags, EVENT_OPEN) = 0;
@@ -772,8 +738,7 @@ USBMain(uint32_t ui32Ticks)
                 //
                 // Call the general event handler if present.
                 //
-                if(g_sAudioState.pfnCallbackEvent)
-                {
+                if(g_sAudioState.pfnCallbackEvent) {
                     g_sAudioState.pfnCallbackEvent(SOUND_EVENT_READY, 0);
                 }
             }
@@ -783,21 +748,18 @@ USBMain(uint32_t ui32Ticks)
         //
         // An unknown device was connected.
         //
-        case STATE_UNKNOWN_DEVICE:
-        {
+        case STATE_UNKNOWN_DEVICE: {
             break;
         }
 
         //
         // Something has caused a power fault.
         //
-        case STATE_POWER_FAULT:
-        {
+        case STATE_POWER_FAULT: {
             break;
         }
 
-        default:
-        {
+        default: {
             break;
         }
     }

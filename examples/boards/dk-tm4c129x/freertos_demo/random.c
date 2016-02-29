@@ -6,20 +6,20 @@
 //
 // Copyright (c) 2005-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -100,8 +100,7 @@ RandomSeed(void)
         ui32Temp = a + (d ^ (b & (c ^ d))) + g_pui32RandomEntropy[k];        \
         a = (ui32Temp << s) | (ui32Temp >> (32 - s));                        \
     }
-    for(ui32Idx = 0; ui32Idx < 16; ui32Idx += 4)
-    {
+    for(ui32Idx = 0; ui32Idx < 16; ui32Idx += 4) {
         F(ui32A, ui32B, ui32C, ui32D, ui32Idx + 0, 3);
         F(ui32D, ui32A, ui32B, ui32C, ui32Idx + 1, 7);
         F(ui32C, ui32D, ui32A, ui32B, ui32Idx + 2, 11);
@@ -117,8 +116,7 @@ RandomSeed(void)
                    g_pui32RandomEntropy[k] +   0x5a827999;                   \
         a = (ui32Temp << s) | (ui32Temp >> (32 - s));                        \
     }
-    for(ui32Idx = 0; ui32Idx < 4; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < 4; ui32Idx++) {
         G(ui32A, ui32B, ui32C, ui32D, ui32Idx + 0, 3);
         G(ui32D, ui32A, ui32B, ui32C, ui32Idx + 4, 5);
         G(ui32C, ui32D, ui32A, ui32B, ui32Idx + 8, 9);
@@ -133,15 +131,13 @@ RandomSeed(void)
         ui32Temp = a + (b ^ c ^ d) + g_pui32RandomEntropy[k] + 0x6ed9eba1;   \
         a = (ui32Temp << s) | (ui32Temp >> (32 - s));                        \
     }
-    for(ui32Idx = 0; ui32Idx < 4; ui32Idx += 2)
-    {
+    for(ui32Idx = 0; ui32Idx < 4; ui32Idx += 2) {
         H(ui32A, ui32B, ui32C, ui32D, ui32Idx + 0, 3);
         H(ui32D, ui32A, ui32B, ui32C, ui32Idx + 8, 9);
         H(ui32C, ui32D, ui32A, ui32B, ui32Idx + 4, 11);
         H(ui32B, ui32C, ui32D, ui32A, ui32Idx + 12, 15);
 
-        if(ui32Idx == 2)
-        {
+        if(ui32Idx == 2) {
             ui32Idx -= 3;
         }
     }

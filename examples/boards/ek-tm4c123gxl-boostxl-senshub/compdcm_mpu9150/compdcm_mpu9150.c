@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C123GXL Firmware Package.
 //
 //*****************************************************************************
@@ -155,8 +155,7 @@ MPU9150AppCallback(void *pvCallbackData, uint_fast8_t ui8Status)
     // If the transaction succeeded set the data flag to indicate to
     // application that this transaction is complete and data may be ready.
     //
-    if(ui8Status == I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status == I2CM_STATUS_SUCCESS) {
         g_vui8I2CDoneFlag = 1;
     }
 
@@ -184,8 +183,7 @@ IntGPIOb(void)
     //
     GPIOIntClear(GPIO_PORTB_BASE, ulStatus);
 
-    if(ulStatus & GPIO_PIN_2)
-    {
+    if(ulStatus & GPIO_PIN_2) {
         //
         // MPU9150 Data is ready for retrieval and processing.
         //
@@ -249,8 +247,7 @@ MPU9150AppErrorHandler(char *pcFilename, uint_fast32_t ui32Line)
     // Go to sleep wait for interventions.  A more robust application could
     // attempt corrective actions here.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Do Nothing
         //
@@ -270,8 +267,7 @@ MPU9150AppI2CWait(char *pcFilename, uint_fast32_t ui32Line)
     // Put the processor to sleep while we wait for the I2C driver to
     // indicate that the transaction is complete.
     //
-    while((g_vui8I2CDoneFlag == 0) && (g_vui8ErrorFlag == 0))
-    {
+    while((g_vui8I2CDoneFlag == 0) && (g_vui8ErrorFlag == 0)) {
         //
         // Do Nothing
         //
@@ -280,8 +276,7 @@ MPU9150AppI2CWait(char *pcFilename, uint_fast32_t ui32Line)
     //
     // If an error occurred call the error handler immediately.
     //
-    if(g_vui8ErrorFlag)
-    {
+    if(g_vui8ErrorFlag) {
         MPU9150AppErrorHandler(pcFilename, ui32Line);
     }
 
@@ -474,8 +469,8 @@ main(void)
     // Configure the data ready interrupt pin output of the MPU9150.
     //
     g_sMPU9150Inst.pui8Data[0] = MPU9150_INT_PIN_CFG_INT_LEVEL |
-                                    MPU9150_INT_PIN_CFG_INT_RD_CLEAR |
-                                    MPU9150_INT_PIN_CFG_LATCH_INT_EN;
+                                 MPU9150_INT_PIN_CFG_INT_RD_CLEAR |
+                                 MPU9150_INT_PIN_CFG_LATCH_INT_EN;
     g_sMPU9150Inst.pui8Data[1] = MPU9150_INT_ENABLE_DATA_RDY_EN;
     MPU9150Write(&g_sMPU9150Inst, MPU9150_O_INT_PIN_CFG,
                  g_sMPU9150Inst.pui8Data, 2, MPU9150AppCallback,
@@ -512,13 +507,11 @@ main(void)
 
     ui32CompDCMStarted = 0;
 
-    while(1)
-    {
+    while(1) {
         //
         // Go to sleep mode while waiting for data ready.
         //
-        while(!g_vui8I2CDoneFlag)
-        {
+        while(!g_vui8I2CDoneFlag) {
             ROM_SysCtlSleep();
         }
 
@@ -548,8 +541,7 @@ main(void)
         //
         // Check if this is our first data ever.
         //
-        if(ui32CompDCMStarted == 0)
-        {
+        if(ui32CompDCMStarted == 0) {
             //
             // Set flag indicating that DCM is started.
             // Perform the seeding of the DCM with the first data set.
@@ -562,9 +554,7 @@ main(void)
             CompDCMGyroUpdate(&g_sCompDCMInst, pfGyro[0], pfGyro[1],
                               pfGyro[2]);
             CompDCMStart(&g_sCompDCMInst);
-        }
-        else
-        {
+        } else {
             //
             // DCM Is already started.  Perform the incremental update.
             //
@@ -582,8 +572,7 @@ main(void)
         // overflow the UART with data.
         //
         g_ui32PrintSkipCounter++;
-        if(g_ui32PrintSkipCounter >= PRINT_SKIP_COUNT)
-        {
+        if(g_ui32PrintSkipCounter >= PRINT_SKIP_COUNT) {
             //
             // Reset skip counter.
             //
@@ -614,8 +603,7 @@ main(void)
             pfEulers[0] *= 57.295779513082320876798154814105f;
             pfEulers[1] *= 57.295779513082320876798154814105f;
             pfEulers[2] *= 57.295779513082320876798154814105f;
-            if(pfEulers[2] < 0)
-            {
+            if(pfEulers[2] < 0) {
                 pfEulers[2] += 360.0f;
             }
 
@@ -624,8 +612,7 @@ main(void)
             // purpose of decomposing the float into a integer part and a
             // fraction (decimal) part.
             //
-            for(ui32Idx = 0; ui32Idx < 16; ui32Idx++)
-            {
+            for(ui32Idx = 0; ui32Idx < 16; ui32Idx++) {
                 //
                 // Conver float value to a integer truncating the decimal part.
                 //
@@ -647,8 +634,7 @@ main(void)
                 //
                 // make the decimal part a positive number for display.
                 //
-                if(i32FPart[ui32Idx] < 0)
-                {
+                if(i32FPart[ui32Idx] < 0) {
                     i32FPart[ui32Idx] *= -1;
                 }
             }

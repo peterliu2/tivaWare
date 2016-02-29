@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C129EXL Firmware Package.
 //
 //*****************************************************************************
@@ -55,13 +55,11 @@ FindCGIParameter(const char *pcToFind, char *pcParam[], int32_t iNumParams)
     //
     // Scan through all the parameters in the array.
     //
-    for(iLoop = 0; iLoop < iNumParams; iLoop++)
-    {
+    for(iLoop = 0; iLoop < iNumParams; iLoop++) {
         //
         // Does the parameter name match the provided string?
         //
-        if(strcmp(pcToFind, pcParam[iLoop]) == 0)
-        {
+        if(strcmp(pcToFind, pcParam[iLoop]) == 0) {
             //
             // We found a match - return the index.
             //
@@ -92,13 +90,10 @@ bool
 IsValidHexDigit(const char cDigit)
 {
     if(((cDigit >= '0') && (cDigit <= '9')) ||
-       ((cDigit >= 'a') && (cDigit <= 'f')) ||
-       ((cDigit >= 'A') && (cDigit <= 'F')))
-    {
+            ((cDigit >= 'a') && (cDigit <= 'f')) ||
+            ((cDigit >= 'A') && (cDigit <= 'F'))) {
         return(true);
-    }
-    else
-    {
+    } else {
         return(false);
     }
 }
@@ -120,20 +115,13 @@ IsValidHexDigit(const char cDigit)
 unsigned char
 HexDigit(const char cDigit)
 {
-    if((cDigit >= '0') && (cDigit <= '9'))
-    {
+    if((cDigit >= '0') && (cDigit <= '9')) {
         return(cDigit - '0');
-    }
-    else
-    {
-        if((cDigit >= 'a') && (cDigit <= 'f'))
-        {
+    } else {
+        if((cDigit >= 'a') && (cDigit <= 'f')) {
             return((cDigit - 'a') + 10);
-        }
-        else
-        {
-            if((cDigit >= 'A') && (cDigit <= 'F'))
-            {
+        } else {
+            if((cDigit >= 'A') && (cDigit <= 'F')) {
                 return((cDigit - 'A') + 10);
             }
         }
@@ -167,12 +155,9 @@ bool
 DecodeHexEscape(const char *pcEncoded, char *pcDecoded)
 {
     if((pcEncoded[0] != '%') || !IsValidHexDigit(pcEncoded[1]) ||
-       !IsValidHexDigit(pcEncoded[2]))
-    {
+            !IsValidHexDigit(pcEncoded[2])) {
         return(false);
-    }
-    else
-    {
+    } else {
         *pcDecoded = ((HexDigit(pcEncoded[1]) * 16) +
                       HexDigit(pcEncoded[2]));
         return(true);
@@ -206,8 +191,7 @@ EncodeFormString(const char *pcDecoded, char *pcEncoded,
     //
     // Make sure we were not passed a tiny buffer.
     //
-    if(ui32Len <= 1)
-    {
+    if(ui32Len <= 1) {
         return(0);
     }
 
@@ -221,21 +205,17 @@ EncodeFormString(const char *pcDecoded, char *pcEncoded,
     // space to put our output in.
     //
     for(ui32Loop = 0; pcDecoded[ui32Loop] && (ui32Count < (ui32Len - 1));
-        ui32Loop++)
-    {
-        switch(pcDecoded[ui32Loop])
-        {
+            ui32Loop++) {
+        switch(pcDecoded[ui32Loop]) {
             //
             // Pass most characters without modification.
             //
-            default:
-            {
+            default: {
                 pcEncoded[ui32Count++] = pcDecoded[ui32Loop];
                 break;
             }
 
-            case '\'':
-            {
+            case '\'': {
                 ui32Count += usnprintf(&pcEncoded[ui32Count],
                                        (ui32Len - ui32Count), "&#39;");
                 break;
@@ -278,15 +258,12 @@ DecodeFormString(const  char *pcEncoded, char *pcDecoded,
     //
     // Keep going until we run out of input or fill the output buffer.
     //
-    while(pcEncoded[ui32Loop] && (ui32Count < (ui32Len - 1)))
-    {
-        switch(pcEncoded[ui32Loop])
-        {
+    while(pcEncoded[ui32Loop] && (ui32Count < (ui32Len - 1))) {
+        switch(pcEncoded[ui32Loop]) {
             //
             // '+' in the encoded data is decoded as a space.
             //
-            case '+':
-            {
+            case '+': {
                 pcDecoded[ui32Count++] = ' ';
                 ui32Loop++;
                 break;
@@ -296,10 +273,8 @@ DecodeFormString(const  char *pcEncoded, char *pcDecoded,
             // '%' in the encoded data indicates that the following 2
             // characters indicate the hex ASCII code of the decoded character.
             //
-            case '%':
-            {
-                if(pcEncoded[ui32Loop + 1] && pcEncoded[ui32Loop + 2])
-                {
+            case '%': {
+                if(pcEncoded[ui32Loop + 1] && pcEncoded[ui32Loop + 2]) {
                     //
                     // Decode the escape sequence.
                     //
@@ -310,8 +285,7 @@ DecodeFormString(const  char *pcEncoded, char *pcDecoded,
                     // If the escape sequence was valid, move to the next
                     // output character.
                     //
-                    if(bValid)
-                    {
+                    if(bValid) {
                         ui32Count++;
                     }
 
@@ -319,9 +293,7 @@ DecodeFormString(const  char *pcEncoded, char *pcDecoded,
                     // Skip past the escape sequence in the encoded string.
                     //
                     ui32Loop += 3;
-                }
-                else
-                {
+                } else {
                     //
                     // We reached the end of the string partway through an
                     // escape sequence so just ignore it and return the number
@@ -336,8 +308,7 @@ DecodeFormString(const  char *pcEncoded, char *pcDecoded,
             //
             // For all other characters, just copy the input to the output.
             //
-            default:
-            {
+            default: {
                 pcDecoded[ui32Count++] = pcEncoded[ui32Loop++];
                 break;
             }
@@ -387,15 +358,12 @@ CheckDecimalParam(const char *pcValue, int32_t *pi32Value)
     ui32Loop = 0;
     i32Accum = 0;
 
-    while(pcValue[ui32Loop])
-    {
+    while(pcValue[ui32Loop]) {
         //
         // Ignore whitespace before the string.
         //
-        if(!bStarted)
-        {
-            if((pcValue[ui32Loop] == ' ') || (pcValue[ui32Loop] == '\t'))
-            {
+        if(!bStarted) {
+            if((pcValue[ui32Loop] == ' ') || (pcValue[ui32Loop] == '\t')) {
                 ui32Loop++;
                 continue;
             }
@@ -403,8 +371,7 @@ CheckDecimalParam(const char *pcValue, int32_t *pi32Value)
             //
             // Ignore a + or - character as long as we have not started.
             //
-            if((pcValue[ui32Loop] == '+') || (pcValue[ui32Loop] == '-'))
-            {
+            if((pcValue[ui32Loop] == '+') || (pcValue[ui32Loop] == '-')) {
                 //
                 // If the string starts with a '-', remember to negate the
                 // result.
@@ -412,9 +379,7 @@ CheckDecimalParam(const char *pcValue, int32_t *pi32Value)
                 bNeg = (pcValue[ui32Loop] == '-') ? true : false;
                 bStarted = true;
                 ui32Loop++;
-            }
-            else
-            {
+            } else {
                 //
                 // We found something other than whitespace or a sign character
                 // so we start looking for numerals now.
@@ -423,30 +388,22 @@ CheckDecimalParam(const char *pcValue, int32_t *pi32Value)
             }
         }
 
-        if(bStarted)
-        {
-            if(!bFinished)
-            {
+        if(bStarted) {
+            if(!bFinished) {
                 //
                 // We expect to see nothing other than valid digit characters
                 // here.
                 //
-                if((pcValue[ui32Loop] >= '0') && (pcValue[ui32Loop] <= '9'))
-                {
+                if((pcValue[ui32Loop] >= '0') && (pcValue[ui32Loop] <= '9')) {
                     i32Accum = (i32Accum * 10) + (pcValue[ui32Loop] - '0');
-                }
-                else
-                {
+                } else {
                     //
                     // Have we hit whitespace?  If so, check for no more
                     // characters until the end of the string.
                     //
-                    if((pcValue[ui32Loop] == ' ') || (pcValue[ui32Loop] == '\t'))
-                    {
+                    if((pcValue[ui32Loop] == ' ') || (pcValue[ui32Loop] == '\t')) {
                         bFinished = true;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // We got something other than a digit or whitespace so
                         // this makes the string invalid as a decimal number.
@@ -454,14 +411,11 @@ CheckDecimalParam(const char *pcValue, int32_t *pi32Value)
                         return(false);
                     }
                 }
-            }
-            else
-            {
+            } else {
                 //
                 // We are scanning for whitespace until the end of the string.
                 //
-                if((pcValue[ui32Loop] != ' ') && (pcValue[ui32Loop] != '\t'))
-                {
+                if((pcValue[ui32Loop] != ' ') && (pcValue[ui32Loop] != '\t')) {
                     //
                     // We found something other than whitespace so the string
                     // is not valid.
@@ -527,14 +481,12 @@ GetCGIParam(const char *pcName, char *pcParams[], char *pcValue[],
     // Is the parameter we are looking for in the list?
     //
     i32Param = FindCGIParameter(pcName, pcParams, iNumParams);
-    if(i32Param != -1)
-    {
+    if(i32Param != -1) {
         //
         // We found the parameter so now get its value.
         //
         bRetcode = CheckDecimalParam(pcValue[i32Param], &i32Value);
-        if(bRetcode)
-        {
+        if(bRetcode) {
             //
             // All is well - return the parameter value.
             //

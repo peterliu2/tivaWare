@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2014-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -207,12 +207,9 @@ NFCP2P_proccessStateMachine(void)
 
     tTRF79x0IRQFlag eIRQStatus = IRQ_STATUS_IDLE;
 
-    switch(g_eNFCP2PState)
-    {
-        case NFC_P2P_PROTOCOL_ACTIVATION:
-        {
-            if (g_eP2PMode == P2P_INITATIOR_MODE)
-            {
+    switch(g_eNFCP2PState) {
+        case NFC_P2P_PROTOCOL_ACTIVATION: {
+            if (g_eP2PMode == P2P_INITATIOR_MODE) {
                 //
                 // Initialize the TRF7970A Registers for P2P Initiator Mode -
                 // in the case there is an external field enabled, the function
@@ -220,7 +217,7 @@ NFCP2P_proccessStateMachine(void)
                 // and the program should switch to Target Mode.
                 //
                 if(TRF79x0Init2(P2P_INITATIOR_MODE, g_eP2PFrequency) ==
-                    STATUS_FAIL)
+                        STATUS_FAIL)
                     break;
 
                 //
@@ -231,89 +228,75 @@ NFCP2P_proccessStateMachine(void)
                 //
                 // Check if IRQ is triggered - timeout of 20 mS
                 //
-                if(TRF79x0IRQHandler(20) == IRQ_STATUS_RX_COMPLETE)
-                {
+                if(TRF79x0IRQHandler(20) == IRQ_STATUS_RX_COMPLETE) {
                     //
                     // Process the received data - check for valid SENSF_RES
                     //
                     if (NFCTypeF_ProcessReceivedData(g_ui8RxDataPtr) ==
-                        STATUS_SUCCESS)
-                    {
+                            STATUS_SUCCESS) {
                         g_eNFCP2PState = NFC_P2P_PARAMETER_SELECTION;
-                        #ifdef DEBUG_PRINT
+#ifdef DEBUG_PRINT
                         //UARTprintf("\nInitiator Activated \n");
                         //UARTprintf("Exit PROT ACT \n");
-                        #endif
+#endif
 
                         break;
-                    }
-                    else
-                    {
+                    } else {
                         TRF79x0DisableTransmitter();
                         break;
                     }
-                }
-                else
-                {
+                } else {
                     TRF79x0DisableTransmitter();
                     break;
                 }
 
-            }
-            else if (g_eP2PMode == P2P_PASSIVE_TARGET_MODE)
-            {
+            } else if (g_eP2PMode == P2P_PASSIVE_TARGET_MODE) {
                 TRF79x0Init2(P2P_PASSIVE_TARGET_MODE, g_eP2PFrequency);
 
                 //
                 // Poll the IRQ flag for 495 mS.
                 //
-                while(eIRQStatus != IRQ_STATUS_TIME_OUT)
-                {
+                while(eIRQStatus != IRQ_STATUS_TIME_OUT) {
                     eIRQStatus = TRF79x0IRQHandler(495);
 
                     //
                     // Process the received data - check for valid SENSF_REQ
                     //
                     if((eIRQStatus == IRQ_STATUS_RX_COMPLETE) &&
-                        (NFCTypeF_ProcessReceivedData(g_ui8RxDataPtr) ==
-                        STATUS_SUCCESS))
-                    {
+                            (NFCTypeF_ProcessReceivedData(g_ui8RxDataPtr) ==
+                             STATUS_SUCCESS)) {
                         g_eNFCP2PState = NFC_P2P_PARAMETER_SELECTION;
                         break;
-                        #ifdef DEBUG_PRINT
+#ifdef DEBUG_PRINT
                         //UARTprintf("\nTarget Activated \n");
                         //UARTprintf("Exit PROT ACT \n");
-                        #endif
+#endif
 
                     }
                 }
                 break;
 
-            }
-            else if (g_eP2PMode == P2P_ACTIVE_TARGET_MODE)
-            {
+            } else if (g_eP2PMode == P2P_ACTIVE_TARGET_MODE) {
                 TRF79x0Init2(P2P_ACTIVE_TARGET_MODE, g_eP2PFrequency);
 
                 //
                 // Poll the IRQ flag for 495 mS.
                 //
-                while(eIRQStatus != IRQ_STATUS_TIME_OUT)
-                {
+                while(eIRQStatus != IRQ_STATUS_TIME_OUT) {
                     eIRQStatus = TRF79x0IRQHandler(495);
 
                     //
                     // Process the received data - check for valid ATR_REQ
                     //
                     if((eIRQStatus == IRQ_STATUS_RX_COMPLETE) &&
-                        (NFCDEP_ProcessReceivedRequest(g_ui8RxDataPtr,0,true) ==
-                        STATUS_SUCCESS))
-                    {
+                            (NFCDEP_ProcessReceivedRequest(g_ui8RxDataPtr,0,true) ==
+                             STATUS_SUCCESS)) {
                         g_eNFCP2PState = NFC_P2P_DATA_EXCHANGE_PROTOCOL;
                         break;
-                        #ifdef DEBUG_PRINT
+#ifdef DEBUG_PRINT
                         //UARTprintf("\nTarget Activated \n");
                         //UARTprintf("Exit PROT ACT \n");
-                        #endif
+#endif
 
 
                     }
@@ -321,54 +304,45 @@ NFCP2P_proccessStateMachine(void)
                 break;
             }
         }
-        case NFC_P2P_PARAMETER_SELECTION:
-        {
+        case NFC_P2P_PARAMETER_SELECTION: {
             //
             // Reset the LLCP Parameters
             //
             LLCP_init();
-            if (g_eP2PMode == P2P_INITATIOR_MODE)
-            {
+            if (g_eP2PMode == P2P_INITATIOR_MODE) {
                 pui8NFCID2_Ptr = NFCTypeF_GetNFCID2();
                 NFCDEP_SendATR_REQ(pui8NFCID2_Ptr);
                 //
                 // Check if IRQ is triggered - timeout of 100 mS
                 //
-                if (TRF79x0IRQHandler(1000) == IRQ_STATUS_RX_COMPLETE)
-                {
+                if (TRF79x0IRQHandler(1000) == IRQ_STATUS_RX_COMPLETE) {
                     //
                     // Process the received data - check for valid ATR_RES
                     //
                     if (NFCDEP_ProcessReceivedData(g_ui8RxDataPtr)
-                            == STATUS_SUCCESS)
-                    {
+                            == STATUS_SUCCESS) {
                         //
                         // If Current Frequency is 212 request to go to a higher
                         // baud rate
                         //
-                        if(g_eP2PFrequency == FREQ_212_KBPS)
-                        {
+                        if(g_eP2PFrequency == FREQ_212_KBPS) {
                             NFCDEP_SendPSL_REQ();
 
                             if (TRF79x0IRQHandler(1000) ==
-                                IRQ_STATUS_RX_COMPLETE)
-                            {
+                                    IRQ_STATUS_RX_COMPLETE) {
                                 if (NFCDEP_ProcessReceivedData(g_ui8RxDataPtr)==
-                                    STATUS_SUCCESS)
-                                {
+                                        STATUS_SUCCESS) {
                                     //
                                     // If the function returns successful then
                                     // the returned DID was correct.
                                     //
                                     TRF79x0SetMode(g_eP2PMode,FREQ_424_KBPS);
                                 }
-                            }
-                            else
-                            {
-                                #ifdef DEBUG_PRINT
+                            } else {
+#ifdef DEBUG_PRINT
                                 //UARTprintf("\nMCU Timed Out\n");
                                 //UARTprintf("Exit PARAM SEL\n");
-                                #endif
+#endif
                                 g_eNFCP2PState = NFC_P2P_PROTOCOL_ACTIVATION;
                                 TRF79x0DisableTransmitter();
                                 break;
@@ -376,98 +350,80 @@ NFCP2P_proccessStateMachine(void)
                         }
 
                         g_eNFCP2PState = NFC_P2P_DATA_EXCHANGE_PROTOCOL;
-                        #ifdef DEBUG_PRINT
+#ifdef DEBUG_PRINT
                         //UARTprintf("Exit P2P PARM SEL\n");
-                        #endif
+#endif
 
                         g_ui16TargetTimeout = LLCP_getLinkTimeOut();
 
-                        #ifdef DEBUG_PRINT
+#ifdef DEBUG_PRINT
                         //UARTprintf("Time out is: %d",g_ui16TargetTimeout);
-                        #endif
-                    }
-                    else
-                    {
+#endif
+                    } else {
                         g_eNFCP2PState = NFC_P2P_PROTOCOL_ACTIVATION;
                         TRF79x0DisableTransmitter();
                         break;
                     }
-                }
-                else
-                {
-                    #ifdef DEBUG_PRINT
+                } else {
+#ifdef DEBUG_PRINT
                     //UARTprintf("\nMCU Timed Out\n");
                     //UARTprintf("Exit PARAM SEL\n");
-                    #endif
+#endif
                     g_eNFCP2PState = NFC_P2P_PROTOCOL_ACTIVATION;
                     TRF79x0DisableTransmitter();
                     break;
                 }
-            }
-            else if (g_eP2PMode == P2P_PASSIVE_TARGET_MODE)
-            {
+            } else if (g_eP2PMode == P2P_PASSIVE_TARGET_MODE) {
                 //
                 // Check if IRQ is triggered - timeout of 100 mS
                 //
-                if (TRF79x0IRQHandler(1000) == IRQ_STATUS_RX_COMPLETE)
-                {
+                if (TRF79x0IRQHandler(1000) == IRQ_STATUS_RX_COMPLETE) {
                     pui8NFCID2_Ptr = NFCTypeF_GetNFCID2();
                     //
                     // Process the received data - check for valid ATR_REQ
                     //
                     if (NFCDEP_ProcessReceivedRequest(g_ui8RxDataPtr,
-                                                        pui8NFCID2_Ptr,false)
-                            == STATUS_SUCCESS)
-                    {
+                                                      pui8NFCID2_Ptr,false)
+                            == STATUS_SUCCESS) {
                         g_eNFCP2PState = NFC_P2P_DATA_EXCHANGE_PROTOCOL;
-                        #ifdef DEBUG_PRINT
+#ifdef DEBUG_PRINT
                         //UARTprintf("Exit P2P PARM SEL\n");
-                        #endif
-                    }
-                    else
-                    {
+#endif
+                    } else {
                         g_eNFCP2PState = NFC_P2P_PROTOCOL_ACTIVATION;
-                        #ifdef DEBUG_PRINT
+#ifdef DEBUG_PRINT
                         //UARTprintf("\nMCU Invalid ATR REQ\n");
                         //UARTprintf("Exit P2P PARM SEL\n");
-                        #endif
+#endif
                         break;
                     }
-                }
-                else
-                {
+                } else {
                     g_eNFCP2PState = NFC_P2P_PROTOCOL_ACTIVATION;
-                    #ifdef DEBUG_PRINT
+#ifdef DEBUG_PRINT
                     //UARTprintf("\nMCU Timed Out\n");
                     //UARTprintf("Exit PARAM SEL\n");
-                    #endif
+#endif
                     break;
                     //TRF79x0DisableTransmitter();
                 }
-            }
-            else if (g_eP2PMode == P2P_ACTIVE_TARGET_MODE)
-            {
+            } else if (g_eP2PMode == P2P_ACTIVE_TARGET_MODE) {
                 //TODO
                 break;
             }
         }
-        case NFC_P2P_DATA_EXCHANGE_PROTOCOL:
-        {
-            if (g_eP2PMode == P2P_INITATIOR_MODE)
-            {
+        case NFC_P2P_DATA_EXCHANGE_PROTOCOL: {
+            if (g_eP2PMode == P2P_INITATIOR_MODE) {
                 NFCDEP_SendDEP_REQ(g_ui8RxDataPtr);
                 //
                 // Check if IRQ is triggered - timeout of 100 mS
                 //
                 if (TRF79x0IRQHandler(g_ui16TargetTimeout) ==
-                        IRQ_STATUS_RX_COMPLETE)
-                {
+                        IRQ_STATUS_RX_COMPLETE) {
                     //
                     // Process the received data - check for valid DEP_RES
                     //
                     if (NFCDEP_ProcessReceivedData(g_ui8RxDataPtr) ==
-                            STATUS_FAIL)
-                    {
+                            STATUS_FAIL) {
                         //DebugPrintf("Exit DATA EXCHANGE\n");
                         g_eNFCP2PState = NFC_P2P_PROTOCOL_ACTIVATION;
                         break;
@@ -476,13 +432,11 @@ NFCP2P_proccessStateMachine(void)
                     //
                     // Check if there is data to send to the Target.
                     //
-                    if (g_bTxDataAvailable == true)
-                    {
+                    if (g_bTxDataAvailable == true) {
                         //
                         // Set the Connect PDU as the next command to the Target
                         //
-                        if (LLCP_setNextPDU(LLCP_CONNECT_PDU) == STATUS_SUCCESS)
-                        {
+                        if (LLCP_setNextPDU(LLCP_CONNECT_PDU) == STATUS_SUCCESS) {
                             //
                             // If there was no ongoing connection, then clear
                             // the g_data_available flag
@@ -490,43 +444,35 @@ NFCP2P_proccessStateMachine(void)
                             g_bTxDataAvailable = false;
                         }
                     }
-                }
-                else
-                {
-                    #ifdef DEBUG_PRINT
+                } else {
+#ifdef DEBUG_PRINT
                     //UARTprintf("\nMCU Timed Out \n");
                     //UARTprintf("Exit DATA EXCHANGE\n");
-                    #endif
+#endif
                     g_eNFCP2PState = NFC_P2P_PROTOCOL_ACTIVATION;
                     TRF79x0DisableTransmitter();
                     break;
                 }
-            }
-            else if ((g_eP2PMode == P2P_PASSIVE_TARGET_MODE) ||
-                     (g_eP2PMode == P2P_ACTIVE_TARGET_MODE))
-            {
+            } else if ((g_eP2PMode == P2P_PASSIVE_TARGET_MODE) ||
+                       (g_eP2PMode == P2P_ACTIVE_TARGET_MODE)) {
                 //
                 // Check if IRQ is triggered - timeout of 100 mS
                 //
                 eIRQStatus = IRQ_STATUS_IDLE;
                 while((eIRQStatus == IRQ_STATUS_IDLE) ||
-                      (eIRQStatus == IRQ_STATUS_RF_FIELD_CHANGE) )
-                {
+                        (eIRQStatus == IRQ_STATUS_RF_FIELD_CHANGE) ) {
                     eIRQStatus = TRF79x0IRQHandler(1000);
                 }
 
-                if (eIRQStatus == IRQ_STATUS_RX_COMPLETE)
-                {
+                if (eIRQStatus == IRQ_STATUS_RX_COMPLETE) {
                     //
                     // Check if there is data to send to the Target.
                     //
-                    if (g_bTxDataAvailable == true)
-                    {
+                    if (g_bTxDataAvailable == true) {
                         //
                         // Set the Connect PDU as the next command to the Target
                         //
-                        if (LLCP_setNextPDU(LLCP_CONNECT_PDU) == STATUS_SUCCESS)
-                        {
+                        if (LLCP_setNextPDU(LLCP_CONNECT_PDU) == STATUS_SUCCESS) {
                             //
                             // If there was no ongoing connection, then clear
                             //the g_data_available flag
@@ -539,40 +485,32 @@ NFCP2P_proccessStateMachine(void)
                     // Process the received data - check for valid DEP_REQ
                     //
                     if (NFCDEP_ProcessReceivedRequest(g_ui8RxDataPtr,
-                                                        pui8NFCID2_Ptr,false)
-                            == STATUS_FAIL)
-                    {
+                                                      pui8NFCID2_Ptr,false)
+                            == STATUS_FAIL) {
                         g_eNFCP2PState = NFC_P2P_PROTOCOL_ACTIVATION;
-                        #ifdef DEBUG_PRINT
+#ifdef DEBUG_PRINT
                         //UARTprintf("Exit DATA EXCHANGE\n");
-                        #endif
+#endif
                         break;
                     }
-                }
-                else if (eIRQStatus
-                     == (IRQ_STATUS_RX_COMPLETE | IRQ_STATUS_FIFO_HIGH_OR_LOW))
-                {
+                } else if (eIRQStatus
+                           == (IRQ_STATUS_RX_COMPLETE | IRQ_STATUS_FIFO_HIGH_OR_LOW)) {
                     // Wait to receive the complete payload
-                }
-                else
-                {
+                } else {
                     g_eNFCP2PState = NFC_P2P_PROTOCOL_ACTIVATION;
-                    #ifdef DEBUG_PRINT
+#ifdef DEBUG_PRINT
                     //UARTprintf("\nMCU Timed Out \n");
                     //UARTprintf("Exit DATA EXCHANGE\n");
-                    #endif
+#endif
 
                     break;
                 }
-            }
-            else if (g_eP2PMode == P2P_ACTIVE_TARGET_MODE)
-            {
+            } else if (g_eP2PMode == P2P_ACTIVE_TARGET_MODE) {
                 //TODO
                 break;
             }
         }
-        case NFC_P2P_DEACTIVATION:
-        {
+        case NFC_P2P_DEACTIVATION: {
             break;
         }
     }
@@ -622,9 +560,9 @@ NFCP2P_getReceiveState(void)
 {
     sNFCP2PRxStatus eReceiveStatus;
 
-     SNEP_getReceiveStatus(&eReceiveStatus.eDataReceivedStatus,
-                           &eReceiveStatus.ui8DataReceivedLength,
-                           &eReceiveStatus.pui8RxDataPtr);
+    SNEP_getReceiveStatus(&eReceiveStatus.eDataReceivedStatus,
+                          &eReceiveStatus.ui8DataReceivedLength,
+                          &eReceiveStatus.pui8RxDataPtr);
 
     return eReceiveStatus;
 }
@@ -655,9 +593,9 @@ NFCP2P_getReceiveState(void)
 //*****************************************************************************
 bool
 NFCP2P_NDEFMessageEncoder(sNDEFMessageData sNDEFDataToSend,
-                                        uint8_t *pui8Buffer,
-                                        uint16_t ui16BufferMaxLength,
-                                        uint32_t *pui32BufferLength)
+                          uint8_t *pui8Buffer,
+                          uint16_t ui16BufferMaxLength,
+                          uint32_t *pui32BufferLength)
 {
     uint32_t ui32HeaderSize = 0;
     uint32_t x;
@@ -679,13 +617,11 @@ NFCP2P_NDEFMessageEncoder(sNDEFMessageData sNDEFDataToSend,
         (sNDEFDataToSend.ui32PayloadLength == 0 )   ||
         (sNDEFDataToSend.pui8PayloadPtr == 0)       ||
         (sNDEFDataToSend.ui32PayloadLength > ui16BufferMaxLength)
-      )
-    {
+    ) {
         DebugPrintf("   ERR: NDEFMessageEncoder: Invalid Input\n");
         return STATUS_FAIL;
     }
-    if(ui16BufferMaxLength < 25)
-    {
+    if(ui16BufferMaxLength < 25) {
         DebugPrintf("Warning: NDEFMessageEncoder : You need a bigger buffer\n");
     }
 
@@ -693,13 +629,13 @@ NFCP2P_NDEFMessageEncoder(sNDEFMessageData sNDEFDataToSend,
     // Fill STATUS_BYTE field
     //
     pui8Buffer[ui32HeaderSize] = (
-                            NDEF_STATUSBYTE_SET_MB(sMessage.sStatusByte.MB) |
-                            NDEF_STATUSBYTE_SET_ME(sMessage.sStatusByte.ME) |
-                            NDEF_STATUSBYTE_SET_CF(sMessage.sStatusByte.CF) |
-                            NDEF_STATUSBYTE_SET_SR(sMessage.sStatusByte.SR) |
-                            NDEF_STATUSBYTE_SET_IL(sMessage.sStatusByte.IL) |
-                            NDEF_STATUSBYTE_SET_TNF(sMessage.sStatusByte.TNF)
-                            );
+                                     NDEF_STATUSBYTE_SET_MB(sMessage.sStatusByte.MB) |
+                                     NDEF_STATUSBYTE_SET_ME(sMessage.sStatusByte.ME) |
+                                     NDEF_STATUSBYTE_SET_CF(sMessage.sStatusByte.CF) |
+                                     NDEF_STATUSBYTE_SET_SR(sMessage.sStatusByte.SR) |
+                                     NDEF_STATUSBYTE_SET_IL(sMessage.sStatusByte.IL) |
+                                     NDEF_STATUSBYTE_SET_TNF(sMessage.sStatusByte.TNF)
+                                 );
     ui32HeaderSize++;
 
     //
@@ -712,13 +648,11 @@ NFCP2P_NDEFMessageEncoder(sNDEFMessageData sNDEFDataToSend,
     // Fill PAYLOAD_LENGTH field.
     // based on StatusByte.SR field. May truncate if improperly set.
     //
-    switch(sMessage.sStatusByte.SR)
-    {
+    switch(sMessage.sStatusByte.SR) {
         //
         // PAYLOAD_LENGTH is 1 byte long
         //
-        case NDEF_STATUSBYTE_SR_1BYTEPAYLOADSIZE:
-        {
+        case NDEF_STATUSBYTE_SR_1BYTEPAYLOADSIZE: {
             pui8Buffer[ui32HeaderSize] = (sMessage.ui32PayloadLength & 0xFF);
             ui32HeaderSize++;
             break;
@@ -727,16 +661,15 @@ NFCP2P_NDEFMessageEncoder(sNDEFMessageData sNDEFDataToSend,
         //
         // PAYLOAD_LENGTH is 4 bytes long, inverted order (NFC Standard)
         //
-        case NDEF_STATUSBYTE_SR_4BYTEPAYLOADSIZE:
-        {
+        case NDEF_STATUSBYTE_SR_4BYTEPAYLOADSIZE: {
             pui8Buffer[ui32HeaderSize+0] = ((sMessage.ui32PayloadLength >> 3*8)
-                                                & 0xFF);
+                                            & 0xFF);
             pui8Buffer[ui32HeaderSize+1] = ((sMessage.ui32PayloadLength >> 2*8)
-                                                & 0xFF);
+                                            & 0xFF);
             pui8Buffer[ui32HeaderSize+2] = ((sMessage.ui32PayloadLength >> 1*8)
-                                                & 0xFF);
+                                            & 0xFF);
             pui8Buffer[ui32HeaderSize+3] = ((sMessage.ui32PayloadLength >> 0*8)
-                                                & 0xFF);
+                                            & 0xFF);
             ui32HeaderSize = ui32HeaderSize + 4;
             break;
         }
@@ -744,8 +677,7 @@ NFCP2P_NDEFMessageEncoder(sNDEFMessageData sNDEFDataToSend,
         //
         // default case, should never get here, if you do its an error
         //
-        default:
-        {
+        default: {
             DebugPrintf("ERR: NFC Header Encoder fn PAYLOAD_LENGTH field\n");
             return STATUS_FAIL;
             break;
@@ -757,13 +689,11 @@ NFCP2P_NDEFMessageEncoder(sNDEFMessageData sNDEFDataToSend,
     // depends on Statusbyte.IL, if IL not set but data given in ui8IDLength
     // the data will be ignored.
     //
-    switch(sMessage.sStatusByte.IL)
-    {
+    switch(sMessage.sStatusByte.IL) {
         //
         // No ID_LENGTH field included
         //
-        case NDEF_STATUSBYTE_IL_IDLENGTHABSENT:
-        {
+        case NDEF_STATUSBYTE_IL_IDLENGTHABSENT: {
             // do nothing
             break;
         }
@@ -771,8 +701,7 @@ NFCP2P_NDEFMessageEncoder(sNDEFMessageData sNDEFDataToSend,
         //
         // ID_LENGTH field present, fill data, incriment buffer pointer
         //
-        case NDEF_STATUSBYTE_IL_IDLENGTHPRESENT:
-        {
+        case NDEF_STATUSBYTE_IL_IDLENGTHPRESENT: {
             pui8Buffer[ui32HeaderSize] = sMessage.ui8IDLength;
             ui32HeaderSize++;
             break;
@@ -781,8 +710,7 @@ NFCP2P_NDEFMessageEncoder(sNDEFMessageData sNDEFDataToSend,
         //
         // default case, should never get here, if you do its an error.
         //
-        default:
-        {
+        default: {
             DebugPrintf("ERR: NFC Header Encoder fn ID_LENGTH field\n");
             return STATUS_FAIL;
             break;
@@ -793,17 +721,13 @@ NFCP2P_NDEFMessageEncoder(sNDEFMessageData sNDEFDataToSend,
     // Fill TYPE field. If TYPE_LENGTH > NDEF_TYPE_MAXSIZE then TYPE will be
     // truncated to MAXSIZE
     //
-    if(0 == sMessage.ui8TypeLength)
-    {
+    if(0 == sMessage.ui8TypeLength) {
         //
         // do nothing
         // TYPE_LENGTH = 0, so there is nothing to put in the TYPE field
         //
-    }
-    else
-    {
-        for(x = 0;(x < sMessage.ui8TypeLength) && (x < NDEF_TYPE_MAXSIZE); x++)
-        {
+    } else {
+        for(x = 0; (x < sMessage.ui8TypeLength) && (x < NDEF_TYPE_MAXSIZE); x++) {
             pui8Buffer[ui32HeaderSize] = sMessage.pui8Type[x];
             ui32HeaderSize++;
         }
@@ -813,12 +737,11 @@ NFCP2P_NDEFMessageEncoder(sNDEFMessageData sNDEFDataToSend,
     // Fill ID field. If ID_LENGTH > NDEF_ID_MAXSIZE then ID will be truncated
     // to MAXSIZE.
     //
-    switch(sMessage.sStatusByte.IL)
-    {
+    switch(sMessage.sStatusByte.IL) {
         //
         // StatusByte.IL says no ID_LENGTH field, thus no ID field.
         //
-        case NDEF_STATUSBYTE_IL_IDLENGTHABSENT:{
+        case NDEF_STATUSBYTE_IL_IDLENGTHABSENT: {
             //do nothing.
             break;
         }
@@ -826,19 +749,14 @@ NFCP2P_NDEFMessageEncoder(sNDEFMessageData sNDEFDataToSend,
         //
         // StatusByte.IL says ID_LENGTH Exists, so add the ID.
         //
-        case NDEF_STATUSBYTE_IL_IDLENGTHPRESENT:
-        {
-            if(0 == sMessage.ui8IDLength)
-            {
+        case NDEF_STATUSBYTE_IL_IDLENGTHPRESENT: {
+            if(0 == sMessage.ui8IDLength) {
                 //
                 // Do nothing. ID_LENGTH = 0 so there is no ID to add.
                 //
-            }
-            else
-            {
-                for(x = 0;(x < sMessage.ui8IDLength) && (x < NDEF_ID_MAXSIZE);
-                    x++)
-                {
+            } else {
+                for(x = 0; (x < sMessage.ui8IDLength) && (x < NDEF_ID_MAXSIZE);
+                        x++) {
                     pui8Buffer[ui32HeaderSize] = sMessage.pui8ID[x];
                     ui32HeaderSize++;
                 }
@@ -850,8 +768,7 @@ NFCP2P_NDEFMessageEncoder(sNDEFMessageData sNDEFDataToSend,
     //
     // Make sure we wont overflow the buffer with the payload in the next step.
     //
-    if((ui32HeaderSize + sMessage.ui32PayloadLength) > ui16BufferMaxLength)
-    {
+    if((ui32HeaderSize + sMessage.ui32PayloadLength) > ui16BufferMaxLength) {
         ASSERT(0);
         DebugPrintf("ERR:NDEFMessageEncoder: BufferOverflow Payload too big\n");
         return STATUS_FAIL;
@@ -860,25 +777,20 @@ NFCP2P_NDEFMessageEncoder(sNDEFMessageData sNDEFDataToSend,
     //
     // Fill PAYLOAD buffer.
     //
-    if(sMessage.sStatusByte.SR == NDEF_STATUSBYTE_SR_1BYTEPAYLOADSIZE)
-    {
+    if(sMessage.sStatusByte.SR == NDEF_STATUSBYTE_SR_1BYTEPAYLOADSIZE) {
         //
         // 1 byte PAYLOAD_LENGTH.
         //
-        for(x = 0;x < (sMessage.ui32PayloadLength & 0xFF);x++)
-        {
+        for(x = 0; x < (sMessage.ui32PayloadLength & 0xFF); x++) {
             pui8Buffer[ui32HeaderSize] =  sMessage.pui8PayloadPtr[x];
             ui32HeaderSize++;
         }
-    }
-    else
-    {
+    } else {
         //
         // 4 byte PAYLOAD_LENGTH.
         // (treat Payload length as a 32bit number)
         //
-        for(x = 0;x < sMessage.ui32PayloadLength; x++)
-        {
+        for(x = 0; x < sMessage.ui32PayloadLength; x++) {
             pui8Buffer[ui32HeaderSize] = sMessage.pui8PayloadPtr[x];
             ui32HeaderSize++;
         }
@@ -923,8 +835,8 @@ NFCP2P_NDEFMessageEncoder(sNDEFMessageData sNDEFDataToSend,
 //*****************************************************************************
 bool
 NFCP2P_NDEFMessageDecoder(sNDEFMessageData *psNDEFDataDecoded,
-                                        uint8_t *pui8Buffer,
-                                        uint16_t ui16BufferMaxLength)
+                          uint8_t *pui8Buffer,
+                          uint16_t ui16BufferMaxLength)
 {
     sNDEFMessageData *psMessage;
     uint8_t ui8StatusByte,ui8TypeLength,ui8IDLength;
@@ -942,8 +854,7 @@ NFCP2P_NDEFMessageDecoder(sNDEFMessageData *psNDEFDataDecoded,
     //
     // Minimum length of header is 5 bytes.
     //
-    if(ui16BufferMaxLength <= 5)
-    {
+    if(ui16BufferMaxLength <= 5) {
         DebugPrintf("ERR: NDEFMessageDecoder: Invalid Input\n");
         return STATUS_FAIL;
     }
@@ -980,28 +891,23 @@ NFCP2P_NDEFMessageDecoder(sNDEFMessageData *psNDEFDataDecoded,
     //
     // Determine the payload size based upon the SR field in the header.
     //
-    switch (psMessage->sStatusByte.SR)
-    {
+    switch (psMessage->sStatusByte.SR) {
         //
         // Short Record (PAYLOAD_LENGTH field is 1 byte).
         //
-        case NDEF_STATUSBYTE_SR_1BYTEPAYLOADSIZE:
-        {
+        case NDEF_STATUSBYTE_SR_1BYTEPAYLOADSIZE: {
             ui32PayloadLength = pui8Buffer[ui32HeaderSize];
 
             //
             // Validate Data
             //
-            if((ui32HeaderSize + ui32PayloadLength) > ui16BufferMaxLength)
-            {
+            if((ui32HeaderSize + ui32PayloadLength) > ui16BufferMaxLength) {
                 ASSERT(0);
                 DebugPrintf(
                     "ERR: NFCP2P_NDEFMessageDecoder: ui32PayloadLength > ui16BufferMaxLength\n");
                 DebugPrintf("\tYou Need a bigger buffer to hold this message.\n");
                 return STATUS_FAIL;
-            }
-            else
-            {
+            } else {
                 //
                 // Set Payload Length
                 //
@@ -1014,29 +920,25 @@ NFCP2P_NDEFMessageDecoder(sNDEFMessageData *psNDEFDataDecoded,
         //
         // Normal Record (PAYLOAD_LENGTH field is 4 bytes).
         //
-        case NDEF_STATUSBYTE_SR_4BYTEPAYLOADSIZE:
-        {
+        case NDEF_STATUSBYTE_SR_4BYTEPAYLOADSIZE: {
             ui32PayloadLength =
-                                (
-                                (pui8Buffer[ui32HeaderSize + 3] << 0*8) |
-                                (pui8Buffer[ui32HeaderSize + 2] << 1*8) |
-                                (pui8Buffer[ui32HeaderSize + 1] << 2*8) |
-                                (pui8Buffer[ui32HeaderSize + 0] << 3*8)
-                                );
+                (
+                    (pui8Buffer[ui32HeaderSize + 3] << 0*8) |
+                    (pui8Buffer[ui32HeaderSize + 2] << 1*8) |
+                    (pui8Buffer[ui32HeaderSize + 1] << 2*8) |
+                    (pui8Buffer[ui32HeaderSize + 0] << 3*8)
+                );
 
             //
             // Validate Data
             //
-            if((ui32HeaderSize + ui32PayloadLength) > ui16BufferMaxLength)
-            {
+            if((ui32HeaderSize + ui32PayloadLength) > ui16BufferMaxLength) {
                 ASSERT(0);
                 DebugPrintf(
                     "ERR: NFCP2P_NDEFMessageDecoder: ui32PayloadLength > ui16BufferMaxLength\n");
                 DebugPrintf("\tYou Need a bigger buffer to hold this message.\n");
                 return STATUS_FAIL;
-            }
-            else
-            {
+            } else {
                 //
                 // Set Payload Length
                 //
@@ -1049,8 +951,7 @@ NFCP2P_NDEFMessageDecoder(sNDEFMessageData *psNDEFDataDecoded,
         //
         // This should never happen. return error.
         //
-        default:
-        {
+        default: {
             DebugPrintf("NDEFMessageDecoder: ERR decoding SR bit \n");
             ASSERT(0);
             return STATUS_FAIL;
@@ -1061,13 +962,11 @@ NFCP2P_NDEFMessageDecoder(sNDEFMessageData *psNDEFDataDecoded,
     //
     // Load ID_LENGTH field, if it exists. Depends on StatusByte.IL.
     //
-    switch (psMessage->sStatusByte.IL)
-    {
+    switch (psMessage->sStatusByte.IL) {
         //
         // ID_LENGTH field exists. Load it to the NDEF structure.
         //
-        case NDEF_STATUSBYTE_IL_IDLENGTHPRESENT:
-        {
+        case NDEF_STATUSBYTE_IL_IDLENGTHPRESENT: {
             ui8IDLength = pui8Buffer[ui32HeaderSize];
             psMessage->ui8IDLength = ui8IDLength;
             ui32HeaderSize++;
@@ -1078,8 +977,7 @@ NFCP2P_NDEFMessageDecoder(sNDEFMessageData *psNDEFDataDecoded,
         // ID_LENGTH field does not exist and thus the ID field doesnt exists.
         // Load 0 to NDEF structure to express this
         //
-        case NDEF_STATUSBYTE_IL_IDLENGTHABSENT:
-        {
+        case NDEF_STATUSBYTE_IL_IDLENGTHABSENT: {
             psMessage->ui8IDLength = 0;
             break;
         }
@@ -1087,10 +985,9 @@ NFCP2P_NDEFMessageDecoder(sNDEFMessageData *psNDEFDataDecoded,
         //
         // This should never happen. return error.
         //
-        default:
-        {
+        default: {
             DebugPrintf(
-               "ERR: Invalid ID_LENGTH field Detected in NDEFMessageDecoder\n");
+                "ERR: Invalid ID_LENGTH field Detected in NDEFMessageDecoder\n");
             ASSERT(0);
             return STATUS_FAIL;
             break;
@@ -1104,25 +1001,22 @@ NFCP2P_NDEFMessageDecoder(sNDEFMessageData *psNDEFDataDecoded,
     // and adjust index in buffer to end of TYPE so as to not lose data / skew
     // pointer.
     //
-    if(psMessage->ui8TypeLength > NDEF_TYPE_MAXSIZE)
-    {
-        #ifdef DEBUG_PRINT
+    if(psMessage->ui8TypeLength > NDEF_TYPE_MAXSIZE) {
+#ifdef DEBUG_PRINT
         ASSERT(0);
         UARTprintf("ERR: MessageDecode: TYPE > NDEF_TYPE_MAXSIZE, truncating to %d bytes\n",
-                        NDEF_TYPE_MAXSIZE);
+                   NDEF_TYPE_MAXSIZE);
         UARTprintf("    Orig Type = ");
-        for(x = 0;x < psMessage->ui8TypeLength;x++)
-        {
+        for(x = 0; x < psMessage->ui8TypeLength; x++) {
             UARTprintf("%c",pui8Buffer[ui32HeaderSize + x]);
         }
         UARTprintf("\n");
-        #endif
+#endif
 
         //
         // Copy across truncated TYPE
         //
-        for(x = 0;x < NDEF_TYPE_MAXSIZE;x++)
-        {
+        for(x = 0; x < NDEF_TYPE_MAXSIZE; x++) {
             psMessage->pui8Type[x] = pui8Buffer[ui32HeaderSize];
             ui32HeaderSize++;
         }
@@ -1131,17 +1025,14 @@ NFCP2P_NDEFMessageDecoder(sNDEFMessageData *psNDEFDataDecoded,
         // Adjust index appropriately.
         //
         ui32HeaderSize = ui32HeaderSize +
-                            (psMessage->ui8TypeLength - NDEF_TYPE_MAXSIZE);
+                         (psMessage->ui8TypeLength - NDEF_TYPE_MAXSIZE);
         psMessage->ui8TypeLength = NDEF_TYPE_MAXSIZE;
-    }
-    else
-    {
+    } else {
         //
         // No problem
         // Load Type field into NDEF structure
         //
-        for(x = 0;x < psMessage->ui8TypeLength;x++)
-        {
+        for(x = 0; x < psMessage->ui8TypeLength; x++) {
             psMessage->pui8Type[x] = pui8Buffer[ui32HeaderSize];
             ui32HeaderSize++;
         }
@@ -1151,25 +1042,22 @@ NFCP2P_NDEFMessageDecoder(sNDEFMessageData *psNDEFDataDecoded,
     // Load ID field into NDEF structure. Depends on length in ID_LENGTH field.
     // if ID field is > NDEF_ID_MAXSIZE truncate to MAXSIZE
     //
-    if(psMessage->ui8IDLength > NDEF_ID_MAXSIZE)
-    {
-        #ifdef DEBUG_PRINT
+    if(psMessage->ui8IDLength > NDEF_ID_MAXSIZE) {
+#ifdef DEBUG_PRINT
         ASSERT(0);
         UARTprintf("ERR: ID_LENGTH > NDEF_ID_MAXSIZE, trucating to %d bytes\n",
-            NDEF_ID_MAXSIZE);
+                   NDEF_ID_MAXSIZE);
         UARTprintf("    Orig ID = ");
-        for(x = 0;x < psMessage->ui8IDLength;x++)
-        {
+        for(x = 0; x < psMessage->ui8IDLength; x++) {
             UARTprintf("%c",pui8Buffer[ui32HeaderSize + x]);
         }
         UARTprintf("\n");
-        #endif
+#endif
 
         //
         // Copy across truncated ID
         //
-        for(x = 0;x < NDEF_ID_MAXSIZE;x++)
-        {
+        for(x = 0; x < NDEF_ID_MAXSIZE; x++) {
             psMessage->pui8ID[x] = pui8Buffer[ui32HeaderSize];
             ui32HeaderSize++;
         }
@@ -1178,17 +1066,14 @@ NFCP2P_NDEFMessageDecoder(sNDEFMessageData *psNDEFDataDecoded,
         // adjust index appropriately
         //
         ui32HeaderSize = ui32HeaderSize + (psMessage->ui8IDLength -
-                                                            NDEF_ID_MAXSIZE);
+                                           NDEF_ID_MAXSIZE);
         psMessage->ui8IDLength = NDEF_ID_MAXSIZE;
-    }
-    else
-    {
+    } else {
         //
         // No problem
         // Load ID field into NDEF structure
         //
-        for(x = 0;x < psMessage->ui8IDLength;x++)
-        {
+        for(x = 0; x < psMessage->ui8IDLength; x++) {
             psMessage->pui8ID[x] = pui8Buffer[ui32HeaderSize];
             ui32HeaderSize++;
         }
@@ -1198,8 +1083,7 @@ NFCP2P_NDEFMessageDecoder(sNDEFMessageData *psNDEFDataDecoded,
     // Error Check
     // Check to make sure we didnt overrun the buffer / read beyond its bounds.
     //
-    if((ui32HeaderSize + psMessage->ui32PayloadLength) > ui16BufferMaxLength)
-    {
+    if((ui32HeaderSize + psMessage->ui32PayloadLength) > ui16BufferMaxLength) {
         ASSERT(0);
         DebugPrintf("ERR: NDEFMessageDecode: Buffer OverRun / OverRead\n");
 
@@ -1246,9 +1130,9 @@ NFCP2P_NDEFMessageDecoder(sNDEFMessageData *psNDEFDataDecoded,
 //*****************************************************************************
 bool
 NFCP2P_NDEFTextRecordEncoder(sNDEFTextRecord sTextRecord,
-                                uint8_t *pui8Buffer,
-                                uint16_t ui16BufferMaxLength,
-                                uint32_t *pui32BufferLength)
+                             uint8_t *pui8Buffer,
+                             uint16_t ui16BufferMaxLength,
+                             uint32_t *pui32BufferLength)
 {
     uint8_t  x;
     uint32_t ui32RecordIndex = 0;
@@ -1263,12 +1147,11 @@ NFCP2P_NDEFTextRecordEncoder(sNDEFTextRecord sTextRecord,
     ASSERT(sTextRecord.ui32TextLength > 0);
     ASSERT(sTextRecord.ui32TextLength < ui16BufferMaxLength);
     if( (pui8Buffer == 0)                   ||
-        (ui16BufferMaxLength == 0)          ||
-        (pui32BufferLength == 0)            ||
-        (sTextRecord.pui8Text == 0)         ||
-        (sTextRecord.ui32TextLength == 0)   ||
-        (sTextRecord.ui32TextLength > ui16BufferMaxLength))
-    {
+            (ui16BufferMaxLength == 0)          ||
+            (pui32BufferLength == 0)            ||
+            (sTextRecord.pui8Text == 0)         ||
+            (sTextRecord.ui32TextLength == 0)   ||
+            (sTextRecord.ui32TextLength > ui16BufferMaxLength)) {
         DebugPrintf("ERR: NDEFTextRecordEncoder: Invalid Input\n");
         return STATUS_FAIL;
     }
@@ -1278,10 +1161,10 @@ NFCP2P_NDEFTextRecordEncoder(sNDEFTextRecord sTextRecord,
     //
     pui8Buffer[ui32RecordIndex] =
         (
-        NDEF_TEXTRECORD_STATUSBYTE_SET_UTF(sTextRecord.sStatusByte.bUTFcode) |
-        NDEF_TEXTRECORD_STATUSBYTE_SET_RFU(sTextRecord.sStatusByte.bRFU    ) |
-        NDEF_TEXTRECORD_STATUSBYTE_SET_LENGTHLANGCODE(
-                                    sTextRecord.sStatusByte.ui5LengthLangCode)
+            NDEF_TEXTRECORD_STATUSBYTE_SET_UTF(sTextRecord.sStatusByte.bUTFcode) |
+            NDEF_TEXTRECORD_STATUSBYTE_SET_RFU(sTextRecord.sStatusByte.bRFU    ) |
+            NDEF_TEXTRECORD_STATUSBYTE_SET_LENGTHLANGCODE(
+                sTextRecord.sStatusByte.ui5LengthLangCode)
         );
     ui32RecordIndex++;
 
@@ -1289,21 +1172,19 @@ NFCP2P_NDEFTextRecordEncoder(sNDEFTextRecord sTextRecord,
     // Validate LanguageCode Length
     //
     if(sTextRecord.sStatusByte.ui5LengthLangCode >
-        NDEF_TEXTRECORD_LANGUAGECODE_MAXSIZE)
-    {
+            NDEF_TEXTRECORD_LANGUAGECODE_MAXSIZE) {
         ASSERT(0);
         DebugPrintf("Err: TextRecordEncoder: ui5LengthLanguageCode > ");
         DebugPrintf("NDEF_TEXTRECORD_LANGUAGECODE_MAXSIZE\n");
         DebugPrintf("\t Truncating from %d to MaxSize of %d.\n",
-                        sTextRecord.sStatusByte.ui5LengthLangCode,
-                        NDEF_TEXTRECORD_LANGUAGECODE_MAXSIZE);
+                    sTextRecord.sStatusByte.ui5LengthLangCode,
+                    NDEF_TEXTRECORD_LANGUAGECODE_MAXSIZE);
     }
 
     //
     // Fill LanguageCode in buffer
     //
-    for(x = 0;x < sTextRecord.sStatusByte.ui5LengthLangCode;x++)
-    {
+    for(x = 0; x < sTextRecord.sStatusByte.ui5LengthLangCode; x++) {
         pui8Buffer[ui32RecordIndex] = sTextRecord.pui8LanguageCode[x];
         ui32RecordIndex++;
     }
@@ -1311,8 +1192,7 @@ NFCP2P_NDEFTextRecordEncoder(sNDEFTextRecord sTextRecord,
     //
     // Error Check
     //
-    if((ui32RecordIndex + sTextRecord.ui32TextLength) > ui16BufferMaxLength)
-    {
+    if((ui32RecordIndex + sTextRecord.ui32TextLength) > ui16BufferMaxLength) {
         ASSERT(0);
         DebugPrintf("ERR: NDEFTextRecordEncode: Buffer Overflow Immenant\n");
         return STATUS_FAIL;
@@ -1321,8 +1201,7 @@ NFCP2P_NDEFTextRecordEncoder(sNDEFTextRecord sTextRecord,
     //
     // Fill Text in buffer
     //
-    for(x = 0;x < sTextRecord.ui32TextLength;x++)
-    {
+    for(x = 0; x < sTextRecord.ui32TextLength; x++) {
         pui8Buffer[ui32RecordIndex] = sTextRecord.pui8Text[x];
         ui32RecordIndex++;
     }
@@ -1353,8 +1232,8 @@ NFCP2P_NDEFTextRecordEncoder(sNDEFTextRecord sTextRecord,
 //*****************************************************************************
 bool
 NFCP2P_NDEFTextRecordDecoder(sNDEFTextRecord *psTextDataDecoded,
-                                uint8_t *pui8Buffer,
-                                uint32_t ui32BufferLength)
+                             uint8_t *pui8Buffer,
+                             uint32_t ui32BufferLength)
 {
     sNDEFTextRecord *psTextRecord;
     uint8_t ui8StatusByte, ui8LengthLangCode, x = 0;
@@ -1368,8 +1247,7 @@ NFCP2P_NDEFTextRecordDecoder(sNDEFTextRecord *psTextDataDecoded,
     if(
         (pui8Buffer == 0)           ||
         (psTextDataDecoded == 0)
-      )
-    {
+    ) {
         DebugPrintf("ERR: TextRecordDecoder: Invalid Input\n");
         return STATUS_FAIL;
     }
@@ -1378,8 +1256,7 @@ NFCP2P_NDEFTextRecordDecoder(sNDEFTextRecord *psTextDataDecoded,
     // Initialize (done to insure 0 as sentinel in language Code)
     //
     psTextRecord = psTextDataDecoded;
-    for(x = 0;x < NDEF_TEXTRECORD_LANGUAGECODE_MAXSIZE;x++)
-    {
+    for(x = 0; x < NDEF_TEXTRECORD_LANGUAGECODE_MAXSIZE; x++) {
         psTextRecord->pui8LanguageCode[x] = 0;
     }
     psTextRecord->ui32TextLength = 0;
@@ -1389,11 +1266,11 @@ NFCP2P_NDEFTextRecordDecoder(sNDEFTextRecord *psTextDataDecoded,
     //
     ui8StatusByte = pui8Buffer[ui32RecordIndex];
     psTextRecord->sStatusByte.bUTFcode =
-                            NDEF_TEXTRECORD_STATUSBYTE_GET_UTF(ui8StatusByte);
+        NDEF_TEXTRECORD_STATUSBYTE_GET_UTF(ui8StatusByte);
     psTextRecord->sStatusByte.bRFU =
-                            NDEF_TEXTRECORD_STATUSBYTE_GET_RFU(ui8StatusByte);
+        NDEF_TEXTRECORD_STATUSBYTE_GET_RFU(ui8StatusByte);
     ui8LengthLangCode =
-                NDEF_TEXTRECORD_STATUSBYTE_GET_LENGTHLANGCODE(ui8StatusByte);
+        NDEF_TEXTRECORD_STATUSBYTE_GET_LENGTHLANGCODE(ui8StatusByte);
     psTextRecord->sStatusByte.ui5LengthLangCode = ui8LengthLangCode;
     ui32RecordIndex++;
 
@@ -1401,8 +1278,7 @@ NFCP2P_NDEFTextRecordDecoder(sNDEFTextRecord *psTextDataDecoded,
     // The StatusByte.RFU should always be 0, if this is not the case return
     //  failure
     //
-    if(psTextRecord->sStatusByte.bRFU != 0)
-    {
+    if(psTextRecord->sStatusByte.bRFU != 0) {
         ASSERT(0);
         DebugPrintf("Err: NDEF TextRecord Decoder: StatusByte.RFU !=0\n");
         return STATUS_FAIL;
@@ -1411,8 +1287,7 @@ NFCP2P_NDEFTextRecordDecoder(sNDEFTextRecord *psTextDataDecoded,
     //
     // LengthLangCode must be > 0
     //
-    if(ui8LengthLangCode <= 0)
-    {
+    if(ui8LengthLangCode <= 0) {
         ASSERT(0);
         DebugPrintf("ERR: NDEFTextRecordDecoder: LengthLangCode <= 0\n");
         return STATUS_FAIL;
@@ -1422,19 +1297,15 @@ NFCP2P_NDEFTextRecordDecoder(sNDEFTextRecord *psTextDataDecoded,
     //
     // Load LANGUAGE_CODE field
     //
-    for(x = 0;x < ui8LengthLangCode;x++)
-    {
+    for(x = 0; x < ui8LengthLangCode; x++) {
         //
         // If space left in LanguageCode field put character in, otherwise
         // truncate. (dont copy across, but do incriment through raw buffer)
         //
-        if(x < NDEF_TEXTRECORD_LANGUAGECODE_MAXSIZE)
-        {
+        if(x < NDEF_TEXTRECORD_LANGUAGECODE_MAXSIZE) {
             psTextRecord->pui8LanguageCode[x] = pui8Buffer[ui32RecordIndex];
             ui32RecordIndex++;
-        }
-        else
-        {
+        } else {
             ui32RecordIndex++;
         }
     }
@@ -1442,14 +1313,13 @@ NFCP2P_NDEFTextRecordDecoder(sNDEFTextRecord *psTextDataDecoded,
     //
     // Validate Data
     //
-    if(ui8LengthLangCode > NDEF_TEXTRECORD_LANGUAGECODE_MAXSIZE)
-    {
+    if(ui8LengthLangCode > NDEF_TEXTRECORD_LANGUAGECODE_MAXSIZE) {
         DebugPrintf("ERR: TextRecordDecoder: LengthLangCode > ");
         DebugPrintf("NDEF_TEXTRECORD_LANGUAGECODE_MAXSIZE, truncating %d to %d",
-            ui8LengthLangCode,NDEF_TEXTRECORD_LANGUAGECODE_MAXSIZE);
+                    ui8LengthLangCode,NDEF_TEXTRECORD_LANGUAGECODE_MAXSIZE);
         DebugPrintf("\n");
         psTextRecord->sStatusByte.ui5LengthLangCode =
-                                NDEF_TEXTRECORD_LANGUAGECODE_MAXSIZE;
+            NDEF_TEXTRECORD_LANGUAGECODE_MAXSIZE;
     }
 
     //
@@ -1460,15 +1330,12 @@ NFCP2P_NDEFTextRecordDecoder(sNDEFTextRecord *psTextDataDecoded,
     //
     // Validate Data - make sure we dont overrun the buffer
     //
-    if(ui32RecordIndex > ui32BufferLength)
-    {
+    if(ui32RecordIndex > ui32BufferLength) {
         ASSERT(0);
         DebugPrintf("ERR: TextRecordDecoder: Text Length longer than payload.");
         DebugPrintf("\n");
         return STATUS_FAIL;
-    }
-    else
-    {
+    } else {
         //
         // Calculate Length of Text
         // Length of text =  Length of Record - RecordIndex to this point.
@@ -1500,9 +1367,9 @@ NFCP2P_NDEFTextRecordDecoder(sNDEFTextRecord *psTextDataDecoded,
 //*****************************************************************************
 bool
 NFCP2P_NDEFURIRecordEncoder(sNDEFURIRecord sURIRecord,
-                                uint8_t *pui8Buffer,
-                                uint16_t ui16BufferMaxLength,
-                                uint32_t *pui32BufferLength)
+                            uint8_t *pui8Buffer,
+                            uint16_t ui16BufferMaxLength,
+                            uint32_t *pui32BufferLength)
 {
     uint32_t ui32RecordIndex = 0;
     uint8_t x = 0;
@@ -1517,8 +1384,7 @@ NFCP2P_NDEFURIRecordEncoder(sNDEFURIRecord sURIRecord,
         (pui8Buffer == 0) ||
         (ui16BufferMaxLength ==0) ||
         ((sURIRecord.ui32URILength +1) > ui16BufferMaxLength)
-      )
-    {
+    ) {
         ASSERT(0);
         DebugPrintf("ERR: URIRecordEncoder: Invalid Input\n");
         return STATUS_FAIL;
@@ -1533,8 +1399,7 @@ NFCP2P_NDEFURIRecordEncoder(sNDEFURIRecord sURIRecord,
     //
     // Fill UTF8 string into buffer
     //
-    for(x = 0;x < sURIRecord.ui32URILength;x++)
-    {
+    for(x = 0; x < sURIRecord.ui32URILength; x++) {
         pui8Buffer[ui32RecordIndex] = sURIRecord.puiUTF8String[x];
         ui32RecordIndex++;
     }
@@ -1566,8 +1431,8 @@ NFCP2P_NDEFURIRecordEncoder(sNDEFURIRecord sURIRecord,
 //*****************************************************************************
 bool
 NFCP2P_NDEFURIRecordDecoder(sNDEFURIRecord *sURIRecord,
-                                uint8_t *pui8Buffer,
-                                uint32_t ui32BufferLength)
+                            uint8_t *pui8Buffer,
+                            uint32_t ui32BufferLength)
 {
     uint32_t ui32RecordIndex = 0;
 
@@ -1579,8 +1444,7 @@ NFCP2P_NDEFURIRecordDecoder(sNDEFURIRecord *sURIRecord,
     if(
         (pui8Buffer == 0)           ||
         (sURIRecord == 0)
-      )
-    {
+    ) {
         DebugPrintf("ERR: URIRecordDecoder: Invalid Input\n");
         return STATUS_FAIL;
     }
@@ -1589,8 +1453,7 @@ NFCP2P_NDEFURIRecordDecoder(sNDEFURIRecord *sURIRecord,
     // Load eIDCode field into struct
     // error check that the ID code is valid.
     //
-    if(pui8Buffer[ui32RecordIndex] >= NDEF_URIRECORD_IDCODE_RFU)
-    {
+    if(pui8Buffer[ui32RecordIndex] >= NDEF_URIRECORD_IDCODE_RFU) {
         //
         // IDCode not recognized, skip it.
         // (can add codes in nfc_p2p.h eNDEF_URIRecord_IDCode enumeration)
@@ -1600,9 +1463,7 @@ NFCP2P_NDEFURIRecordDecoder(sNDEFURIRecord *sURIRecord,
         sURIRecord->eIDCode = RFU;
         ui32RecordIndex++;
         //return STATUS_FAIL;
-    }
-    else
-    {
+    } else {
         //
         // ID Code is Valid, set it.
         //
@@ -1664,7 +1525,7 @@ NFCP2P_NDEFSmartPosterRecordEncoder(sNDEFSmartPosterRecord sSmartPoster,
     // TypeLength[1]. This is done to ensure that there is space
     // left in the buffer for the header while the record is encoding.
     //
-    #define RECORD_OFFSET (NDEF_TYPE_MAXSIZE+NDEF_ID_MAXSIZE+7)
+#define RECORD_OFFSET (NDEF_TYPE_MAXSIZE+NDEF_ID_MAXSIZE+7)
 
     bool bStatus = STATUS_SUCCESS;
 
@@ -1685,14 +1546,13 @@ NFCP2P_NDEFSmartPosterRecordEncoder(sNDEFSmartPosterRecord sSmartPoster,
     // Encode TextHeader (included TextPayload)
     //
     bStatus = NFCP2P_NDEFTextRecordEncoder(sSmartPoster.sTextPayload,
-                                            pui8CurrRecordPt,
-                                            (ui16BufferMaxLength -
-                                               (pui8CurrRecordPt - pui8Buffer)),
-                                            &ui32RecordLength);
+                                           pui8CurrRecordPt,
+                                           (ui16BufferMaxLength -
+                                            (pui8CurrRecordPt - pui8Buffer)),
+                                           &ui32RecordLength);
     sSmartPoster.sTextHeader.ui32PayloadLength = ui32RecordLength;
     sSmartPoster.sTextHeader.pui8PayloadPtr = pui8CurrRecordPt;
-    if(STATUS_FAIL == bStatus)
-    {
+    if(STATUS_FAIL == bStatus) {
         DebugPrintf("    ERR: SmartPoster TextRecord Encode FAIL.\n");
         return bStatus;
     }
@@ -1700,12 +1560,11 @@ NFCP2P_NDEFSmartPosterRecordEncoder(sNDEFSmartPosterRecord sSmartPoster,
     bStatus = NFCP2P_NDEFMessageEncoder(sSmartPoster.sTextHeader,
                                         pui8CurrHeaderPt,
                                         (ui16BufferMaxLength -
-                                            (pui8CurrHeaderPt - pui8Buffer)),
+                                         (pui8CurrHeaderPt - pui8Buffer)),
                                         &ui32RecordLength);
     pui8CurrHeaderPt = pui8CurrHeaderPt + ui32RecordLength;
     pui8CurrRecordPt = pui8CurrHeaderPt + RECORD_OFFSET;
-    if(STATUS_FAIL == bStatus)
-    {
+    if(STATUS_FAIL == bStatus) {
         DebugPrintf("    ERR: SmartPoster TextRecord Header Encode FAIL.\n");
         return bStatus;
     }
@@ -1716,27 +1575,25 @@ NFCP2P_NDEFSmartPosterRecordEncoder(sNDEFSmartPosterRecord sSmartPoster,
     // Encode URIHeader (included URIPayload)
     //
     bStatus = NFCP2P_NDEFURIRecordEncoder(sSmartPoster.sURIPayload,
-                                        pui8CurrRecordPt,
-                                        (ui16BufferMaxLength -
-                                            (pui8CurrRecordPt - pui8Buffer)),
-                                        &ui32RecordLength);
+                                          pui8CurrRecordPt,
+                                          (ui16BufferMaxLength -
+                                           (pui8CurrRecordPt - pui8Buffer)),
+                                          &ui32RecordLength);
     sSmartPoster.sURIHeader.ui32PayloadLength = ui32RecordLength;
     sSmartPoster.sURIHeader.pui8PayloadPtr = pui8CurrRecordPt;
-    if(STATUS_FAIL == bStatus)
-    {
+    if(STATUS_FAIL == bStatus) {
         DebugPrintf("    ERR: SmartPoster URIRecord Encode FAIL.\n");
         return bStatus;
     }
     bStatus = NFCP2P_NDEFMessageEncoder(sSmartPoster.sURIHeader,
                                         pui8CurrHeaderPt,
                                         (ui16BufferMaxLength -
-                                            (pui8CurrHeaderPt - pui8Buffer)),
+                                         (pui8CurrHeaderPt - pui8Buffer)),
                                         &ui32RecordLength);
     pui8CurrHeaderPt = pui8CurrHeaderPt + ui32RecordLength;
     pui8CurrRecordPt = pui8CurrHeaderPt + RECORD_OFFSET;
     ui32TotalLength += ui32RecordLength;
-    if(STATUS_FAIL == bStatus)
-    {
+    if(STATUS_FAIL == bStatus) {
         DebugPrintf("    ERR: SmartPoster URIRecord Header Encode FAIL.\n");
         return bStatus;
     }
@@ -1745,8 +1602,7 @@ NFCP2P_NDEFSmartPosterRecordEncoder(sNDEFSmartPosterRecord sSmartPoster,
     // Encode ActionMessage, Update Payload Ptr and Payload Length in Header,
     // Encode ActionHeader (included ActionPayload)
     //
-    if(sSmartPoster.bActionExists)
-    {
+    if(sSmartPoster.bActionExists) {
         //
         // The Action Record has no Encoder / Decoder because it is just 1 byte
         // of data. So it is hard coded into the Smart Poster Encoder / Decoder
@@ -1757,13 +1613,12 @@ NFCP2P_NDEFSmartPosterRecordEncoder(sNDEFSmartPosterRecord sSmartPoster,
         bStatus = NFCP2P_NDEFMessageEncoder(sSmartPoster.sActionHeader,
                                             pui8CurrHeaderPt,
                                             (ui16BufferMaxLength -
-                                               (pui8CurrHeaderPt - pui8Buffer)),
+                                             (pui8CurrHeaderPt - pui8Buffer)),
                                             &ui32RecordLength);
         pui8CurrHeaderPt = pui8CurrHeaderPt + ui32RecordLength;
         pui8CurrRecordPt = pui8CurrHeaderPt + RECORD_OFFSET;
         ui32TotalLength += ui32RecordLength;
-        if(STATUS_FAIL == bStatus)
-        {
+        if(STATUS_FAIL == bStatus) {
             DebugPrintf("    ERR: SmartPoster ActionRecord Encode FAIL.\n");
             return bStatus;
         }
@@ -1773,8 +1628,7 @@ NFCP2P_NDEFSmartPosterRecordEncoder(sNDEFSmartPosterRecord sSmartPoster,
     // Check for buffer overflow. This should be caught in the lower level
     // encode functions, but just to be safe we check for it here as well.
     //
-    if(ui32TotalLength > ui16BufferMaxLength)
-    {
+    if(ui32TotalLength > ui16BufferMaxLength) {
         DebugPrintf("   ERR: SmartPosterRecordEncoder : Buffer Overflow.\n");
         return STATUS_FAIL;
     }
@@ -1811,9 +1665,9 @@ NFCP2P_NDEFSmartPosterRecordEncoder(sNDEFSmartPosterRecord sSmartPoster,
 //*****************************************************************************
 bool
 NFCP2P_NDEFSmartPosterRecordDecoder(sNDEFSmartPosterRecord *sSmartPoster,
-                                uint8_t *pui8Buffer,
-                                uint16_t ui16BufferMaxLength,
-                                uint32_t ui32BufferLength)
+                                    uint8_t *pui8Buffer,
+                                    uint16_t ui16BufferMaxLength,
+                                    uint32_t ui32BufferLength)
 {
     sNDEFMessageData sCurrentHeader; //temp Header Info
     uint32_t ui32RecordIndex = 0;
@@ -1832,8 +1686,7 @@ NFCP2P_NDEFSmartPosterRecordDecoder(sNDEFSmartPosterRecord *sSmartPoster,
     // Assume first header at pui8Buffer[0]
     // Process and fill
     //
-    while(ui32RecordIndex < ui32BufferLength)
-    {
+    while(ui32RecordIndex < ui32BufferLength) {
         //
         // Pointer to Header
         //
@@ -1843,12 +1696,11 @@ NFCP2P_NDEFSmartPosterRecordDecoder(sNDEFSmartPosterRecord *sSmartPoster,
         // Decode Current Header, in this case the
         //
         bCheck = NFCP2P_NDEFMessageDecoder(&sCurrentHeader,
-                                            pui8CurrHeaderPt,
-                                            (ui16BufferMaxLength -
-                                                (pui8CurrHeaderPt - pui8Buffer))
-                                            );
-        if(STATUS_FAIL == bCheck)
-        {
+                                           pui8CurrHeaderPt,
+                                           (ui16BufferMaxLength -
+                                            (pui8CurrHeaderPt - pui8Buffer))
+                                          );
+        if(STATUS_FAIL == bCheck) {
             DebugPrintf("ERR: SPDecoder: SP NDEFMessageDecoder Failed\n");
             return STATUS_FAIL;
         }
@@ -1857,9 +1709,8 @@ NFCP2P_NDEFSmartPosterRecordDecoder(sNDEFSmartPosterRecord *sSmartPoster,
         // This goes off when you try to read past the end of the buffer.
         //
         if((sCurrentHeader.ui32PayloadLength +
-            (sCurrentHeader.pui8PayloadPtr - pui8Buffer))
-            > ui16BufferMaxLength)
-        {
+                (sCurrentHeader.pui8PayloadPtr - pui8Buffer))
+                > ui16BufferMaxLength) {
             DebugPrintf("ERR: SPDecoder: BufferRead Overrun. Bad Data.");
             return STATUS_FAIL;
         }
@@ -1867,8 +1718,7 @@ NFCP2P_NDEFSmartPosterRecordDecoder(sNDEFSmartPosterRecord *sSmartPoster,
         //
         // Calculate Record Type
         //
-        for(x = 0,TypeID = 0;x < sCurrentHeader.ui8TypeLength;x++)
-        {
+        for(x = 0,TypeID = 0; x < sCurrentHeader.ui8TypeLength; x++) {
             TypeID = (TypeID << 8) + sCurrentHeader.pui8Type[x];
         }
 
@@ -1876,31 +1726,27 @@ NFCP2P_NDEFSmartPosterRecordDecoder(sNDEFSmartPosterRecord *sSmartPoster,
         // Decode Header into appropriate part of SmartPoster struct
         // Call decoder function for each header type
         //
-        switch(TypeID)
-        {
+        switch(TypeID) {
             //
             // Text Record
             //
-            case NDEF_TYPE_TEXT:
-            {
+            case NDEF_TYPE_TEXT: {
                 bCheck = NFCP2P_NDEFMessageDecoder(&sSmartPoster->sTextHeader,
-                                            pui8CurrHeaderPt,
-                                            (ui16BufferMaxLength -
-                                               (pui8CurrHeaderPt - pui8Buffer))
-                                            );
-                if(STATUS_FAIL == bCheck)
-                {
+                                                   pui8CurrHeaderPt,
+                                                   (ui16BufferMaxLength -
+                                                    (pui8CurrHeaderPt - pui8Buffer))
+                                                  );
+                if(STATUS_FAIL == bCheck) {
                     DebugPrintf(
                         "   ERR: SPDecoder: Text NDEFMessageDecoder Failed\n");
                     return STATUS_FAIL;
                 }
                 bCheck = NFCP2P_NDEFTextRecordDecoder(
-                                    &sSmartPoster->sTextPayload,
-                                    sSmartPoster->sTextHeader.pui8PayloadPtr,
-                                    sSmartPoster->sTextHeader.ui32PayloadLength
-                                    );
-                if(STATUS_FAIL == bCheck)
-                {
+                             &sSmartPoster->sTextPayload,
+                             sSmartPoster->sTextHeader.pui8PayloadPtr,
+                             sSmartPoster->sTextHeader.ui32PayloadLength
+                         );
+                if(STATUS_FAIL == bCheck) {
                     DebugPrintf(
                         "   ERR: SPDecoder: NDEFTextRecordDecoder Failed\n");
                     return STATUS_FAIL;
@@ -1911,28 +1757,25 @@ NFCP2P_NDEFSmartPosterRecordDecoder(sNDEFSmartPosterRecord *sSmartPoster,
             //
             // URI Record
             //
-            case NDEF_TYPE_URI:
-            {
+            case NDEF_TYPE_URI: {
                 bCheck = NFCP2P_NDEFMessageDecoder(&sSmartPoster->sURIHeader,
-                                            pui8CurrHeaderPt,
-                                            (ui16BufferMaxLength -
-                                               (pui8CurrHeaderPt - pui8Buffer))
-                                            );
-                if(STATUS_FAIL == bCheck)
-                {
+                                                   pui8CurrHeaderPt,
+                                                   (ui16BufferMaxLength -
+                                                    (pui8CurrHeaderPt - pui8Buffer))
+                                                  );
+                if(STATUS_FAIL == bCheck) {
                     DebugPrintf(
                         "   ERR: SPDecoder: URI NDEFMessageDecoder Failed\n");
                     return STATUS_FAIL;
                 }
                 bCheck = NFCP2P_NDEFURIRecordDecoder(
-                                &sSmartPoster->sURIPayload,
-                                sSmartPoster->sURIHeader.pui8PayloadPtr,
-                                sSmartPoster->sURIHeader.ui32PayloadLength
-                                );
-                if(STATUS_FAIL == bCheck)
-                {
+                             &sSmartPoster->sURIPayload,
+                             sSmartPoster->sURIHeader.pui8PayloadPtr,
+                             sSmartPoster->sURIHeader.ui32PayloadLength
+                         );
+                if(STATUS_FAIL == bCheck) {
                     DebugPrintf(\
-                        "   ERR: SPDecoder: NDEFURIMessageDecoder Failed\n");
+                                "   ERR: SPDecoder: NDEFURIMessageDecoder Failed\n");
                     return STATUS_FAIL;
                 }
                 break;
@@ -1942,32 +1785,29 @@ NFCP2P_NDEFSmartPosterRecordDecoder(sNDEFSmartPosterRecord *sSmartPoster,
             // Action Record (built in type to SmartPoster, no need for external
             // functions)
             //
-            case NDEF_TYPE_ACTION:
-            {
+            case NDEF_TYPE_ACTION: {
                 sSmartPoster->bActionExists = true;
                 bCheck = NFCP2P_NDEFMessageDecoder(&sSmartPoster->sActionHeader,
-                                            pui8CurrHeaderPt,
-                                            (ui16BufferMaxLength -
-                                                (pui8CurrHeaderPt - pui8Buffer))
-                                            );
-                if(STATUS_FAIL == bCheck)
-                {
+                                                   pui8CurrHeaderPt,
+                                                   (ui16BufferMaxLength -
+                                                    (pui8CurrHeaderPt - pui8Buffer))
+                                                  );
+                if(STATUS_FAIL == bCheck) {
                     DebugPrintf(
                         "   ERR: SPDecoder: Action NDEFMessageDecoder Failed\n");
                     return STATUS_FAIL;
                 }
                 sSmartPoster->sActionPayload.eAction =
-                                sSmartPoster->sActionHeader.pui8PayloadPtr[0];
+                    sSmartPoster->sActionHeader.pui8PayloadPtr[0];
                 break;
             }
 
             //
             // Other record type, not supported, so skip it.
             //
-            default:
-            {
+            default: {
                 DebugPrintf("NDEFSmartPosterDecode: Record Not recognized: 0x%x\n"
-                                ,TypeID);
+                            ,TypeID);
                 break;
             }
         }
@@ -1978,7 +1818,7 @@ NFCP2P_NDEFSmartPosterRecordDecoder(sNDEFSmartPosterRecord *sSmartPoster,
         //  when added to payload length this gives the total record size
         //
         ui32RecordIndex += (sCurrentHeader.pui8PayloadPtr-pui8CurrHeaderPt)
-                         + sCurrentHeader.ui32PayloadLength;
+                           + sCurrentHeader.ui32PayloadLength;
     }
 
     return STATUS_SUCCESS;

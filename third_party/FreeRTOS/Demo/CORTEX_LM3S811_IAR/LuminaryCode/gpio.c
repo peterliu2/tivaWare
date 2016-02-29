@@ -61,40 +61,33 @@ GPIOGetIntNumber(unsigned long ulPort)
     //
     // Determine the GPIO interrupt number for the given module.
     //
-    switch(ulPort)
-    {
-        case GPIO_PORTA_BASE:
-        {
+    switch(ulPort) {
+        case GPIO_PORTA_BASE: {
             ulInt = INT_GPIOA;
             break;
         }
 
-        case GPIO_PORTB_BASE:
-        {
+        case GPIO_PORTB_BASE: {
             ulInt = INT_GPIOB;
             break;
         }
 
-        case GPIO_PORTC_BASE:
-        {
+        case GPIO_PORTC_BASE: {
             ulInt = INT_GPIOC;
             break;
         }
 
-        case GPIO_PORTD_BASE:
-        {
+        case GPIO_PORTD_BASE: {
             ulInt = INT_GPIOD;
             break;
         }
 
-        case GPIO_PORTE_BASE:
-        {
+        case GPIO_PORTE_BASE: {
             ulInt = INT_GPIOE;
             break;
         }
 
-        default:
-        {
+        default: {
             return(-1);
         }
     }
@@ -598,12 +591,9 @@ GPIOPinIntStatus(unsigned long ulPort, tBoolean bMasked)
     //
     // Return the interrupt status.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return(HWREG(ulPort + GPIO_O_MIS));
-    }
-    else
-    {
+    } else {
         return(HWREG(ulPort + GPIO_O_RIS));
     }
 }

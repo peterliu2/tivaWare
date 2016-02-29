@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C123GXL Firmware Package.
 //
 //*****************************************************************************
@@ -300,14 +300,12 @@ main(void)
     //
     // Drop into the main loop.
     //
-    while(1)
-    {
+    while(1) {
 
         //
         // Check for and handle timer tick events.
         //
-        if(HWREGBITW(&g_ui32Events, USB_TICK_EVENT) == 1)
-        {
+        if(HWREGBITW(&g_ui32Events, USB_TICK_EVENT) == 1) {
             //
             // Clear the Tick event flag. Set in SysTick interrupt handler.
             //
@@ -316,8 +314,7 @@ main(void)
             //
             // Each tick period handle wired mouse and keyboard.
             //
-            if(HWREGBITW(&g_ui32USBFlags, FLAG_CONNECTED) == 1)
-            {
+            if(HWREGBITW(&g_ui32USBFlags, FLAG_CONNECTED) == 1) {
                 MouseMoveHandler();
                 KeyboardMain();
             }
@@ -327,8 +324,7 @@ main(void)
         // Check for LPRF tick events.  LPRF Ticks are slower since UART to
         // RNP is much slower data connection than the USB.
         //
-        if(HWREGBITW(&g_ui32Events, LPRF_TICK_EVENT) == 1)
-        {
+        if(HWREGBITW(&g_ui32Events, LPRF_TICK_EVENT) == 1) {
             //
             // Clear the event flag.
             //
@@ -345,8 +341,7 @@ main(void)
         // Check for and handle motion events.
         //
         if((HWREGBITW(&g_ui32Events, MOTION_EVENT) == 1) ||
-           (HWREGBITW(&g_ui32Events, MOTION_ERROR_EVENT) == 1))
-        {
+                (HWREGBITW(&g_ui32Events, MOTION_ERROR_EVENT) == 1)) {
             //
             // Clear the motion event flag. Set in the Motion I2C interrupt
             // handler when an I2C transaction to get sensor data is complete.

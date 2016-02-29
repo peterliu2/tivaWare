@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-LM4F232 Firmware Package.
 //
 //*****************************************************************************
@@ -87,8 +87,7 @@ static FILINFO g_sFileInfo;
 // FAT file system driver.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     FRESULT fresult;
     char *pcResultStr;
 }
@@ -108,8 +107,7 @@ tFresultString;
 // providing a human-readable string.
 //
 //*****************************************************************************
-tFresultString g_sFresultStrings[] =
-{
+tFresultString g_sFresultStrings[] = {
     FRESULT_ENTRY(FR_OK),
     FRESULT_ENTRY(FR_DISK_ERR),
     FRESULT_ENTRY(FR_INT_ERR),
@@ -249,8 +247,7 @@ DECLARE_EVENT_DRIVER(g_sUSBEventDriver, 0, 0, USBHCDEvents);
 // In this case, only the MSC class is loaded.
 //
 //*****************************************************************************
-static tUSBHostClassDriver const * const g_ppHostClassDrivers[] =
-{
+static tUSBHostClassDriver const * const g_ppHostClassDrivers[] = {
     &g_sUSBHostMSCClassDriver,
     &g_sUSBEventDriver
 };
@@ -330,8 +327,7 @@ static tDisplay g_sOffscreenDisplayB;
 // be up to 16 colors in this palette.
 //
 //*****************************************************************************
-static uint32_t g_pui32Palette[] =
-{
+static uint32_t g_pui32Palette[] = {
     ClrBlack,
     ClrWhite,
     ClrDarkBlue,
@@ -429,14 +425,12 @@ StringFromFresult(FRESULT fresult)
     // Enter a loop to search the error code table for a matching
     // error code.
     //
-    for(ui32Idx = 0; ui32Idx < NUM_FRESULT_CODES; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < NUM_FRESULT_CODES; ui32Idx++) {
         //
         // If a match is found, then return the string name of the
         // error code.
         //
-        if(g_sFresultStrings[ui32Idx].fresult == fresult)
-        {
+        if(g_sFresultStrings[ui32Idx].fresult == fresult) {
             return(g_sFresultStrings[ui32Idx].pcResultStr);
         }
     }
@@ -465,8 +459,7 @@ FileInit(void)
     //
     // Mount the file system, using logical disk 0.
     //
-    if(f_mount(0, &g_sFatFs) != FR_OK)
-    {
+    if(f_mount(0, &g_sFatFs) != FR_OK) {
         return(false);
     }
     return(true);
@@ -496,14 +489,12 @@ MSCCallback(tUSBHMSCInstance *ps32Instance, uint32_t ui32Event, void *pvData)
     //
     // Determine the event.
     //
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // Called when the device driver has successfully enumerated an MSC
         // device.
         //
-        case MSC_EVENT_OPEN:
-        {
+        case MSC_EVENT_OPEN: {
             //
             // Proceed to the enumeration state.
             //
@@ -516,8 +507,7 @@ MSCCallback(tUSBHMSCInstance *ps32Instance, uint32_t ui32Event, void *pvData)
         // Called when the device driver has been unloaded due to error or
         // the device is no longer present.
         //
-        case MSC_EVENT_CLOSE:
-        {
+        case MSC_EVENT_CLOSE: {
             //
             // Go back to the "no device" state and wait for a new connection.
             //
@@ -531,8 +521,7 @@ MSCCallback(tUSBHMSCInstance *ps32Instance, uint32_t ui32Event, void *pvData)
             break;
         }
 
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -566,13 +555,11 @@ USBHCDEvents(void *pvData)
     //
     // Process each kind of event
     //
-    switch(pEventInfo->ui32Event)
-    {
+    switch(pEventInfo->ui32Event) {
         //
         // An unknown device has been connected.
         //
-        case USB_EVENT_UNKNOWN_CONNECTED:
-        {
+        case USB_EVENT_UNKNOWN_CONNECTED: {
             //
             // An unknown device was detected.
             //
@@ -583,8 +570,7 @@ USBHCDEvents(void *pvData)
         //
         // The unknown device has been been unplugged.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             //
             // Unknown device has been removed.
             //
@@ -595,8 +581,7 @@ USBHCDEvents(void *pvData)
         //
         // A bus power fault was detected.
         //
-        case USB_EVENT_POWER_FAULT:
-        {
+        case USB_EVENT_POWER_FAULT: {
             //
             // No power means no device is present.
             //
@@ -604,8 +589,7 @@ USBHCDEvents(void *pvData)
             break;
         }
 
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -677,8 +661,7 @@ ShowStatusScreen(char *pcStatus[], uint32_t ui32Count)
     //
     // Display the status lines
     //
-    for(ui32Idx = 0; ui32Idx < ui32Count; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < ui32Count; ui32Idx++) {
         GrStringDrawCentered(&sContext, pcStatus[ui32Idx], -1,
                              GrContextDpyWidthGet(&sContext) / 2, i32Y, 0);
         i32Y += 10;
@@ -709,8 +692,7 @@ PopulateFileList(uint32_t ui32Level)
     //
     // Check for error and return if there is a problem.
     //
-    if(fresult != FR_OK)
-    {
+    if(fresult != FR_OK) {
         //
         // Ensure that the error is reported.
         //
@@ -729,8 +711,7 @@ PopulateFileList(uint32_t ui32Level)
     //
     // Enter loop to enumerate through all directory entries.
     //
-    for(;;)
-    {
+    for(;;) {
         //
         // Read an entry from the directory.
         //
@@ -739,8 +720,7 @@ PopulateFileList(uint32_t ui32Level)
         //
         // Check for error and return if there is a problem.
         //
-        if(fresult != FR_OK)
-        {
+        if(fresult != FR_OK) {
             g_pcStatusLines[0] = "Error from";
             g_pcStatusLines[1] = "USB disk";
             g_pcStatusLines[2] = (char *)StringFromFresult(fresult);
@@ -752,16 +732,14 @@ PopulateFileList(uint32_t ui32Level)
         // If the file name is blank, then this is the end of the
         // listing.
         //
-        if(!g_sFileInfo.fname[0])
-        {
+        if(!g_sFileInfo.fname[0]) {
             break;
         }
 
         //
         // Add the information to a menu item
         //
-        if(ui32ItemCount < MAX_FILES_PER_MENU)
-        {
+        if(ui32ItemCount < MAX_FILES_PER_MENU) {
             tSlideMenuItem *pMenuItem;
 
             //
@@ -787,7 +765,7 @@ PopulateFileList(uint32_t ui32Level)
             // shown.
             //
             pMenuItem->psChildMenu = (g_sFileInfo.fattrib & AM_DIR) ?
-                                    &g_psFileMenus[ui32Level + 1] : 0;
+                                     &g_psFileMenus[ui32Level + 1] : 0;
 
             //
             // Move to the next entry in the item array we use to populate the
@@ -845,13 +823,11 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
     // If the first character is /, then this is a fully specified
     // path, and it should just be used as-is.
     //
-    if(pcDirectory[0] == '/')
-    {
+    if(pcDirectory[0] == '/') {
         //
         // Make sure the new path is not bigger than the cwd buffer.
         //
-        if(strlen(pcDirectory) + 1 > sizeof(g_pcCwdBuf))
-        {
+        if(strlen(pcDirectory) + 1 > sizeof(g_pcCwdBuf)) {
             *pui32Reason = NAME_TOO_LONG_ERROR;
             return(FR_OK);
         }
@@ -860,8 +836,7 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
         // If the new path name (in argv[1])  is not too long, then
         // copy it into the temporary buffer so it can be checked.
         //
-        else
-        {
+        else {
             strncpy(g_pcTmpBuf, pcDirectory, sizeof(g_pcTmpBuf));
         }
     }
@@ -870,8 +845,7 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
     // If the argument is .. then attempt to remove the lowest level
     // on the CWD.
     //
-    else if(!strcmp(pcDirectory, ".."))
-    {
+    else if(!strcmp(pcDirectory, "..")) {
         //
         // Get the index to the last character in the current path.
         //
@@ -881,8 +855,7 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
         // Back up from the end of the path name until a separator (/)
         // is found, or until we bump up to the start of the path.
         //
-        while((g_pcTmpBuf[ui32Idx] != '/') && (ui32Idx > 1))
-        {
+        while((g_pcTmpBuf[ui32Idx] != '/') && (ui32Idx > 1)) {
             //
             // Back up one character.
             //
@@ -902,16 +875,14 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
     // Otherwise this is just a normal path name from the current
     // directory, and it needs to be appended to the current path.
     //
-    else
-    {
+    else {
         //
         // Test to make sure that when the new additional path is
         // added on to the current path, there is room in the buffer
         // for the full new path.  It needs to include a new separator,
         // and a trailing null character.
         //
-        if(strlen(g_pcTmpBuf) + strlen(pcDirectory) + 1 + 1 > sizeof(g_pcCwdBuf))
-        {
+        if(strlen(g_pcTmpBuf) + strlen(pcDirectory) + 1 + 1 > sizeof(g_pcCwdBuf)) {
             *pui32Reason = NAME_TOO_LONG_ERROR;
             return(FR_INVALID_OBJECT);
         }
@@ -920,13 +891,11 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
         // The new path is okay, so add the separator and then append
         // the new directory to the path.
         //
-        else
-        {
+        else {
             //
             // If not already at the root level, then append a /
             //
-            if(strcmp(g_pcTmpBuf, "/"))
-            {
+            if(strcmp(g_pcTmpBuf, "/")) {
                 strcat(g_pcTmpBuf, "/");
             }
 
@@ -946,8 +915,7 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
     //
     // If it can't be opened, then it is a bad path.  Return an error.
     //
-    if(fresult != FR_OK)
-    {
+    if(fresult != FR_OK) {
         *pui32Reason = OPENDIR_ERROR;
         return(fresult);
     }
@@ -955,8 +923,7 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
     //
     // Otherwise, it is a valid new path, so copy it into the CWD.
     //
-    else
-    {
+    else {
         strncpy(g_pcCwdBuf, g_pcTmpBuf, sizeof(g_pcCwdBuf));
     }
 
@@ -1002,8 +969,7 @@ ProcessDirChange(char *pcDir, uint32_t ui32Level)
     // If the directory change was successful, populate the
     // list of files for the new subdirectory.
     //
-    if((fresult == FR_OK) && (ui32Level < MAX_SUBDIR_DEPTH))
-    {
+    if((fresult == FR_OK) && (ui32Level < MAX_SUBDIR_DEPTH)) {
         //
         // Get a pointer to the current menu for this CWD.
         //
@@ -1025,12 +991,9 @@ ProcessDirChange(char *pcDir, uint32_t ui32Level)
         // Set the parent directory, if there is one.  If at level 0
         // (CWD is root), then there is no parent directory.
         //
-        if(ui32Level)
-        {
+        if(ui32Level) {
             psMenu->psParent = &g_psFileMenus[ui32Level - 1];
-        }
-        else
-        {
+        } else {
             psMenu->psParent = 0;
         }
 
@@ -1038,8 +1001,7 @@ ProcessDirChange(char *pcDir, uint32_t ui32Level)
         // If we are descending into a new subdir, then initialize the other
         // menu item fields to default values.
         //
-        if(ui32Level > g_ui32Level)
-        {
+        if(ui32Level > g_ui32Level) {
             psMenu->ui32CenterIndex = 0;
             psMenu->ui32FocusIndex = 0;
             psMenu->bMultiSelectable = 0;
@@ -1054,8 +1016,7 @@ ProcessDirChange(char *pcDir, uint32_t ui32Level)
     //
     // Directory change was not successful
     //
-    else
-    {
+    else {
         //
         // Return failure indication
         //
@@ -1196,8 +1157,7 @@ main(void)
     // Enter an infinite loop to run the user interface and process USB
     // events.
     //
-    while(1)
-    {
+    while(1) {
         uint32_t ui32LastTickCount = 0;
 
         //
@@ -1214,19 +1174,16 @@ main(void)
         //
         // Take action based on the application state.
         //
-        switch(g_eState)
-        {
+        switch(g_eState) {
             //
             // A device has enumerated.
             //
-            case STATE_DEVICE_ENUM:
-            {
+            case STATE_DEVICE_ENUM: {
                 //
                 // Check to see if the device is ready.  If not then stay
                 // in this state and we will check it again on the next pass.
                 //
-                if(USBHMSCDriveReady(g_psMSCInstance) != 0)
-                {
+                if(USBHMSCDriveReady(g_psMSCInstance) != 0) {
                     //
                     // Wait about 500ms before attempting to check if the
                     // device is ready again.
@@ -1242,8 +1199,7 @@ main(void)
                     // If the timeout is hit then go to the
                     // STATE_TIMEOUT_DEVICE state.
                     //
-                    if(ui32DriveTimeout == 0)
-                    {
+                    if(ui32DriveTimeout == 0) {
                         g_eState = STATE_TIMEOUT_DEVICE;
                     }
 
@@ -1275,8 +1231,7 @@ main(void)
                 // Initiate a directory change to the root.  This will
                 // populate a menu structure representing the root directory.
                 //
-                if(ProcessDirChange("/", g_ui32Level))
-                {
+                if(ProcessDirChange("/", g_ui32Level)) {
                     //
                     // If there were no errors reported, we are ready for
                     // MSC operation.
@@ -1300,10 +1255,8 @@ main(void)
             //
             // If there is no device then just wait for one.
             //
-            case STATE_NO_DEVICE:
-            {
-                if(g_ui32Flags == FLAGS_DEVICE_PRESENT)
-                {
+            case STATE_NO_DEVICE: {
+                if(g_ui32Flags == FLAGS_DEVICE_PRESENT) {
                     //
                     // Show waiting message on screen
                     //
@@ -1322,13 +1275,11 @@ main(void)
             //
             // An unknown device was connected.
             //
-            case STATE_UNKNOWN_DEVICE:
-            {
+            case STATE_UNKNOWN_DEVICE: {
                 //
                 // If this is a new device then change the status.
                 //
-                if((g_ui32Flags & FLAGS_DEVICE_PRESENT) == 0)
-                {
+                if((g_ui32Flags & FLAGS_DEVICE_PRESENT) == 0) {
                     //
                     // Clear the screen and indicate that an unknown device
                     // is present.
@@ -1349,14 +1300,12 @@ main(void)
             //
             // The connected mass storage device is not reporting ready.
             //
-            case STATE_TIMEOUT_DEVICE:
-            {
+            case STATE_TIMEOUT_DEVICE: {
                 //
                 // If this is the first time in this state then print a
                 // message.
                 //
-                if((g_ui32Flags & FLAGS_DEVICE_PRESENT) == 0)
-                {
+                if((g_ui32Flags & FLAGS_DEVICE_PRESENT) == 0) {
                     //
                     //
                     // Clear the screen and indicate that an unknown device
@@ -1378,14 +1327,12 @@ main(void)
             //
             // The device is ready and in use.
             //
-            case STATE_DEVICE_READY:
-            {
+            case STATE_DEVICE_READY: {
                 //
                 // Process occurrence of timer tick.  Check for user input
                 // once each tick.
                 //
-                if(g_ui32SysTickCount != ui32LastTickCount)
-                {
+                if(g_ui32SysTickCount != ui32LastTickCount) {
                     uint8_t ui8ButtonState;
                     uint8_t ui8ButtonChanged;
 
@@ -1402,9 +1349,8 @@ main(void)
                     //
                     if(BUTTON_PRESSED(SELECT_BUTTON,
                                       ui8ButtonState, ui8ButtonChanged) ||
-                       BUTTON_PRESSED(RIGHT_BUTTON,
-                                      ui8ButtonState, ui8ButtonChanged))
-                    {
+                            BUTTON_PRESSED(RIGHT_BUTTON,
+                                           ui8ButtonState, ui8ButtonChanged)) {
                         uint32_t ui32NewLevel;
                         uint32_t ui32ItemIdx;
                         char *pcItemName;
@@ -1427,8 +1373,7 @@ main(void)
                         // Make sure we are not yet past the maximum tree
                         // depth.
                         //
-                        if(g_ui32Level < MAX_SUBDIR_DEPTH)
-                        {
+                        if(g_ui32Level < MAX_SUBDIR_DEPTH) {
                             //
                             // Potential new level is one greater than the
                             // current level.
@@ -1441,8 +1386,7 @@ main(void)
                             // structure with the files and subdirs in the new
                             // directory.
                             //
-                            if(ProcessDirChange(pcItemName, ui32NewLevel))
-                            {
+                            if(ProcessDirChange(pcItemName, ui32NewLevel)) {
                                 //
                                 // If the change was successful, then update
                                 // the level.
@@ -1465,8 +1409,7 @@ main(void)
                     // If the UP button is pressed, just pass it to the widget
                     // which will handle scrolling the list of files.
                     //
-                    if(BUTTON_PRESSED(UP_BUTTON, ui8ButtonState, ui8ButtonChanged))
-                    {
+                    if(BUTTON_PRESSED(UP_BUTTON, ui8ButtonState, ui8ButtonChanged)) {
                         SendWidgetKeyMessage(WIDGET_MSG_KEY_UP);
                     }
 
@@ -1474,8 +1417,7 @@ main(void)
                     // If the DOWN button is pressed, just pass it to the widget
                     // which will handle scrolling the list of files.
                     //
-                    if(BUTTON_PRESSED(DOWN_BUTTON, ui8ButtonState, ui8ButtonChanged))
-                    {
+                    if(BUTTON_PRESSED(DOWN_BUTTON, ui8ButtonState, ui8ButtonChanged)) {
                         SendWidgetKeyMessage(WIDGET_MSG_KEY_DOWN);
                     }
 
@@ -1483,16 +1425,14 @@ main(void)
                     // If the LEFT button is pressed, then we are attempting
                     // to go up a level in the file system.
                     //
-                    if(BUTTON_PRESSED(LEFT_BUTTON, ui8ButtonState, ui8ButtonChanged))
-                    {
+                    if(BUTTON_PRESSED(LEFT_BUTTON, ui8ButtonState, ui8ButtonChanged)) {
                         uint32_t ui32NewLevel;
 
                         //
                         // Make sure we are not already at the top of the
                         // directory tree (at root).
                         //
-                        if(g_ui32Level)
-                        {
+                        if(g_ui32Level) {
                             //
                             // Potential new level is one less than the
                             // current level.
@@ -1505,8 +1445,7 @@ main(void)
                             // structure with the files and subdirs in the new
                             // directory.
                             //
-                            if(ProcessDirChange("..", ui32NewLevel))
-                            {
+                            if(ProcessDirChange("..", ui32NewLevel)) {
                                 //
                                 // If the change was successful, then update
                                 // the level.
@@ -1529,8 +1468,7 @@ main(void)
             //
             // Something has caused a power fault.
             //
-            case STATE_POWER_FAULT:
-            {
+            case STATE_POWER_FAULT: {
                 //
                 // Clear the screen and show a power fault indication.
                 //
@@ -1540,8 +1478,7 @@ main(void)
                 break;
             }
 
-            default:
-            {
+            default: {
                 break;
             }
         }

@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2007-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -36,8 +36,7 @@
 // This structure defines the fields in a BOOTP request/reply packet.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // The operation; 1 is a request, 2 is a reply.
     //
@@ -203,8 +202,7 @@ CreateSocket(uint32_t ui32Address, uint32_t ui32Port,
     //
     // Create a socket.
     //
-    if((sRet = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == INVALID_SOCKET)
-    {
+    if((sRet = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == INVALID_SOCKET) {
         return(INVALID_SOCKET);
     }
 
@@ -212,8 +210,7 @@ CreateSocket(uint32_t ui32Address, uint32_t ui32Port,
     // Set the broadcast flag as specified.
     //
     if(setsockopt(sRet, SOL_SOCKET, SO_BROADCAST, (const char *)&bBroadcast,
-               sizeof(uint32_t)) == SOCKET_ERROR)
-    {
+                  sizeof(uint32_t)) == SOCKET_ERROR) {
         int32_t i32Tmp = WSAGetLastError();
         closesocket(sRet);
         return(INVALID_SOCKET);
@@ -222,14 +219,12 @@ CreateSocket(uint32_t ui32Address, uint32_t ui32Port,
     //
     // Bind the socket to the given port.
     //
-    if(bBind)
-    {
+    if(bBind) {
         memset(&sAddr, 0, sizeof(sAddr));
         sAddr.sin_family = AF_INET;
         sAddr.sin_addr.s_addr = ui32Address;
         sAddr.sin_port = (USHORT)ui32Port;
-        if(bind(sRet, (struct sockaddr *)&sAddr, sizeof(sAddr)) == SOCKET_ERROR)
-        {
+        if(bind(sRet, (struct sockaddr *)&sAddr, sizeof(sAddr)) == SOCKET_ERROR) {
             int32_t i32Tmp = WSAGetLastError();
             closesocket(sRet);
             return(INVALID_SOCKET);
@@ -256,12 +251,9 @@ BuildTFTPDataPacket(char *pcFileData, uint32_t ui32FileLen,
     //
     // Determine the number of bytes to place into this packet.
     //
-    if(ui32FileLen < (ui32BlockNum * 512))
-    {
+    if(ui32FileLen < (ui32BlockNum * 512)) {
         ui32Length = ui32FileLen & 511;
-    }
-    else
-    {
+    } else {
         ui32Length = 512;
     }
 
@@ -325,8 +317,7 @@ SendFirmwareUpdateMagicPacket(SOCKET sSocket, uint8_t *pui8MACAddr)
     //
     // Build the magic packet. Start with the 6 marker bytes.
     //
-    for(i32Loop = 0; i32Loop < MPACKET_HEADER_LEN; i32Loop++)
-    {
+    for(i32Loop = 0; i32Loop < MPACKET_HEADER_LEN; i32Loop++) {
         pui8Packet[i32Loop] = MPACKET_MARKER;
     }
 
@@ -334,13 +325,11 @@ SendFirmwareUpdateMagicPacket(SOCKET sSocket, uint8_t *pui8MACAddr)
     // Populate the rest of the packet with 8 copies of the target MAC
     // address.
     //
-    for(i32Loop = 0; i32Loop < MPACKET_MAC_REP; i32Loop++)
-    {
-        for(i32MACLoop = 0; i32MACLoop < MPACKET_MAC_LEN; i32MACLoop++)
-        {
+    for(i32Loop = 0; i32Loop < MPACKET_MAC_REP; i32Loop++) {
+        for(i32MACLoop = 0; i32MACLoop < MPACKET_MAC_LEN; i32MACLoop++) {
             pui8Packet[MPACKET_HEADER_LEN +
-                      (i32Loop * MPACKET_MAC_LEN) + i32MACLoop] =
-                                                    pui8MACAddr[i32MACLoop];
+                       (i32Loop * MPACKET_MAC_LEN) + i32MACLoop] =
+                           pui8MACAddr[i32MACLoop];
         }
     }
 
@@ -355,7 +344,7 @@ SendFirmwareUpdateMagicPacket(SOCKET sSocket, uint8_t *pui8MACAddr)
     // Now send the packet.
     //
     i32Written = sendto(sSocket, (const char *)pui8Packet, MPACKET_LEN, 0,
-                      (SOCKADDR *)&sAddr, sizeof(sAddr));
+                        (SOCKADDR *)&sAddr, sizeof(sAddr));
 
     //
     // Tell the caller whether or not we were successful.
@@ -407,8 +396,7 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
     //
     VPRINTF(("Reading file (%s) to be downloaded\n", pcFilename));
     pFile = fopen(pcFilename, "rb");
-    if(!pFile)
-    {
+    if(!pFile) {
         EPRINTF(("File (%s) not found\n", pcFilename));
         return(ERROR_FILE);
     }
@@ -425,8 +413,7 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
     //
     VPRINTF(("... Allocating buffer for file length %u\n", ui32FileLen));
     pcFileData = (char *)malloc(ui32FileLen);
-    if(!pcFileData)
-    {
+    if(!pcFileData) {
         EPRINTF(("Cannot allocate memory for file\n"));
         fclose(pFile);
         return(ERROR_FILE);
@@ -436,8 +423,7 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
     // Read the file contents into the buffer.
     //
     VPRINTF(("... Reading the file\n"));
-    if(fread(pcFileData, 1, ui32FileLen, pFile) != ui32FileLen)
-    {
+    if(fread(pcFileData, 1, ui32FileLen, pFile) != ui32FileLen) {
         free(pcFileData);
         fclose(pFile);
         return(ERROR_FILE);
@@ -454,8 +440,7 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
     VPRINTF(("Setting up network connections\n"));
     VPRINTF(("... Creating sockete for BOOTP server\n"));
     sBOOTP = CreateSocket(ui32LocalAddr, htons(BOOTP_SERVER_PORT), 1, TRUE);
-    if(sBOOTP == INVALID_SOCKET)
-    {
+    if(sBOOTP == INVALID_SOCKET) {
         EPRINTF(("Cannot allocate socket\n"));
         free(pcFileData);
         return(ERROR_BOOTPD);
@@ -466,8 +451,7 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
     //
     VPRINTF(("... Creating sockete for TFTP server\n"));
     sTFTP = CreateSocket(ui32LocalAddr, htons(TFTP_PORT), 0, TRUE);
-    if(sTFTP == INVALID_SOCKET)
-    {
+    if(sTFTP == INVALID_SOCKET) {
         EPRINTF(("Cannot allocate socket\n"));
         free(pcFileData);
         closesocket(sBOOTP);
@@ -478,8 +462,7 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
     // Create the socket we use to send remote firmware update magic packets.
     VPRINTF(("... Creating sockete for MAGIG packet transmission\n"));
     sUpdateSocket = CreateSocket(ui32LocalAddr, htons(MPACKET_PORT), 1, FALSE);
-    if(sUpdateSocket == INVALID_SOCKET)
-    {
+    if(sUpdateSocket == INVALID_SOCKET) {
         EPRINTF(("Cannot allocate socket\n"));
         free(pcFileData);
         closesocket(sTFTP);
@@ -514,8 +497,7 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
     // has completed, the server will exit on its own.
     //
     VPRINTF(("Starting BOOTP/TFTP Server\n"));
-    while(!g_bAbortBOOTP)
-    {
+    while(!g_bAbortBOOTP) {
         //
         // Set the file descriptor set to the currently opened sockets.
         //
@@ -523,8 +505,7 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
         FD_SET(sBOOTP, &sDescriptors);
         FD_SET(sTFTP, &sDescriptors);
         i32AddrLen = (sTFTP > sBOOTP) ? sTFTP : sBOOTP;
-        if(sTFTPData != INVALID_SOCKET)
-        {
+        if(sTFTPData != INVALID_SOCKET) {
             FD_SET(sTFTPData, &sDescriptors);
             i32AddrLen = (sTFTPData > i32AddrLen) ? sTFTPData : i32AddrLen;
         }
@@ -544,13 +525,11 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
         //
         // Wait until there is a packet to be read on one of the open sockets.
         //
-        if(select(i32AddrLen + 1, &sDescriptors, 0, 0, &sTime) != 0)
-        {
+        if(select(i32AddrLen + 1, &sDescriptors, 0, 0, &sTime) != 0) {
             //
             // See if there is a packet waiting to be read from the BOOTP port.
             //
-            if(FD_ISSET(sBOOTP, &sDescriptors))
-            {
+            if(FD_ISSET(sBOOTP, &sDescriptors)) {
                 //
                 // Read the packet from the BOOTP port.
                 //
@@ -558,20 +537,18 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
                 i32AddrLen = sizeof(sAddr);
                 if(recvfrom(sBOOTP, (char *)pui8PacketData,
                             sizeof(pui8PacketData), 0, (struct sockaddr *)&sAddr,
-                            &i32AddrLen) != SOCKET_ERROR)
-                {
+                            &i32AddrLen) != SOCKET_ERROR) {
                     //
                     // Make sure this is a valid BOOTP request.
                     //
                     VPRINTF(("... Verifying BOOTP packet\n"));
                     if((psPacket->ui8Op == BOOTP_REQUEST) &&
-                       (psPacket->ui8HType == 1) &&
-                       (psPacket->ui8HLen == 6) &&
-                       (pui8MACAddr ?
-                        memcmp(psPacket->pui8CHAddr, pui8MACAddr, 6) == 0 : 1) &&
-                       ((stricmp(psPacket->pcSName, "stellaris") == 0) ||
-                        (stricmp(psPacket->pcSName, "tiva") == 0)))
-                    {
+                            (psPacket->ui8HType == 1) &&
+                            (psPacket->ui8HLen == 6) &&
+                            (pui8MACAddr ?
+                             memcmp(psPacket->pui8CHAddr, pui8MACAddr, 6) == 0 : 1) &&
+                            ((stricmp(psPacket->pcSName, "stellaris") == 0) ||
+                             (stricmp(psPacket->pcSName, "tiva") == 0))) {
                         VPRINTF(("... Generating BOOTP response\n"));
                         //
                         // Change the operation code from BOOTP request to
@@ -616,8 +593,7 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
             //
             // See if there is a packet waiting to be read from the TFTP port.
             //
-            if(FD_ISSET(sTFTP, &sDescriptors))
-            {
+            if(FD_ISSET(sTFTP, &sDescriptors)) {
                 //
                 // Read the packet from the TFTP port.
                 //
@@ -625,15 +601,13 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
                 i32AddrLen = sizeof(sAddr);
                 if(recvfrom(sTFTP, (char *)pui8PacketData, sizeof(pui8PacketData),
                             0, (struct sockaddr *)&sAddr, &i32AddrLen) !=
-                        SOCKET_ERROR)
-                {
+                        SOCKET_ERROR) {
                     //
                     // Make sure this is a RRQ request.
                     //
                     VPRINTF(("... Verifying TFTP RRQ request\n"));
                     if((pui8PacketData[0] != ((TFTP_RRQ >> 8) & 0xff)) ||
-                       (pui8PacketData[1] != (TFTP_RRQ & 0xff)))
-                    {
+                            (pui8PacketData[1] != (TFTP_RRQ & 0xff))) {
                         //
                         // Construct an error packet since only RRQ is
                         // supported by this simple TFTP server.
@@ -653,15 +627,12 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
                         sendto(sTFTP, (char *)pui8PacketData,
                                strlen((char *)pui8PacketData + 4) + 5, 0,
                                (struct sockaddr *)&sAddr, i32AddrLen);
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // If there is already a TFTP data connection, then
                         // close it now (i.e. restart).
                         //
-                        if(sTFTPData != INVALID_SOCKET)
-                        {
+                        if(sTFTPData != INVALID_SOCKET) {
                             VPRINTF(("... Restarting TFTP session\n"));
                             closesocket(sTFTPData);
                         }
@@ -671,10 +642,9 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
                         //
                         VPRINTF(("... Create TFTP data socket\n"));
                         while((sTFTPData =
-                            CreateSocket(ui32LocalAddr,
-                                         htons(32768 + (rand() & 8191)), 0,
-                                         TRUE)) == INVALID_SOCKET)
-                        {
+                                    CreateSocket(ui32LocalAddr,
+                                                 htons(32768 + (rand() & 8191)), 0,
+                                                 TRUE)) == INVALID_SOCKET) {
                         }
 
                         //
@@ -686,15 +656,15 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
                         // Generate the TFTP data packet.
                         //
                         VPRINTF(("... Building TFTP packet (Block %d)\n",
-                                ui32BlockNum));
+                                 ui32BlockNum));
                         ui32Len = BuildTFTPDataPacket(pcFileData, ui32FileLen,
-                                                    pui8PacketData, ui32BlockNum);
+                                                      pui8PacketData, ui32BlockNum);
 
                         //
                         // Send the TFTP data packet.
                         //
                         VPRINTF(("... Sending TFTP data packet (Block %d)\n",
-                                ui32BlockNum));
+                                 ui32BlockNum));
                         sendto(sTFTPData, (char *)pui8PacketData, ui32Len, 0,
                                (struct sockaddr *)&sAddr, i32AddrLen);
 
@@ -712,8 +682,7 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
             // port.
             //
             if((sTFTPData != INVALID_SOCKET) &&
-               FD_ISSET(sTFTPData, &sDescriptors))
-            {
+                    FD_ISSET(sTFTPData, &sDescriptors)) {
                 //
                 // Read the packet from the TFTP data port.
                 //
@@ -721,24 +690,20 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
                 i32AddrLen = sizeof(sAddr);
                 if(recvfrom(sTFTPData, (char *)pui8PacketData,
                             sizeof(pui8PacketData), 0, (struct sockaddr *)&sAddr,
-                            &i32AddrLen) != SOCKET_ERROR)
-                {
+                            &i32AddrLen) != SOCKET_ERROR) {
                     //
                     // See if this is an ACK.
                     //
                     VPRINTF(("... Verify TFTP packet is ACK\n"));
                     if((pui8PacketData[0] == ((TFTP_ACK >> 8) & 0xff)) &&
-                       (pui8PacketData[1] == (TFTP_ACK & 0xff)) &&
-                       (pui8PacketData[2] == ((ui32BlockNum >> 8) & 0xff)) &&
-                       (pui8PacketData[3] == (ui32BlockNum & 0xff)))
-                    {
+                            (pui8PacketData[1] == (TFTP_ACK & 0xff)) &&
+                            (pui8PacketData[2] == ((ui32BlockNum >> 8) & 0xff)) &&
+                            (pui8PacketData[3] == (ui32BlockNum & 0xff))) {
                         //
                         // Exit if this is the ACK for the last data packet.
                         //
-                        if(ui32FileLen < (ui32BlockNum * 512))
-                        {
-                            if(pfnCallback)
-                            {
+                        if(ui32FileLen < (ui32BlockNum * 512)) {
+                            if(pfnCallback) {
                                 pfnCallback(100);
                             }
                             break;
@@ -747,8 +712,7 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
                         //
                         // Update the completion percentage.
                         //
-                        if(pfnCallback)
-                        {
+                        if(pfnCallback) {
                             pfnCallback((ui32BlockNum * 512 * 100) / ui32FileLen);
                         }
 
@@ -761,15 +725,15 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
                         // Generate the TFTP data packet.
                         //
                         VPRINTF(("... Building TFTP packet (Block %d)\n",
-                                ui32BlockNum));
+                                 ui32BlockNum));
                         ui32Len = BuildTFTPDataPacket(pcFileData, ui32FileLen,
-                                                    pui8PacketData, ui32BlockNum);
+                                                      pui8PacketData, ui32BlockNum);
 
                         //
                         // Send the TFTP data packet.
                         //
                         VPRINTF(("... Sending TFTP data packet (Block %d)\n",
-                                ui32BlockNum));
+                                 ui32BlockNum));
                         sendto(sTFTPData, (char *)pui8PacketData, ui32Len, 0,
                                (struct sockaddr *)&sAddr, i32AddrLen);
 
@@ -781,9 +745,7 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
                     }
                 }
             }
-        }
-        else
-        {
+        } else {
             //
             // Increment the count of timeouts that we've waited for an ACK.
             //
@@ -793,22 +755,21 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
             // See if there is a TFTP data socket and the timeout count has
             // exceeded 1 (i.e. that we've waited for a second for the ACK).
             //
-            if((sTFTPData != INVALID_SOCKET) && (ui32Count > 1))
-            {
+            if((sTFTPData != INVALID_SOCKET) && (ui32Count > 1)) {
                 //
                 // Generate a TFTP data packet for the most recently sent
                 // block.
                 //
                 VPRINTF(("... Rebuilding TFTP data packet (Block %d)\n",
-                        ui32BlockNum));
+                         ui32BlockNum));
                 ui32Len = BuildTFTPDataPacket(pcFileData, ui32FileLen,
-                                            pui8PacketData, ui32BlockNum);
+                                              pui8PacketData, ui32BlockNum);
 
                 //
                 // Resend the most recent TFTP data packet.
                 //
                 VPRINTF(("Resending TFTP data packet (Block %d)\n",
-                        ui32BlockNum));
+                         ui32BlockNum));
                 sendto(sTFTPData, (char *)pui8PacketData, ui32Len, 0,
                        (struct sockaddr *)&sAddr, i32AddrLen);
 
@@ -823,8 +784,7 @@ StartBOOTPUpdate(uint8_t *pui8MACAddr, uint32_t ui32LocalAddr,
             // If we have not seen a BOOTP request yet, send the firmare
             // update magic packet again.
             //
-            if(!bBOOTPPacketSeen)
-            {
+            if(!bBOOTPPacketSeen) {
                 VPRINTF(("... Resending \"Magic\" packet.\n"));
                 SendFirmwareUpdateMagicPacket(sUpdateSocket, pui8MACAddr);
             }

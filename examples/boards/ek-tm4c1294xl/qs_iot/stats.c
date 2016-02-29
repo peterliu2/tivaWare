@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -37,13 +37,10 @@
 void
 StatSetVal(tStat *psStat, char *pcInputValue)
 {
-    if((psStat->eValueType) == STRING)
-    {
+    if((psStat->eValueType) == STRING) {
         ustrncpy(StatStringVal(*psStat), pcInputValue, MAX_STAT_STRING);
-    }
-    else if((psStat->eValueType == INT) ||
-            (psStat->eValueType == HEX))
-    {
+    } else if((psStat->eValueType == INT) ||
+              (psStat->eValueType == HEX)) {
         StatIntVal(*psStat) = ustrtoul(pcInputValue, NULL, 0);
     }
 }
@@ -57,8 +54,7 @@ StatSetVal(tStat *psStat, char *pcInputValue)
 void
 StatRequestFormat(tStat *psStat, char *pcRequestBuffer)
 {
-    if((psStat->eValueType) == STRING)
-    {
+    if((psStat->eValueType) == STRING) {
         //
         // Disable interrupts to avoid changes to the string during the copy
         // operation.
@@ -70,15 +66,11 @@ StatRequestFormat(tStat *psStat, char *pcRequestBuffer)
                  StatStringVal(*psStat));
 
         ROM_IntMasterEnable();
-    }
-    else if((psStat->eValueType) == INT)
-    {
+    } else if((psStat->eValueType) == INT) {
         usprintf(pcRequestBuffer, "%s=%d",
                  psStat->pcCloudAlias,
                  StatIntVal(*psStat));
-    }
-    else if((psStat->eValueType) == HEX)
-    {
+    } else if((psStat->eValueType) == HEX) {
         usprintf(pcRequestBuffer, "%s=0x%x",
                  psStat->pcCloudAlias,
                  StatIntVal(*psStat));
@@ -101,8 +93,7 @@ StatPrintValue(tStat *psStat, char *pcValueString)
     //
     // Check the type of data that is stored in this psStat variable.
     //
-    if((psStat->eValueType) == STRING)
-    {
+    if((psStat->eValueType) == STRING) {
         //
         // If this is a string, perform a little processing to remove
         // percent-encoded characters. First, copy the original string pointer
@@ -115,14 +106,12 @@ StatPrintValue(tStat *psStat, char *pcValueString)
         // Loop through the characters in the string one by one.
         //
         ui8Index = 0;
-        while(*pcSourceString != 0)
-        {
+        while(*pcSourceString != 0) {
             //
             // If the character is a percent sign, calculate the correct
             // percent-encoding substitution.
             //
-            if(*pcSourceString == '%')
-            {
+            if(*pcSourceString == '%') {
                 //
                 // The next two characters should be a hexadecimal
                 // representation of the actual character that should be
@@ -144,9 +133,7 @@ StatPrintValue(tStat *psStat, char *pcValueString)
                 //
                 pcValueString[ui8Index] = ui32CharValue;
 
-            }
-            else
-            {
+            } else {
                 //
                 // If the character was not a percent sign, it can be copied
                 // directly.
@@ -160,11 +147,9 @@ StatPrintValue(tStat *psStat, char *pcValueString)
             //
             ui8Index++;
         }
-        
+
         pcValueString[ui8Index] = 0;
-    }
-    else if((psStat->eValueType) == INT)
-    {
+    } else if((psStat->eValueType) == INT) {
         //
         // If this is an integer value, just print the value as text into the
         // destination string.

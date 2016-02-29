@@ -90,60 +90,52 @@ static volatile unsigned char ucOutputValue = partstALL_OUTPUTS_OFF;
 
 void vParTestInitialise( void )
 {
-	PDCInit();
-	PDCWrite( PDC_LED, ucOutputValue );
+    PDCInit();
+    PDCWrite( PDC_LED, ucOutputValue );
 }
 /*-----------------------------------------------------------*/
 
 void vParTestSetLED( unsigned portBASE_TYPE uxLED, signed portBASE_TYPE xValue )
 {
-unsigned char ucBit = ( unsigned char ) 1;
+    unsigned char ucBit = ( unsigned char ) 1;
 
-	vTaskSuspendAll();
-	{
-		if( uxLED < partstMAX_OUTPUT_LED )
-		{
-			ucBit = ( ( unsigned char ) 1 ) << uxLED;
+    vTaskSuspendAll();
+    {
+        if( uxLED < partstMAX_OUTPUT_LED ) {
+            ucBit = ( ( unsigned char ) 1 ) << uxLED;
 
-			if( xValue == pdFALSE )
-			{
-				ucBit ^= ( unsigned char ) 0xff;
-				ucOutputValue &= ucBit;
-			}
-			else
-			{
-				ucOutputValue |= ucBit;
-			}
+            if( xValue == pdFALSE ) {
+                ucBit ^= ( unsigned char ) 0xff;
+                ucOutputValue &= ucBit;
+            } else {
+                ucOutputValue |= ucBit;
+            }
 
-			PDCWrite( PDC_LED, ucOutputValue );
-		}	
-	}
-	xTaskResumeAll();
+            PDCWrite( PDC_LED, ucOutputValue );
+        }
+    }
+    xTaskResumeAll();
 }
 /*-----------------------------------------------------------*/
 
 void vParTestToggleLED( unsigned portBASE_TYPE uxLED )
 {
-unsigned char ucBit;
+    unsigned char ucBit;
 
-	vTaskSuspendAll();
-	{
-		if( uxLED < partstMAX_OUTPUT_LED )
-		{
-			ucBit = ( ( unsigned char ) 1 ) << uxLED;
+    vTaskSuspendAll();
+    {
+        if( uxLED < partstMAX_OUTPUT_LED ) {
+            ucBit = ( ( unsigned char ) 1 ) << uxLED;
 
-			if( ucOutputValue & ucBit )
-			{
-				ucOutputValue &= ~ucBit;
-			}
-			else
-			{
-				ucOutputValue |= ucBit;
-			}
+            if( ucOutputValue & ucBit ) {
+                ucOutputValue &= ~ucBit;
+            } else {
+                ucOutputValue |= ucBit;
+            }
 
-			PDCWrite( PDC_LED, ucOutputValue );
-		}
-	}
-	xTaskResumeAll();
+            PDCWrite( PDC_LED, ucOutputValue );
+        }
+    }
+    xTaskResumeAll();
 }
 

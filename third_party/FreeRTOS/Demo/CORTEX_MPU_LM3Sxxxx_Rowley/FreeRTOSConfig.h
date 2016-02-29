@@ -118,9 +118,9 @@ to exclude the API function. */
 #define INCLUDE_uxTaskGetStackHighWaterMark	0
 
 #ifdef __NVIC_PRIO_BITS
-	#define configPRIO_BITS       __NVIC_PRIO_BITS
+#define configPRIO_BITS       __NVIC_PRIO_BITS
 #else
-	#define configPRIO_BITS       3
+#define configPRIO_BITS       3
 #endif
 #define configUNUSED_PRIO_BITS ( ( unsigned char ) ( 8 - configPRIO_BITS ) )
 

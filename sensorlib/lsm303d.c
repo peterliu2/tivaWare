@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -57,15 +57,13 @@
 // and multiplying by 9.81 (1 g = 9.81 m/s^2).
 //
 //*****************************************************************************
-static const float g_pfLSM303DAccelFactors[] =
-{
+static const float g_pfLSM303DAccelFactors[] = {
     0.00059875,                             // Range = +/- 2 g (16384 lsb/g)
     0.00119751,                             // Range = +/- 4 g (8192 lsb/g)
     0.00239502,                             // Range = +/- 8 g (4096 lsb/g)
     0.00479004                              // Range = +/- 16 g (2048 lsb/g)
 };
-static const float g_pfLSM303DMagFactors[] =
-{
+static const float g_pfLSM303DMagFactors[] = {
     8.0e-6f,                                // Range = +/- 2 (0.080 mgauss/lsb)
     1.6e-5f,                                // Range = +/- 4 (0.160 mgauss/lsb)
     3.2e-5f,                                // Range = +/- 8 (0.320 mgauss/lsb)
@@ -75,8 +73,7 @@ static const float g_pfLSM303DMagFactors[] =
 // Uninitialized values will default to zero which is what we want.  0x80 is
 // ORed into the register address so the writes auto-increment
 //
-static const uint8_t g_pui8ZeroInit[] =
-{
+static const uint8_t g_pui8ZeroInit[] = {
     0x80 | LSM303D_O_MAG_INT_CTRL,
     0xE8,                       // MAG_INT_CTRL
     0x0,                        // int_src (RO)
@@ -147,22 +144,19 @@ LSM303DCallback(void *pvCallbackData, uint_fast8_t ui8Status)
     // to the idle state (which will also result in a callback to propagate the
     // error).
     //
-    if(ui8Status != I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status != I2CM_STATUS_SUCCESS) {
         psInst->ui8State = LSM303D_STATE_IDLE;
     }
 
     //
     // Determine the current state of the LSM303D state machine.
     //
-    switch(psInst->ui8State)
-    {
+    switch(psInst->ui8State) {
         //
         // All states that trivially transition to IDLE, and all unknown
         // states.
         //
-        default:
-        {
+        default: {
             //
             // The state machine is now idle.
             //
@@ -174,8 +168,7 @@ LSM303DCallback(void *pvCallbackData, uint_fast8_t ui8Status)
             break;
         }
 
-        case LSM303D_STATE_READ_MAG:
-        {
+        case LSM303D_STATE_READ_MAG: {
             //
             // Move the state machine to the wait for accel data read state.
             //
@@ -193,8 +186,7 @@ LSM303DCallback(void *pvCallbackData, uint_fast8_t ui8Status)
             //
             break;
         }
-        case LSM303D_STATE_INIT:
-        {
+        case LSM303D_STATE_INIT: {
             psInst->ui8State = LSM303D_STATE_IDLE;
 
             //
@@ -206,8 +198,7 @@ LSM303DCallback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // A write just completed
         //
-        case LSM303D_STATE_WRITE:
-        {
+        case LSM303D_STATE_WRITE: {
             //
             // Set the accelerometer ranges to the new values.  If the register
             // was not modified, the values will be the same so this has no
@@ -230,34 +221,31 @@ LSM303DCallback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // A read-modify-write just completed
         //
-        case LSM303D_STATE_RMW:
-        {
+        case LSM303D_STATE_RMW: {
             //
             // See if the accel scale register was just modified.
             //
             if(psInst->uCommand.sReadModifyWriteState.pui8Buffer[0] ==
-                LSM303D_O_CTRL2)
-            {
+                    LSM303D_O_CTRL2) {
                 //
                 // Extract the FS_SEL from the ACCEL_CONFIG register value.
                 //
                 psInst->ui8AccelFSSel =
                     ((psInst->uCommand.sReadModifyWriteState.pui8Buffer[1] &
-                        LSM303D_CTRL2_AFS_M) >> LSM303D_CTRL2_AFS_S);
+                      LSM303D_CTRL2_AFS_M) >> LSM303D_CTRL2_AFS_S);
             }
 
             //
             // See if the mag scale register was just modified.
             //
             if(psInst->uCommand.sReadModifyWriteState.pui8Buffer[0] ==
-                LSM303D_O_CTRL6)
-            {
+                    LSM303D_O_CTRL6) {
                 //
                 // Extract the FS_SEL from the mag scale register value.
                 //
                 psInst->ui8MagFSSel =
                     ((psInst->uCommand.sReadModifyWriteState.pui8Buffer[1] &
-                        LSM303D_CTRL6_MFS_M) >> LSM303D_CTRL6_MFS_S);
+                      LSM303D_CTRL6_MFS_M) >> LSM303D_CTRL6_MFS_S);
 
             }
 
@@ -276,8 +264,7 @@ LSM303DCallback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if the state machine is now idle and there is a callback function.
     //
-    if((psInst->ui8State == LSM303D_STATE_IDLE) && psInst->pfnCallback)
-    {
+    if((psInst->ui8State == LSM303D_STATE_IDLE) && psInst->pfnCallback) {
         //
         // Call the application-supplied callback function.
         //
@@ -305,8 +292,8 @@ LSM303DCallback(void *pvCallbackData, uint_fast8_t ui8Status)
 //*****************************************************************************
 uint_fast8_t
 LSM303DInit(tLSM303D *psInst, tI2CMInstance *psI2CInst,
-                    uint_fast8_t ui8I2CAddr, tSensorCallback *pfnCallback,
-                    void *pvCallbackData)
+            uint_fast8_t ui8I2CAddr, tSensorCallback *pfnCallback,
+            void *pvCallbackData)
 {
     //
     // Initialize the LSM303D instance structure.
@@ -334,8 +321,7 @@ LSM303DInit(tLSM303D *psInst, tI2CMInstance *psI2CInst,
     //
     psInst->ui8State = LSM303D_STATE_INIT;
     if(I2CMWrite(psInst->psI2CInst, psInst->ui8Addr, g_pui8ZeroInit,
-                 sizeof(g_pui8ZeroInit), LSM303DCallback, (void *)psInst) == 0)
-    {
+                 sizeof(g_pui8ZeroInit), LSM303DCallback, (void *)psInst) == 0) {
         psInst->ui8State = LSM303D_STATE_IDLE;
         return(0);
     }
@@ -368,15 +354,14 @@ LSM303DInit(tLSM303D *psInst, tI2CMInstance *psI2CInst,
 //*****************************************************************************
 uint_fast8_t
 LSM303DRead(tLSM303D *psInst, uint_fast8_t ui8Reg,
-                    uint8_t *pui8Data, uint_fast16_t ui16Count,
-                    tSensorCallback *pfnCallback, void *pvCallbackData)
+            uint8_t *pui8Data, uint_fast16_t ui16Count,
+            tSensorCallback *pfnCallback, void *pvCallbackData)
 {
     //
     // Return a failure if the LSM303D driver is not idle (in other words,
     // there is already an outstanding request to the LSM303D).
     //
-    if(psInst->ui8State != LSM303D_STATE_IDLE)
-    {
+    if(psInst->ui8State != LSM303D_STATE_IDLE) {
         return(0);
     }
 
@@ -397,8 +382,7 @@ LSM303DRead(tLSM303D *psInst, uint_fast8_t ui8Reg,
     psInst->uCommand.pui8Buffer[0] = ui8Reg;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
                 psInst->uCommand.pui8Buffer, 1, pui8Data, ui16Count,
-                LSM303DCallback, psInst) == 0)
-    {
+                LSM303DCallback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -436,15 +420,14 @@ LSM303DRead(tLSM303D *psInst, uint_fast8_t ui8Reg,
 //*****************************************************************************
 uint_fast8_t
 LSM303DWrite(tLSM303D *psInst, uint_fast8_t ui8Reg,
-                     const uint8_t *pui8Data, uint_fast16_t ui16Count,
-                     tSensorCallback *pfnCallback, void *pvCallbackData)
+             const uint8_t *pui8Data, uint_fast16_t ui16Count,
+             tSensorCallback *pfnCallback, void *pvCallbackData)
 {
     //
     // Return a failure if the LSM303D driver is not idle (in other words,
     // there is already an outstanding request to the LSM303D).
     //
-    if(psInst->ui8State != LSM303D_STATE_IDLE)
-    {
+    if(psInst->ui8State != LSM303D_STATE_IDLE) {
         return(0);
     }
 
@@ -458,8 +441,7 @@ LSM303DWrite(tLSM303D *psInst, uint_fast8_t ui8Reg,
     // See if the accel full scale select register is being written.
     //
     if((ui8Reg <= LSM303D_O_CTRL2) &&
-       ((ui8Reg + ui16Count) > LSM303D_O_CTRL2))
-    {
+            ((ui8Reg + ui16Count) > LSM303D_O_CTRL2)) {
         //
         // Extract the AFS_SEL from the ACCEL_CONFIG register value.
         //
@@ -472,8 +454,7 @@ LSM303DWrite(tLSM303D *psInst, uint_fast8_t ui8Reg,
     // See if the mag full scale select register is being written.
     //
     if((ui8Reg <= LSM303D_O_CTRL6) &&
-       ((ui8Reg + ui16Count) > LSM303D_O_CTRL6))
-    {
+            ((ui8Reg + ui16Count) > LSM303D_O_CTRL6)) {
         //
         // Extract the AFS_SEL from the ACCEL_CONFIG register value.
         //
@@ -492,8 +473,7 @@ LSM303DWrite(tLSM303D *psInst, uint_fast8_t ui8Reg,
     //
     if(I2CMWrite8(&(psInst->uCommand.sWriteState), psInst->psI2CInst,
                   psInst->ui8Addr, ui8Reg, pui8Data, ui16Count,
-                  LSM303DCallback, psInst) == 0)
-    {
+                  LSM303DCallback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -534,16 +514,15 @@ LSM303DWrite(tLSM303D *psInst, uint_fast8_t ui8Reg,
 //*****************************************************************************
 uint_fast8_t
 LSM303DReadModifyWrite(tLSM303D *psInst, uint_fast8_t ui8Reg,
-                               uint_fast8_t ui8Mask, uint_fast8_t ui8Value,
-                               tSensorCallback *pfnCallback,
-                               void *pvCallbackData)
+                       uint_fast8_t ui8Mask, uint_fast8_t ui8Value,
+                       tSensorCallback *pfnCallback,
+                       void *pvCallbackData)
 {
     //
     // Return a failure if the LSM303D driver is not idle (in other words,
     // there is already an outstanding request to the LSM303D).
     //
-    if(psInst->ui8State != LSM303D_STATE_IDLE)
-    {
+    if(psInst->ui8State != LSM303D_STATE_IDLE) {
         return(0);
     }
 
@@ -564,8 +543,7 @@ LSM303DReadModifyWrite(tLSM303D *psInst, uint_fast8_t ui8Reg,
     if(I2CMReadModifyWrite8(&(psInst->uCommand.sReadModifyWriteState),
                             psInst->psI2CInst, psInst->ui8Addr, ui8Reg,
                             ui8Mask, ui8Value, LSM303DCallback,
-                            psInst) == 0)
-    {
+                            psInst) == 0) {
         //
         // The I2C read-modify-write failed, so move to the idle state and
         // return a failure.
@@ -601,14 +579,13 @@ LSM303DReadModifyWrite(tLSM303D *psInst, uint_fast8_t ui8Reg,
 //*****************************************************************************
 uint_fast8_t
 LSM303DDataRead(tLSM303D *psInst, tSensorCallback *pfnCallback,
-                        void *pvCallbackData)
+                void *pvCallbackData)
 {
     //
     // Return a failure if the LSM303D driver is not idle (in other words,
     // there is already an outstanding request to the LSM303D).
     //
-    if(psInst->ui8State != LSM303D_STATE_IDLE)
-    {
+    if(psInst->ui8State != LSM303D_STATE_IDLE) {
         return(0);
     }
 
@@ -628,8 +605,7 @@ LSM303DDataRead(tLSM303D *psInst, tSensorCallback *pfnCallback,
     //
     psInst->pui8DataMag[0] = LSM303D_O_MAG_STATUS | 0x80;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr, psInst->pui8DataMag, 1,
-                psInst->pui8DataMag, 7, LSM303DCallback, psInst) == 0)
-    {
+                psInst->pui8DataMag, 7, LSM303DCallback, psInst) == 0) {
         //
         // The I2C read failed, so move to the idle state and return a failure.
         //
@@ -664,23 +640,20 @@ LSM303DDataRead(tLSM303D *psInst, tSensorCallback *pfnCallback,
 //*****************************************************************************
 void
 LSM303DDataAccelGetRaw(tLSM303D *psInst,
-                               uint_fast16_t *pui16AccelX,
-                               uint_fast16_t *pui16AccelY,
-                               uint_fast16_t *pui16AccelZ)
+                       uint_fast16_t *pui16AccelX,
+                       uint_fast16_t *pui16AccelY,
+                       uint_fast16_t *pui16AccelZ)
 {
     //
     // Return the raw accelerometer values.
     //
-    if(pui16AccelX)
-    {
+    if(pui16AccelX) {
         *pui16AccelX = (psInst->pui8DataAccel[2] << 8) | psInst->pui8DataAccel[1];
     }
-    if(pui16AccelY)
-    {
+    if(pui16AccelY) {
         *pui16AccelY = (psInst->pui8DataAccel[4] << 8) | psInst->pui8DataAccel[3];
     }
-    if(pui16AccelZ)
-    {
+    if(pui16AccelZ) {
         *pui16AccelZ = (psInst->pui8DataAccel[6] << 8) | psInst->pui8DataAccel[5];
     }
 }
@@ -706,23 +679,20 @@ LSM303DDataAccelGetRaw(tLSM303D *psInst,
 //*****************************************************************************
 void
 LSM303DDataMagnetoGetRaw(tLSM303D *psInst,
-                               uint_fast16_t *pui16AccelX,
-                               uint_fast16_t *pui16AccelY,
-                               uint_fast16_t *pui16AccelZ)
+                         uint_fast16_t *pui16AccelX,
+                         uint_fast16_t *pui16AccelY,
+                         uint_fast16_t *pui16AccelZ)
 {
     //
     // Return the raw accelerometer values.
     //
-    if(pui16AccelX)
-    {
+    if(pui16AccelX) {
         *pui16AccelX = (psInst->pui8DataMag[2] << 8) | psInst->pui8DataMag[1];
     }
-    if(pui16AccelY)
-    {
+    if(pui16AccelY) {
         *pui16AccelY = (psInst->pui8DataMag[4] << 8) | psInst->pui8DataMag[3];
     }
-    if(pui16AccelZ)
-    {
+    if(pui16AccelZ) {
         *pui16AccelZ = (psInst->pui8DataMag[6] << 8) | psInst->pui8DataMag[5];
     }
 }
@@ -748,7 +718,7 @@ LSM303DDataMagnetoGetRaw(tLSM303D *psInst,
 //*****************************************************************************
 void
 LSM303DDataAccelGetFloat(tLSM303D *psInst, float *pfAccelX,
-                                 float *pfAccelY, float *pfAccelZ)
+                         float *pfAccelY, float *pfAccelZ)
 {
     float fFactor;
 
@@ -760,18 +730,15 @@ LSM303DDataAccelGetFloat(tLSM303D *psInst, float *pfAccelX,
     //
     // Convert the Accelerometer values into floating-point gravity values.
     //
-    if(pfAccelX)
-    {
+    if(pfAccelX) {
         *pfAccelX = (float)(((int16_t)((psInst->pui8DataAccel[2] << 8) |
                                        psInst->pui8DataAccel[1])) * fFactor);
     }
-    if(pfAccelY)
-    {
+    if(pfAccelY) {
         *pfAccelY = (float)(((int16_t)((psInst->pui8DataAccel[4] << 8) |
                                        psInst->pui8DataAccel[3])) * fFactor);
     }
-    if(pfAccelZ)
-    {
+    if(pfAccelZ) {
         *pfAccelZ = (float)(((int16_t)((psInst->pui8DataAccel[6] << 8) |
                                        psInst->pui8DataAccel[5])) * fFactor);
     }
@@ -798,7 +765,7 @@ LSM303DDataAccelGetFloat(tLSM303D *psInst, float *pfAccelX,
 //*****************************************************************************
 void
 LSM303DDataMagnetoGetFloat(tLSM303D *psInst, float *pfMagX,
-                                 float *pfMagY, float *pfMagZ)
+                           float *pfMagY, float *pfMagZ)
 {
     float fFactor;
 
@@ -810,20 +777,17 @@ LSM303DDataMagnetoGetFloat(tLSM303D *psInst, float *pfMagX,
     //
     // Convert the Accelerometer values into floating-point gravity values.
     //
-    if(pfMagX)
-    {
+    if(pfMagX) {
         *pfMagX = (float)(((int16_t)((psInst->pui8DataMag[2] << 8) |
-                                       psInst->pui8DataMag[1])) * fFactor);
+                                     psInst->pui8DataMag[1])) * fFactor);
     }
-    if(pfMagY)
-    {
+    if(pfMagY) {
         *pfMagY = (float)(((int16_t)((psInst->pui8DataMag[4] << 8) |
-                                       psInst->pui8DataMag[3])) * fFactor);
+                                     psInst->pui8DataMag[3])) * fFactor);
     }
-    if(pfMagZ)
-    {
+    if(pfMagZ) {
         *pfMagZ = (float)(((int16_t)((psInst->pui8DataMag[6] << 8) |
-                                       psInst->pui8DataMag[5])) * fFactor);
+                                     psInst->pui8DataMag[5])) * fFactor);
     }
 }
 

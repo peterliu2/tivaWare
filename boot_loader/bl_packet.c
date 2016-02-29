@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2006-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -79,8 +79,7 @@ CheckSum(const uint8_t *pui8Data, uint32_t ui32Size)
     //
     // Add up all the bytes, do not do anything for an overflow.
     //
-    while(ui32Size--)
-    {
+    while(ui32Size--) {
         ui32CheckSum += *pui8Data++;
     }
 
@@ -153,8 +152,7 @@ ReceivePacket(uint8_t *pui8Data, uint32_t *pui32Size)
     // size of the packet we are receiving.
     //
     ui32Size = 0;
-    while(ui32Size == 0)
-    {
+    while(ui32Size == 0) {
         ReceiveData((uint8_t *)&ui32Size, 1);
     }
 
@@ -171,8 +169,7 @@ ReceivePacket(uint8_t *pui8Data, uint32_t *pui32Size)
     //
     // If there is room in the buffer then receive the requested data.
     //
-    if(*pui32Size >= ui32Size)
-    {
+    if(*pui32Size >= ui32Size) {
         //
         // Receive the actual data in the packet.
         //
@@ -182,8 +179,7 @@ ReceivePacket(uint8_t *pui8Data, uint32_t *pui32Size)
         // Send a no acknowledge if the checksum does not match, otherwise send
         // an acknowledge to the packet later.
         //
-        if(CheckSum(pui8Data, ui32Size) != (ui32CheckSum & 0xff))
-        {
+        if(CheckSum(pui8Data, ui32Size) != (ui32CheckSum & 0xff)) {
             //
             // Indicate tha the packet was not received correctly.
             //
@@ -194,16 +190,13 @@ ReceivePacket(uint8_t *pui8Data, uint32_t *pui32Size)
             //
             return(-1);
         }
-    }
-    else
-    {
+    } else {
         //
         // If the caller allocated a buffer that was too small for the received
         // data packet, receive it but don't fill the buffer.
         // Then inform the caller that the packet was not received correctly.
         //
-        while(ui32Size--)
-        {
+        while(ui32Size--) {
             ReceiveData(pui8Data, 1);
         }
 
@@ -266,8 +259,7 @@ SendPacket(uint8_t *pui8Data, uint32_t ui32Size)
     // Wait for a non zero byte.
     //
     ui32Temp = 0;
-    while(ui32Temp == 0)
-    {
+    while(ui32Temp == 0) {
         ReceiveData((uint8_t *)&ui32Temp, 1);
     }
 
@@ -275,8 +267,7 @@ SendPacket(uint8_t *pui8Data, uint32_t ui32Size)
     // Check if the byte was a valid ACK and return a negative value if it was
     // not and aknowledge.
     //
-    if(ui32Temp != COMMAND_ACK)
-    {
+    if(ui32Temp != COMMAND_ACK) {
         return(-1);
     }
 

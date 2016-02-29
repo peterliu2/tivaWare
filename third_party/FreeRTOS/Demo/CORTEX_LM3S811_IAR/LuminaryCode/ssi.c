@@ -141,12 +141,10 @@ SSIConfig(unsigned long ulBase, unsigned long ulProtocol, unsigned long ulMode,
     //
     ulMaxBitRate = ulClock / ulBitRate;
     ulPreDiv = 0;
-    do
-    {
+    do {
         ulPreDiv += 2;
         ulSCR = (ulMaxBitRate / ulPreDiv) - 1;
-    }
-    while(ulSCR > 255);
+    } while(ulSCR > 255);
     HWREG(ulBase + SSI_O_CPSR) = ulPreDiv;
 
     //
@@ -382,12 +380,9 @@ SSIIntStatus(unsigned long ulBase, tBoolean bMasked)
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return(HWREG(ulBase + SSI_O_MIS));
-    }
-    else
-    {
+    } else {
         return(HWREG(ulBase + SSI_O_RIS));
     }
 }
@@ -457,8 +452,7 @@ SSIDataPut(unsigned long ulBase, unsigned long ulData)
     //
     // Wait until there is space.
     //
-    while(!(HWREG(ulBase + SSI_O_SR) & SSI_SR_TNF))
-    {
+    while(!(HWREG(ulBase + SSI_O_SR) & SSI_SR_TNF)) {
     }
 
     //
@@ -501,13 +495,10 @@ SSIDataNonBlockingPut(unsigned long ulBase, unsigned long ulData)
     //
     // Check for space to write.
     //
-    if(HWREG(ulBase + SSI_O_SR) & SSI_SR_TNF)
-    {
+    if(HWREG(ulBase + SSI_O_SR) & SSI_SR_TNF) {
         HWREG(ulBase + SSI_O_DR) = ulData;
         return(1);
-    }
-    else
-    {
+    } else {
         return(0);
     }
 }
@@ -545,8 +536,7 @@ SSIDataGet(unsigned long ulBase, unsigned long *pulData)
     //
     // Wait until there is data to be read.
     //
-    while(!(HWREG(ulBase + SSI_O_SR) & SSI_SR_RNE))
-    {
+    while(!(HWREG(ulBase + SSI_O_SR) & SSI_SR_RNE)) {
     }
 
     //
@@ -580,8 +570,8 @@ SSIDataGet(unsigned long ulBase, unsigned long *pulData)
 #if defined(GROUP_datanonblockingget) || defined(BUILD_ALL) || defined(DOXYGEN)
 long
 SSIDataNonBlockingGet(unsigned long ulBase, unsigned long *pulData)
-{ 
-   //
+{
+    //
     // Check the arguments.
     //
     ASSERT(ulBase == SSI_BASE);
@@ -589,13 +579,10 @@ SSIDataNonBlockingGet(unsigned long ulBase, unsigned long *pulData)
     //
     // Check for data to read.
     //
-    if(HWREG(ulBase + SSI_O_SR) & SSI_SR_RNE)
-    {
+    if(HWREG(ulBase + SSI_O_SR) & SSI_SR_RNE) {
         *pulData = HWREG(ulBase + SSI_O_DR);
         return(1);
-    }
-    else
-    {
+    } else {
         return(0);
     }
 }

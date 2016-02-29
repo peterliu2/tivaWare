@@ -70,8 +70,7 @@ DRESULT disk_read (
     DWORD sector,           /* Physical drive nmuber (0) */
     BYTE count)             /* Sector count (1..255) */
 {
-    if(USBStat & STA_NOINIT)
-    {
+    if(USBStat & STA_NOINIT) {
         return(RES_NOTRDY);
     }
 
@@ -117,13 +116,11 @@ DRESULT disk_ioctl (
     BYTE ctrl,              /* Control code */
     void *buff)             /* Buffer to send/receive control data */
 {
-    if(USBStat & STA_NOINIT)
-    {
+    if(USBStat & STA_NOINIT) {
         return(RES_NOTRDY);
     }
 
-    switch(ctrl)
-    {
+    switch(ctrl) {
         case CTRL_SYNC:
             return(RES_OK);
 
@@ -142,10 +139,10 @@ DRESULT disk_ioctl (
 DWORD get_fattime (void)
 {
     return    ((2007UL-1980) << 25) // Year = 2007
-            | (6UL << 21)           // Month = June
-            | (5UL << 16)           // Day = 5
-            | (11U << 11)           // Hour = 11
-            | (38U << 5)            // Min = 38
-            | (0U >> 1)             // Sec = 0
-            ;
+              | (6UL << 21)           // Month = June
+              | (5UL << 16)           // Day = 5
+              | (11U << 11)           // Hour = 11
+              | (38U << 5)            // Min = 38
+              | (0U >> 1)             // Sec = 0
+              ;
 }

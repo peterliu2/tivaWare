@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2009-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Utility Library.
 //
 //*****************************************************************************
@@ -50,8 +50,7 @@ extern "C"
 //! values match the TFTP protocol-defined error codes.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     TFTP_OK = -1,
     TFTP_ERR_NOT_DEFINED = 0,
     TFTP_FILE_NOT_FOUND = 1,
@@ -71,8 +70,7 @@ tTFTPError;
 //! (TFTP_MODE_OCTET) and a marker for an invalid mode (TFTP_MODE_INVALID).
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     TFTP_MODE_NETASCII,
     TFTP_MODE_OCTET,
     TFTP_MODE_INVALID
@@ -109,8 +107,7 @@ typedef void (*tTFTPClose)(struct _tTFTPConnection *psTFTP);
 //! field values to determine where to transfer data from or to.
 //
 //*****************************************************************************
-typedef struct _tTFTPConnection
-{
+typedef struct _tTFTPConnection {
     //
     //! Pointer to the start of the buffer into which GET data should be copied
     //! or from which PUT data should be read.

@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2006-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -112,8 +112,7 @@
 // the bit timing values.
 //
 //*****************************************************************************
-static const uint16_t g_ui16CANBitValues[] =
-{
+static const uint16_t g_ui16CANBitValues[] = {
     CAN_BIT_VALUE(2, 1, 1),     // 4 clocks/bit
     CAN_BIT_VALUE(3, 1, 1),     // 5 clocks/bit
     CAN_BIT_VALUE(3, 2, 2),     // 6 clocks/bit
@@ -178,25 +177,16 @@ _CANIntNumberGet(uint32_t ui32Base)
     //
     // Find the valid interrupt number for this CAN controller.
     //
-    if(CLASS_IS_TM4C123)
-    {
-        if(ui32Base == CAN0_BASE)
-        {
+    if(CLASS_IS_TM4C123) {
+        if(ui32Base == CAN0_BASE) {
             ui8Int = INT_CAN0_TM4C123;
-        }
-        else if(ui32Base == CAN1_BASE)
-        {
+        } else if(ui32Base == CAN1_BASE) {
             ui8Int = INT_CAN1_TM4C123;
         }
-    }
-    else if(CLASS_IS_TM4C129)
-    {
-        if(ui32Base == CAN0_BASE)
-        {
+    } else if(CLASS_IS_TM4C129) {
+        if(ui32Base == CAN0_BASE) {
             ui8Int = INT_CAN0_TM4C129;
-        }
-        else if(ui32Base == CAN1_BASE)
-        {
+        } else if(ui32Base == CAN1_BASE) {
             ui8Int = INT_CAN1_TM4C129;
         }
     }
@@ -233,8 +223,7 @@ _CANDataRegWrite(uint8_t *pui8Data, uint32_t *pui32Register, uint32_t ui32Size)
     //
     // Loop always copies 1 or 2 bytes per iteration.
     //
-    for(ui32Idx = 0; ui32Idx < ui32Size; )
-    {
+    for(ui32Idx = 0; ui32Idx < ui32Size; ) {
         //
         // Write out the data 16 bits at a time since this is how the registers
         // are aligned in memory.
@@ -244,8 +233,7 @@ _CANDataRegWrite(uint8_t *pui8Data, uint32_t *pui32Register, uint32_t ui32Size)
         //
         // Only write the second byte if needed otherwise the value is zero.
         //
-        if(ui32Idx < ui32Size)
-        {
+        if(ui32Idx < ui32Size) {
             ui32Value |= (pui8Data[ui32Idx++] << 8);
         }
 
@@ -282,8 +270,7 @@ _CANDataRegRead(uint8_t *pui8Data, uint32_t *pui32Register, uint32_t ui32Size)
     //
     // Loop always copies 1 or 2 bytes per iteration.
     //
-    for(ui32Idx = 0; ui32Idx < ui32Size; )
-    {
+    for(ui32Idx = 0; ui32Idx < ui32Size; ) {
         //
         // Read out the data 16 bits at a time since this is how the registers
         // are aligned in memory.
@@ -298,8 +285,7 @@ _CANDataRegRead(uint8_t *pui8Data, uint32_t *pui32Register, uint32_t ui32Size)
         //
         // Only read the second byte if needed.
         //
-        if(ui32Idx < ui32Size)
-        {
+        if(ui32Idx < ui32Size) {
             pui8Data[ui32Idx++] = (uint8_t)(ui32Value >> 8);
         }
     }
@@ -341,8 +327,7 @@ CANInit(uint32_t ui32Base)
     //
     // Wait for busy bit to clear
     //
-    while(HWREG(ui32Base + CAN_O_IF1CRQ) & CAN_IF1CRQ_BUSY)
-    {
+    while(HWREG(ui32Base + CAN_O_IF1CRQ) & CAN_IF1CRQ_BUSY) {
     }
 
     //
@@ -358,13 +343,11 @@ CANInit(uint32_t ui32Base)
     //
     // Loop through to program all 32 message objects
     //
-    for(ui32Msg = 1; ui32Msg <= 32; ui32Msg++)
-    {
+    for(ui32Msg = 1; ui32Msg <= 32; ui32Msg++) {
         //
         // Wait for busy bit to clear
         //
-        while(HWREG(ui32Base + CAN_O_IF1CRQ) & CAN_IF1CRQ_BUSY)
-        {
+        while(HWREG(ui32Base + CAN_O_IF1CRQ) & CAN_IF1CRQ_BUSY) {
         }
 
         //
@@ -383,13 +366,11 @@ CANInit(uint32_t ui32Base)
     //
     // Loop through to program all 32 message objects
     //
-    for(ui32Msg = 1; ui32Msg <= 32; ui32Msg++)
-    {
+    for(ui32Msg = 1; ui32Msg <= 32; ui32Msg++) {
         //
         // Wait for busy bit to clear.
         //
-        while(HWREG(ui32Base + CAN_O_IF1CRQ) & CAN_IF1CRQ_BUSY)
-        {
+        while(HWREG(ui32Base + CAN_O_IF1CRQ) & CAN_IF1CRQ_BUSY) {
         }
 
         //
@@ -583,22 +564,19 @@ CANBitRateSet(uint32_t ui32Base, uint32_t ui32SourceClock,
     // Make sure that the Desired Ratio is not too large.  This enforces the
     // requirement that the bit rate is larger than requested.
     //
-    if((ui32SourceClock / ui32DesiredRatio) > ui32BitRate)
-    {
+    if((ui32SourceClock / ui32DesiredRatio) > ui32BitRate) {
         ui32DesiredRatio += 1;
     }
 
     //
     // Check all possible values to find a matching value.
     //
-    while(ui32DesiredRatio <= (CAN_MAX_PRE_DIVISOR * CAN_MAX_BIT_DIVISOR))
-    {
+    while(ui32DesiredRatio <= (CAN_MAX_PRE_DIVISOR * CAN_MAX_BIT_DIVISOR)) {
         //
         // Loop through all possible CAN bit divisors.
         //
         for(ui32CANBits = CAN_MAX_BIT_DIVISOR;
-            ui32CANBits >= CAN_MIN_BIT_DIVISOR; ui32CANBits--)
-        {
+                ui32CANBits >= CAN_MIN_BIT_DIVISOR; ui32CANBits--) {
             //
             // For a given CAN bit divisor save the pre divisor.
             //
@@ -608,8 +586,7 @@ CANBitRateSet(uint32_t ui32Base, uint32_t ui32SourceClock,
             // If the calculated divisors match the desired clock ratio then
             // return these bit rate and set the CAN bit timing.
             //
-            if((ui32PreDivide * ui32CANBits) == ui32DesiredRatio)
-            {
+            if((ui32PreDivide * ui32CANBits) == ui32DesiredRatio) {
                 //
                 // Start building the bit timing value by adding the bit timing
                 // in time quanta.
@@ -776,8 +753,7 @@ CANBitTimingSet(uint32_t ui32Base, tCANBitClkParms *psClkParms)
     //
     // If Init was not set before, then clear it.
     //
-    if(ui32SavedInit & CAN_CTL_INIT)
-    {
+    if(ui32SavedInit & CAN_CTL_INIT) {
         ui32SavedInit &= ~CAN_CTL_INIT;
     }
 
@@ -1004,14 +980,12 @@ CANIntStatus(uint32_t ui32Base, tCANIntStsReg eIntStsReg)
     //
     // See which status the caller is looking for.
     //
-    switch(eIntStsReg)
-    {
+    switch(eIntStsReg) {
         //
         // The caller wants the global interrupt status for the CAN controller
         // specified by ui32Base.
         //
-        case CAN_INT_STS_CAUSE:
-        {
+        case CAN_INT_STS_CAUSE: {
             ui32Status = HWREG(ui32Base + CAN_O_INT);
             break;
         }
@@ -1020,8 +994,7 @@ CANIntStatus(uint32_t ui32Base, tCANIntStsReg eIntStsReg)
         // The caller wants the current message status interrupt for all
         // messages.
         //
-        case CAN_INT_STS_OBJECT:
-        {
+        case CAN_INT_STS_OBJECT: {
             //
             // Read and combine both 16 bit values into one 32bit status.
             //
@@ -1034,8 +1007,7 @@ CANIntStatus(uint32_t ui32Base, tCANIntStsReg eIntStsReg)
         //
         // Request was for unknown status so just return 0.
         //
-        default:
-        {
+        default: {
             ui32Status = 0;
             break;
         }
@@ -1090,20 +1062,16 @@ CANIntClear(uint32_t ui32Base, uint32_t ui32IntClr)
     ASSERT((ui32IntClr == CAN_INT_INTID_STATUS) ||
            ((ui32IntClr >= 1) && (ui32IntClr <= 32)));
 
-    if(ui32IntClr == CAN_INT_INTID_STATUS)
-    {
+    if(ui32IntClr == CAN_INT_INTID_STATUS) {
         //
         // Simply read and discard the status to clear the interrupt.
         //
         HWREG(ui32Base + CAN_O_STS);
-    }
-    else
-    {
+    } else {
         //
         // Wait to be sure that this interface is not busy.
         //
-        while(HWREG(ui32Base + CAN_O_IF1CRQ) & CAN_IF1CRQ_BUSY)
-        {
+        while(HWREG(ui32Base + CAN_O_IF1CRQ) & CAN_IF1CRQ_BUSY) {
         }
 
         //
@@ -1120,8 +1088,7 @@ CANIntClear(uint32_t ui32Base, uint32_t ui32IntClr)
         //
         // Wait to be sure that this interface is not busy.
         //
-        while(HWREG(ui32Base + CAN_O_IF1CRQ) & CAN_IF1CRQ_BUSY)
-        {
+        while(HWREG(ui32Base + CAN_O_IF1CRQ) & CAN_IF1CRQ_BUSY) {
         }
     }
 }
@@ -1155,17 +1122,14 @@ CANRetrySet(uint32_t ui32Base, bool bAutoRetry)
     //
     // Conditionally set the DAR bit to enable/disable auto-retry.
     //
-    if(bAutoRetry)
-    {
+    if(bAutoRetry) {
         //
         // Clearing the DAR bit tells the controller to not disable the
         // auto-retry of messages which were not transmitted or received
         // correctly.
         //
         ui32CtlReg &= ~CAN_CTL_DAR;
-    }
-    else
-    {
+    } else {
         //
         // Setting the DAR bit tells the controller to disable the auto-retry
         // of messages which were not transmitted or received correctly.
@@ -1200,8 +1164,7 @@ CANRetryGet(uint32_t ui32Base)
     //
     // Read the disable automatic retry setting from the CAN controller.
     //
-    if(HWREG(ui32Base + CAN_O_CTL) & CAN_CTL_DAR)
-    {
+    if(HWREG(ui32Base + CAN_O_CTL) & CAN_CTL_DAR) {
         //
         // Automatic data retransmission is not enabled.
         //
@@ -1282,14 +1245,12 @@ CANStatusGet(uint32_t ui32Base, tCANStsReg eStatusReg)
     //
     ASSERT(_CANBaseValid(ui32Base));
 
-    switch(eStatusReg)
-    {
+    switch(eStatusReg) {
         //
         // Just return the global CAN status register since that is what was
         // requested.
         //
-        case CAN_STS_CONTROL:
-        {
+        case CAN_STS_CONTROL: {
             ui32Status = HWREG(ui32Base + CAN_O_STS);
             HWREG(ui32Base + CAN_O_STS) = ~(CAN_STS_RXOK | CAN_STS_TXOK |
                                             CAN_STS_LEC_M);
@@ -1299,8 +1260,7 @@ CANStatusGet(uint32_t ui32Base, tCANStsReg eStatusReg)
         //
         // Combine the Transmit status bits into one 32bit value.
         //
-        case CAN_STS_TXREQUEST:
-        {
+        case CAN_STS_TXREQUEST: {
             ui32Status = HWREG(ui32Base + CAN_O_TXRQ1);
             ui32Status |= HWREG(ui32Base + CAN_O_TXRQ2) << 16;
             break;
@@ -1309,8 +1269,7 @@ CANStatusGet(uint32_t ui32Base, tCANStsReg eStatusReg)
         //
         // Combine the New Data status bits into one 32bit value.
         //
-        case CAN_STS_NEWDAT:
-        {
+        case CAN_STS_NEWDAT: {
             ui32Status = HWREG(ui32Base + CAN_O_NWDA1);
             ui32Status |= HWREG(ui32Base + CAN_O_NWDA2) << 16;
             break;
@@ -1319,8 +1278,7 @@ CANStatusGet(uint32_t ui32Base, tCANStsReg eStatusReg)
         //
         // Combine the Message valid status bits into one 32bit value.
         //
-        case CAN_STS_MSGVAL:
-        {
+        case CAN_STS_MSGVAL: {
             ui32Status = HWREG(ui32Base + CAN_O_MSG1VAL);
             ui32Status |= HWREG(ui32Base + CAN_O_MSG2VAL) << 16;
             break;
@@ -1329,8 +1287,7 @@ CANStatusGet(uint32_t ui32Base, tCANStsReg eStatusReg)
         //
         // Unknown CAN status requested so return 0.
         //
-        default:
-        {
+        default: {
             ui32Status = 0;
             break;
         }
@@ -1382,8 +1339,7 @@ CANErrCntrGet(uint32_t ui32Base, uint32_t *pui32RxCount,
     *pui32RxCount = (ui32CANError & CAN_ERR_REC_M) >> CAN_ERR_REC_S;
     *pui32TxCount = (ui32CANError & CAN_ERR_TEC_M) >> CAN_ERR_TEC_S;
 
-    if(ui32CANError & CAN_ERR_RP)
-    {
+    if(ui32CANError & CAN_ERR_RP) {
         return(true);
     }
     return(false);
@@ -1501,20 +1457,16 @@ CANMessageSet(uint32_t ui32Base, uint32_t ui32ObjID,
     //
     // Wait for busy bit to clear
     //
-    while(HWREG(ui32Base + CAN_O_IF1CRQ) & CAN_IF1CRQ_BUSY)
-    {
+    while(HWREG(ui32Base + CAN_O_IF1CRQ) & CAN_IF1CRQ_BUSY) {
     }
 
     //
     // See if we need to use an extended identifier or not.
     //
     if((psMsgObject->ui32MsgID > CAN_MAX_11BIT_MSG_ID) ||
-       (psMsgObject->ui32Flags & MSG_OBJ_EXTENDED_ID))
-    {
+            (psMsgObject->ui32Flags & MSG_OBJ_EXTENDED_ID)) {
         bUseExtendedID = 1;
-    }
-    else
-    {
+    } else {
         bUseExtendedID = 0;
     }
 
@@ -1537,13 +1489,11 @@ CANMessageSet(uint32_t ui32Base, uint32_t ui32ObjID,
     ui16MaskReg0 = 0;
     ui16MaskReg1 = 0;
 
-    switch(eMsgType)
-    {
+    switch(eMsgType) {
         //
         // Transmit message object.
         //
-        case MSG_OBJ_TYPE_TX:
-        {
+        case MSG_OBJ_TYPE_TX: {
             //
             // Set the TXRQST bit and the reset the rest of the register.
             //
@@ -1556,8 +1506,7 @@ CANMessageSet(uint32_t ui32Base, uint32_t ui32ObjID,
         //
         // Transmit remote request message object
         //
-        case MSG_OBJ_TYPE_TX_REMOTE:
-        {
+        case MSG_OBJ_TYPE_TX_REMOTE: {
             //
             // Set the TXRQST bit and the reset the rest of the register.
             //
@@ -1569,8 +1518,7 @@ CANMessageSet(uint32_t ui32Base, uint32_t ui32ObjID,
         //
         // Receive message object.
         //
-        case MSG_OBJ_TYPE_RX:
-        {
+        case MSG_OBJ_TYPE_RX: {
             //
             // This clears the DIR bit along with everything else.  The TXRQST
             // bit was cleared by defaulting ui16MsgCtrl to 0.
@@ -1582,8 +1530,7 @@ CANMessageSet(uint32_t ui32Base, uint32_t ui32ObjID,
         //
         // Receive remote request message object.
         //
-        case MSG_OBJ_TYPE_RX_REMOTE:
-        {
+        case MSG_OBJ_TYPE_RX_REMOTE: {
             //
             // The DIR bit is set to one for remote receivers.  The TXRQST bit
             // was cleared by defaulting ui16MsgCtrl to 0.
@@ -1613,8 +1560,7 @@ CANMessageSet(uint32_t ui32Base, uint32_t ui32ObjID,
         //
         // Remote frame receive remote, with auto-transmit message object.
         //
-        case MSG_OBJ_TYPE_RXTX_REMOTE:
-        {
+        case MSG_OBJ_TYPE_RXTX_REMOTE: {
             //
             // Oddly the DIR bit is set to one for remote receivers.
             //
@@ -1636,8 +1582,7 @@ CANMessageSet(uint32_t ui32Base, uint32_t ui32ObjID,
         // This case never happens due to the ASSERT statement at the
         // beginning of this function.
         //
-        default:
-        {
+        default: {
             return;
         }
     }
@@ -1645,19 +1590,15 @@ CANMessageSet(uint32_t ui32Base, uint32_t ui32ObjID,
     //
     // Configure the Mask Registers.
     //
-    if(psMsgObject->ui32Flags & MSG_OBJ_USE_ID_FILTER)
-    {
-        if(bUseExtendedID)
-        {
+    if(psMsgObject->ui32Flags & MSG_OBJ_USE_ID_FILTER) {
+        if(bUseExtendedID) {
             //
             // Set the 29 bits of Identifier mask that were requested.
             //
             ui16MaskReg0 = psMsgObject->ui32MsgIDMask & CAN_IF1MSK1_IDMSK_M;
             ui16MaskReg1 = ((psMsgObject->ui32MsgIDMask >> 16) &
                             CAN_IF1MSK2_IDMSK_M);
-        }
-        else
-        {
+        } else {
             //
             // Lower 16 bit are unused so set them to zero.
             //
@@ -1676,8 +1617,7 @@ CANMessageSet(uint32_t ui32Base, uint32_t ui32ObjID,
     // If the caller wants to filter on the extended ID bit then set it.
     //
     if((psMsgObject->ui32Flags & MSG_OBJ_USE_EXT_FILTER) ==
-       MSG_OBJ_USE_EXT_FILTER)
-    {
+            MSG_OBJ_USE_EXT_FILTER) {
         ui16MaskReg1 |= CAN_IF1MSK2_MXTD;
     }
 
@@ -1685,15 +1625,13 @@ CANMessageSet(uint32_t ui32Base, uint32_t ui32ObjID,
     // The caller wants to filter on the message direction field.
     //
     if((psMsgObject->ui32Flags & MSG_OBJ_USE_DIR_FILTER) ==
-       MSG_OBJ_USE_DIR_FILTER)
-    {
+            MSG_OBJ_USE_DIR_FILTER) {
         ui16MaskReg1 |= CAN_IF1MSK2_MDIR;
     }
 
     if(psMsgObject->ui32Flags &
-       (MSG_OBJ_USE_ID_FILTER | MSG_OBJ_USE_DIR_FILTER |
-        MSG_OBJ_USE_EXT_FILTER))
-    {
+            (MSG_OBJ_USE_ID_FILTER | MSG_OBJ_USE_DIR_FILTER |
+             MSG_OBJ_USE_EXT_FILTER)) {
         //
         // Set the UMASK bit to enable using the mask register.
         //
@@ -1714,8 +1652,7 @@ CANMessageSet(uint32_t ui32Base, uint32_t ui32ObjID,
     //
     // Configure the Arbitration registers.
     //
-    if(bUseExtendedID)
-    {
+    if(bUseExtendedID) {
         //
         // Set the 29 bit version of the Identifier for this message object.
         //
@@ -1726,9 +1663,7 @@ CANMessageSet(uint32_t ui32Base, uint32_t ui32ObjID,
         // Mark the message as valid and set the extended ID bit.
         //
         ui16ArbReg1 |= CAN_IF1ARB2_MSGVAL | CAN_IF1ARB2_XTD;
-    }
-    else
-    {
+    } else {
         //
         // Set the 11 bit version of the Identifier for this message object.
         // The lower 18 bits are set to zero.
@@ -1750,32 +1685,28 @@ CANMessageSet(uint32_t ui32Base, uint32_t ui32ObjID,
     //
     // Mark this as the last entry if this is not the last entry in a FIFO.
     //
-    if((psMsgObject->ui32Flags & MSG_OBJ_FIFO) == 0)
-    {
+    if((psMsgObject->ui32Flags & MSG_OBJ_FIFO) == 0) {
         ui16MsgCtrl |= CAN_IF1MCTL_EOB;
     }
 
     //
     // Enable transmit interrupts if they should be enabled.
     //
-    if(psMsgObject->ui32Flags & MSG_OBJ_TX_INT_ENABLE)
-    {
+    if(psMsgObject->ui32Flags & MSG_OBJ_TX_INT_ENABLE) {
         ui16MsgCtrl |= CAN_IF1MCTL_TXIE;
     }
 
     //
     // Enable receive interrupts if they should be enabled.
     //
-    if(psMsgObject->ui32Flags & MSG_OBJ_RX_INT_ENABLE)
-    {
+    if(psMsgObject->ui32Flags & MSG_OBJ_RX_INT_ENABLE) {
         ui16MsgCtrl |= CAN_IF1MCTL_RXIE;
     }
 
     //
     // Write the data out to the CAN Data registers if needed.
     //
-    if(bTransferData)
-    {
+    if(bTransferData) {
         _CANDataRegWrite(psMsgObject->pui8MsgData,
                          (uint32_t *)(ui32Base + CAN_O_IF1DA1),
                          psMsgObject->ui32MsgLen);
@@ -1860,8 +1791,7 @@ CANMessageGet(uint32_t ui32Base, uint32_t ui32ObjID,
     //
     // Clear a pending interrupt and new data in a message object.
     //
-    if(bClrPendingInt)
-    {
+    if(bClrPendingInt) {
         ui16CmdMaskReg |= CAN_IF1CMSK_CLRINTPND;
     }
 
@@ -1879,8 +1809,7 @@ CANMessageGet(uint32_t ui32Base, uint32_t ui32ObjID,
     //
     // Wait for busy bit to clear
     //
-    while(HWREG(ui32Base + CAN_O_IF2CRQ) & CAN_IF1CRQ_BUSY)
-    {
+    while(HWREG(ui32Base + CAN_O_IF2CRQ) & CAN_IF1CRQ_BUSY) {
     }
 
     //
@@ -1898,10 +1827,9 @@ CANMessageGet(uint32_t ui32Base, uint32_t ui32ObjID,
     // Determine if this is a remote frame by checking the TXRQST and DIR bits.
     //
     if((!(ui16MsgCtrl & CAN_IF1MCTL_TXRQST) &&
-        (ui16ArbReg1 & CAN_IF1ARB2_DIR)) ||
-       ((ui16MsgCtrl & CAN_IF1MCTL_TXRQST) &&
-        (!(ui16ArbReg1 & CAN_IF1ARB2_DIR))))
-    {
+            (ui16ArbReg1 & CAN_IF1ARB2_DIR)) ||
+            ((ui16MsgCtrl & CAN_IF1MCTL_TXRQST) &&
+             (!(ui16ArbReg1 & CAN_IF1ARB2_DIR)))) {
         psMsgObject->ui32Flags |= MSG_OBJ_REMOTE_FRAME;
     }
 
@@ -1909,8 +1837,7 @@ CANMessageGet(uint32_t ui32Base, uint32_t ui32ObjID,
     // Get the identifier out of the register, the format depends on size of
     // the mask.
     //
-    if(ui16ArbReg1 & CAN_IF1ARB2_XTD)
-    {
+    if(ui16ArbReg1 & CAN_IF1ARB2_XTD) {
         //
         // Set the 29 bit version of the Identifier for this message object.
         //
@@ -1918,9 +1845,7 @@ CANMessageGet(uint32_t ui32Base, uint32_t ui32ObjID,
                                   ui16ArbReg0);
 
         psMsgObject->ui32Flags |= MSG_OBJ_EXTENDED_ID;
-    }
-    else
-    {
+    } else {
         //
         // The Identifier is an 11 bit value.
         //
@@ -1930,18 +1855,15 @@ CANMessageGet(uint32_t ui32Base, uint32_t ui32ObjID,
     //
     // Indicate that we lost some data.
     //
-    if(ui16MsgCtrl & CAN_IF1MCTL_MSGLST)
-    {
+    if(ui16MsgCtrl & CAN_IF1MCTL_MSGLST) {
         psMsgObject->ui32Flags |= MSG_OBJ_DATA_LOST;
     }
 
     //
     // Set the flag to indicate if ID masking was used.
     //
-    if(ui16MsgCtrl & CAN_IF1MCTL_UMASK)
-    {
-        if(ui16ArbReg1 & CAN_IF1ARB2_XTD)
-        {
+    if(ui16MsgCtrl & CAN_IF1MCTL_UMASK) {
+        if(ui16ArbReg1 & CAN_IF1ARB2_XTD) {
             //
             // The Identifier Mask is assumed to also be a 29 bit value.
             //
@@ -1954,13 +1876,10 @@ CANMessageGet(uint32_t ui32Base, uint32_t ui32ObjID,
             // filtered.
             //
             if((psMsgObject->ui32MsgIDMask != 0x1fffffff) ||
-               ((psMsgObject->ui32Flags & MSG_OBJ_REMOTE_FRAME) == 0))
-            {
+                    ((psMsgObject->ui32Flags & MSG_OBJ_REMOTE_FRAME) == 0)) {
                 psMsgObject->ui32Flags |= MSG_OBJ_USE_ID_FILTER;
             }
-        }
-        else
-        {
+        } else {
             //
             // The Identifier Mask is assumed to also be an 11 bit value.
             //
@@ -1973,8 +1892,7 @@ CANMessageGet(uint32_t ui32Base, uint32_t ui32ObjID,
             // filtered.
             //
             if((psMsgObject->ui32MsgIDMask != 0x7ff) ||
-               ((psMsgObject->ui32Flags & MSG_OBJ_REMOTE_FRAME) == 0))
-            {
+                    ((psMsgObject->ui32Flags & MSG_OBJ_REMOTE_FRAME) == 0)) {
                 psMsgObject->ui32Flags |= MSG_OBJ_USE_ID_FILTER;
             }
         }
@@ -1982,16 +1900,14 @@ CANMessageGet(uint32_t ui32Base, uint32_t ui32ObjID,
         //
         // Indicate if the extended bit was used in filtering.
         //
-        if(ui16MaskReg1 & CAN_IF1MSK2_MXTD)
-        {
+        if(ui16MaskReg1 & CAN_IF1MSK2_MXTD) {
             psMsgObject->ui32Flags |= MSG_OBJ_USE_EXT_FILTER;
         }
 
         //
         // Indicate if direction filtering was enabled.
         //
-        if(ui16MaskReg1 & CAN_IF1MSK2_MDIR)
-        {
+        if(ui16MaskReg1 & CAN_IF1MSK2_MDIR) {
             psMsgObject->ui32Flags |= MSG_OBJ_USE_DIR_FILTER;
         }
     }
@@ -1999,20 +1915,17 @@ CANMessageGet(uint32_t ui32Base, uint32_t ui32ObjID,
     //
     // Set the interrupt flags.
     //
-    if(ui16MsgCtrl & CAN_IF1MCTL_TXIE)
-    {
+    if(ui16MsgCtrl & CAN_IF1MCTL_TXIE) {
         psMsgObject->ui32Flags |= MSG_OBJ_TX_INT_ENABLE;
     }
-    if(ui16MsgCtrl & CAN_IF1MCTL_RXIE)
-    {
+    if(ui16MsgCtrl & CAN_IF1MCTL_RXIE) {
         psMsgObject->ui32Flags |= MSG_OBJ_RX_INT_ENABLE;
     }
 
     //
     // See if there is new data available.
     //
-    if(ui16MsgCtrl & CAN_IF1MCTL_NEWDAT)
-    {
+    if(ui16MsgCtrl & CAN_IF1MCTL_NEWDAT) {
         //
         // Get the amount of data needed to be read.
         //
@@ -2022,8 +1935,7 @@ CANMessageGet(uint32_t ui32Base, uint32_t ui32ObjID,
         // Don't read any data for a remote frame, there is nothing valid in
         // that buffer anyway.
         //
-        if((psMsgObject->ui32Flags & MSG_OBJ_REMOTE_FRAME) == 0)
-        {
+        if((psMsgObject->ui32Flags & MSG_OBJ_REMOTE_FRAME) == 0) {
             //
             // Read out the data from the CAN registers.
             //
@@ -2046,17 +1958,14 @@ CANMessageGet(uint32_t ui32Base, uint32_t ui32ObjID,
         //
         // Wait for busy bit to clear
         //
-        while(HWREG(ui32Base + CAN_O_IF2CRQ) & CAN_IF1CRQ_BUSY)
-        {
+        while(HWREG(ui32Base + CAN_O_IF2CRQ) & CAN_IF1CRQ_BUSY) {
         }
 
         //
         // Indicate that there is new data in this message.
         //
         psMsgObject->ui32Flags |= MSG_OBJ_NEW_DATA;
-    }
-    else
-    {
+    } else {
         //
         // Along with the MSG_OBJ_NEW_DATA not being set the amount of data
         // needs to be set to zero if none was available.
@@ -2091,8 +2000,7 @@ CANMessageClear(uint32_t ui32Base, uint32_t ui32ObjID)
     //
     // Wait for busy bit to clear
     //
-    while(HWREG(ui32Base + CAN_O_IF1CRQ) & CAN_IF1CRQ_BUSY)
-    {
+    while(HWREG(ui32Base + CAN_O_IF1CRQ) & CAN_IF1CRQ_BUSY) {
     }
 
     //

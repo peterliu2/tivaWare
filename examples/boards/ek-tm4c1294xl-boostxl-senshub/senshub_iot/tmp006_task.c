@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -152,8 +152,7 @@ TMP006AppCallback(void *pvCallbackData, uint_fast8_t ui8Status)
     // If a higher priority task was waiting for a semaphore released by this
     // isr then that high priority task will run when the ISR exits.
     //
-    if(xHigherPriorityTaskWokenTransaction == pdTRUE)
-    {
+    if(xHigherPriorityTaskWokenTransaction == pdTRUE) {
         portYIELD_FROM_ISR(true);
     }
 }
@@ -308,8 +307,7 @@ IntHandlerGPIOPortH(void)
     //
     // Verify that it was the TMP006 pin that caused this interrupt.
     //
-    if(ui32Status & GPIO_PIN_2)
-    {
+    if(ui32Status & GPIO_PIN_2) {
         //
         // Give the TMP006 Data Ready Pin binary semaphore. This will
         // release the main TMP006 task so it can go get the data.
@@ -322,8 +320,7 @@ IntHandlerGPIOPortH(void)
         // If a higher priority task was waiting for this semaphore then this
         // call will make sure it runs immediately after the ISR returns.
         //
-        if(xHigherPriorityTaskWoken == pdTRUE)
-        {
+        if(xHigherPriorityTaskWoken == pdTRUE) {
             portYIELD_FROM_ISR(true);
         }
     }
@@ -368,8 +365,7 @@ TMP006Task(void *pvParameters)
     //
     // If an error occurred call the error handler immediately.
     //
-    if(g_vui8TMP006I2CErrorStatus)
-    {
+    if(g_vui8TMP006I2CErrorStatus) {
         //
         // Give back the I2C Semaphore so others can use the I2C interface.
         //
@@ -402,16 +398,14 @@ TMP006Task(void *pvParameters)
     //
     // If an error occurred call the error handler immediately.
     //
-    if(g_vui8TMP006I2CErrorStatus)
-    {
+    if(g_vui8TMP006I2CErrorStatus) {
         TMP006AppErrorHandler(__FILE__, __LINE__);
     }
 
     //
     // Loop forever.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Take the binary semaphore that alerts us that data ready on the
         // sensor.
@@ -441,8 +435,7 @@ TMP006Task(void *pvParameters)
         //
         // If an error occurred call the error handler immediately.
         //
-        if(g_vui8TMP006I2CErrorStatus)
-        {
+        if(g_vui8TMP006I2CErrorStatus) {
             TMP006AppErrorHandler(__FILE__, __LINE__);
         }
 
@@ -481,8 +474,7 @@ TMP006TaskInit(void)
     // Reset the GPIO port to clear any previous interrupt configuration.
     //
     SysCtlPeripheralReset(SYSCTL_PERIPH_GPIOH);
-    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOH))
-    {
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOH)) {
         //
         // Do Nothing. Wait for peripheral to complete reset.
         //
@@ -514,8 +506,7 @@ TMP006TaskInit(void)
     //
     if(xTaskCreate(TMP006Task, (const portCHAR *)"TMP006    ",
                    TMP006_TASK_STACK_SIZE, NULL, tskIDLE_PRIORITY +
-                   PRIORITY_TMP006_TASK, g_xTMP006Handle) != pdTRUE)
-    {
+                   PRIORITY_TMP006_TASK, g_xTMP006Handle) != pdTRUE) {
         //
         // Task creation failed.
         //
@@ -526,8 +517,7 @@ TMP006TaskInit(void)
     // Check if Semaphore creation was successfull.
     //
     if((g_xTMP006DataReadySemaphore == NULL) ||
-       (g_xTMP006TransactionCompleteSemaphore == NULL))
-    {
+            (g_xTMP006TransactionCompleteSemaphore == NULL)) {
         //
         // At least one semaphore was not created successfully.
         //

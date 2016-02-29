@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -50,8 +50,7 @@
 // floating point values in tesla
 //
 //*****************************************************************************
-static const float g_pfLSM303DLHCMagnetoFactors[] =
-{
+static const float g_pfLSM303DLHCMagnetoFactors[] = {
     0,
     9.09E-08f,
     1.17E-07f,
@@ -83,23 +82,20 @@ LSM303DLHCCallback(void *pvCallbackData, uint_fast8_t ui8Status)
     // to the idle state (which will also result in a callback to propagate the
     // error).
     //
-    if(ui8Status != I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status != I2CM_STATUS_SUCCESS) {
         psInst->ui8State = LSM303DLHC_STATE_IDLE;
     }
 
     //
     // Determine the current state of the LSM303DLHC state machine.
     //
-    switch(psInst->ui8State)
-    {
+    switch(psInst->ui8State) {
         //
         // All states that trivially transition to IDLE, and all unknown
         // states.
         //
         case LSM303DLHC_STATE_READ:
-        default:
-        {
+        default: {
             //
             // The state machine is now idle.
             //
@@ -114,8 +110,7 @@ LSM303DLHCCallback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // A write just completed
         //
-        case LSM303DLHC_STATE_WRITE:
-        {
+        case LSM303DLHC_STATE_WRITE: {
             //
             // Set the magneto ranges to the new values.  If the register was
             // not modified, the values will be the same so this has no effect.
@@ -136,14 +131,12 @@ LSM303DLHCCallback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // A read-modify-write just completed
         //
-        case LSM303DLHC_STATE_RMW:
-        {
+        case LSM303DLHC_STATE_RMW: {
             //
             // See if the MAGNETO_CONFIG register was just modified.
             //
             if(psInst->uCommand.sReadModifyWriteState.pui8Buffer[0] ==
-               LSM303DLHC_O_MAG_CRB)
-            {
+                    LSM303DLHC_O_MAG_CRB) {
                 //
                 // Extract the FS_SEL from the MAGNETO_CONFIG register value.
                 //
@@ -167,8 +160,7 @@ LSM303DLHCCallback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if the state machine is now idle and there is a callback function.
     //
-    if((psInst->ui8State == LSM303DLHC_STATE_IDLE) && psInst->pfnCallback)
-    {
+    if((psInst->ui8State == LSM303DLHC_STATE_IDLE) && psInst->pfnCallback) {
         //
         // Call the application-supplied callback function.
         //
@@ -221,8 +213,7 @@ LSM303DLHCMagInit(tLSM303DLHCMag *psInst, tI2CMInstance *psI2CInst,
                                   LSM303DLHC_MAG_CRB_GAIN_S);
     psInst->ui8State = LSM303DLHC_STATE_IDLE;
 
-    if(pfnCallback)
-    {
+    if(pfnCallback) {
         pfnCallback(pvCallbackData, I2CM_STATUS_SUCCESS);
     }
 
@@ -261,8 +252,7 @@ LSM303DLHCMagRead(tLSM303DLHCMag *psInst, uint_fast8_t ui8Reg,
     // Return a failure if the LSM303DLHC driver is not idle (in other words,
     // there is already an outstanding request to the LSM303DLHC).
     //
-    if(psInst->ui8State != LSM303DLHC_STATE_IDLE)
-    {
+    if(psInst->ui8State != LSM303DLHC_STATE_IDLE) {
         return(0);
     }
 
@@ -283,8 +273,7 @@ LSM303DLHCMagRead(tLSM303DLHCMag *psInst, uint_fast8_t ui8Reg,
     psInst->uCommand.pui8Buffer[0] = ui8Reg;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
                 psInst->uCommand.pui8Buffer, 1, pui8Data, ui16Count,
-                LSM303DLHCCallback, psInst) == 0)
-    {
+                LSM303DLHCCallback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -329,8 +318,7 @@ LSM303DLHCMagWrite(tLSM303DLHCMag *psInst, uint_fast8_t ui8Reg,
     // Return a failure if the LSM303DLHC driver is not idle (in other words,
     // there is already an outstanding request to the LSM303DLHC).
     //
-    if(psInst->ui8State != LSM303DLHC_STATE_IDLE)
-    {
+    if(psInst->ui8State != LSM303DLHC_STATE_IDLE) {
         return(0);
     }
 
@@ -344,8 +332,7 @@ LSM303DLHCMagWrite(tLSM303DLHCMag *psInst, uint_fast8_t ui8Reg,
     // See if the MAGNETO_CONFIG register is being written.
     //
     if((ui8Reg <= LSM303DLHC_O_MAG_CRB) &&
-       ((ui8Reg + ui16Count) > LSM303DLHC_O_MAG_CRB))
-    {
+            ((ui8Reg + ui16Count) > LSM303DLHC_O_MAG_CRB)) {
         //
         // Extract the FS_SEL from the MAGNETO_CONFIG register value.
         //
@@ -364,8 +351,7 @@ LSM303DLHCMagWrite(tLSM303DLHCMag *psInst, uint_fast8_t ui8Reg,
     //
     if(I2CMWrite8(&(psInst->uCommand.sWriteState), psInst->psI2CInst,
                   psInst->ui8Addr, ui8Reg, pui8Data, ui16Count,
-                  LSM303DLHCCallback, psInst) == 0)
-    {
+                  LSM303DLHCCallback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -414,8 +400,7 @@ LSM303DLHCMagReadModifyWrite(tLSM303DLHCMag *psInst, uint_fast8_t ui8Reg,
     // Return a failure if the LSM303DLHC driver is not idle (in other words,
     // there is already an outstanding request to the LSM303DLHC).
     //
-    if(psInst->ui8State != LSM303DLHC_STATE_IDLE)
-    {
+    if(psInst->ui8State != LSM303DLHC_STATE_IDLE) {
         return(0);
     }
 
@@ -436,8 +421,7 @@ LSM303DLHCMagReadModifyWrite(tLSM303DLHCMag *psInst, uint_fast8_t ui8Reg,
     if(I2CMReadModifyWrite8(&(psInst->uCommand.sReadModifyWriteState),
                             psInst->psI2CInst, psInst->ui8Addr, ui8Reg,
                             ui8Mask, ui8Value, LSM303DLHCCallback,
-                            psInst) == 0)
-    {
+                            psInst) == 0) {
         //
         // The I2C read-modify-write failed, so move to the idle state and
         // return a failure.
@@ -479,8 +463,7 @@ LSM303DLHCMagDataRead(tLSM303DLHCMag *psInst, tSensorCallback *pfnCallback,
     // Return a failure if the LSM303DLHC driver is not idle (in other words,
     // there is already an outstanding request to the LSM303DLHC).
     //
-    if(psInst->ui8State != LSM303DLHC_STATE_IDLE)
-    {
+    if(psInst->ui8State != LSM303DLHC_STATE_IDLE) {
         return(0);
     }
 
@@ -500,8 +483,7 @@ LSM303DLHCMagDataRead(tLSM303DLHCMag *psInst, tSensorCallback *pfnCallback,
     //
     psInst->pui8Data[0] = LSM303DLHC_O_MAG_OUT_X_MSB;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr, psInst->pui8Data, 1,
-                psInst->pui8Data, 7, LSM303DLHCCallback, psInst) == 0)
-    {
+                psInst->pui8Data, 7, LSM303DLHCCallback, psInst) == 0) {
         //
         // The I2C read failed, so move to the idle state and return a failure.
         //
@@ -543,16 +525,13 @@ LSM303DLHCMagDataMagnetoGetRaw(tLSM303DLHCMag *psInst,
     //
     // Return the raw magnetometer values.
     //
-    if(pui16MagnetoX)
-    {
+    if(pui16MagnetoX) {
         *pui16MagnetoX = (psInst->pui8Data[0] << 8) | psInst->pui8Data[1];
     }
-    if(pui16MagnetoY)
-    {
+    if(pui16MagnetoY) {
         *pui16MagnetoY = (psInst->pui8Data[2] << 8) | psInst->pui8Data[3];
     }
-    if(pui16MagnetoZ)
-    {
+    if(pui16MagnetoZ) {
         *pui16MagnetoZ = (psInst->pui8Data[4] << 8) | psInst->pui8Data[5];
     }
 }
@@ -590,18 +569,15 @@ LSM303DLHCMagDataMagnetoGetFloat(tLSM303DLHCMag *psInst, float *pfMagnetoX,
     //
     // Convert the magnetometer values into rad/sec
     //
-    if(pfMagnetoX)
-    {
+    if(pfMagnetoX) {
         *pfMagnetoX = (float)(((int16_t)((psInst->pui8Data[0] << 8) |
                                          psInst->pui8Data[1])) * fFactor);
     }
-    if(pfMagnetoY)
-    {
+    if(pfMagnetoY) {
         *pfMagnetoY = (float)(((int16_t)((psInst->pui8Data[2] << 8) |
                                          psInst->pui8Data[3])) * fFactor);
     }
-    if(pfMagnetoZ)
-    {
+    if(pfMagnetoZ) {
         *pfMagnetoZ = (float)(((int16_t)((psInst->pui8Data[4] << 8) |
                                          psInst->pui8Data[5])) * fFactor);
     }

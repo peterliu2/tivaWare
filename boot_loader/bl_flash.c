@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2006-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -54,8 +54,7 @@ BLInternalFlashErase(uint32_t ui32Address)
     //
     // Wait until the flash has been erased.
     //
-    while(HWREG(FLASH_FMC) & FLASH_FMC_ERASE)
-    {
+    while(HWREG(FLASH_FMC) & FLASH_FMC_ERASE) {
     }
 }
 
@@ -83,8 +82,7 @@ BLInternalFlashProgram(uint32_t ui32DstAddr, uint8_t *pui8SrcData,
 {
     uint32_t ui32Loop;
 
-    for(ui32Loop = 0; ui32Loop < ui32Length; ui32Loop += 4)
-    {
+    for(ui32Loop = 0; ui32Loop < ui32Length; ui32Loop += 4) {
         //
         // Program this word into flash.
         //
@@ -95,8 +93,7 @@ BLInternalFlashProgram(uint32_t ui32DstAddr, uint8_t *pui8SrcData,
         //
         // Wait until the flash has been programmed.
         //
-        while(HWREG(FLASH_FMC) & FLASH_FMC_WRITE)
-        {
+        while(HWREG(FLASH_FMC) & FLASH_FMC_WRITE) {
         }
     }
 }
@@ -156,8 +153,7 @@ BLInternalFlashStartAddrCheck(uint32_t ui32Addr, uint32_t ui32ImgSize)
     // directly.
     //
 #ifdef FLASH_RSVD_SPACE
-    if((ui32FlashSize - FLASH_RSVD_SPACE) != ui32Addr)
-    {
+    if((ui32FlashSize - FLASH_RSVD_SPACE) != ui32Addr) {
         ui32FlashSize -= FLASH_RSVD_SPACE;
     }
 #endif
@@ -176,18 +172,15 @@ BLInternalFlashStartAddrCheck(uint32_t ui32Addr, uint32_t ui32ImgSize)
     //
     if((
 #ifdef ENABLE_BL_UPDATE
-        (ui32Addr != 0) &&
+                (ui32Addr != 0) &&
 #endif
 #ifdef FLASH_RSVD_SPACE
-        (ui32Addr != (ui32FlashSize - FLASH_RSVD_SPACE)) &&
+                (ui32Addr != (ui32FlashSize - FLASH_RSVD_SPACE)) &&
 #endif
-        (ui32Addr != APP_START_ADDRESS)) ||
-       ((ui32Addr + ui32ImgSize) > ui32FlashSize) || ((ui32Addr & 3) != 0))
-    {
+                (ui32Addr != APP_START_ADDRESS)) ||
+            ((ui32Addr + ui32ImgSize) > ui32FlashSize) || ((ui32Addr & 3) != 0)) {
         return(0);
-    }
-    else
-    {
+    } else {
         return(1);
     }
 }

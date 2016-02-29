@@ -1,5 +1,5 @@
 //*****************************************************************************
-// 
+//
 // langremap.h - header file for a compressed string table.
 //
 // Copyright (c) 2008 Texas Instruments Incorporated.  All rights reserved.
@@ -19,30 +19,29 @@ extern const uint8_t g_pui8Tablelangremap[];
 // from the string table using the GrStringGet() function.
 //
 //*****************************************************************************
-enum SCOMP_STR_INDEX
-{
-    STR_ENGLISH,                  
-    STR_ITALIANO,                 
-    STR_DEUTSCH,                  
-    STR_ESPANOL,                  
-    STR_CHINESE,                  
-    STR_KOREAN,                   
-    STR_JAPANESE,                 
-    STR_APPNAME,                  
-    STR_PLUS,                     
-    STR_MINUS,                    
-    STR_CONFIG,                   
-    STR_INTRO,                    
-    STR_UPDATE,                   
-    STR_LANGUAGE,                 
-    STR_INTRO_1,                  
-    STR_INTRO_2,                  
-    STR_INTRO_3,                  
-    STR_UPDATE_TEXT,              
-    STR_UPDATING,                 
-    STR_UART,                     
-    STR_MAC,                      
-    STR_HEXDIGITS,                
+enum SCOMP_STR_INDEX {
+    STR_ENGLISH,
+    STR_ITALIANO,
+    STR_DEUTSCH,
+    STR_ESPANOL,
+    STR_CHINESE,
+    STR_KOREAN,
+    STR_JAPANESE,
+    STR_APPNAME,
+    STR_PLUS,
+    STR_MINUS,
+    STR_CONFIG,
+    STR_INTRO,
+    STR_UPDATE,
+    STR_LANGUAGE,
+    STR_INTRO_1,
+    STR_INTRO_2,
+    STR_INTRO_3,
+    STR_UPDATE_TEXT,
+    STR_UPDATING,
+    STR_UART,
+    STR_MAC,
+    STR_HEXDIGITS,
 };
 
 //*****************************************************************************

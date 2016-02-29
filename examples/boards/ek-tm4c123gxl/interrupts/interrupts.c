@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C123GXL Firmware Package.
 //
 //*****************************************************************************
@@ -113,20 +113,17 @@ Delay(uint32_t ui32Seconds)
     //
     // Loop while there are more seconds to wait.
     //
-    while(ui32Seconds--)
-    {
+    while(ui32Seconds--) {
         //
         // Wait until the SysTick value is less than 1000.
         //
-        while(ROM_SysTickValueGet() > 1000)
-        {
+        while(ROM_SysTickValueGet() > 1000) {
         }
 
         //
         // Wait until the SysTick value is greater than 1000.
         //
-        while(ROM_SysTickValueGet() < 1000)
-        {
+        while(ROM_SysTickValueGet() < 1000) {
         }
     }
 }
@@ -361,7 +358,7 @@ main(void)
     // of the interrupt handlers.
     //
     ROM_GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_1 | GPIO_PIN_2 |
-                                               GPIO_PIN_3);
+                              GPIO_PIN_3);
     ROM_GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, 0);
 
     //
@@ -422,8 +419,7 @@ main(void)
     //
     // Verify that the interrupts were processed in the correct order.
     //
-    if((g_ui32GPIOa != 3) || (g_ui32GPIOb != 2) || (g_ui32GPIOc != 1))
-    {
+    if((g_ui32GPIOa != 3) || (g_ui32GPIOb != 2) || (g_ui32GPIOc != 1)) {
         ui32Error |= 1;
     }
 
@@ -466,8 +462,7 @@ main(void)
     //
     // Verify that the interrupts were processed in the correct order.
     //
-    if((g_ui32GPIOa != 3) || (g_ui32GPIOb != 2) || (g_ui32GPIOc != 1))
-    {
+    if((g_ui32GPIOa != 3) || (g_ui32GPIOb != 2) || (g_ui32GPIOc != 1)) {
         ui32Error |= 2;
     }
 
@@ -510,8 +505,7 @@ main(void)
     //
     // Verify that the interrupts were processed in the correct order.
     //
-    if((g_ui32GPIOa != 1) || (g_ui32GPIOb != 2) || (g_ui32GPIOc != 3))
-    {
+    if((g_ui32GPIOa != 1) || (g_ui32GPIOb != 2) || (g_ui32GPIOc != 3)) {
         ui32Error |= 4;
     }
 
@@ -543,7 +537,6 @@ main(void)
     //
     // Loop forever.
     //
-    while(1)
-    {
+    while(1) {
     }
 }

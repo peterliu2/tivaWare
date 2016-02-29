@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2009-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -112,8 +112,7 @@ DisplayIP(uint32_t ui32IP)
     //
     // If there is no IP address, indicate that one is being acquired.
     //
-    if(ui32IP == 0)
-    {
+    if(ui32IP == 0) {
         DisplayString(114, 231 - 10, "  Acquiring...  ");
         return;
     }
@@ -127,16 +126,14 @@ DisplayIP(uint32_t ui32IP)
     // Start the string with four spaces.  Not all will necessarily be used,
     // depending upon the length of the IP address string.
     //
-    for(ui32Loop = 0; ui32Loop < 4; ui32Loop++)
-    {
+    for(ui32Loop = 0; ui32Loop < 4; ui32Loop++) {
         g_pcIPString[ui32Idx++] = ' ';
     }
 
     //
     // Loop through the four bytes of the IP address.
     //
-    for(ui32Loop = 0; ui32Loop < 32; ui32Loop += 8)
-    {
+    for(ui32Loop = 0; ui32Loop < 32; ui32Loop += 8) {
         //
         // Extract this byte from the IP address word.
         //
@@ -145,12 +142,10 @@ DisplayIP(uint32_t ui32IP)
         //
         // Convert this byte into ASCII, using only the characters required.
         //
-        if(ui32Value > 99)
-        {
+        if(ui32Value > 99) {
             g_pcIPString[ui32Idx++] = '0' + (ui32Value / 100);
         }
-        if(ui32Value > 9)
-        {
+        if(ui32Value > 9) {
             g_pcIPString[ui32Idx++] = '0' + ((ui32Value / 10) % 10);
         }
         g_pcIPString[ui32Idx++] = '0' + (ui32Value % 10);
@@ -164,8 +159,7 @@ DisplayIP(uint32_t ui32IP)
     //
     // Fill the remainder of the string buffer with spaces.
     //
-    for(ui32Loop = ui32Idx - 1; ui32Loop < 20; ui32Loop++)
-    {
+    for(ui32Loop = ui32Idx - 1; ui32Loop < 20; ui32Loop++) {
         g_pcIPString[ui32Loop] = ' ';
     }
 
@@ -201,8 +195,7 @@ DisplayValue(char *pcBuffer, uint32_t ui32Value, uint32_t ui32X,
     //
     // See if the value is less than 10.
     //
-    if(ui32Value < 10)
-    {
+    if(ui32Value < 10) {
         //
         // Display the value using only a single digit.
         //
@@ -214,8 +207,7 @@ DisplayValue(char *pcBuffer, uint32_t ui32Value, uint32_t ui32X,
     //
     // Otherwise, see if the value is less than 100.
     //
-    else if(ui32Value < 100)
-    {
+    else if(ui32Value < 100) {
         //
         // Display the value using two digits.
         //
@@ -228,8 +220,7 @@ DisplayValue(char *pcBuffer, uint32_t ui32Value, uint32_t ui32X,
     //
     // Otherwise, see if the value is less than 1,000.
     //
-    else if(ui32Value < 1000)
-    {
+    else if(ui32Value < 1000) {
         //
         // Display the value using three digits.
         //
@@ -243,8 +234,7 @@ DisplayValue(char *pcBuffer, uint32_t ui32Value, uint32_t ui32X,
     //
     // Otherwise, see if the value is less than 10,000.
     //
-    else if(ui32Value < 10000)
-    {
+    else if(ui32Value < 10000) {
         //
         // Display the value using four digits.
         //
@@ -259,8 +249,7 @@ DisplayValue(char *pcBuffer, uint32_t ui32Value, uint32_t ui32X,
     //
     // Otherwise, see if the value is less than 100,000.
     //
-    else if(ui32Value < 100000)
-    {
+    else if(ui32Value < 100000) {
         //
         // Display the value using five digits.
         //
@@ -276,8 +265,7 @@ DisplayValue(char *pcBuffer, uint32_t ui32Value, uint32_t ui32X,
     //
     // Otherwise, the value is between 100,000 and 999,999.
     //
-    else
-    {
+    else {
         //
         // Display the value using six digits.
         //
@@ -306,8 +294,7 @@ vApplicationIdleHook(void)
     //
     // See if this is the first time that the idle task has been called.
     //
-    if(g_ui32Seconds == 0xffffffff)
-    {
+    if(g_ui32Seconds == 0xffffffff) {
         //
         // Draw the boxes for the statistics that are displayed.
         //
@@ -343,8 +330,7 @@ vApplicationIdleHook(void)
     //
     // See if the number of seconds has changed.
     //
-    if(ui32Temp != g_ui32Seconds)
-    {
+    if(ui32Temp != g_ui32Seconds) {
         //
         // Update the local copy of the run time.
         //
@@ -377,8 +363,7 @@ vApplicationIdleHook(void)
     //
     // See if the number of tasks has changed.
     //
-    if(g_ui32Tasks != g_ui32PreviousTasks)
-    {
+    if(g_ui32Tasks != g_ui32PreviousTasks) {
         //
         // Update the local copy of the number of tasks.
         //
@@ -387,16 +372,13 @@ vApplicationIdleHook(void)
         //
         // Convert the number of tasks into a text string and display it.
         //
-        if(ui32Temp < 10)
-        {
+        if(ui32Temp < 10) {
             g_pcTaskString[0] = ' ';
             g_pcTaskString[1] = '0' + (ui32Temp % 10);
             g_pcTaskString[2] = ' ';
             g_pcTaskString[3] = '\0';
             DisplayString(81, 231 - 10, g_pcTaskString);
-        }
-        else
-        {
+        } else {
             g_pcTaskString[0] = '0' + ((ui32Temp / 10) % 10);
             g_pcTaskString[1] = '0' + (ui32Temp % 10);
             g_pcTaskString[2] = '\0';
@@ -412,8 +394,7 @@ vApplicationIdleHook(void)
     //
     // See if the IP address has changed.
     //
-    if(ui32Temp != g_ui32IPAddress)
-    {
+    if(ui32Temp != g_ui32IPAddress) {
         //
         // Save the current IP address.
         //
@@ -428,8 +409,7 @@ vApplicationIdleHook(void)
     //
     // See if the number of transmitted packets has changed.
     //
-    if(lwip_stats.link.xmit != g_ui32TXPackets)
-    {
+    if(lwip_stats.link.xmit != g_ui32TXPackets) {
         //
         // Save the number of transmitted packets.
         //
@@ -444,8 +424,7 @@ vApplicationIdleHook(void)
     //
     // See if the number of received packets has changed.
     //
-    if(lwip_stats.link.recv != g_ui32RXPackets)
-    {
+    if(lwip_stats.link.recv != g_ui32RXPackets) {
         //
         // Save the number of received packets.
         //

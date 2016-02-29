@@ -3,24 +3,24 @@
 // startup.c - Boot code for Stellaris.
 //
 // Copyright (c) 2005-2007 Luminary Micro, Inc.  All rights reserved.
-// 
+//
 // Software License Agreement
-// 
+//
 // Luminary Micro, Inc. (LMI) is supplying this software for use solely and
 // exclusively on LMI's microcontroller products.
-// 
+//
 // The software is owned by LMI and/or its suppliers, and is protected under
 // applicable copyright laws.  All rights are reserved.  Any use in violation
 // of the foregoing restrictions may subject the user to criminal sanctions
 // under applicable laws, as well as to civil liability for the breach of the
 // terms and conditions of this license.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
 // OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
 // MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
 // LMI SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
 // CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 1392 of the Stellaris Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -67,10 +67,9 @@ static unsigned long pulStack[STACK_SIZE];
 //
 //*****************************************************************************
 __attribute__ ((section(".isr_vector")))
-void (* const g_pfnVectors[])(void) =
-{
+void (* const g_pfnVectors[])(void) = {
     (void (*)(void))((unsigned long)pulStack + sizeof(pulStack)),
-                                            // The initial stack pointer
+    // The initial stack pointer
     ResetISR,                               // The reset handler
     NmiSR,                                  // The NMI handler
     FaultISR,                               // The hard fault handler
@@ -164,16 +163,14 @@ ResetISR(void)
     // Copy the data segment initializers from flash to SRAM.
     //
     pulSrc = &_etext;
-    for(pulDest = &_data; pulDest < &_edata; )
-    {
+    for(pulDest = &_data; pulDest < &_edata; ) {
         *pulDest++ = *pulSrc++;
     }
 
     //
     // Zero fill the bss segment.
     //
-    for(pulDest = &_bss; pulDest < &_ebss; )
-    {
+    for(pulDest = &_bss; pulDest < &_ebss; ) {
         *pulDest++ = 0;
     }
 
@@ -196,8 +193,7 @@ NmiSR(void)
     //
     // Enter an infinite loop.
     //
-    while(1)
-    {
+    while(1) {
     }
 }
 
@@ -214,8 +210,7 @@ FaultISR(void)
     //
     // Enter an infinite loop.
     //
-    while(1)
-    {
+    while(1) {
     }
 }
 
@@ -232,8 +227,7 @@ IntDefaultHandler(void)
     //
     // Go into an infinite loop.
     //
-    while(1)
-    {
+    while(1) {
     }
 }
 

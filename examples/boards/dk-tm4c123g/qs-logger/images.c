@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C123G Firmware Package.
 //
 //*****************************************************************************
@@ -31,8 +31,7 @@
 // This image contains the TI logo with black background.
 //
 //*****************************************************************************
-const uint8_t g_pui8Image_TI_Black[] =
-{
+const uint8_t g_pui8Image_TI_Black[] = {
     IMAGE_FMT_4BPP_COMP,
     96, 0,
     64, 0,
@@ -138,8 +137,7 @@ const uint8_t g_pui8Image_TI_Black[] =
 // This image contains a splash screen image.
 //
 //*****************************************************************************
-const uint8_t g_pui8Image_Splash1[] =
-{
+const uint8_t g_pui8Image_Splash1[] = {
     IMAGE_FMT_4BPP_COMP,
     96, 0,
     64, 0,
@@ -285,8 +283,7 @@ const uint8_t g_pui8Image_Splash1[] =
     0xc0, 0x07, 0x07,
 };
 
-const uint8_t g_pui8Image_Splash2[] =
-{
+const uint8_t g_pui8Image_Splash2[] = {
     IMAGE_FMT_4BPP_COMP,
     96, 0,
     64, 0,
@@ -433,8 +430,7 @@ const uint8_t g_pui8Image_Splash2[] =
     0x89, 0x07, 0x07, 0x77, 0x2f,
 };
 
-const uint8_t g_pui8Image_Splash3[] =
-{
+const uint8_t g_pui8Image_Splash3[] = {
     IMAGE_FMT_4BPP_COMP,
     96, 0,
     64, 0,
@@ -576,8 +572,7 @@ const uint8_t g_pui8Image_Splash3[] =
     0x07,
 };
 
-const uint8_t g_pui8Image_Splash4[] =
-{
+const uint8_t g_pui8Image_Splash4[] = {
     IMAGE_FMT_4BPP_COMP,
     96, 0,
     64, 0,
@@ -720,8 +715,7 @@ const uint8_t g_pui8Image_Splash4[] =
     0xe0, 0x07, 0x07, 0x07,
 };
 
-const uint8_t g_pui8Image_Splash5[] =
-{
+const uint8_t g_pui8Image_Splash5[] = {
     IMAGE_FMT_4BPP_COMP,
     96, 0,
     64, 0,
@@ -858,8 +852,7 @@ const uint8_t g_pui8Image_Splash5[] =
     0xf0, 0x07, 0x07, 0x07, 0x07,
 };
 
-const uint8_t *g_ppui8Image_Splash[] =
-{
+const uint8_t *g_ppui8Image_Splash[] = {
     g_pui8Image_Splash1, g_pui8Image_Splash2, g_pui8Image_Splash3,
     g_pui8Image_Splash4, g_pui8Image_Splash5
 };

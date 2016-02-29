@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -43,8 +43,7 @@
 
 #define SPIFLASH_IN_USE         0x00000001
 
-struct
-{
+struct {
     uint32_t ulFlags;
 }
 g_sDriveInformation;
@@ -86,8 +85,7 @@ USBDMSCStorageOpen(uint32_t ulDrive)
     //
     // Return if already in use.
     //
-    if(g_sDriveInformation.ulFlags & SPIFLASH_IN_USE)
-    {
+    if(g_sDriveInformation.ulFlags & SPIFLASH_IN_USE) {
         return(0);
     }
 
@@ -151,7 +149,7 @@ USBDMSCStorageRead(void *pvDrive, uint8_t *pui8Data, uint32_t ui32Sector,
 
     g_ui32ReadCount += ui32NumBlocks * MX66L51235F_BLOCK_SIZE;
 
-    MX66L51235FRead(ui32Sector * MX66L51235F_BLOCK_SIZE, pui8Data, 
+    MX66L51235FRead(ui32Sector * MX66L51235F_BLOCK_SIZE, pui8Data,
                     ui32NumBlocks * MX66L51235F_BLOCK_SIZE);
 
     return(ui32NumBlocks * MX66L51235F_BLOCK_SIZE);
@@ -186,8 +184,7 @@ USBDMSCStorageWrite(void *pvDrive, uint8_t *pui8Data, uint32_t ui32Sector,
 
     g_ui32WriteCount += ui32NumBlocks * MX66L51235F_BLOCK_SIZE;
 
-    for(ui32Idx = 0; ui32Idx < ui32NumBlocks; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < ui32NumBlocks; ui32Idx++) {
         //
         // each block is 4K(0x1000) bytes
         //
@@ -195,16 +192,15 @@ USBDMSCStorageWrite(void *pvDrive, uint8_t *pui8Data, uint32_t ui32Sector,
 
         //
         // erase the block
-        // 
+        //
         MX66L51235FSectorErase(ui32BlockAddr);
 
         //
         // program the block one page(256 bytes) a time
-        // 
+        //
         for(ui32PageIdx = 0; ui32PageIdx < (MX66L51235F_BLOCK_SIZE / 256);
-            ui32PageIdx++)
-        {
-            MX66L51235FPageProgram((ui32BlockAddr + (ui32PageIdx * 256)), 
+                ui32PageIdx++) {
+            MX66L51235FPageProgram((ui32BlockAddr + (ui32PageIdx * 256)),
                                    (pui8Data +
                                     (ui32Idx * MX66L51235F_BLOCK_SIZE) +
                                     (ui32PageIdx * 256)), 256);

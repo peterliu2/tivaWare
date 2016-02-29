@@ -41,12 +41,12 @@
 
 extern void ISO15693Init(void);
 extern int ISO15693InventoryAFI(unsigned char ucSubCarrier, unsigned char ucDataRate,
-            	  unsigned char ucAfi, unsigned char ucNbSlots,
-            	  unsigned char *pucMask, unsigned char ucMaskLen);
+                                unsigned char ucAfi, unsigned char ucNbSlots,
+                                unsigned char *pucMask, unsigned char ucMaskLen);
 extern int ISO15693Inventory(unsigned char ucSubCarrier, unsigned char ucDataRate,
-            	  unsigned char ucNbSlots, unsigned char *pucMask, unsigned char ucMaskLen);
+                             unsigned char ucNbSlots, unsigned char *pucMask, unsigned char ucMaskLen);
 extern int ISO15693Anticollision16Slots(unsigned char ucSubCarrier, unsigned char ucDataRate,
-            	  	  	  	 unsigned char *pucMask, unsigned char ucMaskLen);
+                                        unsigned char *pucMask, unsigned char ucMaskLen);
 
 extern int BlockReadSingleUID(unsigned char  *pucUID, unsigned int uiBlock, unsigned char *pucBuf);
 extern int BlockWriteSingleUID(unsigned char  *pucUID, unsigned int uiBlock, unsigned char ucValueLen, unsigned char *pucBuf);

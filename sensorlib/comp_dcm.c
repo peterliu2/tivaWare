@@ -6,20 +6,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -389,10 +389,10 @@ CompDCMUpdate(tCompDCM *psDCM)
     //
     VectorScale(psDCM->ppfDCM[0], psDCM->ppfDCM[0],
                 0.5 * (3.0 - VectorDotProduct(psDCM->ppfDCM[0],
-                                              psDCM->ppfDCM[0])));
+                        psDCM->ppfDCM[0])));
     VectorScale(psDCM->ppfDCM[2], psDCM->ppfDCM[2],
                 0.5 * (3.0 - VectorDotProduct(psDCM->ppfDCM[2],
-                                              psDCM->ppfDCM[2])));
+                        psDCM->ppfDCM[2])));
 
     //
     // Compute the rotated J vector from the cross product of the rotated,
@@ -426,8 +426,7 @@ CompDCMUpdate(tCompDCM *psDCM)
     // If any part of the matrix is not-a-number then reset the DCM back to the
     // identity matrix.
     //
-    if(bNAN)
-    {
+    if(bNAN) {
         psDCM->ppfDCM[0][0] = 1.0;
         psDCM->ppfDCM[0][1] = 0.0;
         psDCM->ppfDCM[0][2] = 0.0;
@@ -493,16 +492,13 @@ CompDCMComputeEulers(tCompDCM *psDCM, float *pfRoll, float *pfPitch,
     //
     // Compute the roll, pitch, and yaw as required.
     //
-    if(pfRoll)
-    {
+    if(pfRoll) {
         *pfRoll = atan2f(psDCM->ppfDCM[2][1], psDCM->ppfDCM[2][2]);
     }
-    if(pfPitch)
-    {
+    if(pfPitch) {
         *pfPitch = -asinf(psDCM->ppfDCM[2][0]);
     }
-    if(pfYaw)
-    {
+    if(pfYaw) {
         *pfYaw = atan2f(psDCM->ppfDCM[1][0], psDCM->ppfDCM[0][0]);
     }
 }
@@ -538,8 +534,7 @@ CompDCMComputeQuaternion(tCompDCM *psDCM, float pfQuaternion[4])
     //
     // See if Qs is the largest of the diagonal values.
     //
-    if((fQs > fQx) && (fQs > fQy) && (fQs > fQz))
-    {
+    if((fQs > fQx) && (fQs > fQy) && (fQs > fQz)) {
         //
         // Finish the computation of Qs.
         //
@@ -561,8 +556,7 @@ CompDCMComputeQuaternion(tCompDCM *psDCM, float pfQuaternion[4])
     // Qs is not the largest, so see if Qx is the largest remaining diagonal
     // value.
     //
-    else if((fQx > fQy) && (fQx > fQz))
-    {
+    else if((fQx > fQy) && (fQx > fQz)) {
         //
         // Finish the computation of Qx.
         //
@@ -584,8 +578,7 @@ CompDCMComputeQuaternion(tCompDCM *psDCM, float pfQuaternion[4])
     // Qs and Qx are not the largest, so see if Qy is the largest remaining
     // diagonal value.
     //
-    else if(fQy > fQz)
-    {
+    else if(fQy > fQz) {
         //
         // Finish the computation of Qy.
         //
@@ -606,8 +599,7 @@ CompDCMComputeQuaternion(tCompDCM *psDCM, float pfQuaternion[4])
     //
     // Qz is the largest diagonal value.
     //
-    else
-    {
+    else {
         //
         // Finish the computation of Qz.
         //

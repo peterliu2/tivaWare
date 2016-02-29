@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2007-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -68,16 +68,14 @@ fs_open(const char *pcName)
     // Allocate memory for the file system structure.
     //
     psFile = mem_malloc(sizeof(struct fs_file));
-    if(psFile == NULL)
-    {
+    if(psFile == NULL) {
         return(NULL);
     }
 
     //
     // Process request to toggle STATUS LED
     //
-    if(ustrncmp(pcName, "/cgi-bin/toggle_led", 19) == 0)
-    {
+    if(ustrncmp(pcName, "/cgi-bin/toggle_led", 19) == 0) {
         static char pcBuf[4];
 
         //
@@ -104,8 +102,7 @@ fs_open(const char *pcName)
     //
     // Request for LED State?
     //
-    else if(ustrncmp(pcName, "/ledstate", 9) == 0)
-    {
+    else if(ustrncmp(pcName, "/ledstate", 9) == 0) {
         static char pcBuf[4];
 
         //
@@ -122,8 +119,7 @@ fs_open(const char *pcName)
     //
     // Request for the animation speed?
     //
-    else if(ustrncmp(pcName, "/get_speed", 10) == 0)
-    {
+    else if(ustrncmp(pcName, "/get_speed", 10) == 0) {
         static char pcBuf[6];
 
         //
@@ -140,8 +136,7 @@ fs_open(const char *pcName)
     //
     // Set the animation speed?
     //
-    else if(ustrncmp(pcName, "/cgi-bin/set_speed?percent=", 12) == 0)
-    {
+    else if(ustrncmp(pcName, "/cgi-bin/set_speed?percent=", 12) == 0) {
         static char pcBuf[6];
 
         //
@@ -163,8 +158,7 @@ fs_open(const char *pcName)
     //
     // If I can't find it there, look in the rest of the main psFile system
     //
-    else
-    {
+    else {
         //
         // Initialize the psFile system tree pointer to the root of the linked list.
         //
@@ -173,14 +167,12 @@ fs_open(const char *pcName)
         //
         // Begin processing the linked list, looking for the requested file name.
         //
-        while(NULL != psTree)
-        {
+        while(NULL != psTree) {
             //
             // Compare the requested file "pcName" to the file name in the
             // current node.
             //
-            if(ustrncmp(pcName, (char *)psTree->name, psTree->len) == 0)
-            {
+            if(ustrncmp(pcName, (char *)psTree->name, psTree->len) == 0) {
                 //
                 // Fill in the data pointer and length values from the
                 // linked list node.
@@ -218,8 +210,7 @@ fs_open(const char *pcName)
     // If we didn't find the file, ptTee will be NULL.  Make sure we
     // return a NULL pointer if this happens.
     //
-    if(NULL == psTree)
-    {
+    if(NULL == psTree) {
         mem_free(psFile);
         psFile = NULL;
     }
@@ -259,8 +250,7 @@ fs_read(struct fs_file *psFile, char *pcBuffer, int iCount)
     //
     // Check to see if a command (pextension = 1).
     //
-    if(psFile->pextension == (void *)1)
-    {
+    if(psFile->pextension == (void *)1) {
         //
         // Nothing to do for this file type.
         //
@@ -271,8 +261,7 @@ fs_read(struct fs_file *psFile, char *pcBuffer, int iCount)
     //
     // Check to see if more data is available.
     //
-    if(psFile->len == psFile->index)
-    {
+    if(psFile->len == psFile->index) {
         //
         // There is no remaining data.  Return a -1 for EOF indication.
         //
@@ -284,8 +273,7 @@ fs_read(struct fs_file *psFile, char *pcBuffer, int iCount)
     // parameter or the available data in the file system buffer.
     //
     iAvailable = psFile->len - psFile->index;
-    if(iAvailable > iCount)
-    {
+    if(iAvailable > iCount) {
         iAvailable = iCount;
     }
 

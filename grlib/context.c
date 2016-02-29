@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2007-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Graphics Library.
 //
 //*****************************************************************************
@@ -48,8 +48,7 @@ static tGrLibDefaults const *g_psGrLibDefaults;
 // source text with either Unicode encoded wide fonts or legacy fonts
 // which are assumed to contain ISO8859-1 text (ASCII + western European).
 //
-const tCodePointMap g_psDefaultCodePointMapTable[] =
-{
+const tCodePointMap g_psDefaultCodePointMapTable[] = {
     {CODEPAGE_ISO8859_1, CODEPAGE_UNICODE, GrMapISO8859_1_Unicode},
     {CODEPAGE_ISO8859_1, CODEPAGE_ISO8859_1, GrMapISO8859_1_Unicode}
 };
@@ -144,16 +143,13 @@ GrContextInit(tContext *psContext, const tDisplay *psDisplay)
     //
     // Set defaults for all text rendering options.
     //
-    if(g_psGrLibDefaults)
-    {
+    if(g_psGrLibDefaults) {
         psContext->pfnStringRenderer = g_psGrLibDefaults->pfnStringRenderer;
         psContext->pCodePointMapTable = g_psGrLibDefaults->pCodePointMapTable;
         psContext->ui16Codepage = g_psGrLibDefaults->ui16Codepage;
         psContext->ui8NumCodePointMaps = g_psGrLibDefaults->ui8NumCodePointMaps;
         psContext->ui8Reserved = g_psGrLibDefaults->ui8Reserved;
-    }
-    else
-    {
+    } else {
         psContext->pfnStringRenderer = GrDefaultStringRenderer;
         psContext->pCodePointMapTable = g_psDefaultCodePointMapTable;
         psContext->ui16Codepage = CODEPAGE_ISO8859_1;
@@ -206,17 +202,17 @@ GrContextClipRegionSet(tContext *psContext, tRectangle *pRect)
     // the extents of the screen.
     //
     psContext->sClipRegion.i16XMin = ((pRect->i16XMin < 0) ? 0 :
-                                   ((pRect->i16XMin >= ui32W) ? (ui32W - 1) :
-                                    pRect->i16XMin));
+                                      ((pRect->i16XMin >= ui32W) ? (ui32W - 1) :
+                                       pRect->i16XMin));
     psContext->sClipRegion.i16YMin = ((pRect->i16YMin < 0) ? 0 :
-                                   ((pRect->i16YMin >= ui32H) ? (ui32H - 1) :
-                                    pRect->i16YMin));
+                                      ((pRect->i16YMin >= ui32H) ? (ui32H - 1) :
+                                       pRect->i16YMin));
     psContext->sClipRegion.i16XMax = ((pRect->i16XMax < 0) ? 0 :
-                                   ((pRect->i16XMax >= ui32W) ? (ui32W - 1) :
-                                    pRect->i16XMax));
+                                      ((pRect->i16XMax >= ui32W) ? (ui32W - 1) :
+                                       pRect->i16XMax));
     psContext->sClipRegion.i16YMax = ((pRect->i16YMax < 0) ? 0 :
-                                   ((pRect->i16YMax >= ui32H) ? (ui32H - 1) :
-                                    pRect->i16YMax));
+                                      ((pRect->i16YMax >= ui32H) ? (ui32H - 1) :
+                                       pRect->i16YMax));
 }
 
 //*****************************************************************************

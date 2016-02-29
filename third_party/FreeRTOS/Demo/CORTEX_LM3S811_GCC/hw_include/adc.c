@@ -245,12 +245,9 @@ ADCIntStatus(unsigned long ulBase, unsigned long ulSequenceNum,
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return(HWREG(ulBase + ADC_O_ISC) & (1 << ulSequenceNum));
-    }
-    else
-    {
+    } else {
         return(HWREG(ulBase + ADC_O_RIS) & (1 << ulSequenceNum));
     }
 }
@@ -630,8 +627,7 @@ ADCSequenceDataGet(unsigned long ulBase, unsigned long ulSequenceNum,
     //
     ulCount = 0;
     while(!(HWREG(ulBase + ADC_O_X_SSFSTAT) & ADC_SSFSTAT_EMPTY) &&
-          (ulCount < 8))
-    {
+            (ulCount < 8)) {
         //
         // Read the FIFO and copy it to the destination.
         //
@@ -723,8 +719,7 @@ ADCSoftwareOversampleConfigure(unsigned long ulBase,
     //
     // Convert the oversampling factor to a shift factor.
     //
-    for(ulValue = 0, ulFactor >>= 1; ulFactor; ulValue++, ulFactor >>= 1)
-    {
+    for(ulValue = 0, ulFactor >>= 1; ulFactor; ulValue++, ulFactor >>= 1) {
     }
 
     //
@@ -783,8 +778,7 @@ ADCSoftwareOversampleStepConfigure(unsigned long ulBase,
     // oversampled sequence.
     //
     for(ulSequenceNum = 1 << g_pucOversampleFactor[ulSequenceNum];
-        ulSequenceNum; ulSequenceNum--)
-    {
+            ulSequenceNum; ulSequenceNum--) {
         //
         // Set the analog mux value for this step.
         //
@@ -798,8 +792,7 @@ ADCSoftwareOversampleStepConfigure(unsigned long ulBase,
         HWREG(ulBase + ADC_O_X_SSCTL) = ((HWREG(ulBase + ADC_O_X_SSCTL) &
                                           ~(0x0000000f << ulStep)) |
                                          (((ulConfig & 0xf0) >> 4) << ulStep));
-        if(ulSequenceNum != 1)
-        {
+        if(ulSequenceNum != 1) {
             HWREG(ulBase + ADC_O_X_SSCTL) &= ~((ADC_SSCTL_IE0 |
                                                 ADC_SSCTL_END0) << ulStep);
         }
@@ -857,14 +850,12 @@ ADCSoftwareOversampleDataGet(unsigned long ulBase, unsigned long ulSequenceNum,
     //
     // Read the samples from the FIFO until it is empty.
     //
-    while(ulCount--)
-    {
+    while(ulCount--) {
         //
         // Compute the sum of the samples.
         //
         ulAccum = 0;
-        for(ulIdx = 1 << g_pucOversampleFactor[ulSequenceNum]; ulIdx; ulIdx--)
-        {
+        for(ulIdx = 1 << g_pucOversampleFactor[ulSequenceNum]; ulIdx; ulIdx--) {
             //
             // Read the FIFO and add it to the accumulator.
             //
@@ -921,14 +912,13 @@ ADCHardwareOversampleConfigure(unsigned long ulBase,
     //
     ASSERT(ulBase == ADC_BASE);
     ASSERT(((ulFactor == 0) || (ulFactor == 2) || (ulFactor == 4) ||
-           (ulFactor == 8) || (ulFactor == 16) || (ulFactor == 32) ||
-           (ulFactor == 64)));
+            (ulFactor == 8) || (ulFactor == 16) || (ulFactor == 32) ||
+            (ulFactor == 64)));
 
     //
     // Convert the oversampling factor to a shift factor.
     //
-    for(ulValue = 0, ulFactor >>= 1; ulFactor; ulValue++, ulFactor >>= 1)
-    {
+    for(ulValue = 0, ulFactor >>= 1; ulFactor; ulValue++, ulFactor >>= 1) {
     }
 
     //

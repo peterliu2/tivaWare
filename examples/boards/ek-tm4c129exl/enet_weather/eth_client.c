@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2014-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C129EXL Firmware Package.
 //
 //*****************************************************************************
@@ -61,8 +61,7 @@
 // The current state of the Ethernet connection.
 //
 //*****************************************************************************
-struct
-{
+struct {
     volatile uint32_t ui32Flags;
 
     //
@@ -139,8 +138,7 @@ static char g_cHTTP11[] = " HTTP/1.0\r\n\r\n";
 // This structure holds the state and control values for the weather requests.
 //
 //*****************************************************************************
-struct
-{
+struct {
     //
     // The current weather source.
     //
@@ -149,8 +147,7 @@ struct
     //
     // The format expected from the weather source.
     //
-    enum
-    {
+    enum {
         iFormatJSON
     }
     eFormat;
@@ -204,8 +201,7 @@ EthClientReset(void)
     //
     // Deallocate the TCP structure if it was already allocated.
     //
-    if(g_sEnet.psTCP)
-    {
+    if(g_sEnet.psTCP) {
         //
         // Clear out all of the TCP callbacks.
         //
@@ -261,13 +257,11 @@ TCPReceive(void *pvArg, struct tcp_pcb *psPcb, struct pbuf *psBuf, err_t iErr)
     struct pbuf *psBufCur;
     int32_t i32Items;
 
-    if(psBuf == 0)
-    {
+    if(psBuf == 0) {
         //
         // Tell the application that the connection was closed.
         //
-        if(g_sWeather.pfnEvent)
-        {
+        if(g_sWeather.pfnEvent) {
             g_sWeather.pfnEvent(ETH_EVENT_CLOSE, 0, 0);
             g_sWeather.pfnEvent = 0;
         }
@@ -277,8 +271,7 @@ TCPReceive(void *pvArg, struct tcp_pcb *psPcb, struct pbuf *psBuf, err_t iErr)
         //
         tcp_close(psPcb);
 
-        if(psPcb == g_sEnet.psTCP)
-        {
+        if(psPcb == g_sEnet.psTCP) {
             g_sEnet.psTCP = 0;
         }
 
@@ -287,10 +280,8 @@ TCPReceive(void *pvArg, struct tcp_pcb *psPcb, struct pbuf *psBuf, err_t iErr)
         return(ERR_OK);
     }
 
-    if(g_sEnet.eState == iEthQueryWait)
-    {
-        if(g_sEnet.ulRequest == WEATHER_CURRENT)
-        {
+    if(g_sEnet.eState == iEthQueryWait) {
+        if(g_sEnet.ulRequest == WEATHER_CURRENT) {
             //
             // Read items from the buffer.
             //
@@ -299,10 +290,8 @@ TCPReceive(void *pvArg, struct tcp_pcb *psPcb, struct pbuf *psBuf, err_t iErr)
             //
             // Make sure some items were found.
             //
-            if(i32Items > 0)
-            {
-                if(g_sWeather.pfnEvent)
-                {
+            if(i32Items > 0) {
+                if(g_sWeather.pfnEvent) {
                     g_sWeather.pfnEvent(ETH_EVENT_RECEIVE,
                                         (void *)g_sWeather.psWeatherReport, 0);
 
@@ -311,11 +300,8 @@ TCPReceive(void *pvArg, struct tcp_pcb *psPcb, struct pbuf *psBuf, err_t iErr)
                     //
                     g_sEnet.eState = iEthIdle;
                 }
-            }
-            else if(i32Items < 0)
-            {
-                if(g_sWeather.pfnEvent)
-                {
+            } else if(i32Items < 0) {
+                if(g_sWeather.pfnEvent) {
                     //
                     // This was not a valid request.
                     //
@@ -327,18 +313,14 @@ TCPReceive(void *pvArg, struct tcp_pcb *psPcb, struct pbuf *psBuf, err_t iErr)
                     g_sEnet.eState = iEthIdle;
                 }
             }
-        }
-        else if(g_sEnet.ulRequest == WEATHER_FORECAST)
-        {
+        } else if(g_sEnet.ulRequest == WEATHER_FORECAST) {
             //
             // Read items from the buffer.
             //
             i32Items = JSONParseForecast(0, g_sWeather.psWeatherReport, psBuf);
 
-            if(i32Items > 0)
-            {
-                if(g_sWeather.pfnEvent)
-                {
+            if(i32Items > 0) {
+                if(g_sWeather.pfnEvent) {
                     g_sWeather.pfnEvent(ETH_EVENT_RECEIVE,
                                         (void *)g_sWeather.psWeatherReport, 0);
 
@@ -347,11 +329,8 @@ TCPReceive(void *pvArg, struct tcp_pcb *psPcb, struct pbuf *psBuf, err_t iErr)
                     //
                     g_sEnet.eState = iEthIdle;
                 }
-            }
-            else if(i32Items < 0)
-            {
-                if(g_sWeather.pfnEvent)
-                {
+            } else if(i32Items < 0) {
+                if(g_sWeather.pfnEvent) {
                     //
                     // This was not a valid request.
                     //
@@ -364,9 +343,7 @@ TCPReceive(void *pvArg, struct tcp_pcb *psPcb, struct pbuf *psBuf, err_t iErr)
                 }
             }
         }
-    }
-    else
-    {
+    } else {
         //
         // Go to idle state.
         //
@@ -381,8 +358,7 @@ TCPReceive(void *pvArg, struct tcp_pcb *psPcb, struct pbuf *psBuf, err_t iErr)
     //
     // Free the buffers used since they have been processed.
     //
-    while(psBufCur->len != 0)
-    {
+    while(psBufCur->len != 0) {
         //
         // Indicate that you have received and processed this set of TCP data.
         //
@@ -396,8 +372,7 @@ TCPReceive(void *pvArg, struct tcp_pcb *psPcb, struct pbuf *psBuf, err_t iErr)
         //
         // Terminate if there are no more buffers.
         //
-        if(psBufCur == 0)
-        {
+        if(psBufCur == 0) {
             break;
         }
     }
@@ -456,8 +431,7 @@ TCPConnected(void *pvArg, struct tcp_pcb *psPcb, err_t iErr)
     //
     // Check if there was a TCP error.
     //
-    if(iErr != ERR_OK)
-    {
+    if(iErr != ERR_OK) {
         //
         // Clear out all of the TCP callbacks.
         //
@@ -470,8 +444,7 @@ TCPConnected(void *pvArg, struct tcp_pcb *psPcb, err_t iErr)
         //
         tcp_close(psPcb);
 
-        if(psPcb == g_sEnet.psTCP)
-        {
+        if(psPcb == g_sEnet.psTCP) {
             g_sEnet.psTCP = 0;
         }
 
@@ -526,8 +499,7 @@ EthClientTCPConnect(uint32_t ui32Port)
     //
     HWREGBITW(&g_sEnet.ui32Flags, FLAG_TIMER_TCP_EN) = 1;
 
-    if(g_sEnet.psTCP)
-    {
+    if(g_sEnet.psTCP) {
         //
         // Initially clear out all of the TCP callbacks.
         //
@@ -549,16 +521,13 @@ EthClientTCPConnect(uint32_t ui32Port)
     //
     // Check if you need to go through a proxy.
     //
-    if(g_sEnet.pcProxyName != 0)
-    {
+    if(g_sEnet.pcProxyName != 0) {
         //
         // Attempt to connect through the proxy server.
         //
         eTCPReturnCode = tcp_connect(g_sEnet.psTCP, &g_sEnet.sServerIP,
                                      ui32Port, TCPConnected);
-    }
-    else
-    {
+    } else {
         //
         // Attempt to connect to the server directly.
         //
@@ -589,8 +558,7 @@ EthClientTCPDisconnect(void)
     //
     // Deallocate the TCP structure if it was already allocated.
     //
-    if(g_sEnet.psTCP)
-    {
+    if(g_sEnet.psTCP) {
         //
         // Close the TCP connection.
         //
@@ -620,8 +588,7 @@ DNSServerFound(const char *pcName, struct ip_addr *psIPAddr, void *vpArg)
     //
     // Check if a valid DNS server address was found.
     //
-    if(psIPAddr != NULL)
-    {
+    if(psIPAddr != NULL) {
         //
         // Copy the returned IP address into a global IP address.
         //
@@ -631,9 +598,7 @@ DNSServerFound(const char *pcName, struct ip_addr *psIPAddr, void *vpArg)
         // Tell the main program that a DNS address was found.
         //
         HWREGBITW(&g_sEnet.ui32Flags, FLAG_DNS_ADDRFOUND) = 1;
-    }
-    else
-    {
+    } else {
         //
         // Disable the DNS timer.
         //
@@ -675,8 +640,7 @@ EthClientSend(char *pcRequest, uint32_t ui32Size)
     //
     //  Write data for sending (but does not send it immediately).
     //
-    if(eError == ERR_OK)
-    {
+    if(eError == ERR_OK) {
         //
         // Find out what we can send and send it
         //
@@ -702,15 +666,12 @@ EthClientDHCPConnect(void)
     //
     // Check if the DHCP has already been started.
     //
-    if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_DHCP_STARTED) == 0)
-    {
+    if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_DHCP_STARTED) == 0) {
         //
         // Set the DCHP started flag.
         //
         HWREGBITW(&g_sEnet.ui32Flags, FLAG_DHCP_STARTED) = 1;
-    }
-    else
-    {
+    } else {
         //
         // If DHCP has already been started, we need to clear the IPs and
         // switch to static.  This forces the LWIP to get new IP address
@@ -745,8 +706,7 @@ EthClientDNSResolve(const char *pcName)
 {
     err_t iRet;
 
-    if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_TIMER_DNS_EN))
-    {
+    if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_TIMER_DNS_EN)) {
         return(ERR_INPROGRESS);
     }
 
@@ -770,8 +730,7 @@ EthClientDNSResolve(const char *pcName)
     // ERR_INPROGRESS is returned, the DNS request has been queued and will be
     // sent to the DNS server.
     //
-    if(iRet == ERR_OK)
-    {
+    if(iRet == ERR_OK) {
         //
         // Stop calling the DNS timer function.
         //
@@ -841,8 +800,7 @@ EthClientMACAddrGet(uint8_t *pui8MACAddr)
 {
     int32_t iIdx;
 
-    for(iIdx = 0; iIdx < 6; iIdx++)
-    {
+    for(iIdx = 0; iIdx < 6; iIdx++) {
         pui8MACAddr[iIdx] = g_sEnet.pui8MACAddr[iIdx];
     }
 }
@@ -942,18 +900,15 @@ EthClientTick(uint32_t ui32TickMS)
     uint32_t ui32IPAddr;
     int32_t i32Ret;
 
-    if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_TIMER_DHCP_EN))
-    {
+    if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_TIMER_DHCP_EN)) {
         lwIPTimer(ui32TickMS);
     }
 
-    if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_TIMER_DNS_EN))
-    {
+    if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_TIMER_DNS_EN)) {
         dns_tmr();
     }
 
-    if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_TIMER_TCP_EN))
-    {
+    if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_TIMER_TCP_EN)) {
         tcp_tmr();
     }
 
@@ -961,8 +916,7 @@ EthClientTick(uint32_t ui32TickMS)
     // Check for loss of link.
     //
     if((g_sEnet.eState != iEthNoConnection) &&
-       (lwIPLocalIPAddrGet() == 0xffffffff))
-    {
+            (lwIPLocalIPAddrGet() == 0xffffffff)) {
         //
         // Reset the connection due to a loss of link.
         //
@@ -972,21 +926,16 @@ EthClientTick(uint32_t ui32TickMS)
         // Signal a disconnect event.
         //
         g_sEnet.pfnEvent(ETH_EVENT_DISCONNECT, 0, 0);
-    }
-    else if(g_sEnet.eState == iEthNoConnection)
-    {
+    } else if(g_sEnet.eState == iEthNoConnection) {
         //
         // Once link is detected start DHCP.
         //
-        if(lwIPLocalIPAddrGet() != 0xffffffff)
-        {
+        if(lwIPLocalIPAddrGet() != 0xffffffff) {
             EthClientDHCPConnect();
 
             g_sEnet.eState = iEthDHCPWait;
         }
-    }
-    else if(g_sEnet.eState == iEthDHCPWait)
-    {
+    } else if(g_sEnet.eState == iEthDHCPWait) {
         //
         // Get IP address.
         //
@@ -996,8 +945,7 @@ EthClientTick(uint32_t ui32TickMS)
         // If IP Address has not yet been assigned, update the display
         // accordingly.
         //
-        if((ui32IPAddr != 0xffffffff) && (ui32IPAddr != 0))
-        {
+        if((ui32IPAddr != 0xffffffff) && (ui32IPAddr != 0)) {
             //
             // Update the DHCP IP address.
             //
@@ -1010,26 +958,20 @@ EthClientTick(uint32_t ui32TickMS)
             //
             HWREGBITW(&g_sEnet.ui32Flags, FLAG_DHCP_STARTED) = 0;
         }
-    }
-    else if(g_sEnet.eState == iEthDHCPComplete)
-    {
-        if(g_sEnet.pcProxyName == 0)
-        {
+    } else if(g_sEnet.eState == iEthDHCPComplete) {
+        if(g_sEnet.pcProxyName == 0) {
             //
             // Resolve the host by name.
             //
             i32Ret = EthClientDNSResolve("api.openweathermap.org");
-        }
-        else
-        {
+        } else {
             //
             // Resolve the proxy by name.
             //
             i32Ret = EthClientDNSResolve(g_sEnet.pcProxyName);
         }
 
-        if(i32Ret == ERR_OK)
-        {
+        if(i32Ret == ERR_OK) {
             //
             // If the address was already returned then go to idle.
             //
@@ -1039,22 +981,17 @@ EthClientTick(uint32_t ui32TickMS)
             // Notify the main routine of the new Ethernet connection.
             //
             g_sEnet.pfnEvent(ETH_EVENT_CONNECT, &g_sEnet.sLocalIP.addr, 4);
-        }
-        else if(i32Ret == ERR_INPROGRESS)
-        {
+        } else if(i32Ret == ERR_INPROGRESS) {
             //
             // If the request is pending the go to the iEthDNSWait state.
             //
             g_sEnet.eState = iEthDNSWait;
         }
-    }
-    else if(g_sEnet.eState == iEthDNSWait)
-    {
+    } else if(g_sEnet.eState == iEthDNSWait) {
         //
         // Check if the host name was resolved.
         //
-        if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_DNS_ADDRFOUND))
-        {
+        if(HWREGBITW(&g_sEnet.ui32Flags, FLAG_DNS_ADDRFOUND)) {
             //
             // Stop calling the DNS timer function.
             //
@@ -1067,12 +1004,8 @@ EthClientTick(uint32_t ui32TickMS)
             //
             g_sEnet.pfnEvent(ETH_EVENT_CONNECT, &g_sEnet.sLocalIP.addr, 4);
         }
-    }
-    else if(g_sEnet.eState == iEthTCPConnectWait)
-    {
-    }
-    else if(g_sEnet.eState == iEthTCPConnectComplete)
-    {
+    } else if(g_sEnet.eState == iEthTCPConnectWait) {
+    } else if(g_sEnet.eState == iEthTCPConnectComplete) {
         err_t eError;
 
         g_sEnet.eState = iEthTCPOpen;
@@ -1080,15 +1013,12 @@ EthClientTick(uint32_t ui32TickMS)
         eError = EthClientSend(g_sWeather.pcRequest,
                                g_sWeather.ui32RequestSize);
 
-        if(eError == ERR_OK)
-        {
+        if(eError == ERR_OK) {
             //
             // Waiting on a query response.
             //
             g_sEnet.eState = iEthQueryWait;
-        }
-        else
-        {
+        } else {
             g_sEnet.eState = iEthIdle;
         }
     }
@@ -1123,26 +1053,20 @@ MergeRequest(int32_t i32Offset, const char *pcSrc, int32_t i32Size,
     //
     // Copy the base request to the buffer.
     //
-    for(i32Idx = 0; i32Idx < i32Size; i32Idx++)
-    {
-        if((pcSrc[i32Idx] == ' ') && (bReplaceSpace))
-        {
-            if((i32Offset + 3) >= sizeof(g_sWeather.pcRequest))
-            {
+    for(i32Idx = 0; i32Idx < i32Size; i32Idx++) {
+        if((pcSrc[i32Idx] == ' ') && (bReplaceSpace)) {
+            if((i32Offset + 3) >= sizeof(g_sWeather.pcRequest)) {
                 break;
             }
             g_sWeather.pcRequest[i32Offset++] = '%';
             g_sWeather.pcRequest[i32Offset++] = '2';
             g_sWeather.pcRequest[i32Offset] = '0';
-        }
-        else
-        {
+        } else {
             g_sWeather.pcRequest[i32Offset] = pcSrc[i32Idx];
         }
 
         if((i32Offset >= sizeof(g_sWeather.pcRequest)) ||
-           (pcSrc[i32Idx] == 0))
-        {
+                (pcSrc[i32Idx] == 0)) {
             break;
         }
 
@@ -1168,8 +1092,7 @@ WeatherForecast(tWeatherSource eWeatherSource, const char *pcQuery,
     // If the requested source is not valid or there is no call back then
     // just fail.
     //
-    if((eWeatherSource != iWSrcOpenWeatherMap) || (g_sWeather.pfnEvent))
-    {
+    if((eWeatherSource != iWSrcOpenWeatherMap) || (g_sWeather.pfnEvent)) {
         return (-1);
     }
 
@@ -1219,8 +1142,7 @@ WeatherForecast(tWeatherSource eWeatherSource, const char *pcQuery,
     //
     g_sEnet.ulRequest = WEATHER_FORECAST;
 
-    if(EthClientTCPConnect(80) != ERR_OK)
-    {
+    if(EthClientTCPConnect(80) != ERR_OK) {
         return(-1);
     }
 
@@ -1247,8 +1169,7 @@ WeatherCurrent(tWeatherSource eWeatherSource, const char *pcQuery,
     // If the requested source is not valid or there is no call back then
     // just fail.
     //
-    if((eWeatherSource != iWSrcOpenWeatherMap) || (g_sWeather.pfnEvent))
-    {
+    if((eWeatherSource != iWSrcOpenWeatherMap) || (g_sWeather.pfnEvent)) {
         return (-1);
     }
 
@@ -1300,8 +1221,7 @@ WeatherCurrent(tWeatherSource eWeatherSource, const char *pcQuery,
     //
     // Connect to server
     //
-    if(EthClientTCPConnect(80) != ERR_OK)
-    {
+    if(EthClientTCPConnect(80) != ERR_OK) {
         return(-1);
     }
 

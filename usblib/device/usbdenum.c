@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2007-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -70,7 +70,7 @@ static void USBDSyncFrame(void *pvInstance, tUSBRequest *psUSBRequest);
 static void USBDEP0StateTx(uint32_t ui32Index);
 static void USBDEP0StateTxConfig(uint32_t ui32Index);
 static int32_t USBDStringIndexFromRequest(uint16_t ui16Lang,
-                                          uint16_t ui16Index);
+        uint16_t ui16Index);
 
 //*****************************************************************************
 //
@@ -184,8 +184,7 @@ tDeviceInfo *g_ppsDevInfo[1];
 // Function table to handle standard requests.
 //
 //*****************************************************************************
-static const tStdRequest g_psUSBDStdRequests[] =
-{
+static const tStdRequest g_psUSBDStdRequests[] = {
     USBDGetStatus,
     USBDClearFeature,
     0,
@@ -246,8 +245,7 @@ USBDCDDeviceInfoInit(uint32_t ui32Index, tDeviceInfo *psDeviceInfo)
     //
     // These devices have a different USB interrupt number.
     //
-    if(CLASS_IS_TM4C129)
-    {
+    if(CLASS_IS_TM4C129) {
         g_psDCDInst[0].ui32IntNum = INT_USB0_TM4C129;
     }
 
@@ -345,16 +343,14 @@ USBDCDInit(uint32_t ui32Index, tDeviceInfo *psDevice, void *pvDCDCBData)
     //
     // Default to device mode if no mode was set.
     //
-    if(g_iUSBMode == eUSBModeNone)
-    {
+    if(g_iUSBMode == eUSBModeNone) {
         g_iUSBMode = eUSBModeDevice;
     }
 
     //
     // Only do hardware update if the stack is in not in OTG mode.
     //
-    if(g_iUSBMode != eUSBModeOTG)
-    {
+    if(g_iUSBMode != eUSBModeOTG) {
         //
         // Reset the USB controller.
         //
@@ -373,45 +369,33 @@ USBDCDInit(uint32_t ui32Index, tDeviceInfo *psDevice, void *pvDCDCBData)
         //
         // Set the PLL to USB clock divider.
         //
-        if(g_ui32PLLDiv == 0)
-        {
+        if(g_ui32PLLDiv == 0) {
             USBClockEnable(USB0_BASE, g_ui32PLLDiv, USB_CLOCK_EXTERNAL);
-        }
-        else
-        {
+        } else {
             USBClockEnable(USB0_BASE, g_ui32PLLDiv, USB_CLOCK_INTERNAL);
         }
 
         //
         // Configure ULPI support.
         //
-        if(g_ui32ULPISupport != USBLIB_FEATURE_ULPI_NONE)
-        {
+        if(g_ui32ULPISupport != USBLIB_FEATURE_ULPI_NONE) {
             USBULPIEnable(USB0_BASE);
 
-            if(g_ui32ULPISupport & USBLIB_FEATURE_ULPI_HS)
-            {
+            if(g_ui32ULPISupport & USBLIB_FEATURE_ULPI_HS) {
                 ULPIConfigSet(USB0_BASE, ULPI_CFG_HS);
-            }
-            else
-            {
+            } else {
                 ULPIConfigSet(USB0_BASE, ULPI_CFG_FS);
             }
-        }
-        else
-        {
+        } else {
             USBULPIDisable(USB0_BASE);
         }
 
         //
         // Force device mode if requested.
         //
-        if(g_iUSBMode == eUSBModeForceDevice)
-        {
+        if(g_iUSBMode == eUSBModeForceDevice) {
             MAP_USBDevMode(USB0_BASE);
-        }
-        else if(g_iUSBMode == eUSBModeDevice)
-        {
+        } else if(g_iUSBMode == eUSBModeDevice) {
             //
             // To run in active device mode the OTG signals must be active.
             // This allows disconnect to be detected by the controller.
@@ -428,8 +412,7 @@ USBDCDInit(uint32_t ui32Index, tDeviceInfo *psDevice, void *pvDCDCBData)
         //
         // Enable or disable LPM functionality.
         //
-        if(g_psDCDInst[0].ui32Features & USBLIB_FEATURE_LPM_EN)
-        {
+        if(g_psDCDInst[0].ui32Features & USBLIB_FEATURE_LPM_EN) {
             //
             // Enable full LPM support and all LPM related interrupts.
             // USB_INTLPM_ERROR is not enabled since there is no response to
@@ -437,16 +420,14 @@ USBDCDInit(uint32_t ui32Index, tDeviceInfo *psDevice, void *pvDCDCBData)
             //
             USBDevLPMConfig(USB0_BASE, USB_DEV_LPM_EN);
             USBLPMIntEnable(USB0_BASE, USB_INTLPM_RESUME | USB_INTLPM_ERROR |
-                                       USB_INTLPM_ACK | USB_INTLPM_NYET);
+                            USB_INTLPM_ACK | USB_INTLPM_NYET);
             USBDevLPMEnable(USB0_BASE);
 
             //
             // Awake by default.
             //
             g_psDCDInst[0].ui32LPMState = USBLIB_LPM_STATE_AWAKE;
-        }
-        else
-        {
+        } else {
             USBDevLPMDisable(USB0_BASE);
             USBDevLPMConfig(USB0_BASE, USB_DEV_LPM_NONE);
             g_psDCDInst[0].ui32LPMState = USBLIB_LPM_STATE_DISABLED;
@@ -467,23 +448,19 @@ USBDCDInit(uint32_t ui32Index, tDeviceInfo *psDevice, void *pvDCDCBData)
     // Get a pointer to the default configuration descriptor.
     //
     psHdr = psDevice->ppsConfigDescriptors[
-                                g_psDCDInst[0].ui32DefaultConfiguration - 1];
+                g_psDCDInst[0].ui32DefaultConfiguration - 1];
     psDesc = (const tConfigDescriptor *)(psHdr->psSections[0]->pui8Data);
 
-    if((psDesc->bmAttributes & USB_CONF_ATTR_PWR_M) == USB_CONF_ATTR_SELF_PWR)
-    {
+    if((psDesc->bmAttributes & USB_CONF_ATTR_PWR_M) == USB_CONF_ATTR_SELF_PWR) {
         g_psDCDInst[0].ui8Status |= USB_STATUS_SELF_PWR;
-    }
-    else
-    {
+    } else {
         g_psDCDInst[0].ui8Status &= ~USB_STATUS_SELF_PWR;
     }
 
     //
     // Only do hardware update if the stack is not in OTG mode.
     //
-    if(g_iUSBMode != eUSBModeOTG)
-    {
+    if(g_iUSBMode != eUSBModeOTG) {
         //
         // Get the current interrupt status.to clear all pending USB
         // interrupts.
@@ -495,10 +472,10 @@ USBDCDInit(uint32_t ui32Index, tDeviceInfo *psDevice, void *pvDCDCBData)
         // Enable USB Interrupts.
         //
         MAP_USBIntEnableControl(USB0_BASE, USB_INTCTRL_RESET |
-                                           USB_INTCTRL_DISCONNECT |
-                                           USB_INTCTRL_RESUME |
-                                           USB_INTCTRL_SUSPEND |
-                                           USB_INTCTRL_SOF);
+                                USB_INTCTRL_DISCONNECT |
+                                USB_INTCTRL_RESUME |
+                                USB_INTCTRL_SUSPEND |
+                                USB_INTCTRL_SOF);
         MAP_USBIntEnableEndpoint(USB0_BASE, USB_INTEP_ALL);
 
         //
@@ -814,38 +791,29 @@ USBDCDFeatureSet(uint32_t ui32Index, uint32_t ui32Feature, void *pvFeature)
 
     bRetCode = true;
 
-    switch(ui32Feature)
-    {
-        case USBLIB_FEATURE_LPM:
-        {
+    switch(ui32Feature) {
+        case USBLIB_FEATURE_LPM: {
             //
             // Save the LPM setting.
             //
             psLPMFeature = (tLPMFeature *)pvFeature;
 
-            if(psLPMFeature->ui32Features & USBLIB_FEATURE_LPM_EN)
-            {
+            if(psLPMFeature->ui32Features & USBLIB_FEATURE_LPM_EN) {
                 g_psDCDInst[0].ui32Features |= USBLIB_FEATURE_LPM_EN;
-            }
-            else
-            {
+            } else {
                 g_psDCDInst[0].ui32Features &= ~USBLIB_FEATURE_LPM_EN;
             }
 
             break;
         }
-        case USBLIB_FEATURE_USBPLL:
-        {
+        case USBLIB_FEATURE_USBPLL: {
             //
             // If the PLL rate is not evenly divisible by 60MHz then
             // do not set it.
             //
-            if((*(uint32_t *)pvFeature % 60000000) != 0)
-            {
+            if((*(uint32_t *)pvFeature % 60000000) != 0) {
                 bRetCode = false;
-            }
-            else
-            {
+            } else {
                 //
                 // Save the new PLL rate.
                 //
@@ -853,8 +821,7 @@ USBDCDFeatureSet(uint32_t ui32Index, uint32_t ui32Feature, void *pvFeature)
             }
             break;
         }
-        case USBLIB_FEATURE_USBULPI:
-        {
+        case USBLIB_FEATURE_USBULPI: {
             //
             // Save the ULPI support level.
             //
@@ -862,8 +829,7 @@ USBDCDFeatureSet(uint32_t ui32Index, uint32_t ui32Feature, void *pvFeature)
 
             break;
         }
-        case USBLIB_FEATURE_POWER:
-        {
+        case USBLIB_FEATURE_POWER: {
             //
             // Update the device status with the new power status flag.
             //
@@ -873,8 +839,7 @@ USBDCDFeatureSet(uint32_t ui32Index, uint32_t ui32Feature, void *pvFeature)
 
             break;
         }
-        default:
-        {
+        default: {
             bRetCode = false;
             break;
         }
@@ -911,21 +876,18 @@ USBDCDFeatureGet(uint32_t ui32Index, uint32_t ui32Feature, void *pvFeature)
 {
     bool bRetCode = true;
 
-    switch (ui32Feature)
-    {
-        case USBLIB_FEATURE_USBULPI:
-        {
+    switch (ui32Feature) {
+        case USBLIB_FEATURE_USBULPI: {
             //
             // Save the ULPI support level.
             //
             *(uint32_t *)pvFeature = g_ui32ULPISupport;
-            
+
             break;
         }
-        default:
-        {
-             bRetCode = false;
-             break;
+        default: {
+            bRetCode = false;
+            break;
         }
     }
     return(bRetCode);
@@ -953,8 +915,7 @@ USBDCDFeatureGet(uint32_t ui32Index, uint32_t ui32Feature, void *pvFeature)
 bool
 USBDCDRemoteWakeLPM(uint32_t ui32Index)
 {
-    if(USBLPMRemoteWakeEnabled(USB0_BASE))
-    {
+    if(USBLPMRemoteWakeEnabled(USB0_BASE)) {
         USBDevLPMRemoteWake(USB0_BASE);
         return(true);
     }
@@ -992,14 +953,12 @@ USBDCDRemoteWakeupRequest(uint32_t ui32Index)
     //
     // Is remote wake up signaling currently enabled?
     //
-    if(g_psDCDInst[0].ui8Status & USB_STATUS_REMOTE_WAKE)
-    {
+    if(g_psDCDInst[0].ui8Status & USB_STATUS_REMOTE_WAKE) {
         //
         // The host has not disabled remote wake up. Are we still in the
         // middle of a previous wake up sequence?
         //
-        if(!g_psDCDInst[0].bRemoteWakeup)
-        {
+        if(!g_psDCDInst[0].bRemoteWakeup) {
             //
             // No - we are not in the middle of a wake up sequence so start
             // one here.
@@ -1034,8 +993,7 @@ USBDCDRemoteWakeupRequest(uint32_t ui32Index)
 void
 USBDeviceResumeTickHandler(tDCDInstance *psDevInst)
 {
-    if(g_psDCDInst[0].bRemoteWakeup)
-    {
+    if(g_psDCDInst[0].bRemoteWakeup) {
         //
         // Increment the millisecond counter we use to time the resume
         // signaling.
@@ -1046,8 +1004,7 @@ USBDeviceResumeTickHandler(tDCDInstance *psDevInst)
         // Have we reached the 10mS mark? If so, we need to turn the signaling
         // off again.
         //
-        if(g_psDCDInst[0].ui8RemoteWakeupCount == REMOTE_WAKEUP_PULSE_MS)
-        {
+        if(g_psDCDInst[0].ui8RemoteWakeupCount == REMOTE_WAKEUP_PULSE_MS) {
             MAP_USBHostResume(USB0_BASE, false);
         }
 
@@ -1057,8 +1014,7 @@ USBDeviceResumeTickHandler(tDCDInstance *psDevInst)
         // initiated the wake up signaling so we just wait until 20mS have
         // passed then tell the client all is well.
         //
-        if(g_psDCDInst[0].ui8RemoteWakeupCount == REMOTE_WAKEUP_READY_MS)
-        {
+        if(g_psDCDInst[0].ui8RemoteWakeupCount == REMOTE_WAKEUP_READY_MS) {
             //
             // We are now finished with the remote wake up signaling.
             //
@@ -1069,10 +1025,9 @@ USBDeviceResumeTickHandler(tDCDInstance *psDevInst)
             // case of a remote wake up request, we do not get a resume
             // interrupt from the controller so we need to fake it here.
             //
-            if(g_ppsDevInfo[0]->psCallbacks->pfnResumeHandler)
-            {
+            if(g_ppsDevInfo[0]->psCallbacks->pfnResumeHandler) {
                 g_ppsDevInfo[0]->psCallbacks->pfnResumeHandler(
-                                                    g_psDCDInst[0].pvCBData);
+                    g_psDCDInst[0].pvCBData);
             }
         }
     }
@@ -1112,51 +1067,41 @@ USBDReadAndDispatchRequest(uint32_t ui32Index)
     //
     // If there was a null setup packet then just return.
     //
-    if(!ui32Size)
-    {
+    if(!ui32Size) {
         return;
     }
 
     //
     // See if this is a standard request or not.
     //
-    if((psRequest->bmRequestType & USB_RTYPE_TYPE_M) != USB_RTYPE_STANDARD)
-    {
+    if((psRequest->bmRequestType & USB_RTYPE_TYPE_M) != USB_RTYPE_STANDARD) {
         //
         // Since this is not a standard request, see if there is
         // an external handler present.
         //
-        if(g_ppsDevInfo[0]->psCallbacks->pfnRequestHandler)
-        {
+        if(g_ppsDevInfo[0]->psCallbacks->pfnRequestHandler) {
             g_ppsDevInfo[0]->psCallbacks->pfnRequestHandler(
-                                                    g_psDCDInst[0].pvCBData,
-                                                    psRequest);
-        }
-        else
-        {
+                g_psDCDInst[0].pvCBData,
+                psRequest);
+        } else {
             //
             // If there is no handler then stall this request.
             //
             USBDCDStallEP0(0);
         }
-    }
-    else
-    {
+    } else {
         //
         // Assure that the jump table is not out of bounds.
         //
         if((psRequest->bRequest <
-           (sizeof(g_psUSBDStdRequests) / sizeof(tStdRequest))) &&
-           (g_psUSBDStdRequests[psRequest->bRequest] != 0))
-        {
+                (sizeof(g_psUSBDStdRequests) / sizeof(tStdRequest))) &&
+                (g_psUSBDStdRequests[psRequest->bRequest] != 0)) {
             //
             // Jump table to the appropriate handler.
             //
             g_psUSBDStdRequests[psRequest->bRequest](&g_psDCDInst[0],
-                                                     psRequest);
-        }
-        else
-        {
+                    psRequest);
+        } else {
             //
             // If there is no handler then stall this request.
             //
@@ -1215,14 +1160,12 @@ USBDeviceEnumHandler(tDCDInstance *pDevInstance)
     //
     ui32EPStatus = MAP_USBEndpointStatus(USB0_BASE, USB_EP_0);
 
-    switch(pDevInstance->iEP0State)
-    {
+    switch(pDevInstance->iEP0State) {
         //
         // Handle the status state, this is a transitory state from
         // eUSBStateTx or eUSBStateRx back to eUSBStateIdle.
         //
-        case eUSBStateStatus:
-        {
+        case eUSBStateStatus: {
             //
             // Just go back to the idle state.
             //
@@ -1231,8 +1174,7 @@ USBDeviceEnumHandler(tDCDInstance *pDevInstance)
             //
             // If there is a pending address change then set the address.
             //
-            if(pDevInstance->ui32DevAddress & DEV_ADDR_PENDING)
-            {
+            if(pDevInstance->ui32DevAddress & DEV_ADDR_PENDING) {
                 //
                 // Clear the pending address change and set the address.
                 //
@@ -1244,8 +1186,7 @@ USBDeviceEnumHandler(tDCDInstance *pDevInstance)
             // If a new packet is already pending, we need to read it
             // and handle whatever request it contains.
             //
-            if(ui32EPStatus & USB_DEV_EP0_OUT_PKTRDY)
-            {
+            if(ui32EPStatus & USB_DEV_EP0_OUT_PKTRDY) {
                 //
                 // Process the newly arrived packet.
                 //
@@ -1257,13 +1198,11 @@ USBDeviceEnumHandler(tDCDInstance *pDevInstance)
         //
         // In the IDLE state the code is waiting to receive data from the host.
         //
-        case eUSBStateIdle:
-        {
+        case eUSBStateIdle: {
             //
             // Is there a packet waiting for us?
             //
-            if(ui32EPStatus & USB_DEV_EP0_OUT_PKTRDY)
-            {
+            if(ui32EPStatus & USB_DEV_EP0_OUT_PKTRDY) {
                 //
                 // Yes - process it.
                 //
@@ -1276,8 +1215,7 @@ USBDeviceEnumHandler(tDCDInstance *pDevInstance)
         // Data is still being sent to the host so handle this in the
         // EP0StateTx() function.
         //
-        case eUSBStateTx:
-        {
+        case eUSBStateTx: {
             USBDEP0StateTx(0);
             break;
         }
@@ -1286,8 +1224,7 @@ USBDeviceEnumHandler(tDCDInstance *pDevInstance)
         // We are still in the middle of sending the configuration descriptor
         // so handle this in the EP0StateTxConfig() function.
         //
-        case eUSBStateTxConfig:
-        {
+        case eUSBStateTxConfig: {
             USBDEP0StateTxConfig(0);
             break;
         }
@@ -1296,20 +1233,16 @@ USBDeviceEnumHandler(tDCDInstance *pDevInstance)
         // Handle the receive state for commands that are receiving data on
         // endpoint zero.
         //
-        case eUSBStateRx:
-        {
+        case eUSBStateRx: {
             //
             // Set the number of bytes to get out of this next packet.
             //
-            if(pDevInstance->ui32EP0DataRemain > EP0_MAX_PACKET_SIZE)
-            {
+            if(pDevInstance->ui32EP0DataRemain > EP0_MAX_PACKET_SIZE) {
                 //
                 // Don't send more than EP0_MAX_PACKET_SIZE bytes.
                 //
                 ui32DataSize = EP0_MAX_PACKET_SIZE;
-            }
-            else
-            {
+            } else {
                 //
                 // There was space so send the remaining bytes.
                 //
@@ -1328,8 +1261,7 @@ USBDeviceEnumHandler(tDCDInstance *pDevInstance)
             // EP0_MAX_PACKET_SIZE remaining then there still needs to be
             // null packet sent before this is complete.
             //
-            if(pDevInstance->ui32EP0DataRemain < EP0_MAX_PACKET_SIZE)
-            {
+            if(pDevInstance->ui32EP0DataRemain < EP0_MAX_PACKET_SIZE) {
                 //
                 // Return to the idle state.
                 //
@@ -1339,15 +1271,14 @@ USBDeviceEnumHandler(tDCDInstance *pDevInstance)
                 // If there is a receive callback then call it.
                 //
                 if((g_ppsDevInfo[0]->psCallbacks->pfnDataReceived) &&
-                   (pDevInstance->ui32OUTDataSize != 0))
-                {
+                        (pDevInstance->ui32OUTDataSize != 0)) {
                     //
                     // Call the custom receive handler to handle the data
                     // that was received.
                     //
                     g_ppsDevInfo[0]->psCallbacks->pfnDataReceived(
-                                                g_psDCDInst[0].pvCBData,
-                                                pDevInstance->ui32OUTDataSize);
+                        g_psDCDInst[0].pvCBData,
+                        pDevInstance->ui32OUTDataSize);
 
                     //
                     // Indicate that there is no longer any data being waited
@@ -1361,9 +1292,7 @@ USBDeviceEnumHandler(tDCDInstance *pDevInstance)
                 // data end as this is the last of the data.
                 //
                 MAP_USBDevEndpointDataAck(USB0_BASE, USB_EP_0, true);
-            }
-            else
-            {
+            } else {
                 //
                 // Need to ACK the data on end point 0 in this case
                 // without setting data end because more data is coming.
@@ -1387,13 +1316,11 @@ USBDeviceEnumHandler(tDCDInstance *pDevInstance)
         // The device stalled endpoint zero so check if the stall needs to be
         // cleared once it has been successfully sent.
         //
-        case eUSBStateStall:
-        {
+        case eUSBStateStall: {
             //
             // If we sent a stall then acknowledge this interrupt.
             //
-            if(ui32EPStatus & USB_DEV_EP0_SENT_STALL)
-            {
+            if(ui32EPStatus & USB_DEV_EP0_SENT_STALL) {
                 //
                 // Clear the Setup End condition.
                 //
@@ -1411,8 +1338,7 @@ USBDeviceEnumHandler(tDCDInstance *pDevInstance)
         //
         // Halt on an unknown state, but only in DEBUG mode builds.
         //
-        default:
-        {
+        default: {
             ASSERT(0);
             break;
         }
@@ -1445,8 +1371,7 @@ USBDeviceEnumResetHandler(tDCDInstance *pDevInstance)
     //
     // Call the device dependent code to indicate a bus reset has occurred.
     //
-    if(g_ppsDevInfo[0]->psCallbacks->pfnResetHandler)
-    {
+    if(g_ppsDevInfo[0]->psCallbacks->pfnResetHandler) {
         g_ppsDevInfo[0]->psCallbacks->pfnResetHandler(g_psDCDInst[0].pvCBData);
     }
 
@@ -1456,8 +1381,7 @@ USBDeviceEnumResetHandler(tDCDInstance *pDevInstance)
     //
     pDevInstance->ui32Configuration = pDevInstance->ui32DefaultConfiguration;
 
-    for(ui32Loop = 0; ui32Loop < USB_MAX_INTERFACES_PER_DEVICE; ui32Loop++)
-    {
+    for(ui32Loop = 0; ui32Loop < USB_MAX_INTERFACES_PER_DEVICE; ui32Loop++) {
         pDevInstance->pui8AltSetting[ui32Loop] = (uint8_t)0;
     }
 }
@@ -1505,13 +1429,11 @@ USBDGetStatus(void *pvInstance, tUSBRequest *psUSBRequest)
     //
     // Determine what type of status was requested.
     //
-    switch(psUSBRequest->bmRequestType & USB_RTYPE_RECIPIENT_M)
-    {
+    switch(psUSBRequest->bmRequestType & USB_RTYPE_RECIPIENT_M) {
         //
         // This was a Device Status request.
         //
-        case USB_RTYPE_DEVICE:
-        {
+        case USB_RTYPE_DEVICE: {
             //
             // Return the current status for the device.
             //
@@ -1523,8 +1445,7 @@ USBDGetStatus(void *pvInstance, tUSBRequest *psUSBRequest)
         //
         // This was a Interface status request.
         //
-        case USB_RTYPE_INTERFACE:
-        {
+        case USB_RTYPE_INTERFACE: {
             //
             // Interface status always returns 0.
             //
@@ -1536,8 +1457,7 @@ USBDGetStatus(void *pvInstance, tUSBRequest *psUSBRequest)
         //
         // This was an endpoint status request.
         //
-        case USB_RTYPE_ENDPOINT:
-        {
+        case USB_RTYPE_ENDPOINT: {
             //
             // Which endpoint are we dealing with?
             //
@@ -1546,13 +1466,10 @@ USBDGetStatus(void *pvInstance, tUSBRequest *psUSBRequest)
             //
             // Check if this was a valid endpoint request.
             //
-            if((ui16Index == 0) || (ui16Index >= NUM_USB_EP))
-            {
+            if((ui16Index == 0) || (ui16Index >= NUM_USB_EP)) {
                 USBDCDStallEP0(0);
                 return;
-            }
-            else
-            {
+            } else {
                 //
                 // Are we dealing with an IN or OUT endpoint?
                 //
@@ -1571,8 +1488,7 @@ USBDGetStatus(void *pvInstance, tUSBRequest *psUSBRequest)
         //
         // This was an unknown request.
         //
-        default:
-        {
+        default: {
             //
             // Anything else causes a stall condition to indicate that the
             // command was not supported.
@@ -1637,25 +1553,20 @@ USBDClearFeature(void *pvInstance, tUSBRequest *psUSBRequest)
     //
     // Determine what type of status was requested.
     //
-    switch(psUSBRequest->bmRequestType & USB_RTYPE_RECIPIENT_M)
-    {
+    switch(psUSBRequest->bmRequestType & USB_RTYPE_RECIPIENT_M) {
         //
         // This is a clear feature request at the device level.
         //
-        case USB_RTYPE_DEVICE:
-        {
+        case USB_RTYPE_DEVICE: {
             //
             // Only remote wake is can be cleared by this function.
             //
-            if(USB_FEATURE_REMOTE_WAKE & psUSBRequest->wValue)
-            {
+            if(USB_FEATURE_REMOTE_WAKE & psUSBRequest->wValue) {
                 //
                 // Clear the remote wake up state.
                 //
                 psUSBControl->ui8Status &= ~USB_STATUS_REMOTE_WAKE;
-            }
-            else
-            {
+            } else {
                 USBDCDStallEP0(0);
             }
             break;
@@ -1664,8 +1575,7 @@ USBDClearFeature(void *pvInstance, tUSBRequest *psUSBRequest)
         //
         // This is a clear feature request at the endpoint level.
         //
-        case USB_RTYPE_ENDPOINT:
-        {
+        case USB_RTYPE_ENDPOINT: {
             //
             // Which endpoint are we dealing with?
             //
@@ -1674,17 +1584,13 @@ USBDClearFeature(void *pvInstance, tUSBRequest *psUSBRequest)
             //
             // Not a valid endpoint.
             //
-            if((ui16Index == 0) || (ui16Index > NUM_USB_EP))
-            {
+            if((ui16Index == 0) || (ui16Index > NUM_USB_EP)) {
                 USBDCDStallEP0(0);
-            }
-            else
-            {
+            } else {
                 //
                 // Only the halt feature is supported.
                 //
-                if(USB_FEATURE_EP_HALT == psUSBRequest->wValue)
-                {
+                if(USB_FEATURE_EP_HALT == psUSBRequest->wValue) {
                     //
                     // Are we dealing with an IN or OUT endpoint?
                     //
@@ -1696,21 +1602,16 @@ USBDClearFeature(void *pvInstance, tUSBRequest *psUSBRequest)
                     //
                     psUSBControl->ppui8Halt[ui32Dir][ui16Index - 1] = 0;
 
-                    if(ui32Dir == HALT_EP_IN)
-                    {
+                    if(ui32Dir == HALT_EP_IN) {
                         MAP_USBDevEndpointStallClear(USB0_BASE,
                                                      IndexToUSBEP(ui16Index),
                                                      USB_EP_DEV_IN);
-                    }
-                    else
-                    {
+                    } else {
                         MAP_USBDevEndpointStallClear(USB0_BASE,
                                                      IndexToUSBEP(ui16Index),
                                                      USB_EP_DEV_OUT);
                     }
-                }
-                else
-                {
+                } else {
                     //
                     // If any other feature is requested, this is an error.
                     //
@@ -1724,8 +1625,7 @@ USBDClearFeature(void *pvInstance, tUSBRequest *psUSBRequest)
         //
         // This is an unknown request.
         //
-        default:
-        {
+        default: {
             USBDCDStallEP0(0);
             return;
         }
@@ -1776,26 +1676,21 @@ USBDSetFeature(void *pvInstance, tUSBRequest *psUSBRequest)
     //
     // Determine what type of status was requested.
     //
-    switch(psUSBRequest->bmRequestType & USB_RTYPE_RECIPIENT_M)
-    {
+    switch(psUSBRequest->bmRequestType & USB_RTYPE_RECIPIENT_M) {
         //
         // This is a set feature request at the device level.
         //
-        case USB_RTYPE_DEVICE:
-        {
+        case USB_RTYPE_DEVICE: {
             //
             // Only remote wake is the only feature that can be set by this
             // function.
             //
-            if(USB_FEATURE_REMOTE_WAKE & psUSBRequest->wValue)
-            {
+            if(USB_FEATURE_REMOTE_WAKE & psUSBRequest->wValue) {
                 //
                 // Set the remote wake up state.
                 //
                 psUSBControl->ui8Status |= USB_STATUS_REMOTE_WAKE;
-            }
-            else
-            {
+            } else {
                 USBDCDStallEP0(0);
             }
             break;
@@ -1804,8 +1699,7 @@ USBDSetFeature(void *pvInstance, tUSBRequest *psUSBRequest)
         //
         // This is a set feature request at the endpoint level.
         //
-        case USB_RTYPE_ENDPOINT:
-        {
+        case USB_RTYPE_ENDPOINT: {
             //
             // Which endpoint are we dealing with?
             //
@@ -1814,17 +1708,13 @@ USBDSetFeature(void *pvInstance, tUSBRequest *psUSBRequest)
             //
             // Not a valid endpoint?
             //
-            if((ui16Index == 0) || (ui16Index >= NUM_USB_EP))
-            {
+            if((ui16Index == 0) || (ui16Index >= NUM_USB_EP)) {
                 USBDCDStallEP0(0);
-            }
-            else
-            {
+            } else {
                 //
                 // Only the Halt feature can be set.
                 //
-                if(USB_FEATURE_EP_HALT == psUSBRequest->wValue)
-                {
+                if(USB_FEATURE_EP_HALT == psUSBRequest->wValue) {
                     //
                     // Are we dealing with an IN or OUT endpoint?
                     //
@@ -1835,9 +1725,7 @@ USBDSetFeature(void *pvInstance, tUSBRequest *psUSBRequest)
                     // Clear the halt condition on this endpoint.
                     //
                     psUSBControl->ppui8Halt[ui32Dir][ui16Index - 1] = 1;
-                }
-                else
-                {
+                } else {
                     //
                     // No other requests are supported.
                     //
@@ -1851,8 +1739,7 @@ USBDSetFeature(void *pvInstance, tUSBRequest *psUSBRequest)
         //
         // This is an unknown request.
         //
-        default:
-        {
+        default: {
             USBDCDStallEP0(0);
             return;
         }
@@ -1969,18 +1856,16 @@ USBDGetDescriptor(void *pvInstance, tUSBRequest *psUSBRequest)
     //
     // Which descriptor are we being asked for?
     //
-    switch(psUSBRequest->wValue >> 8)
-    {
+    switch(psUSBRequest->wValue >> 8) {
         //
         // This request was for a device descriptor.
         //
-        case USB_DTYPE_DEVICE:
-        {
+        case USB_DTYPE_DEVICE: {
             //
             // Return the externally provided device descriptor.
             //
             psUSBControl->pui8EP0Data =
-                                    (uint8_t *)psDevice->pui8DeviceDescriptor;
+                (uint8_t *)psDevice->pui8DeviceDescriptor;
 
             //
             // The size of the device descriptor is in the first byte.
@@ -1994,8 +1879,7 @@ USBDGetDescriptor(void *pvInstance, tUSBRequest *psUSBRequest)
         //
         // This request was for a configuration descriptor.
         //
-        case USB_DTYPE_CONFIGURATION:
-        {
+        case USB_DTYPE_CONFIGURATION: {
             //
             // Which configuration are we being asked for?
             //
@@ -2007,8 +1891,7 @@ USBDGetDescriptor(void *pvInstance, tUSBRequest *psUSBRequest)
             psDeviceDesc =
                 (const tDeviceDescriptor *)psDevice->pui8DeviceDescriptor;
 
-            if(ui8Index >= psDeviceDesc->bNumConfigurations)
-            {
+            if(ui8Index >= psDeviceDesc->bNumConfigurations) {
                 //
                 // This is an invalid configuration index.  Stall EP0 to
                 // indicate a request error.
@@ -2016,9 +1899,7 @@ USBDGetDescriptor(void *pvInstance, tUSBRequest *psUSBRequest)
                 USBDCDStallEP0(0);
                 psUSBControl->pui8EP0Data = 0;
                 psUSBControl->ui32EP0DataRemain = 0;
-            }
-            else
-            {
+            } else {
                 //
                 // Return the externally specified configuration descriptor.
                 //
@@ -2031,14 +1912,14 @@ USBDGetDescriptor(void *pvInstance, tUSBRequest *psUSBRequest)
                 psUSBControl->ui8ConfigSection = 0;
                 psUSBControl->ui16SectionOffset = 0;
                 psUSBControl->pui8EP0Data =
-                                (uint8_t *)psConfig->psSections[0]->pui8Data;
+                    (uint8_t *)psConfig->psSections[0]->pui8Data;
 
                 //
                 // Determine the total size of the configuration descriptor
                 // by counting the sizes of the sections comprising it.
                 //
                 psUSBControl->ui32EP0DataRemain =
-                                            USBDCDConfigDescGetSize(psConfig);
+                    USBDCDConfigDescGetSize(psConfig);
 
                 //
                 // Remember that we need to send the configuration descriptor
@@ -2054,8 +1935,7 @@ USBDGetDescriptor(void *pvInstance, tUSBRequest *psUSBRequest)
         //
         // This request was for a string descriptor.
         //
-        case USB_DTYPE_STRING:
-        {
+        case USB_DTYPE_STRING: {
             //
             // Determine the correct descriptor index based on the requested
             // language ID and index.
@@ -2067,8 +1947,7 @@ USBDGetDescriptor(void *pvInstance, tUSBRequest *psUSBRequest)
             // If the mapping function returned -1 then stall the request to
             // indicate that the request was not valid.
             //
-            if(i32Index == -1)
-            {
+            if(i32Index == -1) {
                 USBDCDStallEP0(0);
                 break;
             }
@@ -2092,19 +1971,15 @@ USBDGetDescriptor(void *pvInstance, tUSBRequest *psUSBRequest)
         // Any other request is not handled by the default enumeration handler
         // so see if it needs to be passed on to another handler.
         //
-        default:
-        {
+        default: {
             //
             // If there is a handler for requests that are not handled then
             // call it.
             //
-            if(psDevice->psCallbacks->pfnGetDescriptor)
-            {
+            if(psDevice->psCallbacks->pfnGetDescriptor) {
                 psDevice->psCallbacks->pfnGetDescriptor(g_psDCDInst[0].pvCBData,
-                                                      psUSBRequest);
-            }
-            else
-            {
+                                                        psUSBRequest);
+            } else {
                 //
                 // Whatever this was this handler does not understand it so
                 // just stall the request.
@@ -2119,14 +1994,12 @@ USBDGetDescriptor(void *pvInstance, tUSBRequest *psUSBRequest)
     //
     // If this request has data to send, then send it.
     //
-    if(psUSBControl->pui8EP0Data)
-    {
+    if(psUSBControl->pui8EP0Data) {
         //
         // If there is more data to send than is requested then just
         // send the requested amount of data.
         //
-        if(psUSBControl->ui32EP0DataRemain > psUSBRequest->wLength)
-        {
+        if(psUSBControl->ui32EP0DataRemain > psUSBRequest->wLength) {
             psUSBControl->ui32EP0DataRemain = psUSBRequest->wLength;
         }
 
@@ -2135,12 +2008,9 @@ USBDGetDescriptor(void *pvInstance, tUSBRequest *psUSBRequest)
         // function since we need to handle the configuration descriptor
         // differently from the others.
         //
-        if(!bConfig)
-        {
+        if(!bConfig) {
             USBDEP0StateTx(0);
-        }
-        else
-        {
+        } else {
             USBDEP0StateTxConfig(0);
         }
     }
@@ -2178,8 +2048,7 @@ USBDStringIndexFromRequest(uint16_t ui16Lang, uint16_t ui16Index)
     // Make sure we have a string table at all.
     //
     if((g_ppsDevInfo[0] == 0) ||
-       (g_ppsDevInfo[0]->ppui8StringDescriptors == 0))
-    {
+            (g_ppsDevInfo[0]->ppui8StringDescriptors == 0)) {
         return(-1);
     }
 
@@ -2188,8 +2057,7 @@ USBDStringIndexFromRequest(uint16_t ui16Lang, uint16_t ui16Index)
     // requested.  This is the special case since descriptor 0 contains the
     // language codes supported by the device.
     //
-    if(ui16Index == 0)
-    {
+    if(ui16Index == 0) {
         return(0);
     }
 
@@ -2200,7 +2068,7 @@ USBDStringIndexFromRequest(uint16_t ui16Lang, uint16_t ui16Index)
     // language code).
     //
     ui32NumLangs =
-            (g_ppsDevInfo[0]->ppui8StringDescriptors[0][0] - 2) / 2;
+        (g_ppsDevInfo[0]->ppui8StringDescriptors[0][0] - 2) / 2;
 
     //
     // We assume that the table includes the same number of strings for each
@@ -2219,8 +2087,7 @@ USBDStringIndexFromRequest(uint16_t ui16Lang, uint16_t ui16Index)
     // (1 + (strings_per_language * languages)) entries.
     //
     if((1 + (ui32NumStringi16PerLang * ui32NumLangs)) !=
-            g_ppsDevInfo[0]->ui32NumStringDescriptors)
-    {
+            g_ppsDevInfo[0]->ui32NumStringDescriptors) {
         return(-1);
     }
 
@@ -2230,19 +2097,17 @@ USBDStringIndexFromRequest(uint16_t ui16Lang, uint16_t ui16Index)
     // same as the order of the language IDs listed in the first descriptor.
     //
     pLang = (tString0Descriptor *)
-                        (g_ppsDevInfo[0]->ppui8StringDescriptors[0]);
+            (g_ppsDevInfo[0]->ppui8StringDescriptors[0]);
 
     //
     // Look through the supported languages looking for the one we were asked
     // for.
     //
-    for(ui32Loop = 0; ui32Loop < ui32NumLangs; ui32Loop++)
-    {
+    for(ui32Loop = 0; ui32Loop < ui32NumLangs; ui32Loop++) {
         //
         // Have we found the requested language?
         //
-        if(pLang->wLANGID[ui32Loop] == ui16Lang)
-        {
+        if(pLang->wLANGID[ui32Loop] == ui16Lang) {
             //
             // Yes - calculate the index of the descriptor to send.
             //
@@ -2324,12 +2189,9 @@ USBDGetConfiguration(void *pvInstance, tUSBRequest *psUSBRequest)
     // If we still have an address pending then the device is still not
     // configured.
     //
-    if(psUSBControl->ui32DevAddress & DEV_ADDR_PENDING)
-    {
+    if(psUSBControl->ui32DevAddress & DEV_ADDR_PENDING) {
         ui8Value = 0;
-    }
-    else
-    {
+    } else {
         ui8Value = (uint8_t)psUSBControl->ui32Configuration;
     }
 
@@ -2385,16 +2247,13 @@ USBDSetConfiguration(void *pvInstance, tUSBRequest *psUSBRequest)
     // Cannot set the configuration to one that does not exist so check the
     // enumeration structure to see how many valid configurations are present.
     //
-    if(psUSBRequest->wValue > psDevice->pui8DeviceDescriptor[17])
-    {
+    if(psUSBRequest->wValue > psDevice->pui8DeviceDescriptor[17]) {
         //
         // The passed configuration number is not valid.  Stall the endpoint to
         // signal the error to the host.
         //
         USBDCDStallEP0(0);
-    }
-    else
-    {
+    } else {
         //
         // Save the configuration.
         //
@@ -2405,8 +2264,7 @@ USBDSetConfiguration(void *pvInstance, tUSBRequest *psUSBRequest)
         // not currently configured), configure the endpoints (other than EP0)
         // appropriately.
         //
-        if(psUSBControl->ui32Configuration)
-        {
+        if(psUSBControl->ui32Configuration) {
             //
             // Get a pointer to the configuration descriptor.  This will always
             // be the first section in the current configuration.
@@ -2419,15 +2277,11 @@ USBDSetConfiguration(void *pvInstance, tUSBRequest *psUSBRequest)
             // Remember the new self- or bus-powered state if the user has not
             // already called us to tell us the state to report.
             //
-            if(!psUSBControl->bPwrSrcSet)
-            {
+            if(!psUSBControl->bPwrSrcSet) {
                 if((psDesc->bmAttributes & USB_CONF_ATTR_PWR_M) ==
-                    USB_CONF_ATTR_SELF_PWR)
-                {
+                        USB_CONF_ATTR_SELF_PWR) {
                     psUSBControl->ui8Status |= USB_STATUS_SELF_PWR;
-                }
-                else
-                {
+                } else {
                     psUSBControl->ui8Status &= ~USB_STATUS_SELF_PWR;
                 }
             }
@@ -2436,16 +2290,15 @@ USBDSetConfiguration(void *pvInstance, tUSBRequest *psUSBRequest)
             // Configure endpoints for the new configuration.
             //
             USBDeviceConfig(psUSBControl,
-                    psDevice->ppsConfigDescriptors[psUSBRequest->wValue - 1]);
+                            psDevice->ppsConfigDescriptors[psUSBRequest->wValue - 1]);
         }
 
         //
         // If there is a configuration change callback then call it.
         //
-        if(psDevice->psCallbacks->pfnConfigChange)
-        {
+        if(psDevice->psCallbacks->pfnConfigChange) {
             psDevice->psCallbacks->pfnConfigChange(g_psDCDInst[0].pvCBData,
-                                            psUSBControl->ui32Configuration);
+                                                   psUSBControl->ui32Configuration);
         }
     }
 }
@@ -2488,24 +2341,18 @@ USBDGetInterface(void *pvInstance, tUSBRequest *psUSBRequest)
     // If we still have an address pending then the device is still not
     // configured.
     //
-    if(psUSBControl->ui32DevAddress & DEV_ADDR_PENDING)
-    {
+    if(psUSBControl->ui32DevAddress & DEV_ADDR_PENDING) {
         ui8Value = (uint8_t)0;
-    }
-    else
-    {
+    } else {
         //
         // Is the interface number valid?
         //
-        if(psUSBRequest->wIndex < USB_MAX_INTERFACES_PER_DEVICE)
-        {
+        if(psUSBRequest->wIndex < USB_MAX_INTERFACES_PER_DEVICE) {
             //
             // Read the current alternate setting for the required interface.
             //
             ui8Value = psUSBControl->pui8AltSetting[psUSBRequest->wIndex];
-        }
-        else
-        {
+        } else {
             //
             // An invalid interface number was specified.
             //
@@ -2584,8 +2431,7 @@ USBDSetInterface(void *pvInstance, tUSBRequest *psUSBRequest)
     // Find the interface descriptor for the supplied interface and alternate
     // setting numbers.
     //
-    for(ui32Loop = 0; ui32Loop < ui32NumInterfaces; ui32Loop++)
-    {
+    for(ui32Loop = 0; ui32Loop < ui32NumInterfaces; ui32Loop++) {
         //
         // Get the next interface descriptor in the configuration descriptor.
         //
@@ -2596,9 +2442,8 @@ USBDSetInterface(void *pvInstance, tUSBRequest *psUSBRequest)
         // Is this the required interface with the correct alternate setting?
         //
         if(psInterface &&
-           (psInterface->bInterfaceNumber == psUSBRequest->wIndex) &&
-           (psInterface->bAlternateSetting == psUSBRequest->wValue))
-        {
+                (psInterface->bInterfaceNumber == psUSBRequest->wIndex) &&
+                (psInterface->bAlternateSetting == psUSBRequest->wValue)) {
             ui8Interface = psInterface->bInterfaceNumber;
 
             //
@@ -2613,26 +2458,25 @@ USBDSetInterface(void *pvInstance, tUSBRequest *psUSBRequest)
             // setting.
             //
             psUSBControl->pui8AltSetting[ui8Interface] =
-                                            psInterface->bAlternateSetting;
+                psInterface->bAlternateSetting;
 
             //
             // Reconfigure the endpoints to match the requirements of the
             // new alternate setting for the interface.
             //
             bRetcode = USBDeviceConfigAlternate(psUSBControl, psConfig,
-                                            ui8Interface,
-                                            psInterface->bAlternateSetting);
+                                                ui8Interface,
+                                                psInterface->bAlternateSetting);
 
             //
             // If there is a callback then notify the application of the
             // change to the alternate interface.
             //
-            if(bRetcode && psDevice->psCallbacks->pfnInterfaceChange)
-            {
+            if(bRetcode && psDevice->psCallbacks->pfnInterfaceChange) {
                 psDevice->psCallbacks->pfnInterfaceChange(
-                                                g_psDCDInst[0].pvCBData,
-                                                psUSBRequest->wIndex,
-                                                psUSBRequest->wValue);
+                    g_psDCDInst[0].pvCBData,
+                    psUSBRequest->wIndex,
+                    psUSBRequest->wValue);
             }
 
             //
@@ -2709,8 +2553,7 @@ USBDEP0StateTx(uint32_t ui32Index)
     //
     // Limit individual transfers to 64 bytes.
     //
-    if(ui32NumBytes > EP0_MAX_PACKET_SIZE)
-    {
+    if(ui32NumBytes > EP0_MAX_PACKET_SIZE) {
         ui32NumBytes = EP0_MAX_PACKET_SIZE;
     }
 
@@ -2734,17 +2577,14 @@ USBDEP0StateTx(uint32_t ui32Index)
     //
     // If this is exactly 64 then don't set the last packet yet.
     //
-    if(ui32NumBytes == EP0_MAX_PACKET_SIZE)
-    {
+    if(ui32NumBytes == EP0_MAX_PACKET_SIZE) {
         //
         // There is more data to send or exactly 64 bytes were sent, this
         // means that there is either more data coming or a null packet needs
         // to be sent to complete the transaction.
         //
         MAP_USBEndpointDataSend(USB0_BASE, USB_EP_0, USB_TRANS_IN);
-    }
-    else
-    {
+    } else {
         //
         // Now go to the status state and wait for the transmit to complete.
         //
@@ -2759,14 +2599,13 @@ USBDEP0StateTx(uint32_t ui32Index)
         // If there is a sent callback then call it.
         //
         if((g_ppsDevInfo[0]->psCallbacks->pfnDataSent) &&
-           (g_psDCDInst[0].ui32OUTDataSize != 0))
-        {
+                (g_psDCDInst[0].ui32OUTDataSize != 0)) {
             //
             // Call the custom handler.
             //
             g_ppsDevInfo[0]->psCallbacks->pfnDataSent(
-                                            g_psDCDInst[0].pvCBData,
-                                            g_psDCDInst[0].ui32OUTDataSize);
+                g_psDCDInst[0].pvCBData,
+                g_psDCDInst[0].ui32OUTDataSize);
 
             //
             // There is no longer any data pending to be sent.
@@ -2806,7 +2645,7 @@ USBDEP0StateTxConfig(uint32_t ui32Index)
     // Find the current configuration descriptor definition.
     //
     psConfig = g_ppsDevInfo[0]->ppsConfigDescriptors[
-                                            g_psDCDInst[0].ui8ConfigIndex];
+                   g_psDCDInst[0].ui8ConfigIndex];
 
     //
     // Set the number of bytes to send this iteration.
@@ -2816,8 +2655,7 @@ USBDEP0StateTxConfig(uint32_t ui32Index)
     //
     // Limit individual transfers to 64 bytes.
     //
-    if(ui32NumBytes > EP0_MAX_PACKET_SIZE)
-    {
+    if(ui32NumBytes > EP0_MAX_PACKET_SIZE) {
         ui32NumBytes = EP0_MAX_PACKET_SIZE;
     }
 
@@ -2827,8 +2665,7 @@ USBDEP0StateTxConfig(uint32_t ui32Index)
     // g_sUSBDeviceState.ui32EP0DataRemain.
     //
     if((g_psDCDInst[0].ui16SectionOffset == 0) &&
-       (g_psDCDInst[0].ui8ConfigSection == 0))
-    {
+            (g_psDCDInst[0].ui8ConfigSection == 0)) {
         //
         // Copy the USB configuration descriptor from the beginning of the
         // first section of the current configuration.
@@ -2844,24 +2681,21 @@ USBDEP0StateTxConfig(uint32_t ui32Index)
         // Write the descriptor to the USB FIFO.
         //
         ui32ToSend = (ui32NumBytes < sizeof(tConfigDescriptor)) ? ui32NumBytes:
-                        sizeof(tConfigDescriptor);
+                     sizeof(tConfigDescriptor);
         MAP_USBEndpointDataPut(USB0_BASE, USB_EP_0, (uint8_t *)&sConfDesc,
                                ui32ToSend);
 
         //
         // Did we reach the end of the first section?
         //
-        if(psConfig->psSections[0]->ui16Size == ui32ToSend)
-        {
+        if(psConfig->psSections[0]->ui16Size == ui32ToSend) {
             //
             // Update our tracking indices to point to the start of the next
             // section.
             //
             g_psDCDInst[0].ui16SectionOffset = 0;
             g_psDCDInst[0].ui8ConfigSection = 1;
-        }
-        else
-        {
+        } else {
             //
             // Note that we have sent the first few bytes of the descriptor.
             //
@@ -2872,9 +2706,7 @@ USBDEP0StateTxConfig(uint32_t ui32Index)
         // How many bytes do we have remaining to send on this iteration?
         //
         ui32ToSend = ui32NumBytes - ui32ToSend;
-    }
-    else
-    {
+    } else {
         //
         // Set the number of bytes we still have to send on this call.
         //
@@ -2884,8 +2716,7 @@ USBDEP0StateTxConfig(uint32_t ui32Index)
     //
     // Add the relevant number of bytes to the USB FIFO
     //
-    while(ui32ToSend)
-    {
+    while(ui32ToSend) {
         //
         // Get a pointer to the current configuration section.
         //
@@ -2902,13 +2733,12 @@ USBDEP0StateTxConfig(uint32_t ui32Index)
         // USBEndpointDataPut() function.
         //
         pui8Data = (uint8_t *)psSection->pui8Data +
-                              g_psDCDInst[0].ui16SectionOffset;
+                   g_psDCDInst[0].ui16SectionOffset;
 
         //
         // Are there more bytes in this section that we still have to send?
         //
-        if(ui32SecBytes > ui32ToSend)
-        {
+        if(ui32SecBytes > ui32ToSend) {
             //
             // Yes - send only the remaining bytes in the transfer.
             //
@@ -2929,8 +2759,7 @@ USBDEP0StateTxConfig(uint32_t ui32Index)
         //
         // Have we reached the end of a section?
         //
-        if(g_psDCDInst[0].ui16SectionOffset == psSection->ui16Size)
-        {
+        if(g_psDCDInst[0].ui16SectionOffset == psSection->ui16Size) {
             //
             // Yes - move to the next one.
             //
@@ -2948,8 +2777,7 @@ USBDEP0StateTxConfig(uint32_t ui32Index)
     // If we ran out of bytes in the configuration section, bail and just
     // send out what we have.
     //
-    if(psConfig->ui8NumSections <= g_psDCDInst[0].ui8ConfigSection)
-    {
+    if(psConfig->ui8NumSections <= g_psDCDInst[0].ui8ConfigSection) {
         g_psDCDInst[0].ui32EP0DataRemain = 0;
     }
 
@@ -2957,10 +2785,9 @@ USBDEP0StateTxConfig(uint32_t ui32Index)
     // If there is no more data don't keep looking or ui8ConfigSection might
     // overrun the available space.
     //
-    if(g_psDCDInst[0].ui32EP0DataRemain != 0)
-    {
+    if(g_psDCDInst[0].ui32EP0DataRemain != 0) {
         pui8Data =(uint8_t *)
-            psConfig->psSections[g_psDCDInst[0].ui8ConfigSection]->pui8Data;
+                  psConfig->psSections[g_psDCDInst[0].ui8ConfigSection]->pui8Data;
         ui32ToSend = g_psDCDInst[0].ui16SectionOffset;
         g_psDCDInst[0].pui8EP0Data = (pui8Data + ui32ToSend);
     }
@@ -2968,17 +2795,14 @@ USBDEP0StateTxConfig(uint32_t ui32Index)
     //
     // If this is exactly 64 then don't set the last packet yet.
     //
-    if(ui32NumBytes == EP0_MAX_PACKET_SIZE)
-    {
+    if(ui32NumBytes == EP0_MAX_PACKET_SIZE) {
         //
         // There is more data to send or exactly 64 bytes were sent, this
         // means that there is either more data coming or a null packet needs
         // to be sent to complete the transaction.
         //
         MAP_USBEndpointDataSend(USB0_BASE, USB_EP_0, USB_TRANS_IN);
-    }
-    else
-    {
+    } else {
         //
         // Send the last bit of data.
         //
@@ -2988,13 +2812,12 @@ USBDEP0StateTxConfig(uint32_t ui32Index)
         // If there is a sent callback then call it.
         //
         if((g_ppsDevInfo[0]->psCallbacks->pfnDataSent) &&
-           (g_psDCDInst[0].ui32OUTDataSize != 0))
-        {
+                (g_psDCDInst[0].ui32OUTDataSize != 0)) {
             //
             // Call the custom handler.
             //
             g_ppsDevInfo[0]->psCallbacks->pfnDataSent(g_psDCDInst[0].pvCBData,
-                                            g_psDCDInst[0].ui32OUTDataSize);
+                    g_psDCDInst[0].ui32OUTDataSize);
 
             //
             // There is no longer any data pending to be sent.
@@ -3042,8 +2865,7 @@ USBDeviceIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     // If device initialization has not been performed then just disconnect
     // from the USB bus and return from the handler.
     //
-    if(g_ppsDevInfo[0] == 0)
-    {
+    if(g_ppsDevInfo[0] == 0) {
         MAP_USBDevDisconnect(USB0_BASE);
         return;
     }
@@ -3053,21 +2875,18 @@ USBDeviceIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     //
     // Received a reset from the host.
     //
-    if(ui32Status & USB_INTCTRL_RESET)
-    {
+    if(ui32Status & USB_INTCTRL_RESET) {
         USBDeviceEnumResetHandler(&g_psDCDInst[0]);
     }
 
     //
     // Suspend was signaled on the bus.
     //
-    if(ui32Status & USB_INTCTRL_SUSPEND)
-    {
+    if(ui32Status & USB_INTCTRL_SUSPEND) {
         //
         // Call the SuspendHandler() if it was specified.
         //
-        if(g_ppsDevInfo[0]->psCallbacks->pfnSuspendHandler)
-        {
+        if(g_ppsDevInfo[0]->psCallbacks->pfnSuspendHandler) {
             g_ppsDevInfo[0]->psCallbacks->pfnSuspendHandler(pvInstance);
         }
     }
@@ -3075,13 +2894,11 @@ USBDeviceIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     //
     // Resume was signaled on the bus.
     //
-    if(ui32Status & USB_INTCTRL_RESUME)
-    {
+    if(ui32Status & USB_INTCTRL_RESUME) {
         //
         // Call the ResumeHandler() if it was specified.
         //
-        if(g_ppsDevInfo[0]->psCallbacks->pfnResumeHandler)
-        {
+        if(g_ppsDevInfo[0]->psCallbacks->pfnResumeHandler) {
             g_ppsDevInfo[0]->psCallbacks->pfnResumeHandler(pvInstance);
         }
     }
@@ -3089,13 +2906,11 @@ USBDeviceIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     //
     // USB device was disconnected.
     //
-    if(ui32Status & USB_INTCTRL_DISCONNECT)
-    {
+    if(ui32Status & USB_INTCTRL_DISCONNECT) {
         //
         // Call the DisconnectHandler() if it was specified.
         //
-        if(g_ppsDevInfo[0]->psCallbacks->pfnDisconnectHandler)
-        {
+        if(g_ppsDevInfo[0]->psCallbacks->pfnDisconnectHandler) {
             g_ppsDevInfo[0]->psCallbacks->pfnDisconnectHandler(pvInstance);
         }
     }
@@ -3103,8 +2918,7 @@ USBDeviceIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     //
     // Start of Frame was received.
     //
-    if(ui32Status & USB_INTCTRL_SOF)
-    {
+    if(ui32Status & USB_INTCTRL_SOF) {
         //
         // Increment the global Start of Frame counter.
         //
@@ -3123,8 +2937,7 @@ USBDeviceIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
         //
         // Have we counted enough SOFs to allow us to call the tick function?
         //
-        if(ui32SOFDivide == USB_SOF_TICK_DIVIDE)
-        {
+        if(ui32SOFDivide == USB_SOF_TICK_DIVIDE) {
             //
             // Yes - reset the divider and call the SOF tick handler.
             //
@@ -3143,17 +2956,15 @@ USBDeviceIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     // class to handle the sleep state.
     //
     if((g_psDCDInst[0].ui32LPMState == USBLIB_LPM_STATE_SLEEP) &&
-       ((ui32LPMStatus & (USB_INTLPM_ACK | USB_INTLPM_RESUME)) ==
-        USB_INTLPM_RESUME))
-    {
+            ((ui32LPMStatus & (USB_INTLPM_ACK | USB_INTLPM_RESUME)) ==
+             USB_INTLPM_RESUME)) {
         //
         // Notify the class of the wake from LPM L1.
         //
-        if(g_ppsDevInfo[0]->psCallbacks->pfnDeviceHandler)
-        {
+        if(g_ppsDevInfo[0]->psCallbacks->pfnDeviceHandler) {
             g_ppsDevInfo[0]->psCallbacks->pfnDeviceHandler(pvInstance,
-                                                USB_EVENT_LPM_RESUME,
-                                                (void *)0);
+                    USB_EVENT_LPM_RESUME,
+                    (void *)0);
         }
 
         //
@@ -3172,31 +2983,26 @@ USBDeviceIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     //
     else if((g_psDCDInst[0].ui32LPMState == USBLIB_LPM_STATE_AWAKE) &&
             ((ui32LPMStatus & (USB_INTLPM_ACK | USB_INTLPM_RESUME)) ==
-             USB_INTLPM_ACK))
-    {
-        if(g_ppsDevInfo[0]->psCallbacks->pfnDeviceHandler)
-        {
+             USB_INTLPM_ACK)) {
+        if(g_ppsDevInfo[0]->psCallbacks->pfnDeviceHandler) {
             g_ppsDevInfo[0]->psCallbacks->pfnDeviceHandler(pvInstance,
-                                                USB_EVENT_LPM_SLEEP,
-                                                (void *)0);
+                    USB_EVENT_LPM_SLEEP,
+                    (void *)0);
         }
 
         //
         // Now back in the sleep state.
         //
         g_psDCDInst[0].ui32LPMState = USBLIB_LPM_STATE_SLEEP;
-    }
-    else if(ui32LPMStatus & USB_INTLPM_NYET)
-    {
+    } else if(ui32LPMStatus & USB_INTLPM_NYET) {
         //
         // The device has held off the sleep state because LPM
         // responses are disabled.
         //
-        if(g_ppsDevInfo[0]->psCallbacks->pfnDeviceHandler)
-        {
+        if(g_ppsDevInfo[0]->psCallbacks->pfnDeviceHandler) {
             g_ppsDevInfo[0]->psCallbacks->pfnDeviceHandler(pvInstance,
-                                                USB_EVENT_LPM_ERROR,
-                                                (void *)0);
+                    USB_EVENT_LPM_ERROR,
+                    (void *)0);
         }
     }
 
@@ -3208,8 +3014,7 @@ USBDeviceIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     //
     // Handle end point 0 interrupts.
     //
-    if(ui32Status & USB_INTEP_0)
-    {
+    if(ui32Status & USB_INTEP_0) {
         USBDeviceEnumHandler(&g_psDCDInst[0]);
         ui32Status &= ~USB_INTEP_0;
     }
@@ -3219,8 +3024,7 @@ USBDeviceIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     //
     ui32DMAIntStatus = USBLibDMAIntStatus(g_psDCDInst[0].psDMAInstance);
 
-    if(ui32DMAIntStatus)
-    {
+    if(ui32DMAIntStatus) {
         //
         // Handle any DMA interrupt processing.
         //
@@ -3232,8 +3036,7 @@ USBDeviceIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status)
     // check for an endpoint callback and call it if it is available.
     //
     if((g_ppsDevInfo[0]->psCallbacks->pfnEndpointHandler) &&
-       ((ui32Status != 0) || (ui32DMAIntStatus != 0)))
-    {
+            ((ui32Status != 0) || (ui32DMAIntStatus != 0))) {
         g_ppsDevInfo[0]->psCallbacks->pfnEndpointHandler(pvInstance, ui32Status);
     }
 }

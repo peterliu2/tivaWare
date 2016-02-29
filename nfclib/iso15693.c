@@ -27,8 +27,7 @@
 #include "trf79x0.h"
 #include "nfclib/iso15693.h"
 
-extern struct
-{
+extern struct {
     //
     // The actual string of bytes in the UID.
     //
@@ -45,7 +44,7 @@ extern struct
     char pcUIDStr[CARD_LABEL_SIZE];
 
     unsigned char ucSlot;
-}g_sCard_15693[16];
+} g_sCard_15693[16];
 
 //*****************************************************************************
 //
@@ -60,8 +59,7 @@ static unsigned char g_pucCmd[16];
 // This will invalidate the block.
 //
 //*****************************************************************************
-static const unsigned char g_pucValueEmpty[] =
-{
+static const unsigned char g_pucValueEmpty[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
@@ -79,7 +77,7 @@ static unsigned char ucCardFound = 0;
 void
 ISO15693SetupRegisters(void)
 {
-	// actually, we can just use the default setting
+    // actually, we can just use the default setting
 #if 0
     //
     // Set the TX pulse to 9.44us (0x80 * 73.7ns).
@@ -100,8 +98,8 @@ ISO15693SetupRegisters(void)
     // Configure the Special Settings Register.
     //
     TRF79x0WriteRegister(TRF79X0_RX_SPECIAL_SETTINGS_REG,
-       (TRF79x0ReadRegister(TRF79X0_RX_SPECIAL_SETTINGS_REG) & 0x0f) |
-       TRF79X0_RX_SP_SET_C424);
+                         (TRF79x0ReadRegister(TRF79X0_RX_SPECIAL_SETTINGS_REG) & 0x0f) |
+                         TRF79X0_RX_SP_SET_C424);
 
     //
     // Configure the Test Settings Register.
@@ -126,14 +124,14 @@ ISO15693SetupRegisters(void)
     // Set the regulator voltage to be automatic.
     //
     TRF79x0WriteRegister(TRF79X0_CHIP_STATUS_CTRL_REG,
-    					 TRF79X0_STATUS_CTRL_RF_ON | TRF79X0_STATUS_CTRL_RF_PWR_FULL
-    					 | TRF79X0_STATUS_CTRL_5V_OPERATION);
+                         TRF79X0_STATUS_CTRL_RF_ON | TRF79X0_STATUS_CTRL_RF_PWR_FULL
+                         | TRF79X0_STATUS_CTRL_5V_OPERATION);
 
     //
     // Set the ISO format to ISO15693 high bit rate, 26.48 kbps, one subcarrier, 1 out of 4
     //
     TRF79x0WriteRegister(TRF79X0_ISO_CONTROL_REG,
-    		TRF79X0_ISO_CONTROL_15693_HIGH_1SUB_1OUT4);
+                         TRF79X0_ISO_CONTROL_15693_HIGH_1SUB_1OUT4);
 }
 
 //*****************************************************************************
@@ -183,8 +181,8 @@ ISO15693NextSlot(void)
 //
 int
 ISO15693InventoryAFI(unsigned char ucSubCarrier, unsigned char ucDataRate,
-            	  unsigned char ucAfi, unsigned char ucNbSlots,
-            	  unsigned char *pucMask, unsigned char ucMaskLen)
+                     unsigned char ucAfi, unsigned char ucNbSlots,
+                     unsigned char *pucMask, unsigned char ucMaskLen)
 {
     unsigned char pucResponse[10];
     unsigned int uiRxSize, i, slot;
@@ -194,9 +192,9 @@ ISO15693InventoryAFI(unsigned char ucSubCarrier, unsigned char ucDataRate,
     //
     // Prepare Inventory command.
     //
-	//	b5 	AFI_flag
-	//	0          AFI Field is not present
-	//	1          AFI Field is present
+    //	b5 	AFI_flag
+    //	0          AFI Field is not present
+    //	1          AFI Field is present
     g_pucCmd[0] = (ucNbSlots << 5) | (0x1 << 4) | (0x1 << 2) | (ucDataRate << 1) | ucSubCarrier;
     g_pucCmd[1] = 0x01;		// Command Code = 0x01 ---> Inventory
     g_pucCmd[2] = ucAfi;
@@ -207,42 +205,37 @@ ISO15693InventoryAFI(unsigned char ucSubCarrier, unsigned char ucDataRate,
     //
     TRF79x0Transceive(g_pucCmd, 4, 0, pucResponse, &uiRxSize, 0, TRF79X0_TRANSCEIVE_CRC);
 
-	//
-	// check if needing to scan slot
-	//
+    //
+    // check if needing to scan slot
+    //
     slot = 1;
-	while((uiRxSize != 10) && (slot < 16))
-	{
-	    uiRxSize = sizeof(pucResponse);
+    while((uiRxSize != 10) && (slot < 16)) {
+        uiRxSize = sizeof(pucResponse);
 
-	    TRF79x0IRQClearCauses(TRF79X0_WAIT_RXEND);
-	    //
-	    // the order of the two function must not reversed, because the TRF79x0ReceiveAgain() called
-	    // TRF79x0Command(TRF79X0_RESET_FIFO_CMD); to reset receive FIFO
-	    // the most important action TRF79x0ReceiveAgain() done is to set g_sRXState.uiMaxLength as uiRxSize
-	    // in order to enable the TRF7970A interrupt to continue receive data
-	    //
-		ISO15693NextSlot();
-		TRF79x0ReceiveAgain(pucResponse, &uiRxSize);
-		slot++;
-	};
+        TRF79x0IRQClearCauses(TRF79X0_WAIT_RXEND);
+        //
+        // the order of the two function must not reversed, because the TRF79x0ReceiveAgain() called
+        // TRF79x0Command(TRF79X0_RESET_FIFO_CMD); to reset receive FIFO
+        // the most important action TRF79x0ReceiveAgain() done is to set g_sRXState.uiMaxLength as uiRxSize
+        // in order to enable the TRF7970A interrupt to continue receive data
+        //
+        ISO15693NextSlot();
+        TRF79x0ReceiveAgain(pucResponse, &uiRxSize);
+        slot++;
+    };
 
-    if(uiRxSize == 10 )
-    {
+    if(uiRxSize == 10 ) {
         //
         // Valid answer to Inventory command received, return it as an char, uiRxSize NOT including two CRC bytes
         // the first 2 byte in pucResponse is Flags & DSFI, the last 8 bytes is UID
-		//
-        if(pucMask != NULL)
-        {
-        	for(i = 0; i < 8; i++)
-        		pucMask[i] = pucResponse[2 + i];
+        //
+        if(pucMask != NULL) {
+            for(i = 0; i < 8; i++)
+                pucMask[i] = pucResponse[2 + i];
         }
         return(uiRxSize);
-    }
-    else
-    {
-    	return(0);
+    } else {
+        return(0);
     }
 }
 
@@ -260,7 +253,7 @@ ISO15693InventoryAFI(unsigned char ucSubCarrier, unsigned char ucDataRate,
 //
 int
 ISO15693Inventory(unsigned char ucSubCarrier, unsigned char ucDataRate,
-            	  unsigned char ucNbSlots, unsigned char *pucMask, unsigned char ucMaskLen)
+                  unsigned char ucNbSlots, unsigned char *pucMask, unsigned char ucMaskLen)
 {
     unsigned char pucResponse[10];
     unsigned char uiRxSize, i, slot;
@@ -270,9 +263,9 @@ ISO15693Inventory(unsigned char ucSubCarrier, unsigned char ucDataRate,
     //
     // Prepare Inventory command.
     //
-	//	b5 	AFI_flag
-	//	0          AFI Field is not present
-	//	1          AFI Field is present
+    //	b5 	AFI_flag
+    //	0          AFI Field is not present
+    //	1          AFI Field is present
     g_pucCmd[0] = (ucNbSlots << 5) | (0x1 << 2) | (ucDataRate << 1) | ucSubCarrier;
     g_pucCmd[1] = 0x01;		// Command Code = 0x01 ---> Inventory
     g_pucCmd[3] = ucMaskLen;
@@ -282,47 +275,42 @@ ISO15693Inventory(unsigned char ucSubCarrier, unsigned char ucDataRate,
     //
     TRF79x0Transceive(g_pucCmd, 3, 0, pucResponse, &uiRxSize, 0, TRF79X0_TRANSCEIVE_CRC);
 
-	//
-	// check if needing to scan slot
-	//
+    //
+    // check if needing to scan slot
+    //
     slot = 1;
-	while((uiRxSize != 10) && (slot < 16))
-	{
-	    uiRxSize = sizeof(pucResponse);
+    while((uiRxSize != 10) && (slot < 16)) {
+        uiRxSize = sizeof(pucResponse);
 
-	    TRF79x0IRQClearCauses(TRF79X0_WAIT_RXEND);
-	    //
-	    // the order of the two function must not reversed, because the TRF79x0ReceiveAgain() called
-	    // TRF79x0Command(TRF79X0_RESET_FIFO_CMD); to reset receive FIFO
-	    // the most important action TRF79x0ReceiveAgain() done is to set g_sRXState.uiMaxLength as uiRxSize
-	    // in order to enable the TRF7970A interrupt to continue receive data
-	    //
-		ISO15693NextSlot();
-		TRF79x0ReceiveAgain(pucResponse, &uiRxSize);
-		slot++;
-	};
+        TRF79x0IRQClearCauses(TRF79X0_WAIT_RXEND);
+        //
+        // the order of the two function must not reversed, because the TRF79x0ReceiveAgain() called
+        // TRF79x0Command(TRF79X0_RESET_FIFO_CMD); to reset receive FIFO
+        // the most important action TRF79x0ReceiveAgain() done is to set g_sRXState.uiMaxLength as uiRxSize
+        // in order to enable the TRF7970A interrupt to continue receive data
+        //
+        ISO15693NextSlot();
+        TRF79x0ReceiveAgain(pucResponse, &uiRxSize);
+        slot++;
+    };
 
-    if(uiRxSize == 10 )
-    {
+    if(uiRxSize == 10 ) {
         //
         // Valid answer to Inventory command received, return it as an char, uiRxSize NOT including two CRC bytes
         //
-        if(pucMask != NULL)
-        {
-        	for(i = 0; i < uiRxSize; i++)
-        		pucMask[i] = pucResponse[i];
+        if(pucMask != NULL) {
+            for(i = 0; i < uiRxSize; i++)
+                pucMask[i] = pucResponse[i];
         }
         return(uiRxSize);
-    }
-    else
-    {
-    	return(0);
+    } else {
+        return(0);
     }
 }
 
 int
 ISO15693Anticollision16Slots(unsigned char ucSubCarrier, unsigned char ucDataRate,
-            	  	  	  	 unsigned char *pucMask, unsigned char ucMaskLen)
+                             unsigned char *pucMask, unsigned char ucMaskLen)
 {
     unsigned char pucResponse[10], ucMaskNew[8];
     unsigned int uiRxSize, uiTxSize, i, slot = 0;
@@ -333,19 +321,18 @@ ISO15693Anticollision16Slots(unsigned char ucSubCarrier, unsigned char ucDataRat
     //
     // Prepare Inventory command.
     //
-	//	b5 	AFI_flag
-	//	0          AFI Field is not present
-	//	1          AFI Field is present
+    //	b5 	AFI_flag
+    //	0          AFI Field is not present
+    //	1          AFI Field is present
     g_pucCmd[0] = (0x1 << 2) | (ucDataRate << 1) | ucSubCarrier;
     g_pucCmd[1] = 0x01;		// Command Code = 0x01 ---> Inventory
     g_pucCmd[2] = ucMaskLen;
 
-	uiTxSize = 3 + (((ucMaskLen >> 2) + 1) >> 1);
+    uiTxSize = 3 + (((ucMaskLen >> 2) + 1) >> 1);
 
-    if(uiTxSize > 3)
-    {
-    	for(i = 0; i < (uiTxSize - 3); i++)
-    		g_pucCmd[3 + i] = pucMask[i];
+    if(uiTxSize > 3) {
+        for(i = 0; i < (uiTxSize - 3); i++)
+            g_pucCmd[3 + i] = pucMask[i];
     }
 
     //
@@ -353,77 +340,69 @@ ISO15693Anticollision16Slots(unsigned char ucSubCarrier, unsigned char ucDataRat
     //
     TRF79x0Transceive(g_pucCmd, uiTxSize, 0, pucResponse, &uiRxSize, 0, TRF79X0_TRANSCEIVE_CRC);
 
-	//
-	// check if needing to scan slot
-	//
-	while(slot < 16)
-	{
-	    if(TRF79x0IsCollision() == 1)
-	    {
-	    	uiFlagCollision = 1;
-	    	uiSlotCollision = slot -1;
-	    }
-	    else if(uiRxSize == 10)
-	    {
-	    	for(i = 0; i < 8; i++)
-	    		g_sCard_15693[ucCardFound + 1].pucUID[i] = pucResponse[2 + i];
-	    	g_sCard_15693[ucCardFound + 1].ucSlot = slot;
-	    	ucCardFound++;
-	    }
+    //
+    // check if needing to scan slot
+    //
+    while(slot < 16) {
+        if(TRF79x0IsCollision() == 1) {
+            uiFlagCollision = 1;
+            uiSlotCollision = slot -1;
+        } else if(uiRxSize == 10) {
+            for(i = 0; i < 8; i++)
+                g_sCard_15693[ucCardFound + 1].pucUID[i] = pucResponse[2 + i];
+            g_sCard_15693[ucCardFound + 1].ucSlot = slot;
+            ucCardFound++;
+        }
 
-	    uiRxSize = sizeof(pucResponse);
+        uiRxSize = sizeof(pucResponse);
 
-	    TRF79x0IRQClearCauses(TRF79X0_WAIT_RXEND);
+        TRF79x0IRQClearCauses(TRF79X0_WAIT_RXEND);
 
-	    //
-	    // the order of the two function must not reversed, because the TRF79x0ReceiveAgain() called
-	    // TRF79x0Command(TRF79X0_RESET_FIFO_CMD); to reset receive FIFO
-	    // the most important action TRF79x0ReceiveAgain() done is to set g_sRXState.uiMaxLength as uiRxSize
-	    // in order to enable the TRF7970A interrupt to continue receive data
-	    //
-		ISO15693NextSlot();
-		TRF79x0ReceiveAgain(pucResponse, &uiRxSize);
-		slot++;
-	};
+        //
+        // the order of the two function must not reversed, because the TRF79x0ReceiveAgain() called
+        // TRF79x0Command(TRF79X0_RESET_FIFO_CMD); to reset receive FIFO
+        // the most important action TRF79x0ReceiveAgain() done is to set g_sRXState.uiMaxLength as uiRxSize
+        // in order to enable the TRF7970A interrupt to continue receive data
+        //
+        ISO15693NextSlot();
+        TRF79x0ReceiveAgain(pucResponse, &uiRxSize);
+        slot++;
+    };
 
-	//
-	// only do ones cascade
-	// TODO: NEED refer to the msp430 version to make more cascade anticollision function
-	//
-	if(uiFlagCollision && (ucMaskLen < 4))
-	{
-		uiFlagCollision = 0;
-		ucMaskNew[0] = uiSlotCollision;
-		ISO15693Anticollision16Slots(0, 1, &ucMaskNew[0], ucMaskLen + 4);
-	}
-
-    if(ucCardFound)
-    {
-    	ucCardFound = 0;
-        return(1);
+    //
+    // only do ones cascade
+    // TODO: NEED refer to the msp430 version to make more cascade anticollision function
+    //
+    if(uiFlagCollision && (ucMaskLen < 4)) {
+        uiFlagCollision = 0;
+        ucMaskNew[0] = uiSlotCollision;
+        ISO15693Anticollision16Slots(0, 1, &ucMaskNew[0], ucMaskLen + 4);
     }
-    else
-    {
-    	return(0);
+
+    if(ucCardFound) {
+        ucCardFound = 0;
+        return(1);
+    } else {
+        return(0);
     }
 }
 
 int
 ISO15693StayQuiet(unsigned char  *pucUID)
 {
-	int i;
+    int i;
 
     //
     // Prepare Stay Quiet command.
     //
-	//	b6 	Address_flag		the bit sequence start from b1 not b0!
-	//	1          Request is addressed. UID field is included. It shall be	executed only
-	//			   by the VICC whose UID matches the UID specified in the request.
+    //	b6 	Address_flag		the bit sequence start from b1 not b0!
+    //	1          Request is addressed. UID field is included. It shall be	executed only
+    //			   by the VICC whose UID matches the UID specified in the request.
     g_pucCmd[0] = (1 << 5) | (1 << 1);
     // Command Code = 0x02 ---> Stay Quiet
     g_pucCmd[1] = 0x02;
     for(i = 0; i < 8; i++)
-    	g_pucCmd[2 + i] = pucUID[i];
+        g_pucCmd[2 + i] = pucUID[i];
 
     //
     // Transmit Stay Quiet command, receive response
@@ -462,24 +441,23 @@ BlockReadSingleUID(unsigned char  *pucUID, unsigned int uiBlock, unsigned char *
     //
     // Prepare Read Single Block command.
     //
-	//	b6 	Address_flag		the bit sequence start from b1 not b0!
-	//	1          Request is addressed. UID field is included. It shall be	executed only
-	//			   by the VICC whose UID matches the UID specified in the request.
+    //	b6 	Address_flag		the bit sequence start from b1 not b0!
+    //	1          Request is addressed. UID field is included. It shall be	executed only
+    //			   by the VICC whose UID matches the UID specified in the request.
     // b7	Option_flag
     // 1			Meaning is defined by the command description
     pucCmd[0] = (1 << 6) |(1 << 5) | (1 << 1);
     // Command Code = 0x20 ---> Read Single Block
     pucCmd[1] = 0x20;
     for(i = 0; i < 8; i++)
-    	pucCmd[2 + i] = pucUID[i];
+        pucCmd[2 + i] = pucUID[i];
     pucCmd[10] = uiBlock;
 
     //
     // Transmit Read Single Block, receive response
     //
     TRF79x0Transceive(pucCmd, sizeof(pucCmd), 0, pucBuf, &uiRxBytes, &uiRxBits, TRF79X0_TRANSCEIVE_CRC);
-    if(uiRxBytes == 0)
-    {
+    if(uiRxBytes == 0) {
         return(0);
     }
 
@@ -514,8 +492,7 @@ BlockReadSingle(unsigned int uiBlock, unsigned char *pucBuf)
     // Transmit Read Single Block, receive response
     //
     TRF79x0Transceive(pucCmd, sizeof(pucCmd), 0, pucBuf, &uiRxBytes, &uiRxBits, TRF79X0_TRANSCEIVE_CRC);
-    if(uiRxBytes == 0)
-    {
+    if(uiRxBytes == 0) {
         return(0);
     }
 
@@ -549,9 +526,9 @@ BlockWriteSingleUID(unsigned char  *pucUID, unsigned int uiBlock, unsigned char 
     //
     // Prepare Write Single Block command.
     //
-	//	b6 	Address_flag		the bit sequence start from b1 not b0!
-	//	1          Request is addressed. UID field is included. It shall be	executed only
-	//			   by the VICC whose UID matches the UID specified in the request.
+    //	b6 	Address_flag		the bit sequence start from b1 not b0!
+    //	1          Request is addressed. UID field is included. It shall be	executed only
+    //			   by the VICC whose UID matches the UID specified in the request.
 
     // b7	Option_flag			must be set for Write & Lock command
     // 1			Meaning is defined by the command description
@@ -559,17 +536,16 @@ BlockWriteSingleUID(unsigned char  *pucUID, unsigned int uiBlock, unsigned char 
     // Command Code = 0x21 ---> Write Single Block
     pucCmd[1] = 0x21;
     for(i = 0; i < 8; i++)
-    	pucCmd[2 + i] = pucUID[i];
+        pucCmd[2 + i] = pucUID[i];
     pucCmd[10] = uiBlock;
     for(i = 0; i < ucValueLen; i++)
-    	pucCmd[11 + i] = pucBuf[i];
+        pucCmd[11 + i] = pucBuf[i];
 
     //
     // Transmit Read Single Block, receive response
     //
     TRF79x0TransceiveISO15693(pucCmd, 11 + ucValueLen, 0, pucResponse, &uiRxBytes, 0, TRF79X0_TRANSCEIVE_CRC);
-    if(uiRxBytes == 0)
-    {
+    if(uiRxBytes == 0) {
         return(0);
     }
 
@@ -592,9 +568,9 @@ BlockWriteSingle(unsigned int uiBlock, unsigned char ucValueLen, unsigned char *
     //
     // Prepare Write Single Block command.
     //
-	//	b6 	Address_flag		the bit sequence start from b1 not b0!
-	//	1          Request is addressed. UID field is included. It shall be	executed only
-	//			   by the VICC whose UID matches the UID specified in the request.
+    //	b6 	Address_flag		the bit sequence start from b1 not b0!
+    //	1          Request is addressed. UID field is included. It shall be	executed only
+    //			   by the VICC whose UID matches the UID specified in the request.
 
     // b7	Option_flag			must be set for Write & Lock command
     // 1			Meaning is defined by the command description
@@ -603,14 +579,13 @@ BlockWriteSingle(unsigned int uiBlock, unsigned char ucValueLen, unsigned char *
     pucCmd[1] = 0x21;
     pucCmd[2] = uiBlock;
     for(i = 0; i < ucValueLen; i++)
-    	pucCmd[3 + i] = pucBuf[i];
+        pucCmd[3 + i] = pucBuf[i];
 
     //
     // Transmit Read Single Block, receive response
     //
     TRF79x0TransceiveISO15693(pucCmd, 3 + ucValueLen, 0, pucResponse, &uiRxBytes, 0, TRF79X0_TRANSCEIVE_CRC);
-    if(uiRxBytes == 0)
-    {
+    if(uiRxBytes == 0) {
         return(0);
     }
 
@@ -634,24 +609,23 @@ BlockLockSingleUID(unsigned char  *pucUID, unsigned int uiBlock, unsigned char *
     //
     // Prepare Read Single Block command.
     //
-	//	b6 	Address_flag		the bit sequence start from b1 not b0!
-	//	1          Request is addressed. UID field is included. It shall be	executed only
-	//			   by the VICC whose UID matches the UID specified in the request.
+    //	b6 	Address_flag		the bit sequence start from b1 not b0!
+    //	1          Request is addressed. UID field is included. It shall be	executed only
+    //			   by the VICC whose UID matches the UID specified in the request.
     // b7	Option_flag			must be set for Write & Lock command
     // 1			Meaning is defined by the command description
     pucCmd[0] = (1 << 6) | (1 << 5) | (1 << 1);
     // Command Code = 0x22 ---> Lock Single Block
     pucCmd[1] = 0x22;
     for(i = 0; i < 8; i++)
-    	pucCmd[2 + i] = pucUID[i];
+        pucCmd[2 + i] = pucUID[i];
     pucCmd[10] = uiBlock;
 
     //
     // Transmit Read Single Block, receive response
     //
     TRF79x0TransceiveISO15693(pucCmd, sizeof(pucCmd), 0, pucResponse, &uiRxBytes, &uiRxBits, TRF79X0_TRANSCEIVE_CRC);
-    if(uiRxBytes == 0)
-    {
+    if(uiRxBytes == 0) {
         return(0);
     }
 
@@ -685,8 +659,7 @@ BlockLockSingle(unsigned int uiBlock, unsigned char *pucResponse)
     // Transmit Read Single Block, receive response
     //
     TRF79x0TransceiveISO15693(pucCmd, sizeof(pucCmd), 0, pucResponse, &uiRxBytes, &uiRxBits, TRF79X0_TRANSCEIVE_CRC);
-    if(uiRxBytes == 0)
-    {
+    if(uiRxBytes == 0) {
         return(0);
     }
 

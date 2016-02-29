@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2014-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -67,8 +67,7 @@
 //! SNEPCommand request / responses enumeration.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     //
     // SNEP request field value
     //
@@ -115,15 +114,14 @@ typedef enum
 
     //! See SNEP V1.0 Section 5.8
     SNEP_RESPONSE_REJECT =           0xFF
-}tSNEPCommands;
+} tSNEPCommands;
 
 //*****************************************************************************
 //
 //! SNEP Connection Status Enumeration.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     //! No ongoing transaction to/from the client
     SNEP_CONNECTION_IDLE                    = 0x00,
 
@@ -153,15 +151,14 @@ typedef enum
 
     //! Received excess size request.
     SNEP_CONNECTION_EXCESS_SIZE
-}tSNEPConnectionStatus;
+} tSNEPConnectionStatus;
 
 //*****************************************************************************
 //
 //! RX packet status enumeration.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     //
     //! No pending received data
     //
@@ -178,7 +175,7 @@ typedef enum
 
     //! Last fragment received from the client - packet completed
     RECEIVED_FRAGMENT_COMPLETED
-}tPacketStatus;
+} tPacketStatus;
 
 //*****************************************************************************
 //
@@ -192,7 +189,7 @@ uint8_t SNEP_sendRequest(uint8_t * pui8DataPtr, tSNEPCommands eRequestCmd);
 uint8_t SNEP_sendResponse(uint8_t * pui8DataPtr, tSNEPCommands eResponseCmd);
 void SNEP_processReceivedData(uint8_t * pui8RxBuffer, uint8_t ui8RxLength);
 void SNEP_getReceiveStatus(tPacketStatus * peReceiveFlag, uint8_t * length,
-                            uint8_t ** pui8DataPtr);
+                           uint8_t ** pui8DataPtr);
 tSNEPConnectionStatus SNEP_getProtocolStatus(void);
 void SNEP_setProtocolStatus(tSNEPConnectionStatus eProtocolStatus);
 

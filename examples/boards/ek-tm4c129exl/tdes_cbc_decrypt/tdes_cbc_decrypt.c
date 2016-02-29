@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C129EXL Firmware Package.
 //
 //*****************************************************************************
@@ -46,11 +46,11 @@
 //! \addtogroup example_list
 //! <h1>TDES CBC Decryption Demo (tdes_cbc_decrypt)</h1>
 //!
-//! Simple demo showing an decryption operation using the DES module with 
-//! triple DES in CBC mode.  A single block of data is decrypted at a time.  
-//! The module is also capable of performing in DES mode, but this has been 
-//! proven to be cryptographically insecure.  CBC mode is also not recommended 
-//! because it will always produce the same ciphertext for a block of 
+//! Simple demo showing an decryption operation using the DES module with
+//! triple DES in CBC mode.  A single block of data is decrypted at a time.
+//! The module is also capable of performing in DES mode, but this has been
+//! proven to be cryptographically insecure.  CBC mode is also not recommended
+//! because it will always produce the same ciphertext for a block of
 //! plaintext.  CBC and CFB modes are recommended instead.
 //!
 //! Please note that the use of interrupts and uDMA is not required for the
@@ -83,32 +83,28 @@ tDMAControlTable g_psDMAControlTable[64] __attribute__((aligned(1024)));
 //*****************************************************************************
 //
 // Triple DES test vector.
-// The plaintext is from the AES example. The key was randomly generated.  
-// The resulting ciphertext was then generated using a Perl script with the 
+// The plaintext is from the AES example. The key was randomly generated.
+// The resulting ciphertext was then generated using a Perl script with the
 // Crypt::DES_EDE3 module.
 //
 //*****************************************************************************
-uint32_t g_pui32TDESPlainText[16] =
-{
+uint32_t g_pui32TDESPlainText[16] = {
     0xe2bec16b, 0x969f402e, 0x117e3de9, 0x2a179373,
     0x578a2dae, 0x9cac031e, 0xac6fb79e, 0x518eaf45,
     0x461cc830, 0x11e45ca3, 0x19c1fbe5, 0xef520a1a,
     0x45249ff6, 0x179b4fdf, 0x7b412bad, 0x10376ce6
 };
 
-uint32_t g_pui32TDESKey[6] =
-{
+uint32_t g_pui32TDESKey[6] = {
     0xc7f51c87, 0x8076211f, 0x5de5c871, 0xa243cf7e,
     0xd25fdb75, 0xad73068f
 };
 
-uint32_t g_pui32TDESIV[2] =
-{
+uint32_t g_pui32TDESIV[2] = {
     0x6d8ecac4, 0x3b27c885
 };
 
-uint32_t g_pui32TDESCipherText[16] =
-{
+uint32_t g_pui32TDESCipherText[16] = {
     0x24c69385, 0xb338be54, 0x6eeeb276, 0x1a952b4e,
     0x7242ce4b, 0x9ec147cf, 0x765916ee, 0x3d25e685,
     0xfe5865b4, 0xf2238cb8, 0x2a5b68d5, 0x0f79a41a,
@@ -140,12 +136,9 @@ LengthRoundUp(uint32_t ui32Length)
     uint32_t ui32Remainder;
 
     ui32Remainder = ui32Length % 8;
-    if(ui32Remainder == 0)
-    {
+    if(ui32Remainder == 0) {
         return(ui32Length);
-    }
-    else
-    {
+    } else {
         return(ui32Length + (8 - ui32Remainder));
     }
 }
@@ -175,40 +168,34 @@ TDESIntHandler(void)
     //
     // Print a different message depending on the interrupt source.
     //
-    if(ui32IntStatus & DES_INT_CONTEXT_IN)
-    {
+    if(ui32IntStatus & DES_INT_CONTEXT_IN) {
         ROM_DESIntDisable(DES_BASE, DES_INT_CONTEXT_IN);
         g_bContextInIntFlag = true;
         UARTprintf(" Context input registers are ready.\n");
     }
-    if(ui32IntStatus & DES_INT_DATA_IN)
-    {
+    if(ui32IntStatus & DES_INT_DATA_IN) {
         ROM_DESIntDisable(DES_BASE, DES_INT_DATA_IN);
         g_bDataInIntFlag = true;
         UARTprintf(" Data FIFO is ready to receive data.\n");
     }
-    if(ui32IntStatus & DES_INT_DATA_OUT)
-    {
+    if(ui32IntStatus & DES_INT_DATA_OUT) {
         ROM_DESIntDisable(DES_BASE, DES_INT_DATA_OUT);
         g_bDataOutIntFlag = true;
         UARTprintf(" Data FIFO is ready to provide data.\n");
     }
-    if(ui32IntStatus & DES_INT_DMA_CONTEXT_IN)
-    {
+    if(ui32IntStatus & DES_INT_DMA_CONTEXT_IN) {
         ROM_DESIntClear(DES_BASE, DES_INT_DMA_CONTEXT_IN);
         g_bContextInDMADoneIntFlag = true;
         UARTprintf(" DMA completed a context write to the internal\n");
         UARTprintf(" registers.\n");
     }
-    if(ui32IntStatus & DES_INT_DMA_DATA_IN)
-    {
+    if(ui32IntStatus & DES_INT_DMA_DATA_IN) {
         ROM_DESIntClear(DES_BASE, DES_INT_DMA_DATA_IN);
         g_bDataInDMADoneIntFlag = true;
         UARTprintf(" DMA has written the last word of input data to\n");
         UARTprintf(" the internal FIFO of the engine.\n");
     }
-    if(ui32IntStatus & DES_INT_DMA_DATA_OUT)
-    {
+    if(ui32IntStatus & DES_INT_DMA_DATA_OUT) {
         ROM_DESIntClear(DES_BASE, DES_INT_DMA_DATA_OUT);
         g_bDataOutDMADoneIntFlag = true;
         UARTprintf(" DMA has written the last word of process result.\n");
@@ -222,7 +209,7 @@ TDESIntHandler(void)
 //*****************************************************************************
 bool
 TDESCBCDecrypt(uint32_t *pui32Src, uint32_t *pui32Dst, uint32_t *pui32Key,
-                 uint32_t ui32Length, uint32_t *pui32IV, bool bUseDMA)
+               uint32_t ui32Length, uint32_t *pui32IV, bool bUseDMA)
 {
     //
     // Perform a soft reset.
@@ -265,8 +252,7 @@ TDESCBCDecrypt(uint32_t *pui32Src, uint32_t *pui32Dst, uint32_t *pui32Key,
     // Depending on the argument, perform the decryption
     // with or without uDMA.
     //
-    if(bUseDMA)
-    {
+    if(bUseDMA) {
         //
         // Enable DMA interrupts.
         //
@@ -322,31 +308,27 @@ TDESCBCDecrypt(uint32_t *pui32Src, uint32_t *pui32Dst, uint32_t *pui32Key,
         // Write the length registers to start the process.
         //
         ROM_DESLengthSet(DES_BASE, ui32Length);
-        
+
         //
         // Enable the DMA channels to start the transfers.  This must be done after
-        // writing the length to prevent data from copying before the context is 
+        // writing the length to prevent data from copying before the context is
         // truly ready.
-        // 
+        //
         ROM_uDMAChannelEnable(UDMA_CH21_DES0DIN);
         ROM_uDMAChannelEnable(UDMA_CH22_DES0DOUT);
 
         //
         // Wait for the data in DMA done interrupt.
         //
-        while(!g_bDataInDMADoneIntFlag)
-        {
+        while(!g_bDataInDMADoneIntFlag) {
         }
 
         //
         // Wait for the data out DMA done interrupt.
         //
-        while(!g_bDataOutDMADoneIntFlag)
-        {
+        while(!g_bDataOutDMADoneIntFlag) {
         }
-    }
-    else
-    {
+    } else {
         //
         // Perform the decryption.
         //
@@ -369,8 +351,7 @@ DESInit(void)
     //
     // Check that the CCM peripheral is present.
     //
-    if(!ROM_SysCtlPeripheralPresent(SYSCTL_PERIPH_CCM0))
-    {
+    if(!ROM_SysCtlPeripheralPresent(SYSCTL_PERIPH_CCM0)) {
         UARTprintf("No CCM peripheral found!\n");
 
         //
@@ -388,15 +369,13 @@ DESInit(void)
     // Wait for the peripheral to be ready.
     //
     ui32Loop = 0;
-    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0))
-    {
+    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0)) {
         //
         // Increment our poll counter.
         //
         ui32Loop++;
 
-        if(ui32Loop > CCM_LOOP_TIMEOUT)
-        {
+        if(ui32Loop > CCM_LOOP_TIMEOUT) {
             //
             // Timed out, notify and spin.
             //
@@ -418,15 +397,13 @@ DESInit(void)
     // Wait for the peripheral to be ready again.
     //
     ui32Loop = 0;
-    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0))
-    {
+    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0)) {
         //
         // Increment our poll counter.
         //
         ui32Loop++;
 
-        if(ui32Loop > CCM_LOOP_TIMEOUT)
-        {
+        if(ui32Loop > CCM_LOOP_TIMEOUT) {
             //
             // Timed out, spin.
             //
@@ -492,7 +469,7 @@ int
 main(void)
 {
     uint32_t pui32PlainText[16], ui32Errors, ui32Idx, ui32SysClock;
-    
+
     //
     // Run from the PLL at 120 MHz.
     //
@@ -510,8 +487,7 @@ main(void)
     // Initialize local variables.
     //
     ui32Errors = 0;
-    for(ui32Idx = 0; ui32Idx < 16; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < 16; ui32Idx++) {
         pui32PlainText[ui32Idx] = 0;
     }
 
@@ -547,8 +523,7 @@ main(void)
     //
     // Initialize the CCM and DES modules.
     //
-    if(!DESInit())
-    {
+    if(!DESInit()) {
         UARTprintf("Initialization of the DES module failed.\n");
         ui32Errors |= 0x00000001;
     }
@@ -563,10 +538,8 @@ main(void)
     //
     // Check the result.
     //
-    for(ui32Idx = 0; ui32Idx < 16; ui32Idx++)
-    {
-        if(pui32PlainText[ui32Idx] != g_pui32TDESPlainText[ui32Idx])
-        {
+    for(ui32Idx = 0; ui32Idx < 16; ui32Idx++) {
+        if(pui32PlainText[ui32Idx] != g_pui32TDESPlainText[ui32Idx]) {
             UARTprintf("Plaintext mismatch on word %d. Exp: 0x%x, Act: "
                        "0x%x\n", ui32Idx, g_pui32TDESPlainText[ui32Idx],
                        pui32PlainText[ui32Idx]);
@@ -577,8 +550,7 @@ main(void)
     //
     // Clear the array containing the plaintext.
     //
-    for(ui32Idx = 0; ui32Idx < 16; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < 16; ui32Idx++) {
         pui32PlainText[ui32Idx] = 0;
     }
 
@@ -592,10 +564,8 @@ main(void)
     //
     // Check the result.
     //
-    for(ui32Idx = 0; ui32Idx < 16; ui32Idx++)
-    {
-        if(pui32PlainText[ui32Idx] != g_pui32TDESPlainText[ui32Idx])
-        {
+    for(ui32Idx = 0; ui32Idx < 16; ui32Idx++) {
+        if(pui32PlainText[ui32Idx] != g_pui32TDESPlainText[ui32Idx]) {
             UARTprintf("Plaintext mismatch on word %d. Exp: 0x%x, Act: "
                        "0x%x\n", ui32Idx, g_pui32TDESPlainText[ui32Idx],
                        pui32PlainText[ui32Idx]);
@@ -606,16 +576,12 @@ main(void)
     //
     // Finished.
     //
-    if(ui32Errors)
-    {
+    if(ui32Errors) {
         UARTprintf("Demo failed with error code 0x%x.\n", ui32Errors);
-    }
-    else
-    {
+    } else {
         UARTprintf("Demo completed successfully.\n");
     }
 
-    while(1)
-    {
+    while(1) {
     }
 }

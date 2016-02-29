@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C129EXL Firmware Package.
 //
 //*****************************************************************************
@@ -192,8 +192,7 @@ EchoNewDataToHost(tUSBDBulkDevice *psDevice, uint8_t *pi8Data,
     ui32ReadIndex = (uint32_t)(pi8Data - g_pui8USBRxBuffer);
     ui32WriteIndex = sTxRing.ui32WriteIndex;
 
-    while(ui32Loop)
-    {
+    while(ui32Loop) {
         //
         // Copy from the receive buffer to the transmit buffer converting
         // character case on the way.
@@ -203,30 +202,24 @@ EchoNewDataToHost(tUSBDBulkDevice *psDevice, uint8_t *pi8Data,
         // Is this a lower case character?
         //
         if((g_pui8USBRxBuffer[ui32ReadIndex] >= 'a') &&
-           (g_pui8USBRxBuffer[ui32ReadIndex] <= 'z'))
-        {
+                (g_pui8USBRxBuffer[ui32ReadIndex] <= 'z')) {
             //
             // Convert to upper case and write to the transmit buffer.
             //
             g_pui8USBTxBuffer[ui32WriteIndex] =
                 (g_pui8USBRxBuffer[ui32ReadIndex] - 'a') + 'A';
-        }
-        else
-        {
+        } else {
             //
             // Is this an upper case character?
             //
             if((g_pui8USBRxBuffer[ui32ReadIndex] >= 'A') &&
-               (g_pui8USBRxBuffer[ui32ReadIndex] <= 'Z'))
-            {
+                    (g_pui8USBRxBuffer[ui32ReadIndex] <= 'Z')) {
                 //
                 // Convert to lower case and write to the transmit buffer.
                 //
                 g_pui8USBTxBuffer[ui32WriteIndex] =
                     (g_pui8USBRxBuffer[ui32ReadIndex] - 'Z') + 'z';
-            }
-            else
-            {
+            } else {
                 //
                 // Copy the received character to the transmit buffer.
                 //
@@ -290,8 +283,7 @@ TxHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
     // We are not required to do anything in response to any transmit event
     // in this example. All we do is update our transmit counter.
     //
-    if(ui32Event == USB_EVENT_TX_COMPLETE)
-    {
+    if(ui32Event == USB_EVENT_TX_COMPLETE) {
         g_ui32TxCount += ui32MsgValue;
     }
     return(0);
@@ -321,13 +313,11 @@ RxHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
     //
     // Which event are we being sent?
     //
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // We are connected to a host and communication is now possible.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             g_bUSBConfigured = true;
             g_ui32Flags |= COMMAND_STATUS_UPDATE;
 
@@ -343,8 +333,7 @@ RxHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
         //
         // The host has disconnected.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             g_bUSBConfigured = false;
             g_ui32Flags |= COMMAND_STATUS_UPDATE;
             break;
@@ -353,8 +342,7 @@ RxHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgValue,
         //
         // A new packet has been received.
         //
-        case USB_EVENT_RX_AVAILABLE:
-        {
+        case USB_EVENT_RX_AVAILABLE: {
             tUSBDBulkDevice *psDevice;
 
             //
@@ -475,25 +463,20 @@ main(void)
     //
     // Main application loop.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Have we been asked to update the status display?
         //
-        if(g_ui32Flags & COMMAND_STATUS_UPDATE)
-        {
+        if(g_ui32Flags & COMMAND_STATUS_UPDATE) {
             g_ui32Flags &= ~COMMAND_STATUS_UPDATE;
 
-            if(g_bUSBConfigured)
-            {
+            if(g_bUSBConfigured) {
                 UARTprintf("Host Connected.            \n\n");
                 UARTprintf("Data transferred:\n");
                 UARTprintf("TX: %d  RX: %d                    \r",
                            g_ui32TxCount,
                            g_ui32RxCount);
-            }
-            else
-            {
+            } else {
                 UARTprintf("\n\nHost Disconnected.\n\n");
             }
         }
@@ -501,8 +484,7 @@ main(void)
         //
         // Has there been any transmit traffic since we last checked?
         //
-        if(ui32TxCount != g_ui32TxCount)
-        {
+        if(ui32TxCount != g_ui32TxCount) {
             //
             // Take a snapshot of the latest transmit count.
             //
@@ -519,8 +501,7 @@ main(void)
         //
         // Has there been any receive traffic since we last checked?
         //
-        if(ui32RxCount != g_ui32RxCount)
-        {
+        if(ui32RxCount != g_ui32RxCount) {
             //
             // Take a snapshot of the latest receive count.
             //

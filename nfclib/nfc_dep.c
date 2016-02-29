@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2014-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -35,7 +35,8 @@
 //*****************************************************************************
 
 uint8_t g_pui8NFCID3t[10] = {0x01, 0xFE, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                             0x08, 0x09};
+                             0x08, 0x09
+                            };
 
 uint8_t g_ui8NfcDepPni = 0x00;
 
@@ -69,8 +70,7 @@ void NFCDEP_SendATR_REQ(uint8_t * pui8NFCID2_Ptr)
     //
     // NFCID3i
     //
-    for(ui8Counter=0;ui8Counter<8;ui8Counter++)
-    {
+    for(ui8Counter=0; ui8Counter<8; ui8Counter++) {
         g_pui8DEPBufferPtr[3+ui8Counter] = pui8NFCID2_Ptr[ui8Counter];
     }
     g_pui8DEPBufferPtr[11] = 0x00;
@@ -163,8 +163,7 @@ void NFCDEP_SendATR_RES(void)
     //
     // NFCID3t
     //
-    for(ui8Counter=0;ui8Counter<10;ui8Counter++)
-    {
+    for(ui8Counter=0; ui8Counter<10; ui8Counter++) {
         g_pui8DEPBufferPtr[ui8Offset++] = g_pui8NFCID3t[ui8Counter];
     }
 
@@ -182,7 +181,7 @@ void NFCDEP_SendATR_RES(void)
     g_pui8DEPBufferPtr[ui8Offset++] = LLCP_MAGIC_NUMBER_LOW;
 
     ui8Offset = ui8Offset + LLCP_addTLV(LLCP_VERSION,
-                                            &g_pui8DEPBufferPtr[ui8Offset]);
+                                        &g_pui8DEPBufferPtr[ui8Offset]);
     ui8Offset = ui8Offset + LLCP_addTLV(LLCP_MIUX,&g_pui8DEPBufferPtr[ui8Offset]);
     ui8Offset = ui8Offset + LLCP_addTLV(LLCP_WKS,&g_pui8DEPBufferPtr[ui8Offset]);
     ui8Offset = ui8Offset + LLCP_addTLV(LLCP_LTO,&g_pui8DEPBufferPtr[ui8Offset]);
@@ -250,8 +249,8 @@ void NFCDEP_SendPSL_RES(uint8_t did_value)
 //
 //*****************************************************************************
 tStatus NFCDEP_ProcessReceivedRequest(uint8_t * pui8RxBuffer , \
-                                        uint8_t * pui8NFCID2_Ptr,
-                                        bool bActiveResponse)
+                                      uint8_t * pui8NFCID2_Ptr,
+                                      bool bActiveResponse)
 {
     volatile uint8_t ui8CommandLength;
     uint16_t ui16Command;
@@ -265,38 +264,28 @@ tStatus NFCDEP_ProcessReceivedRequest(uint8_t * pui8RxBuffer , \
     ui8PFBValue = pui8RxBuffer[3];
 
     // Check if chaining is enabled
-    if((ui8PFBValue & 0xF0) == 0x00)
-    {
+    if((ui8PFBValue & 0xF0) == 0x00) {
         tNextPduType = INFORMATION_PDU;
-    }
-    else if((ui8PFBValue & 0xF0) == 0x10)
-    {
+    } else if((ui8PFBValue & 0xF0) == 0x10) {
         tNextPduType = ACK_PDU;
-    }
-    else if((ui8PFBValue & 0xF0) == 0x90)
-    {
+    } else if((ui8PFBValue & 0xF0) == 0x90) {
         tNextPduType = RTOX_REQ_PDU;
-    }
-    else if((ui8PFBValue & 0xF0) == 0x80)
-    {
+    } else if((ui8PFBValue & 0xF0) == 0x80) {
         tNextPduType = ATN_PDU;
     }
 
 
-    if(ui16Command == ATR_REQ_CMD)
-    {
+    if(ui16Command == ATR_REQ_CMD) {
         if((pui8NFCID2_Ptr[0] == pui8RxBuffer[3]  && \
-           pui8NFCID2_Ptr[1] == pui8RxBuffer[4]  && \
-           pui8NFCID2_Ptr[2] == pui8RxBuffer[5]  && \
-           pui8NFCID2_Ptr[3] == pui8RxBuffer[6]  && \
-           pui8NFCID2_Ptr[4] == pui8RxBuffer[7]  && \
-           pui8NFCID2_Ptr[5] == pui8RxBuffer[8]  && \
-           pui8NFCID2_Ptr[6] == pui8RxBuffer[9]  && \
-           pui8NFCID2_Ptr[7] == pui8RxBuffer[10]) || bActiveResponse == true)
-        {
+                pui8NFCID2_Ptr[1] == pui8RxBuffer[4]  && \
+                pui8NFCID2_Ptr[2] == pui8RxBuffer[5]  && \
+                pui8NFCID2_Ptr[3] == pui8RxBuffer[6]  && \
+                pui8NFCID2_Ptr[4] == pui8RxBuffer[7]  && \
+                pui8NFCID2_Ptr[5] == pui8RxBuffer[8]  && \
+                pui8NFCID2_Ptr[6] == pui8RxBuffer[9]  && \
+                pui8NFCID2_Ptr[7] == pui8RxBuffer[10]) || bActiveResponse == true) {
             ui8Counter = 0;
-            while(ui8CommandLength > (ui8Counter+20))
-            {
+            while(ui8CommandLength > (ui8Counter+20)) {
                 //
                 // Process the TLV - pass the starting address of the TLV
                 //
@@ -307,54 +296,41 @@ tStatus NFCDEP_ProcessReceivedRequest(uint8_t * pui8RxBuffer , \
                 // the current TLV
                 //
                 ui8Counter = ui8Counter+ pui8RxBuffer[ui8Counter+21] + 2;
-    		}
+            }
             NFCDEP_SendATR_RES();
             // Reset the PNI
             g_ui8NfcDepPni = 0x00;
             //UARTprintf("CMD : D400\n");
-        }
-        else
+        } else
             eNfcDepStatus = STATUS_FAIL;
-    }
-    else if(ui16Command == PSL_REQ_CMD)
-    {
+    } else if(ui16Command == PSL_REQ_CMD) {
         // Check if the DSI (Bits 5-3) == 010b => 424kbaud (Init. to Target)
         //  if the DRI (2-0) == 010b => 424kbaud (Target to Initiator)
         if(((pui8RxBuffer[4] & 0x38) == 0x10) && \
-           ((pui8RxBuffer[4] & 0x07) == 0x02))
-        {
+                ((pui8RxBuffer[4] & 0x07) == 0x02)) {
             NFCDEP_SendPSL_RES(pui8RxBuffer[3]);
             TRF79x0SetMode(P2P_PASSIVE_TARGET_MODE,FREQ_424_KBPS);
         }
 
-    }
-    else if(ui16Command == DEP_REQ_CMD)
-    {
+    } else if(ui16Command == DEP_REQ_CMD) {
         //
         // LLCP Packet Handler
         //
-        if(tNextPduType == INFORMATION_PDU)
-        {
+        if(tNextPduType == INFORMATION_PDU) {
             LLCP_processReceivedData(&pui8RxBuffer[4], (ui8CommandLength-4));
         }
 
         NFCDEP_SendDEP_RES();
-    }
-    else if(ui16Command == DSL_REQ_CMD)
-    {
+    } else if(ui16Command == DSL_REQ_CMD) {
         //
         // Debug
         //
         while(1);
-    }
-    else if(ui16Command == RSL_REQ_CMD)
-    {
+    } else if(ui16Command == RSL_REQ_CMD) {
         //UARTprintf("CMD : D40A\n");
         if(ui8CommandLength == 0x03)
             NFCDEP_SendRSL_RES();
-    }
-    else
-    {
+    } else {
         eNfcDepStatus = STATUS_FAIL;
 
     }
@@ -377,25 +353,21 @@ tStatus NFCDEP_ProcessReceivedData(uint8_t * pui8RxBuffer)
     ui8CommandLength = pui8RxBuffer[0];
     ui16Command = pui8RxBuffer[2]  + (pui8RxBuffer[1] << 8);
 
-    if(ui16Command == ATR_RES_CMD)
-    {
+    if(ui16Command == ATR_RES_CMD) {
         //
         // Store the g_pui8NFCID3t
         //
-        for(ui8Counter = 0; ui8Counter < 10; ui8Counter++)
-        {
+        for(ui8Counter = 0; ui8Counter < 10; ui8Counter++) {
             g_pui8NFCID3t[ui8Counter] = pui8RxBuffer[3+ui8Counter];
         }
         //
         // LLCP Decoding - RFU
         //
         if(pui8RxBuffer[18] == LLCP_MAGIC_NUMBER_HIGH && \
-           pui8RxBuffer[19] == LLCP_MAGIC_NUMBER_MIDDLE && \
-           pui8RxBuffer[20] == LLCP_MAGIC_NUMBER_LOW)
-        {
+                pui8RxBuffer[19] == LLCP_MAGIC_NUMBER_MIDDLE && \
+                pui8RxBuffer[20] == LLCP_MAGIC_NUMBER_LOW) {
             ui8Counter = 0;
-            while(ui8CommandLength > (ui8Counter+21))
-            {
+            while(ui8CommandLength > (ui8Counter+21)) {
                 //
                 // Process the TLV - pass the starting address of the TLV
                 //
@@ -406,7 +378,7 @@ tStatus NFCDEP_ProcessReceivedData(uint8_t * pui8RxBuffer)
                 // the current TLV
                 //
                 ui8Counter = ui8Counter+ pui8RxBuffer[ui8Counter+22] + 2;
-    		}
+            }
             //
             // Set the next PDU for LLCP - SYMM PDU
             //
@@ -417,60 +389,43 @@ tStatus NFCDEP_ProcessReceivedData(uint8_t * pui8RxBuffer)
             //
             g_ui8NfcDepPni = 0x00;
             tNextPduType = INFORMATION_PDU;
-        }
-        else
-        {
+        } else {
             eNfcDepStatus = STATUS_FAIL;
         }
-    }
-    else if(ui16Command == PSL_RES_CMD)
-    {
+    } else if(ui16Command == PSL_RES_CMD) {
         //
         // Check if DID is correct
         //
         if(pui8RxBuffer[3] != 0x00)
             eNfcDepStatus = STATUS_FAIL;
 
-    }
-    else if(ui16Command == DEP_RES_CMD)
-    {
+    } else if(ui16Command == DEP_RES_CMD) {
         ui8PFBValue = pui8RxBuffer[3];
 
-        if((ui8PFBValue & 0xF0) == 0x00)
-        {
+        if((ui8PFBValue & 0xF0) == 0x00) {
             tNextPduType = INFORMATION_PDU;
-        }
-        else if((ui8PFBValue & 0xF0) == 0x10)
-        {
+        } else if((ui8PFBValue & 0xF0) == 0x10) {
             //
             // Check if chaining is enabled
             //
             tNextPduType = ACK_PDU;
-        }
-        else if((ui8PFBValue & 0xF0) == 0x90)
-        {
+        } else if((ui8PFBValue & 0xF0) == 0x90) {
             tNextPduType = RTOX_REQ_PDU;
             g_ui8RtoxTransportData = (0x3F & pui8RxBuffer[4]);
         }
 
         if(tNextPduType == INFORMATION_PDU)
-        //
-        // LLCP Packet Handler
-        //
+            //
+            // LLCP Packet Handler
+            //
             eNfcDepStatus = LLCP_processReceivedData(&pui8RxBuffer[4],
-                                                    (ui8CommandLength-4));
+                            (ui8CommandLength-4));
 
-    }
-    else if(ui16Command == DSL_RES_CMD)
-    {
+    } else if(ui16Command == DSL_RES_CMD) {
 
-    }
-    else if(ui16Command == RSL_RES_CMD)
-    {
+    } else if(ui16Command == RSL_RES_CMD) {
 
-    }
-    else
-    {
+    } else {
         eNfcDepStatus = STATUS_FAIL;
     }
 
@@ -486,8 +441,7 @@ void NFCDEP_SendDEP_REQ(uint8_t * pui8RxBuffer)
 {
     uint8_t ui8TotalLength = 0;
 
-    if(tNextPduType == INFORMATION_PDU)
-    {
+    if(tNextPduType == INFORMATION_PDU) {
         //
         // Total = 1 byte Length + 2 bytes Command + 1 byte PFB + n PDU
         //
@@ -497,9 +451,7 @@ void NFCDEP_SendDEP_REQ(uint8_t * pui8RxBuffer)
         // PFB Byte
         //
         g_pui8DEPBufferPtr[3] = ((tNextPduType | (g_ui8NfcDepPni++)) & 0x03);
-    }
-    else if(tNextPduType == RTOX_REQ_PDU)
-    {
+    } else if(tNextPduType == RTOX_REQ_PDU) {
         //
         // PFB Byte
         //
@@ -507,9 +459,7 @@ void NFCDEP_SendDEP_REQ(uint8_t * pui8RxBuffer)
 
         g_pui8DEPBufferPtr[4] = g_ui8RtoxTransportData;
         ui8TotalLength = 5;
-    }
-    else if(tNextPduType == ACK_PDU)
-    {
+    } else if(tNextPduType == ACK_PDU) {
         //
         // PFB Byte
         //
@@ -533,8 +483,7 @@ void NFCDEP_SendDEP_REQ(uint8_t * pui8RxBuffer)
 
     if(tNextPduType == RTOX_REQ_PDU)
         if(TRF79x0IRQHandler(((2<<g_ui8RtoxTransportData)/3)) ==
-                                                        IRQ_STATUS_RX_COMPLETE)
-        {
+                IRQ_STATUS_RX_COMPLETE) {
             NFCDEP_ProcessReceivedData(pui8RxBuffer);
             NFCDEP_SendDEP_REQ(pui8RxBuffer);
         }
@@ -549,8 +498,7 @@ void NFCDEP_SendDEP_RES(void)
 {
     uint8_t ui8TotalLength = 0;
 
-    if(tNextPduType == INFORMATION_PDU)
-    {
+    if(tNextPduType == INFORMATION_PDU) {
         //
         // PFB Byte
         //
@@ -560,9 +508,7 @@ void NFCDEP_SendDEP_RES(void)
         // Total = 1 byte Length + 2 bytes Command + 1 byte PFB + n PDU
         //
         ui8TotalLength = 4 + LLCP_stateMachine(&g_pui8DEPBufferPtr[4]);
-    }
-    else if(tNextPduType == ATN_PDU)
-    {
+    } else if(tNextPduType == ATN_PDU) {
         //
         // PFB Byte
         //

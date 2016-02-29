@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C123G Firmware Package.
 //
 //*****************************************************************************
@@ -108,8 +108,7 @@
 // A graphics image of a small right arrow icon.
 //
 //*****************************************************************************
-const uint8_t g_ui8RtArrow[] =
-{
+const uint8_t g_ui8RtArrow[] = {
     IMAGE_FMT_1BPP_UNCOMP,
     4, 0,
     8, 0,
@@ -129,8 +128,7 @@ const uint8_t g_ui8RtArrow[] =
 // A graphics image of a small left arrow icon.
 //
 //*****************************************************************************
-const uint8_t g_ui8LtArrow[] =
-{
+const uint8_t g_ui8LtArrow[] = {
     IMAGE_FMT_1BPP_UNCOMP,
     4, 0,
     8, 0,
@@ -150,8 +148,7 @@ const uint8_t g_ui8LtArrow[] =
 // A graphics image of a small unchecked box icon.
 //
 //*****************************************************************************
-const uint8_t g_ui8Unchecked[] =
-{
+const uint8_t g_ui8Unchecked[] = {
     IMAGE_FMT_1BPP_UNCOMP,
     7, 0,
     8, 0,
@@ -171,8 +168,7 @@ const uint8_t g_ui8Unchecked[] =
 // A graphics image of a small checked box icon.
 //
 //*****************************************************************************
-const uint8_t g_ui8Checked[] =
-{
+const uint8_t g_ui8Checked[] = {
     IMAGE_FMT_1BPP_UNCOMP,
     7, 0,
     8, 0,
@@ -281,14 +277,12 @@ SlideMenuDraw(tSlideMenuWidget *psMenuWidget, tContext *psContext,
     // Loop through all menu items, drawing on the display.  Note that some
     // may not be on the screen, but they will be clipped.
     //
-    while(ui32Idx < psMenu->ui32Items)
-    {
+    while(ui32Idx < psMenu->ui32Items) {
         //
         // If this index is the one that is highlighted, then change the
         // background
         //
-        if(ui32Idx == psMenu->ui32FocusIndex)
-        {
+        if(ui32Idx == psMenu->ui32FocusIndex) {
             //
             // Set the foreground to the highlight color, and fill the
             // rectangle of the background of this menu item.
@@ -309,8 +303,7 @@ SlideMenuDraw(tSlideMenuWidget *psMenuWidget, tContext *psContext,
             // If this menu has a parent, then draw a left arrow icon on the
             // focused menu item.
             //
-            if(psMenu->psParent)
-            {
+            if(psMenu->psParent) {
                 GrImageDraw(psContext, g_ui8LtArrow, sRect.i16XMin + 4,
                             sRect.i16YMin +
                             (psMenuWidget->ui32MenuItemHeight / 2) - 4);
@@ -321,8 +314,7 @@ SlideMenuDraw(tSlideMenuWidget *psMenuWidget, tContext *psContext,
             // right arrow icon on the focused menu item.
             //
             if(psMenu->psSlideMenuItems[ui32Idx].psChildMenu ||
-               psMenu->psSlideMenuItems[ui32Idx].psChildWidget)
-            {
+                    psMenu->psSlideMenuItems[ui32Idx].psChildWidget) {
                 GrImageDraw(psContext, g_ui8RtArrow, sRect.i16XMax - 8,
                             sRect.i16YMin +
                             (psMenuWidget->ui32MenuItemHeight / 2) - 4);
@@ -333,8 +325,7 @@ SlideMenuDraw(tSlideMenuWidget *psMenuWidget, tContext *psContext,
         // Otherwise this is a normal, non-highlighted menu item cell,
         // so set the normal background color.
         //
-        else
-        {
+        else {
             GrContextBackgroundSet(psContext, psMenuWidget->ui32ColorBackground);
         }
 
@@ -343,16 +334,12 @@ SlideMenuDraw(tSlideMenuWidget *psMenuWidget, tContext *psContext,
         // the menu item.  Draw a checked or unchecked box depending on whether
         // the item has been selected.
         //
-        if(psMenu->bMultiSelectable)
-        {
-            if(psMenu->ui32SelectedFlags & (1 << ui32Idx))
-            {
+        if(psMenu->bMultiSelectable) {
+            if(psMenu->ui32SelectedFlags & (1 << ui32Idx)) {
                 GrImageDraw(psContext, g_ui8Checked, sRect.i16XMax - 12,
                             sRect.i16YMin +
                             (psMenuWidget->ui32MenuItemHeight / 2) - 4);
-            }
-            else
-            {
+            } else {
                 GrImageDraw(psContext, g_ui8Unchecked, sRect.i16XMax - 12,
                             sRect.i16YMin +
                             (psMenuWidget->ui32MenuItemHeight / 2) - 4);
@@ -421,8 +408,7 @@ SlideMenuPaint(tWidget *psWidget)
     // there is nothing to paint here.  Just exit and the child widget will
     // be painted.
     //
-    if(psWidget->psChild)
-    {
+    if(psWidget->psChild) {
         return;
     }
 
@@ -498,8 +484,7 @@ SlideMenuDown(tWidget *psWidget)
     // If this menu widget has a child widget, that means the child widget
     // is in control of the display, and there is nothing to do here.
     //
-    if(psWidget->psChild)
-    {
+    if(psWidget->psChild) {
         return(0);
     }
 
@@ -514,8 +499,7 @@ SlideMenuDown(tWidget *psWidget)
     // If we are already at the end of the list of menu items, then there
     // is nothing else to do.
     //
-    if(psMenu->ui32FocusIndex >= (psMenu->ui32Items - 1))
-    {
+    if(psMenu->ui32FocusIndex >= (psMenu->ui32Items - 1)) {
         return(1);
     }
 
@@ -547,7 +531,7 @@ SlideMenuDown(tWidget *psWidget)
     GrContextInit(&sContext, psMenuWidget->psDisplayB);
     SlideMenuDraw(psMenuWidget, &sContext, -1 *
                   (psMenuWidget->sBase.sPosition.i16YMax -
-                  psMenuWidget->sBase.sPosition.i16YMin));
+                   psMenuWidget->sBase.sPosition.i16YMin));
 
     //
     // Initialize a drawing context for the display where the widget is to be
@@ -578,8 +562,7 @@ SlideMenuDown(tWidget *psWidget)
     // The speed of the animation is controlled entirely by the speed of the
     // processor and the speed of the interface to the physical display.
     //
-    for(ui32Y = 0; ui32Y <= psMenuWidget->ui32MenuItemHeight; ui32Y++)
-    {
+    for(ui32Y = 0; ui32Y <= psMenuWidget->ui32MenuItemHeight; ui32Y++) {
         GrImageDraw(&sContext, psMenuWidget->psDisplayA->pvDisplayData,
                     psWidget->sPosition.i16XMin,
                     psWidget->sPosition.i16YMin - ui32Y);
@@ -649,8 +632,7 @@ SlideMenuUp(tWidget *psWidget)
     // If this menu widget has a child widget, that means the child widget
     // is in control of the display, and there is nothing to do here.
     //
-    if(psWidget->psChild)
-    {
+    if(psWidget->psChild) {
         return(0);
     }
 
@@ -665,8 +647,7 @@ SlideMenuUp(tWidget *psWidget)
     // If we are already at the start of the list of menu items, then there
     // is nothing else to do.
     //
-    if(psMenu->ui32FocusIndex == 0)
-    {
+    if(psMenu->ui32FocusIndex == 0) {
         return(1);
     }
 
@@ -698,7 +679,7 @@ SlideMenuUp(tWidget *psWidget)
     GrContextInit(&sContext, psMenuWidget->psDisplayB);
     SlideMenuDraw(psMenuWidget, &sContext,
                   (psMenuWidget->sBase.sPosition.i16YMax -
-                  psMenuWidget->sBase.sPosition.i16YMin));
+                   psMenuWidget->sBase.sPosition.i16YMin));
 
     //
     // Initialize a drawing context for the display where the widget is to be
@@ -729,8 +710,7 @@ SlideMenuUp(tWidget *psWidget)
     // The speed of the animation is controlled entirely by the speed of the
     // processor and the speed of the interface to the physical display.
     //
-    for(ui32Y = 0; ui32Y <= psMenuWidget->ui32MenuItemHeight; ui32Y++)
-    {
+    for(ui32Y = 0; ui32Y <= psMenuWidget->ui32MenuItemHeight; ui32Y++) {
         GrImageDraw(&sContext, psMenuWidget->psDisplayB->pvDisplayData,
                     psWidget->sPosition.i16XMin,
                     psWidget->sPosition.i16YMin + ui32Y - ui32MenuHeight);
@@ -803,8 +783,7 @@ SlideMenuRight(tWidget *psWidget)
     // If this menu widget has a child widget, that means the child widget
     // is in control of the display, and there is nothing to do here.
     //
-    if(psWidget->psChild)
-    {
+    if(psWidget->psChild) {
         return(0);
     }
 
@@ -837,8 +816,7 @@ SlideMenuRight(tWidget *psWidget)
     //
     // Process child menu of this menu item
     //
-    if(psChildMenu)
-    {
+    if(psChildMenu) {
         //
         // Switch the active menu for this SlideMenuWidget to be the child
         // menu
@@ -855,18 +833,16 @@ SlideMenuRight(tWidget *psWidget)
     // Process child widget of this menu item.  This only happens if there
     // is no child menu.
     //
-    else if(psChildWidget)
-    {
+    else if(psChildWidget) {
         //
         // Call the widget activated callback function.  This will notify
         // the application that a child widget has been activated by the
         // menu system.
         //
-        if(psMenuWidget->pfnActive)
-        {
+        if(psMenuWidget->pfnActive) {
             psMenuWidget->pfnActive(psChildWidget,
-                                   &psMenu->psSlideMenuItems[psMenu->ui32FocusIndex],
-                                   1);
+                                    &psMenu->psSlideMenuItems[psMenu->ui32FocusIndex],
+                                    1);
         }
 
         //
@@ -899,8 +875,7 @@ SlideMenuRight(tWidget *psWidget)
     // There is no child menu or child widget, so there is nothing to change
     // on the display.
     //
-    else
-    {
+    else {
         return(1);
     }
 
@@ -929,8 +904,7 @@ SlideMenuRight(tWidget *psWidget)
     // off-screen buffer B and the new one is in buffer A.  So when we are
     // done, the correct image will be in buffer A.
     //
-    for(ui32X = 0; ui32X <= ui32MenuWidth; ui32X += 8)
-    {
+    for(ui32X = 0; ui32X <= ui32MenuWidth; ui32X += 8) {
         GrImageDraw(&sContext, psMenuWidget->psDisplayB->pvDisplayData,
                     psWidget->sPosition.i16XMin - ui32X,
                     psWidget->sPosition.i16YMin);
@@ -995,17 +969,15 @@ SlideMenuLeft(tWidget *psWidget)
     // control, and we are requested to go back to the previous menu item.
     // Process the child widget.
     //
-    if(psWidget->psChild)
-    {
+    if(psWidget->psChild) {
         //
         // Call the widget de-activated callback function.  This notifies the
         // application that the widget is being deactivated.
         //
-        if(psMenuWidget->pfnActive)
-        {
+        if(psMenuWidget->pfnActive) {
             psMenuWidget->pfnActive(psWidget->psChild,
-                                   &psMenu->psSlideMenuItems[psMenu->ui32FocusIndex],
-                                   0);
+                                    &psMenu->psSlideMenuItems[psMenu->ui32FocusIndex],
+                                    0);
         }
 
         //
@@ -1032,8 +1004,7 @@ SlideMenuLeft(tWidget *psWidget)
     // Otherwise there is not a child widget in control, so process the parent
     // menu, if there is one.
     //
-    else if(psParentMenu)
-    {
+    else if(psParentMenu) {
         //
         // Render the current menu into the off-screen buffer B.  This will be
         // the same menu appearance that is currently on the display.
@@ -1050,8 +1021,7 @@ SlideMenuLeft(tWidget *psWidget)
     // Otherwise, we are already at the top level menu and there is nothing
     // else to do.
     //
-    else
-    {
+    else {
         return(1);
     }
 
@@ -1087,8 +1057,7 @@ SlideMenuLeft(tWidget *psWidget)
     // one is in buffer A.  So when we are done, the correct image will be in
     // buffer A.
     //
-    for(ui32X = 0; ui32X <= ui32MenuWidth; ui32X += 8)
-    {
+    for(ui32X = 0; ui32X <= ui32MenuWidth; ui32X += 8) {
         GrImageDraw(&sContext, psMenuWidget->psDisplayB->pvDisplayData,
                     psWidget->sPosition.i16XMin + ui32X,
                     psWidget->sPosition.i16YMin);
@@ -1127,8 +1096,7 @@ SlideMenuClick(tWidget *psWidget)
     //
     // If a child widget is in control then there is nothing to do.
     //
-    if(psWidget->psChild)
-    {
+    if(psWidget->psChild) {
         return(0);
     }
 
@@ -1141,8 +1109,7 @@ SlideMenuClick(tWidget *psWidget)
     //
     // Check to see if this menu allows multiple selection.
     //
-    if(psMenu->bMultiSelectable)
-    {
+    if(psMenu->bMultiSelectable) {
         //
         // Toggle the selection status of the currently highlighted menu
         // item, and then repaint it.
@@ -1183,45 +1150,39 @@ SlideMenuMove(tWidget *psWidget, uint32_t ui32Msg)
     //
     // Process the key event.
     //
-    switch(ui32Msg)
-    {
+    switch(ui32Msg) {
         //
         // User presses select button.
         //
-        case WIDGET_MSG_KEY_SELECT:
-        {
+        case WIDGET_MSG_KEY_SELECT: {
             return(SlideMenuClick(psWidget));
         }
 
         //
         // User presses up button.
         //
-        case WIDGET_MSG_KEY_UP:
-        {
+        case WIDGET_MSG_KEY_UP: {
             return(SlideMenuUp(psWidget));
         }
 
         //
         // User presses down button.
         //
-        case WIDGET_MSG_KEY_DOWN:
-        {
+        case WIDGET_MSG_KEY_DOWN: {
             return(SlideMenuDown(psWidget));
         }
 
         //
         // User presses left button.
         //
-        case WIDGET_MSG_KEY_LEFT:
-        {
+        case WIDGET_MSG_KEY_LEFT: {
             return(SlideMenuLeft(psWidget));
         }
 
         //
         // User presses right button.
         //
-        case WIDGET_MSG_KEY_RIGHT:
-        {
+        case WIDGET_MSG_KEY_RIGHT: {
             return(SlideMenuRight(psWidget));
         }
 
@@ -1229,8 +1190,7 @@ SlideMenuMove(tWidget *psWidget, uint32_t ui32Msg)
         // This is an unexpected event.  Return an indication that the event
         // was not handled.
         //
-        default:
-        {
+        default: {
             return(0);
         }
     }
@@ -1256,7 +1216,7 @@ SlideMenuMove(tWidget *psWidget, uint32_t ui32Msg)
 //*****************************************************************************
 int32_t
 SlideMenuMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
-              uint32_t ui32Param2)
+                 uint32_t ui32Param2)
 {
     //
     // Check the arguments.
@@ -1266,13 +1226,11 @@ SlideMenuMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
     //
     // Determine which message is being sent.
     //
-    switch(ui32Msg)
-    {
+    switch(ui32Msg) {
         //
         // The widget paint request has been sent.
         //
-        case WIDGET_MSG_PAINT:
-        {
+        case WIDGET_MSG_PAINT: {
             //
             // Handle the widget paint request.
             //
@@ -1294,13 +1252,11 @@ SlideMenuMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
         case WIDGET_MSG_KEY_UP:
         case WIDGET_MSG_KEY_DOWN:
         case WIDGET_MSG_KEY_LEFT:
-        case WIDGET_MSG_KEY_RIGHT:
-        {
+        case WIDGET_MSG_KEY_RIGHT: {
             //
             // If this key event is for us, then process the event.
             //
-            if((tWidget *)ui32Param1 == psWidget)
-            {
+            if((tWidget *)ui32Param1 == psWidget) {
                 return(SlideMenuMove(psWidget, ui32Msg));
             }
         }
@@ -1309,8 +1265,7 @@ SlideMenuMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
         // An unknown request has been sent.  This widget does not handle
         // pointer events, so they get dumped here if they occur.
         //
-        default:
-        {
+        default: {
             //
             // Let the default message handler process this message.
             //
@@ -1368,8 +1323,7 @@ SlideMenuInit(tSlideMenuWidget *psWidget, const tDisplay *psDisplay,
     //
     // Clear out the widget structure.
     //
-    for(ui32Idx = 0; ui32Idx < sizeof(tSlideMenuWidget); ui32Idx += 4)
-    {
+    for(ui32Idx = 0; ui32Idx < sizeof(tSlideMenuWidget); ui32Idx += 4) {
         ((uint32_t *)psWidget)[ui32Idx / 4] = 0;
     }
 

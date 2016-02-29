@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2001-2004 Swedish Institute of Computer Science.
- * All rights reserved. 
- * 
- * Redistribution and use in source and binary forms, with or without modification, 
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
@@ -11,21 +11,21 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  * 3. The name of the author may not be used to endorse or promote products
- *    derived from this software without specific prior written permission. 
+ *    derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED 
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT 
- * SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT 
- * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING 
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
+ * SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
+ * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
  * OF SUCH DAMAGE.
  *
  * This file is part of the lwIP TCP/IP stack.
- * 
+ *
  * Author: Adam Dunkels <adam@sics.se>
  *
  */
@@ -48,17 +48,17 @@ extern "C" {
 #define PBUF_IP_HLEN        20
 
 typedef enum {
-  PBUF_TRANSPORT,
-  PBUF_IP,
-  PBUF_LINK,
-  PBUF_RAW
+    PBUF_TRANSPORT,
+    PBUF_IP,
+    PBUF_LINK,
+    PBUF_RAW
 } pbuf_layer;
 
 typedef enum {
-  PBUF_RAM, /* pbuf data is stored in RAM */
-  PBUF_ROM, /* pbuf data is stored in ROM */
-  PBUF_REF, /* pbuf comes from the pbuf pool */
-  PBUF_POOL /* pbuf payload refers to RAM */
+    PBUF_RAM, /* pbuf data is stored in RAM */
+    PBUF_ROM, /* pbuf data is stored in ROM */
+    PBUF_REF, /* pbuf comes from the pbuf pool */
+    PBUF_POOL /* pbuf payload refers to RAM */
 } pbuf_type;
 
 
@@ -77,44 +77,44 @@ typedef enum {
 #define PBUF_FLAG_TCP_FIN   0x20U
 
 struct pbuf {
-  /** next pbuf in singly linked pbuf chain */
-  struct pbuf *next;
+    /** next pbuf in singly linked pbuf chain */
+    struct pbuf *next;
 
-  /** pointer to the actual data in the buffer */
-  void *payload;
+    /** pointer to the actual data in the buffer */
+    void *payload;
 
-  /**
-   * total length of this buffer and all next buffers in chain
-   * belonging to the same packet.
-   *
-   * For non-queue packet chains this is the invariant:
-   * p->tot_len == p->len + (p->next? p->next->tot_len: 0)
-   */
-  u16_t tot_len;
+    /**
+     * total length of this buffer and all next buffers in chain
+     * belonging to the same packet.
+     *
+     * For non-queue packet chains this is the invariant:
+     * p->tot_len == p->len + (p->next? p->next->tot_len: 0)
+     */
+    u16_t tot_len;
 
-  /** length of this buffer */
-  u16_t len;
+    /** length of this buffer */
+    u16_t len;
 
-  /** pbuf_type as u8_t instead of enum to save space */
-  u8_t /*pbuf_type*/ type;
+    /** pbuf_type as u8_t instead of enum to save space */
+    u8_t /*pbuf_type*/ type;
 
-  /** misc flags */
-  u8_t flags;
+    /** misc flags */
+    u8_t flags;
 
-  /**
-   * the reference count always equals the number of pointers
-   * that refer to this pbuf. This can be pointers from an application,
-   * the stack itself, or pbuf->next pointers from a chain.
-   */
-  u16_t ref;
-  
+    /**
+     * the reference count always equals the number of pointers
+     * that refer to this pbuf. This can be pointers from an application,
+     * the stack itself, or pbuf->next pointers from a chain.
+     */
+    u16_t ref;
+
 #if LWIP_PTPD
-  /* the time at which the packet was received, seconds component */
-  u32_t time_s;
+    /* the time at which the packet was received, seconds component */
+    u32_t time_s;
 
-  /* the time at which the packet was received, nanoseconds component */
-  u32_t time_ns;
-#endif /* #if LWIP_PTPD */  
+    /* the time at which the packet was received, nanoseconds component */
+    u32_t time_ns;
+#endif /* #if LWIP_PTPD */
 };
 
 #if LWIP_SUPPORT_CUSTOM_PBUF
@@ -123,10 +123,10 @@ typedef void (*pbuf_free_custom_fn)(struct pbuf *p);
 
 /** A custom pbuf: like a pbuf, but following a function pointer to free it. */
 struct pbuf_custom {
-  /** The actual pbuf */
-  struct pbuf pbuf;
-  /** This function is called when pbuf_free deallocates this pbuf(_custom) */
-  pbuf_free_custom_fn custom_free_function;
+    /** The actual pbuf */
+    struct pbuf pbuf;
+    /** This function is called when pbuf_free deallocates this pbuf(_custom) */
+    pbuf_free_custom_fn custom_free_function;
 };
 #endif /* LWIP_SUPPORT_CUSTOM_PBUF */
 
@@ -157,11 +157,11 @@ struct pbuf *pbuf_alloced_custom(pbuf_layer l, u16_t length, pbuf_type type,
                                  struct pbuf_custom *p, void *payload_mem,
                                  u16_t payload_mem_len);
 #endif /* LWIP_SUPPORT_CUSTOM_PBUF */
-void pbuf_realloc(struct pbuf *p, u16_t size); 
+void pbuf_realloc(struct pbuf *p, u16_t size);
 u8_t pbuf_header(struct pbuf *p, s16_t header_size);
 void pbuf_ref(struct pbuf *p);
 u8_t pbuf_free(struct pbuf *p);
-u8_t pbuf_clen(struct pbuf *p);  
+u8_t pbuf_clen(struct pbuf *p);
 void pbuf_cat(struct pbuf *head, struct pbuf *tail);
 void pbuf_chain(struct pbuf *head, struct pbuf *tail);
 struct pbuf *pbuf_dechain(struct pbuf *p);

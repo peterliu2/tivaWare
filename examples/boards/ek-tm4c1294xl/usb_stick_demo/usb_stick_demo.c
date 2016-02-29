@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -126,8 +126,8 @@ main(void)
     // Run from the PLL at 50 MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 50000000);
+                                            SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 50000000);
 
     //
     // Configure the device pins.
@@ -175,13 +175,11 @@ main(void)
     // debounce the press).
     //
     ui32Count = 0;
-    while(1)
-    {
+    while(1) {
         //
         // See if the button is pressed.
         //
-        if(ROM_GPIOPinRead(GPIO_PORTJ_BASE, GPIO_PIN_0) == 0)
-        {
+        if(ROM_GPIOPinRead(GPIO_PORTJ_BASE, GPIO_PIN_0) == 0) {
             //
             // Increment the count since the button is pressed.
             //
@@ -191,13 +189,10 @@ main(void)
             // If the count has reached 4, then the button has been debounced
             // as being pressed.
             //
-            if(ui32Count == 4)
-            {
+            if(ui32Count == 4) {
                 break;
             }
-        }
-        else
-        {
+        } else {
             //
             // Reset the count since the button is not pressed.
             //
@@ -215,13 +210,11 @@ main(void)
     // debounce the release).
     //
     ui32Count = 0;
-    while(1)
-    {
+    while(1) {
         //
         // See if the button is pressed.
         //
-        if(ROM_GPIOPinRead(GPIO_PORTJ_BASE, GPIO_PIN_0) != 0)
-        {
+        if(ROM_GPIOPinRead(GPIO_PORTJ_BASE, GPIO_PIN_0) != 0) {
             //
             // Increment the count since the button is released.
             //
@@ -231,13 +224,10 @@ main(void)
             // If the count has reached 4, then the button has been debounced
             // as being released.
             //
-            if(ui32Count == 4)
-            {
+            if(ui32Count == 4) {
                 break;
             }
-        }
-        else
-        {
+        } else {
             //
             // Reset the count since the button is pressed.
             //
@@ -253,10 +243,10 @@ main(void)
     //
     // Indicate that the updater is being called.
     //
-        UARTprintf("The USB stick\n");
-        UARTprintf("updater is now\n");
-        UARTprintf("waiting for a\n");
-        UARTprintf("USB stick.\n");
+    UARTprintf("The USB stick\n");
+    UARTprintf("updater is now\n");
+    UARTprintf("waiting for a\n");
+    UARTprintf("USB stick.\n");
 
     //
     // Call the updater so that it will search for an update on a memory stick.
@@ -267,7 +257,6 @@ main(void)
     // The updater should take control, so this should never be reached.
     // Just in case, loop forever.
     //
-    while(1)
-    {
+    while(1) {
     }
 }

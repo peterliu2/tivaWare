@@ -58,11 +58,10 @@ CCIF extern struct uip_eth_addr uip_ethaddr;
  * The Ethernet header.
  */
 #include "net/pack_struct_start.h"
-struct uip_eth_hdr
-{
-	struct uip_eth_addr dest;
-	struct uip_eth_addr src;
-	u16_t				type;
+struct uip_eth_hdr {
+    struct uip_eth_addr dest;
+    struct uip_eth_addr src;
+    u16_t				type;
 }
 
 #include "net/pack_struct_end.h"
@@ -142,8 +141,8 @@ void	uip_arp_timer( void );
 		uip_ethaddr.addr[5] = eaddr.addr[5]; \
 	} while( 0 )
 
-	/** @} */
+/** @} */
 #endif /* __UIP_ARP_H__ */
 
-	/** @} */
-	
+/** @} */
+

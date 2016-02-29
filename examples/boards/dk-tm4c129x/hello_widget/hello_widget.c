@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -81,8 +81,8 @@ RectangularButton(g_sPushBtn, &g_sBackground, 0, 0,
                   &g_sKentec320x240x16_SSD2119, 60, 60, 200, 40,
                   (PB_STYLE_OUTLINE | PB_STYLE_TEXT_OPAQUE | PB_STYLE_TEXT |
                    PB_STYLE_FILL | PB_STYLE_RELEASE_NOTIFY),
-                   ClrDarkBlue, ClrBlue, ClrWhite, ClrWhite,
-                   g_psFontCmss22b, "Show Welcome", 0, 0, 0, 0, OnButtonPress);
+                  ClrDarkBlue, ClrBlue, ClrWhite, ClrWhite,
+                  g_psFontCmss22b, "Show Welcome", 0, 0, 0, 0, OnButtonPress);
 
 //*****************************************************************************
 //
@@ -143,8 +143,7 @@ OnButtonPress(tWidget *psWidget)
 {
     g_bHelloVisible = !g_bHelloVisible;
 
-    if(g_bHelloVisible)
-    {
+    if(g_bHelloVisible) {
         //
         // Add the Hello widget to the tree as a child of the push
         // button.  We could add it elsewhere but this seems as good a
@@ -163,9 +162,7 @@ OnButtonPress(tWidget *psWidget)
         // the welcome message).
         //
         WidgetPaint((tWidget *)&g_sPushBtn);
-    }
-    else
-    {
+    } else {
         //
         // Remove the Hello widget from the tree.
         //
@@ -248,8 +245,7 @@ main(void)
     //
     // Loop forever, processing widget messages.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Process any messages from or for the widgets.
         //

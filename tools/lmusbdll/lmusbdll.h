@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -27,7 +27,7 @@
 #pragma once
 
 #ifndef __AFXWIN_H__
-    #error "include 'stdafx.h' before including this file for PCH"
+#error "include 'stdafx.h' before including this file for PCH"
 #endif
 
 //
@@ -70,22 +70,22 @@ LMUSB_HANDLE __stdcall InitializeDevice(unsigned short usVID,
                                         LPGUID lpGUID,
                                         BOOL *pbDriverInstalled);
 LMUSB_HANDLE __stdcall InitializeDeviceByIndex(unsigned short usVID,
-                                               unsigned short usPID,
-                                               LPGUID lpGUID,
-                                               DWORD dwIndex,
-                                               BOOL bOpenDataEndpoints,
-                                               BOOL *pbDriverInstalled);
+        unsigned short usPID,
+        LPGUID lpGUID,
+        DWORD dwIndex,
+        BOOL bOpenDataEndpoints,
+        BOOL *pbDriverInstalled);
 BOOL __stdcall TerminateDevice(LMUSB_HANDLE hHandle);
 BOOL __stdcall WriteUSBPacket(LMUSB_HANDLE hHandle,
                               unsigned char *pcBuffer,
                               unsigned long ulSize,
                               unsigned long *pulWritten);
 DWORD __stdcall ReadUSBPacket(LMUSB_HANDLE hHandle,
-                             unsigned char *pcBuffer,
-                             unsigned long ulSize,
-                             unsigned long *pulRead,
-                             unsigned long ulTimeoutMs,
-                             HANDLE hBreak);
+                              unsigned char *pcBuffer,
+                              unsigned long ulSize,
+                              unsigned long *pulRead,
+                              unsigned long ulTimeoutMs,
+                              HANDLE hBreak);
 BOOL __stdcall Endpoint0Transfer(LMUSB_HANDLE hHandle, UCHAR ucRequestType,
                                  UCHAR ucRequest, USHORT usValue,
                                  USHORT usIndex, USHORT usLength,
@@ -99,26 +99,26 @@ BOOL __stdcall Endpoint0Transfer(LMUSB_HANDLE hHandle, UCHAR ucRequestType,
 //
 //****************************************************************************
 typedef LMUSB_HANDLE (__stdcall *tInitializeDevice)(unsigned short usVID,
-                                                    unsigned short usPID,
-                                                    LPGUID lpGUID,
-                                                    BOOL *pbDriverInstalled);
+        unsigned short usPID,
+        LPGUID lpGUID,
+        BOOL *pbDriverInstalled);
 typedef BOOL (__stdcall *tTerminateDevice)(LMUSB_HANDLE hHandle);
 typedef BOOL (__stdcall *tWriteUSBPacket)(LMUSB_HANDLE hHandle,
-                                          unsigned char *pcBuffer,
-                                          unsigned long ulSize,
-                                          unsigned long *pulWritten);
+        unsigned char *pcBuffer,
+        unsigned long ulSize,
+        unsigned long *pulWritten);
 typedef DWORD (__stdcall *tReadUSBPacket)(LMUSB_HANDLE hHandle,
-                                          unsigned char *pcBuffer,
-                                          unsigned long ulSize,
-                                          unsigned long *pulRead,
-                                          unsigned long ulTimeoutMs,
-                                          HANDLE hBreak);
+        unsigned char *pcBuffer,
+        unsigned long ulSize,
+        unsigned long *pulRead,
+        unsigned long ulTimeoutMs,
+        HANDLE hBreak);
 typedef DWORD (__stdcall *tEndpoint0Transfer)(LMUSB_HANDLE hHandle,
-                                              UCHAR ucRequestType,
-                                              UCHAR ucRequest, USHORT usValue,
-                                              USHORT usIndex, USHORT usLength,
-                                              PUCHAR pucBuffer,
-                                              PUSHORT pusCount);
+        UCHAR ucRequestType,
+        UCHAR ucRequest, USHORT usValue,
+        USHORT usIndex, USHORT usLength,
+        PUCHAR pucBuffer,
+        PUSHORT pusCount);
 #ifdef __cplusplus
 }
 #endif

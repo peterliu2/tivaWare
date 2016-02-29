@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -50,8 +50,7 @@
 // floating point values in tesla
 //
 //*****************************************************************************
-static const float g_fAK8963Factors[] =
-{
+static const float g_fAK8963Factors[] = {
     0.0000006,                  // 14-bit = .6 uT/LSB
     0.00000015,                 // 16-bit = .15 uT/LSB
 };
@@ -77,23 +76,20 @@ AK8963Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     // to the idle state (which will also result in a callback to propagate
     // the error).
     //
-    if(ui8Status != I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status != I2CM_STATUS_SUCCESS) {
         psInst->ui8State = AK8963_STATE_IDLE;
     }
 
     //
     // Determine the current state of the AK8963 state machine.
     //
-    switch(psInst->ui8State)
-    {
+    switch(psInst->ui8State) {
         //
         // All states that trivially transition to IDLE, and all unknown
         // states.
         //
         case AK8963_STATE_READ:
-        default:
-        {
+        default: {
             //
             // The state machine is now idle.
             //
@@ -108,8 +104,7 @@ AK8963Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // A write has just completed.
         //
-        case AK8963_STATE_WRITE:
-        {
+        case AK8963_STATE_WRITE: {
             //
             // Set the bit width to the new value.  If the register was not
             // modified, the values will be the same so this has no effect.
@@ -130,20 +125,17 @@ AK8963Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // A read-modify-write just completed
         //
-        case AK8963_STATE_RMW:
-        {
+        case AK8963_STATE_RMW: {
             //
             // See if the AK8963_O_CNTL2 register was just modified.
             //
             if(psInst->uCommand.sReadModifyWriteState.pui8Buffer[0] ==
-               AK8963_O_CNTL2)
-            {
+                    AK8963_O_CNTL2) {
                 //
                 // Extract the AK8963_CNTL2_SRST field
                 //
                 if(psInst->uCommand.sReadModifyWriteState.pui8Buffer[1] &
-                   AK8963_CNTL2_SRST)
-                {
+                        AK8963_CNTL2_SRST) {
                     //
                     // A soft reset has happened.  Reset the bitoutput
                     // tracking variable
@@ -156,8 +148,7 @@ AK8963Callback(void *pvCallbackData, uint_fast8_t ui8Status)
             // See if the AK8963_O_CNTL register was just modified.
             //
             if(psInst->uCommand.sReadModifyWriteState.pui8Buffer[0] ==
-               AK8963_O_CNTL)
-            {
+                    AK8963_O_CNTL) {
                 //
                 // Extract the BITM field
                 //
@@ -181,8 +172,7 @@ AK8963Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if the state machine is now idle and there is a callback function.
     //
-    if((psInst->ui8State == AK8963_STATE_IDLE) && psInst->pfnCallback)
-    {
+    if((psInst->ui8State == AK8963_STATE_IDLE) && psInst->pfnCallback) {
         //
         // Call the application-supplied callback function.
         //
@@ -223,8 +213,7 @@ AK8963Init(tAK8963 *psInst, tI2CMInstance *psI2CInst, uint_fast8_t ui8I2CAddr,
     //
     // The default settings are ok.  Return success and call the callback.
     //
-    if(pfnCallback)
-    {
+    if(pfnCallback) {
         pfnCallback(pvCallbackData, 0);
     }
 
@@ -260,8 +249,7 @@ AK8963Read(tAK8963 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     // Return a failure if the AK8963 driver is not idle (in other words, there
     // is already an outstanding request to the AK8963).
     //
-    if(psInst->ui8State != AK8963_STATE_IDLE)
-    {
+    if(psInst->ui8State != AK8963_STATE_IDLE) {
         return(0);
     }
 
@@ -282,8 +270,7 @@ AK8963Read(tAK8963 *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     psInst->uCommand.pui8Buffer[0] = ui8Reg;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
                 psInst->uCommand.pui8Buffer, 1, pui8Data, ui16Count,
-                AK8963Callback, psInst) == 0)
-    {
+                AK8963Callback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -328,8 +315,7 @@ AK8963Write(tAK8963 *psInst, uint_fast8_t ui8Reg, const uint8_t *pui8Data,
     // Return a failure if the AK8963 driver is not idle (in other words, there
     // is already an outstanding request to the AK8963).
     //
-    if(psInst->ui8State != AK8963_STATE_IDLE)
-    {
+    if(psInst->ui8State != AK8963_STATE_IDLE) {
         return(0);
     }
 
@@ -342,13 +328,11 @@ AK8963Write(tAK8963 *psInst, uint_fast8_t ui8Reg, const uint8_t *pui8Data,
     //
     // See if the CNTL2 register is being written.
     //
-    if((ui8Reg <= AK8963_O_CNTL2) && ((ui8Reg + ui16Count) > AK8963_O_CNTL2))
-    {
+    if((ui8Reg <= AK8963_O_CNTL2) && ((ui8Reg + ui16Count) > AK8963_O_CNTL2)) {
         //
         // See if a soft reset is being requested.
         //
-        if(pui8Data[ui8Reg - AK8963_O_CNTL2] & AK8963_CNTL2_SRST)
-        {
+        if(pui8Data[ui8Reg - AK8963_O_CNTL2] & AK8963_CNTL2_SRST) {
             //
             // Update the bit width based on the soft reset.
             //
@@ -359,8 +343,7 @@ AK8963Write(tAK8963 *psInst, uint_fast8_t ui8Reg, const uint8_t *pui8Data,
     //
     // See if the CNTL register is being written.
     //
-    if((ui8Reg <= AK8963_O_CNTL) && ((ui8Reg + ui16Count) > AK8963_O_CNTL))
-    {
+    if((ui8Reg <= AK8963_O_CNTL) && ((ui8Reg + ui16Count) > AK8963_O_CNTL)) {
         //
         // Extract the new value of the BITM field from the CNTL register
         // value.
@@ -379,8 +362,7 @@ AK8963Write(tAK8963 *psInst, uint_fast8_t ui8Reg, const uint8_t *pui8Data,
     //
     if(I2CMWrite8(&(psInst->uCommand.sWriteState), psInst->psI2CInst,
                   psInst->ui8Addr, ui8Reg, pui8Data, ui16Count, AK8963Callback,
-                  psInst) == 0)
-    {
+                  psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -428,8 +410,7 @@ AK8963ReadModifyWrite(tAK8963 *psInst, uint_fast8_t ui8Reg,
     // Return a failure if the AK8963 driver is not idle (in other words, there
     // is already an outstanding request to the AK8963).
     //
-    if(psInst->ui8State != AK8963_STATE_IDLE)
-    {
+    if(psInst->ui8State != AK8963_STATE_IDLE) {
         return(0);
     }
 
@@ -449,8 +430,7 @@ AK8963ReadModifyWrite(tAK8963 *psInst, uint_fast8_t ui8Reg,
     //
     if(I2CMReadModifyWrite8(&(psInst->uCommand.sReadModifyWriteState),
                             psInst->psI2CInst, psInst->ui8Addr, ui8Reg,
-                            ui8Mask, ui8Value, AK8963Callback, psInst) == 0)
-    {
+                            ui8Mask, ui8Value, AK8963Callback, psInst) == 0) {
         //
         // The I2C read-modify-write failed, so move to the idle state and
         // return a failure.
@@ -492,8 +472,7 @@ AK8963DataRead(tAK8963 *psInst, tSensorCallback *pfnCallback,
     // Return a failure if the AK8963 driver is not idle (in other words, there
     // is already an outstanding request to the AK8963).
     //
-    if(psInst->ui8State != AK8963_STATE_IDLE)
-    {
+    if(psInst->ui8State != AK8963_STATE_IDLE) {
         return(0);
     }
 
@@ -515,8 +494,7 @@ AK8963DataRead(tAK8963 *psInst, tSensorCallback *pfnCallback,
     //
     psInst->pui8Data[0] = AK8963_O_ST1;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr, psInst->pui8Data, 1,
-                psInst->pui8Data, 8, AK8963Callback, psInst) == 0)
-    {
+                psInst->pui8Data, 8, AK8963Callback, psInst) == 0) {
         //
         // The I2C read failed, so move to the idle state and return a failure.
         //
@@ -557,16 +535,13 @@ AK8963DataMagnetoGetRaw(tAK8963 *psInst, uint_fast16_t *pui16MagnetoX,
     //
     // Return the raw magnetometer values.
     //
-    if(pui16MagnetoX)
-    {
+    if(pui16MagnetoX) {
         *pui16MagnetoX = (psInst->pui8Data[2] << 8) | psInst->pui8Data[1];
     }
-    if(pui16MagnetoY)
-    {
+    if(pui16MagnetoY) {
         *pui16MagnetoY = (psInst->pui8Data[4] << 8) | psInst->pui8Data[3];
     }
-    if(pui16MagnetoZ)
-    {
+    if(pui16MagnetoZ) {
         *pui16MagnetoZ = (psInst->pui8Data[6] << 8) | psInst->pui8Data[5];
     }
 }
@@ -604,18 +579,15 @@ AK8963DataMagnetoGetFloat(tAK8963 *psInst, float *pfMagnetoX,
     //
     // Convert the magnetometer values into floating-point tesla values.
     //
-    if(pfMagnetoX)
-    {
+    if(pfMagnetoX) {
         *pfMagnetoX = ((float)(int16_t)((psInst->pui8Data[2] << 8) |
                                         psInst->pui8Data[1]) * fFactor);
     }
-    if(pfMagnetoY)
-    {
+    if(pfMagnetoY) {
         *pfMagnetoY = ((float)(int16_t)((psInst->pui8Data[4] << 8) |
                                         psInst->pui8Data[3]) * fFactor);
     }
-    if(pfMagnetoZ)
-    {
+    if(pfMagnetoZ) {
         *pfMagnetoZ = ((float)(int16_t)((psInst->pui8Data[6] << 8) |
                                         psInst->pui8Data[5]) * fFactor);
     }
@@ -648,12 +620,10 @@ AK8963DataGetStatus(tAK8963 *psInst, uint_fast8_t *pui8Status1,
     //
     // Return the status registers
     //
-    if(pui8Status1)
-    {
+    if(pui8Status1) {
         *pui8Status1 = psInst->pui8Data[0];
     }
-    if(pui8Status2)
-    {
+    if(pui8Status2) {
         *pui8Status2 = psInst->pui8Data[7];
     }
 }

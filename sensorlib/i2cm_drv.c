@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -284,13 +284,13 @@ extern uint_fast8_t I2CMReadBatched(tI2CMInstance *psInst,
 //
 //*****************************************************************************
 extern uint_fast8_t I2CMReadModifyWrite16BE(tI2CMReadModifyWrite16 *psInst,
-                                            tI2CMInstance *psI2CInst,
-                                            uint_fast8_t ui8Addr,
-                                            uint_fast8_t ui8Reg,
-                                            uint_fast16_t ui16Mask,
-                                            uint_fast16_t ui16Value,
-                                            tSensorCallback *pfnCallback,
-                                            void *pvCallbackData);
+        tI2CMInstance *psI2CInst,
+        uint_fast8_t ui8Addr,
+        uint_fast8_t ui8Reg,
+        uint_fast16_t ui16Mask,
+        uint_fast16_t ui16Value,
+        tSensorCallback *pfnCallback,
+        void *pvCallbackData);
 
 //*****************************************************************************
 //
@@ -303,16 +303,14 @@ I2CMStateIdle(tI2CMInstance *psInst, tI2CMCommand *pCommand)
     //
     // Do nothing if there is not another transfer in the queue.
     //
-    if(psInst->ui8ReadPtr == psInst->ui8WritePtr)
-    {
+    if(psInst->ui8ReadPtr == psInst->ui8WritePtr) {
         return;
     }
 
     //
     // See if there is any data to be written.
     //
-    if(pCommand->ui16WriteCount != 0)
-    {
+    if(pCommand->ui16WriteCount != 0) {
         //
         // Set the slave address and indicate a write.
         //
@@ -327,8 +325,7 @@ I2CMStateIdle(tI2CMInstance *psInst, tI2CMCommand *pCommand)
         // See if there is just a single byte to be written and no bytes to be
         // read.
         //
-        if((pCommand->ui16WriteCount == 1) && (pCommand->ui16ReadCount == 0))
-        {
+        if((pCommand->ui16WriteCount == 1) && (pCommand->ui16ReadCount == 0)) {
             //
             // Perform a single byte send.
             //
@@ -344,8 +341,7 @@ I2CMStateIdle(tI2CMInstance *psInst, tI2CMCommand *pCommand)
         // Otherwise, see if there is just a single byte to be written and at
         // least one byte to be read.
         //
-        else if(pCommand->ui16WriteCount == 1)
-        {
+        else if(pCommand->ui16WriteCount == 1) {
             //
             // Perform a single send, writing the first byte as the only byte.
             //
@@ -363,8 +359,7 @@ I2CMStateIdle(tI2CMInstance *psInst, tI2CMCommand *pCommand)
         //
         // Otherwise, there is more than one byte to be written.
         //
-        else
-        {
+        else {
             //
             // Start the burst cycle, writing the first byte.
             //
@@ -384,9 +379,7 @@ I2CMStateIdle(tI2CMInstance *psInst, tI2CMCommand *pCommand)
             psInst->ui8State = ((pCommand->ui16WriteCount != 2) ?
                                 STATE_WRITE_NEXT : STATE_WRITE_FINAL);
         }
-    }
-    else
-    {
+    } else {
         //
         // Set the slave address and indicate a read.
         //
@@ -400,8 +393,7 @@ I2CMStateIdle(tI2CMInstance *psInst, tI2CMCommand *pCommand)
         //
         // See if there is just a single byte to be read.
         //
-        if(pCommand->ui16ReadCount == 1)
-        {
+        if(pCommand->ui16ReadCount == 1) {
             //
             // Perform a single byte read.
             //
@@ -412,9 +404,7 @@ I2CMStateIdle(tI2CMInstance *psInst, tI2CMCommand *pCommand)
             // The next state is the wait for final read state.
             //
             psInst->ui8State = STATE_READ_WAIT;
-        }
-        else
-        {
+        } else {
             //
             // Start the burst receive.
             //
@@ -443,8 +433,7 @@ I2CMStateWriteNext(tI2CMInstance *psInst, tI2CMCommand *pCommand)
     //
     // See if the write batch has been sent.
     //
-    if(psInst->ui16Index == pCommand->ui16WriteBatchSize)
-    {
+    if(psInst->ui16Index == pCommand->ui16WriteBatchSize) {
         //
         // Move to the write pause state.
         //
@@ -453,14 +442,11 @@ I2CMStateWriteNext(tI2CMInstance *psInst, tI2CMCommand *pCommand)
         //
         // Call the callback function.
         //
-        if(pCommand->pfnCallback)
-        {
+        if(pCommand->pfnCallback) {
             pCommand->pfnCallback(pCommand->pvCallbackData,
                                   I2CM_STATUS_BATCH_DONE);
         }
-    }
-    else
-    {
+    } else {
         //
         // Write the next byte to the data register.
         //
@@ -477,8 +463,7 @@ I2CMStateWriteNext(tI2CMInstance *psInst, tI2CMCommand *pCommand)
         // If there is one byte left, set the next state to the final write
         // state.
         //
-        if((pCommand->ui16WriteCount - psInst->ui16Index) == 1)
-        {
+        if((pCommand->ui16WriteCount - psInst->ui16Index) == 1) {
             psInst->ui8State = STATE_WRITE_FINAL;
         }
     }
@@ -495,8 +480,7 @@ I2CMStateWriteFinal(tI2CMInstance *psInst, tI2CMCommand *pCommand)
     //
     // See if the write batch has been sent.
     //
-    if(psInst->ui16Index == pCommand->ui16WriteBatchSize)
-    {
+    if(psInst->ui16Index == pCommand->ui16WriteBatchSize) {
         //
         // Move to the write pause state.
         //
@@ -505,14 +489,11 @@ I2CMStateWriteFinal(tI2CMInstance *psInst, tI2CMCommand *pCommand)
         //
         // Call the callback function.
         //
-        if(pCommand->pfnCallback)
-        {
+        if(pCommand->pfnCallback) {
             pCommand->pfnCallback(pCommand->pvCallbackData,
                                   I2CM_STATUS_BATCH_DONE);
         }
-    }
-    else
-    {
+    } else {
         //
         // Write the final byte to the data register.
         //
@@ -522,8 +503,7 @@ I2CMStateWriteFinal(tI2CMInstance *psInst, tI2CMCommand *pCommand)
         //
         // See if there is data to be read after this byte is written.
         //
-        if(pCommand->ui16ReadCount == 0)
-        {
+        if(pCommand->ui16ReadCount == 0) {
             //
             // Finish the burst write.
             //
@@ -534,9 +514,7 @@ I2CMStateWriteFinal(tI2CMInstance *psInst, tI2CMCommand *pCommand)
             // The next state is the callback state.
             //
             psInst->ui8State = STATE_CALLBACK;
-        }
-        else
-        {
+        } else {
             //
             // Finish the burst write.
             //
@@ -579,13 +557,11 @@ I2CMStateWritePause(tI2CMInstance *psInst, tI2CMCommand *pCommand)
     //
     // See if there is more than one byte left to be written.
     //
-    if((pCommand->ui16WriteCount - psInst->ui16Index) == 0)
-    {
+    if((pCommand->ui16WriteCount - psInst->ui16Index) == 0) {
         //
         // See if there is data to be read after this byte is written.
         //
-        if(pCommand->ui16ReadCount == 0)
-        {
+        if(pCommand->ui16ReadCount == 0) {
             //
             // Finish the burst write.
             //
@@ -596,9 +572,7 @@ I2CMStateWritePause(tI2CMInstance *psInst, tI2CMCommand *pCommand)
             // The next state is the callback state.
             //
             psInst->ui8State = STATE_CALLBACK;
-        }
-        else
-        {
+        } else {
             //
             // Finish the burst write.
             //
@@ -612,9 +586,7 @@ I2CMStateWritePause(tI2CMInstance *psInst, tI2CMCommand *pCommand)
             psInst->ui8State = ((pCommand->ui16ReadCount == 1) ?
                                 STATE_READ_ONE : STATE_READ_FIRST);
         }
-    }
-    else
-    {
+    } else {
         //
         // Continue the burst write.
         //
@@ -623,12 +595,9 @@ I2CMStateWritePause(tI2CMInstance *psInst, tI2CMCommand *pCommand)
         //
         // The next state is the write next state.
         //
-        if((pCommand->ui16WriteCount - psInst->ui16Index) == 1)
-        {
+        if((pCommand->ui16WriteCount - psInst->ui16Index) == 1) {
             psInst->ui8State = STATE_WRITE_FINAL;
-        }
-        else
-        {
+        } else {
             psInst->ui8State = STATE_WRITE_NEXT;
         }
     }
@@ -713,8 +682,7 @@ I2CMStateReadNext(tI2CMInstance *psInst, tI2CMCommand *pCommand)
     //
     // See if the read batch has been filled.
     //
-    if(psInst->ui16Index == pCommand->ui16ReadBatchSize)
-    {
+    if(psInst->ui16Index == pCommand->ui16ReadBatchSize) {
         //
         // Move to the read pause state.
         //
@@ -723,14 +691,11 @@ I2CMStateReadNext(tI2CMInstance *psInst, tI2CMCommand *pCommand)
         //
         // Call the callback function.
         //
-        if(pCommand->pfnCallback)
-        {
+        if(pCommand->pfnCallback) {
             pCommand->pfnCallback(pCommand->pvCallbackData,
                                   I2CM_STATUS_BATCH_READY);
         }
-    }
-    else
-    {
+    } else {
         //
         // Continue the burst read.
         //
@@ -741,8 +706,7 @@ I2CMStateReadNext(tI2CMInstance *psInst, tI2CMCommand *pCommand)
         // If there are two characters left to be read, make the next state be
         // the end of burst read state.
         //
-        if((pCommand->ui16ReadCount - psInst->ui16Index) == 2)
-        {
+        if((pCommand->ui16ReadCount - psInst->ui16Index) == 2) {
             psInst->ui8State = STATE_READ_FINAL;
         }
     }
@@ -766,8 +730,7 @@ I2CMStateReadFinal(tI2CMInstance *psInst, tI2CMCommand *pCommand)
     //
     // See if the read batch has been filled.
     //
-    if(psInst->ui16Index == pCommand->ui16ReadBatchSize)
-    {
+    if(psInst->ui16Index == pCommand->ui16ReadBatchSize) {
         //
         // Move to the read pause state.
         //
@@ -776,14 +739,11 @@ I2CMStateReadFinal(tI2CMInstance *psInst, tI2CMCommand *pCommand)
         //
         // Call the callback function.
         //
-        if(pCommand->pfnCallback)
-        {
+        if(pCommand->pfnCallback) {
             pCommand->pfnCallback(pCommand->pvCallbackData,
                                   I2CM_STATUS_BATCH_READY);
         }
-    }
-    else
-    {
+    } else {
         //
         // Finish the burst read.
         //
@@ -818,8 +778,7 @@ I2CMStateReadPause(tI2CMInstance *psInst, tI2CMCommand *pCommand)
     //
     // See if there is more than one byte left to be read.
     //
-    if((pCommand->ui16ReadCount - psInst->ui16Index) == 1)
-    {
+    if((pCommand->ui16ReadCount - psInst->ui16Index) == 1) {
         //
         // Finish the burst read.
         //
@@ -830,9 +789,7 @@ I2CMStateReadPause(tI2CMInstance *psInst, tI2CMCommand *pCommand)
         // The next state is the wait for final read state.
         //
         psInst->ui8State = STATE_READ_WAIT;
-    }
-    else
-    {
+    } else {
         //
         // Continue the burst read.
         //
@@ -842,12 +799,9 @@ I2CMStateReadPause(tI2CMInstance *psInst, tI2CMCommand *pCommand)
         //
         // Determine the next state based on the number of bytes left to read.
         //
-        if((pCommand->ui16ReadCount - psInst->ui16Index) == 2)
-        {
+        if((pCommand->ui16ReadCount - psInst->ui16Index) == 2) {
             psInst->ui8State = STATE_READ_FINAL;
-        }
-        else
-        {
+        } else {
             psInst->ui8State = STATE_READ_NEXT;
         }
     }
@@ -895,38 +849,27 @@ I2CMStateCallback(tI2CMInstance *psInst, tI2CMCommand *pCommand,
     // This command has been completed, so increment the read pointer.
     //
     psInst->ui8ReadPtr++;
-    if(psInst->ui8ReadPtr == NUM_I2CM_COMMANDS)
-    {
+    if(psInst->ui8ReadPtr == NUM_I2CM_COMMANDS) {
         psInst->ui8ReadPtr = 0;
     }
 
     //
     // If there is a callback function then call it now.
     //
-    if(pfnCallback)
-    {
+    if(pfnCallback) {
         //
         // Convert the status from the I2C driver into the I2C master
         // driver status.
         //
-        if((ui32Status & (I2C_MCS_ARBLST | I2C_MCS_ERROR)) == 0)
-        {
+        if((ui32Status & (I2C_MCS_ARBLST | I2C_MCS_ERROR)) == 0) {
             ui32Status = I2CM_STATUS_SUCCESS;
-        }
-        else if(ui32Status & I2C_MCS_ARBLST)
-        {
+        } else if(ui32Status & I2C_MCS_ARBLST) {
             ui32Status = I2CM_STATUS_ARB_LOST;
-        }
-        else if(ui32Status & I2C_MCS_ADRACK)
-        {
+        } else if(ui32Status & I2C_MCS_ADRACK) {
             ui32Status = I2CM_STATUS_ADDR_NACK;
-        }
-        else if(ui32Status & I2C_MCS_DATACK)
-        {
+        } else if(ui32Status & I2C_MCS_DATACK) {
             ui32Status = I2CM_STATUS_DATA_NACK;
-        }
-        else
-        {
+        } else {
             ui32Status = I2CM_STATUS_ERROR;
         }
 
@@ -976,15 +919,13 @@ I2CMIntHandler(tI2CMInstance *psInst)
     // See if an error occurred during the last transaction.
     //
     if((ui32Status & (I2C_MCS_ERROR | I2C_MCS_ARBLST)) &&
-       (psInst->ui8State != STATE_IDLE))
-    {
+            (psInst->ui8State != STATE_IDLE)) {
         //
         // An error occurred, so halt the I2C transaction.  The error stop
         // command for send and receive is identical, so it does not matter
         // which one is used here.  Only issue the stop if the bus is busy.
         //
-        if(ui32Status & I2C_MCS_BUSBSY)
-        {
+        if(ui32Status & I2C_MCS_BUSBSY) {
             MAP_I2CMasterControl(psInst->ui32Base,
                                  I2C_MASTER_CMD_BURST_SEND_ERROR_STOP);
         }
@@ -1000,18 +941,15 @@ I2CMIntHandler(tI2CMInstance *psInst)
     // action.  However, a few states require multi-state processing, so those
     // states will break and this loop repeated.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Determine what to do based on the current state.
         //
-        switch(psInst->ui8State)
-        {
+        switch(psInst->ui8State) {
             //
             // The idle state.
             //
-            case STATE_IDLE:
-            {
+            case STATE_IDLE: {
                 //
                 // Handle the idle state.
                 //
@@ -1027,8 +965,7 @@ I2CMIntHandler(tI2CMInstance *psInst)
             //
             // The state for the middle of a burst write.
             //
-            case STATE_WRITE_NEXT:
-            {
+            case STATE_WRITE_NEXT: {
                 //
                 // Handle the write next state.
                 //
@@ -1044,8 +981,7 @@ I2CMIntHandler(tI2CMInstance *psInst)
             //
             // The state for the final write of a burst sequence.
             //
-            case STATE_WRITE_FINAL:
-            {
+            case STATE_WRITE_FINAL: {
                 //
                 // Handle the write final state.
                 //
@@ -1061,8 +997,7 @@ I2CMIntHandler(tI2CMInstance *psInst)
             //
             // The state for a paused write.
             //
-            case STATE_WRITE_PAUSE:
-            {
+            case STATE_WRITE_PAUSE: {
                 //
                 // Handle the write pause state.
                 //
@@ -1078,8 +1013,7 @@ I2CMIntHandler(tI2CMInstance *psInst)
             //
             // The state for a single byte read.
             //
-            case STATE_READ_ONE:
-            {
+            case STATE_READ_ONE: {
                 //
                 // Handle the read one state.
                 //
@@ -1095,8 +1029,7 @@ I2CMIntHandler(tI2CMInstance *psInst)
             //
             // The state for the start of a burst read.
             //
-            case STATE_READ_FIRST:
-            {
+            case STATE_READ_FIRST: {
                 //
                 // Handle the read first state.
                 //
@@ -1112,8 +1045,7 @@ I2CMIntHandler(tI2CMInstance *psInst)
             //
             // The state for the middle of a burst read.
             //
-            case STATE_READ_NEXT:
-            {
+            case STATE_READ_NEXT: {
                 //
                 // Handle the read next state.
                 //
@@ -1129,8 +1061,7 @@ I2CMIntHandler(tI2CMInstance *psInst)
             //
             // The state for the end of a burst read.
             //
-            case STATE_READ_FINAL:
-            {
+            case STATE_READ_FINAL: {
                 //
                 // Handle the read final state.
                 //
@@ -1146,8 +1077,7 @@ I2CMIntHandler(tI2CMInstance *psInst)
             //
             // The state for a paused read.
             //
-            case STATE_READ_PAUSE:
-            {
+            case STATE_READ_PAUSE: {
                 //
                 // Handle the read pause state.
                 //
@@ -1163,8 +1093,7 @@ I2CMIntHandler(tI2CMInstance *psInst)
             //
             // This state is for the final read of a single or burst read.
             //
-            case STATE_READ_WAIT:
-            {
+            case STATE_READ_WAIT: {
                 //
                 // Handle the read wait state.
                 //
@@ -1180,8 +1109,7 @@ I2CMIntHandler(tI2CMInstance *psInst)
             //
             // This state is for providing the transaction complete callback.
             //
-            case STATE_CALLBACK:
-            {
+            case STATE_CALLBACK: {
                 //
                 // Handle the callback state.
                 //
@@ -1193,8 +1121,7 @@ I2CMIntHandler(tI2CMInstance *psInst)
                 // cause the next state to be processed.
                 //
                 if((ui32Status & (I2C_MCS_ERROR | I2C_MCS_ARBLST)) &&
-                   (ui32Status & I2C_MCS_BUSBSY))
-                {
+                        (ui32Status & I2C_MCS_BUSBSY)) {
                     return;
                 }
 
@@ -1354,13 +1281,10 @@ I2CMCommand(tI2CMInstance *psInst, uint_fast8_t ui8Addr,
     //
     // Disable the I2C interrupt.
     //
-    if(MAP_IntIsEnabled(psInst->ui8Int))
-    {
+    if(MAP_IntIsEnabled(psInst->ui8Int)) {
         ui8Enabled = 1;
         MAP_IntDisable(psInst->ui8Int);
-    }
-    else
-    {
+    } else {
         ui8Enabled = 0;
     }
 
@@ -1369,18 +1293,15 @@ I2CMCommand(tI2CMInstance *psInst, uint_fast8_t ui8Addr,
     // to the queue).
     //
     ui8Next = psInst->ui8WritePtr + 1;
-    if(ui8Next == NUM_I2CM_COMMANDS)
-    {
+    if(ui8Next == NUM_I2CM_COMMANDS) {
         ui8Next = 0;
     }
 
     //
     // Return a failure if the command queue is full.
     //
-    if(psInst->ui8ReadPtr == ui8Next)
-    {
-        if(ui8Enabled)
-        {
+    if(psInst->ui8ReadPtr == ui8Next) {
+        if(ui8Enabled) {
             MAP_IntEnable(psInst->ui8Int);
         }
         return(0);
@@ -1412,8 +1333,7 @@ I2CMCommand(tI2CMInstance *psInst, uint_fast8_t ui8Addr,
     //
     // See if the state machine is idle.
     //
-    if(psInst->ui8State == STATE_IDLE)
-    {
+    if(psInst->ui8State == STATE_IDLE) {
         //
         // Generate a fake I2C interrupt, which will commence the I2C transfer.
         //
@@ -1423,8 +1343,7 @@ I2CMCommand(tI2CMInstance *psInst, uint_fast8_t ui8Addr,
     //
     // Re-enable the I2C master interrupt.
     //
-    if(ui8Enabled)
-    {
+    if(ui8Enabled) {
         MAP_IntEnable(psInst->ui8Int);
     }
 
@@ -1462,20 +1381,16 @@ I2CMTransferResume(tI2CMInstance *psInst, uint8_t *pui8Data)
     // Return an error if there is not a paused transfer.
     //
     if((psInst->ui8State != STATE_WRITE_PAUSE) &&
-       (psInst->ui8State != STATE_READ_PAUSE))
-    {
+            (psInst->ui8State != STATE_READ_PAUSE)) {
         return(0);
     }
 
     //
     // Save the pointer for the next buffer.
     //
-    if(psInst->ui8State == STATE_WRITE_PAUSE)
-    {
+    if(psInst->ui8State == STATE_WRITE_PAUSE) {
         psInst->pCommands[psInst->ui8ReadPtr].pui8WriteData = pui8Data;
-    }
-    else
-    {
+    } else {
         psInst->pCommands[psInst->ui8ReadPtr].pui8ReadData = pui8Data;
     }
 
@@ -1512,8 +1427,7 @@ I2CMReadModifyWrite8Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     // to the idle state (which will also result ina  callback to propagate the
     // error).
     //
-    if(ui8Status != I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status != I2CM_STATUS_SUCCESS) {
         psInst->ui8State = I2CM_RMW_STATE_IDLE;
     }
 
@@ -1521,13 +1435,11 @@ I2CMReadModifyWrite8Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     // Determine the current state of the I2C master read-modify-write state
     // machine.
     //
-    switch(psInst->ui8State)
-    {
+    switch(psInst->ui8State) {
         //
         // The read portion of the read-modify-write has completed.
         //
-        case I2CM_RMW_STATE_READ:
-        {
+        case I2CM_RMW_STATE_READ: {
             //
             // Modify the register data that was just read.
             //
@@ -1554,8 +1466,7 @@ I2CMReadModifyWrite8Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // The write portion of the read-modify-write has completed.
         //
-        case I2CM_RMW_STATE_WRITE:
-        {
+        case I2CM_RMW_STATE_WRITE: {
             //
             // Move to the idle state.
             //
@@ -1571,8 +1482,7 @@ I2CMReadModifyWrite8Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if the state machine is now idle and there is a callback function.
     //
-    if((psInst->ui8State == I2CM_RMW_STATE_IDLE) && psInst->pfnCallback)
-    {
+    if((psInst->ui8State == I2CM_RMW_STATE_IDLE) && psInst->pfnCallback) {
         //
         // Call the application-supplied callback function.
         //
@@ -1643,8 +1553,7 @@ I2CMReadModifyWrite8(tI2CMReadModifyWrite8 *psInst, tI2CMInstance *psI2CInst,
     //
     // See if this is a write or a read-modify-write.
     //
-    if(ui8Mask == 0)
-    {
+    if(ui8Mask == 0) {
         //
         // Set the state to waiting for the write portion of the
         // read-modify-write.
@@ -1660,13 +1569,10 @@ I2CMReadModifyWrite8(tI2CMReadModifyWrite8 *psInst, tI2CMInstance *psI2CInst,
         // Add the write command to the I2C master queue.
         //
         if(I2CMWrite(psI2CInst, ui8Addr, psInst->pui8Buffer, 2,
-                     I2CMReadModifyWrite8Callback, psInst) == 0)
-        {
+                     I2CMReadModifyWrite8Callback, psInst) == 0) {
             return(0);
         }
-    }
-    else
-    {
+    } else {
         //
         // Set the state to waiting for the read portion of the
         // read-modify-write.
@@ -1678,8 +1584,7 @@ I2CMReadModifyWrite8(tI2CMReadModifyWrite8 *psInst, tI2CMInstance *psI2CInst,
         //
         if(I2CMRead(psI2CInst, ui8Addr, psInst->pui8Buffer, 1,
                     psInst->pui8Buffer + 1, 1, I2CMReadModifyWrite8Callback,
-                    psInst) == 0)
-        {
+                    psInst) == 0) {
             return(0);
         }
     }
@@ -1713,8 +1618,7 @@ I2CMReadModifyWrite16LECallback(void *pvCallbackData, uint_fast8_t ui8Status)
     // to the idle state (which will also result ina  callback to propagate the
     // error).
     //
-    if(ui8Status != I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status != I2CM_STATUS_SUCCESS) {
         psInst->ui8State = I2CM_RMW_STATE_IDLE;
     }
 
@@ -1722,13 +1626,11 @@ I2CMReadModifyWrite16LECallback(void *pvCallbackData, uint_fast8_t ui8Status)
     // Determine the current state of the I2C master read-modify-write state
     // machine.
     //
-    switch(psInst->ui8State)
-    {
+    switch(psInst->ui8State) {
         //
         // The read portion of the read-modify-write has completed.
         //
-        case I2CM_RMW_STATE_READ:
-        {
+        case I2CM_RMW_STATE_READ: {
             //
             // Modify the register data that was just read.
             //
@@ -1757,8 +1659,7 @@ I2CMReadModifyWrite16LECallback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // The write portion of the read-modify-write has completed.
         //
-        case I2CM_RMW_STATE_WRITE:
-        {
+        case I2CM_RMW_STATE_WRITE: {
             //
             // Move to the idle state.
             //
@@ -1774,8 +1675,7 @@ I2CMReadModifyWrite16LECallback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if the state machine is now idle and there is a callback function.
     //
-    if((psInst->ui8State == I2CM_RMW_STATE_IDLE) && psInst->pfnCallback)
-    {
+    if((psInst->ui8State == I2CM_RMW_STATE_IDLE) && psInst->pfnCallback) {
         //
         // Call the application-supplied callback function.
         //
@@ -1848,8 +1748,7 @@ I2CMReadModifyWrite16LE(tI2CMReadModifyWrite16 *psInst,
     //
     // See if this is a write or a read-modify-write.
     //
-    if(ui16Mask == 0)
-    {
+    if(ui16Mask == 0) {
         //
         // Set the state to waiting for the write portion of the
         // read-modify-write.
@@ -1866,13 +1765,10 @@ I2CMReadModifyWrite16LE(tI2CMReadModifyWrite16 *psInst,
         // Add the write command to the I2C master queue.
         //
         if(I2CMWrite(psI2CInst, ui8Addr, psInst->pui8Buffer, 3,
-                     I2CMReadModifyWrite16LECallback, psInst) == 0)
-        {
+                     I2CMReadModifyWrite16LECallback, psInst) == 0) {
             return(0);
         }
-    }
-    else
-    {
+    } else {
         //
         // Set the state to waiting for the read portion of the
         // read-modify-write.
@@ -1884,8 +1780,7 @@ I2CMReadModifyWrite16LE(tI2CMReadModifyWrite16 *psInst,
         //
         if(I2CMRead(psI2CInst, ui8Addr, psInst->pui8Buffer, 1,
                     psInst->pui8Buffer + 1, 2, I2CMReadModifyWrite16LECallback,
-                    psInst) == 0)
-        {
+                    psInst) == 0) {
             return(0);
         }
     }
@@ -1915,14 +1810,12 @@ I2CMWrite8Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if the current batch is done and more data is needed.
     //
-    if(ui8Status == I2CM_STATUS_BATCH_DONE)
-    {
+    if(ui8Status == I2CM_STATUS_BATCH_DONE) {
         //
         // Place the next two bytes into the write buffer.
         //
         psInst->pui8Buffer[0] = psInst->pui8Data[0];
-        if(psInst->ui16Count > 1)
-        {
+        if(psInst->ui16Count > 1) {
             psInst->pui8Buffer[1] = psInst->pui8Data[1];
         }
 
@@ -1942,8 +1835,7 @@ I2CMWrite8Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     // The transfer has completed, or an error has occurred.  In both cases,
     // see if there is a callback function.
     //
-    else if(psInst->pfnCallback)
-    {
+    else if(psInst->pfnCallback) {
         //
         // Call the application-supplied callback function.
         //
@@ -1998,8 +1890,7 @@ I2CMWrite8(tI2CMWrite8 *psInst, tI2CMInstance *psI2CInst, uint_fast8_t ui8Addr,
     psInst->pui8Buffer[0] = ui8Reg;
     psInst->pui8Buffer[1] = pui8Data[0];
     if(I2CMWriteBatched(psI2CInst, ui8Addr, psInst->pui8Buffer, ui16Count + 1,
-                        2, I2CMWrite8Callback, psInst) == 0)
-    {
+                        2, I2CMWrite8Callback, psInst) == 0) {
         //
         // The I2C write failed, so return a failure.
         //
@@ -2032,13 +1923,11 @@ I2CMRead16BECallback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if the transaction completed successfully.
     //
-    if(ui8Status == I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status == I2CM_STATUS_SUCCESS) {
         //
         // Loop through the 16-bit values read from the I2C device.
         //
-        while(psInst->ui16Count--)
-        {
+        while(psInst->ui16Count--) {
             //
             // Byte swap this value.
             //
@@ -2056,8 +1945,7 @@ I2CMRead16BECallback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if there is a callback function.
     //
-    if(psInst->pfnCallback)
-    {
+    if(psInst->pfnCallback) {
         //
         // Call the application-supplied callback function.
         //
@@ -2115,8 +2003,7 @@ I2CMRead16BE(tI2CMRead16BE *psInst, tI2CMInstance *psI2CInst,
     //
     psInst->pui8Data[0] = ui8Reg;
     if(I2CMRead(psI2CInst, ui8Addr, psInst->pui8Data, 1, psInst->pui8Data,
-                ui16Count * 2, I2CMRead16BECallback, psInst) == 0)
-    {
+                ui16Count * 2, I2CMRead16BECallback, psInst) == 0) {
         //
         // The I2C write failed, so return a failure.
         //
@@ -2148,14 +2035,12 @@ I2CMWrite16BECallback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if the current batch is done and more data is needed.
     //
-    if(ui8Status == I2CM_STATUS_BATCH_DONE)
-    {
+    if(ui8Status == I2CM_STATUS_BATCH_DONE) {
         //
         // Place the next two bytes into the write buffer.
         //
         psInst->pui8Buffer[0] = psInst->pui8Data[0];
-        if(psInst->ui16Count > 1)
-        {
+        if(psInst->ui16Count > 1) {
             psInst->pui8Buffer[1] = psInst->pui8Data[3];
         }
 
@@ -2175,8 +2060,7 @@ I2CMWrite16BECallback(void *pvCallbackData, uint_fast8_t ui8Status)
     // The transfer has completed, or an error has occurred.  In both cases,
     // see if there is a callback function.
     //
-    else if(psInst->pfnCallback)
-    {
+    else if(psInst->pfnCallback) {
         //
         // Call the application-supplied callback function.
         //
@@ -2234,8 +2118,7 @@ I2CMWrite16BE(tI2CMWrite16BE *psInst, tI2CMInstance *psI2CInst,
     psInst->pui8Buffer[1] = psInst->pui8Data[1];
     if(I2CMWriteBatched(psI2CInst, ui8Addr, psInst->pui8Buffer,
                         (ui16Count * 2) + 1, 2, I2CMWrite16BECallback,
-                        psInst) == 0)
-    {
+                        psInst) == 0) {
         //
         // The I2C write failed, so return a failure.
         //

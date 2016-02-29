@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-LM4F232 Firmware Package.
 //
 //*****************************************************************************
@@ -57,10 +57,9 @@ static uint32_t pui32Stack[128];
 //
 //*****************************************************************************
 __attribute__ ((section(".isr_vector")))
-void (* const g_pfnVectors[])(void) =
-{
+void (* const g_pfnVectors[])(void) = {
     (void (*)(void))((uint32_t)pui32Stack + sizeof(pui32Stack)),
-                                            // The initial stack pointer
+    // The initial stack pointer
     ResetISR,                               // The reset handler
     NmiSR,                                  // The NMI handler
     FaultISR,                               // The hard fault handler
@@ -249,8 +248,7 @@ ResetISR(void)
     // Copy the data segment initializers from flash to SRAM.
     //
     pui32Src = &_ldata;
-    for(pui32Dest = &_data; pui32Dest < &_edata; )
-    {
+    for(pui32Dest = &_data; pui32Dest < &_edata; ) {
         *pui32Dest++ = *pui32Src++;
     }
 
@@ -300,8 +298,7 @@ NmiSR(void)
     //
     // Enter an infinite loop.
     //
-    while(1)
-    {
+    while(1) {
     }
 }
 
@@ -318,8 +315,7 @@ FaultISR(void)
     //
     // Enter an infinite loop.
     //
-    while(1)
-    {
+    while(1) {
     }
 }
 
@@ -336,7 +332,6 @@ IntDefaultHandler(void)
     //
     // Go into an infinite loop.
     //
-    while(1)
-    {
+    while(1) {
     }
 }

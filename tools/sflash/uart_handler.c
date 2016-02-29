@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2006-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -80,15 +80,13 @@ OpenUART(char *pcComPort, uint32_t ui32BaudRate)
     COMMTIMEOUTS sCommTimeouts;
 
     g_hComPort = CreateFile(pcComPort, GENERIC_READ | GENERIC_WRITE, 0, NULL,
-			    OPEN_EXISTING, 0, NULL);
+                            OPEN_EXISTING, 0, NULL);
 
-    if(g_hComPort == INVALID_HANDLE_VALUE)
-    {
+    if(g_hComPort == INVALID_HANDLE_VALUE) {
         return(-1);
     }
 
-    if(GetCommState(g_hComPort, &sDCB) == 0)
-    {
+    if(GetCommState(g_hComPort, &sDCB) == 0) {
         return(-1);
     }
 
@@ -100,13 +98,11 @@ OpenUART(char *pcComPort, uint32_t ui32BaudRate)
     sDCB.fOutxCtsFlow = FALSE;
     sDCB.fOutxDsrFlow = FALSE;
     sDCB.fDtrControl = DTR_CONTROL_ENABLE;
-    if(SetCommState(g_hComPort, &sDCB) == 0)
-    {
+    if(SetCommState(g_hComPort, &sDCB) == 0) {
         return(-1);
     }
 
-    if(GetCommTimeouts(g_hComPort, &sCommTimeouts) == 0)
-    {
+    if(GetCommTimeouts(g_hComPort, &sCommTimeouts) == 0) {
         return(-1);
     }
 
@@ -116,8 +112,7 @@ OpenUART(char *pcComPort, uint32_t ui32BaudRate)
     sCommTimeouts.WriteTotalTimeoutConstant = 8000;
     sCommTimeouts.WriteTotalTimeoutMultiplier = 8000;
 
-    if(SetCommTimeouts(g_hComPort, &sCommTimeouts) == 0)
-    {
+    if(SetCommTimeouts(g_hComPort, &sCommTimeouts) == 0) {
         return(-1);
     }
     return(0);
@@ -125,8 +120,7 @@ OpenUART(char *pcComPort, uint32_t ui32BaudRate)
     struct termios sOptions;
 
     g_i32ComPort = open(pcComPort, O_RDWR | O_NOCTTY | O_NDELAY);
-    if(g_i32ComPort == -1)
-    {
+    if(g_i32ComPort == -1) {
         return(-1);
     }
 
@@ -134,33 +128,22 @@ OpenUART(char *pcComPort, uint32_t ui32BaudRate)
 
     tcgetattr(g_i32ComPort, &sOptions);
 
-    if(ui32BaudRate == 9600)
-    {
+    if(ui32BaudRate == 9600) {
         cfsetispeed(&sOptions, B9600);
         cfsetospeed(&sOptions, B9600);
-    }
-    else if(ui32BaudRate == 19200)
-    {
+    } else if(ui32BaudRate == 19200) {
         cfsetispeed(&sOptions, B19200);
         cfsetospeed(&sOptions, B19200);
-    }
-    else if(ui32BaudRate == 38400)
-    {
+    } else if(ui32BaudRate == 38400) {
         cfsetispeed(&sOptions, B38400);
         cfsetospeed(&sOptions, B38400);
-    }
-    else if(ui32BaudRate == 57600)
-    {
+    } else if(ui32BaudRate == 57600) {
         cfsetispeed(&sOptions, B57600);
         cfsetospeed(&sOptions, B57600);
-    }
-    else if(ui32BaudRate == 115200)
-    {
+    } else if(ui32BaudRate == 115200) {
         cfsetispeed(&sOptions, B115200);
         cfsetospeed(&sOptions, B115200);
-    }
-    else
-    {
+    } else {
         cfsetispeed(&sOptions, B230400);
         cfsetospeed(&sOptions, B230400);
     }
@@ -199,8 +182,7 @@ CloseUART(void)
 #ifdef __WIN32
     return(CloseHandle(g_hComPort));
 #else
-    if(g_i32ComPort != -1)
-    {
+    if(g_i32ComPort != -1) {
         close(g_i32ComPort);
     }
 
@@ -234,18 +216,15 @@ UARTSendData(uint8_t const *pui8Data, uint8_t ui8Size)
     //
     // Send the Ack back to the device.
     //
-    if(WriteFile(g_hComPort, pui8Data, ui8Size, &ulNumBytes, NULL) == 0)
-    {
+    if(WriteFile(g_hComPort, pui8Data, ui8Size, &ulNumBytes, NULL) == 0) {
         return(-1);
     }
-    if(ulNumBytes != ui8Size)
-    {
+    if(ulNumBytes != ui8Size) {
         return(-1);
     }
     return(0);
 #else
-    if(write(g_i32ComPort, pui8Data, ui8Size) != ui8Size)
-    {
+    if(write(g_i32ComPort, pui8Data, ui8Size) != ui8Size) {
         return(-1);
     }
 
@@ -275,18 +254,15 @@ UARTReceiveData(uint8_t *pui8Data, uint8_t ui8Size)
 #ifdef __WIN32
     unsigned long ulNumBytes;
 
-    if(ReadFile(g_hComPort, pui8Data, ui8Size, &ulNumBytes, NULL) == 0)
-    {
+    if(ReadFile(g_hComPort, pui8Data, ui8Size, &ulNumBytes, NULL) == 0) {
         return(-1);
     }
-    if(ulNumBytes != ui8Size)
-    {
+    if(ulNumBytes != ui8Size) {
         return(-1);
     }
     return(0);
 #else
-    if(read(g_i32ComPort, pui8Data, ui8Size) != ui8Size)
-    {
+    if(read(g_i32ComPort, pui8Data, ui8Size) != ui8Size) {
         return(-1);
     }
 

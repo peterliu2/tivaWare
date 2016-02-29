@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-LM4F232 Firmware Package.
 //
 //*****************************************************************************
@@ -96,8 +96,7 @@ static FILINFO g_sFileInfo;
 // FAT file system driver.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     FRESULT fresult;
     char *pcResultStr;
 }
@@ -117,8 +116,7 @@ tFresultString;
 // providing a human-readable string.
 //
 //*****************************************************************************
-tFresultString g_sFresultStrings[] =
-{
+tFresultString g_sFresultStrings[] = {
     FRESULT_ENTRY(FR_OK),
     FRESULT_ENTRY(FR_DISK_ERR),
     FRESULT_ENTRY(FR_INT_ERR),
@@ -213,8 +211,7 @@ static tDisplay g_sOffscreenDisplayB;
 // be up to 16 colors in this palette.
 //
 //*****************************************************************************
-static uint32_t g_pui32Palette[] =
-{
+static uint32_t g_pui32Palette[] = {
     ClrBlack,
     ClrWhite,
     ClrDarkBlue,
@@ -446,8 +443,7 @@ FillAudioBuffer(void)
     //
     // If already full return.
     //
-    if(g_ui32ValidBytes == g_ui32BufferSize)
-    {
+    if(g_ui32ValidBytes == g_ui32BufferSize) {
         return;
     }
 
@@ -462,8 +458,7 @@ FillAudioBuffer(void)
     // If write is ahead of read then fill to the end of the buffer if
     // possible.
     //
-    if(pui8Read <= g_pui8Write)
-    {
+    if(pui8Read <= g_pui8Write) {
         //
         // Calculate the amount of space we have.
         //
@@ -474,8 +469,7 @@ FillAudioBuffer(void)
         g_pui8Write += ui32Count;
         g_ui32ValidBytes += ui32Count;
 
-        if(g_pui8Write == (g_pui8AudioBuffer + g_ui32BufferSize))
-        {
+        if(g_pui8Write == (g_pui8AudioBuffer + g_ui32BufferSize)) {
             g_pui8Write = g_pui8AudioBuffer;
         }
     }
@@ -483,8 +477,7 @@ FillAudioBuffer(void)
     //
     // If read is now ahead of write then fill to the read pointer.
     //
-    if(pui8Read > g_pui8Write)
-    {
+    if(pui8Read > g_pui8Write) {
         //
         // Calculate the amount of space we have.
         //
@@ -509,8 +502,7 @@ USBAudioOutCallback(void *pvBuffer, uint32_t ui32Event)
     // If a buffer has been played then schedule a new one to play.
     //
     if((ui32Event == USB_EVENT_TX_COMPLETE) &&
-       (HWREGBITW(&g_ui32Flags, FLAGS_PLAYING)))
-    {
+            (HWREGBITW(&g_ui32Flags, FLAGS_PLAYING))) {
         //
         // Indicate that a transfer was complete so that the non-interrupt
         // code can read in more data from the file.
@@ -525,20 +517,16 @@ USBAudioOutCallback(void *pvBuffer, uint32_t ui32Event)
         //
         // Remove the specified number of bytes from the buffer.
         //
-        if(g_ui32ValidBytes > g_ui32TransferSize)
-        {
+        if(g_ui32ValidBytes > g_ui32TransferSize) {
             g_ui32ValidBytes -= g_ui32TransferSize;
-        }
-        else
-        {
+        } else {
             g_ui32ValidBytes = 0;
         }
 
         //
         // Wrap the read pointer if necessary.
         //
-        if(g_pui8Read >= (g_pui8AudioBuffer + g_ui32BufferSize))
-        {
+        if(g_pui8Read >= (g_pui8AudioBuffer + g_ui32BufferSize)) {
             g_pui8Read = g_pui8AudioBuffer;
         }
 
@@ -591,8 +579,7 @@ DisplayTime(uint32_t ui32ForceUpdate)
     //
     // Only display on the screen once per second.
     //
-    if((g_ui32BytesPlayed >= g_ui32NextUpdate) || (ui32ForceUpdate != 0))
-    {
+    if((g_ui32BytesPlayed >= g_ui32NextUpdate) || (ui32ForceUpdate != 0)) {
         //
         // Set the next update time to one second later.
         //
@@ -644,8 +631,7 @@ WaveStop(void)
     //
     // Zero out the buffer.
     //
-    for(ui32Idx = 0; ui32Idx < (AUDIO_BUFFER_SIZE >> 2); ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < (AUDIO_BUFFER_SIZE >> 2); ui32Idx++) {
         pui32Buffer[ui32Idx] = 0;
     }
 
@@ -697,12 +683,9 @@ GetTickms(void)
     ui32RetVal = g_ui32SysTickCount;
     ui32Saved = ui32RetVal;
 
-    if(ui32Saved > g_ui32LastTick)
-    {
+    if(ui32Saved > g_ui32LastTick) {
         ui32RetVal = ui32Saved - g_ui32LastTick;
-    }
-    else
-    {
+    } else {
         ui32RetVal = g_ui32LastTick - ui32Saved;
     }
 
@@ -734,14 +717,12 @@ StringFromFresult(FRESULT fresult)
     // Enter a loop to search the error code table for a matching
     // error code.
     //
-    for(ui32Idx = 0; ui32Idx < NUM_FRESULT_CODES; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < NUM_FRESULT_CODES; ui32Idx++) {
         //
         // If a match is found, then return the string name of the
         // error code.
         //
-        if(g_sFresultStrings[ui32Idx].fresult == fresult)
-        {
+        if(g_sFresultStrings[ui32Idx].fresult == fresult) {
             return(g_sFresultStrings[ui32Idx].pcResultStr);
         }
     }
@@ -805,8 +786,7 @@ ShowStatusScreen(char *pcStatus[], uint32_t ui32Count)
     // Display the status lines
     //
     GrContextFontSet(&sContext, g_psFontFixed6x8);
-    for(ui32Idx = 0; ui32Idx < ui32Count; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < ui32Count; ui32Idx++) {
         GrStringDrawCentered(&sContext, pcStatus[ui32Idx], -1,
                              GrContextDpyWidthGet(&sContext) / 2, i32Y, 0);
         i32Y += 10;
@@ -830,8 +810,7 @@ FileInit(void)
     //
     // Mount the file system, using logical disk 0.
     //
-    if(f_mount(0, &g_sFatFs) != FR_OK)
-    {
+    if(f_mount(0, &g_sFatFs) != FR_OK) {
         return(false);
     }
     return(true);
@@ -846,10 +825,8 @@ FileInit(void)
 static void
 AudioEvent(uint32_t ui32Event, uint32_t ui32Param)
 {
-    switch(ui32Event)
-    {
-        case SOUND_EVENT_READY:
-        {
+    switch(ui32Event) {
+        case SOUND_EVENT_READY: {
             //
             // Flag that a new audio device is present.
             //
@@ -863,8 +840,7 @@ AudioEvent(uint32_t ui32Event, uint32_t ui32Param)
 
             break;
         }
-        case SOUND_EVENT_DISCONNECT:
-        {
+        case SOUND_EVENT_DISCONNECT: {
             //
             // Device is no longer present.
             //
@@ -888,18 +864,14 @@ AudioEvent(uint32_t ui32Event, uint32_t ui32Param)
 
             break;
         }
-        case SOUND_EVENT_UNKNOWN_DEV:
-        {
-            if(ui32Param == 1)
-            {
+        case SOUND_EVENT_UNKNOWN_DEV: {
+            if(ui32Param == 1) {
                 //
                 // Unknown device connected.
                 //
                 strcpy(g_pcStatusText, "Unknown Device");
                 WidgetPaint((tWidget *)&g_sStatus);
-            }
-            else
-            {
+            } else {
                 //
                 // Unknown device disconnected.
                 //
@@ -909,8 +881,7 @@ AudioEvent(uint32_t ui32Event, uint32_t ui32Param)
 
             break;
         }
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -953,8 +924,7 @@ PopulateFileList(uint32_t ui32Level)
     //
     // Check for error and return if there is a problem.
     //
-    if(fresult != FR_OK)
-    {
+    if(fresult != FR_OK) {
         //
         // Ensure that the error is reported.
         //
@@ -973,8 +943,7 @@ PopulateFileList(uint32_t ui32Level)
     //
     // Enter loop to enumerate through all directory entries.
     //
-    for(;;)
-    {
+    for(;;) {
         //
         // Read an entry from the directory.
         //
@@ -983,8 +952,7 @@ PopulateFileList(uint32_t ui32Level)
         //
         // Check for error and return if there is a problem.
         //
-        if(fresult != FR_OK)
-        {
+        if(fresult != FR_OK) {
             g_pcStatusLines[0] = "Error from";
             g_pcStatusLines[1] = "USB disk";
             g_pcStatusLines[2] = (char *)StringFromFresult(fresult);
@@ -996,16 +964,14 @@ PopulateFileList(uint32_t ui32Level)
         // If the file name is blank, then this is the end of the
         // listing.
         //
-        if(!g_sFileInfo.fname[0])
-        {
+        if(!g_sFileInfo.fname[0]) {
             break;
         }
 
         //
         // Add the information to a menu item
         //
-        if(ui32ItemCount < MAX_FILES_PER_MENU)
-        {
+        if(ui32ItemCount < MAX_FILES_PER_MENU) {
             tSlideMenuItem *psMenuItem;
 
             //
@@ -1031,7 +997,7 @@ PopulateFileList(uint32_t ui32Level)
             // shown.
             //
             psMenuItem->psChildMenu = (g_sFileInfo.fattrib & AM_DIR) ?
-                                    &g_psFileMenus[ui32Level + 1] : 0;
+                                      &g_psFileMenus[ui32Level + 1] : 0;
 
             //
             // Move to the next entry in the item array we use to populate the
@@ -1089,13 +1055,11 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
     // If the first character is /, then this is a fully specified
     // path, and it should just be used as-is.
     //
-    if(pcDirectory[0] == '/')
-    {
+    if(pcDirectory[0] == '/') {
         //
         // Make sure the new path is not bigger than the cwd buffer.
         //
-        if(strlen(pcDirectory) + 1 > sizeof(g_pcCwdBuf))
-        {
+        if(strlen(pcDirectory) + 1 > sizeof(g_pcCwdBuf)) {
             *pui32Reason = NAME_TOO_LONG_ERROR;
             return(FR_OK);
         }
@@ -1104,8 +1068,7 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
         // If the new path name (in argv[1])  is not too long, then
         // copy it into the temporary buffer so it can be checked.
         //
-        else
-        {
+        else {
             strncpy(g_pcTmpBuf, pcDirectory, sizeof(g_pcTmpBuf));
         }
     }
@@ -1114,8 +1077,7 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
     // If the argument is .. then attempt to remove the lowest level
     // on the CWD.
     //
-    else if(!strcmp(pcDirectory, ".."))
-    {
+    else if(!strcmp(pcDirectory, "..")) {
         //
         // Get the index to the last character in the current path.
         //
@@ -1125,8 +1087,7 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
         // Back up from the end of the path name until a separator (/)
         // is found, or until we bump up to the start of the path.
         //
-        while((g_pcTmpBuf[ui32Idx] != '/') && (ui32Idx > 1))
-        {
+        while((g_pcTmpBuf[ui32Idx] != '/') && (ui32Idx > 1)) {
             //
             // Back up one character.
             //
@@ -1146,16 +1107,14 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
     // Otherwise this is just a normal path name from the current
     // directory, and it needs to be appended to the current path.
     //
-    else
-    {
+    else {
         //
         // Test to make sure that when the new additional path is
         // added on to the current path, there is room in the buffer
         // for the full new path.  It needs to include a new separator,
         // and a trailing null character.
         //
-        if(strlen(g_pcTmpBuf) + strlen(pcDirectory) + 1 + 1 > sizeof(g_pcCwdBuf))
-        {
+        if(strlen(g_pcTmpBuf) + strlen(pcDirectory) + 1 + 1 > sizeof(g_pcCwdBuf)) {
             *pui32Reason = NAME_TOO_LONG_ERROR;
             return(FR_INVALID_OBJECT);
         }
@@ -1164,13 +1123,11 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
         // The new path is okay, so add the separator and then append
         // the new directory to the path.
         //
-        else
-        {
+        else {
             //
             // If not already at the root level, then append a /
             //
-            if(strcmp(g_pcTmpBuf, "/"))
-            {
+            if(strcmp(g_pcTmpBuf, "/")) {
                 strcat(g_pcTmpBuf, "/");
             }
 
@@ -1190,8 +1147,7 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
     //
     // If it can't be opened, then it is a bad path.  Return an error.
     //
-    if(fresult != FR_OK)
-    {
+    if(fresult != FR_OK) {
         *pui32Reason = OPENDIR_ERROR;
         return(fresult);
     }
@@ -1199,8 +1155,7 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
     //
     // Otherwise, it is a valid new path, so copy it into the CWD.
     //
-    else
-    {
+    else {
         strncpy(g_pcCwdBuf, g_pcTmpBuf, sizeof(g_pcCwdBuf));
     }
 
@@ -1246,8 +1201,7 @@ ProcessDirChange(char *pcDir, uint32_t ui32Level)
     // If the directory change was successful, populate the
     // list of files for the new subdirectory.
     //
-    if((fresult == FR_OK) && (ui32Level < MAX_SUBDIR_DEPTH))
-    {
+    if((fresult == FR_OK) && (ui32Level < MAX_SUBDIR_DEPTH)) {
         //
         // Get a pointer to the current menu for this CWD.
         //
@@ -1269,12 +1223,9 @@ ProcessDirChange(char *pcDir, uint32_t ui32Level)
         // Set the parent directory, if there is one.  If at level 0
         // (CWD is root), then there is no parent directory.
         //
-        if(ui32Level)
-        {
+        if(ui32Level) {
             psMenu->psParent = &g_psFileMenus[ui32Level - 1];
-        }
-        else
-        {
+        } else {
             psMenu->psParent = 0;
         }
 
@@ -1282,8 +1233,7 @@ ProcessDirChange(char *pcDir, uint32_t ui32Level)
         // If we are descending into a new subdir, then initialize the other
         // menu item fields to default values.
         //
-        if(ui32Level > g_ui32Level)
-        {
+        if(ui32Level > g_ui32Level) {
             psMenu->ui32CenterIndex = 0;
             psMenu->ui32FocusIndex = 0;
             psMenu->bMultiSelectable = 0;
@@ -1298,8 +1248,7 @@ ProcessDirChange(char *pcDir, uint32_t ui32Level)
     //
     // Directory change was not successful
     //
-    else
-    {
+    else {
         //
         // Return failure indication
         //
@@ -1404,17 +1353,14 @@ main(void)
     //
     ui32Retcode = disk_initialize(0);
 
-    if(ui32Retcode != RES_OK)
-    {
+    if(ui32Retcode != RES_OK) {
         g_pcStatusLines[0] = "No SD Card Found";
         g_pcStatusLines[1] = "Please insert";
         g_pcStatusLines[2] = "a card and";
         g_pcStatusLines[3] = "reset the board.";
         ShowStatusScreen(g_pcStatusLines, 4);
         return (1);
-    }
-    else
-    {
+    } else {
         g_pcStatusLines[0] = "SD Card Found";
         ShowStatusScreen(g_pcStatusLines, 1);
 
@@ -1422,8 +1368,7 @@ main(void)
         // Mount the file system, using logical disk 0.
         //
         f_mount(0, &g_sFatFs);
-        if(!FileInit())
-        {
+        if(!FileInit()) {
             return(1);
         }
     }
@@ -1445,15 +1390,13 @@ main(void)
     // Enter an (almost) infinite loop for reading and processing commands from
     // the user.
     //
-    while(1)
-    {
+    while(1) {
         uint32_t ui32LastTickCount = 0;
 
         //
         // On connect change the device state to ready.
         //
-        if(HWREGBITW(&g_ui32Flags, FLAGS_DEVICE_CONNECT))
-        {
+        if(HWREGBITW(&g_ui32Flags, FLAGS_DEVICE_CONNECT)) {
             HWREGBITW(&g_ui32Flags, FLAGS_DEVICE_CONNECT) = 0;
 
             //
@@ -1481,15 +1424,12 @@ main(void)
             // Initiate a directory change to the root.  This will
             // populate a menu structure representing the root directory.
             //
-            if(ProcessDirChange("/", g_ui32Level))
-            {
+            if(ProcessDirChange("/", g_ui32Level)) {
                 //
                 // Request a repaint so the file menu will be shown
                 //
                 WidgetPaint(WIDGET_ROOT);
-            }
-            else
-            {
+            } else {
                 g_pcStatusLines[0] = "ERROR";
                 g_pcStatusLines[1] = "Unable to change";
                 g_pcStatusLines[2] = "directory.";
@@ -1501,16 +1441,11 @@ main(void)
             // Attempt to set the audio format to 44100 16 bit stereo by
             // default otherwise try 48000 16 bit stereo.
             //
-            if(USBSoundOutputFormatSet(44100, 16, 2) == 0)
-            {
+            if(USBSoundOutputFormatSet(44100, 16, 2) == 0) {
                 ui32Temp = 44100;
-            }
-            else if(USBSoundOutputFormatSet(48000, 16, 2) == 0)
-            {
+            } else if(USBSoundOutputFormatSet(48000, 16, 2) == 0) {
                 ui32Temp = 48000;
-            }
-            else
-            {
+            } else {
                 ui32Temp = 0;
             }
 
@@ -1518,8 +1453,7 @@ main(void)
             // If the audio device was support put the sample rate in the
             // status line.
             //
-            if(ui32Temp != 0)
-            {
+            if(ui32Temp != 0) {
                 //
                 // Calculate the number of bytes per USB frame.
                 //
@@ -1534,19 +1468,14 @@ main(void)
                 // Print the time string in the format mm.ss/mm.ss
                 //
 
-                if(ui32Temp == 44100)
-                {
+                if(ui32Temp == 44100) {
                     usprintf(g_pcStatusText, "44.1 kHz Ready");
-                }
-                else if(ui32Temp == 48000)
-                {
+                } else if(ui32Temp == 48000) {
                     usprintf(g_pcStatusText, "48 kHz Ready");
                 }
 
                 HWREGBITW(&g_ui32Flags, FLAGS_DEVICE_READY) = 1;
-            }
-            else
-            {
+            } else {
                 strcpy(g_pcStatusText, "Not Supported");
                 return (1);
             }
@@ -1567,9 +1496,8 @@ main(void)
         // once each tick.
         //
         if((g_ui32SysTickCount != ui32LastTickCount) &&
-           HWREGBITW(&g_ui32Flags, FLAGS_DEVICE_READY) &&
-           (HWREGBITW(&g_ui32Flags, FLAGS_PLAY_SCREEN) == 0))
-        {
+                HWREGBITW(&g_ui32Flags, FLAGS_DEVICE_READY) &&
+                (HWREGBITW(&g_ui32Flags, FLAGS_PLAY_SCREEN) == 0)) {
             uint8_t ui8ButtonState;
             uint8_t ui8ButtonChanged;
 
@@ -1586,9 +1514,8 @@ main(void)
             //
             if(BUTTON_PRESSED(SELECT_BUTTON,
                               ui8ButtonState, ui8ButtonChanged) ||
-               BUTTON_PRESSED(RIGHT_BUTTON,
-                              ui8ButtonState, ui8ButtonChanged))
-            {
+                    BUTTON_PRESSED(RIGHT_BUTTON,
+                                   ui8ButtonState, ui8ButtonChanged)) {
                 uint32_t ui32NewLevel;
                 uint32_t ui32ItemIdx;
                 char *pcItemName;
@@ -1611,8 +1538,7 @@ main(void)
                 // Make sure we are not yet past the maximum tree
                 // depth.
                 //
-                if(g_ui32Level < MAX_SUBDIR_DEPTH)
-                {
+                if(g_ui32Level < MAX_SUBDIR_DEPTH) {
                     //
                     // Potential new level is one greater than the
                     // current level.
@@ -1625,8 +1551,7 @@ main(void)
                     // structure with the files and subdirs in the new
                     // directory.
                     //
-                    if(ProcessDirChange(pcItemName, ui32NewLevel))
-                    {
+                    if(ProcessDirChange(pcItemName, ui32NewLevel)) {
                         //
                         // If the change was successful, then update
                         // the level.
@@ -1648,16 +1573,14 @@ main(void)
                     // the file information and if it is a valid
                     // wav file, allow playback.
                     //
-                    else
-                    {
+                    else {
 
                         //
                         // Update the file name information.
                         //
                         strncpy(g_pcFileName, pcItemName, 16);
 
-                        if(WavOpen(g_pcFileName, &g_sWavFile) == 0)
-                        {
+                        if(WavOpen(g_pcFileName, &g_sWavFile) == 0) {
                             //
                             // Read the .wav file format.
                             //
@@ -1674,12 +1597,9 @@ main(void)
                             //
                             // Concatenate the number of channels.
                             //
-                            if(g_sWavHeader.ui16NumChannels == 1)
-                            {
+                            if(g_sWavHeader.ui16NumChannels == 1) {
                                 strcat(g_pcFormat, "Mo");
-                            }
-                            else
-                            {
+                            } else {
                                 strcat(g_pcFormat, "St");
                             }
 
@@ -1687,7 +1607,7 @@ main(void)
                             // Calculate the minutes and seconds in the file.
                             //
                             g_ui16Seconds = g_sWavHeader.ui32DataSize /
-                                          g_sWavHeader.ui32AvgByteRate;
+                                            g_sWavHeader.ui32AvgByteRate;
                             g_ui16Minutes = g_ui16Seconds / 60;
                             g_ui16Seconds -= g_ui16Minutes * 60;
 
@@ -1705,9 +1625,7 @@ main(void)
                             // Update the volume information
                             //
                             DisplayVolume();
-                        }
-                        else
-                        {
+                        } else {
                             //
                             // Set the time and volume strings to null strings.
                             //
@@ -1737,8 +1655,7 @@ main(void)
             // If the UP button is pressed, just pass it to the widget
             // which will handle scrolling the list of files.
             //
-            if(BUTTON_PRESSED(UP_BUTTON, ui8ButtonState, ui8ButtonChanged))
-            {
+            if(BUTTON_PRESSED(UP_BUTTON, ui8ButtonState, ui8ButtonChanged)) {
                 SendWidgetKeyMessage(WIDGET_MSG_KEY_UP);
             }
 
@@ -1746,8 +1663,7 @@ main(void)
             // If the DOWN button is pressed, just pass it to the widget
             // which will handle scrolling the list of files.
             //
-            if(BUTTON_PRESSED(DOWN_BUTTON, ui8ButtonState, ui8ButtonChanged))
-            {
+            if(BUTTON_PRESSED(DOWN_BUTTON, ui8ButtonState, ui8ButtonChanged)) {
                 SendWidgetKeyMessage(WIDGET_MSG_KEY_DOWN);
             }
 
@@ -1755,16 +1671,14 @@ main(void)
             // If the LEFT button is pressed, then we are attempting
             // to go up a level in the file system.
             //
-            if(BUTTON_PRESSED(LEFT_BUTTON, ui8ButtonState, ui8ButtonChanged))
-            {
+            if(BUTTON_PRESSED(LEFT_BUTTON, ui8ButtonState, ui8ButtonChanged)) {
                 uint32_t ui32NewLevel;
 
                 //
                 // Make sure we are not already at the top of the
                 // directory tree (at root).
                 //
-                if(g_ui32Level)
-                {
+                if(g_ui32Level) {
                     //
                     // Potential new level is one less than the
                     // current level.
@@ -1777,8 +1691,7 @@ main(void)
                     // structure with the files and subdirs in the new
                     // directory.
                     //
-                    if(ProcessDirChange("..", ui32NewLevel))
-                    {
+                    if(ProcessDirChange("..", ui32NewLevel)) {
                         //
                         // If the change was successful, then update
                         // the level.
@@ -1802,9 +1715,8 @@ main(void)
         // buttons.
         //
         if((g_ui32SysTickCount != ui32LastTickCount) &&
-           HWREGBITW(&g_ui32Flags, FLAGS_DEVICE_READY) &&
-           (HWREGBITW(&g_ui32Flags, FLAGS_PLAY_SCREEN)))
-        {
+                HWREGBITW(&g_ui32Flags, FLAGS_DEVICE_READY) &&
+                (HWREGBITW(&g_ui32Flags, FLAGS_PLAY_SCREEN))) {
             uint8_t ui8ButtonState;
             uint8_t ui8ButtonChanged;
 
@@ -1819,8 +1731,7 @@ main(void)
             // If the left button is pressed, we need to return to
             // the file menu.
             //
-            if(BUTTON_PRESSED(LEFT_BUTTON, ui8ButtonState, ui8ButtonChanged))
-            {
+            if(BUTTON_PRESSED(LEFT_BUTTON, ui8ButtonState, ui8ButtonChanged)) {
                 //
                 // It is possible we have already started playback.
                 //
@@ -1839,29 +1750,25 @@ main(void)
             //
             if(BUTTON_PRESSED(SELECT_BUTTON,
                               ui8ButtonState, ui8ButtonChanged) ||
-               BUTTON_PRESSED(RIGHT_BUTTON,
-                              ui8ButtonState, ui8ButtonChanged))
-            {
+                    BUTTON_PRESSED(RIGHT_BUTTON,
+                                   ui8ButtonState, ui8ButtonChanged)) {
                 //
                 // If we are stopped, then start playing.
                 //
-                if(HWREGBITW(&g_ui32Flags, FLAGS_PLAYING) == 0)
-                {
+                if(HWREGBITW(&g_ui32Flags, FLAGS_PLAYING) == 0) {
                     HWREGBITW(&g_ui32Flags, FLAGS_PLAYING) = 1;
                     //
                     // Don't play anything but 16 bit audio since most USB
                     // devices do not support 8 bit formats.
                     //
-                    if(g_sWavHeader.ui16BitsPerSample != 16)
-                    {
+                    if(g_sWavHeader.ui16BitsPerSample != 16) {
                         return(1);
                     }
 
                     //
                     // See if this is a valid .wav file that can be opened.
                     //
-                    if(WavOpen(g_pcFileName, &g_sWavFile) == 0)
-                    {
+                    if(WavOpen(g_pcFileName, &g_sWavFile) == 0) {
                         //
                         // Change the text on the button to playing.
                         //
@@ -1872,9 +1779,7 @@ main(void)
                         // Indicate that wave play back should start.
                         //
                         HWREGBITW(&g_ui32Flags, FLAGS_PLAYING) = 1;
-                    }
-                    else
-                    {
+                    } else {
                         HWREGBITW(&g_ui32Flags, FLAGS_PLAYING) = 0;
                         return(1);
                     }
@@ -1901,8 +1806,7 @@ main(void)
                 //
                 // Stop play back if we are playing.
                 //
-                else
-                {
+                else {
                     WaveStop();
                 }
             }
@@ -1910,10 +1814,8 @@ main(void)
             //
             // If the UP button is pressed, increase the volume by 5%.
             //
-            if(BUTTON_PRESSED(UP_BUTTON, ui8ButtonState, ui8ButtonChanged))
-            {
-                if(g_ui32CurrentVolume < 100)
-                {
+            if(BUTTON_PRESSED(UP_BUTTON, ui8ButtonState, ui8ButtonChanged)) {
+                if(g_ui32CurrentVolume < 100) {
                     g_ui32CurrentVolume += 5;
                     USBSoundVolumeSet(g_ui32CurrentVolume);
                     DisplayVolume();
@@ -1923,10 +1825,8 @@ main(void)
             //
             // If the DOWN button is pressed, decrease the volume by 5%.
             //
-            if(BUTTON_PRESSED(DOWN_BUTTON, ui8ButtonState, ui8ButtonChanged))
-            {
-                if((g_ui32CurrentVolume <= 100) && (g_ui32CurrentVolume > 0))
-                {
+            if(BUTTON_PRESSED(DOWN_BUTTON, ui8ButtonState, ui8ButtonChanged)) {
+                if((g_ui32CurrentVolume <= 100) && (g_ui32CurrentVolume > 0)) {
                     g_ui32CurrentVolume -= 5;
                     USBSoundVolumeSet(g_ui32CurrentVolume);
                     DisplayVolume();
@@ -1937,13 +1837,11 @@ main(void)
         //
         // Handle the case when the wave file is playing.
         //
-        if(HWREGBITW(&g_ui32Flags, FLAGS_PLAYING))
-        {
+        if(HWREGBITW(&g_ui32Flags, FLAGS_PLAYING)) {
             //
             // Handle the transmit complete event.
             //
-            if(HWREGBITW(&g_ui32Flags, FLAGS_TX_COMPLETE))
-            {
+            if(HWREGBITW(&g_ui32Flags, FLAGS_TX_COMPLETE)) {
                 //
                 // Clear the transmit complete flag.
                 //
@@ -1957,8 +1855,7 @@ main(void)
                 //
                 // If we run out of valid bytes then stop the playback.
                 //
-                if(g_ui32ValidBytes == 0)
-                {
+                if(g_ui32ValidBytes == 0) {
                     //
                     // No more data or error so stop playing.
                     //

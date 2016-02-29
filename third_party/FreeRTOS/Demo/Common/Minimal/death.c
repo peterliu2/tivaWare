@@ -127,96 +127,90 @@ TaskHandle_t xCreatedTask;
 
 void vCreateSuicidalTasks( UBaseType_t uxPriority )
 {
-UBaseType_t *puxPriority;
+    UBaseType_t *puxPriority;
 
-	/* Create the Creator tasks - passing in as a parameter the priority at which
-	the suicidal tasks should be created. */
-	puxPriority = ( UBaseType_t * ) pvPortMalloc( sizeof( UBaseType_t ) );
-	*puxPriority = uxPriority;
+    /* Create the Creator tasks - passing in as a parameter the priority at which
+    the suicidal tasks should be created. */
+    puxPriority = ( UBaseType_t * ) pvPortMalloc( sizeof( UBaseType_t ) );
+    *puxPriority = uxPriority;
 
-	xTaskCreate( vCreateTasks, "CREATOR", deathSTACK_SIZE, ( void * ) puxPriority, uxPriority, NULL );
+    xTaskCreate( vCreateTasks, "CREATOR", deathSTACK_SIZE, ( void * ) puxPriority, uxPriority, NULL );
 
-	/* Record the number of tasks that are running now so we know if any of the
-	suicidal tasks have failed to be killed. */
-	uxTasksRunningAtStart = ( UBaseType_t ) uxTaskGetNumberOfTasks();
-	
-	/* FreeRTOS.org versions before V3.0 started the idle-task as the very
-	first task. The idle task was then already included in uxTasksRunningAtStart.
-	From FreeRTOS V3.0 on, the idle task is started when the scheduler is
-	started. Therefore the idle task is not yet accounted for. We correct
-	this by increasing uxTasksRunningAtStart by 1. */
-	uxTasksRunningAtStart++;
-	
-	/* From FreeRTOS version 7.0.0 can optionally create a timer service task.  
-	If this is done, then uxTasksRunningAtStart needs incrementing again as that
-	too is created when the scheduler is started. */
-	#if configUSE_TIMERS == 1
-		uxTasksRunningAtStart++;
-	#endif
+    /* Record the number of tasks that are running now so we know if any of the
+    suicidal tasks have failed to be killed. */
+    uxTasksRunningAtStart = ( UBaseType_t ) uxTaskGetNumberOfTasks();
+
+    /* FreeRTOS.org versions before V3.0 started the idle-task as the very
+    first task. The idle task was then already included in uxTasksRunningAtStart.
+    From FreeRTOS V3.0 on, the idle task is started when the scheduler is
+    started. Therefore the idle task is not yet accounted for. We correct
+    this by increasing uxTasksRunningAtStart by 1. */
+    uxTasksRunningAtStart++;
+
+    /* From FreeRTOS version 7.0.0 can optionally create a timer service task.
+    If this is done, then uxTasksRunningAtStart needs incrementing again as that
+    too is created when the scheduler is started. */
+#if configUSE_TIMERS == 1
+    uxTasksRunningAtStart++;
+#endif
 }
 /*-----------------------------------------------------------*/
-					
+
 static portTASK_FUNCTION( vSuicidalTask, pvParameters )
 {
-volatile long l1, l2;
-TaskHandle_t xTaskToKill;
-const TickType_t xDelay = ( TickType_t ) 200 / portTICK_PERIOD_MS;
+    volatile long l1, l2;
+    TaskHandle_t xTaskToKill;
+    const TickType_t xDelay = ( TickType_t ) 200 / portTICK_PERIOD_MS;
 
-	if( pvParameters != NULL )
-	{
-		/* This task is periodically created four times.  Two created tasks are
-		passed a handle to the other task so it can kill it before killing itself.
-		The other task is passed in null. */
-		xTaskToKill = *( TaskHandle_t* )pvParameters;
-	}
-	else
-	{
-		xTaskToKill = NULL;
-	}
+    if( pvParameters != NULL ) {
+        /* This task is periodically created four times.  Two created tasks are
+        passed a handle to the other task so it can kill it before killing itself.
+        The other task is passed in null. */
+        xTaskToKill = *( TaskHandle_t* )pvParameters;
+    } else {
+        xTaskToKill = NULL;
+    }
 
-	for( ;; )
-	{
-		/* Do something random just to use some stack and registers. */
-		l1 = 2;
-		l2 = 89;
-		l2 *= l1;
-		vTaskDelay( xDelay );
+    for( ;; ) {
+        /* Do something random just to use some stack and registers. */
+        l1 = 2;
+        l2 = 89;
+        l2 *= l1;
+        vTaskDelay( xDelay );
 
-		if( xTaskToKill != NULL )
-		{
-			/* Make sure the other task has a go before we delete it. */
-			vTaskDelay( ( TickType_t ) 0 );
+        if( xTaskToKill != NULL ) {
+            /* Make sure the other task has a go before we delete it. */
+            vTaskDelay( ( TickType_t ) 0 );
 
-			/* Kill the other task that was created by vCreateTasks(). */
-			vTaskDelete( xTaskToKill );
+            /* Kill the other task that was created by vCreateTasks(). */
+            vTaskDelete( xTaskToKill );
 
-			/* Kill ourselves. */
-			vTaskDelete( NULL );
-		}
-	}
+            /* Kill ourselves. */
+            vTaskDelete( NULL );
+        }
+    }
 }/*lint !e818 !e550 Function prototype must be as per standard for task functions. */
 /*-----------------------------------------------------------*/
 
 static portTASK_FUNCTION( vCreateTasks, pvParameters )
 {
-const TickType_t xDelay = ( TickType_t ) 1000 / portTICK_PERIOD_MS;
-UBaseType_t uxPriority;
+    const TickType_t xDelay = ( TickType_t ) 1000 / portTICK_PERIOD_MS;
+    UBaseType_t uxPriority;
 
-	uxPriority = *( UBaseType_t * ) pvParameters;
-	vPortFree( pvParameters );
+    uxPriority = *( UBaseType_t * ) pvParameters;
+    vPortFree( pvParameters );
 
-	for( ;; )
-	{
-		/* Just loop round, delaying then creating the four suicidal tasks. */
-		vTaskDelay( xDelay );
+    for( ;; ) {
+        /* Just loop round, delaying then creating the four suicidal tasks. */
+        vTaskDelay( xDelay );
 
-		xCreatedTask = NULL;
+        xCreatedTask = NULL;
 
-		xTaskCreate( vSuicidalTask, "SUICID1", configMINIMAL_STACK_SIZE, NULL, uxPriority, &xCreatedTask );
-		xTaskCreate( vSuicidalTask, "SUICID2", configMINIMAL_STACK_SIZE, &xCreatedTask, uxPriority, NULL );
+        xTaskCreate( vSuicidalTask, "SUICID1", configMINIMAL_STACK_SIZE, NULL, uxPriority, &xCreatedTask );
+        xTaskCreate( vSuicidalTask, "SUICID2", configMINIMAL_STACK_SIZE, &xCreatedTask, uxPriority, NULL );
 
-		++usCreationCount;
-	}
+        ++usCreationCount;
+    }
 }
 /*-----------------------------------------------------------*/
 
@@ -224,35 +218,27 @@ UBaseType_t uxPriority;
 are not any more than four extra tasks. */
 BaseType_t xIsCreateTaskStillRunning( void )
 {
-static uint16_t usLastCreationCount = 0xfff;
-BaseType_t xReturn = pdTRUE;
-static UBaseType_t uxTasksRunningNow;
+    static uint16_t usLastCreationCount = 0xfff;
+    BaseType_t xReturn = pdTRUE;
+    static UBaseType_t uxTasksRunningNow;
 
-	if( usLastCreationCount == usCreationCount )
-	{
-		xReturn = pdFALSE;
-	}
-	else
-	{
-		usLastCreationCount = usCreationCount;
-	}
-	
-	uxTasksRunningNow = ( UBaseType_t ) uxTaskGetNumberOfTasks();
+    if( usLastCreationCount == usCreationCount ) {
+        xReturn = pdFALSE;
+    } else {
+        usLastCreationCount = usCreationCount;
+    }
 
-	if( uxTasksRunningNow < uxTasksRunningAtStart )
-	{
-		xReturn = pdFALSE;
-	}
-	else if( ( uxTasksRunningNow - uxTasksRunningAtStart ) > uxMaxNumberOfExtraTasksRunning )
-	{
-		xReturn = pdFALSE;
-	}
-	else
-	{
-		/* Everything is okay. */
-	}
+    uxTasksRunningNow = ( UBaseType_t ) uxTaskGetNumberOfTasks();
 
-	return xReturn;
+    if( uxTasksRunningNow < uxTasksRunningAtStart ) {
+        xReturn = pdFALSE;
+    } else if( ( uxTasksRunningNow - uxTasksRunningAtStart ) > uxMaxNumberOfExtraTasksRunning ) {
+        xReturn = pdFALSE;
+    } else {
+        /* Everything is okay. */
+    }
+
+    return xReturn;
 }
 
 

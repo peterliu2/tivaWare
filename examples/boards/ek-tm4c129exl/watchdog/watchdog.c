@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C129EXL Firmware Package.
 //
 //*****************************************************************************
@@ -92,8 +92,7 @@ WatchdogIntHandler(void)
     // without clearing the interrupt.  This will cause the system to reset
     // next time the watchdog interrupt fires.
     //
-    if(!g_bFeedWatchdog)
-    {
+    if(!g_bFeedWatchdog) {
         return;
     }
 
@@ -107,7 +106,7 @@ WatchdogIntHandler(void)
     //
     ROM_GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0,
                      (ROM_GPIOPinRead(GPIO_PORTN_BASE, GPIO_PIN_0) ^
-                                     GPIO_PIN_0));
+                      GPIO_PIN_0));
 }
 
 //*****************************************************************************
@@ -139,9 +138,9 @@ main(void)
     // Set the clocking to run directly from the crystal at 120MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN |
-                                             SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN |
+                                            SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
     //
     // Initialize the buttons driver.
     //
@@ -188,17 +187,14 @@ main(void)
     //
     // Loop forever while the LED winks as watchdog interrupts are handled.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Poll for the select button pressed
         //
         uint8_t ui8Buttons = ButtonsPoll(0, 0);
-        if(ui8Buttons & USR_SW1)
-        {
+        if(ui8Buttons & USR_SW1) {
             SW1ButtonPressed();
-            while(1)
-            {
+            while(1) {
             }
         }
     }

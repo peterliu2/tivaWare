@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -87,10 +87,8 @@ InternalUSBTickInit(void)
 {
     uint32_t ui32Loop;
 
-    if(!g_bUSBTimerInitialized)
-    {
-        for(ui32Loop = 0; ui32Loop < MAX_USB_TICK_HANDLERS; ui32Loop++)
-        {
+    if(!g_bUSBTimerInitialized) {
+        for(ui32Loop = 0; ui32Loop < MAX_USB_TICK_HANDLERS; ui32Loop++) {
             g_pfnTickHandlers[ui32Loop] = (tUSBTickHandler)0;
             g_pvTickInstance[ui32Loop] = 0;
         }
@@ -145,10 +143,8 @@ InternalUSBRegisterTickHandler(tUSBTickHandler pfHandler, void *pvInstance)
 {
     int32_t i32Idx;
 
-    for(i32Idx = 0; i32Idx < MAX_USB_TICK_HANDLERS; i32Idx++)
-    {
-        if(g_pfnTickHandlers[i32Idx] == 0)
-        {
+    for(i32Idx = 0; i32Idx < MAX_USB_TICK_HANDLERS; i32Idx++) {
+        if(g_pfnTickHandlers[i32Idx] == 0) {
             //
             // Save the handler.
             //
@@ -163,8 +159,7 @@ InternalUSBRegisterTickHandler(tUSBTickHandler pfHandler, void *pvInstance)
         }
     }
 
-    if(i32Idx == MAX_USB_TICK_HANDLERS)
-    {
+    if(i32Idx == MAX_USB_TICK_HANDLERS) {
         return(-1);
     }
     return(0);
@@ -202,10 +197,8 @@ InternalUSBStartOfFrameTick(uint32_t ui32TicksmS)
     //
     // Call any registered SOF tick handlers.
     //
-    for(i32Idx = 0; i32Idx < MAX_USB_TICK_HANDLERS; i32Idx++)
-    {
-        if(g_pfnTickHandlers[i32Idx])
-        {
+    for(i32Idx = 0; i32Idx < MAX_USB_TICK_HANDLERS; i32Idx++) {
+        if(g_pfnTickHandlers[i32Idx]) {
             g_pfnTickHandlers[i32Idx](g_pvTickInstance[i32Idx], ui32TicksmS);
         }
     }

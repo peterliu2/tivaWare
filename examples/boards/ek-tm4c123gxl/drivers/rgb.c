@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C123GXL Firmware Package.
 //
 //*****************************************************************************
@@ -66,13 +66,13 @@ static float g_fIntensity = 0.3f;
 
 //*****************************************************************************
 //
-//! Wide Timer interrupt to handle blinking effect of the RGB 
+//! Wide Timer interrupt to handle blinking effect of the RGB
 //!
 //! This function is called by the hardware interrupt controller on a timeout
 //! of the wide timer.  This function must be in the NVIC table in the startup
 //! file.  When called will toggle the enable flag to turn on or off the entire
-//! RGB unit.  This creates a blinking effect.  A wide timer is used since the 
-//! blink is intended to be visible to the human eye and thus is expected to 
+//! RGB unit.  This creates a blinking effect.  A wide timer is used since the
+//! blink is intended to be visible to the human eye and thus is expected to
 //! have a frequency between 15 and 0.1 hz. Currently blink duty is fixed at
 //! 50%.
 //!
@@ -95,12 +95,9 @@ RGBBlinkIntHandler(void)
     //
     ulFlags ^= 1;
 
-    if(ulFlags)
-    {
+    if(ulFlags) {
         RGBEnable();
-    }
-    else
-    {
+    } else {
         RGBDisable();
     }
 
@@ -157,8 +154,7 @@ RGBInit(uint32_t ui32Enable)
     HWREG(GREEN_TIMER_BASE + TIMER_O_CTL)   |= 0x40;
     HWREG(BLUE_TIMER_BASE + TIMER_O_CTL)   |= 0x4000;
 
-    if(ui32Enable)
-    {
+    if(ui32Enable) {
         RGBEnable();
     }
 
@@ -203,17 +199,17 @@ RGBEnable(void)
     ROM_GPIOPinConfigure(GREEN_GPIO_PIN_CFG);
     ROM_GPIOPinTypeTimer(GREEN_GPIO_BASE, GREEN_GPIO_PIN);
     MAP_GPIOPadConfigSet(GREEN_GPIO_BASE, GREEN_GPIO_PIN, GPIO_STRENGTH_8MA_SC,
-                     GPIO_PIN_TYPE_STD);
+                         GPIO_PIN_TYPE_STD);
 
     ROM_GPIOPinConfigure(BLUE_GPIO_PIN_CFG);
     ROM_GPIOPinTypeTimer(BLUE_GPIO_BASE, BLUE_GPIO_PIN);
     MAP_GPIOPadConfigSet(BLUE_GPIO_BASE, BLUE_GPIO_PIN, GPIO_STRENGTH_8MA_SC,
-                     GPIO_PIN_TYPE_STD);
+                         GPIO_PIN_TYPE_STD);
 
     ROM_GPIOPinConfigure(RED_GPIO_PIN_CFG);
     ROM_GPIOPinTypeTimer(RED_GPIO_BASE, RED_GPIO_PIN);
     MAP_GPIOPadConfigSet(RED_GPIO_BASE, RED_GPIO_PIN, GPIO_STRENGTH_8MA_SC,
-                     GPIO_PIN_TYPE_STD);
+                         GPIO_PIN_TYPE_STD);
 }
 
 //*****************************************************************************
@@ -291,14 +287,12 @@ RGBColorSet(volatile uint32_t * pui32RGBColor)
     uint32_t ui32Color[3];
     uint32_t ui32Index;
 
-    for(ui32Index=0; ui32Index < 3; ui32Index++)
-    {
+    for(ui32Index=0; ui32Index < 3; ui32Index++) {
         g_ui32Colors[ui32Index] = pui32RGBColor[ui32Index];
         ui32Color[ui32Index] = (uint32_t) (((float) pui32RGBColor[ui32Index]) *
-                            g_fIntensity + 0.5f);
+                                           g_fIntensity + 0.5f);
 
-        if(ui32Color[ui32Index] > 0xFFFF)
-        {
+        if(ui32Color[ui32Index] > 0xFFFF) {
             ui32Color[ui32Index] = 0xFFFF;
         }
     }
@@ -348,17 +342,14 @@ RGBBlinkRateSet(float fRate)
 {
     uint64_t ui64Load;
 
-    if(fRate == 0.0f)
-    {
+    if(fRate == 0.0f) {
         //
         // Disable the timer and enable the RGB.  If blink rate is zero we
         // assume we want the RGB to be enabled. To disable call RGBDisable
         //
         ROM_TimerDisable(WTIMER5_BASE, TIMER_B);
         RGBEnable();
-    }
-    else
-    {
+    } else {
         //
         // Keep the math in floating pointing until the end so that we keep as
         // much precision as we can.
@@ -390,8 +381,7 @@ RGBColorGet(uint32_t * pui32RGBColor)
 {
     uint32_t ui32Index;
 
-    for(ui32Index=0; ui32Index < 3; ui32Index++)
-    {
+    for(ui32Index=0; ui32Index < 3; ui32Index++) {
         pui32RGBColor[ui32Index] = g_ui32Colors[ui32Index];
     }
 }

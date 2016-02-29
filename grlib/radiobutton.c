@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Graphics Library.
 //
 //*****************************************************************************
@@ -81,8 +81,7 @@ RadioButtonPaint(tWidget *psWidget, uint32_t bClick)
     //
     // See if the radio button fill style is selected.
     //
-    if((pRadio->ui16Style & RB_STYLE_FILL) && !bClick)
-    {
+    if((pRadio->ui16Style & RB_STYLE_FILL) && !bClick) {
         //
         // Fill the radio button with the fill color.
         //
@@ -93,8 +92,7 @@ RadioButtonPaint(tWidget *psWidget, uint32_t bClick)
     //
     // See if the radio button outline style is selected.
     //
-    if((pRadio->ui16Style & RB_STYLE_OUTLINE) && !bClick)
-    {
+    if((pRadio->ui16Style & RB_STYLE_OUTLINE) && !bClick) {
         //
         // Outline the radio button with the outline color.
         //
@@ -107,9 +105,8 @@ RadioButtonPaint(tWidget *psWidget, uint32_t bClick)
     //
     i32X = psWidget->sPosition.i16XMin + (pRadio->ui16CircleSize / 2) + 2;
     i32Y = (psWidget->sPosition.i16YMin +
-          ((psWidget->sPosition.i16YMax - psWidget->sPosition.i16YMin) / 2));
-    if(!bClick)
-    {
+            ((psWidget->sPosition.i16YMax - psWidget->sPosition.i16YMin) / 2));
+    if(!bClick) {
         GrContextForegroundSet(&sCtx, pRadio->ui32OutlineColor);
         GrCircleDraw(&sCtx, i32X, i32Y, pRadio->ui16CircleSize / 2);
     }
@@ -118,12 +115,9 @@ RadioButtonPaint(tWidget *psWidget, uint32_t bClick)
     // Select the foreground color based on whether or not the radio button is
     // selected.
     //
-    if(pRadio->ui16Style & RB_STYLE_SELECTED)
-    {
+    if(pRadio->ui16Style & RB_STYLE_SELECTED) {
         GrContextForegroundSet(&sCtx, pRadio->ui32OutlineColor);
-    }
-    else
-    {
+    } else {
         GrContextForegroundSet(&sCtx, pRadio->ui32FillColor);
     }
 
@@ -135,8 +129,7 @@ RadioButtonPaint(tWidget *psWidget, uint32_t bClick)
     //
     // See if the radio button text or image style is selected.
     //
-    if((pRadio->ui16Style & (RB_STYLE_TEXT | RB_STYLE_IMG)) && !bClick)
-    {
+    if((pRadio->ui16Style & (RB_STYLE_TEXT | RB_STYLE_IMG)) && !bClick) {
         //
         // Shrink the clipping region by the size of the radio button so that
         // it is not overwritten by further "decorative" portions of the
@@ -149,8 +142,7 @@ RadioButtonPaint(tWidget *psWidget, uint32_t bClick)
         // clipping region by one pixel on each side so that the outline is not
         // overwritten by the text or image.
         //
-        if(pRadio->ui16Style & RB_STYLE_OUTLINE)
-        {
+        if(pRadio->ui16Style & RB_STYLE_OUTLINE) {
             sCtx.sClipRegion.i16YMin++;
             sCtx.sClipRegion.i16XMax--;
             sCtx.sClipRegion.i16YMax--;
@@ -159,8 +151,7 @@ RadioButtonPaint(tWidget *psWidget, uint32_t bClick)
         //
         // See if the radio button image style is selected.
         //
-        if(pRadio->ui16Style & RB_STYLE_IMG)
-        {
+        if(pRadio->ui16Style & RB_STYLE_IMG) {
             //
             // Determine where along the Y extent of the widget to draw the
             // image.  It is drawn at the top if it takes all (or more than
@@ -168,15 +159,12 @@ RadioButtonPaint(tWidget *psWidget, uint32_t bClick)
             // it takes less than the Y extent.
             //
             if(GrImageHeightGet(pRadio->pui8Image) >
-               (sCtx.sClipRegion.i16YMax - sCtx.sClipRegion.i16YMin))
-            {
+                    (sCtx.sClipRegion.i16YMax - sCtx.sClipRegion.i16YMin)) {
                 i32Y = sCtx.sClipRegion.i16YMin;
-            }
-            else
-            {
+            } else {
                 i32Y = (sCtx.sClipRegion.i16YMin +
-                      ((sCtx.sClipRegion.i16YMax - sCtx.sClipRegion.i16YMin -
-                        GrImageHeightGet(pRadio->pui8Image) + 1) / 2));
+                        ((sCtx.sClipRegion.i16YMax - sCtx.sClipRegion.i16YMin -
+                          GrImageHeightGet(pRadio->pui8Image) + 1) / 2));
             }
 
             //
@@ -196,8 +184,7 @@ RadioButtonPaint(tWidget *psWidget, uint32_t bClick)
         //
         // See if the radio button text style is selected.
         //
-        if(pRadio->ui16Style & RB_STYLE_TEXT)
-        {
+        if(pRadio->ui16Style & RB_STYLE_TEXT) {
             //
             // Determine where along the Y extent of the widget to draw the
             // string.  It is drawn at the top if it takes all (or more than
@@ -205,15 +192,12 @@ RadioButtonPaint(tWidget *psWidget, uint32_t bClick)
             // it takes less than the Y extent.
             //
             if(GrFontHeightGet(pRadio->psFont) >
-               (sCtx.sClipRegion.i16YMax - sCtx.sClipRegion.i16YMin))
-            {
+                    (sCtx.sClipRegion.i16YMax - sCtx.sClipRegion.i16YMin)) {
                 i32Y = sCtx.sClipRegion.i16YMin;
-            }
-            else
-            {
+            } else {
                 i32Y = (sCtx.sClipRegion.i16YMin +
-                      ((sCtx.sClipRegion.i16YMax - sCtx.sClipRegion.i16YMin -
-                        GrFontHeightGet(pRadio->psFont) + 1) / 2));
+                        ((sCtx.sClipRegion.i16YMax - sCtx.sClipRegion.i16YMin -
+                          GrFontHeightGet(pRadio->psFont) + 1) / 2));
             }
 
             //
@@ -273,30 +257,26 @@ RadioButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
     // See if the given coordinates are within the extents of the radio button.
     //
     if((i32X >= psWidget->sPosition.i16XMin) &&
-       (i32X <= psWidget->sPosition.i16XMax) &&
-       (i32Y >= psWidget->sPosition.i16YMin) &&
-       (i32Y <= psWidget->sPosition.i16YMax))
-    {
+            (i32X <= psWidget->sPosition.i16XMax) &&
+            (i32Y >= psWidget->sPosition.i16YMin) &&
+            (i32Y <= psWidget->sPosition.i16YMax)) {
         //
         // See if the pointer was just raised and this radio button is not
         // selected.
         //
         if((ui32Msg == WIDGET_MSG_PTR_UP) &&
-           !(pRadio->ui16Style & RB_STYLE_SELECTED))
-        {
+                !(pRadio->ui16Style & RB_STYLE_SELECTED)) {
             //
             // Loop through the siblings of this radio button widget.
             //
             for(pSibling = psWidget->psParent->psChild; pSibling;
-                pSibling = pSibling->psNext)
-            {
+                    pSibling = pSibling->psNext) {
                 //
                 // Skip this widget if it is not a radio button widget, or if
                 // it is the original radio button widget.
                 //
                 if((pSibling == psWidget) ||
-                   (pSibling->pfnMsgProc != RadioButtonMsgProc))
-                {
+                        (pSibling->pfnMsgProc != RadioButtonMsgProc)) {
                     continue;
                 }
 
@@ -309,8 +289,7 @@ RadioButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
                 //
                 // See if the sibling radio button is selected.
                 //
-                if(pRadio2->ui16Style & RB_STYLE_SELECTED)
-                {
+                if(pRadio2->ui16Style & RB_STYLE_SELECTED) {
                     //
                     // Clear the selected state of the sibling radio button.
                     //
@@ -325,8 +304,7 @@ RadioButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
                     // If there is an OnChange callback for the sibling radio
                     // button then call the callback.
                     //
-                    if(pRadio2->pfnOnChange)
-                    {
+                    if(pRadio2->pfnOnChange) {
                         pRadio2->pfnOnChange(pSibling, 0);
                     }
                 }
@@ -346,8 +324,7 @@ RadioButtonClick(tWidget *psWidget, uint32_t ui32Msg, int32_t i32X,
             // If there is an OnChange callback for this widget then call the
             // callback.
             //
-            if(pRadio->pfnOnChange)
-            {
+            if(pRadio->pfnOnChange) {
                 pRadio->pfnOnChange(psWidget, 1);
             }
         }
@@ -394,13 +371,11 @@ RadioButtonMsgProc(tWidget *psWidget, uint32_t ui32Msg,
     //
     // Determine which message is being sent.
     //
-    switch(ui32Msg)
-    {
+    switch(ui32Msg) {
         //
         // The widget paint request has been sent.
         //
-        case WIDGET_MSG_PAINT:
-        {
+        case WIDGET_MSG_PAINT: {
             //
             // Handle the widget paint request.
             //
@@ -418,8 +393,7 @@ RadioButtonMsgProc(tWidget *psWidget, uint32_t ui32Msg,
         //
         case WIDGET_MSG_PTR_DOWN:
         case WIDGET_MSG_PTR_MOVE:
-        case WIDGET_MSG_PTR_UP:
-        {
+        case WIDGET_MSG_PTR_UP: {
             //
             // Handle the pointer request, returning the appropriate value.
             //
@@ -430,8 +404,7 @@ RadioButtonMsgProc(tWidget *psWidget, uint32_t ui32Msg,
         //
         // An unknown request has been sent.
         //
-        default:
-        {
+        default: {
             //
             // Let the default message handler process this message.
             //
@@ -476,8 +449,7 @@ RadioButtonInit(tRadioButtonWidget *psWidget, const tDisplay *psDisplay,
     //
     // Clear out the widget structure.
     //
-    for(ui32Idx = 0; ui32Idx < sizeof(tRadioButtonWidget); ui32Idx += 4)
-    {
+    for(ui32Idx = 0; ui32Idx < sizeof(tRadioButtonWidget); ui32Idx += 4) {
         ((uint32_t *)psWidget)[ui32Idx / 4] = 0;
     }
 

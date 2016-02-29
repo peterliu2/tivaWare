@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -187,14 +187,12 @@ TSHandler(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
     //
     // See which event is being sent from the touch screen driver.
     //
-    switch(ui32Message)
-    {
+    switch(ui32Message) {
         //
         // The pen has just been placed down.
         //
         case WIDGET_MSG_PTR_DOWN:
-        case WIDGET_MSG_PTR_MOVE:
-        {
+        case WIDGET_MSG_PTR_MOVE: {
             //
             // Let the main loop know that there is an update.
             //
@@ -215,8 +213,7 @@ TSHandler(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
         //
         // The pen has just been picked up.
         //
-        case WIDGET_MSG_PTR_UP:
-        {
+        case WIDGET_MSG_PTR_UP: {
             //
             // Let the main loop know that there is an update.
             //
@@ -264,13 +261,11 @@ uint32_t
 GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
                void *pvMsgData)
 {
-    switch (ui32Event)
-    {
+    switch (ui32Event) {
         //
         // The host has connected to us and configured the device.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             g_iGamepadState = eStateIdle;
 
             DisplayStatus(&g_sContext, "Connected");
@@ -280,8 +275,7 @@ GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // The host has disconnected from us.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             g_iGamepadState = eStateNotConfigured;
 
             DisplayStatus(&g_sContext, "Disconnected");
@@ -293,8 +287,7 @@ GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         // of a report.  It is to return to the idle state so that a new report
         // can be sent to the host.
         //
-        case USB_EVENT_TX_COMPLETE:
-        {
+        case USB_EVENT_TX_COMPLETE: {
             //
             // Enter the idle state since we finished sending something.
             //
@@ -306,8 +299,7 @@ GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // This event indicates that the host has suspended the USB bus.
         //
-        case USB_EVENT_SUSPEND:
-        {
+        case USB_EVENT_SUSPEND: {
             //
             // Go to the suspended state.
             //
@@ -320,8 +312,7 @@ GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // This event signals that the host has resumed signaling on the bus.
         //
-        case USB_EVENT_RESUME:
-        {
+        case USB_EVENT_RESUME: {
             //
             // Go back to the idle state.
             //
@@ -336,8 +327,7 @@ GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         // rarely if ever made, but is required by the USB HID
         // specification.
         //
-        case USBD_HID_EVENT_GET_REPORT:
-        {
+        case USBD_HID_EVENT_GET_REPORT: {
             *(void **)pvMsgData = (void *)&g_sReport;
 
             break;
@@ -346,8 +336,7 @@ GamepadHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // We ignore all other events.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -441,13 +430,11 @@ main(void)
     // then drop into the main gamepad handling section.  If the host
     // disconnects, we return to the top and wait for a new connection.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Wait here until USB device is connected to a host.
         //
-        if(g_iGamepadState == eStateIdle)
-        {
+        if(g_iGamepadState == eStateIdle) {
             //
             // See if the buttons updated.
             //
@@ -458,37 +445,32 @@ main(void)
             //
             // Set button 1 if up button pressed.
             //
-            if(ui8Buttons & UP_BUTTON)
-            {
+            if(ui8Buttons & UP_BUTTON) {
                 g_sReport.ui8Buttons |= 0x01;
             }
 
             //
             // Set button 2 if down button pressed.
             //
-            if(ui8Buttons & DOWN_BUTTON)
-            {
+            if(ui8Buttons & DOWN_BUTTON) {
                 g_sReport.ui8Buttons |= 0x02;
             }
 
             //
             // Set button 3 if select button pressed.
             //
-            if(ui8Buttons & SELECT_BUTTON)
-            {
+            if(ui8Buttons & SELECT_BUTTON) {
                 g_sReport.ui8Buttons |= 0x04;
             }
 
-            if(ui8ButtonsChanged)
-            {
+            if(ui8ButtonsChanged) {
                 g_bUpdate = true;
             }
 
             //
             // Send the report if there was an update.
             //
-            if(g_bUpdate)
-            {
+            if(g_bUpdate) {
                 g_bUpdate = false;
 
                 USBDHIDGamepadSendReport(&g_sGamepadDevice, &g_sReport,

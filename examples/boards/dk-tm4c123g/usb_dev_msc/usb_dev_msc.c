@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C123G Firmware Package.
 //
 //*****************************************************************************
@@ -160,7 +160,7 @@ tDMAControlTable sDMAControlTable[64] __attribute__ ((aligned(1024)));
 //*****************************************************************************
 uint32_t
 RxHandler(void *pvCBData, uint_fast32_t ui32Event,
-               uint_fast32_t ui32MsgValue, void *pvMsgData)
+          uint_fast32_t ui32MsgValue, void *pvMsgData)
 {
     return(0);
 }
@@ -205,14 +205,13 @@ UpdateStatus(char *pcString, bool bClrBackground)
     //
     GrContextBackgroundSet(&g_sContext, DISPLAY_BANNER_BG);
 
-    if(bClrBackground)
-    {
+    if(bClrBackground) {
         //
         // Fill the bottom rows of the screen with blue to create the status area.
         //
         sRect.i16XMin = 0;
         sRect.i16YMin = GrContextDpyHeightGet(&g_sContext) -
-                      DISPLAY_BANNER_HEIGHT;
+                        DISPLAY_BANNER_HEIGHT;
         sRect.i16XMax = GrContextDpyWidthGet(&g_sContext) - 1;
         sRect.i16YMax = sRect.i16YMin + DISPLAY_BANNER_HEIGHT - 1;
 
@@ -227,15 +226,13 @@ UpdateStatus(char *pcString, bool bClrBackground)
         //
         GrContextForegroundSet(&g_sContext, DISPLAY_BANNER_FG);
         GrRectDraw(&g_sContext, &sRect);
-    }
-    else
-    {
+    } else {
         //
         // Fill the bottom rows of the screen with blue to create the status area.
         //
         sRect.i16XMin = 1;
         sRect.i16YMin = GrContextDpyHeightGet(&g_sContext) -
-                      DISPLAY_BANNER_HEIGHT + 1;
+                        DISPLAY_BANNER_HEIGHT + 1;
         sRect.i16XMax = GrContextDpyWidthGet(&g_sContext) - 2;
         sRect.i16YMax = sRect.i16YMin + DISPLAY_BANNER_HEIGHT - 3;
 
@@ -259,8 +256,7 @@ UpdateStatus(char *pcString, bool bClrBackground)
     //
     // Update the status on the screen.
     //
-    if(pcString != 0)
-    {
+    if(pcString != 0) {
         GrStringDrawCentered(&g_sContext, pcString,
                              -1, GrContextDpyWidthGet(&g_sContext) / 2,
                              58, 1);
@@ -282,18 +278,15 @@ USBDMSCEventCallback(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgParam,
     //
     g_ui32IdleTimeout = USBMSC_ACTIVITY_TIMEOUT;
 
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // Writing to the device.
         //
-        case USBD_MSC_EVENT_WRITING:
-        {
+        case USBD_MSC_EVENT_WRITING: {
             //
             // Only update if this is a change.
             //
-            if(g_eMSCState != MSC_DEV_WRITE)
-            {
+            if(g_eMSCState != MSC_DEV_WRITE) {
                 //
                 // Go to the write state.
                 //
@@ -311,13 +304,11 @@ USBDMSCEventCallback(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgParam,
         //
         // Reading from the device.
         //
-        case USBD_MSC_EVENT_READING:
-        {
+        case USBD_MSC_EVENT_READING: {
             //
             // Only update if this is a change.
             //
-            if(g_eMSCState != MSC_DEV_READ)
-            {
+            if(g_eMSCState != MSC_DEV_READ) {
                 //
                 // Go to the read state.
                 //
@@ -334,8 +325,7 @@ USBDMSCEventCallback(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgParam,
         //
         // The USB host has disconnected from the device.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             //
             // Go to the disconnected state.
             //
@@ -351,8 +341,7 @@ USBDMSCEventCallback(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgParam,
         //
         // The USB host has connected to the device.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             //
             // Go to the idle state to wait for read/writes.
             //
@@ -361,8 +350,7 @@ USBDMSCEventCallback(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgParam,
             break;
         }
         case USBD_MSC_EVENT_IDLE:
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -384,8 +372,7 @@ SysTickHandler(void)
     //
     disk_timerproc();
 
-    if(g_ui32IdleTimeout != 0)
-    {
+    if(g_ui32IdleTimeout != 0) {
         g_ui32IdleTimeout--;
     }
 }
@@ -506,8 +493,7 @@ main(void)
     ui32Retcode = disk_initialize(0);
 
     GrContextFontSet(&g_sContext, g_psFontFixed6x8);
-    if(ui32Retcode != RES_OK)
-    {
+    if(ui32Retcode != RES_OK) {
         GrStringDrawCentered(&g_sContext, "No SDCard Found", -1,
                              GrContextDpyWidthGet(&g_sContext) / 2, 16, 0);
         GrStringDrawCentered(&g_sContext, "Please insert",
@@ -516,9 +502,7 @@ main(void)
                              -1, GrContextDpyWidthGet(&g_sContext) / 2, 36, 0);
         GrStringDrawCentered(&g_sContext, "reset the board.",
                              -1, GrContextDpyWidthGet(&g_sContext) / 2, 46, 0);
-    }
-    else
-    {
+    } else {
         GrStringDrawCentered(&g_sContext, "SDCard Found",  -1,
                              GrContextDpyWidthGet(&g_sContext) / 2, 30, 0);
     }
@@ -526,17 +510,13 @@ main(void)
     //
     // Drop into the main loop.
     //
-    while(1)
-    {
-        switch(g_eMSCState)
-        {
-            case MSC_DEV_READ:
-            {
+    while(1) {
+        switch(g_eMSCState) {
+            case MSC_DEV_READ: {
                 //
                 // Update the screen if necessary.
                 //
-                if(g_ui32Flags & FLAG_UPDATE_STATUS)
-                {
+                if(g_ui32Flags & FLAG_UPDATE_STATUS) {
                     UpdateStatus("Reading", 0);
                     g_ui32Flags &= ~FLAG_UPDATE_STATUS;
                 }
@@ -544,21 +524,18 @@ main(void)
                 //
                 // If there is no activity then return to the idle state.
                 //
-                if(g_ui32IdleTimeout == 0)
-                {
+                if(g_ui32IdleTimeout == 0) {
                     UpdateStatus("Idle", 0);
                     g_eMSCState = MSC_DEV_IDLE;
                 }
 
                 break;
             }
-            case MSC_DEV_WRITE:
-            {
+            case MSC_DEV_WRITE: {
                 //
                 // Update the screen if necessary.
                 //
-                if(g_ui32Flags & FLAG_UPDATE_STATUS)
-                {
+                if(g_ui32Flags & FLAG_UPDATE_STATUS) {
                     UpdateStatus("Writing", 0);
                     g_ui32Flags &= ~FLAG_UPDATE_STATUS;
                 }
@@ -566,31 +543,26 @@ main(void)
                 //
                 // If there is no activity then return to the idle state.
                 //
-                if(g_ui32IdleTimeout == 0)
-                {
+                if(g_ui32IdleTimeout == 0) {
                     UpdateStatus("Idle", 0);
                     g_eMSCState = MSC_DEV_IDLE;
                 }
                 break;
             }
-            case MSC_DEV_DISCONNECTED:
-            {
+            case MSC_DEV_DISCONNECTED: {
                 //
                 // Update the screen if necessary.
                 //
-                if(g_ui32Flags & FLAG_UPDATE_STATUS)
-                {
+                if(g_ui32Flags & FLAG_UPDATE_STATUS) {
                     UpdateStatus("Disconnected", 0);
                     g_ui32Flags &= ~FLAG_UPDATE_STATUS;
                 }
                 break;
             }
-            case MSC_DEV_IDLE:
-            {
+            case MSC_DEV_IDLE: {
                 break;
             }
-            default:
-            {
+            default: {
                 break;
             }
         }
@@ -606,8 +578,7 @@ main(void)
 void
 __error__(char *pcFilename, uint32_t ui32Line)
 {
-    while(1)
-    {
+    while(1) {
         //
         // Hang on runtime error.
         //

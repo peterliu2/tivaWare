@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C129EXL Firmware Package.
 //
 //*****************************************************************************
@@ -350,8 +350,8 @@
 // Depends on: None
 // Exclusive of: CAN_ENABLE_UPDATE, ENET_ENABLE_UPDATE, I2C_ENABLE_UPDATE,
 //               SSI_ENABLE_UPDATE, USB_ENABLE_UPDATE
-// Requires: UART_AUTOBAUD or UART_FIXED_BAUDRATE, UART_CLOCK_ENABLE, 
-//           UARTx_BASE, UART_RXPIN_CLOCK_ENABLE, UART_RXPIN_BASE, 
+// Requires: UART_AUTOBAUD or UART_FIXED_BAUDRATE, UART_CLOCK_ENABLE,
+//           UARTx_BASE, UART_RXPIN_CLOCK_ENABLE, UART_RXPIN_BASE,
 //           UART_RXPIN_PCTL, UART_RXPIN_POS, UART_TXPIN_CLOCK_ENABLE,
 //           UART_TXPIN_BASE, UART_TXPIN_PCTL and UART_TXPIN_POS
 //
@@ -498,8 +498,8 @@
 // Depends on: None
 // Exclusive of: CAN_ENABLE_UPDATE, ENET_ENABLE_UPDATE, I2C_ENABLE_UPDATE,
 //               UART_ENABLE_UPDATE, USB_ENABLE_UPDATE
-// Requires: SSI_CLOCK_ENABLE, SSIx_BASE, SSI_CLKPIN_CLOCK_ENABLE, 
-//           SSI_CLKPIN_BASE, SSI_CLKPIN_PCTL, SSI_CLKPIN_POS, 
+// Requires: SSI_CLOCK_ENABLE, SSIx_BASE, SSI_CLKPIN_CLOCK_ENABLE,
+//           SSI_CLKPIN_BASE, SSI_CLKPIN_PCTL, SSI_CLKPIN_POS,
 //           SSI_FSSPIN_CLOCK_ENABLE, SSI_FSSPIN_BASE, SSI_FSSPIN_PCTL,
 //           SSI_FSSPIN_POS, SSI_MISOPIN_CLOCK_ENABLE, SSI_MISOPIN_BASE,
 //           SSI_MISOPIN_PCTL, SSI_MISOPIN_POS, SSI_MOSIPIN_CLOCK_ENABLE,
@@ -713,7 +713,7 @@
 // Depends on: None
 // Exclusive of: CAN_ENABLE_UPDATE, ENET_ENABLE_UPDATE, SSI_ENABLE_UPDATE,
 //               UART_ENABLE_UPDATE, USB_ENABLE_UPDATE
-// Requires: I2C_SLAVE_ADDR, I2C_CLOCK_ENABLE, I2Cx_BASE, 
+// Requires: I2C_SLAVE_ADDR, I2C_CLOCK_ENABLE, I2Cx_BASE,
 //           I2C_SCLPIN_CLOCK_ENABLE, I2C_SCLPIN_BASE, I2C_SCLPIN_PCTL,
 //           I2C_SCLPIN_POS, I2C_SDAPIN_CLOCK_ENABLE, I2C_SDAPIN_BASE,
 //           I2C_SDAPIN_PCTL and I2C_SDAPIN_POS
@@ -1057,7 +1057,7 @@
 //
 // Specifies the GPIO peripheral containing the pin which is used for VBUS.
 // The value is of the form SYSCTL_RCGCGPIO_Rx, where the Rx represents
-// the required GPIO port.  This applies to Blizzard class and later 
+// the required GPIO port.  This applies to Blizzard class and later
 // devices.
 //
 // Depends on: USB_ENABLE_UPDATE, USB_VBUS_CONFIG
@@ -1107,7 +1107,7 @@
 //
 // Specifies the GPIO peripheral containing the pin which is used for ID.
 // The value is of the form SYSCTL_RCGCGPIO_Rx, where the Rx represents
-// the required GPIO port.  This applies to Blizzard class and later 
+// the required GPIO port.  This applies to Blizzard class and later
 // devices.
 //
 // Depends on: USB_ENABLE_UPDATE, USB_ID_CONFIG
@@ -1157,7 +1157,7 @@
 //
 // Specifies the GPIO peripheral containing the pin which is used for DP.
 // The value is of the form SYSCTL_RCGCGPIO_Rx, where the Rx represents
-// the required GPIO port.  This applies to Blizzard class and later 
+// the required GPIO port.  This applies to Blizzard class and later
 // devices.
 //
 // Depends on: USB_ENABLE_UPDATE, USB_DP_CONFIG
@@ -1207,7 +1207,7 @@
 //
 // Specifies the GPIO peripheral containing the pin which is used for DM.
 // The value is of the form SYSCTL_RCGCGPIO_Rx, where the Rx represents
-// the required GPIO port.  This applies to Blizzard class and later 
+// the required GPIO port.  This applies to Blizzard class and later
 // devices.
 //
 // Depends on: USB_ENABLE_UPDATE, USB_DM_CONFIG

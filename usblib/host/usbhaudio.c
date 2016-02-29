@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -71,8 +71,7 @@ static void USBAudioClose(void *pvInstance);
 // This is the structure for an instance of a USB host audio driver.
 //
 //*****************************************************************************
-struct tUSBHostAudioInstance
-{
+struct tUSBHostAudioInstance {
     //
     // Save the device instance.
     //
@@ -166,8 +165,7 @@ struct tUSBHostAudioInstance
 // The USB Host audio instance.
 //
 //*****************************************************************************
-static tUSBHostAudioInstance g_sAudioDevice =
-{
+static tUSBHostAudioInstance g_sAudioDevice = {
     0
 };
 
@@ -177,8 +175,7 @@ static tUSBHostAudioInstance g_sAudioDevice =
 //! provided with the USB library.
 //
 //*****************************************************************************
-const tUSBHostClassDriver g_sUSBHostAudioClassDriver =
-{
+const tUSBHostClassDriver g_sUSBHostAudioClassDriver = {
     USB_CLASS_AUDIO,
     USBAudioOpen,
     USBAudioClose,
@@ -197,10 +194,8 @@ PipeCallbackIN(uint32_t ui32Pipe, uint32_t ui32Event)
     // Only handle the data available callback and pass it on to the
     // application.
     //
-    if(ui32Event == USB_EVENT_RX_AVAILABLE)
-    {
-        if(g_sAudioDevice.pfnInCallback)
-        {
+    if(ui32Event == USB_EVENT_RX_AVAILABLE) {
+        if(g_sAudioDevice.pfnInCallback) {
             g_sAudioDevice.pfnInCallback(&g_sAudioDevice,
                                          USB_EVENT_RX_AVAILABLE,
                                          USBHCDPipeTransferSizeGet(ui32Pipe),
@@ -221,10 +216,8 @@ PipeCallbackOUT(uint32_t ui32Pipe, uint32_t ui32Event)
     // Only handle the transmit complete callback and pass it on to the
     // application.
     //
-    if(ui32Event == USB_EVENT_TX_COMPLETE)
-    {
-        if(g_sAudioDevice.pfnOutCallback)
-        {
+    if(ui32Event == USB_EVENT_TX_COMPLETE) {
+        if(g_sAudioDevice.pfnOutCallback) {
             g_sAudioDevice.pfnOutCallback(&g_sAudioDevice,
                                           USB_EVENT_TX_COMPLETE, 0,
                                           g_sAudioDevice.pvOutBuffer);
@@ -248,8 +241,7 @@ AudioTerminalGet(tConfigDescriptor *psConfigDesc, uint32_t ui32Terminal,
     psHeader = (tDescriptorHeader *)psConfigDesc;
     i32BytesRemaining = psConfigDesc->wTotalLength;
 
-    while(i32BytesRemaining > 0)
-    {
+    while(i32BytesRemaining > 0) {
         //
         // Output and input terminals are the same past the bDescriptorSubtype
         // and wTerminalType that are being searched for.
@@ -260,23 +252,19 @@ AudioTerminalGet(tConfigDescriptor *psConfigDesc, uint32_t ui32Terminal,
         // Only CS_INTERFACE descriptors can be a terminal.
         //
         if((psHeader->bDescriptorType == USB_DTYPE_CS_INTERFACE) &&
-           (ui32Terminal == psOutput->bDescriptorSubtype))
-        {
+                (ui32Terminal == psOutput->bDescriptorSubtype)) {
             if((psOutput->bDescriptorSubtype == USB_AI_OUTPUT_TERMINAL) ||
-               (psOutput->bDescriptorSubtype == USB_AI_INPUT_TERMINAL))
+                    (psOutput->bDescriptorSubtype == USB_AI_INPUT_TERMINAL))
 
             {
                 //
                 // If this was the terminal type that was requested, the
                 // return it.
                 //
-                if(psOutput->wTerminalType == ui32TerminalType)
-                {
+                if(psOutput->wTerminalType == ui32TerminalType) {
                     return(psHeader);
                 }
-            }
-            else if(psOutput->bDescriptorSubtype == USB_AI_FEATURE_UNIT)
-            {
+            } else if(psOutput->bDescriptorSubtype == USB_AI_FEATURE_UNIT) {
                 return(psHeader);
             }
         }
@@ -330,21 +318,18 @@ AudioControlGet(tConfigDescriptor *psConfigDesc)
     //
     // Search the whole configuration descriptor.
     //
-    while(i32Bytes > 0)
-    {
+    while(i32Bytes > 0) {
         //
         // Find an interface descriptor and see if it is a control interface.
         //
-        if(psHeader->bDescriptorType == USB_DTYPE_INTERFACE)
-        {
+        if(psHeader->bDescriptorType == USB_DTYPE_INTERFACE) {
             psInterface = (tInterfaceDescriptor *)psHeader;
 
             //
             // If this is the control interface then return the value to the
             // caller.
             //
-            if(psInterface->bInterfaceSubClass == USB_ASC_AUDIO_CONTROL)
-            {
+            if(psInterface->bInterfaceSubClass == USB_ASC_AUDIO_CONTROL) {
                 ui32Interface = psInterface->bInterfaceNumber;
 
                 break;
@@ -400,16 +385,13 @@ AudioGetInterface(tUSBHostAudioInstance *psAudioDevice, uint16_t ui16Format,
 
     i32Bytes = psAudioDevice->psDevice->psConfigDescriptor->wTotalLength;
 
-    while(i32Bytes > 0)
-    {
-        if(psHeader->bDescriptorType == USB_DTYPE_INTERFACE)
-        {
+    while(i32Bytes > 0) {
+        if(psHeader->bDescriptorType == USB_DTYPE_INTERFACE) {
             //
             // If a new interface was found and the last one satisfied all
             // requirements then a valid interface was found so break out.
             //
-            if(psInterface)
-            {
+            if(psInterface) {
                 break;
             }
 
@@ -429,22 +411,19 @@ AudioGetInterface(tUSBHostAudioInstance *psAudioDevice, uint16_t ui16Format,
             // the interface pointer to null.
             //
             if((psInterface->bNumEndpoints == 0) ||
-               (psInterface->bInterfaceClass != USB_CLASS_AUDIO) ||
-               (psInterface->bInterfaceSubClass != USB_ASC_AUDIO_STREAMING))
-            {
+                    (psInterface->bInterfaceClass != USB_CLASS_AUDIO) ||
+                    (psInterface->bInterfaceSubClass != USB_ASC_AUDIO_STREAMING)) {
                 psInterface = 0;
             }
         }
         if((psInterface) &&
-           (psHeader->bDescriptorType == USB_DTYPE_CS_INTERFACE))
-        {
+                (psHeader->bDescriptorType == USB_DTYPE_CS_INTERFACE)) {
             pACHeader = (tACHeader *)psHeader;
 
             //
             // If this is a General descriptor the check if the format matches.
             //
-            if(pACHeader->bDescriptorSubtype == USB_AS_GENERAL)
-            {
+            if(pACHeader->bDescriptorSubtype == USB_AS_GENERAL) {
                 //
                 // Just save the pointer to the format descriptor.
                 //
@@ -454,13 +433,10 @@ AudioGetInterface(tUSBHostAudioInstance *psAudioDevice, uint16_t ui16Format,
                 // If this interface has the wrong format then set it to null
                 // so that the rest of this interface is ignored.
                 //
-                if(pGeneral->wFormatTag != ui16Format)
-                {
+                if(pGeneral->wFormatTag != ui16Format) {
                     psInterface = 0;
                 }
-            }
-            else if(pACHeader->bDescriptorSubtype == USB_AS_FORMAT_TYPE)
-            {
+            } else if(pACHeader->bDescriptorSubtype == USB_AS_FORMAT_TYPE) {
                 pFormat = (tASFormat *)psHeader;
 
                 //
@@ -469,25 +445,20 @@ AudioGetInterface(tUSBHostAudioInstance *psAudioDevice, uint16_t ui16Format,
                 // of this interface is ignored.
                 //
                 if((pFormat->bNrChannels != ui32Channels) ||
-                   (pFormat->bSubFrameSize != ui32Bytes))
-                {
+                        (pFormat->bSubFrameSize != ui32Bytes)) {
                     psInterface = 0;
-                }
-                else
-                {
+                } else {
                     pui8Value = &pFormat->tSamFreq;
 
                     //
                     // Attempt to find the sample rate in the sample rate
                     // table for this interface.
                     //
-                    for(i32Idx = 0; i32Idx < pFormat->bSamFreqType; i32Idx++)
-                    {
+                    for(i32Idx = 0; i32Idx < pFormat->bSamFreqType; i32Idx++) {
                         ui32Value = (*((uint32_t *)&pui8Value[i32Idx * 3]) &
-                                    0xffffff);
+                                     0xffffff);
 
-                        if(ui32Value == ui32SampleRate)
-                        {
+                        if(ui32Value == ui32SampleRate) {
                             break;
                         }
                     }
@@ -497,58 +468,44 @@ AudioGetInterface(tUSBHostAudioInstance *psAudioDevice, uint16_t ui16Format,
                     // pointer to null so that the rest of this interface is
                     // ignored.
                     //
-                    if(i32Idx == pFormat->bSamFreqType)
-                    {
+                    if(i32Idx == pFormat->bSamFreqType) {
                         psInterface = 0;
                     }
                 }
             }
-        }
-        else if((psInterface) &&
-                (psHeader->bDescriptorType == USB_DTYPE_ENDPOINT))
-        {
+        } else if((psInterface) &&
+                  (psHeader->bDescriptorType == USB_DTYPE_ENDPOINT)) {
             pEndpoint = (tEndpointDescriptor *)psHeader;
 
             //
             // See what direction is being requested.
             //
-            if(ui32Flags & USBH_AUDIO_FORMAT_IN)
-            {
+            if(ui32Flags & USBH_AUDIO_FORMAT_IN) {
                 //
                 // If this is an input endpoint and is just a feed back input
                 // then ignore it.
                 //
-                if(pEndpoint->bEndpointAddress & USB_EP_DESC_IN)
-                {
+                if(pEndpoint->bEndpointAddress & USB_EP_DESC_IN) {
                     if((pEndpoint->bmAttributes & USB_EP_ATTR_USAGE_M)
-                        == USB_EP_ATTR_USAGE_FEEDBACK)
-                    {
+                            == USB_EP_ATTR_USAGE_FEEDBACK) {
                         psInterface = 0;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Save this endpoint as a possible valid endpoint
                         //
                         pINEndpoint = pEndpoint;
                     }
                 }
-            }
-            else
-            {
+            } else {
                 //
                 // If this is an output endpoint and is just a feed back input
                 // then ignore it.
                 //
-                if((pEndpoint->bEndpointAddress & USB_EP_DESC_IN) == 0)
-                {
+                if((pEndpoint->bEndpointAddress & USB_EP_DESC_IN) == 0) {
                     if((pEndpoint->bmAttributes & USB_EP_ATTR_USAGE_M)
-                        == USB_EP_ATTR_USAGE_FEEDBACK)
-                    {
+                            == USB_EP_ATTR_USAGE_FEEDBACK) {
                         psInterface = 0;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Save this endpoint as a possible valid endpoint;
                         //
@@ -573,13 +530,11 @@ AudioGetInterface(tUSBHostAudioInstance *psAudioDevice, uint16_t ui16Format,
     //
     // If there is still a valid interface then return the values.
     //
-    if(psInterface)
-    {
+    if(psInterface) {
         //
         // Check a valid IN endpoint descriptor.
         //
-        if(pINEndpoint)
-        {
+        if(pINEndpoint) {
             //
             // Save the endpoint address.
             //
@@ -590,8 +545,7 @@ AudioGetInterface(tUSBHostAudioInstance *psAudioDevice, uint16_t ui16Format,
             // If there is no current pipe then just allocate a new one with
             // the settings for this interface.
             //
-            if(g_sAudioDevice.ui32IsochInPipe == 0)
-            {
+            if(g_sAudioDevice.ui32IsochInPipe == 0) {
                 //
                 // Allocate the USB Pipe for this Isochronous IN end point.
                 //
@@ -600,9 +554,7 @@ AudioGetInterface(tUSBHostAudioInstance *psAudioDevice, uint16_t ui16Format,
                                         g_sAudioDevice.psDevice,
                                         pINEndpoint->wMaxPacketSize,
                                         PipeCallbackIN);
-            }
-            else if(g_sAudioDevice.ui16PipeSizeIn < pINEndpoint->wMaxPacketSize)
-            {
+            } else if(g_sAudioDevice.ui16PipeSizeIn < pINEndpoint->wMaxPacketSize) {
                 //
                 // Free the old endpoint and allocate a new one.
                 //
@@ -636,20 +588,18 @@ AudioGetInterface(tUSBHostAudioInstance *psAudioDevice, uint16_t ui16Format,
         //
         // Check a valid OUT endpoint descriptor.
         //
-        if(pOUTEndpoint)
-        {
+        if(pOUTEndpoint) {
             //
             // Save the endpoint address.
             //
             g_sAudioDevice.ui8IsochOutAddress =
-                            pOUTEndpoint->bEndpointAddress & USB_EP_DESC_NUM_M;
+                pOUTEndpoint->bEndpointAddress & USB_EP_DESC_NUM_M;
 
             //
             // If there is no current pipe then just allocate a new one with
             // the settings for this interface.
             //
-            if(g_sAudioDevice.ui32IsochOutPipe == 0)
-            {
+            if(g_sAudioDevice.ui32IsochOutPipe == 0) {
                 //
                 // Allocate the USB Pipe for this Isochronous OUT end point.
                 //
@@ -658,10 +608,8 @@ AudioGetInterface(tUSBHostAudioInstance *psAudioDevice, uint16_t ui16Format,
                                         g_sAudioDevice.psDevice,
                                         pOUTEndpoint->wMaxPacketSize,
                                         PipeCallbackOUT);
-            }
-            else if(g_sAudioDevice.ui16PipeSizeOut <
-                    pOUTEndpoint->wMaxPacketSize)
-            {
+            } else if(g_sAudioDevice.ui16PipeSizeOut <
+                      pOUTEndpoint->wMaxPacketSize) {
                 //
                 // Free the old endpoint and allocate a new one.
                 //
@@ -722,8 +670,7 @@ USBAudioOpen(tUSBHostDevice *psDevice)
     //
     // Don't allow the device to be opened without closing first.
     //
-    if(g_sAudioDevice.psDevice)
-    {
+    if(g_sAudioDevice.psDevice) {
         return(0);
     }
 
@@ -742,29 +689,28 @@ USBAudioOpen(tUSBHostDevice *psDevice)
     //
     g_sAudioDevice.psInTerminal =
         (tACInputTerminal *)AudioTerminalGet(psConfigDesc,
-                                             USB_AI_INPUT_TERMINAL,
-                                             USB_TTYPE_STREAMING);
+                USB_AI_INPUT_TERMINAL,
+                USB_TTYPE_STREAMING);
 
     //
     // Find the output terminal.
     //
     g_sAudioDevice.psOutTerminal =
         (tACOutputTerminal *)AudioTerminalGet(psConfigDesc,
-                                              USB_AI_OUTPUT_TERMINAL,
-                                              USB_TTYPE_STREAMING);
+                USB_AI_OUTPUT_TERMINAL,
+                USB_TTYPE_STREAMING);
 
     //
     // Find the feature unit.
     g_sAudioDevice.psFeatureUnit =
         (tACFeatureUnit *)AudioTerminalGet(psConfigDesc,
-                                             USB_AI_FEATURE_UNIT, 0);
+                                           USB_AI_FEATURE_UNIT, 0);
 
     //
     // Need some kind of terminal to send or receive audio from.
     //
     if((g_sAudioDevice.psOutTerminal == 0) &&
-       (g_sAudioDevice.psInTerminal == 0))
-    {
+            (g_sAudioDevice.psInTerminal == 0)) {
         return(0);
     }
 
@@ -773,8 +719,7 @@ USBAudioOpen(tUSBHostDevice *psDevice)
     //
     ui32Temp = AudioControlGet(psConfigDesc);
 
-    if(ui32Temp == INVALID_INTERFACE)
-    {
+    if(ui32Temp == INVALID_INTERFACE) {
         return(0);
     }
 
@@ -787,8 +732,7 @@ USBAudioOpen(tUSBHostDevice *psDevice)
     //
     // If the call back exists, call it with an Open event.
     //
-    if(g_sAudioDevice.pfnCallback != 0)
-    {
+    if(g_sAudioDevice.pfnCallback != 0) {
         g_sAudioDevice.pfnCallback(&g_sAudioDevice,
                                    USBH_AUDIO_EVENT_OPEN, 0, 0);
     }
@@ -796,8 +740,7 @@ USBAudioOpen(tUSBHostDevice *psDevice)
     //
     // If a feature unit was found, save the ID
     //
-    if(g_sAudioDevice.psFeatureUnit != 0)
-    {
+    if(g_sAudioDevice.psFeatureUnit != 0) {
         g_sAudioDevice.ui8VolumeID = g_sAudioDevice.psFeatureUnit->bUnitID;
     }
 
@@ -851,8 +794,7 @@ USBAudioClose(void *pvAudioDevice)
     //
     // Do nothing if there is not a driver open.
     //
-    if(psAudioDevice->psDevice == 0)
-    {
+    if(psAudioDevice->psDevice == 0) {
         return;
     }
 
@@ -864,24 +806,21 @@ USBAudioClose(void *pvAudioDevice)
     //
     // Free the Isochronous IN pipe.
     //
-    if(psAudioDevice->ui32IsochInPipe != 0)
-    {
+    if(psAudioDevice->ui32IsochInPipe != 0) {
         USBHCDPipeFree(psAudioDevice->ui32IsochInPipe);
     }
 
     //
     // Free the Isochronous OUT pipe.
     //
-    if(psAudioDevice->ui32IsochOutPipe != 0)
-    {
+    if(psAudioDevice->ui32IsochOutPipe != 0) {
         USBHCDPipeFree(psAudioDevice->ui32IsochOutPipe);
     }
 
     //
     // If the call back exists then call it.
     //
-    if(psAudioDevice->pfnCallback != 0)
-    {
+    if(psAudioDevice->pfnCallback != 0) {
         psAudioDevice->pfnCallback(psAudioDevice, USBH_AUDIO_EVENT_CLOSE, 0,
                                    0);
     }
@@ -913,8 +852,7 @@ USBHostAudioOpen(uint32_t ui32Index, tUSBHostAudioCallback pfnCallback)
     // Only one audio device is supported at this time and on one instance
     // is supported so if there is already a call back then fail.
     //
-    if((ui32Index != 0) || (g_sAudioDevice.pfnCallback))
-    {
+    if((ui32Index != 0) || (g_sAudioDevice.pfnCallback)) {
         return(0);
     }
 
@@ -1016,8 +954,8 @@ VolumeSettingGet(tUSBHostAudioInstance *psAudioDevice, uint32_t ui32Interface,
     // Put the setup packet in the buffer.
     //
     USBHCDControlTransfer(0, &sSetupPacket, psAudioDevice->psDevice,
-                (uint8_t *)&ui32Value, 4,
-                psAudioDevice->psDevice->sDeviceDescriptor.bMaxPacketSize0);
+                          (uint8_t *)&ui32Value, 4,
+                          psAudioDevice->psDevice->sDeviceDescriptor.bMaxPacketSize0);
 
     return(ui32Value);
 }
@@ -1212,8 +1150,8 @@ USBHostAudioVolumeSet(tUSBHostAudioInstance *psAudioInstance,
     // Put the setup packet in the buffer.
     //
     USBHCDControlTransfer(0, &sSetupPacket, psAudioInstance->psDevice,
-            (uint8_t *)&ui32Value, 2,
-            psAudioInstance->psDevice->sDeviceDescriptor.bMaxPacketSize0);
+                          (uint8_t *)&ui32Value, 2,
+                          psAudioInstance->psDevice->sDeviceDescriptor.bMaxPacketSize0);
 }
 
 //*****************************************************************************
@@ -1255,8 +1193,7 @@ USBHostAudioFormatGet(tUSBHostAudioInstance *psAudioInstance,
     //
     if(AudioGetInterface(psAudioInstance, USB_ADF_PCM, ui32SampleRate,
                          ui32Bits >> 3, ui32Channels, ui32Flags) !=
-       INVALID_INTERFACE)
-    {
+            INVALID_INTERFACE) {
         return(0);
     }
     return(1);
@@ -1303,16 +1240,14 @@ USBHostAudioFormatSet(tUSBHostAudioInstance *psAudioInstance,
                                       ui32SampleRate, ui32Bits >> 3,
                                       ui32Channels, ui32Flags);
 
-    if(ui32Interface == INVALID_INTERFACE)
-    {
+    if(ui32Interface == INVALID_INTERFACE) {
         return(1);
     }
 
     //
     // Determine if this is an input or output request.
     //
-    if(ui32Flags & USBH_AUDIO_FORMAT_IN)
-    {
+    if(ui32Flags & USBH_AUDIO_FORMAT_IN) {
         //
         // Get the active interface number and alternate setting for this
         // format.
@@ -1321,10 +1256,8 @@ USBHostAudioFormatSet(tUSBHostAudioInstance *psAudioInstance,
             (uint8_t)(ui32Interface & INTERFACE_NUM_M);
         psAudioInstance->ui8InAltSetting =
             (uint8_t)((ui32Interface & INTERFACE_ALTSETTING_M) >>
-            INTERFACE_ALTSETTING_S);
-    }
-    else
-    {
+                      INTERFACE_ALTSETTING_S);
+    } else {
         //
         // Get the active interface number and alternate setting for this
         // format.
@@ -1333,7 +1266,7 @@ USBHostAudioFormatSet(tUSBHostAudioInstance *psAudioInstance,
             (uint8_t)(ui32Interface & INTERFACE_NUM_M);
         psAudioInstance->ui8OutAltSetting =
             (uint8_t)((ui32Interface & INTERFACE_ALTSETTING_M) >>
-            INTERFACE_ALTSETTING_S);
+                      INTERFACE_ALTSETTING_S);
     }
     return(0);
 }
@@ -1371,8 +1304,7 @@ USBHostAudioPlay(tUSBHostAudioInstance *psAudioInstance, void *pvBuffer,
     //
     // Make sure that there is a device present.
     //
-    if(psAudioInstance->psDevice == 0)
-    {
+    if(psAudioInstance->psDevice == 0) {
         return(0);
     }
 
@@ -1380,8 +1312,7 @@ USBHostAudioPlay(tUSBHostAudioInstance *psAudioInstance, void *pvBuffer,
     // If the audio output interface is not active then select the current
     // active audio interface.
     //
-    if(HWREGBITW(&psAudioInstance->ui32Flags, AUDIO_FLAG_OUT_ACTIVE) == 0)
-    {
+    if(HWREGBITW(&psAudioInstance->ui32Flags, AUDIO_FLAG_OUT_ACTIVE) == 0) {
         //
         // Indicate the active audio interface has been selected.
         //
@@ -1447,8 +1378,7 @@ USBHostAudioRecord(tUSBHostAudioInstance *psAudioInstance, void *pvBuffer,
     //
     // Make sure that there is a device present.
     //
-    if(psAudioInstance->psDevice == 0)
-    {
+    if(psAudioInstance->psDevice == 0) {
         return(0);
     }
 
@@ -1456,8 +1386,7 @@ USBHostAudioRecord(tUSBHostAudioInstance *psAudioInstance, void *pvBuffer,
     // If the audio input interface is not active then select the current
     // active audio interface.
     //
-    if(HWREGBITW(&psAudioInstance->ui32Flags, AUDIO_FLAG_IN_ACTIVE) == 0)
-    {
+    if(HWREGBITW(&psAudioInstance->ui32Flags, AUDIO_FLAG_IN_ACTIVE) == 0) {
         //
         // Indicate the active audio interface has been selected.
         //
@@ -1467,8 +1396,8 @@ USBHostAudioRecord(tUSBHostAudioInstance *psAudioInstance, void *pvBuffer,
         // Configure the USB audio device to use the selected audio interface.
         //
         USBHCDSetInterface(0, (uint32_t)psAudioInstance->psDevice,
-                        psAudioInstance->ui8InInterface,
-                        psAudioInstance->ui8InAltSetting);
+                           psAudioInstance->ui8InInterface,
+                           psAudioInstance->ui8InAltSetting);
     }
 
     //

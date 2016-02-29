@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C129EXL Firmware Package.
 //
 //*****************************************************************************
@@ -115,8 +115,7 @@ DECLARE_EVENT_DRIVER(g_sUSBEventDriver, 0, 0, USBHCDEvents);
 // In this case, only the Keyboard class is loaded.
 //
 //*****************************************************************************
-static tUSBHostClassDriver const * const g_ppHostClassDrivers[] =
-{
+static tUSBHostClassDriver const * const g_ppHostClassDrivers[] = {
     &g_sUSBHIDClassDriver,
     &g_sUSBEventDriver
 };
@@ -160,8 +159,7 @@ tUSBHKeyboard *g_psKeyboardInstance = 0;
 // This enumerated type is used to hold the states of the keyboard.
 //
 //*****************************************************************************
-enum
-{
+enum {
     //
     // No device is present.
     //
@@ -253,12 +251,9 @@ GetTickms(void)
     ui32RetVal = g_ui32SysTickCount;
     ui32Saved = ui32RetVal;
 
-    if(ui32Saved > g_ui32LastTick)
-    {
+    if(ui32Saved > g_ui32LastTick) {
         ui32RetVal = ui32Saved - g_ui32LastTick;
-    }
-    else
-    {
+    } else {
         ui32RetVal = g_ui32LastTick - ui32Saved;
     }
 
@@ -301,20 +296,17 @@ USBHCDEvents(void *pvData)
     //
     pEventInfo = (tEventInfo *)pvData;
 
-    switch(pEventInfo->ui32Event)
-    {
+    switch(pEventInfo->ui32Event) {
         //
         // New keyboard detected.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             //
             // See if this is a HID Keyboard.
             //
             if((USBHCDDevClass(pEventInfo->ui32Instance, 0) == USB_CLASS_HID) &&
-               (USBHCDDevProtocol(pEventInfo->ui32Instance, 0) ==
-                USB_HID_PROTOCOL_KEYB))
-            {
+                    (USBHCDDevProtocol(pEventInfo->ui32Instance, 0) ==
+                     USB_HID_PROTOCOL_KEYB)) {
                 //
                 // Indicate that the keyboard has been detected.
                 //
@@ -333,8 +325,7 @@ USBHCDEvents(void *pvData)
         //
         // Unsupported device detected.
         //
-        case USB_EVENT_UNKNOWN_CONNECTED:
-        {
+        case USB_EVENT_UNKNOWN_CONNECTED: {
             UARTprintf("Unsupported Device Class (0x%02x) Connected.\n",
                        pEventInfo->ui32Instance);
 
@@ -348,8 +339,7 @@ USBHCDEvents(void *pvData)
         //
         // Device has been unplugged.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             //
             // Indicate that the device has been disconnected.
             //
@@ -366,8 +356,7 @@ USBHCDEvents(void *pvData)
         //
         // Power Fault has occurred.
         //
-        case USB_EVENT_POWER_FAULT:
-        {
+        case USB_EVENT_POWER_FAULT: {
             UARTprintf("Power Fault\n");
 
             //
@@ -378,8 +367,7 @@ USBHCDEvents(void *pvData)
             break;
         }
 
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -407,18 +395,15 @@ KeyboardCallback(tUSBHKeyboard *psKbInstance, uint32_t ui32Event,
 {
     unsigned char ucChar;
 
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // New Key press detected.
         //
-        case USBH_EVENT_HID_KB_PRESS:
-        {
+        case USBH_EVENT_HID_KB_PRESS: {
             //
             // If this was a Caps Lock key then update the Caps Lock state.
             //
-            if(ui32MsgParam == HID_KEYB_USAGE_CAPSLOCK)
-            {
+            if(ui32MsgParam == HID_KEYB_USAGE_CAPSLOCK) {
                 //
                 // The main loop needs to update the keyboard's Caps Lock
                 // state.
@@ -429,9 +414,7 @@ KeyboardCallback(tUSBHKeyboard *psKbInstance, uint32_t ui32Event,
                 // Toggle the current Caps Lock state.
                 //
                 g_ui32Modifiers ^= HID_KEYB_CAPS_LOCK;
-            }
-            else if(ui32MsgParam == HID_KEYB_USAGE_SCROLLOCK)
-            {
+            } else if(ui32MsgParam == HID_KEYB_USAGE_SCROLLOCK) {
                 //
                 // The main loop needs to update the keyboard's Scroll Lock
                 // state.
@@ -442,9 +425,7 @@ KeyboardCallback(tUSBHKeyboard *psKbInstance, uint32_t ui32Event,
                 // Toggle the current Scroll Lock state.
                 //
                 g_ui32Modifiers ^= HID_KEYB_SCROLL_LOCK;
-            }
-            else if(ui32MsgParam == HID_KEYB_USAGE_NUMLOCK)
-            {
+            } else if(ui32MsgParam == HID_KEYB_USAGE_NUMLOCK) {
                 //
                 // The main loop needs to update the keyboard's Scroll Lock
                 // state.
@@ -455,38 +436,32 @@ KeyboardCallback(tUSBHKeyboard *psKbInstance, uint32_t ui32Event,
                 // Toggle the current Num Lock state.
                 //
                 g_ui32Modifiers ^= HID_KEYB_NUM_LOCK;
-            }
-            else if(ui32MsgParam == HID_KEYB_USAGE_BACKSPACE)
-            {
+            } else if(ui32MsgParam == HID_KEYB_USAGE_BACKSPACE) {
                 //
                 // This is the backspace, so move the cursor left and erase
                 // that character.
                 //
                 UARTprintf("\b \b");
-            }
-            else
-            {
+            } else {
                 //
                 // Print the current key out the UART.
                 //
                 ucChar = (unsigned char)
-                    USBHKeyboardUsageToChar(g_psKeyboardInstance,
-                                            &g_sUSKeyboardMap,
-                                            (unsigned char)ui32MsgParam);
+                         USBHKeyboardUsageToChar(g_psKeyboardInstance,
+                                                 &g_sUSKeyboardMap,
+                                                 (unsigned char)ui32MsgParam);
                 //
                 // A zero value indicates there was no textual mapping of this
                 // usage code.
                 //
-                if(ucChar != 0)
-                {
+                if(ucChar != 0) {
                     UARTprintf("%c", ucChar);
                 }
             }
             break;
         }
 
-        case USBH_EVENT_HID_KB_MOD:
-        {
+        case USBH_EVENT_HID_KB_MOD: {
             //
             // This application ignores the state of the shift or control
             // and other special keys.
@@ -494,8 +469,7 @@ KeyboardCallback(tUSBHKeyboard *psKbInstance, uint32_t ui32Event,
             break;
         }
 
-        case USBH_EVENT_HID_KB_REL:
-        {
+        case USBH_EVENT_HID_KB_REL: {
             //
             // This applications ignores the release of keys as well.
             //
@@ -587,21 +561,18 @@ main(void)
     //
     // The main loop for the application.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Tell the OTG library code how much time has passed in
         // milliseconds since the last call.
         //
         USBOTGMain(GetTickms());
 
-        switch(g_eUSBState)
-        {
+        switch(g_eUSBState) {
             //
             // This state is entered when they keyboard is first detected.
             //
-            case STATE_KEYBOARD_INIT:
-            {
+            case STATE_KEYBOARD_INIT: {
                 //
                 // Initialized the newly connected keyboard.
                 //
@@ -617,8 +588,7 @@ main(void)
                 break;
             }
 
-            case STATE_KEYBOARD_UPDATE:
-            {
+            case STATE_KEYBOARD_UPDATE: {
                 //
                 // If the application detected a change that required an
                 // update to be sent to the keyboard to change the modifier
@@ -631,8 +601,7 @@ main(void)
                 break;
             }
 
-            case STATE_KEYBOARD_CONNECTED:
-            {
+            case STATE_KEYBOARD_CONNECTED: {
                 //
                 // Nothing is currently done in the main loop when the keyboard
                 // is connected.
@@ -640,16 +609,14 @@ main(void)
                 break;
             }
 
-            case STATE_UNKNOWN_DEVICE:
-            {
+            case STATE_UNKNOWN_DEVICE: {
                 //
                 // Nothing to do as the device is unknown.
                 //
                 break;
             }
 
-            case STATE_NO_DEVICE:
-            {
+            case STATE_NO_DEVICE: {
                 //
                 // Nothing is currently done in the main loop when the keyboard
                 // is not connected.
@@ -657,8 +624,7 @@ main(void)
                 break;
             }
 
-            default:
-            {
+            default: {
                 break;
             }
         }

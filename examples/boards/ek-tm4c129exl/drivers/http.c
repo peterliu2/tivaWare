@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C129EXL Firmware Package.
 //
 //*****************************************************************************
@@ -82,16 +82,12 @@ BufferFillToCharacter(char cWhichOne, char *pcSource, char *pcOutput,
     // Search the string until the character is found.
     //
     *pui32Size = 0;
-    while(*pcSource)
-    {
-        if(*pcSource == cWhichOne)
-        {
+    while(*pcSource) {
+        if(*pcSource == cWhichOne) {
             pcOutput[*pui32Size] = 0;
             pcSource++;
             return;
-        }
-        else
-        {
+        } else {
             pcOutput[*pui32Size] = *pcSource;
             pcSource++;
             *pui32Size += 1;
@@ -120,16 +116,12 @@ BufferFillToEOL(char *pcSource, char *pcOutput, uint32_t *pui32Size)
     // Search the string until EOL is found.
     //
     *pui32Size = 0;
-    while(*pcSource)
-    {
-        if((*pcSource == '\r') && (*(pcSource+ 1) == '\n'))
-        {
+    while(*pcSource) {
+        if((*pcSource == '\r') && (*(pcSource+ 1) == '\n')) {
             pcOutput[*pui32Size] = 0;
             pcSource += 2;
             return;
-        }
-        else
-        {
+        } else {
             pcOutput[*pui32Size] = *pcSource;
             pcSource++;
             *pui32Size += 1;
@@ -150,13 +142,11 @@ InsertRequest(char *pcDest, char *pcRequest)
     ui32DstSize = strlen(pcDest);
 
     pcDest[ui32DstSize + ui32ReqSize] = 0;
-    for(i = ui32DstSize; i-- > 0; )
-    {
+    for(i = ui32DstSize; i-- > 0; ) {
         pcDest[ui32ReqSize + i] = pcDest[i];
     }
 
-    for(i = 0; i < ui32ReqSize; i++)
-    {
+    for(i = 0; i < ui32ReqSize; i++) {
         pcDest[i] = pcRequest[i];
     }
 }
@@ -185,109 +175,86 @@ HTTPMessageTypeSet(char *pcDest, uint8_t ui8Type, char *pcResource)
     // Check to see if the resource and destination pointers are the same.  If
     // yes, insert the request type at the beginning of the resource string.
     //
-    if(pcDest == pcResource)
-    {
+    if(pcDest == pcResource) {
         //
         // Add the request type to the buffer.
         //
-        switch(ui8Type)
-        {
-            case HTTP_MESSAGE_CONNECT:
-            {
+        switch(ui8Type) {
+            case HTTP_MESSAGE_CONNECT: {
                 InsertRequest(pcDest, g_pcHttpConnect);
                 break;
             }
-            case HTTP_MESSAGE_GET:
-            {
+            case HTTP_MESSAGE_GET: {
                 InsertRequest(pcDest, g_pcHttpGet);
                 break;
             }
-            case HTTP_MESSAGE_POST:
-            {
+            case HTTP_MESSAGE_POST: {
                 InsertRequest(pcDest, g_pcHttpPost);
                 break;
             }
-            case HTTP_MESSAGE_PUT:
-            {
+            case HTTP_MESSAGE_PUT: {
                 InsertRequest(pcDest, g_pcHttpPut);
                 break;
             }
-            case HTTP_MESSAGE_DELETE:
-            {
+            case HTTP_MESSAGE_DELETE: {
                 InsertRequest(pcDest, g_pcHttpDelete);
                 break;
             }
-            case HTTP_MESSAGE_HEAD:
-            {
+            case HTTP_MESSAGE_HEAD: {
                 InsertRequest(pcDest, g_pcHttpHead);
                 break;
             }
-            case HTTP_MESSAGE_TRACE:
-            {
+            case HTTP_MESSAGE_TRACE: {
                 InsertRequest(pcDest, g_pcHttpTrace);
                 break;
             }
-            case HTTP_MESSAGE_OPTIONS:
-            {
+            case HTTP_MESSAGE_OPTIONS: {
                 InsertRequest(pcDest, g_pcHttpOptions);
                 break;
             }
-            case HTTP_MESSAGE_PATCH:
-            {
+            case HTTP_MESSAGE_PATCH: {
                 InsertRequest(pcDest, g_pcHttpPatch);
                 break;
             }
         }
-    }
-    else
-    {
+    } else {
         //
         // Add the request type to the buffer.
         //
-        switch(ui8Type)
-        {
-            case HTTP_MESSAGE_CONNECT:
-            {
+        switch(ui8Type) {
+            case HTTP_MESSAGE_CONNECT: {
                 usprintf(pcDest, g_pcHttpConnect);
                 break;
             }
-            case HTTP_MESSAGE_GET:
-            {
+            case HTTP_MESSAGE_GET: {
                 usprintf(pcDest, g_pcHttpGet);
                 break;
             }
-            case HTTP_MESSAGE_POST:
-            {
+            case HTTP_MESSAGE_POST: {
                 usprintf(pcDest, g_pcHttpPost);
                 break;
             }
-            case HTTP_MESSAGE_PUT:
-            {
+            case HTTP_MESSAGE_PUT: {
                 usprintf(pcDest, g_pcHttpPut);
                 break;
             }
-            case HTTP_MESSAGE_DELETE:
-            {
+            case HTTP_MESSAGE_DELETE: {
                 usprintf(pcDest, g_pcHttpDelete);
                 break;
             }
-            case HTTP_MESSAGE_HEAD:
-            {
+            case HTTP_MESSAGE_HEAD: {
                 usprintf(pcDest, g_pcHttpHead);
                 break;
             }
-            case HTTP_MESSAGE_TRACE:
-            {
+            case HTTP_MESSAGE_TRACE: {
                 usprintf(pcDest, g_pcHttpTrace);
                 break;
             }
-            case HTTP_MESSAGE_OPTIONS:
-            {
+            case HTTP_MESSAGE_OPTIONS: {
                 usprintf(pcDest, g_pcHttpOptions);
                 break;
             }
-            case HTTP_MESSAGE_PATCH:
-            {
+            case HTTP_MESSAGE_PATCH: {
                 usprintf(pcDest, g_pcHttpPatch);
                 break;
             }
@@ -412,8 +379,7 @@ HTTPResponseParse(char *pcData, char *pcResponseText, uint32_t *pui32NumHeaders)
     //
     // Fail if not a HTTP response.
     //
-    if(ustrncmp(g_pcTempData, "HTTP/", 5))
-    {
+    if(ustrncmp(g_pcTempData, "HTTP/", 5)) {
         *pcResponseText = 0;
         *pui32NumHeaders = 0;
         return 0;
@@ -440,8 +406,7 @@ HTTPResponseParse(char *pcData, char *pcResponseText, uint32_t *pui32NumHeaders)
     // Parse the remainder of the packet.
     //
     *pui32NumHeaders = 0;
-    while(*pcData)
-    {
+    while(*pcData) {
         //
         // Search line by line and count headers.  Search until there is a blank
         // line, which means end of headers.
@@ -452,12 +417,9 @@ HTTPResponseParse(char *pcData, char *pcResponseText, uint32_t *pui32NumHeaders)
         //
         // Blank line.  For the purposes of this function, we're done.
         //
-        if(ui32Size == 0)
-        {
+        if(ui32Size == 0) {
             break;
-        }
-        else
-        {
+        } else {
             //
             // Increment header counter.
             //
@@ -502,22 +464,17 @@ HTTPResponseHeaderExtract(char *pcData, uint32_t ui32HeaderIdx,
     //
     // Find and return the requested header.
     //
-    while(*pcData)
-    {
+    while(*pcData) {
         BufferFillToEOL(pcData, g_pcTempData, &ui32Size);
         pcData += (ui32Size + 2);
 
         //
         // Blank line, end of header section.
         //
-        if(ui32Size == 0)
-        {
+        if(ui32Size == 0) {
             break;
-        }
-        else
-        {
-            if(ui32HeaderNumber == ui32HeaderIdx)
-            {
+        } else {
+            if(ui32HeaderNumber == ui32HeaderIdx) {
                 BufferFillToCharacter(':', g_pcTempData, pcHeaderName,
                                       &ui32Size);
                 BufferFillToCharacter(0, &g_pcTempData[ui32Size + 2],
@@ -525,9 +482,7 @@ HTTPResponseHeaderExtract(char *pcData, uint32_t ui32HeaderIdx,
                 pcHeaderValue[ui32Size] = 0;
 
                 break;
-            }
-            else
-            {
+            } else {
                 //
                 // Increment header counter.
                 //
@@ -556,8 +511,7 @@ HTTPResponseBodyExtract(char *pcData, char *pcDest)
     //
     // Find and return the body.
     //
-    while(*pcData)
-    {
+    while(*pcData) {
         //
         // Read lines until a blank line is found.  This is the start of the
         // body.
@@ -568,16 +522,14 @@ HTTPResponseBodyExtract(char *pcData, char *pcDest)
         //
         // Blank line, end of header section.
         //
-        if(ui32Size == 0)
-        {
+        if(ui32Size == 0) {
             bBodyFound = true;
         }
 
         //
         // If the body has been found, start filling the buffer.
         //
-        if(bBodyFound)
-        {
+        if(bBodyFound) {
 
             pcDest[0] = 0;
             strcat(pcDest, pcData);

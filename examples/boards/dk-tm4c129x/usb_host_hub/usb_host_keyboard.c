@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -65,8 +65,7 @@ extern const tHIDKeyboardUsageTable g_sUSKeyboardMap;
 // This enumerated type is used to hold the states of the keyboard.
 //
 //*****************************************************************************
-enum
-{
+enum {
     //
     // No device is present.
     //
@@ -120,13 +119,11 @@ KeyboardCallback(tUSBHKeyboard *psKbInstance, uint32_t ui32Event,
 {
     char cChar;
 
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // New keyboard detected.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             //
             // Proceed to the STATE_KEYBOARD_INIT state so that the main loop
             // can finish initialized the mouse since USBHKeyboardInit() cannot
@@ -140,8 +137,7 @@ KeyboardCallback(tUSBHKeyboard *psKbInstance, uint32_t ui32Event,
         //
         // Keyboard has been unplugged.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             //
             // Change the state so that the main loop knows that the keyboard
             // is no longer present.
@@ -154,13 +150,11 @@ KeyboardCallback(tUSBHKeyboard *psKbInstance, uint32_t ui32Event,
         //
         // New Key press detected.
         //
-        case USBH_EVENT_HID_KB_PRESS:
-        {
+        case USBH_EVENT_HID_KB_PRESS: {
             //
             // If this was a Caps Lock key then update the Caps Lock state.
             //
-            if(ui32MsgParam == HID_KEYB_USAGE_CAPSLOCK)
-            {
+            if(ui32MsgParam == HID_KEYB_USAGE_CAPSLOCK) {
                 //
                 // The main loop needs to update the keyboard's Caps Lock
                 // state.
@@ -171,9 +165,7 @@ KeyboardCallback(tUSBHKeyboard *psKbInstance, uint32_t ui32Event,
                 // Toggle the current Caps Lock state.
                 //
                 g_ui32Modifiers ^= HID_KEYB_CAPS_LOCK;
-            }
-            else if(ui32MsgParam == HID_KEYB_USAGE_SCROLLOCK)
-            {
+            } else if(ui32MsgParam == HID_KEYB_USAGE_SCROLLOCK) {
                 //
                 // The main loop needs to update the keyboard's Scroll Lock
                 // state.
@@ -184,9 +176,7 @@ KeyboardCallback(tUSBHKeyboard *psKbInstance, uint32_t ui32Event,
                 // Toggle the current Scroll Lock state.
                 //
                 g_ui32Modifiers ^= HID_KEYB_SCROLL_LOCK;
-            }
-            else if(ui32MsgParam == HID_KEYB_USAGE_NUMLOCK)
-            {
+            } else if(ui32MsgParam == HID_KEYB_USAGE_NUMLOCK) {
                 //
                 // The main loop needs to update the keyboard's Scroll Lock
                 // state.
@@ -197,54 +187,46 @@ KeyboardCallback(tUSBHKeyboard *psKbInstance, uint32_t ui32Event,
                 // Toggle the current Num Lock state.
                 //
                 g_ui32Modifiers ^= HID_KEYB_NUM_LOCK;
-            }
-            else
-            {
+            } else {
                 //
                 // Was this the backspace key?
                 //
-                if((uint8_t)ui32MsgParam == HID_KEYB_USAGE_BACKSPACE)
-                {
+                if((uint8_t)ui32MsgParam == HID_KEYB_USAGE_BACKSPACE) {
                     //
                     // Yes - set the ASCII code for a backspace key.  This is
                     // not returned by USBHKeyboardUsageToChar since this only
                     // returns printable characters.
                     //
                     cChar = ASCII_BACKSPACE;
-                }
-                else
-                {
+                } else {
                     //
                     // This is not backspace so try to map the usage code to a
                     // printable ASCII character.
                     //
                     cChar = (char)
-                        USBHKeyboardUsageToChar(g_psKeyboardInstance,
-                                                &g_sUSKeyboardMap,
-                                                (uint8_t)ui32MsgParam);
+                            USBHKeyboardUsageToChar(g_psKeyboardInstance,
+                                                    &g_sUSKeyboardMap,
+                                                    (uint8_t)ui32MsgParam);
                 }
 
                 //
                 // A zero value indicates there was no textual mapping of this
                 // usage code.
                 //
-                if(cChar != 0)
-                {
+                if(cChar != 0) {
                     PrintChar(cChar);
                 }
             }
             break;
         }
-        case USBH_EVENT_HID_KB_MOD:
-        {
+        case USBH_EVENT_HID_KB_MOD: {
             //
             // This application ignores the state of the shift or control
             // and other special keys.
             //
             break;
         }
-        case USBH_EVENT_HID_KB_REL:
-        {
+        case USBH_EVENT_HID_KB_REL: {
             //
             // This applications ignores the release of keys as well.
             //
@@ -261,13 +243,11 @@ KeyboardCallback(tUSBHKeyboard *psKbInstance, uint32_t ui32Event,
 void
 KeyboardMain(void)
 {
-    switch(g_iKeyboardState)
-    {
+    switch(g_iKeyboardState) {
         //
         // This state is entered when they keyboard is first detected.
         //
-        case eStateKeyboardInit:
-        {
+        case eStateKeyboardInit: {
             //
             // Initialized the newly connected keyboard.
             //
@@ -285,8 +265,7 @@ KeyboardMain(void)
 
             break;
         }
-        case eStateKeyboardUpdate:
-        {
+        case eStateKeyboardUpdate: {
             //
             // If the application detected a change that required an
             // update to be sent to the keyboard to change the modifier
@@ -299,20 +278,16 @@ KeyboardMain(void)
             //
             // Set the USER LED based on the Caps Lock.
             //
-            if(g_ui32Modifiers & HID_KEYB_CAPS_LOCK)
-            {
+            if(g_ui32Modifiers & HID_KEYB_CAPS_LOCK) {
 //                ROM_GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, GPIO_PIN_3);
-            }
-            else
-            {
+            } else {
 //                ROM_GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0);
             }
 
             break;
         }
         case eStateKeyboardConnected:
-        default:
-        {
+        default: {
             break;
         }
     }

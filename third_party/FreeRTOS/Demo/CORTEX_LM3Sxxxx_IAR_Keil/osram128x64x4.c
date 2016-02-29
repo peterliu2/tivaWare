@@ -3,24 +3,24 @@
 // osram128x64x4.c - Driver for the OSRAM 128x64x4 graphical OLED display.
 //
 // Copyright (c) 2006-2007 Luminary Micro, Inc.  All rights reserved.
-// 
+//
 // Software License Agreement
-// 
+//
 // Luminary Micro, Inc. (LMI) is supplying this software for use solely and
 // exclusively on LMI's microcontroller products.
-// 
+//
 // The software is owned by LMI and/or its suppliers, and is protected under
 // applicable copyright laws.  All rights are reserved.  Any use in violation
 // of the foregoing restrictions may subject the user to criminal sanctions
 // under applicable laws, as well as to civil liability for the breach of the
 // terms and conditions of this license.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
 // OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
 // MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
 // LMI SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
 // CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 1408 of the Stellaris Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -95,8 +95,7 @@ static const unsigned char g_pucOSRAM128x64x4HorizontalInc[] = { 0xA0, 0x52 };
 // function to the appropriate four bit-per-pixel gray scale format.
 //
 //*****************************************************************************
-static const unsigned char g_pucFont[96][5] =
-{
+static const unsigned char g_pucFont[96][5] = {
     { 0x00, 0x00, 0x00, 0x00, 0x00 }, // " "
     { 0x00, 0x00, 0x4f, 0x00, 0x00 }, // !
     { 0x00, 0x07, 0x00, 0x07, 0x00 }, // "
@@ -203,8 +202,7 @@ static const unsigned char g_pucFont[96][5] =
 // Note:  This initialization sequence is derived from OSRAM App Note AN018.
 //
 //*****************************************************************************
-static const unsigned char g_pucOSRAM128x64x4Init[] =
-{
+static const unsigned char g_pucOSRAM128x64x4Init[] = {
     //
     // Column Address
     //
@@ -315,8 +313,7 @@ OSRAMWriteCommand(const unsigned char *pucBuffer, unsigned long ulCount)
     //
     // Return iff SSI port is not enabled for OSRAM.
     //
-    if(!g_bSSIEnabled)
-    {
+    if(!g_bSSIEnabled) {
         return;
     }
 
@@ -328,8 +325,7 @@ OSRAMWriteCommand(const unsigned char *pucBuffer, unsigned long ulCount)
     //
     // Loop while there are more bytes left to be transferred.
     //
-    while(ulCount != 0)
-    {
+    while(ulCount != 0) {
         //
         // Write the next byte to the controller.
         //
@@ -367,8 +363,7 @@ OSRAMWriteData(const unsigned char *pucBuffer, unsigned long ulCount)
     //
     // Return iff SSI port is not enabled for OSRAM.
     //
-    if(!g_bSSIEnabled)
-    {
+    if(!g_bSSIEnabled) {
         return;
     }
 
@@ -380,8 +375,7 @@ OSRAMWriteData(const unsigned char *pucBuffer, unsigned long ulCount)
     //
     // Loop while there are more bytes left to be transferred.
     //
-    while(ulCount != 0)
-    {
+    while(ulCount != 0) {
         //
         // Write the next byte to the controller.
         //
@@ -433,13 +427,11 @@ OSRAM128x64x4Clear(void)
     // In vertical address increment mode, loop through each column, filling
     // each row with 0.
     //
-    for(ulColumn = 0; ulColumn < (128/2); ulColumn++)
-    {
+    for(ulColumn = 0; ulColumn < (128/2); ulColumn++) {
         //
         // 8 rows (bytes) per row of text.
         //
-        for(ulRow = 0; ulRow < 80; ulRow += 8)
-        {
+        for(ulRow = 0; ulRow < 80; ulRow += 8) {
             OSRAMWriteData(pucZeroBuffer, sizeof(pucZeroBuffer));
         }
     }
@@ -511,42 +503,34 @@ OSRAM128x64x4StringDraw(const char *pcStr, unsigned long ulX,
     //
     // Loop while there are more characters in the string.
     //
-    while(*pcStr != 0)
-    {
+    while(*pcStr != 0) {
         //
         // Get a working copy of the current character and convert to an
         // index into the character bit-map array.
         //
         ucTemp = *pcStr;
         ucTemp &= 0x7F;
-        if(ucTemp < ' ')
-        {
+        if(ucTemp < ' ') {
             ucTemp = ' ';
-        }
-        else
-        {
+        } else {
             ucTemp -= ' ';
         }
 
         //
         // Build and display the character buffer.
         //
-        for(ulIdx1 = 0; ulIdx1 < 3; ulIdx1++)
-        {
+        for(ulIdx1 = 0; ulIdx1 < 3; ulIdx1++) {
             //
             // Convert two columns of 1-bit font data into a single data
             // byte column of 4-bit font data.
             //
-            for(ulIdx2 = 0; ulIdx2 < 8; ulIdx2++)
-            {
+            for(ulIdx2 = 0; ulIdx2 < 8; ulIdx2++) {
                 pucBuffer[ulIdx2] = 0;
-                if(g_pucFont[ucTemp][ulIdx1*2] & (1 << ulIdx2))
-                {
+                if(g_pucFont[ucTemp][ulIdx1*2] & (1 << ulIdx2)) {
                     pucBuffer[ulIdx2] = ((ucLevel << 4) & 0xf0);
                 }
                 if((ulIdx1 < 2) &&
-                    (g_pucFont[ucTemp][ulIdx1*2+1] & (1 << ulIdx2)))
-                {
+                        (g_pucFont[ucTemp][ulIdx1*2+1] & (1 << ulIdx2))) {
                     pucBuffer[ulIdx2] |= ((ucLevel << 0) & 0x0f);
                 }
             }
@@ -555,13 +539,10 @@ OSRAM128x64x4StringDraw(const char *pcStr, unsigned long ulX,
             // If there is room, dump the single data byte column to the
             // display.  Otherwise, bail out.
             //
-            if(ulX < 126)
-            {
+            if(ulX < 126) {
                 OSRAMWriteData(pucBuffer, 8);
                 ulX += 2;
-            }
-            else
-            {
+            } else {
                 return;
             }
         }
@@ -640,8 +621,8 @@ OSRAM128x64x4StringDraw(const char *pcStr, unsigned long ulX,
 //*****************************************************************************
 void
 OSRAM128x64x4ImageDraw(const unsigned char *pucImage, unsigned long ulX,
-               unsigned long ulY, unsigned long ulWidth,
-               unsigned long ulHeight)
+                       unsigned long ulY, unsigned long ulWidth,
+                       unsigned long ulHeight)
 {
     static unsigned char pucBuffer[8];
 
@@ -673,8 +654,7 @@ OSRAM128x64x4ImageDraw(const unsigned char *pucImage, unsigned long ulX,
     //
     // Loop while there are more rows to display.
     //
-    while(ulHeight--)
-    {
+    while(ulHeight--) {
         //
         // Write this row of image data.
         //
@@ -732,8 +712,7 @@ OSRAM128x64x4Enable(unsigned long ulFrequency)
     //
     // Drain the receive fifo.
     //
-    while(SSIDataNonBlockingGet(SSI0_BASE, &ulTemp) != 0)
-    {
+    while(SSIDataNonBlockingGet(SSI0_BASE, &ulTemp) != 0) {
     }
 
     //
@@ -770,8 +749,7 @@ OSRAM128x64x4Disable(void)
     //
     // Drain the receive fifo.
     //
-    while(SSIDataNonBlockingGet(SSI0_BASE, &ulTemp) != 0)
-    {
+    while(SSIDataNonBlockingGet(SSI0_BASE, &ulTemp) != 0) {
     }
 
     //
@@ -851,8 +829,7 @@ OSRAM128x64x4Init(unsigned long ulFrequency)
     // sequence array, sending each command "string" to the controller.
     //
     for(ulIdx = 0; ulIdx < sizeof(g_pucOSRAM128x64x4Init);
-        ulIdx += g_pucOSRAM128x64x4Init[ulIdx] + 1)
-    {
+            ulIdx += g_pucOSRAM128x64x4Init[ulIdx] + 1) {
         //
         // Send this command.
         //
@@ -885,8 +862,7 @@ OSRAM128x64x4DisplayOn(void)
     // sequence array, sending each command "string" to the controller.
     //
     for(ulIdx = 0; ulIdx < sizeof(g_pucOSRAM128x64x4Init);
-        ulIdx += g_pucOSRAM128x64x4Init[ulIdx] + 1)
-    {
+            ulIdx += g_pucOSRAM128x64x4Init[ulIdx] + 1) {
         //
         // Send this command.
         //
@@ -914,8 +890,7 @@ OSRAM128x64x4DisplayOn(void)
 void
 OSRAM128x64x4DisplayOff(void)
 {
-    static const unsigned char pucCommand1[] =
-    {
+    static const unsigned char pucCommand1[] = {
         0xAE, 0xAD, 0x02
     };
 

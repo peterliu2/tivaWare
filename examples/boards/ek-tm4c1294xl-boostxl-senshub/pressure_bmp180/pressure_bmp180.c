@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -118,8 +118,7 @@ void BMP180AppCallback(void* pvCallbackData, uint_fast8_t ui8Status)
 {
     //
     // If the transaction was successful then set the data ready flag.
-    if(ui8Status == I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status == I2CM_STATUS_SUCCESS) {
         g_vui8DataFlag = 1;
     }
 
@@ -270,8 +269,7 @@ main(void)
     //
     // Wait for initialization callback to indicate reset request is complete.
     //
-    while(g_vui8DataFlag == 0)
-    {
+    while(g_vui8DataFlag == 0) {
         //
         // Wait for I2C transactions to complete.
         //
@@ -292,14 +290,12 @@ main(void)
     //
     // Begin the data collection and printing.  Loop Forever.
     //
-    while(1)
-    {
+    while(1) {
         //
         // The reads are started by SysTick Interrupt, we poll here to detect
         // when a read is complete.
         //
-        while(g_vui8DataFlag == 0)
-        {
+        while(g_vui8DataFlag == 0) {
             //
             // Wait for the new data set to be available.
             //
@@ -324,8 +320,7 @@ main(void)
         i32IntegerPart = (int32_t) fTemperature;
         i32FractionPart =(int32_t) (fTemperature * 1000.0f);
         i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-        if(i32FractionPart < 0)
-        {
+        if(i32FractionPart < 0) {
             i32FractionPart *= -1;
         }
 
@@ -342,8 +337,7 @@ main(void)
         i32IntegerPart = (int32_t) fPressure;
         i32FractionPart =(int32_t) (fPressure * 1000.0f);
         i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-        if(i32FractionPart < 0)
-        {
+        if(i32FractionPart < 0) {
             i32FractionPart *= -1;
         }
 
@@ -365,8 +359,7 @@ main(void)
         i32IntegerPart = (int32_t) fAltitude;
         i32FractionPart =(int32_t) (fAltitude * 1000.0f);
         i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-        if(i32FractionPart < 0)
-        {
+        if(i32FractionPart < 0) {
             i32FractionPart *= -1;
         }
 

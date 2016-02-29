@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -165,8 +165,7 @@ extern "C"
 //! specification.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! Determines the type and direction of the request.
     //
@@ -301,8 +300,7 @@ PACKED tUSBRequest;
 //! be found at the beginning of all valid USB descriptors.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The length of this descriptor (including this length byte) expressed
     //! in bytes.
@@ -325,8 +323,7 @@ PACKED tDescriptorHeader;
 //! 2.0 specification section 9.6.1.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The length of this descriptor in bytes.  All device descriptors are
     //! 18 bytes long.
@@ -475,8 +472,7 @@ PACKED tDeviceDescriptor;
 //! the USB 2.0 specification, section 9.6.2.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The length of this descriptor in bytes.  All device qualifier
     //! descriptors are 10 bytes long.
@@ -537,8 +533,7 @@ PACKED tDeviceQualifierDescriptor;
 //! USB other speed configuration descriptor defined in section 9.6.4.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The length of this descriptor in bytes.  All configuration descriptors
     //! are 9 bytes long.
@@ -608,8 +603,7 @@ PACKED tConfigDescriptor;
 //! 2.0 specification section 9.6.5.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The length of this descriptor in bytes.  All interface descriptors
     //! are 9 bytes long.
@@ -668,8 +662,7 @@ PACKED tInterfaceDescriptor;
 //! 2.0 specification section 9.6.6.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The length of this descriptor in bytes.  All endpoint descriptors
     //! are 7 bytes long.
@@ -762,8 +755,7 @@ PACKED tEndpointDescriptor;
 //! language IDs present in the descriptor is given by ((bLength - 2) / 2).
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The length of this descriptor in bytes.  This value will vary
     //! depending upon the number of language codes provided in the descriptor.
@@ -792,8 +784,7 @@ PACKED tString0Descriptor;
 //! other than 0 as defined in USB 2.0 specification section 9.6.7.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The length of this descriptor in bytes.  This value will be 2 greater
     //! than the number of bytes comprising the UNICODE string that the
@@ -962,8 +953,7 @@ typedef void (* tUSBDeviceHandler)(void *pvInstance, uint32_t ui32Request,
 //! device stack.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! This callback is made whenever the USB host requests a non-standard
     //! descriptor from the device.
@@ -1045,8 +1035,7 @@ tCustomHandlers;
 //! not valid to split a single descriptor across multiple sections.
 //!
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The number of bytes of descriptor data pointed to by pui8Data.
     //
@@ -1073,8 +1062,7 @@ tConfigSection;
 //! for the configuration descriptor.
 //!
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The number of sections comprising the full descriptor for this
     //! configuration.
@@ -1131,14 +1119,14 @@ extern tDescriptorHeader *USBDescGet(tDescriptorHeader *psDesc,
                                      uint32_t ui32Size, uint32_t ui32Type,
                                      uint32_t ui32Index);
 extern uint32_t
-       USBDescGetNumAlternateInterfaces(tConfigDescriptor *psConfig,
-                                        uint8_t ui8InterfaceNumber);
+USBDescGetNumAlternateInterfaces(tConfigDescriptor *psConfig,
+                                 uint8_t ui8InterfaceNumber);
 extern tInterfaceDescriptor *USBDescGetInterface(tConfigDescriptor *psConfig,
-                                                 uint32_t ui32Index,
-                                                 uint32_t ui32AltCfg);
+        uint32_t ui32Index,
+        uint32_t ui32AltCfg);
 extern tEndpointDescriptor *
-       USBDescGetInterfaceEndpoint(tInterfaceDescriptor *psInterface,
-                                   uint32_t ui32Index, uint32_t ui32Size);
+USBDescGetInterfaceEndpoint(tInterfaceDescriptor *psInterface,
+                            uint32_t ui32Index, uint32_t ui32Size);
 
 //*****************************************************************************
 //
@@ -1147,8 +1135,7 @@ extern tEndpointDescriptor *
 //! modes by calling the USBStackModeSet() API.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     //
     //! Operate in USB device mode with active monitoring of VBUS and the
     //! ID pin must be pulled to a logic high value.
@@ -1336,8 +1323,7 @@ typedef uint32_t (* tUSBCallback)(void *pvCBData, uint32_t ui32Event,
 //! USB_EVENT_POWER_DISABLE and USB_EVENT_SOF.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! One of the USB_EVENT_ values.
     //
@@ -1755,8 +1741,7 @@ typedef uint32_t (* tUSBPacketAvailable)(void *pvHandle);
 // to set feature enables and resume timing parameter.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint32_t ui32HIRD;
     uint32_t ui32Features;
 }
@@ -1768,8 +1753,7 @@ tLPMFeature;
 //! ring buffer.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The ring buffer size.
     //
@@ -1798,8 +1782,7 @@ tUSBRingBufObject;
 // private and should not be accessed directly by the application.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     tUSBRingBufObject sRingBuf;
     uint32_t ui32LastSent;
     uint32_t ui32Flags;
@@ -1812,8 +1795,7 @@ tUSBBufferVars;
 //! will provide buffered access to either a transmit or receive channel.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! This field sets the mode of the buffer.  If true, the buffer
     //! operates as a transmit buffer and supports calls to USBBufferWrite
@@ -1891,7 +1873,7 @@ tUSBBuffer;
 //*****************************************************************************
 extern const tUSBBuffer *USBBufferInit(tUSBBuffer *psBuffer);
 extern void USBBufferZeroLengthPacketInsert(const tUSBBuffer *psBuffer,
-                                            bool bSendZLP);
+        bool bSendZLP);
 extern void USBBufferInfoGet(const tUSBBuffer *psBuffer,
                              tUSBRingBufObject *psRingBuf);
 extern void *USBBufferCallbackDataSet(tUSBBuffer *psBuffer, void *pvCBData);

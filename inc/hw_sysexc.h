@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -47,10 +47,10 @@
 //
 //*****************************************************************************
 #define SYSEXC_RIS              0x400F9000  // System Exception Raw Interrupt
-                                            // Status
+// Status
 #define SYSEXC_IM               0x400F9004  // System Exception Interrupt Mask
 #define SYSEXC_MIS              0x400F9008  // System Exception Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define SYSEXC_IC               0x400F900C  // System Exception Interrupt Clear
 
 //*****************************************************************************
@@ -59,17 +59,17 @@
 //
 //*****************************************************************************
 #define SYSEXC_RIS_FPIXCRIS     0x00000020  // Floating-Point Inexact Exception
-                                            // Raw Interrupt Status
+// Raw Interrupt Status
 #define SYSEXC_RIS_FPOFCRIS     0x00000010  // Floating-Point Overflow
-                                            // Exception Raw Interrupt Status
+// Exception Raw Interrupt Status
 #define SYSEXC_RIS_FPUFCRIS     0x00000008  // Floating-Point Underflow
-                                            // Exception Raw Interrupt Status
+// Exception Raw Interrupt Status
 #define SYSEXC_RIS_FPIOCRIS     0x00000004  // Floating-Point Invalid Operation
-                                            // Raw Interrupt Status
+// Raw Interrupt Status
 #define SYSEXC_RIS_FPDZCRIS     0x00000002  // Floating-Point Divide By 0
-                                            // Exception Raw Interrupt Status
+// Exception Raw Interrupt Status
 #define SYSEXC_RIS_FPIDCRIS     0x00000001  // Floating-Point Input Denormal
-                                            // Exception Raw Interrupt Status
+// Exception Raw Interrupt Status
 
 //*****************************************************************************
 //
@@ -77,17 +77,17 @@
 //
 //*****************************************************************************
 #define SYSEXC_IM_FPIXCIM       0x00000020  // Floating-Point Inexact Exception
-                                            // Interrupt Mask
+// Interrupt Mask
 #define SYSEXC_IM_FPOFCIM       0x00000010  // Floating-Point Overflow
-                                            // Exception Interrupt Mask
+// Exception Interrupt Mask
 #define SYSEXC_IM_FPUFCIM       0x00000008  // Floating-Point Underflow
-                                            // Exception Interrupt Mask
+// Exception Interrupt Mask
 #define SYSEXC_IM_FPIOCIM       0x00000004  // Floating-Point Invalid Operation
-                                            // Interrupt Mask
+// Interrupt Mask
 #define SYSEXC_IM_FPDZCIM       0x00000002  // Floating-Point Divide By 0
-                                            // Exception Interrupt Mask
+// Exception Interrupt Mask
 #define SYSEXC_IM_FPIDCIM       0x00000001  // Floating-Point Input Denormal
-                                            // Exception Interrupt Mask
+// Exception Interrupt Mask
 
 //*****************************************************************************
 //
@@ -95,21 +95,21 @@
 //
 //*****************************************************************************
 #define SYSEXC_MIS_FPIXCMIS     0x00000020  // Floating-Point Inexact Exception
-                                            // Masked Interrupt Status
+// Masked Interrupt Status
 #define SYSEXC_MIS_FPOFCMIS     0x00000010  // Floating-Point Overflow
-                                            // Exception Masked Interrupt
-                                            // Status
+// Exception Masked Interrupt
+// Status
 #define SYSEXC_MIS_FPUFCMIS     0x00000008  // Floating-Point Underflow
-                                            // Exception Masked Interrupt
-                                            // Status
+// Exception Masked Interrupt
+// Status
 #define SYSEXC_MIS_FPIOCMIS     0x00000004  // Floating-Point Invalid Operation
-                                            // Masked Interrupt Status
+// Masked Interrupt Status
 #define SYSEXC_MIS_FPDZCMIS     0x00000002  // Floating-Point Divide By 0
-                                            // Exception Masked Interrupt
-                                            // Status
+// Exception Masked Interrupt
+// Status
 #define SYSEXC_MIS_FPIDCMIS     0x00000001  // Floating-Point Input Denormal
-                                            // Exception Masked Interrupt
-                                            // Status
+// Exception Masked Interrupt
+// Status
 
 //*****************************************************************************
 //
@@ -117,16 +117,16 @@
 //
 //*****************************************************************************
 #define SYSEXC_IC_FPIXCIC       0x00000020  // Floating-Point Inexact Exception
-                                            // Interrupt Clear
+// Interrupt Clear
 #define SYSEXC_IC_FPOFCIC       0x00000010  // Floating-Point Overflow
-                                            // Exception Interrupt Clear
+// Exception Interrupt Clear
 #define SYSEXC_IC_FPUFCIC       0x00000008  // Floating-Point Underflow
-                                            // Exception Interrupt Clear
+// Exception Interrupt Clear
 #define SYSEXC_IC_FPIOCIC       0x00000004  // Floating-Point Invalid Operation
-                                            // Interrupt Clear
+// Interrupt Clear
 #define SYSEXC_IC_FPDZCIC       0x00000002  // Floating-Point Divide By 0
-                                            // Exception Interrupt Clear
+// Exception Interrupt Clear
 #define SYSEXC_IC_FPIDCIC       0x00000001  // Floating-Point Input Denormal
-                                            // Exception Interrupt Clear
+// Exception Interrupt Clear
 
 #endif // __HW_SYSEXC_H__

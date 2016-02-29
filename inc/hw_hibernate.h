@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2007-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -52,7 +52,7 @@
 #define HIB_IM                  0x400FC014  // Hibernation Interrupt Mask
 #define HIB_RIS                 0x400FC018  // Hibernation Raw Interrupt Status
 #define HIB_MIS                 0x400FC01C  // Hibernation Masked Interrupt
-                                            // Status
+// Status
 #define HIB_IC                  0x400FC020  // Hibernation Interrupt Clear
 #define HIB_RTCT                0x400FC024  // Hibernation RTC Trim
 #define HIB_RTCSS               0x400FC028  // Hibernation RTC Sub Seconds
@@ -78,7 +78,7 @@
 #define HIB_TPLOG6              0x400FC4F8  // HIB Tamper Log 6
 #define HIB_TPLOG7              0x400FC4FC  // HIB Tamper Log 7
 #define HIB_PP                  0x400FCFC0  // Hibernation Peripheral
-                                            // Properties
+// Properties
 #define HIB_CC                  0x400FCFC8  // Hibernation Clock Control
 
 //*****************************************************************************
@@ -116,7 +116,7 @@
 #define HIB_CTL_OSCDRV          0x00020000  // Oscillator Drive Capability
 #define HIB_CTL_OSCBYP          0x00010000  // Oscillator Bypass
 #define HIB_CTL_VBATSEL_M       0x00006000  // Select for Low-Battery
-                                            // Comparator
+// Comparator
 #define HIB_CTL_VBATSEL_1_9V    0x00000000  // 1.9 Volts
 #define HIB_CTL_VBATSEL_2_1V    0x00002000  // 2.1 Volts (default)
 #define HIB_CTL_VBATSEL_2_3V    0x00004000  // 2.3 Volts
@@ -138,13 +138,13 @@
 //*****************************************************************************
 #define HIB_IM_VDDFAIL          0x00000080  // VDD Fail Interrupt Mask
 #define HIB_IM_RSTWK            0x00000040  // Reset Pad I/O Wake-Up Interrupt
-                                            // Mask
+// Mask
 #define HIB_IM_PADIOWK          0x00000020  // Pad I/O Wake-Up Interrupt Mask
 #define HIB_IM_WC               0x00000010  // External Write Complete/Capable
-                                            // Interrupt Mask
+// Interrupt Mask
 #define HIB_IM_EXTW             0x00000008  // External Wake-Up Interrupt Mask
 #define HIB_IM_LOWBAT           0x00000004  // Low Battery Voltage Interrupt
-                                            // Mask
+// Mask
 #define HIB_IM_RTCALT0          0x00000001  // RTC Alert 0 Interrupt Mask
 
 //*****************************************************************************
@@ -154,15 +154,15 @@
 //*****************************************************************************
 #define HIB_RIS_VDDFAIL         0x00000080  // VDD Fail Raw Interrupt Status
 #define HIB_RIS_RSTWK           0x00000040  // Reset Pad I/O Wake-Up Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define HIB_RIS_PADIOWK         0x00000020  // Pad I/O Wake-Up Raw Interrupt
-                                            // Status
+// Status
 #define HIB_RIS_WC              0x00000010  // Write Complete/Capable Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define HIB_RIS_EXTW            0x00000008  // External Wake-Up Raw Interrupt
-                                            // Status
+// Status
 #define HIB_RIS_LOWBAT          0x00000004  // Low Battery Voltage Raw
-                                            // Interrupt Status
+// Interrupt Status
 #define HIB_RIS_RTCALT0         0x00000001  // RTC Alert 0 Raw Interrupt Status
 
 //*****************************************************************************
@@ -172,16 +172,16 @@
 //*****************************************************************************
 #define HIB_MIS_VDDFAIL         0x00000080  // VDD Fail Interrupt Mask
 #define HIB_MIS_RSTWK           0x00000040  // Reset Pad I/O Wake-Up Interrupt
-                                            // Mask
+// Mask
 #define HIB_MIS_PADIOWK         0x00000020  // Pad I/O Wake-Up Interrupt Mask
 #define HIB_MIS_WC              0x00000010  // Write Complete/Capable Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define HIB_MIS_EXTW            0x00000008  // External Wake-Up Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define HIB_MIS_LOWBAT          0x00000004  // Low Battery Voltage Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define HIB_MIS_RTCALT0         0x00000001  // RTC Alert 0 Masked Interrupt
-                                            // Status
+// Status
 
 //*****************************************************************************
 //
@@ -190,15 +190,15 @@
 //*****************************************************************************
 #define HIB_IC_VDDFAIL          0x00000080  // VDD Fail Interrupt Clear
 #define HIB_IC_RSTWK            0x00000040  // Reset Pad I/O Wake-Up Interrupt
-                                            // Clear
+// Clear
 #define HIB_IC_PADIOWK          0x00000020  // Pad I/O Wake-Up Interrupt Clear
 #define HIB_IC_WC               0x00000010  // Write Complete/Capable Interrupt
-                                            // Clear
+// Clear
 #define HIB_IC_EXTW             0x00000008  // External Wake-Up Interrupt Clear
 #define HIB_IC_LOWBAT           0x00000004  // Low Battery Voltage Interrupt
-                                            // Clear
+// Clear
 #define HIB_IC_RTCALT0          0x00000001  // RTC Alert0 Masked Interrupt
-                                            // Clear
+// Clear
 
 //*****************************************************************************
 //
@@ -226,7 +226,7 @@
 #define HIB_IO_IOWRC            0x80000000  // I/O Write Complete
 #define HIB_IO_WURSTEN          0x00000010  // Reset Wake Source Enable
 #define HIB_IO_WUUNLK           0x00000001  // I/O Wake Pad Configuration
-                                            // Enable
+// Enable
 
 //*****************************************************************************
 //
@@ -336,16 +336,16 @@
 //
 //*****************************************************************************
 #define HIB_TPCTL_WAKE          0x00000800  // Wake from Hibernate on a Tamper
-                                            // Event
+// Event
 #define HIB_TPCTL_MEMCLR_M      0x00000300  // HIB Memory Clear on Tamper Event
 #define HIB_TPCTL_MEMCLR_NONE   0x00000000  // Do not Clear HIB memory on
-                                            // tamper event
+// tamper event
 #define HIB_TPCTL_MEMCLR_LOW32  0x00000100  // Clear Lower 32 Bytes of HIB
-                                            // memory on tamper event
+// memory on tamper event
 #define HIB_TPCTL_MEMCLR_HIGH32 0x00000200  // Clear upper 32 Bytes of HIB
-                                            // memory on tamper event
+// memory on tamper event
 #define HIB_TPCTL_MEMCLR_ALL    0x00000300  // Clear all HIB memory on tamper
-                                            // event
+// event
 #define HIB_TPCTL_TPCLR         0x00000010  // Tamper Event Clear
 #define HIB_TPCTL_TPEN          0x00000001  // Tamper Module Enable
 
@@ -370,22 +370,22 @@
 //*****************************************************************************
 #define HIB_TPIO_GFLTR3         0x08000000  // TMPR3 Glitch Filtering
 #define HIB_TPIO_PUEN3          0x04000000  // TMPR3 Internal Weak Pull-up
-                                            // Enable
+// Enable
 #define HIB_TPIO_LEV3           0x02000000  // TMPR3 Trigger Level
 #define HIB_TPIO_EN3            0x01000000  // TMPR3 Enable
 #define HIB_TPIO_GFLTR2         0x00080000  // TMPR2 Glitch Filtering
 #define HIB_TPIO_PUEN2          0x00040000  // TMPR2 Internal Weak Pull-up
-                                            // Enable
+// Enable
 #define HIB_TPIO_LEV2           0x00020000  // TMPR2 Trigger Level
 #define HIB_TPIO_EN2            0x00010000  // TMPR2 Enable
 #define HIB_TPIO_GFLTR1         0x00000800  // TMPR1 Glitch Filtering
 #define HIB_TPIO_PUEN1          0x00000400  // TMPR1 Internal Weak Pull-up
-                                            // Enable
+// Enable
 #define HIB_TPIO_LEV1           0x00000200  // TMPR1 Trigger Level
 #define HIB_TPIO_EN1            0x00000100  // TMPR1Enable
 #define HIB_TPIO_GFLTR0         0x00000008  // TMPR0 Glitch Filtering
 #define HIB_TPIO_PUEN0          0x00000004  // TMPR0 Internal Weak Pull-up
-                                            // Enable
+// Enable
 #define HIB_TPIO_LEV0           0x00000002  // TMPR0 Trigger Level
 #define HIB_TPIO_EN0            0x00000001  // TMPR0 Enable
 

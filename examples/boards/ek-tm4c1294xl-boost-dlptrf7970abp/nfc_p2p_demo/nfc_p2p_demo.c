@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -200,8 +200,7 @@ TimerSet(uint16_t ui16Timeoutms, uint8_t *ui8TimeouFlag)
     //
     // Check corner case and start timer.
     //
-    if(ui16Timeoutms > 0)
-    {
+    if(ui16Timeoutms > 0) {
         //
         // Set the Timer0A load value to 1ms.
         //
@@ -222,8 +221,7 @@ TimerSet(uint16_t ui16Timeoutms, uint8_t *ui8TimeouFlag)
         // Clear Flag
         //
         *ui8TimeouFlag = 0x00;
-    }
-    else
+    } else
         //
         // Corner Case, timeout of 0 means there is nothing to do
         //
@@ -247,8 +245,7 @@ Timer0AIntHandler(void)
     //
     // Subtract off 1ms from global counter, set flag when end is reached
     //
-    if(--g_ui32TimeoutMsCounter == 0)
-    {
+    if(--g_ui32TimeoutMsCounter == 0) {
         *g_pui8TimeoutPtr = 0x01;
 
         //
@@ -274,47 +271,41 @@ SendData(void)
     //
     // Determine Tag Type
     //
-    for(x=0,ui32Type=0;x<g_sNDEFMessage.ui8TypeLength;x++)
-    {
+    for(x=0,ui32Type=0; x<g_sNDEFMessage.ui8TypeLength; x++) {
         ui32Type=(ui32Type<<8)+g_sNDEFMessage.pui8Type[x];
     }
 
     //
     // Handler for different Message Types
     //
-    switch(ui32Type)
-    {
-        case NDEF_TYPE_TEXT :
-        {
+    switch(ui32Type) {
+        case NDEF_TYPE_TEXT : {
             //
             // Encode the Record from Struct to Buffer
             //
             bCheck = NFCP2P_NDEFTextRecordEncoder(g_sNDEFText,
-                                                    g_pui8PayloadBuffer,
-                                                    sizeof(g_pui8PayloadBuffer),
-                                                    &ui32Counter);
+                                                  g_pui8PayloadBuffer,
+                                                  sizeof(g_pui8PayloadBuffer),
+                                                  &ui32Counter);
             break;
         }
-        case NDEF_TYPE_URI :
-        {
+        case NDEF_TYPE_URI : {
             //
             // Encode the Record from Struct to Buffer
             //
             NFCP2P_NDEFURIRecordEncoder(g_sNDEFURI, g_pui8PayloadBuffer,
-                                            sizeof(g_pui8PayloadBuffer),
-                                            &ui32Counter);
+                                        sizeof(g_pui8PayloadBuffer),
+                                        &ui32Counter);
             break;
         }
-        case NDEF_TYPE_SIGNATURE :
-        {
+        case NDEF_TYPE_SIGNATURE : {
             //
             // Do Nothing, Signature Record Types Not Supported
             //
 
             break;
         }
-        case NDEF_TYPE_SMARTPOSTER :
-        {
+        case NDEF_TYPE_SMARTPOSTER : {
             //
             // Encode the Record from Struct to Buffer
             //
@@ -324,8 +315,7 @@ SendData(void)
                                                 &ui32Counter);
             break;
         }
-        default:
-        {
+        default: {
             //
             // The Tag Type is unrecognized. Print Error Message and Exit.
             //
@@ -350,7 +340,7 @@ SendData(void)
     //  This is used to echo the tag back over NFC
     //
     NFCP2P_NDEFMessageEncoder(g_sNDEFMessage, g_pui8MessageBuffer,
-                                sizeof(g_pui8MessageBuffer),&ui32length);
+                              sizeof(g_pui8MessageBuffer),&ui32length);
 
     //
     // Send the NFC data to the stack for processing.
@@ -416,9 +406,8 @@ SendTIInfo(void)
     // of the buffer written in the ui32length variable
     //
     bCheck = NFCP2P_NDEFURIRecordEncoder(g_sNDEFURI,g_pui8PayloadBuffer,
-                                       sizeof(g_pui8PayloadBuffer),&ui32length);
-    if(!bCheck)
-    {
+                                         sizeof(g_pui8PayloadBuffer),&ui32length);
+    if(!bCheck) {
         //
         // NDEFURIRecordEncoder function failed. Alert User
         //
@@ -438,8 +427,7 @@ SendTIInfo(void)
     //
     bCheck = NFCP2P_NDEFMessageEncoder(g_sNDEFMessage,g_pui8MessageBuffer,
                                        sizeof(g_pui8MessageBuffer),&ui32length);
-    if(!bCheck)
-    {
+    if(!bCheck) {
         //
         // NDEFMessageEncoder function failed. Alert User
         //
@@ -475,16 +463,16 @@ main(void)
     bool bCheck=STATUS_FAIL;
     uint8_t ui8ButtonDebounced = 0, ui8ButtonDelta = 0, ui8ButtonRaw = 0;
     uint8_t pui8Instructions[]="Instructions:\n "
-                "You will need a NFC capable device and a NFC boosterpack for "
-                "this demo.\n "
-                "To use this demo put the phone or tablet within 2 inches of "
-                "the NFC boosterpack.\n "
-                "Messages sent to the microcontroller will be displayed on "
-                "the terminal.\n "
-                "Button SW1 will send a website link to the TI product page "
-                "for the board.\n"
-                "Button SW2 will echo the last tag sent to the board back to "
-                "the phone / tablet.\n";
+                               "You will need a NFC capable device and a NFC boosterpack for "
+                               "this demo.\n "
+                               "To use this demo put the phone or tablet within 2 inches of "
+                               "the NFC boosterpack.\n "
+                               "Messages sent to the microcontroller will be displayed on "
+                               "the terminal.\n "
+                               "Button SW1 will send a website link to the TI product page "
+                               "for the board.\n"
+                               "Button SW2 will echo the last tag sent to the board back to "
+                               "the phone / tablet.\n";
 
     //
     // Select NFC Boosterpack Type
@@ -553,15 +541,12 @@ main(void)
     //
     UARTprintf((char *)pui8Instructions);
 
-    while(1)
-    {
+    while(1) {
         //
         // NFC-P2P-Initiator-Statemachine
         //
-        if(NFCP2P_proccessStateMachine() == NFC_P2P_PROTOCOL_ACTIVATION)
-        {
-            if(eCurrentTRF79x0Mode == P2P_INITATIOR_MODE)
-            {
+        if(NFCP2P_proccessStateMachine() == NFC_P2P_PROTOCOL_ACTIVATION) {
+            if(eCurrentTRF79x0Mode == P2P_INITATIOR_MODE) {
                 eCurrentTRF79x0Mode = P2P_PASSIVE_TARGET_MODE;
 
                 //
@@ -569,9 +554,7 @@ main(void)
                 //
                 LEDWrite(CLP_D3,CLP_D3);
                 LEDWrite(CLP_D4,0);
-            }
-            else if(eCurrentTRF79x0Mode == P2P_PASSIVE_TARGET_MODE)
-            {
+            } else if(eCurrentTRF79x0Mode == P2P_PASSIVE_TARGET_MODE) {
                 eCurrentTRF79x0Mode = P2P_INITATIOR_MODE;
 
                 //
@@ -592,13 +575,11 @@ main(void)
         // packet from the Target
         //
         g_sTRFReceiveStatus = NFCP2P_getReceiveState();
-        if(g_sTRFReceiveStatus.eDataReceivedStatus != RECEIVED_NO_FRAGMENT)
-        {
+        if(g_sTRFReceiveStatus.eDataReceivedStatus != RECEIVED_NO_FRAGMENT) {
             //
             //Copy Volatile stack buffer into semi-stable buffer for processing.
             //
-            for(x=0;x<g_sTRFReceiveStatus.ui8DataReceivedLength;x++)
-            {
+            for(x=0; x<g_sTRFReceiveStatus.ui8DataReceivedLength; x++) {
                 g_ui8NFCP2PRawTagBuffer[x]=g_sTRFReceiveStatus.pui8RxDataPtr[x];
 
             }
@@ -607,21 +588,19 @@ main(void)
             // Decode Message Header from Buffer to Struct
             //
             bCheck = NFCP2P_NDEFMessageDecoder(&g_sNDEFMessage,
-                                            g_ui8NFCP2PRawTagBuffer,
-                                            sizeof(g_ui8NFCP2PRawTagBuffer));
+                                               g_ui8NFCP2PRawTagBuffer,
+                                               sizeof(g_ui8NFCP2PRawTagBuffer));
 
             //
             // Check Message Decode Validity
             //
-            if(!bCheck)
-            {
+            if(!bCheck) {
                 //
                 // Message Decode Failed, notify user
                 //
                 UARTprintf("ERR: Message Decode Failed in Main Loop\n");
             }
-            if(bCheck)
-            {
+            if(bCheck) {
                 //
                 // Mesasge Decoded Successfully, Continue Processing.
                 //
@@ -634,18 +613,15 @@ main(void)
                 //
                 // Determine TypeID
                 //
-                for(x=0,TypeID=0;x<g_sNDEFMessage.ui8TypeLength;x++)
-                {
+                for(x=0,TypeID=0; x<g_sNDEFMessage.ui8TypeLength; x++) {
                     TypeID=(TypeID<<8)+g_sNDEFMessage.pui8Type[x];
                 }
 
                 //
                 // Handler for different Message Types
                 //
-                switch(TypeID)
-                {
-                    case NDEF_TYPE_TEXT:
-                    {
+                switch(TypeID) {
+                    case NDEF_TYPE_TEXT: {
                         //
                         // Calculate maximum size remaining in buffer
                         // The size remaining = Total size - size used by
@@ -653,15 +629,15 @@ main(void)
                         //
                         ui16MaxSizeRemaining =
                             (sizeof(g_ui8NFCP2PRawTagBuffer) -
-                            (g_sNDEFMessage.pui8PayloadPtr -
-                            &g_ui8NFCP2PRawTagBuffer[0]));
+                             (g_sNDEFMessage.pui8PayloadPtr -
+                              &g_ui8NFCP2PRawTagBuffer[0]));
 
                         //
                         // Decode the Record from Buffer to Struct
                         //
                         NFCP2P_NDEFTextRecordDecoder(&g_sNDEFText,
-                                            g_sNDEFMessage.pui8PayloadPtr,
-                                            g_sNDEFMessage.ui32PayloadLength);
+                                                     g_sNDEFMessage.pui8PayloadPtr,
+                                                     g_sNDEFMessage.ui32PayloadLength);
 
                         //
                         // Print Record debug info over UART to Terminal
@@ -669,23 +645,22 @@ main(void)
                         DEBUG_TEXTRECORD(g_sNDEFText);
                         break;
                     }
-                    case NDEF_TYPE_URI:
-                    {
+                    case NDEF_TYPE_URI: {
                         //
                         // Calculate maximum size remaining in buffer
                         // The size remaining = Total size - size used by header
                         //
                         ui16MaxSizeRemaining =
                             (sizeof(g_ui8NFCP2PRawTagBuffer) -
-                            (g_sNDEFMessage.pui8PayloadPtr -
-                            &g_ui8NFCP2PRawTagBuffer[0]));
+                             (g_sNDEFMessage.pui8PayloadPtr -
+                              &g_ui8NFCP2PRawTagBuffer[0]));
 
                         //
                         // Decode the Record from Buffer to Struct
                         //
                         NFCP2P_NDEFURIRecordDecoder(&g_sNDEFURI,
-                                            g_sNDEFMessage.pui8PayloadPtr,
-                                            g_sNDEFMessage.ui32PayloadLength);
+                                                    g_sNDEFMessage.pui8PayloadPtr,
+                                                    g_sNDEFMessage.ui32PayloadLength);
 
                         //
                         // Print Record debug info over UART to Terminal
@@ -693,30 +668,28 @@ main(void)
                         DEBUG_URIRECORD(g_sNDEFURI);
                         break;
                     }
-                    case NDEF_TYPE_SIGNATURE:
-                    {
+                    case NDEF_TYPE_SIGNATURE: {
                         UARTprintf("Signature Record Not Supported\n");
                         break;
                     }
-                    case NDEF_TYPE_SMARTPOSTER:
-                    {
+                    case NDEF_TYPE_SMARTPOSTER: {
                         //
                         // Calculate maximum size remaining in buffer
                         // The size remaining = Total size - size used by header
                         //
                         ui16MaxSizeRemaining =
                             (sizeof(g_ui8NFCP2PRawTagBuffer) -
-                            (g_sNDEFMessage.pui8PayloadPtr -
-                            &g_ui8NFCP2PRawTagBuffer[0]));
+                             (g_sNDEFMessage.pui8PayloadPtr -
+                              &g_ui8NFCP2PRawTagBuffer[0]));
 
                         //
                         // Decode the Record from Buffer to Struct
                         //
                         NFCP2P_NDEFSmartPosterRecordDecoder(
-                                    &g_sNDEFSmartPoster,
-                                    g_sNDEFMessage.pui8PayloadPtr,
-                                    ui16MaxSizeRemaining,
-                                    g_sNDEFMessage.ui32PayloadLength);
+                            &g_sNDEFSmartPoster,
+                            g_sNDEFMessage.pui8PayloadPtr,
+                            ui16MaxSizeRemaining,
+                            g_sNDEFMessage.ui32PayloadLength);
 
                         //
                         // Print Record debug info over UART to Terminal
@@ -724,11 +697,9 @@ main(void)
                         DEBUG_SMARTPOSTER(g_sNDEFSmartPoster);
                         break;
                     }
-                    default:
-                    {
+                    default: {
                         UARTprintf("    Err: TypeID of Tag Not Recognized: ");
-                        for(x=0,TypeID=0;x<g_sNDEFMessage.ui8TypeLength;x++)
-                        {
+                        for(x=0,TypeID=0; x<g_sNDEFMessage.ui8TypeLength; x++) {
                             UARTprintf("%c",g_sNDEFMessage.pui8Type[x]);
                         }
                         UARTprintf("\n");
@@ -746,16 +717,14 @@ main(void)
         //
         // Check Left Button, SW1, send TI information.
         //
-        if(BUTTON_PRESSED(LEFT_BUTTON, ui8ButtonDebounced, ui8ButtonDelta))
-        {
+        if(BUTTON_PRESSED(LEFT_BUTTON, ui8ButtonDebounced, ui8ButtonDelta)) {
             SendTIInfo();
         }
         //
         // Check Right Button, SW2, echo current tag in buffer.
         //
         else if(BUTTON_PRESSED(RIGHT_BUTTON, ui8ButtonDebounced,
-                                ui8ButtonDelta))
-        {
+                               ui8ButtonDelta)) {
             SendData();
         }
     }

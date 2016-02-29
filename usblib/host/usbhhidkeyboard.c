@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -66,8 +66,7 @@ static uint32_t USBHKeyboardCallback(void *pvKeyboard, uint32_t ui32Event,
 // This is the structure definition for a keyboard device instance.
 //
 //*****************************************************************************
-struct tUSBHKeyboard
-{
+struct tUSBHKeyboard {
     //
     // Global flags for an instance of a keyboard.
     //
@@ -110,8 +109,7 @@ struct tUSBHKeyboard
 // This is the per instance information for a keyboard device.
 //
 //*****************************************************************************
-static tUSBHKeyboard g_sUSBHKeyboard =
-{
+static tUSBHKeyboard g_sUSBHKeyboard = {
     0
 };
 
@@ -229,15 +227,13 @@ USBHKeyboardUsageToChar(tUSBHKeyboard *psKbInstance,
     //
     // Handle the case where CAPS lock has been set.
     //
-    if(psKbInstance->ui8KeyModSticky &= HID_KEYB_CAPS_LOCK)
-    {
+    if(psKbInstance->ui8KeyModSticky &= HID_KEYB_CAPS_LOCK) {
         //
         // See if this usage ID is modified by Caps Lock by checking the packed
         // bit array in the pui32ShiftState member of the psTable array.
         //
         if((psTable->pui32CapsLock[ui8UsageID >> 5]) >>
-           (ui8UsageID & 0x1f) & 1)
-        {
+                (ui8UsageID & 0x1f) & 1) {
             ui32Shift = psTable->ui8BytesPerChar;
         }
     }
@@ -245,17 +241,13 @@ USBHKeyboardUsageToChar(tUSBHKeyboard *psKbInstance,
     //
     // Now handle if a shift key is being held.
     //
-    if((psKbInstance->ui8KeyModState & 0x22) != 0)
-    {
+    if((psKbInstance->ui8KeyModState & 0x22) != 0) {
         //
         // Not shifted yet so we need to shift.
         //
-        if(ui32Shift == 0)
-        {
+        if(ui32Shift == 0) {
             ui32Shift = psTable->ui8BytesPerChar;
-        }
-        else
-        {
+        } else {
             //
             // Unshift because CAPS LOCK and shift were pressed.
             //
@@ -266,8 +258,7 @@ USBHKeyboardUsageToChar(tUSBHKeyboard *psKbInstance,
     //
     // One byte per character.
     //
-    if(psTable->ui8BytesPerChar == 1)
-    {
+    if(psTable->ui8BytesPerChar == 1) {
         //
         // Get the base address of the table.
         //
@@ -278,8 +269,7 @@ USBHKeyboardUsageToChar(tUSBHKeyboard *psKbInstance,
     //
     // Two bytes per character.
     //
-    else if(psTable->ui8BytesPerChar == 2)
-    {
+    else if(psTable->ui8BytesPerChar == 2) {
         //
         // Get the base address of the table.
         //
@@ -290,8 +280,7 @@ USBHKeyboardUsageToChar(tUSBHKeyboard *psKbInstance,
     //
     // All other sizes are unsupported for now.
     //
-    else
-    {
+    else {
         ui32Value = 0;
     }
 
@@ -400,9 +389,8 @@ USBHKeyboardInit(tUSBHKeyboard *psKbInstance)
     // Reset the key state.
     //
     for(i32Idx = 0;
-        i32Idx < sizeof(psKbInstance->pui8KeyState) / sizeof(uint8_t);
-        i32Idx++)
-    {
+            i32Idx < sizeof(psKbInstance->pui8KeyState) / sizeof(uint8_t);
+            i32Idx++) {
         psKbInstance->pui8KeyState[i32Idx] =0;
     }
 
@@ -468,16 +456,14 @@ UpdateKeyboardState(tUSBHKeyboard *psKbInstance)
     //
     // rollover code so ignore this buffer.
     //
-    if(psKbInstance->pui8Buffer[2] == 0x01)
-    {
+    if(psKbInstance->pui8Buffer[2] == 0x01) {
         return;
     }
 
     //
     // Handle the keyboard modifier states.
     //
-    if(psKbInstance->ui8KeyModState != psKbInstance->pui8Buffer[0])
-    {
+    if(psKbInstance->ui8KeyModState != psKbInstance->pui8Buffer[0]) {
         //
         // Notify the application of the event.
         //
@@ -494,13 +480,11 @@ UpdateKeyboardState(tUSBHKeyboard *psKbInstance)
     // This loop checks for keys that have been released to make room for new
     // ones that may have been pressed.
     //
-    for(i32OldKey = 0; i32OldKey < 6; i32OldKey++)
-    {
+    for(i32OldKey = 0; i32OldKey < 6; i32OldKey++) {
         //
         // If there is no old key pressed in this entry go to the next one.
         //
-        if(psKbInstance->pui8KeyState[i32OldKey] == 0)
-        {
+        if(psKbInstance->pui8KeyState[i32OldKey] == 0) {
             continue;
         }
 
@@ -508,14 +492,12 @@ UpdateKeyboardState(tUSBHKeyboard *psKbInstance)
         // Check if this old key is still in the list of currently pressed
         // keys.
         //
-        for(i32NewKey = 2; i32NewKey < 8; i32NewKey++)
-        {
+        for(i32NewKey = 2; i32NewKey < 8; i32NewKey++) {
             //
             // Break out if the key is still present.
             //
             if(psKbInstance->pui8Buffer[i32NewKey] ==
-               psKbInstance->pui8KeyState[i32OldKey])
-            {
+                    psKbInstance->pui8KeyState[i32OldKey]) {
                 break;
             }
         }
@@ -523,8 +505,7 @@ UpdateKeyboardState(tUSBHKeyboard *psKbInstance)
         // If the old key was no longer in the list of pressed keys then
         // notify the application of the key release.
         //
-        if(i32NewKey == 8)
-        {
+        if(i32NewKey == 8) {
             //
             // Send the key release notification to the application.
             //
@@ -542,59 +523,52 @@ UpdateKeyboardState(tUSBHKeyboard *psKbInstance)
     //
     // This loop checks for new keys that have been pressed.
     //
-    for(i32NewKey = 2; i32NewKey < 8; i32NewKey++)
-    {
+    for(i32NewKey = 2; i32NewKey < 8; i32NewKey++) {
         //
         // The new list is empty so no new keys are pressed.
         //
-        if(psKbInstance->pui8Buffer[i32NewKey] == 0)
-        {
+        if(psKbInstance->pui8Buffer[i32NewKey] == 0) {
             break;
         }
 
         //
         // This loop checks if the current key was already pressed.
         //
-        for(i32OldKey = 0; i32OldKey < 6; i32OldKey++)
-        {
+        for(i32OldKey = 0; i32OldKey < 6; i32OldKey++) {
             //
             // If it is in both lists then it was already pressed so ignore it.
             //
             if(psKbInstance->pui8Buffer[i32NewKey] ==
-               psKbInstance->pui8KeyState[i32OldKey])
-            {
+                    psKbInstance->pui8KeyState[i32OldKey]) {
                 break;
             }
         }
         //
         // The key in the new list was not found so it is new.
         //
-        if(i32OldKey == 6)
-        {
+        if(i32OldKey == 6) {
             //
             // Look for a free location to store this key usage code.
             //
-            for(i32OldKey = 0; i32OldKey < 6; i32OldKey++)
-            {
+            for(i32OldKey = 0; i32OldKey < 6; i32OldKey++) {
                 //
                 // If an empty location is found, store it and notify the
                 // application.
                 //
-                if(psKbInstance->pui8KeyState[i32OldKey] == 0)
-                {
+                if(psKbInstance->pui8KeyState[i32OldKey] == 0) {
                     //
                     // Save the newly pressed key.
                     //
                     psKbInstance->pui8KeyState[i32OldKey] =
-                                        psKbInstance->pui8Buffer[i32NewKey];
+                        psKbInstance->pui8Buffer[i32NewKey];
 
                     //
                     // Notify the application of the new key that has been
                     // pressed.
                     //
                     psKbInstance->pfnCallback( 0, USBH_EVENT_HID_KB_PRESS,
-                                        psKbInstance->pui8Buffer[i32NewKey],
-                                        0);
+                                               psKbInstance->pui8Buffer[i32NewKey],
+                                               0);
 
                     break;
                 }
@@ -633,13 +607,11 @@ USBHKeyboardCallback(void *pvKeyboard, uint32_t ui32Event,
     //
     psKbInstance = (tUSBHKeyboard *)pvKeyboard;
 
-    switch (ui32Event)
-    {
+    switch (ui32Event) {
         //
         // New keyboard has been connected so notify the application.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             //
             // Remember that a keyboard is present.
             //
@@ -652,8 +624,7 @@ USBHKeyboardCallback(void *pvKeyboard, uint32_t ui32Event,
 
             break;
         }
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             //
             // No keyboard is present.
             //
@@ -666,8 +637,7 @@ USBHKeyboardCallback(void *pvKeyboard, uint32_t ui32Event,
 
             break;
         }
-        case USB_EVENT_RX_AVAILABLE:
-        {
+        case USB_EVENT_RX_AVAILABLE: {
             //
             // New keyboard report structure was received.
             //

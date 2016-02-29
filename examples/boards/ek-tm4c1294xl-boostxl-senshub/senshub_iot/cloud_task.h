@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -43,8 +43,7 @@
 // The buffer can be used for arguments, such as the proxy URL and port.
 //
 //*****************************************************************************
-typedef struct sCloudTaskRequest
-{
+typedef struct sCloudTaskRequest {
     //
     // The request identifier for this message.
     //
@@ -54,7 +53,7 @@ typedef struct sCloudTaskRequest
     // A message buffer to hold additional message data.
     //
     char pcBuf[128];
-}sCloudTaskRequest_t;
+} sCloudTaskRequest_t;
 
 //*****************************************************************************
 //
@@ -117,8 +116,7 @@ extern xSemaphoreHandle g_xCloudDataSemaphore;
 // Struct typedef to hold the board level system data.
 //
 //*****************************************************************************
-typedef struct sBoardDataStruct
-{
+typedef struct sBoardDataStruct {
     //
     // Array to hold the current state of the four LEDs
     //
@@ -130,7 +128,7 @@ typedef struct sBoardDataStruct
     //
     uint32_t ui32SwitchPressCount[2];
 
-}sBoardData_t;
+} sBoardData_t;
 
 //*****************************************************************************
 //
@@ -144,8 +142,7 @@ typedef struct sBoardDataStruct
 // Struct typedef to hold the FreeRTOS task statistics.
 //
 //*****************************************************************************
-typedef struct sTaskStatistics
-{
+typedef struct sTaskStatistics {
     //
     // Array to hold task statistic data provided by FreeRTOS.
     //
@@ -165,7 +162,7 @@ typedef struct sTaskStatistics
     //
     unsigned long ulTotalRunTime;
 
-}sTaskStatistics_t;
+} sTaskStatistics_t;
 
 //*****************************************************************************
 //
@@ -181,8 +178,7 @@ typedef struct sTaskStatistics
 // access issues.
 //
 //*****************************************************************************
-typedef struct sCloudDataStruct
-{
+typedef struct sCloudDataStruct {
     //
     // Pointer to general system data such as LEDs and Switches.
     //

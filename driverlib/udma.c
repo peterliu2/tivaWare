@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2007-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -372,8 +372,7 @@ uDMAChannelAttributeEnable(uint32_t ui32ChannelNum, uint32_t ui32Attr)
     //
     // Set the useburst bit for this channel if set in ui32Config.
     //
-    if(ui32Attr & UDMA_ATTR_USEBURST)
-    {
+    if(ui32Attr & UDMA_ATTR_USEBURST) {
         HWREG(UDMA_USEBURSTSET) = 1 << ui32ChannelNum;
     }
 
@@ -381,24 +380,21 @@ uDMAChannelAttributeEnable(uint32_t ui32ChannelNum, uint32_t ui32Attr)
     // Set the alternate control select bit for this channel,
     // if set in ui32Config.
     //
-    if(ui32Attr & UDMA_ATTR_ALTSELECT)
-    {
+    if(ui32Attr & UDMA_ATTR_ALTSELECT) {
         HWREG(UDMA_ALTSET) = 1 << ui32ChannelNum;
     }
 
     //
     // Set the high priority bit for this channel, if set in ui32Config.
     //
-    if(ui32Attr & UDMA_ATTR_HIGH_PRIORITY)
-    {
+    if(ui32Attr & UDMA_ATTR_HIGH_PRIORITY) {
         HWREG(UDMA_PRIOSET) = 1 << ui32ChannelNum;
     }
 
     //
     // Set the request mask bit for this channel, if set in ui32Config.
     //
-    if(ui32Attr & UDMA_ATTR_REQMASK)
-    {
+    if(ui32Attr & UDMA_ATTR_REQMASK) {
         HWREG(UDMA_REQMASKSET) = 1 << ui32ChannelNum;
     }
 }
@@ -445,8 +441,7 @@ uDMAChannelAttributeDisable(uint32_t ui32ChannelNum, uint32_t ui32Attr)
     //
     // Clear the useburst bit for this channel if set in ui32Config.
     //
-    if(ui32Attr & UDMA_ATTR_USEBURST)
-    {
+    if(ui32Attr & UDMA_ATTR_USEBURST) {
         HWREG(UDMA_USEBURSTCLR) = 1 << ui32ChannelNum;
     }
 
@@ -454,24 +449,21 @@ uDMAChannelAttributeDisable(uint32_t ui32ChannelNum, uint32_t ui32Attr)
     // Clear the alternate control select bit for this channel, if set in
     // ui32Config.
     //
-    if(ui32Attr & UDMA_ATTR_ALTSELECT)
-    {
+    if(ui32Attr & UDMA_ATTR_ALTSELECT) {
         HWREG(UDMA_ALTCLR) = 1 << ui32ChannelNum;
     }
 
     //
     // Clear the high priority bit for this channel, if set in ui32Config.
     //
-    if(ui32Attr & UDMA_ATTR_HIGH_PRIORITY)
-    {
+    if(ui32Attr & UDMA_ATTR_HIGH_PRIORITY) {
         HWREG(UDMA_PRIOCLR) = 1 << ui32ChannelNum;
     }
 
     //
     // Clear the request mask bit for this channel, if set in ui32Config.
     //
-    if(ui32Attr & UDMA_ATTR_REQMASK)
-    {
+    if(ui32Attr & UDMA_ATTR_REQMASK) {
         HWREG(UDMA_REQMASKCLR) = 1 << ui32ChannelNum;
     }
 }
@@ -516,32 +508,28 @@ uDMAChannelAttributeGet(uint32_t ui32ChannelNum)
     //
     // Check to see if useburst bit is set for this channel.
     //
-    if(HWREG(UDMA_USEBURSTSET) & (1 << ui32ChannelNum))
-    {
+    if(HWREG(UDMA_USEBURSTSET) & (1 << ui32ChannelNum)) {
         ui32Attr |= UDMA_ATTR_USEBURST;
     }
 
     //
     // Check to see if the alternate control bit is set for this channel.
     //
-    if(HWREG(UDMA_ALTSET) & (1 << ui32ChannelNum))
-    {
+    if(HWREG(UDMA_ALTSET) & (1 << ui32ChannelNum)) {
         ui32Attr |= UDMA_ATTR_ALTSELECT;
     }
 
     //
     // Check to see if the high priority bit is set for this channel.
     //
-    if(HWREG(UDMA_PRIOSET) & (1 << ui32ChannelNum))
-    {
+    if(HWREG(UDMA_PRIOSET) & (1 << ui32ChannelNum)) {
         ui32Attr |= UDMA_ATTR_HIGH_PRIORITY;
     }
 
     //
     // Check to see if the request mask bit is set for this channel.
     //
-    if(HWREG(UDMA_REQMASKSET) & (1 << ui32ChannelNum))
-    {
+    if(HWREG(UDMA_REQMASKSET) & (1 << ui32ChannelNum)) {
         ui32Attr |= UDMA_ATTR_REQMASK;
     }
 
@@ -748,11 +736,9 @@ uDMAChannelTransferSet(uint32_t ui32ChannelStructIndex, uint32_t ui32Mode,
     //
     // Adjust the mode if the alt control structure is selected.
     //
-    if(ui32ChannelStructIndex & UDMA_ALT_SELECT)
-    {
+    if(ui32ChannelStructIndex & UDMA_ALT_SELECT) {
         if((ui32Mode == UDMA_MODE_MEM_SCATTER_GATHER) ||
-           (ui32Mode == UDMA_MODE_PER_SCATTER_GATHER))
-        {
+                (ui32Mode == UDMA_MODE_PER_SCATTER_GATHER)) {
             ui32Mode |= UDMA_MODE_ALT_SELECT;
         }
     }
@@ -773,8 +759,7 @@ uDMAChannelTransferSet(uint32_t ui32ChannelStructIndex, uint32_t ui32Mode,
     // increment is set to none, then the ending address is the same as the
     // beginning.
     //
-    if(ui32Inc != UDMA_SRC_INC_NONE)
-    {
+    if(ui32Inc != UDMA_SRC_INC_NONE) {
         ui32Inc = ui32Inc >> 26;
         ui32BufferBytes = ui32TransferSize << ui32Inc;
         pvSrcAddr = (void *)((uint32_t)pvSrcAddr + ui32BufferBytes - 1);
@@ -796,8 +781,7 @@ uDMAChannelTransferSet(uint32_t ui32ChannelStructIndex, uint32_t ui32Mode,
     // destination increment is set to none, then the ending address is the
     // same as the beginning.
     //
-    if(ui32Inc != UDMA_DST_INC_NONE)
-    {
+    if(ui32Inc != UDMA_DST_INC_NONE) {
         //
         // There is a special case if this is setting up a scatter-gather
         // transfer.  The destination pointer must point to the end of
@@ -805,8 +789,7 @@ uDMAChannelTransferSet(uint32_t ui32ChannelStructIndex, uint32_t ui32Mode,
         // the end of the buffer in the normal way.
         //
         if((ui32Mode == UDMA_MODE_MEM_SCATTER_GATHER) ||
-           (ui32Mode == UDMA_MODE_PER_SCATTER_GATHER))
-        {
+                (ui32Mode == UDMA_MODE_PER_SCATTER_GATHER)) {
             pvDstAddr =
                 (void *)&psControlTable[ui32ChannelStructIndex |
                                         UDMA_ALT_SELECT].ui32Spare;
@@ -814,8 +797,7 @@ uDMAChannelTransferSet(uint32_t ui32ChannelStructIndex, uint32_t ui32Mode,
         //
         // Not a scatter-gather transfer, calculate end pointer normally.
         //
-        else
-        {
+        else {
             ui32Inc = ui32Inc >> 30;
             ui32BufferBytes = ui32TransferSize << ui32Inc;
             pvDstAddr = (void *)((uint32_t)pvDstAddr + ui32BufferBytes - 1);
@@ -979,8 +961,7 @@ uDMAChannelSizeGet(uint32_t ui32ChannelStructIndex)
     // If the size field and mode field are 0 then the transfer is finished
     // and there are no more items to transfer
     //
-    if(ui32Control == 0)
-    {
+    if(ui32Control == 0) {
         return(0);
     }
 
@@ -988,8 +969,7 @@ uDMAChannelSizeGet(uint32_t ui32ChannelStructIndex)
     // Otherwise, if either the size field or more field is non-zero, then
     // not all the items have been transferred.
     //
-    else
-    {
+    else {
         //
         // Shift the size field and add one, then return to user.
         //
@@ -1048,9 +1028,8 @@ uDMAChannelModeGet(uint32_t ui32ChannelStructIndex)
     // Check if scatter/gather mode, and if so, mask off the alt bit.
     //
     if(((ui32Control & ~UDMA_MODE_ALT_SELECT) ==
-        UDMA_MODE_MEM_SCATTER_GATHER) ||
-       ((ui32Control & ~UDMA_MODE_ALT_SELECT) == UDMA_MODE_PER_SCATTER_GATHER))
-    {
+            UDMA_MODE_MEM_SCATTER_GATHER) ||
+            ((ui32Control & ~UDMA_MODE_ALT_SELECT) == UDMA_MODE_PER_SCATTER_GATHER)) {
         ui32Control &= ~UDMA_MODE_ALT_SELECT;
     }
 

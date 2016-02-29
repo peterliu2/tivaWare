@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -132,8 +132,7 @@ TMP006AppCallback(void *pvCallbackData, uint_fast8_t ui8Status)
     // If the transaction succeeded set the data flag to indicate to
     // application that this transaction is complete and data may be ready.
     //
-    if(ui8Status == I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status == I2CM_STATUS_SUCCESS) {
         g_vui8DataFlag = 1;
     }
 
@@ -181,8 +180,7 @@ TMP006AppErrorHandler(char *pcFilename, uint_fast32_t ui32Line)
     // Go to sleep wait for interventions.  A more robust application could
     // attempt corrective actions here.
     //
-    while(1)
-    {
+    while(1) {
         MAP_SysCtlSleep();
     }
 }
@@ -222,8 +220,7 @@ GPIOQ7IntHandler(void)
     //
     MAP_GPIOIntClear(GPIO_PORTQ_BASE, ui32Status);
 
-    if(ui32Status & GPIO_PIN_7)
-    {
+    if(ui32Status & GPIO_PIN_7) {
         //
         // This interrupt indicates a conversion is complete and ready to be
         // fetched.  So we start the process of getting the data.
@@ -362,16 +359,14 @@ main(void)
     // Put the processor to sleep while we wait for the I2C driver to
     // indicate that the transaction is complete.
     //
-    while((g_vui8DataFlag == 0) && (g_vui8ErrorFlag == 0))
-    {
+    while((g_vui8DataFlag == 0) && (g_vui8ErrorFlag == 0)) {
         MAP_SysCtlSleep();
     }
 
     //
     // If an error occurred call the error handler immediately.
     //
-    if(g_vui8ErrorFlag)
-    {
+    if(g_vui8ErrorFlag) {
         TMP006AppErrorHandler(__FILE__, __LINE__);
     }
 
@@ -397,16 +392,14 @@ main(void)
     //
     // Wait for the DRDY enable I2C transaction to complete.
     //
-    while((g_vui8DataFlag == 0) && (g_vui8ErrorFlag == 0))
-    {
+    while((g_vui8DataFlag == 0) && (g_vui8ErrorFlag == 0)) {
         MAP_SysCtlSleep();
     }
 
     //
     // If an error occurred call the error handler immediately.
     //
-    if(g_vui8ErrorFlag)
-    {
+    if(g_vui8ErrorFlag) {
         TMP006AppErrorHandler(__FILE__, __LINE__);
     }
 
@@ -433,23 +426,20 @@ main(void)
     //
     // Loop Forever
     //
-    while(1)
-    {
+    while(1) {
         //
         // Put the processor to sleep while we wait for the TMP006 to
         // signal that data is ready.  Also continue to sleep while I2C
         // transactions get the raw data from the TMP006
         //
-        while((g_vui8DataFlag == 0) && (g_vui8ErrorFlag == 0))
-        {
+        while((g_vui8DataFlag == 0) && (g_vui8ErrorFlag == 0)) {
             MAP_SysCtlSleep();
         }
 
         //
         // If an error occurred call the error handler immediately.
         //
-        if(g_vui8ErrorFlag)
-        {
+        if(g_vui8ErrorFlag) {
             TMP006AppErrorHandler(__FILE__, __LINE__);
         }
 
@@ -477,8 +467,7 @@ main(void)
         i32IntegerPart = (int32_t)fAmbient;
         i32FractionPart = (int32_t)(fAmbient * 1000.0f);
         i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-        if(i32FractionPart < 0)
-        {
+        if(i32FractionPart < 0) {
             i32FractionPart *= -1;
         }
 
@@ -486,7 +475,7 @@ main(void)
         // Print the ambient temperature reading to LCD and terminal.
         //
         usnprintf(pcBuf, sizeof(pcBuf), "%3d.%03d ", i32IntegerPart,
-                                                     i32FractionPart);
+                  i32FractionPart);
         GrStringDraw(&g_sContext, pcBuf, 8,
                      ((GrContextDpyWidthGet(&g_sContext) / 2) + 16),
                      (GrContextDpyHeightGet(&g_sContext) - 32) / 2, 1);
@@ -499,8 +488,7 @@ main(void)
         i32IntegerPart = (int32_t)fObject;
         i32FractionPart = (int32_t)(fObject * 1000.0f);
         i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-        if(i32FractionPart < 0)
-        {
+        if(i32FractionPart < 0) {
             i32FractionPart *= -1;
         }
 
@@ -508,7 +496,7 @@ main(void)
         // Print the object temperature reading to LCD and terminal.
         //
         usnprintf(pcBuf, sizeof(pcBuf), "%3d.%03d ", i32IntegerPart,
-                                                     i32FractionPart);
+                  i32FractionPart);
         GrStringDraw(&g_sContext, pcBuf, 8,
                      ((GrContextDpyWidthGet(&g_sContext) / 2) + 16),
                      ((GrContextDpyHeightGet(&g_sContext) - 32) / 2) + 24, 1);

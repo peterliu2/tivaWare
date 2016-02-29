@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C123G Firmware Package.
 //
 //*****************************************************************************
@@ -196,19 +196,16 @@ ClockSetPaint(tWidget *psWidget)
     //
     // Process each of the fields to be shown on the widget
     //
-    for(ui32Idx = 0; ui32Idx < NUM_FIELDS; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < NUM_FIELDS; ui32Idx++) {
         //
         // Compute the X and Y for the text for each field, and print the
         // text into a buffer.
         //
-        switch(ui32Idx)
-        {
+        switch(ui32Idx) {
             //
             // Year
             //
-            case FIELD_YEAR:
-            {
+            case FIELD_YEAR: {
                 usnprintf(pcBuf, sizeof(pcBuf), "%4u", psTime->tm_year + 1900);
                 i32X = sRect.i16XMin + (i32Width - (ui32FontWidth * 10)) / 2;
                 i32Y = sRect.i16YMin + ((i32Height * 1) / 6) -
@@ -220,8 +217,7 @@ ClockSetPaint(tWidget *psWidget)
             //
             // Month
             //
-            case FIELD_MONTH:
-            {
+            case FIELD_MONTH: {
                 usnprintf(pcBuf, sizeof(pcBuf), "%02u", psTime->tm_mon + 1);
                 i32X += ui32FontWidth * 5;
                 ui32SelWidth = 2;
@@ -231,8 +227,7 @@ ClockSetPaint(tWidget *psWidget)
             //
             // Day
             //
-            case FIELD_DAY:
-            {
+            case FIELD_DAY: {
                 usnprintf(pcBuf, sizeof(pcBuf), "%02u", psTime->tm_mday);
                 i32X += ui32FontWidth * 3;
                 ui32SelWidth = 2;
@@ -242,8 +237,7 @@ ClockSetPaint(tWidget *psWidget)
             //
             // Hour
             //
-            case FIELD_HOUR:
-            {
+            case FIELD_HOUR: {
                 usnprintf(pcBuf, sizeof(pcBuf), "%02u", psTime->tm_hour);
                 i32X = sRect.i16XMin + (i32Width - (ui32FontWidth * 5)) / 2;
                 i32Y = sRect.i16YMin + ((i32Height * 3) / 6) -
@@ -255,8 +249,7 @@ ClockSetPaint(tWidget *psWidget)
             //
             // Minute
             //
-            case FIELD_MINUTE:
-            {
+            case FIELD_MINUTE: {
                 usnprintf(pcBuf, sizeof(pcBuf), "%02u", psTime->tm_min);
                 i32X += ui32FontWidth * 3;
                 ui32SelWidth = 2;
@@ -266,8 +259,7 @@ ClockSetPaint(tWidget *psWidget)
             //
             // OK
             //
-            case FIELD_OK:
-            {
+            case FIELD_OK: {
                 usnprintf(pcBuf, sizeof(pcBuf), "OK");
                 i32X = (i32Width - (ui32FontWidth * 9)) / 2;
                 i32X += sRect.i16XMin;
@@ -282,8 +274,7 @@ ClockSetPaint(tWidget *psWidget)
             // issuing a warning that ui32SelWidth may be used ininitialized).
             //
             case FIELD_CANCEL:
-            default:
-            {
+            default: {
                 usnprintf(pcBuf, sizeof(pcBuf), "CANCEL");
                 i32X += ui32FontWidth * 3;
                 ui32SelWidth = 6;
@@ -296,8 +287,7 @@ ClockSetPaint(tWidget *psWidget)
         // If the current field index is the highlighted field, then this
         // text field will be drawn with highlighting.
         //
-        if(ui32Idx == psClockWidget->ui32Highlight)
-        {
+        if(ui32Idx == psClockWidget->ui32Highlight) {
             //
             // Compute a rectangle for the highlight area.
             //
@@ -323,9 +313,7 @@ ClockSetPaint(tWidget *psWidget)
             //
             GrContextForegroundSet(&sContext,
                                    psClockWidget->ui32BackgroundColor);
-        }
-        else
-        {
+        } else {
             //
             // This text field is not highlighted so just set the normal
             // foreground color.
@@ -361,13 +349,11 @@ MaxDayOfMonth(uint8_t tm_mon)
     //
     // Process the month
     //
-    switch(tm_mon)
-    {
+    switch(tm_mon) {
         //
         // February returns 28 days
         //
-        case 1:
-        {
+        case 1: {
             return(28);
         }
 
@@ -377,16 +363,14 @@ MaxDayOfMonth(uint8_t tm_mon)
         case 3:
         case 5:
         case 8:
-        case 10:
-        {
+        case 10: {
             return(30);
         }
 
         //
         // Remaining months have 31 days.
         //
-        default:
-        {
+        default: {
             return(31);
         }
     }
@@ -419,15 +403,12 @@ ClockSetKeyUp(tClockSetWidget *psWidget)
     //
     // Determine which field is highlighted.
     //
-    switch(psWidget->ui32Highlight)
-    {
+    switch(psWidget->ui32Highlight) {
         //
         // Increment the year.  Cap it at 2037 to keep things simple.
         //
-        case FIELD_YEAR:
-        {
-            if(psTime->tm_year+1900 < 2037)
-            {
+        case FIELD_YEAR: {
+            if(psTime->tm_year+1900 < 2037) {
                 psTime->tm_year++;
             }
             break;
@@ -436,14 +417,11 @@ ClockSetKeyUp(tClockSetWidget *psWidget)
         //
         // Increment the month.  Adjust the day of the month if needed.
         //
-        case FIELD_MONTH:
-        {
-            if(psTime->tm_mon < 11)
-            {
+        case FIELD_MONTH: {
+            if(psTime->tm_mon < 11) {
                 psTime->tm_mon++;
             }
-            if(psTime->tm_mday > MaxDayOfMonth(psTime->tm_mon))
-            {
+            if(psTime->tm_mday > MaxDayOfMonth(psTime->tm_mon)) {
                 psTime->tm_mday = MaxDayOfMonth(psTime->tm_mon);
             }
             break;
@@ -453,10 +431,8 @@ ClockSetKeyUp(tClockSetWidget *psWidget)
         // Increment the day.  Cap it at the max number of days for the
         // current value of month.
         //
-        case FIELD_DAY:
-        {
-            if(psTime->tm_mday < MaxDayOfMonth(psTime->tm_mon))
-            {
+        case FIELD_DAY: {
+            if(psTime->tm_mday < MaxDayOfMonth(psTime->tm_mon)) {
                 psTime->tm_mday++;
             }
             break;
@@ -465,10 +441,8 @@ ClockSetKeyUp(tClockSetWidget *psWidget)
         //
         // Increment the hour.
         //
-        case FIELD_HOUR:
-        {
-            if(psTime->tm_hour < 23)
-            {
+        case FIELD_HOUR: {
+            if(psTime->tm_hour < 23) {
                 psTime->tm_hour++;
             }
             break;
@@ -477,10 +451,8 @@ ClockSetKeyUp(tClockSetWidget *psWidget)
         //
         // Increment the minute.
         //
-        case FIELD_MINUTE:
-        {
-            if(psTime->tm_min < 59)
-            {
+        case FIELD_MINUTE: {
+            if(psTime->tm_min < 59) {
                 psTime->tm_min++;
             }
             break;
@@ -489,8 +461,7 @@ ClockSetKeyUp(tClockSetWidget *psWidget)
         //
         // Bad value for field index - ignore.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -534,15 +505,12 @@ ClockSetKeyDown(tClockSetWidget *psWidget)
     //
     // Determine which field is highlighted.
     //
-    switch(psWidget->ui32Highlight)
-    {
+    switch(psWidget->ui32Highlight) {
         //
         // Decrement the year.  Minimum year is 1970.
         //
-        case FIELD_YEAR:
-        {
-            if(psTime->tm_year+1900 > 1970)
-            {
+        case FIELD_YEAR: {
+            if(psTime->tm_year+1900 > 1970) {
                 psTime->tm_year--;
             }
             break;
@@ -553,14 +521,11 @@ ClockSetKeyDown(tClockSetWidget *psWidget)
         // day is valid for this month, and enforce the maximum day number
         // for this month.
         //
-        case FIELD_MONTH:
-        {
-            if(psTime->tm_mon > 0)
-            {
+        case FIELD_MONTH: {
+            if(psTime->tm_mon > 0) {
                 psTime->tm_mon--;
             }
-            if(psTime->tm_mday > MaxDayOfMonth(psTime->tm_mon))
-            {
+            if(psTime->tm_mday > MaxDayOfMonth(psTime->tm_mon)) {
                 psTime->tm_mday = MaxDayOfMonth(psTime->tm_mon);
             }
             break;
@@ -569,10 +534,8 @@ ClockSetKeyDown(tClockSetWidget *psWidget)
         //
         // Decrement the day
         //
-        case FIELD_DAY:
-        {
-            if(psTime->tm_mday > 1)
-            {
+        case FIELD_DAY: {
+            if(psTime->tm_mday > 1) {
                 psTime->tm_mday--;
             }
             break;
@@ -581,10 +544,8 @@ ClockSetKeyDown(tClockSetWidget *psWidget)
         //
         // Decrement the hour
         //
-        case FIELD_HOUR:
-        {
-            if(psTime->tm_hour > 0)
-            {
+        case FIELD_HOUR: {
+            if(psTime->tm_hour > 0) {
                 psTime->tm_hour--;
             }
             break;
@@ -593,10 +554,8 @@ ClockSetKeyDown(tClockSetWidget *psWidget)
         //
         // Decrement the minute
         //
-        case FIELD_MINUTE:
-        {
-            if(psTime->tm_min > 0)
-            {
+        case FIELD_MINUTE: {
+            if(psTime->tm_min > 0) {
                 psTime->tm_min--;
             }
             break;
@@ -605,8 +564,7 @@ ClockSetKeyDown(tClockSetWidget *psWidget)
         //
         // Bad value for field index - ignore.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -644,12 +602,9 @@ ClockSetKeyLeft(tClockSetWidget *psWidget)
     //
     // If not already at the minimum, decrement the highlighted field index.
     //
-    if(psWidget->ui32Highlight)
-    {
+    if(psWidget->ui32Highlight) {
         psWidget->ui32Highlight--;
-    }
-    else
-    {
+    } else {
         //
         // Already at the first field, so reset to the last field.
         //
@@ -688,12 +643,9 @@ ClockSetKeyRight(tClockSetWidget *psWidget)
     //
     // If not already at the last field, increment the highlighted field index.
     //
-    if(psWidget->ui32Highlight < FIELD_LAST)
-    {
+    if(psWidget->ui32Highlight < FIELD_LAST) {
         psWidget->ui32Highlight++;
-    }
-    else
-    {
+    } else {
         //
         // Already at the last field, so reset to the first field.
         //
@@ -742,8 +694,7 @@ ClockSetKeySelect(tClockSetWidget *psWidget)
     // fields is highlighted, then take action.
     //
     if(psWidget->pfnOnOkClick && ((psWidget->ui32Highlight == FIELD_OK) ||
-                                  (psWidget->ui32Highlight == FIELD_CANCEL)))
-    {
+                                  (psWidget->ui32Highlight == FIELD_CANCEL))) {
         //
         // Call the callback function and pass the flag to indicate if OK
         // was selected (otherwise it was CANCEL).
@@ -760,9 +711,7 @@ ClockSetKeySelect(tClockSetWidget *psWidget)
         // Return to caller, indicating the button event was handled.
         //
         return(1);
-    }
-    else
-    {
+    } else {
         //
         // There is no callback function, or neither the OK or CANCEL fields is
         // highlighted.  In this case ingore the button event.
@@ -802,45 +751,39 @@ ClockSetKeyHandler(tWidget *psWidget, uint32_t ui32Msg)
     //
     // Process the key event
     //
-    switch(ui32Msg)
-    {
+    switch(ui32Msg) {
         //
         // Select key
         //
-        case WIDGET_MSG_KEY_SELECT:
-        {
+        case WIDGET_MSG_KEY_SELECT: {
             return(ClockSetKeySelect(psClockWidget));
         }
 
         //
         // Up button
         //
-        case WIDGET_MSG_KEY_UP:
-        {
+        case WIDGET_MSG_KEY_UP: {
             return(ClockSetKeyUp(psClockWidget));
         }
 
         //
         // Down button
         //
-        case WIDGET_MSG_KEY_DOWN:
-        {
+        case WIDGET_MSG_KEY_DOWN: {
             return(ClockSetKeyDown(psClockWidget));
         }
 
         //
         // Left button
         //
-        case WIDGET_MSG_KEY_LEFT:
-        {
+        case WIDGET_MSG_KEY_LEFT: {
             return(ClockSetKeyLeft(psClockWidget));
         }
 
         //
         // Right button
         //
-        case WIDGET_MSG_KEY_RIGHT:
-        {
+        case WIDGET_MSG_KEY_RIGHT: {
             return(ClockSetKeyRight(psClockWidget));
         }
 
@@ -848,8 +791,7 @@ ClockSetKeyHandler(tWidget *psWidget, uint32_t ui32Msg)
         // This is an unexpected event.  Return an indication that the event
         // was not handled.
         //
-        default:
-        {
+        default: {
             return(0);
         }
     }
@@ -885,13 +827,11 @@ ClockSetMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
     //
     // Determine which message is being sent.
     //
-    switch(ui32Msg)
-    {
+    switch(ui32Msg) {
         //
         // The widget paint request has been sent.
         //
-        case WIDGET_MSG_PAINT:
-        {
+        case WIDGET_MSG_PAINT: {
             //
             // Handle the widget paint request.
             //
@@ -911,13 +851,11 @@ ClockSetMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
         case WIDGET_MSG_KEY_UP:
         case WIDGET_MSG_KEY_DOWN:
         case WIDGET_MSG_KEY_LEFT:
-        case WIDGET_MSG_KEY_RIGHT:
-        {
+        case WIDGET_MSG_KEY_RIGHT: {
             //
             // If the key event is for this widget, then process the key event
             //
-            if((tWidget *)ui32Param1 == psWidget)
-            {
+            if((tWidget *)ui32Param1 == psWidget) {
                 return(ClockSetKeyHandler(psWidget, ui32Msg));
             }
         }
@@ -925,8 +863,7 @@ ClockSetMsgProc(tWidget *psWidget, uint32_t ui32Msg, uint32_t ui32Param1,
         //
         // An unknown request has been sent.
         //
-        default:
-        {
+        default: {
             //
             // Let the default message handler process this message.
             //
@@ -977,8 +914,7 @@ ClockSetInit(tClockSetWidget *psWidget, const tDisplay *psDisplay,
     //
     // Clear out the widget structure.
     //
-    for(ui32Idx = 0; ui32Idx < sizeof(tClockSetWidget); ui32Idx += 4)
-    {
+    for(ui32Idx = 0; ui32Idx < sizeof(tClockSetWidget); ui32Idx += 4) {
         ((uint32_t *)psWidget)[ui32Idx / 4] = 0;
     }
 

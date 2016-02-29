@@ -5,23 +5,23 @@
 //
 // Copyright (c) 2014-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -33,7 +33,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -166,15 +166,13 @@ static volatile uint16_t *g_pui16EPISdram;
 // A table used to determine the EPI clock frequency band in use.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint32_t ui32SysClock;
     uint32_t ui32FreqFlag;
 }
 tSDRAMFreqMapping;
 
-static tSDRAMFreqMapping g_psSDRAMFreq[] =
-{
+static tSDRAMFreqMapping g_psSDRAMFreq[] = {
     //
     // SysClock >= 100MHz, EPI clock >= 50Mhz (divided by 2)
     //
@@ -204,7 +202,7 @@ static tSDRAMFreqMapping g_psSDRAMFreq[] =
     // SysClock < 15Mhz, EPI clock < 15Mhz (no divider)
     //
     {0, EPI_SDRAM_CORE_FREQ_0_15}
- };
+};
 
 #define NUM_SDRAM_FREQ (sizeof(g_psSDRAMFreq) / sizeof(tSDRAMFreqMapping))
 
@@ -271,7 +269,7 @@ main(void)
     // application requires.
     //
     ui32SysClock = SysCtlClockFreqSet((SYSCTL_OSC_INT | SYSCTL_USE_PLL |
-                                      SYSCTL_CFG_VCO_320), 120000000);
+                                       SYSCTL_CFG_VCO_320), 120000000);
 
     //
     // Set up the serial console to use for displaying messages.  This is
@@ -400,15 +398,12 @@ main(void)
     //
     // Is our current system clock faster than we can drive the SDRAM clock?
     //
-    if(ui32SysClock > 60000000)
-    {
+    if(ui32SysClock > 60000000) {
         //
         // Yes. Set the EPI clock to half the system clock.
         //
         EPIDividerSet(EPI0_BASE, 1);
-    }
-    else
-    {
+    } else {
         //
         // With a system clock of 60MHz or lower, we can drive the SDRAM at
         // the same rate so set the divider to 0.
@@ -432,13 +427,11 @@ main(void)
     // Examine the system clock frequency to determine how to set the SDRAM
     // controller's frequency flag.
     //
-    for(ui32Val = 0; ui32Val < NUM_SDRAM_FREQ; ui32Val++)
-    {
+    for(ui32Val = 0; ui32Val < NUM_SDRAM_FREQ; ui32Val++) {
         //
         // Is the system clock frequency above the break point in the table?
         //
-        if(ui32SysClock >= g_psSDRAMFreq[ui32Val].ui32SysClock)
-        {
+        if(ui32SysClock >= g_psSDRAMFreq[ui32Val].ui32SysClock) {
             //
             // Yes - remember the frequency flag to use and exit the loop.
             //
@@ -454,7 +447,7 @@ main(void)
     // Set the SDRAM size to 64MB with a refresh interval of 1024 clock ticks.
     //
     EPIConfigSDRAMSet(EPI0_BASE, (ui32Freq | EPI_SDRAM_FULL_POWER |
-                      EPI_SDRAM_SIZE_512MBIT), 1024);
+                                  EPI_SDRAM_SIZE_512MBIT), 1024);
 
     //
     // Set the address map.  The EPI0 is mapped from 0x60000000 to 0x01FFFFFF.
@@ -470,8 +463,7 @@ main(void)
     // is going through the initialization and false when the SDRAM interface
     // it is not in a wake-up period.
     //
-    while(HWREG(EPI0_BASE + EPI_O_STAT) &  EPI_STAT_INITSEQ)
-    {
+    while(HWREG(EPI0_BASE + EPI_O_STAT) &  EPI_STAT_INITSEQ) {
     }
 
     //
@@ -530,10 +522,9 @@ main(void)
     // Check the validity of the data.
     //
     if((g_pui16EPISdram[SDRAM_START_ADDRESS] == 0xabcd) &&
-       (g_pui16EPISdram[SDRAM_START_ADDRESS + 1] == 0x1234) &&
-       (g_pui16EPISdram[SDRAM_END_ADDRESS - 1] == 0xdcba) &&
-       (g_pui16EPISdram[SDRAM_END_ADDRESS] == 0x4321))
-    {
+            (g_pui16EPISdram[SDRAM_START_ADDRESS + 1] == 0x1234) &&
+            (g_pui16EPISdram[SDRAM_END_ADDRESS - 1] == 0xdcba) &&
+            (g_pui16EPISdram[SDRAM_END_ADDRESS] == 0x4321)) {
         //
         // Read and write operations were successful.  Return with no errors.
         //
@@ -551,7 +542,6 @@ main(void)
     // Read and/or write operations were unsuccessful.  Wait in while(1) loop
     // for debugging.
     //
-    while(1)
-    {
+    while(1) {
     }
 }

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -95,8 +95,7 @@ DECLARE_EVENT_DRIVER(g_sUSBEventDriver, 0, 0, USBHCDEvents);
 // In this case, only the HID class is loaded.
 //
 //*****************************************************************************
-static tUSBHostClassDriver const * const g_ppHostClassDrivers[] =
-{
+static tUSBHostClassDriver const * const g_ppHostClassDrivers[] = {
     &g_sUSBHIDClassDriver,
     &g_sUSBEventDriver
 };
@@ -108,7 +107,7 @@ static tUSBHostClassDriver const * const g_ppHostClassDrivers[] =
 //
 //*****************************************************************************
 static const uint32_t g_ui32NumHostClassDrivers =
-                  sizeof(g_ppHostClassDrivers) / sizeof(tUSBHostClassDriver *);
+    sizeof(g_ppHostClassDrivers) / sizeof(tUSBHostClassDriver *);
 
 //*****************************************************************************
 //
@@ -134,8 +133,7 @@ __error__(char *pcFilename, uint32_t ui32Line)
 // This enumerated type is used to hold the states of the mouse.
 //
 //*****************************************************************************
-enum
-{
+enum {
     //
     // No device is present.
     //
@@ -176,13 +174,11 @@ MouseCallback(tUSBHMouse *psMouse, uint32_t ui32Event, uint32_t ui32MsgParam,
 {
     int32_t i32Pos;
 
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // New mouse detected.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             //
             // Proceed to the eStateMouseInit state so that the main loop
             // can finish initializing the mouse since USBHMouseInit() cannot
@@ -196,8 +192,7 @@ MouseCallback(tUSBHMouse *psMouse, uint32_t ui32Event, uint32_t ui32MsgParam,
         //
         // Mouse has been unplugged.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             //
             // Change the state so that the main loop knows that a device is no
             // longer present.
@@ -217,8 +212,7 @@ MouseCallback(tUSBHMouse *psMouse, uint32_t ui32Event, uint32_t ui32MsgParam,
         //
         // New button press detected.
         //
-        case USBH_EVENT_HID_MS_PRESS:
-        {
+        case USBH_EVENT_HID_MS_PRESS: {
             //
             // Save the new button that was pressed.
             //
@@ -232,8 +226,7 @@ MouseCallback(tUSBHMouse *psMouse, uint32_t ui32Event, uint32_t ui32MsgParam,
         //
         // A button was released on a HID mouse.
         //
-        case USBH_EVENT_HID_MS_REL:
-        {
+        case USBH_EVENT_HID_MS_REL: {
             //
             // Remove the button from the pressed state.
             //
@@ -247,8 +240,7 @@ MouseCallback(tUSBHMouse *psMouse, uint32_t ui32Event, uint32_t ui32MsgParam,
         //
         // The HID mouse detected movement in the X direction.
         //
-        case USBH_EVENT_HID_MS_X:
-        {
+        case USBH_EVENT_HID_MS_X: {
             //
             // Update the cursor X position.
             // This has to be calculated as an intermediate signed value
@@ -256,22 +248,17 @@ MouseCallback(tUSBHMouse *psMouse, uint32_t ui32Event, uint32_t ui32MsgParam,
             //
             i32Pos = g_sStatus.ui32XPos + (int8_t)ui32MsgParam;
 
-            if(i32Pos < 0)
-            {
+            if(i32Pos < 0) {
                 g_sStatus.ui32XPos = MOUSE_MIN_X;
-            }
-            else
-            {
+            } else {
                 g_sStatus.ui32XPos = (uint32_t)i32Pos;
             }
 
-            if(g_sStatus.ui32XPos < MOUSE_MIN_X)
-            {
+            if(g_sStatus.ui32XPos < MOUSE_MIN_X) {
                 g_sStatus.ui32XPos = MOUSE_MIN_X;
             }
 
-            if(g_sStatus.ui32XPos > MOUSE_MAX_X)
-            {
+            if(g_sStatus.ui32XPos > MOUSE_MAX_X) {
                 g_sStatus.ui32XPos = MOUSE_MAX_X;
             }
 
@@ -283,8 +270,7 @@ MouseCallback(tUSBHMouse *psMouse, uint32_t ui32Event, uint32_t ui32MsgParam,
         //
         // The HID mouse detected movement in the Y direction.
         //
-        case USBH_EVENT_HID_MS_Y:
-        {
+        case USBH_EVENT_HID_MS_Y: {
             //
             // Update the cursor Y position.
             // This has to be calculated as an intermediate signed value
@@ -292,22 +278,17 @@ MouseCallback(tUSBHMouse *psMouse, uint32_t ui32Event, uint32_t ui32MsgParam,
             //
             i32Pos = (int32_t)g_sStatus.ui32YPos + (int8_t)ui32MsgParam;
 
-            if(i32Pos < 0)
-            {
+            if(i32Pos < 0) {
                 g_sStatus.ui32YPos = MOUSE_MIN_Y;
-            }
-            else
-            {
+            } else {
                 g_sStatus.ui32YPos = (uint32_t)i32Pos;
             }
 
-            if(g_sStatus.ui32YPos < MOUSE_MIN_Y)
-            {
+            if(g_sStatus.ui32YPos < MOUSE_MIN_Y) {
                 g_sStatus.ui32YPos = MOUSE_MIN_Y;
             }
 
-            if(g_sStatus.ui32YPos > MOUSE_MAX_Y)
-            {
+            if(g_sStatus.ui32YPos > MOUSE_MAX_Y) {
                 g_sStatus.ui32YPos = MOUSE_MAX_Y;
             }
 
@@ -315,8 +296,7 @@ MouseCallback(tUSBHMouse *psMouse, uint32_t ui32Event, uint32_t ui32MsgParam,
 
             break;
         }
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -330,13 +310,11 @@ MouseCallback(tUSBHMouse *psMouse, uint32_t ui32Event, uint32_t ui32MsgParam,
 void
 MouseMain(void)
 {
-    switch(g_iMouseState)
-    {
+    switch(g_iMouseState) {
         //
         // This state is entered when they mouse is first detected.
         //
-        case eStateMouseInit:
-        {
+        case eStateMouseInit: {
             //
             // Initialized the newly connected mouse.
             //
@@ -350,10 +328,8 @@ MouseMain(void)
             break;
         }
         case eStateMouseConnected:
-        default:
-        {
-            if(g_sStatus.bUpdate == true)
-            {
+        default: {
+            if(g_sStatus.bUpdate == true) {
                 g_sStatus.bUpdate = false;
 
                 UIUpdateStatus();
@@ -388,11 +364,9 @@ USBHCDEvents(void *pvData)
     //
     pEventInfo = (tEventInfo *)pvData;
 
-    switch(pEventInfo->ui32Event)
-    {
+    switch(pEventInfo->ui32Event) {
         case USB_EVENT_UNKNOWN_CONNECTED:
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             //
             // Save the device instance data.
             //
@@ -409,8 +383,7 @@ USBHCDEvents(void *pvData)
         //
         // A device has been unplugged.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             //
             // Device is no longer connected.
             //
@@ -423,8 +396,7 @@ USBHCDEvents(void *pvData)
 
             break;
         }
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -538,8 +510,7 @@ main(void)
     //
     // The main loop for the application.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Call the USB library to let non-interrupt code run.
         //

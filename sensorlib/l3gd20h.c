@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -63,8 +63,7 @@
 // 0.0174532925 radians).
 //
 //*****************************************************************************
-static const float g_pfL3GD20HGyroFactors[] =
-{
+static const float g_pfL3GD20HGyroFactors[] = {
     1.5271631e-5f,                          // Range = +/- 245 dps
     3.0543262e-4f,                          // Range = +/- 500 dps
     1.2217305e-3f,                          // Range = +/- 2000 dps
@@ -92,23 +91,20 @@ L3GD20HCallback(void *pvCallbackData, uint_fast8_t ui8Status)
     // to the idle state (which will also result in a callback to propagate the
     // error).
     //
-    if(ui8Status != I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status != I2CM_STATUS_SUCCESS) {
         psInst->ui8State = L3GD20H_STATE_IDLE;
     }
 
     //
     // Determine the current state of the L3GD20H state machine.
     //
-    switch(psInst->ui8State)
-    {
+    switch(psInst->ui8State) {
         //
         // All states that trivially transition to IDLE, and all unknown
         // states.
         //
         case L3GD20H_STATE_READ:
-        default:
-        {
+        default: {
             //
             // The state machine is now idle.
             //
@@ -123,8 +119,7 @@ L3GD20HCallback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // L3GD20H Device reset was issued
         //
-        case L3GD20H_STATE_INIT_RES:
-        {
+        case L3GD20H_STATE_INIT_RES: {
             //
             // Issue a read of the status register to confirm reset is done.
             //
@@ -144,14 +139,12 @@ L3GD20HCallback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // Status register was read, check if reset is done before proceeding.
         //
-        case L3GD20H_STATE_INIT_WAIT:
-        {
+        case L3GD20H_STATE_INIT_WAIT: {
             //
             // Check the value read back from status to determine if device
             // is still in reset or if it is ready.
             //
-            if(psInst->pui8Data[0] & L3GD20H_LOW_ODR_SWRESET_M)
-            {
+            if(psInst->pui8Data[0] & L3GD20H_LOW_ODR_SWRESET_M) {
                 //
                 // Device still in reset so begin polling this register.
                 //
@@ -159,9 +152,7 @@ L3GD20HCallback(void *pvCallbackData, uint_fast8_t ui8Status)
                 I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
                          psInst->uCommand.pui8Buffer, 1, psInst->pui8Data, 1,
                          L3GD20HCallback, psInst);
-            }
-            else
-            {
+            } else {
                 //
                 // Device is out of reset, move to the idle state.
                 //
@@ -177,8 +168,7 @@ L3GD20HCallback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // A write just completed
         //
-        case L3GD20H_STATE_WRITE:
-        {
+        case L3GD20H_STATE_WRITE: {
             //
             // Set the gyroscope ranges to the new values.  If the register was
             // not modified, the values will be the same so this has no effect.
@@ -199,20 +189,17 @@ L3GD20HCallback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // A read-modify-write just completed
         //
-        case L3GD20H_STATE_RMW:
-        {
+        case L3GD20H_STATE_RMW: {
             //
             // See if the PWR_MGMT_1 register was just modified.
             //
             if(psInst->uCommand.sReadModifyWriteState.pui8Buffer[0] ==
-               L3GD20H_O_LOW_ODR)
-            {
+                    L3GD20H_O_LOW_ODR) {
                 //
                 // See if a soft reset has been issued.
                 //
                 if(psInst->uCommand.sReadModifyWriteState.pui8Buffer[1] &
-                   L3GD20H_LOW_ODR_SWRESET_M)
-                {
+                        L3GD20H_LOW_ODR_SWRESET_M) {
                     //
                     // Default range setting is +/- 245 degrees/s
                     //
@@ -225,8 +212,7 @@ L3GD20HCallback(void *pvCallbackData, uint_fast8_t ui8Status)
             // See if the GYRO_CONFIG register was just modified.
             //
             if(psInst->uCommand.sReadModifyWriteState.pui8Buffer[0] ==
-               L3GD20H_O_CTRL4)
-            {
+                    L3GD20H_O_CTRL4) {
                 //
                 // Extract the FS_SEL from the GYRO_CONFIG register value.
                 //
@@ -251,8 +237,7 @@ L3GD20HCallback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if the state machine is now idle and there is a callback function.
     //
-    if((psInst->ui8State == L3GD20H_STATE_IDLE) && psInst->pfnCallback)
-    {
+    if((psInst->ui8State == L3GD20H_STATE_IDLE) && psInst->pfnCallback) {
         //
         // Call the application-supplied callback function.
         //
@@ -313,8 +298,7 @@ L3GD20HInit(tL3GD20H *psInst, tI2CMInstance *psI2CInst,
     psInst->pui8Data[0] = L3GD20H_O_LOW_ODR;
     psInst->pui8Data[1] = L3GD20H_LOW_ODR_SWRESET_RESET;
     if(I2CMWrite(psInst->psI2CInst, psInst->ui8Addr,
-                 psInst->uCommand.pui8Buffer, 2, L3GD20HCallback, psInst) == 0)
-    {
+                 psInst->uCommand.pui8Buffer, 2, L3GD20HCallback, psInst) == 0) {
         psInst->ui8State = L3GD20H_STATE_IDLE;
         return(0);
     }
@@ -354,8 +338,7 @@ L3GD20HRead(tL3GD20H *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     // Return a failure if the L3GD20H driver is not idle (in other words,
     // there is already an outstanding request to the L3GD20H).
     //
-    if(psInst->ui8State != L3GD20H_STATE_IDLE)
-    {
+    if(psInst->ui8State != L3GD20H_STATE_IDLE) {
         return(0);
     }
 
@@ -376,8 +359,7 @@ L3GD20HRead(tL3GD20H *psInst, uint_fast8_t ui8Reg, uint8_t *pui8Data,
     psInst->uCommand.pui8Buffer[0] = ui8Reg;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
                 psInst->uCommand.pui8Buffer, 1, pui8Data, ui16Count,
-                L3GD20HCallback, psInst) == 0)
-    {
+                L3GD20HCallback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -422,8 +404,7 @@ L3GD20HWrite(tL3GD20H *psInst, uint_fast8_t ui8Reg, const uint8_t *pui8Data,
     // Return a failure if the L3GD20H driver is not idle (in other words,
     // there is already an outstanding request to the L3GD20H).
     //
-    if(psInst->ui8State != L3GD20H_STATE_IDLE)
-    {
+    if(psInst->ui8State != L3GD20H_STATE_IDLE) {
         return(0);
     }
 
@@ -437,13 +418,11 @@ L3GD20HWrite(tL3GD20H *psInst, uint_fast8_t ui8Reg, const uint8_t *pui8Data,
     // See if the PWR_MGMT_1 register is being written.
     //
     if((ui8Reg <= L3GD20H_O_LOW_ODR) &&
-       ((ui8Reg + ui16Count) > L3GD20H_O_LOW_ODR))
-    {
+            ((ui8Reg + ui16Count) > L3GD20H_O_LOW_ODR)) {
         //
         // See if a soft reset is being requested.
         //
-        if(pui8Data[ui8Reg - L3GD20H_O_LOW_ODR] & L3GD20H_LOW_ODR_SWRESET_M)
-        {
+        if(pui8Data[ui8Reg - L3GD20H_O_LOW_ODR] & L3GD20H_LOW_ODR_SWRESET_M) {
             //
             // Default range setting is +/- 245 degrees/s.
             //
@@ -455,8 +434,7 @@ L3GD20HWrite(tL3GD20H *psInst, uint_fast8_t ui8Reg, const uint8_t *pui8Data,
     // See if the GYRO_CONFIG register is being written.
     //
     if((ui8Reg <= L3GD20H_O_CTRL4) &&
-       ((ui8Reg + ui16Count) > L3GD20H_O_CTRL4))
-    {
+            ((ui8Reg + ui16Count) > L3GD20H_O_CTRL4)) {
         //
         // Extract the FS_SEL from the GYRO_CONFIG register value.
         //
@@ -475,8 +453,7 @@ L3GD20HWrite(tL3GD20H *psInst, uint_fast8_t ui8Reg, const uint8_t *pui8Data,
     //
     if(I2CMWrite8(&(psInst->uCommand.sWriteState), psInst->psI2CInst,
                   psInst->ui8Addr, ui8Reg, pui8Data, ui16Count,
-                  L3GD20HCallback, psInst) == 0)
-    {
+                  L3GD20HCallback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -524,8 +501,7 @@ L3GD20HReadModifyWrite(tL3GD20H *psInst, uint_fast8_t ui8Reg,
     // Return a failure if the L3GD20H driver is not idle (in other words,
     // there is already an outstanding request to the L3GD20H).
     //
-    if(psInst->ui8State != L3GD20H_STATE_IDLE)
-    {
+    if(psInst->ui8State != L3GD20H_STATE_IDLE) {
         return(0);
     }
 
@@ -545,8 +521,7 @@ L3GD20HReadModifyWrite(tL3GD20H *psInst, uint_fast8_t ui8Reg,
     //
     if(I2CMReadModifyWrite8(&(psInst->uCommand.sReadModifyWriteState),
                             psInst->psI2CInst, psInst->ui8Addr, ui8Reg,
-                            ui8Mask, ui8Value, L3GD20HCallback, psInst) == 0)
-    {
+                            ui8Mask, ui8Value, L3GD20HCallback, psInst) == 0) {
         //
         // The I2C read-modify-write failed, so move to the idle state and
         // return a failure.
@@ -588,8 +563,7 @@ L3GD20HDataRead(tL3GD20H *psInst, tSensorCallback *pfnCallback,
     // Return a failure if the L3GD20H driver is not idle (in other words,
     // there is already an outstanding request to the L3GD20H).
     //
-    if(psInst->ui8State != L3GD20H_STATE_IDLE)
-    {
+    if(psInst->ui8State != L3GD20H_STATE_IDLE) {
         return(0);
     }
 
@@ -609,8 +583,7 @@ L3GD20HDataRead(tL3GD20H *psInst, tSensorCallback *pfnCallback,
     //
     psInst->pui8Data[0] = L3GD20H_O_STATUS | 0x80;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr, psInst->pui8Data, 1,
-                psInst->pui8Data, 7, L3GD20HCallback, psInst) == 0)
-    {
+                psInst->pui8Data, 7, L3GD20HCallback, psInst) == 0) {
         //
         // The I2C read failed, so move to the idle state and return a failure.
         //
@@ -650,16 +623,13 @@ L3GD20HDataGyroGetRaw(tL3GD20H *psInst, uint_fast16_t *pui16GyroX,
     //
     // Return the raw gyroscope values.
     //
-    if(pui16GyroX)
-    {
+    if(pui16GyroX) {
         *pui16GyroX = (psInst->pui8Data[2] << 8) | psInst->pui8Data[1];
     }
-    if(pui16GyroY)
-    {
+    if(pui16GyroY) {
         *pui16GyroY = (psInst->pui8Data[4] << 8) | psInst->pui8Data[3];
     }
-    if(pui16GyroZ)
-    {
+    if(pui16GyroZ) {
         *pui16GyroZ = (psInst->pui8Data[6] << 8) | psInst->pui8Data[5];
     }
 }
@@ -697,18 +667,15 @@ L3GD20HDataGyroGetFloat(tL3GD20H *psInst, float *pfGyroX, float *pfGyroY,
     //
     // Convert the gyroscope values into rad/sec.
     //
-    if(pfGyroX)
-    {
+    if(pfGyroX) {
         *pfGyroX = ((float)(int16_t)((psInst->pui8Data[2] << 8) |
                                      psInst->pui8Data[1]) * fFactor);
     }
-    if(pfGyroY)
-    {
+    if(pfGyroY) {
         *pfGyroY = ((float)(int16_t)((psInst->pui8Data[4] << 8) |
                                      psInst->pui8Data[3]) * fFactor);
     }
-    if(pfGyroZ)
-    {
+    if(pfGyroZ) {
         *pfGyroZ = ((float)(int16_t)((psInst->pui8Data[6] << 8) |
                                      psInst->pui8Data[5]) * fFactor);
     }

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2014-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //****************************************************************************
@@ -70,8 +70,7 @@ extern tRectangle g_sUSBStatsRect;
 // Different USB display status used by g_ui8PrevUSBDisplay.
 //
 //*****************************************************************************
-enum
-{
+enum {
     DISPLAY_USB_NOT_CONNECTED = 0,
     DISPLAY_USB_CONNECTED
 };
@@ -159,21 +158,18 @@ uint32_t
 MouseHandler(void *pvCBData, uint32_t ui32Event,
              uint32_t ui32MsgData, void *pvMsgData)
 {
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // The USB host has connected to and configured the device.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             g_eMouseState = MOUSE_STATE_IDLE;
             HWREGBITW(&g_ui32USBFlags, FLAG_CONNECTED) = 1;
 
             //
             // Display on LCD to show we are connected to USB.
             //
-            if(g_ui8PrevUSBDisplay != DISPLAY_USB_CONNECTED)
-            {
+            if(g_ui8PrevUSBDisplay != DISPLAY_USB_CONNECTED) {
                 g_ui8PrevUSBDisplay = DISPLAY_USB_CONNECTED;
                 DpyRectFill(g_sContext.psDisplay, &g_sUSBStatsRect, ClrBlack);
                 GrContextForegroundSet(&g_sContext, ClrGreen);
@@ -191,16 +187,14 @@ MouseHandler(void *pvCBData, uint32_t ui32Event,
         //
         // The USB host has disconnected from the device.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             HWREGBITW(&g_ui32USBFlags, FLAG_CONNECTED) = 0;
             g_eMouseState = MOUSE_STATE_UNCONFIGURED;
 
             //
             // Display on LCD to show we are no longer connected to USB.
             //
-            if(g_ui8PrevUSBDisplay != DISPLAY_USB_NOT_CONNECTED)
-            {
+            if(g_ui8PrevUSBDisplay != DISPLAY_USB_NOT_CONNECTED) {
                 g_ui8PrevUSBDisplay = DISPLAY_USB_NOT_CONNECTED;
                 DpyRectFill(g_sContext.psDisplay, &g_sUSBStatsRect, ClrBlack);
                 GrContextForegroundSet(&g_sContext, ClrRed);
@@ -218,8 +212,7 @@ MouseHandler(void *pvCBData, uint32_t ui32Event,
         //
         // A report was sent to the host.  We are not free to send another.
         //
-        case USB_EVENT_TX_COMPLETE:
-        {
+        case USB_EVENT_TX_COMPLETE: {
             g_eMouseState = MOUSE_STATE_IDLE;
             break;
         }
@@ -253,13 +246,11 @@ MouseWaitForSendIdle(uint32_t ui32TimeoutTicks)
     ui32Start = g_ui32SysTickCount;
     ui32Elapsed = 0;
 
-    while(ui32Elapsed < ui32TimeoutTicks)
-    {
+    while(ui32Elapsed < ui32TimeoutTicks) {
         //
         // Is the mouse is idle, return immediately.
         //
-        if(g_eMouseState == MOUSE_STATE_IDLE)
-        {
+        if(g_eMouseState == MOUSE_STATE_IDLE) {
             return(true);
         }
 
@@ -269,7 +260,7 @@ MouseWaitForSendIdle(uint32_t ui32TimeoutTicks)
         //
         ui32Now = g_ui32SysTickCount;
         ui32Elapsed = ((ui32Start < ui32Now) ? (ui32Now - ui32Start) :
-                     (((uint32_t)0xFFFFFFFF - ui32Start) + ui32Now + 1));
+                       (((uint32_t)0xFFFFFFFF - ui32Start) + ui32Now + 1));
     }
 
     //
@@ -297,18 +288,14 @@ MouseMoveHandler(void)
     //
     bSendIt = MotionMouseGet(&i8DeltaX, &i8DeltaY, &ui8Buttons);
 
-    if((g_ui8Buttons & ALL_BUTTONS) != (g_ui8MouseButtonsPrev))
-    {
+    if((g_ui8Buttons & ALL_BUTTONS) != (g_ui8MouseButtonsPrev)) {
         bButtonChange = true;
         g_ui8MouseButtonsPrev = g_ui8Buttons;
-    }
-    else
-    {
+    } else {
         bButtonChange = false;
     }
 
-    if(bSendIt || bButtonChange)
-    {
+    if(bSendIt || bButtonChange) {
         //
         // Convert button presses from GPIO pin positions to mouse button bit
         // positions. Overrides Motion Button action (currently not
@@ -327,14 +314,12 @@ MouseMoveHandler(void)
         //
         // Did we schedule the report for transmission?
         //
-        if(ui32Retcode == MOUSE_SUCCESS)
-        {
+        if(ui32Retcode == MOUSE_SUCCESS) {
             //
             // Wait for the host to acknowledge the transmission if all went
             // well.
             //
-            if(!MouseWaitForSendIdle(MAX_SEND_DELAY))
-            {
+            if(!MouseWaitForSendIdle(MAX_SEND_DELAY)) {
                 //
                 // The transmission failed, so assume the host disconnected and
                 // go back to waiting for a new connection.
@@ -344,8 +329,7 @@ MouseMoveHandler(void)
                 //
                 // Display on LCD to show we are no longer connected to USB.
                 //
-                if(g_ui8PrevUSBDisplay != DISPLAY_USB_NOT_CONNECTED)
-                {
+                if(g_ui8PrevUSBDisplay != DISPLAY_USB_NOT_CONNECTED) {
                     g_ui8PrevUSBDisplay = DISPLAY_USB_NOT_CONNECTED;
                     DpyRectFill(g_sContext.psDisplay, &g_sUSBStatsRect,
                                 ClrBlack);
@@ -386,13 +370,11 @@ uint32_t
 KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
                 void *pvMsgData)
 {
-    switch (ui32Event)
-    {
+    switch (ui32Event) {
         //
         // The host has connected to us and configured the device.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             HWREGBITW(&g_ui32USBFlags, FLAG_CONNECTED) = 1;
             HWREGBITW(&g_ui32USBFlags, FLAG_SUSPENDED) = 0;
             g_eKeyboardState = KEYBOARD_STATE_IDLE;
@@ -400,8 +382,7 @@ KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
             //
             // Display on LCD to show we are connected to USB.
             //
-            if(g_ui8PrevUSBDisplay != DISPLAY_USB_CONNECTED)
-            {
+            if(g_ui8PrevUSBDisplay != DISPLAY_USB_CONNECTED) {
                 g_ui8PrevUSBDisplay = DISPLAY_USB_CONNECTED;
                 DpyRectFill(g_sContext.psDisplay, &g_sUSBStatsRect, ClrBlack);
                 GrContextForegroundSet(&g_sContext, ClrGreen);
@@ -419,16 +400,14 @@ KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // The host has disconnected from us.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             HWREGBITW(&g_ui32USBFlags, FLAG_CONNECTED) = 0;
             g_eKeyboardState = KEYBOARD_STATE_UNCONFIGURED;
 
             //
             // Display on LCD to show we are no longer connected to USB.
             //
-            if(g_ui8PrevUSBDisplay != DISPLAY_USB_NOT_CONNECTED)
-            {
+            if(g_ui8PrevUSBDisplay != DISPLAY_USB_NOT_CONNECTED) {
                 g_ui8PrevUSBDisplay = DISPLAY_USB_NOT_CONNECTED;
                 DpyRectFill(g_sContext.psDisplay, &g_sUSBStatsRect, ClrBlack);
                 GrContextForegroundSet(&g_sContext, ClrRed);
@@ -448,8 +427,7 @@ KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         // of a report. It is used here purely as a way of determining whether
         // the host is still talking to us or not.
         //
-        case USB_EVENT_TX_COMPLETE:
-        {
+        case USB_EVENT_TX_COMPLETE: {
             //
             // Enter the idle state since we finished sending something.
             //
@@ -460,8 +438,7 @@ KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // This event indicates that the host has suspended the USB bus.
         //
-        case USB_EVENT_SUSPEND:
-        {
+        case USB_EVENT_SUSPEND: {
             HWREGBITW(&g_ui32USBFlags, FLAG_SUSPENDED) = 1;
             break;
         }
@@ -469,8 +446,7 @@ KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // This event signals that the host has resumed signaling on the bus.
         //
-        case USB_EVENT_RESUME:
-        {
+        case USB_EVENT_RESUME: {
             HWREGBITW(&g_ui32USBFlags, FLAG_SUSPENDED) = 0;
             break;
         }
@@ -480,16 +456,14 @@ KeyboardHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         // Feature report and that the report is now in the buffer we provided
         // on the previous USBD_HID_EVENT_GET_REPORT_BUFFER callback.
         //
-        case USBD_HID_KEYB_EVENT_SET_LEDS:
-        {
+        case USBD_HID_KEYB_EVENT_SET_LEDS: {
             break;
         }
 
         //
         // We ignore all other events.
         //
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -522,13 +496,11 @@ KeyboardWaitForSendIdle(uint_fast32_t ui32TimeoutTicks)
     ui32Start = g_ui32SysTickCount;
     ui32Elapsed = 0;
 
-    while(ui32Elapsed < ui32TimeoutTicks)
-    {
+    while(ui32Elapsed < ui32TimeoutTicks) {
         //
         // Is the keyboard is idle, return immediately.
         //
-        if(g_eKeyboardState == KEYBOARD_STATE_IDLE)
-        {
+        if(g_eKeyboardState == KEYBOARD_STATE_IDLE) {
             return(true);
         }
 
@@ -538,7 +510,7 @@ KeyboardWaitForSendIdle(uint_fast32_t ui32TimeoutTicks)
         //
         ui32Now = g_ui32SysTickCount;
         ui32Elapsed = ((ui32Start < ui32Now) ? (ui32Now - ui32Start) :
-                     (((uint32_t)0xFFFFFFFF - ui32Start) + ui32Now + 1));
+                       (((uint32_t)0xFFFFFFFF - ui32Start) + ui32Now + 1));
     }
 
     //
@@ -564,23 +536,20 @@ uint32_t KeyboardStateChange(uint8_t ui8Modifiers, uint8_t ui8Usage,
     //
     g_eKeyboardState = KEYBOARD_STATE_SENDING;
     ui32RetCode = USBDHIDKeyboardKeyStateChange((void *)&g_sKeyboardDevice,
-                                                ui8Modifiers, ui8Usage,
-                                                bPressed);
+                  ui8Modifiers, ui8Usage,
+                  bPressed);
 
-    if(ui32RetCode == KEYB_SUCCESS)
-    {
+    if(ui32RetCode == KEYB_SUCCESS) {
         //
         // Wait until the key press message has been sent.
         //
-        if(!KeyboardWaitForSendIdle(MAX_SEND_DELAY))
-        {
+        if(!KeyboardWaitForSendIdle(MAX_SEND_DELAY)) {
             HWREGBITW(&g_ui32USBFlags, FLAG_CONNECTED) = 0;
 
             //
             // Display on LCD to show we are no longer connected to USB.
             //
-            if(g_ui8PrevUSBDisplay != DISPLAY_USB_NOT_CONNECTED)
-            {
+            if(g_ui8PrevUSBDisplay != DISPLAY_USB_NOT_CONNECTED) {
                 g_ui8PrevUSBDisplay = DISPLAY_USB_NOT_CONNECTED;
                 DpyRectFill(g_sContext.psDisplay, &g_sUSBStatsRect, ClrBlack);
                 GrContextForegroundSet(&g_sContext, ClrRed);
@@ -625,23 +594,18 @@ KeyboardMain(void)
     //
     // Check if the keyboard is in the suspended state.
     //
-    if(HWREGBITW(&g_ui32USBFlags, FLAG_SUSPENDED) == 1)
-    {
+    if(HWREGBITW(&g_ui32USBFlags, FLAG_SUSPENDED) == 1) {
         //
         // We are connected but keyboard is suspended so do wake request.
         //
         USBDHIDKeyboardRemoteWakeupRequest((void *)&g_sKeyboardDevice);
-    }
-    else
-    {
+    } else {
         if(MotionKeyboardGet(&ui8Modifiers, &ui8Key, &bModifierHold,
-                             &bKeyHold))
-        {
+                             &bKeyHold)) {
             //
             // Send the Keyboard Packet button presses.
             //
-            if(KeyboardStateChange(ui8Modifiers, ui8Key, true) != KEYB_SUCCESS)
-            {
+            if(KeyboardStateChange(ui8Modifiers, ui8Key, true) != KEYB_SUCCESS) {
                 return;
             }
 
@@ -651,8 +615,7 @@ KeyboardMain(void)
             //
             ROM_SysCtlDelay(g_ui32SysClock / (100 * 3));
             if(KeyboardStateChange(bModifierHold ? ui8Modifiers : 0,
-                                   ui8Key, bKeyHold) != KEYB_SUCCESS)
-            {
+                                   ui8Key, bKeyHold) != KEYB_SUCCESS) {
                 return;
             }
         }
@@ -669,13 +632,11 @@ uint32_t
 EventHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
              void *pvMsgData)
 {
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // The host has connected to us and configured the device.
         //
-        case USB_EVENT_CONNECTED:
-        {
+        case USB_EVENT_CONNECTED: {
             //
             // Now connected.
             //
@@ -684,8 +645,7 @@ EventHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
             //
             // Display on LCD to show we are connected to USB.
             //
-            if(g_ui8PrevUSBDisplay != DISPLAY_USB_CONNECTED)
-            {
+            if(g_ui8PrevUSBDisplay != DISPLAY_USB_CONNECTED) {
                 g_ui8PrevUSBDisplay = DISPLAY_USB_CONNECTED;
                 DpyRectFill(g_sContext.psDisplay, &g_sUSBStatsRect, ClrBlack);
                 GrContextForegroundSet(&g_sContext, ClrGreen);
@@ -715,8 +675,7 @@ EventHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
         //
         // Handle the disconnect state.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             //
             // No longer connected.
             //
@@ -725,8 +684,7 @@ EventHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
             //
             // Display on LCD to show we are no longer connected to USB.
             //
-            if(g_ui8PrevUSBDisplay != DISPLAY_USB_NOT_CONNECTED)
-            {
+            if(g_ui8PrevUSBDisplay != DISPLAY_USB_NOT_CONNECTED) {
                 g_ui8PrevUSBDisplay = DISPLAY_USB_NOT_CONNECTED;
                 DpyRectFill(g_sContext.psDisplay, &g_sUSBStatsRect, ClrBlack);
                 GrContextForegroundSet(&g_sContext, ClrRed);
@@ -741,8 +699,7 @@ EventHandler(void *pvCBData, uint32_t ui32Event, uint32_t ui32MsgData,
             break;
         }
 
-        default:
-        {
+        default: {
             break;
         }
     }

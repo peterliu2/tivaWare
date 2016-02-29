@@ -5,23 +5,23 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -33,7 +33,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -287,8 +287,7 @@ main(void)
     //
     // Initalize the receive buffer.
     //
-    for(ui32Index = 0; ui32Index < NUM_I2C_DATA; ui32Index++)
-    {
+    for(ui32Index = 0; ui32Index < NUM_I2C_DATA; ui32Index++) {
         pui32DataRx[ui32Index] = 0;
     }
 
@@ -300,8 +299,7 @@ main(void)
     //
     // Send 3 peices of I2C data from the master to the slave.
     //
-    for(ui32Index = 0; ui32Index < NUM_I2C_DATA; ui32Index++)
-    {
+    for(ui32Index = 0; ui32Index < NUM_I2C_DATA; ui32Index++) {
         //
         // Display the data that the I2C0 master is transferring.
         //
@@ -322,8 +320,7 @@ main(void)
         //
         // Wait until the slave has received and acknowledged the data.
         //
-        while(!(I2CSlaveStatus(I2C0_BASE) & I2C_SLAVE_ACT_RREQ))
-        {
+        while(!(I2CSlaveStatus(I2C0_BASE) & I2C_SLAVE_ACT_RREQ)) {
         }
 
         //
@@ -334,8 +331,7 @@ main(void)
         //
         // Wait until master module is done transferring.
         //
-        while(I2CMasterBusy(I2C0_BASE))
-        {
+        while(I2CMasterBusy(I2C0_BASE)) {
         }
 
         //
@@ -347,8 +343,7 @@ main(void)
     //
     // Reset receive buffer.
     //
-    for(ui32Index = 0; ui32Index < NUM_I2C_DATA; ui32Index++)
-    {
+    for(ui32Index = 0; ui32Index < NUM_I2C_DATA; ui32Index++) {
         pui32DataRx[ui32Index] = 0;
     }
 
@@ -372,12 +367,10 @@ main(void)
     // Dummy acknowledge and wait for the receive request from the master.
     // This is done to clear any flags that should not be set.
     //
-    while(!(I2CSlaveStatus(I2C0_BASE) & I2C_SLAVE_ACT_TREQ))
-    {
+    while(!(I2CSlaveStatus(I2C0_BASE) & I2C_SLAVE_ACT_TREQ)) {
     }
 
-    for(ui32Index = 0; ui32Index < NUM_I2C_DATA; ui32Index++)
-    {
+    for(ui32Index = 0; ui32Index < NUM_I2C_DATA; ui32Index++) {
         //
         // Display the data that I2C0 slave module is transferring.
         //
@@ -396,8 +389,7 @@ main(void)
         //
         // Wait until the slave is done sending data.
         //
-        while(!(I2CSlaveStatus(I2C0_BASE) & I2C_SLAVE_ACT_TREQ))
-        {
+        while(!(I2CSlaveStatus(I2C0_BASE) & I2C_SLAVE_ACT_TREQ)) {
         }
 
         //

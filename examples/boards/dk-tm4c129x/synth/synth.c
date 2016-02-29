@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -106,8 +106,7 @@
 // A structure that describes a key on the keyboard.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // The outline of the key.
     //
@@ -135,8 +134,7 @@ tKey;
 // The white keys on the keyboard.
 //
 //*****************************************************************************
-static const tKey g_psWhiteKeys[] =
-{
+static const tKey g_psWhiteKeys[] = {
     //
     // C4
     //
@@ -471,8 +469,7 @@ static const tKey g_psWhiteKeys[] =
 // The black keys on the keyboard.
 //
 //*****************************************************************************
-static const tKey g_psBlackKeys[] =
-{
+static const tKey g_psBlackKeys[] = {
     //
     // C#4
     //
@@ -683,9 +680,9 @@ static int16_t g_pi16AudioBuffer[AUDIO_SIZE];
 //*****************************************************************************
 static uint32_t g_ui32Flags;
 #define FLAG_PING               0           // The "ping" half of the sound
-                                            // buffer needs to be filled
+// buffer needs to be filled
 #define FLAG_PONG               1           // The "pong" half of the sound
-                                            // buffer needs to be filled
+// buffer needs to be filled
 
 //*****************************************************************************
 //
@@ -753,8 +750,7 @@ DrawWhiteKeys(tContext *pContext)
     //
     // Loop through the white keys.
     //
-    for(ui32Key = 0; ui32Key < NUM_WHITE_KEYS; ui32Key++)
-    {
+    for(ui32Key = 0; ui32Key < NUM_WHITE_KEYS; ui32Key++) {
         //
         // Select the color for the top and left edges of the white key.
         //
@@ -852,8 +848,7 @@ DrawBlackKeys(tContext *pContext)
     //
     // Loop through the black keys.
     //
-    for(ui32Key = 0; ui32Key < NUM_BLACK_KEYS; ui32Key++)
-    {
+    for(ui32Key = 0; ui32Key < NUM_BLACK_KEYS; ui32Key++) {
         //
         // Select the color for the top and left edges of the black key.
         //
@@ -931,15 +926,12 @@ SoundCallback(uint32_t ui32Half)
     //
     // See which half of the sound buffer has been played.
     //
-    if(ui32Half == 0)
-    {
+    if(ui32Half == 0) {
         //
         // The first half of the sound buffer needs to be filled.
         //
         HWREGBITW(&g_ui32Flags, FLAG_PING) = 1;
-    }
-    else
-    {
+    } else {
         //
         // The second half of the sound buffer needs to be filled.
         //
@@ -961,13 +953,11 @@ TouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
     //
     // See if this touch event occurred on one of the black keys.
     //
-    for(ui32Key = 0; ui32Key < NUM_BLACK_KEYS; ui32Key++)
-    {
+    for(ui32Key = 0; ui32Key < NUM_BLACK_KEYS; ui32Key++) {
         if((i32X >= g_psBlackKeys[ui32Key].sOutline.i16XMin) &&
-           (i32X <= g_psBlackKeys[ui32Key].sOutline.i16XMax) &&
-           (i32Y >= g_psBlackKeys[ui32Key].sOutline.i16YMin) &&
-           (i32Y <= g_psBlackKeys[ui32Key].sOutline.i16YMax))
-        {
+                (i32X <= g_psBlackKeys[ui32Key].sOutline.i16XMax) &&
+                (i32Y >= g_psBlackKeys[ui32Key].sOutline.i16YMin) &&
+                (i32Y <= g_psBlackKeys[ui32Key].sOutline.i16YMax)) {
             break;
         }
     }
@@ -975,27 +965,22 @@ TouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
     //
     // See if a match was found.
     //
-    if(ui32Key != NUM_BLACK_KEYS)
-    {
+    if(ui32Key != NUM_BLACK_KEYS) {
         //
         // The touch event occurred on one of the black keys.  Increment the
         // index by the number of white keys since they are listed first.
         //
         ui32Key += NUM_WHITE_KEYS;
-    }
-    else
-    {
+    } else {
         //
         // The touch event did not occur on one of the black keys.  Check the
         // white keys.
         //
-        for(ui32Key = 0; ui32Key < NUM_WHITE_KEYS; ui32Key++)
-        {
+        for(ui32Key = 0; ui32Key < NUM_WHITE_KEYS; ui32Key++) {
             if((i32X >= g_psWhiteKeys[ui32Key].sOutline.i16XMin) &&
-               (i32X <= g_psWhiteKeys[ui32Key].sOutline.i16XMax) &&
-               (i32Y >= g_psWhiteKeys[ui32Key].sOutline.i16YMin) &&
-               (i32Y <= g_psWhiteKeys[ui32Key].sOutline.i16YMax))
-            {
+                    (i32X <= g_psWhiteKeys[ui32Key].sOutline.i16XMax) &&
+                    (i32Y >= g_psWhiteKeys[ui32Key].sOutline.i16YMin) &&
+                    (i32Y <= g_psWhiteKeys[ui32Key].sOutline.i16YMax)) {
                 break;
             }
         }
@@ -1004,8 +989,7 @@ TouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
         // If the touch event did not occur on one of the white keys, set the
         // key number to a non-existant key.
         //
-        if(ui32Key == NUM_WHITE_KEYS)
-        {
+        if(ui32Key == NUM_WHITE_KEYS) {
             ui32Key += NUM_BLACK_KEYS;
         }
     }
@@ -1013,13 +997,11 @@ TouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
     //
     // Determine the message that is being sent.
     //
-    switch(ui32Message)
-    {
+    switch(ui32Message) {
         //
         // The user has just touched the screen.
         //
-        case WIDGET_MSG_PTR_DOWN:
-        {
+        case WIDGET_MSG_PTR_DOWN: {
             //
             // Save this key as the currently pressed key.
             //
@@ -1034,8 +1016,7 @@ TouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
         //
         // The user has moved the touch location on the screen.
         //
-        case WIDGET_MSG_PTR_MOVE:
-        {
+        case WIDGET_MSG_PTR_MOVE: {
             //
             // Save this key as the currently pressed key.
             //
@@ -1050,8 +1031,7 @@ TouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
         //
         // The user is no longer touching the screen.
         //
-        case WIDGET_MSG_PTR_UP:
-        {
+        case WIDGET_MSG_PTR_UP: {
             //
             // Indicate that no key is being pressed.
             //
@@ -1087,16 +1067,14 @@ GenerateAudio(int16_t *pi16Buffer, uint32_t ui32Count)
     //
     ui32Key = (ROM_GPIOPinRead(GPIO_PORTN_BASE, GPIO_PIN_3) |
                ROM_GPIOPinRead(GPIO_PORTE_BASE, GPIO_PIN_5));
-    if(ui32Key == GPIO_PIN_5)
-    {
+    if(ui32Key == GPIO_PIN_5) {
         //
         // The up botton is pressed and the down button is not pressed.
         // Therefore, turn up the volume.
         //
         SoundVolumeUp(1);
     }
-    if(ui32Key == GPIO_PIN_3)
-    {
+    if(ui32Key == GPIO_PIN_3) {
         //
         // The up botton is not pressed and the down button is pressed.
         // Therefore, turn down the volume.
@@ -1112,8 +1090,7 @@ GenerateAudio(int16_t *pi16Buffer, uint32_t ui32Count)
     //
     // See if this key is one of the white keys.
     //
-    if(ui32Key < NUM_WHITE_KEYS)
-    {
+    if(ui32Key < NUM_WHITE_KEYS) {
         //
         // Compute the step value required to generate this white key's
         // frequency.
@@ -1125,8 +1102,7 @@ GenerateAudio(int16_t *pi16Buffer, uint32_t ui32Count)
     //
     // See if this key is one of the black keys.
     //
-    else if(ui32Key < (NUM_WHITE_KEYS + NUM_BLACK_KEYS))
-    {
+    else if(ui32Key < (NUM_WHITE_KEYS + NUM_BLACK_KEYS)) {
         //
         // Compute the step value required to generate this black key's
         // frequency.
@@ -1139,8 +1115,7 @@ GenerateAudio(int16_t *pi16Buffer, uint32_t ui32Count)
     //
     // No key is being pressed.
     //
-    else
-    {
+    else {
         //
         // Do not generate any waveform.
         //
@@ -1150,13 +1125,11 @@ GenerateAudio(int16_t *pi16Buffer, uint32_t ui32Count)
     //
     // See if no key was previously pressed and no key is currently pressed.
     //
-    if((g_ui32AudioStep == 0) && (ui32NewStep == 0))
-    {
+    if((g_ui32AudioStep == 0) && (ui32NewStep == 0)) {
         //
         // Fill the buffer with silence.
         //
-        while(ui32Count--)
-        {
+        while(ui32Count--) {
             *pi16Buffer++ = 0;
         }
 
@@ -1169,8 +1142,7 @@ GenerateAudio(int16_t *pi16Buffer, uint32_t ui32Count)
     //
     // See if the same key as last time is pressed.
     //
-    if(g_ui32AudioStep == ui32NewStep)
-    {
+    if(g_ui32AudioStep == ui32NewStep) {
         //
         // Set the volume of the waveform generator to full volume.
         //
@@ -1181,8 +1153,7 @@ GenerateAudio(int16_t *pi16Buffer, uint32_t ui32Count)
     //
     // See if a key was previously pressed.
     //
-    else if(g_ui32AudioStep == 0)
-    {
+    else if(g_ui32AudioStep == 0) {
         //
         // There was not a previously pressed key, so ramp the volume of the
         // first waveform generator to full volume.
@@ -1199,8 +1170,7 @@ GenerateAudio(int16_t *pi16Buffer, uint32_t ui32Count)
     //
     // Otherwise there is already a key playing.
     //
-    else
-    {
+    else {
         //
         // Ramp the volume of the waveform generator to zero.
         //
@@ -1211,8 +1181,7 @@ GenerateAudio(int16_t *pi16Buffer, uint32_t ui32Count)
     //
     // Loop through the samples to be generated.
     //
-    while(ui32Count--)
-    {
+    while(ui32Count--) {
         //
         // Compute the value of the waveform.
         //
@@ -1232,12 +1201,10 @@ GenerateAudio(int16_t *pi16Buffer, uint32_t ui32Count)
         // Increment the waveform volume by the step.
         //
         i32Vol += i32VolStep;
-        if(i32Vol < 0)
-        {
+        if(i32Vol < 0) {
             i32Vol = 0;
         }
-        if(i32Vol > 1024)
-        {
+        if(i32Vol > 1024) {
             i32Vol = 1024;
         }
 
@@ -1245,12 +1212,10 @@ GenerateAudio(int16_t *pi16Buffer, uint32_t ui32Count)
         // Cilp the waveform to min/max if required.
         //
         i32Val /= 2;
-        if(i32Val > 32767)
-        {
+        if(i32Val > 32767) {
             i32Val = 32767;
         }
-        if(i32Val < -32768)
-        {
+        if(i32Val < -32768) {
             i32Val = -32768;
         }
 
@@ -1339,13 +1304,11 @@ main(void)
     //
     // Loop forever.
     //
-    while(1)
-    {
+    while(1) {
         //
         // See if the first half of the sound buffer needs to be filled.
         //
-        if(HWREGBITW(&g_ui32Flags, FLAG_PING) == 1)
-        {
+        if(HWREGBITW(&g_ui32Flags, FLAG_PING) == 1) {
             //
             // Synthesize new audio into the first half of the sound buffer.
             //
@@ -1360,8 +1323,7 @@ main(void)
         //
         // See if the second half of the sound buffer needs to be filled.
         //
-        if(HWREGBITW(&g_ui32Flags, FLAG_PONG) == 1)
-        {
+        if(HWREGBITW(&g_ui32Flags, FLAG_PONG) == 1) {
             //
             // Synthesize new audio into the second half of the sound buffer.
             //
@@ -1377,13 +1339,11 @@ main(void)
         //
         // See if a different key has been pressed.
         //
-        if(ui32OldKey != ui32NewKey)
-        {
+        if(ui32OldKey != ui32NewKey) {
             //
             // See if the old key was a white key.
             //
-            if(ui32OldKey < NUM_WHITE_KEYS)
-            {
+            if(ui32OldKey < NUM_WHITE_KEYS) {
                 //
                 // Redraw the face of the white key so that it no longer shows
                 // as being pressed.
@@ -1394,8 +1354,7 @@ main(void)
             //
             // See if the old key was a black key.
             //
-            else if(ui32OldKey < (NUM_WHITE_KEYS + NUM_BLACK_KEYS))
-            {
+            else if(ui32OldKey < (NUM_WHITE_KEYS + NUM_BLACK_KEYS)) {
                 //
                 // Redraw the face of the black key so that it no longer shows
                 // as being pressed.
@@ -1407,8 +1366,7 @@ main(void)
             //
             // See if the new key is a white key.
             //
-            if(ui32NewKey < NUM_WHITE_KEYS)
-            {
+            if(ui32NewKey < NUM_WHITE_KEYS) {
                 //
                 // Redraw the face of the white key so that it is shown as
                 // being pressed.
@@ -1419,8 +1377,7 @@ main(void)
             //
             // See if the new key is a black key.
             //
-            else if(ui32NewKey < (NUM_WHITE_KEYS + NUM_BLACK_KEYS))
-            {
+            else if(ui32NewKey < (NUM_WHITE_KEYS + NUM_BLACK_KEYS)) {
                 //
                 // Redraw the face of the black key so that it is shown as
                 // being pressed.

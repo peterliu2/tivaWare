@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -108,8 +108,7 @@ SysTickIntHandler(void)
     // If the USR_SW1 button has been pressed, and was previously not pressed,
     // start the process of changing the behavior of the JTAG pins.
     //
-    if(BUTTON_PRESSED(USR_SW1, ui8Buttons, ui8ButtonsChanged))
-    {
+    if(BUTTON_PRESSED(USR_SW1, ui8Buttons, ui8ButtonsChanged)) {
         //
         // Toggle the pin mode.
         //
@@ -118,8 +117,7 @@ SysTickIntHandler(void)
         //
         // See if the pins should be in JTAG or GPIO mode.
         //
-        if(g_ui32Mode == 0)
-        {
+        if(g_ui32Mode == 0) {
             //
             // Change PC0-3 into hardware (i.e. JTAG) pins.
             //
@@ -144,9 +142,7 @@ SysTickIntHandler(void)
             //
             ROM_GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0 | GPIO_PIN_1,
                              GPIO_PIN_0);
-        }
-        else
-        {
+        } else {
             //
             // Change PC0-3 into GPIO inputs.
             //
@@ -166,8 +162,8 @@ SysTickIntHandler(void)
             HWREG(GPIO_PORTC_BASE + GPIO_O_CR) = 0x00;
             HWREG(GPIO_PORTC_BASE + GPIO_O_LOCK) = 0;
             ROM_GPIOPinTypeGPIOInput(GPIO_PORTC_BASE, (GPIO_PIN_0 | GPIO_PIN_1 |
-                                                       GPIO_PIN_2 |
-                                                       GPIO_PIN_3));
+                                     GPIO_PIN_2 |
+                                     GPIO_PIN_3));
 
             //
             // Turn off the LED to indicate that the pins are in GPIO mode.
@@ -224,9 +220,9 @@ main(void)
     // Set the clocking to run directly from the crystal at 120MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN |
-                                             SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN |
+                                            SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
     //
     // Enable the peripherals used by this application.
     //
@@ -279,13 +275,11 @@ main(void)
     // current state of PC0-3; the handling of changing the JTAG pins to and
     // from GPIO mode is done in GPIO Interrupt Handler.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Wait until the pin mode changes.
         //
-        while(g_ui32Mode == ui32Mode)
-        {
+        while(g_ui32Mode == ui32Mode) {
         }
 
         //
@@ -297,15 +291,12 @@ main(void)
         //
         // See what the new pin mode was changed to.
         //
-        if(ui32Mode == 0)
-        {
+        if(ui32Mode == 0) {
             //
             // Indicate that PC0-3 are currently JTAG pins.
             //
             UARTprintf("Pins are JTAG\n");
-        }
-        else
-        {
+        } else {
             //
             // Indicate that PC0-3 are currently GPIO pins.
             //

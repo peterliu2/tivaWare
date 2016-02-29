@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -52,7 +52,7 @@
 #define EEPROM_EERDWRINC        0x400AF014  // EEPROM Read-Write with Increment
 #define EEPROM_EEDONE           0x400AF018  // EEPROM Done Status
 #define EEPROM_EESUPP           0x400AF01C  // EEPROM Support Control and
-                                            // Status
+// Status
 #define EEPROM_EEUNLOCK         0x400AF020  // EEPROM Unlock
 #define EEPROM_EEPROT           0x400AF030  // EEPROM Protection
 #define EEPROM_EEPASS0          0x400AF034  // EEPROM Password
@@ -111,7 +111,7 @@
 //*****************************************************************************
 #define EEPROM_EERDWRINC_VALUE_M                                              \
                                 0xFFFFFFFF  // EEPROM Read or Write Data with
-                                            // Increment
+// Increment
 #define EEPROM_EERDWRINC_VALUE_S                                              \
                                 0
 
@@ -151,15 +151,15 @@
 #define EEPROM_EEPROT_PROT_M    0x00000007  // Protection Control
 #define EEPROM_EEPROT_PROT_RWNPW                                              \
                                 0x00000000  // This setting is the default. If
-                                            // there is no password, the block
-                                            // is not protected and is readable
-                                            // and writable
+// there is no password, the block
+// is not protected and is readable
+// and writable
 #define EEPROM_EEPROT_PROT_RWPW 0x00000001  // If there is a password, the
-                                            // block is readable or writable
-                                            // only when unlocked
+// block is readable or writable
+// only when unlocked
 #define EEPROM_EEPROT_PROT_RONPW                                              \
                                 0x00000002  // If there is no password, the
-                                            // block is readable, not writable
+// block is readable, not writable
 #define EEPROM_EEPROT_ACC       0x00000008  // Access Control
 
 //*****************************************************************************

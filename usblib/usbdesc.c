@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -100,15 +100,13 @@ USBDescGetNum(tDescriptorHeader *psDesc,  uint32_t ui32Size,
     //
     // Keep looking through the supplied data until we reach the end.
     //
-    while(ui32TotLength < ui32Size)
-    {
+    while(ui32TotLength < ui32Size) {
         //
         // Does this descriptor match the type passed (if a specific type
         // has been specified)?
         //
         if((ui32Type == USB_DESC_ANY) ||
-           (psDescCheck->bDescriptorType == (uint8_t)(ui32Type & 0xFF)))
-        {
+                (psDescCheck->bDescriptorType == (uint8_t)(ui32Type & 0xFF))) {
             ui32Count++;
         }
 
@@ -166,21 +164,18 @@ USBDescGet(tDescriptorHeader *psDesc,  uint32_t ui32Size,
     //
     // Keep looking through the supplied data until we reach the end.
     //
-    while(ui32TotLength < ui32Size)
-    {
+    while(ui32TotLength < ui32Size) {
         //
         // Does this descriptor match the type passed (if a specific type
         // has been specified)?
         //
         if((ui32Type == USB_DESC_ANY) ||
-           (psDescCheck->bDescriptorType == (uint8_t)(ui32Type & 0xFF)))
-        {
+                (psDescCheck->bDescriptorType == (uint8_t)(ui32Type & 0xFF))) {
             //
             // We found a matching descriptor.  If our count matches the
             // supplied index, we are done so return the pointer.
             //
-            if(ui32Count == ui32Index)
-            {
+            if(ui32Count == ui32Index) {
                 return(psDescCheck);
             }
 
@@ -241,15 +236,13 @@ USBDescGetNumAlternateInterfaces(tConfigDescriptor *psConfig,
     //
     // Keep looking through the supplied data until we reach the end.
     //
-    while(ui32TotLength < (uint32_t)psConfig->wTotalLength)
-    {
+    while(ui32TotLength < (uint32_t)psConfig->wTotalLength) {
         //
         // Is this an interface descriptor with the required interface number?
         //
         if((psDescCheck->bDescriptorType == USB_DTYPE_INTERFACE) &&
-            (((tInterfaceDescriptor *)psDescCheck)->bInterfaceNumber ==
-             ui8InterfaceNumber))
-        {
+                (((tInterfaceDescriptor *)psDescCheck)->bInterfaceNumber ==
+                 ui8InterfaceNumber)) {
             //
             // Yes - increment our count.
             //
@@ -308,23 +301,20 @@ USBDescGetAlternateInterface(tConfigDescriptor *psConfig,
     //
     // Keep looking through the supplied data until we reach the end.
     //
-    while(ui32TotLength < (uint32_t)psConfig->wTotalLength)
-    {
+    while(ui32TotLength < (uint32_t)psConfig->wTotalLength) {
         //
         // Does this descriptor match the type passed (if a specific type
         // has been specified)?
         //
         if((psDescCheck->bDescriptorType == USB_DTYPE_INTERFACE) &&
-            (((tInterfaceDescriptor *)psDescCheck)->bInterfaceNumber ==
-             ui8InterfaceNumber))
-        {
+                (((tInterfaceDescriptor *)psDescCheck)->bInterfaceNumber ==
+                 ui8InterfaceNumber)) {
             //
             // This is an interface descriptor for interface
             // ui8InterfaceNumber.  Determine if this is the n-th one we have
             // found and, if so, return its pointer.
             //
-            if(ui32Count == ui32Index)
-            {
+            if(ui32Count == ui32Index) {
                 //
                 // Found it - return the pointer.
                 //
@@ -392,19 +382,16 @@ USBDescGetInterface(tConfigDescriptor *psConfig, uint32_t ui32Index,
     // If we are being told to ignore the alternate configuration, this boils
     // down to a very simple query.
     //
-    if(ui32Alt == USB_DESC_ANY)
-    {
+    if(ui32Alt == USB_DESC_ANY) {
         //
         // Return the ui32Index-th interface descriptor we find in the
         // configuration descriptor.
         //
         return((tInterfaceDescriptor *)USBDescGet(
-                          (tDescriptorHeader *)psConfig,
-                          (uint32_t)psConfig->wTotalLength,
-                          USB_DTYPE_INTERFACE, ui32Index));
-    }
-    else
-    {
+                   (tDescriptorHeader *)psConfig,
+                   (uint32_t)psConfig->wTotalLength,
+                   USB_DTYPE_INTERFACE, ui32Index));
+    } else {
         //
         // In this case, a specific alternate setting number is required.
         // Given that interface numbers are zero based indices, we can
@@ -454,21 +441,18 @@ USBDescGetInterfaceEndpoint(tInterfaceDescriptor *psInterface,
     //
     // Is the index passed valid?
     //
-    if(ui32Index >= psInterface->bNumEndpoints)
-    {
+    if(ui32Index >= psInterface->bNumEndpoints) {
         //
         // It's out of bounds so return a NULL.
         //
         return((tEndpointDescriptor *)0);
-    }
-    else
-    {
+    } else {
         //
         // Endpoint index is valid so find the descriptor.
         //
         return((tEndpointDescriptor *)USBDescGet(
-                         (tDescriptorHeader *)psInterface,
-                          ui32Size, USB_DTYPE_ENDPOINT, ui32Index));
+                   (tDescriptorHeader *)psInterface,
+                   ui32Size, USB_DTYPE_ENDPOINT, ui32Index));
     }
 }
 

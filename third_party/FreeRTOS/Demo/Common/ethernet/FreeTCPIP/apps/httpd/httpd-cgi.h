@@ -54,10 +54,9 @@ typedef				PT_THREAD( (*httpd_cgifunction) ( struct httpd_state *, char * ) );
 
 httpd_cgifunction	httpd_cgi( char *name );
 
-struct httpd_cgi_call
-{
-	const char				*name;
-	const httpd_cgifunction function;
+struct httpd_cgi_call {
+    const char				*name;
+    const httpd_cgifunction function;
 };
 
 /**

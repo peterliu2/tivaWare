@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Utility Library.
 //
 //*****************************************************************************
@@ -121,36 +121,29 @@ SoftwareUpdateUDPReceive(void *arg, struct udp_pcb *pcb, struct pbuf *p,
     // Check that the packet length is what we expect.  If not, ignore the
     // packet.
     //
-    if(p->len == MPACKET_LEN)
-    {
+    if(p->len == MPACKET_LEN) {
         //
         // The length matches so now look for the 6 byte header
         //
-        for(ui32Loop = 0; ui32Loop < MPACKET_HEADER_LEN; ui32Loop++)
-        {
+        for(ui32Loop = 0; ui32Loop < MPACKET_HEADER_LEN; ui32Loop++) {
             //
             // Does this header byte match the expected marker?
             //
-            if((*pi8Data & 0x000000FF)!= MPACKET_MARKER)
-            {
+            if((*pi8Data & 0x000000FF)!= MPACKET_MARKER) {
                 //
                 // No - free the buffer and return - this is not a packet
                 // we are interested in.
                 //
                 pbuf_free(p);
                 return;
-            }
-            else
-            {
+            } else {
                 //
                 // Byte matched so move on to the next one.
                 //
                 pi8Data++;
             }
         }
-    }
-    else
-    {
+    } else {
         //
         // No - free the buffer and return - this is not a packet
         // we are interested in.
@@ -169,27 +162,22 @@ SoftwareUpdateUDPReceive(void *arg, struct udp_pcb *pcb, struct pbuf *p,
     //
     // Loop through each of the expected MAC address copies.
     //
-    for(ui32Loop = 0; ui32Loop < MPACKET_MAC_REP; ui32Loop++)
-    {
+    for(ui32Loop = 0; ui32Loop < MPACKET_MAC_REP; ui32Loop++) {
         //
         // Loop through each byte of the MAC address in this
         // copy.
         //
-        for(ui32MACLoop = 0; ui32MACLoop < MPACKET_MAC_LEN; ui32MACLoop++)
-        {
+        for(ui32MACLoop = 0; ui32MACLoop < MPACKET_MAC_LEN; ui32MACLoop++) {
             //
             // Does the payload MAC address byte match what we expect?
             //
-            if((*pi8Data & 0x000000FF) != g_pui8MACAddr[ui32MACLoop])
-            {
+            if((*pi8Data & 0x000000FF) != g_pui8MACAddr[ui32MACLoop]) {
                 //
                 // No match - free the packet and return.
                 //
                 pbuf_free(p);
                 return;
-            }
-            else
-            {
+            } else {
                 //
                 // Byte matched so move on to the next one.
                 //
@@ -208,8 +196,7 @@ SoftwareUpdateUDPReceive(void *arg, struct udp_pcb *pcb, struct pbuf *p,
     // request targetted at this board.  Signal this to the application
     // if we have a valid callback pointer.
     //
-    if(g_pfnUpdateCallback)
-    {
+    if(g_pfnUpdateCallback) {
         g_pfnUpdateCallback();
     }
 }

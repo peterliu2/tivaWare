@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -121,19 +121,14 @@ LPTSTR GetSystemErrorString(DWORD dwError)
     dwRetcode = FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, "%0", dwError, 0,
                               g_pcErrorString, MAX_STRING_LEN, NULL);
 
-    if(dwRetcode == 0)
-    {
+    if(dwRetcode == 0) {
         return((LPTSTR)L"Unknown");
-    }
-    else
-    {
+    } else {
         //
         // Remove the trailing "\n\r" if present.
         //
-        if(dwRetcode >= 2)
-        {
-            if(g_pcErrorString[dwRetcode - 2] == '\r')
-            {
+        if(dwRetcode >= 2) {
+            if(g_pcErrorString[dwRetcode - 2] == '\r') {
                 g_pcErrorString[dwRetcode - 2] = '\0';
             }
         }
@@ -160,14 +155,13 @@ void UpdateThroughput(void)
     //
     GetSystemTime(&sSysTime);
     ulNow = (((((sSysTime.wHour * 60) +
-               sSysTime.wMinute) * 60) +
+                sSysTime.wMinute) * 60) +
               sSysTime.wSecond) * 1000) + sSysTime.wMilliseconds;
 
     //
     // If this is the first call, set the start time.
     //
-    if(ulStartTime == 0)
-    {
+    if(ulStartTime == 0) {
         ulStartTime = ulNow;
         ulLast = ulNow;
         return;
@@ -181,8 +175,7 @@ void UpdateThroughput(void)
     //
     // We dump a new measurement every second.
     //
-    if(ulElapsed > 1000)
-    {
+    if(ulElapsed > 1000) {
 
         //printf("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
         printf("\r%6dKbps Packets: %10d ", ((g_ulByteCount * 8) / ulElapsed), g_ulPacketCount);
@@ -231,16 +224,13 @@ int main(int argc, char *argv[])
     printf("\nBulk USB Device Example\n");
     printf(  "-----------------------\n\n");
     printf("Version %s\n\n", BLDVER);
-    if(!bEcho)
-    {
+    if(!bEcho) {
         printf("This is a partner application to the usb_dev_bulk example\n");
         printf("shipped with TivaWare software releases for USB-enabled\n");
         printf("boards. Strings entered here are sent to the board which\n");
         printf("inverts the case of the characters in the string and returns\n");
         printf("them to the host.\n\n");
-    }
-    else
-    {
+    } else {
         printf("If run with the \"-e\" command line switch, this application\n");
         printf("echoes all data received on the bulk IN endpoint to the bulk\n");
         printf("OUT endpoint.  This feature may be helpful during development\n");
@@ -256,38 +246,32 @@ int main(int argc, char *argv[])
                             (LPGUID)&(GUID_DEVINTERFACE_TIVA_BULK),
                             &bDriverInstalled);
 
-    if(hUSB)
-    {
+    if(hUSB) {
         //
         // Are we operating in echo mode or not? The "-e" parameter tells the
         // app to echo everything it receives back to the device unchanged.
         //
-        if(bEcho)
-        {
+        if(bEcho) {
             //
             // Yes - we are in echo mode.
             //
             printf("Running in echo mode. Press Ctrl+C to exit.\n\n");
 
-            while(1)
-            {
+            while(1) {
                 //
                 // Read a block of data from the device.
                 //
                 dwError = ReadUSBPacket(hUSB, szBuffer, ECHO_PACKET_SIZE, &ulRead,
                                         INFINITE, NULL);
 
-                if(dwError != ERROR_SUCCESS)
-                {
+                if(dwError != ERROR_SUCCESS) {
                     //
                     // We failed to read from the device.
                     //
                     printf("\n\nError %d (%S) reading from bulk IN pipe.\n", dwError,
                            GetSystemErrorString(dwError));
                     break;
-                }
-                else
-                {
+                } else {
                     //
                     // Update our byte and packet counters.
                     //
@@ -298,8 +282,7 @@ int main(int argc, char *argv[])
                     // Write the data back out to the device.
                     //
                     bResult = WriteUSBPacket(hUSB, szBuffer, ulRead, &ulWritten);
-                    if(!bResult)
-                    {
+                    if(!bResult) {
                         //
                         // We failed to write the data for some reason.
                         //
@@ -315,22 +298,18 @@ int main(int argc, char *argv[])
                     UpdateThroughput();
                 }
             }
-        }
-        else
-        {
+        } else {
             //
             // We are running in normal mode.  Keep sending and receiving
             // strings until the user indicates that it is time to exit.
             //
-            while(1)
-            {
+            while(1) {
 
                 //
                 // The device was found and successfully configured. Now get a string from
                 // the user...
                 //
-                do
-                {
+                do {
                     printf("\nEnter a string (EXIT to exit): ");
                     fgets(szBuffer, MAX_ENTRY_LEN, stdin);
                     printf("\n");
@@ -340,33 +319,27 @@ int main(int argc, char *argv[])
                     //
                     ulLength = (ULONG)strlen(szBuffer);
 
-                    if(ulLength <= 1)
-                    {
+                    if(ulLength <= 1) {
                         //
                         // The string is either nothing at all or a single '\n' so reprompt the user.
                         //
                         printf("\nPlease enter some text.\n");
                         ulLength = 0;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Get rid of the trailing '\n' if there is one there.
                         //
-                        if(szBuffer[ulLength - 1] == '\n')
-                        {
+                        if(szBuffer[ulLength - 1] == '\n') {
                             szBuffer[ulLength - 1] = '\0';
                             ulLength--;
                         }
                     }
-                }
-                while(ulLength == 0);
+                } while(ulLength == 0);
 
                 //
                 // Are we being asked to exit the application?
                 //
-                if(!(strcmp("EXIT", szBuffer)))
-                {
+                if(!(strcmp("EXIT", szBuffer))) {
                     //
                     // Yes - drop out and exit.
                     //
@@ -378,17 +351,14 @@ int main(int argc, char *argv[])
                 // Write the user's string to the device.
                 //
                 bResult = WriteUSBPacket(hUSB, szBuffer, ulLength, &ulWritten);
-                if(!bResult)
-                {
+                if(!bResult) {
                     //
                     // We failed to write the data for some reason.
                     //
                     dwError = GetLastError();
                     printf("Error %d (%S) writing to bulk OUT pipe.\n", dwError,
                            GetSystemErrorString(dwError));
-                }
-                else
-                {
+                } else {
                     //
                     // We wrote data successfully so now read it back.
                     //
@@ -401,16 +371,13 @@ int main(int argc, char *argv[])
                     dwError = ReadUSBPacket(hUSB, szBuffer, ulWritten, &ulRead,
                                             INFINITE, NULL);
 
-                    if(dwError != ERROR_SUCCESS)
-                    {
+                    if(dwError != ERROR_SUCCESS) {
                         //
                         // We failed to read from the device.
                         //
                         printf("Error %d (%S) reading from bulk IN pipe.\n", dwError,
                                GetSystemErrorString(dwError));
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Add a string terminator to the returned data (this
                         // should already be there but, just in case...)
@@ -424,9 +391,7 @@ int main(int argc, char *argv[])
                 }
             }
         }
-    }
-    else
-    {
+    } else {
         //
         // An error was reported while trying to connect to the device.
         //

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2009-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -42,8 +42,7 @@
 // This structure contains the details of a SSI tag.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // The text name of the tag.  If the name is "foo", it will appear in the
     // HTML source as "<!--#foo-->".
@@ -62,8 +61,7 @@ tSSITag;
 // The list of tags.
 //
 //*****************************************************************************
-const tSSITag g_psTags[] =
-{
+const tSSITag g_psTags[] = {
     { "linksent", (uint32_t *) &lwip_stats.link.xmit },
     { "linkrecv", (uint32_t *) &lwip_stats.link.recv },
     { "linkdrop", (uint32_t *) &lwip_stats.link.drop },
@@ -165,8 +163,7 @@ ToggleRateCGIHandler(int32_t i32Index, int32_t i32NumParams, char *ppcParam[],
     // Return a parameter error if the time parameter was not supplied or was
     // out of range.
     //
-    if(bParamError || (i32Rate < 1) || (i32Rate > 10000))
-    {
+    if(bParamError || (i32Rate < 1) || (i32Rate > 10000)) {
         return("/perror.htm");
     }
 
@@ -204,8 +201,7 @@ SpiderSpeedCGIHandler(int32_t i32Index, int32_t i32NumParams, char *ppcParam[],
     // Return a parameter error if the time parameter was not supplied or was
     // out of range.
     //
-    if(bParamError)
-    {
+    if(bParamError) {
         return("/perror.htm");
     }
 
@@ -225,8 +221,7 @@ SpiderSpeedCGIHandler(int32_t i32Index, int32_t i32NumParams, char *ppcParam[],
 // The array of CGI handlers, as required by the web server.
 //
 //*****************************************************************************
-static const tCGI g_psCGIs[] =
-{
+static const tCGI g_psCGIs[] = {
     { "/toggle_rate.cgi", ToggleRateCGIHandler },
     { "/spider_rate.cgi", SpiderSpeedCGIHandler }
 };
@@ -249,16 +244,13 @@ SSIHandler(int32_t i32Index, char *pcInsert, int32_t i32InsertLen)
     //
     // Replace the tag with an appropriate value.
     //
-    if(i32Index < NUM_TAGS)
-    {
+    if(i32Index < NUM_TAGS) {
         //
         // This is a valid tag, so print out its value.
         //
         usnprintf(pcInsert, i32InsertLen, "%d",
                   *(g_psTags[i32Index].pui32Value));
-    }
-    else
-    {
+    } else {
         //
         // This is an unknown tag.
         //
@@ -268,8 +260,7 @@ SSIHandler(int32_t i32Index, char *pcInsert, int32_t i32InsertLen)
     //
     // Determine the length of the replacement text.
     //
-    for(i32Index = 0; pcInsert[i32Index] != 0; i32Index++)
-    {
+    for(i32Index = 0; pcInsert[i32Index] != 0; i32Index++) {
     }
 
     //
@@ -306,8 +297,7 @@ SetupServices(void *pvArg)
     //
     // Initialize the tag array used by the web server's SSI processing.
     //
-    for(ui32Idx = 0; ui32Idx < NUM_TAGS; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < NUM_TAGS; ui32Idx++) {
         g_ppcSSITags[ui32Idx] = g_psTags[ui32Idx].pcName;
     }
 
@@ -337,8 +327,7 @@ lwIPTaskInit(void)
     // Get the MAC address from the user registers.
     //
     ROM_FlashUserGet(&ui32User0, &ui32User1);
-    if((ui32User0 == 0xffffffff) || (ui32User1 == 0xffffffff))
-    {
+    if((ui32User0 == 0xffffffff) || (ui32User1 == 0xffffffff)) {
         return(1);
     }
 

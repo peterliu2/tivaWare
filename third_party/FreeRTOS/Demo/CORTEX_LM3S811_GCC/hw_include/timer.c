@@ -434,16 +434,14 @@ TimerPrescaleSet(unsigned long ulBase, unsigned long ulTimer,
     //
     // Set the timer A prescaler if requested.
     //
-    if(ulTimer & TIMER_A)
-    {
+    if(ulTimer & TIMER_A) {
         HWREG(ulBase + TIMER_O_TAPR) = ulValue;
     }
 
     //
     // Set the timer B prescaler if requested.
     //
-    if(ulTimer & TIMER_B)
-    {
+    if(ulTimer & TIMER_B) {
         HWREG(ulBase + TIMER_O_TBPR) = ulValue;
     }
 }
@@ -518,16 +516,14 @@ TimerPrescaleMatchSet(unsigned long ulBase, unsigned long ulTimer,
     //
     // Set the timer A prescale match if requested.
     //
-    if(ulTimer & TIMER_A)
-    {
+    if(ulTimer & TIMER_A) {
         HWREG(ulBase + TIMER_O_TAPMR) = ulValue;
     }
 
     //
     // Set the timer B prescale match if requested.
     //
-    if(ulTimer & TIMER_B)
-    {
+    if(ulTimer & TIMER_B) {
         HWREG(ulBase + TIMER_O_TBPMR) = ulValue;
     }
 }
@@ -600,16 +596,14 @@ TimerLoadSet(unsigned long ulBase, unsigned long ulTimer,
     //
     // Set the timer A load value if requested.
     //
-    if(ulTimer & TIMER_A)
-    {
+    if(ulTimer & TIMER_A) {
         HWREG(ulBase + TIMER_O_TAILR) = ulValue;
     }
 
     //
     // Set the timer B load value if requested.
     //
-    if(ulTimer & TIMER_B)
-    {
+    if(ulTimer & TIMER_B) {
         HWREG(ulBase + TIMER_O_TBILR) = ulValue;
     }
 }
@@ -715,16 +709,14 @@ TimerMatchSet(unsigned long ulBase, unsigned long ulTimer,
     //
     // Set the timer A match value if requested.
     //
-    if(ulTimer & TIMER_A)
-    {
+    if(ulTimer & TIMER_A) {
         HWREG(ulBase + TIMER_O_TAMATCHR) = ulValue;
     }
 
     //
     // Set the timer B match value if requested.
     //
-    if(ulTimer & TIMER_B)
-    {
+    if(ulTimer & TIMER_B) {
         HWREG(ulBase + TIMER_O_TBMATCHR) = ulValue;
     }
 }
@@ -806,8 +798,7 @@ TimerIntRegister(unsigned long ulBase, unsigned long ulTimer,
     //
     // Register an interrupt handler for timer A if requested.
     //
-    if(ulTimer & TIMER_A)
-    {
+    if(ulTimer & TIMER_A) {
         //
         // Register the interrupt handler.
         //
@@ -822,8 +813,7 @@ TimerIntRegister(unsigned long ulBase, unsigned long ulTimer,
     //
     // Register an interrupt handler for timer B if requested.
     //
-    if(ulTimer & TIMER_B)
-    {
+    if(ulTimer & TIMER_B) {
         //
         // Register the interrupt handler.
         //
@@ -876,8 +866,7 @@ TimerIntUnregister(unsigned long ulBase, unsigned long ulTimer)
     //
     // Unregister the interrupt handler for timer A if requested.
     //
-    if(ulTimer & TIMER_A)
-    {
+    if(ulTimer & TIMER_A) {
         //
         // Disable the interrupt.
         //
@@ -892,8 +881,7 @@ TimerIntUnregister(unsigned long ulBase, unsigned long ulTimer)
     //
     // Unregister the interrupt handler for timer B if requested.
     //
-    if(ulTimer & TIMER_B)
-    {
+    if(ulTimer & TIMER_B) {
         //
         // Disable the interrupt.
         //

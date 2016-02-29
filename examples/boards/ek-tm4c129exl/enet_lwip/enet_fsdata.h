@@ -6,8 +6,7 @@
 //
 //***************************************************************************
 
-static const uint8_t data_404_htm[] =
-{
+static const uint8_t data_404_htm[] = {
     /* /404.htm */
     0x2f, 0x34, 0x30, 0x34, 0x2e, 0x68, 0x74, 0x6d,
     0x00,
@@ -40,8 +39,7 @@ static const uint8_t data_404_htm[] =
     0x0a,
 };
 
-static const uint8_t data_about_htm[] =
-{
+static const uint8_t data_about_htm[] = {
     /* /about.htm */
     0x2f, 0x61, 0x62, 0x6f, 0x75, 0x74, 0x2e, 0x68,
     0x74, 0x6d, 0x00,
@@ -264,8 +262,7 @@ static const uint8_t data_about_htm[] =
     0x68, 0x74, 0x6d, 0x6c, 0x3e, 0x0a,
 };
 
-static const uint8_t data_block_htm[] =
-{
+static const uint8_t data_block_htm[] = {
     /* /block.htm */
     0x2f, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x2e, 0x68,
     0x74, 0x6d, 0x00,
@@ -326,8 +323,7 @@ static const uint8_t data_block_htm[] =
     0x6c, 0x3e, 0x0a,
 };
 
-static const uint8_t data_block_jpg[] =
-{
+static const uint8_t data_block_jpg[] = {
     /* /block.jpg */
     0x2f, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x2e, 0x6a,
     0x70, 0x67, 0x00,
@@ -22865,8 +22861,7 @@ static const uint8_t data_block_jpg[] =
     0x9c, 0xff, 0xd9,
 };
 
-static const uint8_t data_block_tm4c129e_jpg[] =
-{
+static const uint8_t data_block_tm4c129e_jpg[] = {
     /* /block_tm4c129e.jpg */
     0x2f, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x5f, 0x74,
     0x6d, 0x34, 0x63, 0x31, 0x32, 0x39, 0x65, 0x2e,
@@ -47732,8 +47727,7 @@ static const uint8_t data_block_tm4c129e_jpg[] =
     0xd9,
 };
 
-static const uint8_t data_ek_tm4c1294xl_jpg[] =
-{
+static const uint8_t data_ek_tm4c1294xl_jpg[] = {
     /* /ek-tm4c1294xl.jpg */
     0x2f, 0x65, 0x6b, 0x2d, 0x74, 0x6d, 0x34, 0x63,
     0x31, 0x32, 0x39, 0x34, 0x78, 0x6c, 0x2e, 0x6a,
@@ -53572,8 +53566,7 @@ static const uint8_t data_ek_tm4c1294xl_jpg[] =
     0x38, 0xe7, 0x3f, 0xff, 0xd9,
 };
 
-static const uint8_t data_favicon_ico[] =
-{
+static const uint8_t data_favicon_ico[] = {
     /* /favicon.ico */
     0x2f, 0x66, 0x61, 0x76, 0x69, 0x63, 0x6f, 0x6e,
     0x2e, 0x69, 0x63, 0x6f, 0x00,
@@ -53794,8 +53787,7 @@ static const uint8_t data_favicon_ico[] =
     0x00, 0x00, 0xf0, 0xff, 0x00, 0x00,
 };
 
-static const uint8_t data_index_htm[] =
-{
+static const uint8_t data_index_htm[] = {
     /* /index.htm */
     0x2f, 0x69, 0x6e, 0x64, 0x65, 0x78, 0x2e, 0x68,
     0x74, 0x6d, 0x00,
@@ -54027,8 +54019,7 @@ static const uint8_t data_index_htm[] =
     0x2f, 0x68, 0x74, 0x6d, 0x6c, 0x3e, 0x0a,
 };
 
-static const uint8_t data_javascript_js[] =
-{
+static const uint8_t data_javascript_js[] = {
     /* /javascript.js */
     0x2f, 0x6a, 0x61, 0x76, 0x61, 0x73, 0x63, 0x72,
     0x69, 0x70, 0x74, 0x2e, 0x6a, 0x73, 0x00,
@@ -54176,8 +54167,7 @@ static const uint8_t data_javascript_js[] =
     0x7d, 0x0a,
 };
 
-static const uint8_t data_overview_htm[] =
-{
+static const uint8_t data_overview_htm[] = {
     /* /overview.htm */
     0x2f, 0x6f, 0x76, 0x65, 0x72, 0x76, 0x69, 0x65,
     0x77, 0x2e, 0x68, 0x74, 0x6d, 0x00,
@@ -54365,8 +54355,7 @@ static const uint8_t data_overview_htm[] =
     0x6d, 0x6c, 0x3e, 0x0a,
 };
 
-static const uint8_t data_styles_css[] =
-{
+static const uint8_t data_styles_css[] = {
     /* /styles.css */
     0x2f, 0x73, 0x74, 0x79, 0x6c, 0x65, 0x73, 0x2e,
     0x63, 0x73, 0x73, 0x00,
@@ -54561,14 +54550,13 @@ static const uint8_t data_styles_css[] =
     0x70, 0x3a, 0x20, 0x31, 0x70, 0x78, 0x20, 0x73,
     0x6f, 0x6c, 0x69, 0x64, 0x20, 0x23, 0x66, 0x66,
     0x30, 0x30, 0x30, 0x30, 0x3b, 0x0a, 0x7d, 0x0a,
-   
+
 };
 
-static const uint8_t data_ti_jpg[] =
-{
+static const uint8_t data_ti_jpg[] = {
     /* /ti.jpg */
     0x2f, 0x74, 0x69, 0x2e, 0x6a, 0x70, 0x67, 0x00,
-   
+
     0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, 0x4a, 0x46,
     0x49, 0x46, 0x00, 0x01, 0x01, 0x01, 0x00, 0x48,
     0x00, 0x48, 0x00, 0x00, 0xff, 0xdb, 0x00, 0x43,
@@ -55466,8 +55454,7 @@ static const uint8_t data_ti_jpg[] =
     0xfa, 0x3f, 0xff, 0xd9,
 };
 
-static const uint8_t data_tm4c_jpg[] =
-{
+static const uint8_t data_tm4c_jpg[] = {
     /* /tm4c.jpg */
     0x2f, 0x74, 0x6d, 0x34, 0x63, 0x2e, 0x6a, 0x70,
     0x67, 0x00,
@@ -55895,134 +55882,121 @@ static const uint8_t data_tm4c_jpg[] =
     0xd9,
 };
 
-const struct fsdata_file file_tm4c_jpg[] =
-{
-	{
-		NULL,
-		data_tm4c_jpg,
-		data_tm4c_jpg + 10,
-		sizeof(data_tm4c_jpg) - 10
-	}
+const struct fsdata_file file_tm4c_jpg[] = {
+    {
+        NULL,
+        data_tm4c_jpg,
+        data_tm4c_jpg + 10,
+        sizeof(data_tm4c_jpg) - 10
+    }
 };
 
-const struct fsdata_file file_ti_jpg[] =
-{
-	{
-		file_tm4c_jpg,
-		data_ti_jpg,
-		data_ti_jpg + 8,
-		sizeof(data_ti_jpg) - 8
-	}
+const struct fsdata_file file_ti_jpg[] = {
+    {
+        file_tm4c_jpg,
+        data_ti_jpg,
+        data_ti_jpg + 8,
+        sizeof(data_ti_jpg) - 8
+    }
 };
 
-const struct fsdata_file file_styles_css[] =
-{
-	{
-		file_ti_jpg,
-		data_styles_css,
-		data_styles_css + 12,
-		sizeof(data_styles_css) - 12
-	}
+const struct fsdata_file file_styles_css[] = {
+    {
+        file_ti_jpg,
+        data_styles_css,
+        data_styles_css + 12,
+        sizeof(data_styles_css) - 12
+    }
 };
 
-const struct fsdata_file file_overview_htm[] =
-{
-	{
-		file_styles_css,
-		data_overview_htm,
-		data_overview_htm + 14,
-		sizeof(data_overview_htm) - 14
-	}
+const struct fsdata_file file_overview_htm[] = {
+    {
+        file_styles_css,
+        data_overview_htm,
+        data_overview_htm + 14,
+        sizeof(data_overview_htm) - 14
+    }
 };
 
-const struct fsdata_file file_javascript_js[] =
-{
-	{
-		file_overview_htm,
-		data_javascript_js,
-		data_javascript_js + 15,
-		sizeof(data_javascript_js) - 15
-	}
+const struct fsdata_file file_javascript_js[] = {
+    {
+        file_overview_htm,
+        data_javascript_js,
+        data_javascript_js + 15,
+        sizeof(data_javascript_js) - 15
+    }
 };
 
-const struct fsdata_file file_index_htm[] =
-{
-	{
-		file_javascript_js,
-		data_index_htm,
-		data_index_htm + 11,
-		sizeof(data_index_htm) - 11
-	}
+const struct fsdata_file file_index_htm[] = {
+    {
+        file_javascript_js,
+        data_index_htm,
+        data_index_htm + 11,
+        sizeof(data_index_htm) - 11
+    }
 };
 
-const struct fsdata_file file_favicon_ico[] =
-{
-	{
-		file_index_htm,
-		data_favicon_ico,
-		data_favicon_ico + 13,
-		sizeof(data_favicon_ico) - 13
-	}
+const struct fsdata_file file_favicon_ico[] = {
+    {
+        file_index_htm,
+        data_favicon_ico,
+        data_favicon_ico + 13,
+        sizeof(data_favicon_ico) - 13
+    }
 };
 
-const struct fsdata_file file_ek_tm4c1294xl_jpg[] =
-{
-	{
-		file_favicon_ico,
-		data_ek_tm4c1294xl_jpg,
-		data_ek_tm4c1294xl_jpg + 19,
-		sizeof(data_ek_tm4c1294xl_jpg) - 19
-	}
+const struct fsdata_file file_ek_tm4c1294xl_jpg[] = {
+    {
+        file_favicon_ico,
+        data_ek_tm4c1294xl_jpg,
+        data_ek_tm4c1294xl_jpg + 19,
+        sizeof(data_ek_tm4c1294xl_jpg) - 19
+    }
 };
 
-const struct fsdata_file file_block_tm4c129e_jpg[] =
-{
-	{
-		file_ek_tm4c1294xl_jpg,
-		data_block_tm4c129e_jpg,
-		data_block_tm4c129e_jpg + 20,
-		sizeof(data_block_tm4c129e_jpg) - 20
-	}
+const struct fsdata_file file_block_tm4c129e_jpg[] = {
+    {
+        file_ek_tm4c1294xl_jpg,
+        data_block_tm4c129e_jpg,
+        data_block_tm4c129e_jpg + 20,
+        sizeof(data_block_tm4c129e_jpg) - 20
+    }
 };
 
-const struct fsdata_file file_block_jpg[] =
-{
-	{
-		file_block_tm4c129e_jpg,
-		data_block_jpg,
-		data_block_jpg + 11,
-		sizeof(data_block_jpg) - 11
-	}
+const struct fsdata_file file_block_jpg[] = {
+    {
+        file_block_tm4c129e_jpg,
+        data_block_jpg,
+        data_block_jpg + 11,
+        sizeof(data_block_jpg) - 11
+    }
 };
 
-const struct fsdata_file file_block_htm[] =
-{
-	{
-		file_block_jpg,
-		data_block_htm,
-		data_block_htm + 11,
-		sizeof(data_block_htm) - 11
-	}
+const struct fsdata_file file_block_htm[] = {
+    {
+        file_block_jpg,
+        data_block_htm,
+        data_block_htm + 11,
+        sizeof(data_block_htm) - 11
+    }
 };
 
-const struct fsdata_file file_about_htm[] =
-{
-	{
-		file_block_htm,
-		data_about_htm,
-		data_about_htm + 11,
-		sizeof(data_about_htm) - 11
-	}
+const struct fsdata_file file_about_htm[] = {
+    {
+        file_block_htm,
+        data_about_htm,
+        data_about_htm + 11,
+        sizeof(data_about_htm) - 11
+    }
 };
 
-const struct fsdata_file file_404_htm[] =
-{
-	{
-		file_about_htm,
-		data_404_htm,
-		data_404_htm + 9,
-		sizeof(data_404_htm) - 9
-	}
+const struct fsdata_file file_404_htm[] = {
+    {
+        file_about_htm,
+        data_404_htm,
+        data_404_htm + 9,
+        sizeof(data_404_htm) - 9
+    }
 };
 
 #define FS_ROOT file_404_htm

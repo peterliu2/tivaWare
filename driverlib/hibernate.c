@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2007-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Peripheral Driver Library.
 //
 //*****************************************************************************
@@ -109,8 +109,7 @@ _HibernateWriteComplete(void)
     //
     // Spin until the write complete bit is set.
     //
-    while(!(HWREG(HIB_CTL) & HIB_CTL_WRC))
-    {
+    while(!(HWREG(HIB_CTL) & HIB_CTL_WRC)) {
     }
 }
 
@@ -128,7 +127,7 @@ _HibernateWriteComplete(void)
 //! the system clock is the value returned by SysCtlClockGet() for TM4C123x
 //! devices or the value returned by SysCtlClockFreqSet() for TM4C129x devices,
 //! or it can be explicitly hard coded if it is constant and known (to save the
-//! code/execution overhead of a call to SysCtlClockGet() or fetch of the 
+//! code/execution overhead of a call to SysCtlClockGet() or fetch of the
 //! variable call holding the return value of SysCtlClockFreqSet()).
 //!
 //! \return None.
@@ -251,8 +250,7 @@ HibernateClockConfig(uint32_t ui32Config)
     // Must be sure that the 32KHz clock is enabled if the hibernate is about
     // to switch to it.
     //
-    if(ui32Config & HIBERNATE_OSC_LFIOSC)
-    {
+    if(ui32Config & HIBERNATE_OSC_LFIOSC) {
         ui32HIBCtl |= HIB_CTL_CLK32EN;
     }
 
@@ -270,8 +268,7 @@ HibernateClockConfig(uint32_t ui32Config)
     // Write the output clock configuration for devices that support
     // controlling the output clocks from the hibernate module.
     //
-    if(HIBERNATE_CLOCK_OUTPUT)
-    {
+    if(HIBERNATE_CLOCK_OUTPUT) {
         HWREG(HIB_CC) = ui32Config & (HIBERNATE_OUT_SYSCLK |
                                       HIBERNATE_OUT_ALT1CLK);
     }
@@ -444,16 +441,14 @@ HibernateWakeSet(uint32_t ui32WakeFlags)
     //
     // Write the hibernate IO register if requested.
     //
-    if(HIBERNATE_WAKE_IO)
-    {
+    if(HIBERNATE_WAKE_IO) {
         //
         // If the reset or GPIOs are begin used as a wake source then the
         // the VDD3ON needs to be set to allow the pads to remained
         // powered.
         //
         if((ui32WakeFlags & (HIBERNATE_WAKE_RESET | HIBERNATE_WAKE_GPIO)) &&
-           ((HWREG(HIB_CTL) & HIB_CTL_VDD3ON) == 0))
-        {
+                ((HWREG(HIB_CTL) & HIB_CTL_VDD3ON) == 0)) {
             //
             // Make sure that VDD3ON mode is enabled so that the pads can
             // retain their state.
@@ -474,8 +469,7 @@ HibernateWakeSet(uint32_t ui32WakeFlags)
         //
         // Spin until the write complete bit is set.
         //
-        while((HWREG(HIB_IO) & HIB_IO_IOWRC) == 0)
-        {
+        while((HWREG(HIB_IO) & HIB_IO_IOWRC) == 0) {
         }
 
         //
@@ -519,16 +513,13 @@ HibernateWakeGet(void)
     // Read the wake bits from the control register and return those bits to
     // the caller.
     //
-    if(HIBERNATE_WAKE_IO)
-    {
+    if(HIBERNATE_WAKE_IO) {
         ui32Ctrl = HWREG(HIB_CTL);
         return((ui32Ctrl & (HIBERNATE_WAKE_PIN | HIBERNATE_WAKE_RTC |
                             HIBERNATE_WAKE_LOW_BAT)) |
                ((HWREG(HIB_IO) << 16) & (HIBERNATE_WAKE_RESET |
                                          HIBERNATE_WAKE_GPIO)));
-    }
-    else
-    {
+    } else {
         return(HWREG(HIB_CTL) & (HIBERNATE_WAKE_PIN | HIBERNATE_WAKE_RTC |
                                  HIBERNATE_WAKE_LOW_BAT));
     }
@@ -895,8 +886,7 @@ HibernateDataSet(uint32_t *pui32Data, uint32_t ui32Count)
     //
     // Loop through all the words to be stored, storing one at a time.
     //
-    for(ui32Idx = 0; ui32Idx < ui32Count; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < ui32Count; ui32Idx++) {
         //
         // Write a word to the battery-backed storage area.
         //
@@ -941,8 +931,7 @@ HibernateDataGet(uint32_t *pui32Data, uint32_t ui32Count)
     //
     // Loop through all the words to be restored, reading one at a time.
     //
-    for(ui32Idx = 0; ui32Idx < ui32Count; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < ui32Count; ui32Idx++) {
         //
         // Read a word from the battery-backed storage area.  No delay is
         // required between reads.
@@ -1109,12 +1098,9 @@ _HibernateIntNumberGet(void)
     //
     // Find the valid interrupt number for the hibernate module.
     //
-    if(CLASS_IS_TM4C129)
-    {
+    if(CLASS_IS_TM4C129) {
         ui32Int = INT_HIBERNATE_TM4C129;
-    }
-    else
-    {
+    } else {
         ui32Int = INT_HIBERNATE_TM4C123;
     }
 
@@ -1224,12 +1210,9 @@ HibernateIntStatus(bool bMasked)
     //
     // Read and return the Hibernation module raw or masked interrupt status.
     //
-    if(bMasked == true)
-    {
+    if(bMasked == true) {
         return(HWREG(HIB_MIS));
-    }
-    else
-    {
+    } else {
         return(HWREG(HIB_RIS));
     }
 }
@@ -1400,8 +1383,7 @@ HibernateGPIORetentionGet(void)
     // Read the current GPIO retention configuration.
     //
     if((HWREG(HIB_CTL) & (HIB_CTL_RETCLR | HIB_CTL_VDD3ON)) ==
-       (HIB_CTL_RETCLR | HIB_CTL_VDD3ON))
-    {
+            (HIB_CTL_RETCLR | HIB_CTL_VDD3ON)) {
         return(true);
     }
     return(false);
@@ -1479,45 +1461,36 @@ _HibernateCalendarSet(uint32_t ui32Reg, struct tm *psTime)
     //
     // 24 Hour time is used directly for Calendar set.
     //
-    if(HWREG(HIB_CALCTL) & HIB_CALCTL_CAL24)
-    {
+    if(HWREG(HIB_CALCTL) & HIB_CALCTL_CAL24) {
         ui32Time |= (psTime->tm_hour << HIB_CALLD0_HR_S);
 
         //
         // for Calendar match, if it is every hour, AMPM bit should be clear
         //
-        if((ui32Reg == HIB_CALM0) && (psTime->tm_hour == 0xFF) )
-        {
+        if((ui32Reg == HIB_CALM0) && (psTime->tm_hour == 0xFF) ) {
             //
             // clear AMPM bit
             //
             ui32Time &= ~HIB_CAL0_AMPM;
         }
-    }
-    else
-    {
+    } else {
         //
         // In AM/PM time hours have to be capped at 12.
         // If the hours are all 1s, it means the match for the hour is
         // always true.  We need to set 1F in the hw field.
         //
-        if(psTime->tm_hour == 0xFF)
-        {
+        if(psTime->tm_hour == 0xFF) {
             //
             // Match every hour.
             //
             ui32Time |= HIB_CALLD0_HR_M;
-        }
-        else if(psTime->tm_hour >= 12)
-        {
+        } else if(psTime->tm_hour >= 12) {
             //
             // Need to set the PM bit if it is noon or later.
             //
             ui32Time |= (((psTime->tm_hour - 12) << HIB_CALLD0_HR_S) |
                          HIB_CAL0_AMPM);
-        }
-        else
-        {
+        } else {
             //
             // All other times are normal and AM.
             //
@@ -1528,8 +1501,7 @@ _HibernateCalendarSet(uint32_t ui32Reg, struct tm *psTime)
     //
     // Create the date in the correct register format.
     //
-    if(ui32Reg == HIB_CAL0)
-    {
+    if(ui32Reg == HIB_CAL0) {
         //
         // We must add 1 to the month, since the time structure lists
         // the month from 0 to 11 and the HIB lists it from 1 to 12.
@@ -1538,22 +1510,17 @@ _HibernateCalendarSet(uint32_t ui32Reg, struct tm *psTime)
                     ((psTime->tm_mon + 1) << HIB_CAL1_MON_S) |
                     (psTime->tm_wday << HIB_CAL1_DOW_S) |
                     ((psTime->tm_year - 100) << HIB_CAL1_YEAR_S));
-    }
-    else
-    {
+    } else {
         //
         // Wday, month and year are not included in the match
         // Functionality.
         //
-        if(psTime->tm_mday == 0xFF)
-        {
+        if(psTime->tm_mday == 0xFF) {
             //
             // program 0 to match every day
             //
             ui32Date = 0 << HIB_CAL1_DOM_M;
-        }
-        else
-        {
+        } else {
             ui32Date = (psTime->tm_mday << HIB_CAL1_DOM_S);
         }
     }
@@ -1561,8 +1528,7 @@ _HibernateCalendarSet(uint32_t ui32Reg, struct tm *psTime)
     //
     // Load register requires unlock.
     //
-    if(ui32Reg == HIB_CAL0)
-    {
+    if(ui32Reg == HIB_CAL0) {
         //
         // Unlock the hibernate counter load registers.
         //
@@ -1573,15 +1539,12 @@ _HibernateCalendarSet(uint32_t ui32Reg, struct tm *psTime)
     //
     // Set the requested time and date.
     //
-    if(ui32Reg == HIB_CAL0)
-    {
+    if(ui32Reg == HIB_CAL0) {
         HWREG(HIB_CALLD0) = ui32Time;
         _HibernateWriteComplete();
         HWREG(HIB_CALLD1) = ui32Date;
         _HibernateWriteComplete();
-    }
-    else
-    {
+    } else {
         HWREG(HIB_CALM0) = ui32Time;
         _HibernateWriteComplete();
         HWREG(HIB_CALM1) = ui32Date;
@@ -1591,8 +1554,7 @@ _HibernateCalendarSet(uint32_t ui32Reg, struct tm *psTime)
     //
     // Load register requires unlock.
     //
-    if(ui32Reg == HIB_CAL0)
-    {
+    if(ui32Reg == HIB_CAL0) {
         //
         // Lock the hibernate counter load registers.
         //
@@ -1670,29 +1632,24 @@ HibernateCalendarGet(struct tm *psTime)
     // Wait for the value to be valid, this should never be more than a few
     // loops and should never hang.
     //
-    do
-    {
+    do {
         ui32Date = HWREG(HIB_CAL1);
-    }
-    while((ui32Date & HIB_CAL1_VALID) == 0);
+    } while((ui32Date & HIB_CAL1_VALID) == 0);
 
     //
     // Wait for the value to be valid, this should never be more than a few
     // loops and should never hang.
     //
-    do
-    {
+    do {
         ui32Time = HWREG(HIB_CAL0);
-    }
-    while((ui32Time & HIB_CAL0_VALID) == 0);
+    } while((ui32Time & HIB_CAL0_VALID) == 0);
 
     //
     // The date changed after reading the time so fail this call and let the
     // application call again since it knows how int32_t to wait until another
     // second passes.
     //
-    if(ui32Date != HWREG(HIB_CAL1))
-    {
+    if(ui32Date != HWREG(HIB_CAL1)) {
         return(-1);
     }
 
@@ -1713,8 +1670,7 @@ HibernateCalendarGet(struct tm *psTime)
     // Fix up the hour in the non-24-hour mode and the time is in PM.
     //
     if(((HWREG(HIB_CALCTL) & HIB_CALCTL_CAL24) == 0) &&
-       (ui32Time & HIB_CAL0_AMPM))
-    {
+            (ui32Time & HIB_CAL0_AMPM)) {
         psTime->tm_hour += 12;
     }
 
@@ -1803,51 +1759,39 @@ HibernateCalendarMatchGet(uint32_t ui32Index, struct tm *psTime)
     //
     // Populate the date and time fields in the psTime structure.
     //
-    if((ui32Time & HIB_CAL0_MIN_M) == HIB_CAL0_MIN_M)
-    {
+    if((ui32Time & HIB_CAL0_MIN_M) == HIB_CAL0_MIN_M) {
         //
         // Match every minute
         //
         psTime->tm_min = 0xFF;
-    }
-    else
-    {
+    } else {
         psTime->tm_min = (ui32Time & HIB_CAL0_MIN_M) >> HIB_CAL0_MIN_S;
     }
 
-    if((ui32Time & HIB_CAL0_SEC_M) == HIB_CAL0_SEC_M)
-    {
+    if((ui32Time & HIB_CAL0_SEC_M) == HIB_CAL0_SEC_M) {
         //
         // Match every second
         //
         psTime->tm_sec = 0xFF;
-    }
-    else
-    {
+    } else {
         psTime->tm_sec = (ui32Time & HIB_CAL0_SEC_M) >> HIB_CAL0_SEC_S;
     }
 
-    if((ui32Time & HIB_CAL0_HR_M) == HIB_CAL0_HR_M)
-    {
+    if((ui32Time & HIB_CAL0_HR_M) == HIB_CAL0_HR_M) {
         //
         // Match every hour
         //
         psTime->tm_hour = 0xFF;
-    }
-    else
-    {
+    } else {
         psTime->tm_hour = (ui32Time & HIB_CAL0_HR_M) >> HIB_CAL0_HR_S;
     }
 
-    if((ui32Date & HIB_CAL1_DOM_M) == 0)
-    {
+    if((ui32Date & HIB_CAL1_DOM_M) == 0) {
         //
         // Match every day
         //
         psTime->tm_mday = 0xFF;
-    }
-    else
-    {
+    } else {
         psTime->tm_mday = (ui32Date & HIB_CAL1_DOM_M) >> HIB_CAL1_DOM_S;
     }
 
@@ -1855,8 +1799,7 @@ HibernateCalendarMatchGet(uint32_t ui32Index, struct tm *psTime)
     // Fix up the hour in the non-24-hour mode and the time is in PM.
     //
     if(((HWREG(HIB_CALCTL) & HIB_CALCTL_CAL24) == 0) &&
-       (ui32Time & HIB_CAL0_AMPM))
-    {
+            (ui32Time & HIB_CAL0_AMPM)) {
         psTime->tm_hour += 12;
     }
 }
@@ -2347,8 +2290,7 @@ HibernateTamperStatusGet(void)
     // The HW shows "disabled" with a zero value, use bit[0] as a flag
     // for this purpose.
     //
-    if((ui32Reg & HIB_TPSTAT_STATE_M) == 0)
-    {
+    if((ui32Reg & HIB_TPSTAT_STATE_M) == 0) {
         ui32Status |= HIBERNATE_TAMPER_STATUS_INACTIVE;
     }
 
@@ -2431,8 +2373,7 @@ HibernateTamperEventsGet(uint32_t ui32Index, uint32_t *pui32RTC,
     // Retrieve the event log data for the requested index if available.
     //
     ui32Reg = HWREG(HIB_TPLOG0 + ((ui32Index << 3) + 4));
-    if(ui32Reg == 0)
-    {
+    if(ui32Reg == 0) {
         //
         // No event data is available for this index.
         //
@@ -2454,10 +2395,8 @@ HibernateTamperEventsGet(uint32_t ui32Index, uint32_t *pui32RTC,
     // and in 24hr mode.
     //
     if((HWREG(HIB_CALCTL) & (HIB_CALCTL_CALEN | HIB_CALCTL_CAL24)) ==
-       (HIB_CALCTL_CALEN | HIB_CALCTL_CAL24))
-    {
-        if(HWREG(HIB_CAL0) & HIB_CAL0_AMPM)
-        {
+            (HIB_CALCTL_CALEN | HIB_CALCTL_CAL24)) {
+        if(HWREG(HIB_CAL0) & HIB_CAL0_AMPM) {
             //
             // Add 12 hour since it is PM
             //
@@ -2537,8 +2476,7 @@ bool
 HibernateTamperExtOscValid(void)
 {
     if(HibernateTamperStatusGet() & (HIBERNATE_TAMPER_STATUS_EXT_OSC_ACTIVE |
-                                     HIBERNATE_TAMPER_STATUS_EXT_OSC_VALID))
-    {
+                                     HIBERNATE_TAMPER_STATUS_EXT_OSC_VALID)) {
         return(true);
     }
 

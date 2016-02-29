@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2014-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -86,8 +86,7 @@ volatile int32_t g_i32PreviousScreenIdx = 0;
 // State information for the toggle buttons used in the settings panel.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // The outside area of the button.
     //
@@ -406,16 +405,14 @@ Canvas(g_sKeyboardBackground, WIDGET_ROOT, 0, &g_sKeyboardText,
 #define SCREEN_DETAILS          2
 #define SCREEN_KEYBOARD         3
 
-static struct
-{
+static struct {
     tWidget *psWidget;
     uint32_t ui32Up;
     uint32_t ui32Down;
     uint32_t ui32Left;
     uint32_t ui32Right;
 }
-g_sScreens[NUM_SCREENS] =
-{
+g_sScreens[NUM_SCREENS] = {
     {
         (tWidget *)&g_sSummaryBackground,
         SCREEN_SUMMARY, SCREEN_TI, SCREEN_DETAILS, SCREEN_DETAILS
@@ -444,8 +441,7 @@ static uint32_t g_i32ScreenIdx;
 // The state of the direction control for the application.
 //
 //*****************************************************************************
-static struct
-{
+static struct {
     //
     // The initial touch location.
     //
@@ -455,8 +451,7 @@ static struct
     //
     // The current movement that was detected.
     //
-    enum
-    {
+    enum {
         iSwipeUp,
         iSwipeDown,
         iSwipeLeft,
@@ -477,8 +472,7 @@ g_sSwipe;
 // The screen buttons state structure.
 //
 //*****************************************************************************
-struct
-{
+struct {
     //
     // Indicates if an on-screen buttons are enabled.
     //
@@ -517,25 +511,21 @@ HandleKeyboard(void)
     //
     // Nothing to do if the keyboard is not active.
     //
-    if(g_i32ScreenIdx != SCREEN_KEYBOARD)
-    {
+    if(g_i32ScreenIdx != SCREEN_KEYBOARD) {
         return;
     }
 
     //
     // If the mid value is hit then clear the cursor.
     //
-    if(g_ui32CursorDelay == KEYBOARD_BLINK_RATE / 2)
-    {
+    if(g_ui32CursorDelay == KEYBOARD_BLINK_RATE / 2) {
         GrContextForegroundSet(&g_sContext, ClrBlack);
 
         //
         // Keep the counter moving now that the clearing has been handled.
         //
         g_ui32CursorDelay--;
-    }
-    else if(g_ui32CursorDelay == 0)
-    {
+    } else if(g_ui32CursorDelay == 0) {
         GrContextForegroundSet(&g_sContext, ClrWhite);
 
         //
@@ -543,9 +533,7 @@ HandleKeyboard(void)
         // handled.
         //
         g_ui32CursorDelay = KEYBOARD_BLINK_RATE;
-    }
-    else
-    {
+    } else {
         return;
     }
 
@@ -564,22 +552,19 @@ HandleKeyboard(void)
 static void
 DrawButtons(int32_t i32Offset, bool bClear)
 {
-    static const tRectangle sRectTop =
-    {
+    static const tRectangle sRectTop = {
         140,
         BG_MIN_Y,
         171,
         BG_MIN_Y + 10,
     };
-    static const tRectangle sRectRight =
-    {
+    static const tRectangle sRectRight = {
         BG_MAX_X - 11,
         BG_MIN_Y - 20 + ((BG_MAX_Y - BG_MIN_Y) / 2),
         BG_MAX_X,
         BG_MIN_Y - 20 + ((BG_MAX_Y - BG_MIN_Y) / 2) + 40,
     };
-    static const tRectangle sRectLeft =
-    {
+    static const tRectangle sRectLeft = {
         BG_MIN_X,
         BG_MIN_Y - 20 + ((BG_MAX_Y - BG_MIN_Y) / 2),
         BG_MIN_X + 10,
@@ -589,24 +574,21 @@ DrawButtons(int32_t i32Offset, bool bClear)
     //
     // Only draw if they are enabled.
     //
-    if(g_sButtons.bEnabled == false)
-    {
+    if(g_sButtons.bEnabled == false) {
         return;
     }
 
     //
     // Draw the three pop up buttons.
     //
-    if(g_i32ScreenIdx == SCREEN_SUMMARY || g_i32ScreenIdx == SCREEN_DETAILS)
-    {
+    if(g_i32ScreenIdx == SCREEN_SUMMARY || g_i32ScreenIdx == SCREEN_DETAILS) {
         GrContextForegroundSet(&g_sContext, ClrBlack);
         GrContextBackgroundSet(&g_sContext, ClrGray);
 
         GrRectFill(&g_sContext, &sRectRight);
         GrRectFill(&g_sContext, &sRectLeft);
 
-        if(bClear == false)
-        {
+        if(bClear == false) {
             GrLineDrawH(&g_sContext, 140, 171, BG_MIN_Y + 10 + i32Offset);
 
             GrImageDraw(&g_sContext, g_pui8DownTabImage, 140,
@@ -620,18 +602,13 @@ DrawButtons(int32_t i32Offset, bool bClear)
                                    BG_MIN_X - i32Offset,
                                    BG_MIN_Y - 20 + ((BG_MAX_Y - BG_MIN_Y) / 2),
                                    1);
-        }
-        else
-        {
+        } else {
             GrRectFill(&g_sContext, &sRectTop);
         }
-    }
-    else if(g_i32ScreenIdx == SCREEN_TI)
-    {
+    } else if(g_i32ScreenIdx == SCREEN_TI) {
         GrContextForegroundSet(&g_sContext, ClrGray);
         GrContextBackgroundSet(&g_sContext, ClrWhite);
-        if(bClear == false)
-        {
+        if(bClear == false) {
             GrLineDrawH(&g_sContext, 140, 171, BG_MAX_Y - 11 - i32Offset);
             GrImageDraw(&g_sContext, g_pui8UpTabImage, 140,
                         BG_MAX_Y - 10 - i32Offset);
@@ -663,100 +640,65 @@ AnimatePanel(uint32_t ui32Color)
 
     GrContextForegroundSet(&g_sContext, ui32Color);
 
-    if(g_i32ScreenIdx == SCREEN_DETAILS)
-    {
-        for(i32Idx = BG_MAX_Y; i32Idx >= BG_MIN_Y; i32Idx--)
-        {
+    if(g_i32ScreenIdx == SCREEN_DETAILS) {
+        for(i32Idx = BG_MAX_Y; i32Idx >= BG_MIN_Y; i32Idx--) {
             GrLineDrawH(&g_sContext, BG_MIN_X, BG_MAX_X, i32Idx);
 
 
-            if(i32Idx == 40)
-            {
+            if(i32Idx == 40) {
                 WidgetPaint((tWidget *)&g_sHeaderTitle);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 70)
-            {
+            } else if(i32Idx == 70) {
                 WidgetPaint((tWidget *)&g_sHeaderLine1);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 100)
-            {
+            } else if(i32Idx == 100) {
                 WidgetPaint((tWidget *)&g_sHeaderLine2);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 130)
-            {
+            } else if(i32Idx == 130) {
                 WidgetPaint((tWidget *)&g_sHeaderLine3);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 160)
-            {
+            } else if(i32Idx == 160) {
                 WidgetPaint((tWidget *)&g_sHeaderLine4);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 190)
-            {
+            } else if(i32Idx == 190) {
                 WidgetPaint((tWidget *)&g_sHeaderLine5);
                 WidgetMessageQueueProcess();
             }
 
             SysCtlDelay(SCREEN_ANIMATE_DELAY);
         }
-    }
-    else if(g_i32ScreenIdx == SCREEN_SUMMARY)
-    {
-        for(i32Idx = BG_MAX_Y; i32Idx >= BG_MIN_Y; i32Idx--)
-        {
+    } else if(g_i32ScreenIdx == SCREEN_SUMMARY) {
+        for(i32Idx = BG_MAX_Y; i32Idx >= BG_MIN_Y; i32Idx--) {
             GrLineDrawH(&g_sContext, BG_MIN_X, BG_MAX_X, i32Idx);
 
-            if(i32Idx == 210)
-            {
+            if(i32Idx == 210) {
                 WidgetPaint((tWidget *)&g_sPayloadLine8);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 195)
-            {
+            } else if(i32Idx == 195) {
                 WidgetPaint((tWidget *)&g_sPayloadLine7);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 180)
-            {
+            } else if(i32Idx == 180) {
                 WidgetPaint((tWidget *)&g_sPayloadLine6);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 165)
-            {
+            } else if(i32Idx == 165) {
                 WidgetPaint((tWidget *)&g_sPayloadLine5);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 150)
-            {
+            } else if(i32Idx == 150) {
                 WidgetPaint((tWidget *)&g_sPayloadLine4);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 135)
-            {
+            } else if(i32Idx == 135) {
                 WidgetPaint((tWidget *)&g_sPayloadLine3);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 120)
-            {
+            } else if(i32Idx == 120) {
                 WidgetPaint((tWidget *)&g_sPayloadLine2);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 105)
-            {
+            } else if(i32Idx == 105) {
                 WidgetPaint((tWidget *)&g_sPayloadLine1);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 75)
-            {
+            } else if(i32Idx == 75) {
                 WidgetPaint((tWidget *)&g_sPayloadTitle);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 40)
-            {
+            } else if(i32Idx == 40) {
                 WidgetPaint((tWidget *)&g_sTag);
                 WidgetMessageQueueProcess();
                 WidgetPaint((tWidget *)&g_sTagTitle);
@@ -765,33 +707,23 @@ AnimatePanel(uint32_t ui32Color)
 
             SysCtlDelay(SCREEN_ANIMATE_DELAY);
         }
-    }
-    else if(g_i32ScreenIdx == SCREEN_TI)
-    {
-        for(i32Idx = BG_MIN_Y; i32Idx < BG_MAX_Y; i32Idx++)
-        {
+    } else if(g_i32ScreenIdx == SCREEN_TI) {
+        for(i32Idx = BG_MIN_Y; i32Idx < BG_MAX_Y; i32Idx++) {
             GrLineDrawH(&g_sContext, BG_MIN_X, BG_MAX_X, i32Idx);
 
-            if (i32Idx == 100)
-            {
+            if (i32Idx == 100) {
                 GrImageDraw(&g_sContext, g_pui8TILogo, BG_MIN_X,
-                        BG_MIN_Y);
-            }
-            else if(i32Idx == 140)
-            {
+                            BG_MIN_Y);
+            } else if(i32Idx == 140) {
                 WidgetPaint((tWidget *)&g_sStatusLine1);
                 WidgetMessageQueueProcess();
                 GrContextForegroundSet(&g_sContext, ui32Color);
-            }
-            else if(i32Idx == 170)
-            {
+            } else if(i32Idx == 170) {
                 //DrawToggle(&sProxyToggle, g_sConfig.bProxyEnabled);
                 WidgetPaint((tWidget *)&g_sStatusLine2);
                 GrContextForegroundSet(&g_sContext, ui32Color);
                 WidgetMessageQueueProcess();
-            }
-            else if(i32Idx == 230)
-            {
+            } else if(i32Idx == 230) {
                 WidgetPaint((tWidget *)&g_sTINFCButton);
                 WidgetPaint((tWidget *)&g_sEchoNFCButton);
                 GrContextForegroundSet(&g_sContext, ui32Color);
@@ -810,62 +742,50 @@ AnimatePanel(uint32_t ui32Color)
 void
 AnimateButtons(bool bInit)
 {
-    if(bInit)
-    {
+    if(bInit) {
         g_sButtons.i32X = 0;
         g_sButtons.i32Y = 0;
         g_sButtons.bEnabled = true;
         g_sButtons.bActive = false;
         g_sButtons.ui32Delay = 0;
-    }
-    else if(g_sButtons.bEnabled == false)
-    {
+    } else if(g_sButtons.bEnabled == false) {
         //
         // Just return if the buttons are not on screen.
         //
         return;
     }
 
-    if(g_sButtons.ui32Delay == 0)
-    {
+    if(g_sButtons.ui32Delay == 0) {
         g_sButtons.ui32Delay = 6;
 
         GrContextForegroundSet(&g_sContext, ClrBlack);
         GrContextBackgroundSet(&g_sContext, ClrGray);
 
-        if((bInit == false) || (g_sButtons.bActive == true))
-        {
+        if((bInit == false) || (g_sButtons.bActive == true)) {
             //
             // Update the buttons.
             //
             DrawButtons(g_sButtons.i32X - g_sButtons.i32Y, true);
 
-            if(g_sButtons.i32X < 3)
-            {
+            if(g_sButtons.i32X < 3) {
                 g_sButtons.i32X++;
-            }
-            else
-            {
+            } else {
                 g_sButtons.i32Y++;
             }
         }
 
-        if(g_sButtons.bActive == false)
-        {
+        if(g_sButtons.bActive == false) {
             //
             // Update the buttons.
             //
             DrawButtons(g_sButtons.i32X - g_sButtons.i32Y, false);
 
-            if(g_sButtons.i32Y >= 3)
-            {
+            if(g_sButtons.i32Y >= 3) {
                 g_sButtons.bActive = true;
                 g_sButtons.ui32Delay = 6;
             }
-        }
-        else if((g_i32ScreenIdx == SCREEN_SUMMARY) ||
-                (g_i32ScreenIdx == SCREEN_DETAILS))
-        {
+        } else if((g_i32ScreenIdx == SCREEN_SUMMARY) ||
+                  (g_i32ScreenIdx == SCREEN_DETAILS)) {
             ButtonsDisable();
         }
     }
@@ -879,8 +799,7 @@ AnimateButtons(bool bInit)
 void
 ClearScreen(tContext *psContext)
 {
-    static const tRectangle sRect =
-    {
+    static const tRectangle sRect = {
         0,
         0,
         319,
@@ -898,8 +817,7 @@ ClearScreen(tContext *psContext)
 void
 ClearBackground(tContext *psContext)
 {
-    static const tRectangle sRect =
-    {
+    static const tRectangle sRect = {
         BG_MIN_X,
         BG_MIN_Y,
         BG_MAX_X,
@@ -918,17 +836,13 @@ ClearBackground(tContext *psContext)
 void
 KeyEvent(tWidget *psWidget, uint32_t ui32Key, uint32_t ui32Event)
 {
-    switch(ui32Key)
-    {
+    switch(ui32Key) {
         //
         // Look for a backspace key press.
         //
-        case UNICODE_BACKSPACE:
-        {
-            if(ui32Event == KEYBOARD_EVENT_PRESS)
-            {
-                if(g_ui32StringIdx != 0)
-                {
+        case UNICODE_BACKSPACE: {
+            if(ui32Event == KEYBOARD_EVENT_PRESS) {
+                if(g_ui32StringIdx != 0) {
                     g_ui32StringIdx--;
                     g_pcKeyStr[g_ui32StringIdx] = 0;
                 }
@@ -947,10 +861,8 @@ KeyEvent(tWidget *psWidget, uint32_t ui32Key, uint32_t ui32Event)
         // Look for an enter/return key press.  This will exit the keyboard and
         // return to the current active screen.
         //
-        case UNICODE_RETURN:
-        {
-            if(ui32Event == KEYBOARD_EVENT_RELEASE)
-            {
+        case UNICODE_RETURN: {
+            if(ui32Event == KEYBOARD_EVENT_RELEASE) {
                 //
                 // Get rid of the keyboard widget.
                 //
@@ -966,13 +878,10 @@ KeyEvent(tWidget *psWidget, uint32_t ui32Key, uint32_t ui32Event)
                 // If returning to the main screen then re-draw the frame to
                 // indicate the main screen.
                 //
-                if(g_i32ScreenIdx == SCREEN_DETAILS)
-                {
+                if(g_i32ScreenIdx == SCREEN_DETAILS) {
                     FrameDraw(&g_sContext, "nfc-p2p-demo : Details");
                     WidgetPaint(g_sScreens[g_i32ScreenIdx].psWidget);
-                }
-                else if(g_i32ScreenIdx == SCREEN_TI)
-                {
+                } else if(g_i32ScreenIdx == SCREEN_TI) {
                     //
                     // Returning to the settings screen.
                     //
@@ -984,8 +893,7 @@ KeyEvent(tWidget *psWidget, uint32_t ui32Key, uint32_t ui32Event)
                 //
                 // Assumed Screen = SCREEN_SUMMARY
                 //
-                else
-                {
+                else {
                     FrameDraw(&g_sContext, "nfc-p2p-demo : Summary");
                     WidgetPaint(g_sScreens[g_i32ScreenIdx].psWidget);
                 }
@@ -1000,15 +908,12 @@ KeyEvent(tWidget *psWidget, uint32_t ui32Key, uint32_t ui32Event)
         //
         // If the key is not special then update the text string.
         //
-        default:
-        {
-            if(ui32Event == KEYBOARD_EVENT_PRESS)
-            {
+        default: {
+            if(ui32Event == KEYBOARD_EVENT_PRESS) {
                 //
                 // Set the string to the current string to be updated.
                 //
-                if(g_ui32StringIdx == 0)
-                {
+                if(g_ui32StringIdx == 0) {
                     CanvasTextSet(&g_sKeyboardText, g_pcKeyStr);
                 }
                 g_pcKeyStr[g_ui32StringIdx] = (char)ui32Key;
@@ -1055,15 +960,12 @@ DrawToggle(const tButtonToggle *psButton, bool bOn)
     GrContextForegroundSet(&g_sContext, ClrDarkGray);
     GrRectFill(&g_sContext, &psButton->sRectButton);
 
-    if(bOn)
-    {
+    if(bOn) {
         sRect.i16XMin += 2;
         sRect.i16YMin += 2;
         sRect.i16XMax -= 15;
         sRect.i16YMax -= 2;
-    }
-    else
-    {
+    } else {
         sRect.i16XMin += 15;
         sRect.i16YMin += 2;
         sRect.i16XMax -= 2;
@@ -1079,19 +981,15 @@ DrawToggle(const tButtonToggle *psButton, bool bOn)
     i16X = sRect.i16XMin + ((sRect.i16XMax - sRect.i16XMin) / 2);
     i16Y = sRect.i16YMin + ((sRect.i16YMax - sRect.i16YMin) / 2);
 
-    if(bOn)
-    {
+    if(bOn) {
         GrStringDrawCentered(&g_sContext, psButton->pcOn, -1, i16X, i16Y,
                              true);
-    }
-    else
-    {
+    } else {
         GrStringDrawCentered(&g_sContext, psButton->pcOff, -1, i16X, i16Y,
                              true);
     }
 
-    if(psButton->pcLabel)
-    {
+    if(psButton->pcLabel) {
         GrStringDraw(&g_sContext, psButton->pcLabel, -1,
                      psButton->sRectButton.i16XMax + 2,
                      psButton->sRectButton.i16YMin + 6,
@@ -1111,8 +1009,7 @@ SysTickIntHandler(void)
     //
     // Timeout for the screen saver.
     //
-    if(g_ui32ScreenSaver != 0)
-    {
+    if(g_ui32ScreenSaver != 0) {
         g_ui32ScreenSaver--;
     }
 
@@ -1120,8 +1017,7 @@ SysTickIntHandler(void)
     // Stop updating until the toggle event points have been handled.
     //
     if((g_ui32CursorDelay != 0) &&
-       (g_ui32CursorDelay != (KEYBOARD_BLINK_RATE / 2)))
-    {
+            (g_ui32CursorDelay != (KEYBOARD_BLINK_RATE / 2))) {
         g_ui32CursorDelay--;
     }
 }
@@ -1143,15 +1039,12 @@ TouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
     //
     g_ui32ScreenSaver =  60 * SYSTEM_TICK_S;
 
-    if(g_sSwipe.bEnable)
-    {
-        switch(ui32Message)
-        {
+    if(g_sSwipe.bEnable) {
+        switch(ui32Message) {
             //
             // The user has just touched the screen.
             //
-            case WIDGET_MSG_PTR_DOWN:
-            {
+            case WIDGET_MSG_PTR_DOWN: {
                 //
                 // Save this press location.
                 //
@@ -1167,8 +1060,7 @@ TouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
             //
             // The user has moved the touch location on the screen.
             //
-            case WIDGET_MSG_PTR_MOVE:
-            {
+            case WIDGET_MSG_PTR_MOVE: {
                 //
                 // Done handling this message.
                 //
@@ -1178,8 +1070,7 @@ TouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
             //
             // The user is no longer touching the screen.
             //
-            case WIDGET_MSG_PTR_UP:
-            {
+            case WIDGET_MSG_PTR_UP: {
                 //
                 // Indicate that no key is being pressed.
                 //
@@ -1190,46 +1081,31 @@ TouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
                 // Dead zone for just a button press.
                 //
                 if(((i32XDiff < SWIPE_MIN_DIFF) &&
-                    (i32XDiff > -SWIPE_MIN_DIFF)) &&
-                   ((i32YDiff < SWIPE_MIN_DIFF) &&
-                    (i32YDiff > -SWIPE_MIN_DIFF)))
-                {
-                    if(g_sButtons.bActive)
-                    {
+                        (i32XDiff > -SWIPE_MIN_DIFF)) &&
+                        ((i32YDiff < SWIPE_MIN_DIFF) &&
+                         (i32YDiff > -SWIPE_MIN_DIFF))) {
+                    if(g_sButtons.bActive) {
                         //
                         // Reset the delay.
                         //
                         g_sButtons.ui32Delay = 200;
 
-                        if(i32X < 30)
-                        {
+                        if(i32X < 30) {
                             g_sSwipe.eMovement = iSwipeRight;
-                        }
-                        else if(i32X > 290)
-                        {
+                        } else if(i32X > 290) {
                             g_sSwipe.eMovement = iSwipeLeft;
-                        }
-                        else if(i32Y < 40)
-                        {
+                        } else if(i32Y < 40) {
                             g_sSwipe.eMovement = iSwipeDown;
-                        }
-                        else if(i32Y > 200)
-                        {
+                        } else if(i32Y > 200) {
                             g_sSwipe.eMovement = iSwipeUp;
-                        }
-                        else
-                        {
+                        } else {
                             g_sSwipe.eMovement = iSwipeNone;
                         }
-                    }
-                    else
-                    {
-                        if(g_i32ScreenIdx == SCREEN_SUMMARY)
-                        {
+                    } else {
+                        if(g_i32ScreenIdx == SCREEN_SUMMARY) {
                             AnimateButtons(true);
                         }
-                        if(g_i32ScreenIdx == SCREEN_DETAILS)
-                        {
+                        if(g_i32ScreenIdx == SCREEN_DETAILS) {
                             AnimateButtons(true);
                         }
                     }
@@ -1239,25 +1115,16 @@ TouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
                 //
                 // If Y movement dominates then this is an up/down motion.
                 //
-                if(i32YDiff/i32XDiff)
-                {
-                    if(i32YDiff < 0)
-                    {
+                if(i32YDiff/i32XDiff) {
+                    if(i32YDiff < 0) {
                         g_sSwipe.eMovement = iSwipeUp;
-                    }
-                    else
-                    {
+                    } else {
                         g_sSwipe.eMovement = iSwipeDown;
                     }
-                }
-                else
-                {
-                    if(i32XDiff > 0)
-                    {
+                } else {
+                    if(i32XDiff > 0) {
                         g_sSwipe.eMovement = iSwipeRight;
-                    }
-                    else
-                    {
+                    } else {
                         g_sSwipe.eMovement = iSwipeLeft;
                     }
                 }
@@ -1284,35 +1151,28 @@ HandleMovement(void)
 {
     uint32_t ui32NewIdx;
 
-    if(g_sSwipe.eMovement != iSwipeNone)
-    {
-        switch(g_sSwipe.eMovement)
-        {
-            case iSwipeUp:
-            {
+    if(g_sSwipe.eMovement != iSwipeNone) {
+        switch(g_sSwipe.eMovement) {
+            case iSwipeUp: {
                 ui32NewIdx = g_sScreens[g_i32ScreenIdx].ui32Up;
                 break;
             }
-            case iSwipeDown:
-            {
+            case iSwipeDown: {
                 ui32NewIdx = g_sScreens[g_i32ScreenIdx].ui32Down;
 
                 break;
             }
-            case iSwipeRight:
-            {
+            case iSwipeRight: {
                 ui32NewIdx = g_sScreens[g_i32ScreenIdx].ui32Left;
 
                 break;
             }
-            case iSwipeLeft:
-            {
+            case iSwipeLeft: {
                 ui32NewIdx = g_sScreens[g_i32ScreenIdx].ui32Right;
 
                 break;
             }
-            default:
-            {
+            default: {
                 ui32NewIdx = g_i32ScreenIdx;
                 break;
             }
@@ -1321,8 +1181,7 @@ HandleMovement(void)
         //
         // Check if the panel has changed.
         //
-        if(ui32NewIdx != g_i32ScreenIdx)
-        {
+        if(ui32NewIdx != g_i32ScreenIdx) {
             //
             // Remove the current widget.
             //
@@ -1337,8 +1196,7 @@ HandleMovement(void)
             //
             ButtonsDisable();
 
-            if(g_i32ScreenIdx == SCREEN_SUMMARY)
-            {
+            if(g_i32ScreenIdx == SCREEN_SUMMARY) {
                 //
                 // Update the frame.
                 //
@@ -1350,9 +1208,7 @@ HandleMovement(void)
                 AnimatePanel(TI_BLACK);
 
                 AnimateButtons(true);
-            }
-            else if(g_i32ScreenIdx == SCREEN_DETAILS)
-            {
+            } else if(g_i32ScreenIdx == SCREEN_DETAILS) {
                 //
                 // Update the frame.
                 //
@@ -1365,9 +1221,7 @@ HandleMovement(void)
 
                 AnimateButtons(true);
 
-            }
-            else if(g_i32ScreenIdx == SCREEN_TI)
-            {
+            } else if(g_i32ScreenIdx == SCREEN_TI) {
                 //
                 // Update the frame.
                 //
@@ -1479,8 +1333,7 @@ ScreenPeriodic(void)
     //
     // If nothing has happened for awhile, then move to a new city.
     //
-    if(g_ui32ScreenSaver == 0)
-    {
+    if(g_ui32ScreenSaver == 0) {
         //
         // Reset the timeout for 10s to update the screen more often.
         //
@@ -1508,8 +1361,7 @@ ScreenRefresh(void)
     //
     // Repaint All relevant info to screen
     //
-    if(g_i32ScreenIdx == SCREEN_SUMMARY)
-    {
+    if(g_i32ScreenIdx == SCREEN_SUMMARY) {
         WidgetPaint((tWidget *)&g_sTag);
         WidgetPaint((tWidget *)&g_sPayloadLine1);
         WidgetPaint((tWidget *)&g_sPayloadLine2);
@@ -1519,14 +1371,10 @@ ScreenRefresh(void)
         WidgetPaint((tWidget *)&g_sPayloadLine6);
         WidgetPaint((tWidget *)&g_sPayloadLine7);
         WidgetPaint((tWidget *)&g_sPayloadLine8);
-    }
-    else if(g_i32ScreenIdx == SCREEN_DETAILS)
-    {
+    } else if(g_i32ScreenIdx == SCREEN_DETAILS) {
         g_sSwipe.eMovement = iSwipeLeft;
         HandleMovement();
-    }
-    else if(g_i32ScreenIdx == SCREEN_TI)
-    {
+    } else if(g_i32ScreenIdx == SCREEN_TI) {
         g_sSwipe.eMovement = iSwipeUp;
         HandleMovement();
     }
@@ -1546,8 +1394,7 @@ void
 ScreenClear(void)
 {
     uint32_t x=0;
-    for(x=0;x<60;x++)
-    {
+    for(x=0; x<60; x++) {
         g_pcPayloadLine1[x]=0;
         g_pcPayloadLine2[x]=0;
         g_pcPayloadLine3[x]=0;
@@ -1577,122 +1424,89 @@ ScreenPayloadWrite(uint8_t * source, uint32_t length, uint32_t index)
 {
     uint32_t x=0;
 
-    switch(index)
-    {
-        case 1:
-        {
-                if((length-x) < SCREEN_LINELENGTH)
-                {
-                    ustrncpy(g_pcPayloadLine1,(char *)source+x, length-x);
-                    return;
-                }
-                else
-                {
-                    ustrncpy(g_pcPayloadLine1,(char *)source+x,
-                                SCREEN_LINELENGTH);
-                }
-                x=x+SCREEN_LINELENGTH;
+    switch(index) {
+        case 1: {
+            if((length-x) < SCREEN_LINELENGTH) {
+                ustrncpy(g_pcPayloadLine1,(char *)source+x, length-x);
+                return;
+            } else {
+                ustrncpy(g_pcPayloadLine1,(char *)source+x,
+                         SCREEN_LINELENGTH);
+            }
+            x=x+SCREEN_LINELENGTH;
         }
         default:
-        case 2:
-        {
-                if((length-x) < SCREEN_LINELENGTH)
-                {
-                    ustrncpy(g_pcPayloadLine2,(char *)source+x, length-x);
-                    return;
-                }
-                else
-                {
-                    ustrncpy(g_pcPayloadLine2,(char *)source+x,
-                                SCREEN_LINELENGTH);
-                }
-                x=x+SCREEN_LINELENGTH;
+        case 2: {
+            if((length-x) < SCREEN_LINELENGTH) {
+                ustrncpy(g_pcPayloadLine2,(char *)source+x, length-x);
+                return;
+            } else {
+                ustrncpy(g_pcPayloadLine2,(char *)source+x,
+                         SCREEN_LINELENGTH);
+            }
+            x=x+SCREEN_LINELENGTH;
         }
-        case 3:
-        {
-                if((length-x) < SCREEN_LINELENGTH)
-                {
-                    ustrncpy(g_pcPayloadLine3,(char *)source+x, length-x);
-                    return;
-                }
-                else
-                {
-                    ustrncpy(g_pcPayloadLine3,(char *)source+x,
-                                SCREEN_LINELENGTH);
-                }
-                x=x+SCREEN_LINELENGTH;
+        case 3: {
+            if((length-x) < SCREEN_LINELENGTH) {
+                ustrncpy(g_pcPayloadLine3,(char *)source+x, length-x);
+                return;
+            } else {
+                ustrncpy(g_pcPayloadLine3,(char *)source+x,
+                         SCREEN_LINELENGTH);
+            }
+            x=x+SCREEN_LINELENGTH;
         }
-        case 4:
-        {
-                if((length-x) < SCREEN_LINELENGTH)
-                {
-                    ustrncpy(g_pcPayloadLine4,(char *)source+x, length-x);
-                    return;
-                }
-                else
-                {
-                    ustrncpy(g_pcPayloadLine4,(char *)source+x,
-                                SCREEN_LINELENGTH);
-                }
-                x=x+SCREEN_LINELENGTH;
+        case 4: {
+            if((length-x) < SCREEN_LINELENGTH) {
+                ustrncpy(g_pcPayloadLine4,(char *)source+x, length-x);
+                return;
+            } else {
+                ustrncpy(g_pcPayloadLine4,(char *)source+x,
+                         SCREEN_LINELENGTH);
+            }
+            x=x+SCREEN_LINELENGTH;
         }
-        case 5:
-        {
-                if((length-x) < SCREEN_LINELENGTH)
-                {
-                    ustrncpy(g_pcPayloadLine5,(char *)source+x, length-x);
-                    return;
-                }
-                else
-                {
-                    ustrncpy(g_pcPayloadLine5,(char *)source+x,
-                                SCREEN_LINELENGTH);
-                }
-                x=x+SCREEN_LINELENGTH;
+        case 5: {
+            if((length-x) < SCREEN_LINELENGTH) {
+                ustrncpy(g_pcPayloadLine5,(char *)source+x, length-x);
+                return;
+            } else {
+                ustrncpy(g_pcPayloadLine5,(char *)source+x,
+                         SCREEN_LINELENGTH);
+            }
+            x=x+SCREEN_LINELENGTH;
         }
-        case 6:
-        {
-                if((length-x) < SCREEN_LINELENGTH)
-                {
-                    ustrncpy(g_pcPayloadLine6,(char *)source+x, length-x);
-                    return;
-                }
-                else
-                {
-                    ustrncpy(g_pcPayloadLine6,(char *)source+x,
-                                SCREEN_LINELENGTH);
-                }
-                x=x+SCREEN_LINELENGTH;
+        case 6: {
+            if((length-x) < SCREEN_LINELENGTH) {
+                ustrncpy(g_pcPayloadLine6,(char *)source+x, length-x);
+                return;
+            } else {
+                ustrncpy(g_pcPayloadLine6,(char *)source+x,
+                         SCREEN_LINELENGTH);
+            }
+            x=x+SCREEN_LINELENGTH;
         }
-        case 7:
-        {
-                if((length-x) < SCREEN_LINELENGTH)
-                {
-                    ustrncpy(g_pcPayloadLine7,(char *)source+x, length-x);
-                    return;
-                }
-                else
-                {
-                    ustrncpy(g_pcPayloadLine7,(char *)source+x,
-                                SCREEN_LINELENGTH);
-                }
-                x=x+SCREEN_LINELENGTH;
+        case 7: {
+            if((length-x) < SCREEN_LINELENGTH) {
+                ustrncpy(g_pcPayloadLine7,(char *)source+x, length-x);
+                return;
+            } else {
+                ustrncpy(g_pcPayloadLine7,(char *)source+x,
+                         SCREEN_LINELENGTH);
+            }
+            x=x+SCREEN_LINELENGTH;
         }
-        case 8:
-        {
-                if((length-x) < SCREEN_LINELENGTH)
-                {
-                    ustrncpy(g_pcPayloadLine8,(char *)source+x, length-x);
-                    return;
-                }
-                else
-                {
-                    ustrncpy(g_pcPayloadLine8,(char *)source+x,
-                                SCREEN_LINELENGTH);
-                }
+        case 8: {
+            if((length-x) < SCREEN_LINELENGTH) {
+                ustrncpy(g_pcPayloadLine8,(char *)source+x, length-x);
+                return;
+            } else {
+                ustrncpy(g_pcPayloadLine8,(char *)source+x,
+                         SCREEN_LINELENGTH);
+            }
         }
     }
-        return;
+    return;
 }
 
 //*****************************************************************************

@@ -28,8 +28,7 @@
 // the USB bulk device.
 //
 //****************************************************************************
-typedef struct
-{
+typedef struct {
     HANDLE deviceHandle;
     WINUSB_INTERFACE_HANDLE winUSBHandle;
     UCHAR deviceSpeed;
@@ -70,8 +69,8 @@ tDeviceInfoWinUSB devInfo;
 //     the device path.
 //****************************************************************************
 static DWORD GetDevicePath(LPGUID InterfaceGuid,
-                    PCHAR  pcDevicePath,
-                    size_t BufLen)
+                           PCHAR  pcDevicePath,
+                           size_t BufLen)
 {
     BOOL bResult = FALSE;
     HDEVINFO deviceInfo;
@@ -88,8 +87,7 @@ static DWORD GetDevicePath(LPGUID InterfaceGuid,
     deviceInfo = SetupDiGetClassDevs(InterfaceGuid,
                                      NULL, NULL,
                                      DIGCF_PRESENT | DIGCF_DEVICEINTERFACE);
-    if(deviceInfo == INVALID_HANDLE_VALUE)
-    {
+    if(deviceInfo == INVALID_HANDLE_VALUE) {
         //
         // No device offering the required interface is present. Has the
         // interface been installed? Ask for the information set for all
@@ -98,12 +96,9 @@ static DWORD GetDevicePath(LPGUID InterfaceGuid,
         deviceInfo = SetupDiGetClassDevs(InterfaceGuid,
                                          NULL, NULL,
                                          DIGCF_DEVICEINTERFACE);
-        if(deviceInfo == INVALID_HANDLE_VALUE)
-        {
+        if(deviceInfo == INVALID_HANDLE_VALUE) {
             return(ERROR_DEV_NOT_EXIST);
-        }
-        else
-        {
+        } else {
             SetupDiDestroyDeviceInfoList(deviceInfo);
             return(ERROR_DEVICE_NOT_CONNECTED);
         }
@@ -121,8 +116,7 @@ static DWORD GetDevicePath(LPGUID InterfaceGuid,
                                           InterfaceGuid,
                                           0,
                                           &interfaceData);
-    if(bResult == FALSE)
-    {
+    if(bResult == FALSE) {
         //
         // We failed to find the first matching device so tell the caller
         // that no suitable device is connected.
@@ -145,10 +139,9 @@ static DWORD GetDevicePath(LPGUID InterfaceGuid,
     // Allocate a buffer to hold the interface details.
     //
     detailData = (PSP_DEVICE_INTERFACE_DETAIL_DATA)LocalAlloc(LMEM_FIXED,
-                   requiredLength);
+                 requiredLength);
 
-    if(NULL == detailData)
-    {
+    if(NULL == detailData) {
         SetupDiDestroyDeviceInfoList(deviceInfo);
         return(ERROR_NOT_ENOUGH_MEMORY);
     }
@@ -160,14 +153,13 @@ static DWORD GetDevicePath(LPGUID InterfaceGuid,
     // Now call once again to retrieve the actual interface detail information.
     //
     bResult = SetupDiGetDeviceInterfaceDetail(deviceInfo,
-                                              &interfaceData,
-                                              detailData,
-                                              length,
-                                              &requiredLength,
-                                              NULL);
+              &interfaceData,
+              detailData,
+              length,
+              &requiredLength,
+              NULL);
 
-    if(FALSE == bResult)
-    {
+    if(FALSE == bResult) {
         SetupDiDestroyDeviceInfoList(deviceInfo);
         LocalFree(detailData);
         return(GetLastError());
@@ -178,10 +170,9 @@ static DWORD GetDevicePath(LPGUID InterfaceGuid,
     // the caller's buffer.
     //
     hr = StringCchCopy((LPTSTR)pcDevicePath,
-                        BufLen,
-                        (LPCTSTR)detailData->DevicePath);
-    if(FAILED(hr))
-    {
+                       BufLen,
+                       (LPCTSTR)detailData->DevicePath);
+    if(FAILED(hr)) {
         //
         // We failed to copy the device path string!
         //
@@ -226,8 +217,7 @@ static HANDLE OpenDevice(void)
     retVal = GetDevicePath((LPGUID)&GUID_DEVINTERFACE_LUMINARY_BULK,
                            devicePath,
                            sizeof(devicePath));
-    if(retVal != ERROR_SUCCESS)
-    {
+    if(retVal != ERROR_SUCCESS) {
         SetLastError(retVal);
         return(INVALID_HANDLE_VALUE);
     }
@@ -276,8 +266,7 @@ BOOL InitializeDevice(void)
     // handle to allow access to it.
     //
     devInfo.deviceHandle = OpenDevice();
-    if(devInfo.deviceHandle == INVALID_HANDLE_VALUE)
-    {
+    if(devInfo.deviceHandle == INVALID_HANDLE_VALUE) {
         //
         // We were unable to access the device - return a failure.
         //
@@ -290,8 +279,7 @@ BOOL InitializeDevice(void)
     //
     bResult = WinUsb_Initialize(devInfo.deviceHandle, &usbHandle);
 
-    if(bResult)
-    {
+    if(bResult) {
         //
         // If we managed to initialize the WinUSB layer, we now query the
         // device descriptor to determine the speed of the device.
@@ -304,8 +292,7 @@ BOOL InitializeDevice(void)
                                                 &speed);
     }
 
-    if(bResult)
-    {
+    if(bResult) {
         //
         // If all is well, now query the interface descriptor. We ask for the
         // first interface only since, in the case of the generic bulk device,
@@ -317,30 +304,23 @@ BOOL InitializeDevice(void)
                                                 &ifaceDescriptor);
     }
 
-    if(bResult)
-    {
+    if(bResult) {
         //
         // We got the interface descriptor so now we enumerate the endpoints
         // to find the two we require - one bulk IN endpoint and one bulk OUT
         // endpoint.
         //
-        for(i=0;i<ifaceDescriptor.bNumEndpoints;i++)
-        {
+        for(i=0; i<ifaceDescriptor.bNumEndpoints; i++) {
             bResult = WinUsb_QueryPipe(devInfo.winUSBHandle, 0, (UCHAR) i,
-                                      &pipeInfo);
+                                       &pipeInfo);
 
             if((pipeInfo.PipeType == UsbdPipeTypeBulk) &&
-                  USB_ENDPOINT_DIRECTION_IN(pipeInfo.PipeId))
-            {
+                    USB_ENDPOINT_DIRECTION_IN(pipeInfo.PipeId)) {
                 devInfo.bulkInPipe = pipeInfo.PipeId;
-            }
-            else if((pipeInfo.PipeType == UsbdPipeTypeBulk) &&
-                  USB_ENDPOINT_DIRECTION_OUT(pipeInfo.PipeId))
-            {
+            } else if((pipeInfo.PipeType == UsbdPipeTypeBulk) &&
+                      USB_ENDPOINT_DIRECTION_OUT(pipeInfo.PipeId)) {
                 devInfo.bulkOutPipe = pipeInfo.PipeId;
-            }
-            else
-            {
+            } else {
                 //
                 // Hmm... we found and endpoint that we didn't expect to see
                 // on this interface. This tends to imply that there is a
@@ -353,8 +333,8 @@ BOOL InitializeDevice(void)
                 break;
             }
         }
-  }
-  return(bResult);
+    }
+    return(bResult);
 }
 
 //****************************************************************************
@@ -379,12 +359,9 @@ BOOL TerminateDevice(void)
 
     bRetcode2 = CloseHandle(devInfo.deviceHandle);
 
-    if(bRetcode & bRetcode2)
-    {
+    if(bRetcode & bRetcode2) {
         return(TRUE);
-    }
-    else
-    {
+    } else {
         return(FALSE);
     }
 }
@@ -453,16 +430,14 @@ BOOL ReadUSBPacket(unsigned char *pcBuffer, unsigned long ulSize,
     // Make sure we got the number of bytes expected. If we got less, try to
     // read the remainder.
     //
-    if(bResult && (*pulRead < ulSize))
-    {
+    if(bResult && (*pulRead < ulSize)) {
         bResult = WinUsb_ReadPipe(devInfo.winUSBHandle,
                                   devInfo.bulkInPipe,
                                   pcBuffer + *pulRead,
                                   ulSize - *pulRead,
                                   &ulSecondRead,
                                   NULL);
-        if(bResult)
-        {
+        if(bResult) {
             *pulRead += ulSecondRead;
         }
     }

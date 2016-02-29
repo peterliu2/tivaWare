@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C123GXL Firmware Package.
 //
 //*****************************************************************************
@@ -126,8 +126,7 @@ SHT21AppCallback(void *pvCallbackData, uint_fast8_t ui8Status)
     // If the transaction succeeded set the data flag to indicate to
     // application that this transaction is complete and data may be ready.
     //
-    if(ui8Status == I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status == I2CM_STATUS_SUCCESS) {
         g_vui8DataFlag = 1;
     }
 
@@ -175,8 +174,7 @@ SHT21AppErrorHandler(char *pcFilename, uint_fast32_t ui32Line)
     // Go to sleep wait for interventions.  A more robust application could
     // attempt corrective actions here.
     //
-    while(1)
-    {
+    while(1) {
         ROM_SysCtlSleep();
     }
 }
@@ -210,16 +208,14 @@ SHT21AppI2CWait(char *pcFilename, uint_fast32_t ui32Line)
     // Put the processor to sleep while we wait for the I2C driver to
     // indicate that the transaction is complete.
     //
-    while((g_vui8DataFlag == 0) && (g_vui8ErrorFlag == 0))
-    {
+    while((g_vui8DataFlag == 0) && (g_vui8ErrorFlag == 0)) {
         ROM_SysCtlSleep();
     }
 
     //
     // If an error occurred call the error handler immediately.
     //
-    if(g_vui8ErrorFlag)
-    {
+    if(g_vui8ErrorFlag) {
         SHT21AppErrorHandler(pcFilename, ui32Line);
     }
 
@@ -379,8 +375,7 @@ main(void)
     //
     // Loop Forever
     //
-    while(1)
-    {
+    while(1) {
         //
         // Write the command to start a humidity measurement
         //
@@ -454,8 +449,7 @@ main(void)
         i32IntegerPart = (int32_t) fHumidity;
         i32FractionPart = (int32_t) (fHumidity * 1000.0f);
         i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-        if(i32FractionPart < 0)
-        {
+        if(i32FractionPart < 0) {
             i32FractionPart *= -1;
         }
 
@@ -470,8 +464,7 @@ main(void)
         i32IntegerPart = (int32_t) fTemperature;
         i32FractionPart = (int32_t) (fTemperature * 1000.0f);
         i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-        if(i32FractionPart < 0)
-        {
+        if(i32FractionPart < 0) {
             i32FractionPart *= -1;
         }
 

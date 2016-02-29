@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Graphics Library.
 //
 //*****************************************************************************
@@ -70,13 +70,11 @@ PixelTransparentDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
     //
     // What format are we dealing with?
     //
-    switch(i32BPP & 0xFF)
-    {
+    switch(i32BPP & 0xFF) {
         //
         // Two color bitmap.
         //
-        case 1:
-        {
+        case 1: {
             //
             // How many bytes do we need to read to cover the line of data
             // we've been passed.
@@ -99,14 +97,12 @@ PixelTransparentDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
             //
             i32Bit = i32X0;
             i32X0 = 0;
-            for(i32Index = 0; i32Index < i32NumBytes; )
-            {
+            for(i32Index = 0; i32Index < i32NumBytes; ) {
                 //
                 // Count the number of off pixels from this position in the
                 // glyph image.
                 //
-                for(i32Off = 0; i32Index < i32NumBytes; )
-                {
+                for(i32Off = 0; i32Index < i32NumBytes; ) {
                     //
                     // Get the number of zero pixels at this position.
                     //
@@ -120,8 +116,7 @@ PixelTransparentDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
                     // Therefore, simply limit it to the number of pixels
                     // remaining in this byte.
                     //
-                    if(i32Count > 8)
-                    {
+                    if(i32Count > 8) {
                         i32Count = 8 - i32Bit;
                     }
 
@@ -138,17 +133,14 @@ PixelTransparentDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
                     //
                     // See if the end of the byte has been reached.
                     //
-                    if(i32Bit == 8)
-                    {
+                    if(i32Bit == 8) {
                         //
                         // Advance to the next byte and continue counting off
                         // pixels.
                         //
                         i32Bit = 0;
                         i32Index++;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Since the end of the byte was not reached, there
                         // must be an on pixel.  Therefore, stop counting off
@@ -162,15 +154,14 @@ PixelTransparentDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
                 // Count the number of on pixels from this position in the
                 // glyph image.
                 //
-                for(i32On = 0; i32Index < i32NumBytes; )
-                {
+                for(i32On = 0; i32Index < i32NumBytes; ) {
                     //
                     // Get the number of one pixels at this location (by
                     // inverting the data and counting the number of zeros).
                     //
                     i32Count = NumLeadingZeros(~(((pui8Data[i32Index] ^
                                                    ui32Mask) <<
-                                                 (24 + i32Bit))));
+                                                  (24 + i32Bit))));
 
                     //
                     // If there were more than 8, then it is a "false" result
@@ -178,8 +169,7 @@ PixelTransparentDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
                     // Therefore, simply limit it to the number of pixels
                     // remaining in this byte.
                     //
-                    if(i32Count > 8)
-                    {
+                    if(i32Count > 8) {
                         i32Count = 8 - i32Bit;
                     }
 
@@ -196,17 +186,14 @@ PixelTransparentDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
                     //
                     // See if the end of the byte has been reached.
                     //
-                    if(i32Bit == 8)
-                    {
+                    if(i32Bit == 8) {
                         //
                         // Advance to the next byte and continue counting on
                         // pixels.
                         //
                         i32Bit = 0;
                         i32Index++;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Since the end of the byte was not reached, there
                         // must be an off pixel.  Therefore, stop counting on
@@ -221,8 +208,7 @@ PixelTransparentDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
                 // determined so draw the on run if it is non-zero length
                 // and falls within the range we need to draw.
                 //
-                if(i32On && (i32Off < i32Len))
-                {
+                if(i32On && (i32Off < i32Len)) {
                     i32Draw = ((i32Off + i32On) > i32Len) ? (i32X + i32Len) :
                               (i32X + i32Off + i32On);
                     DpyLineDrawH(pContext->psDisplay, i32X + i32Off,
@@ -248,8 +234,7 @@ PixelTransparentDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
         //
         // 4 bits per pixel (16 color) bitmap.
         //
-        case 4:
-        {
+        case 4: {
             //
             // Are we starting by drawing or skipping pixels?
             //
@@ -263,8 +248,7 @@ PixelTransparentDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
             //
             // Scan all pixels in the line of data provided.
             //
-            for(i32Index = 1; i32Index < i32Count; i32Index++)
-            {
+            for(i32Index = 1; i32Index < i32Count; i32Index++) {
                 //
                 // Toggle the sub-byte pixel indicator;
                 //
@@ -274,19 +258,17 @@ PixelTransparentDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
                 // Read the next pixel.
                 //
                 ui8Pixel = (pui8Data[(i32Index + i32Bit) / 2] >>
-                           (i32X0 ? 0 : 4)) & 0x0F;
+                            (i32X0 ? 0 : 4)) & 0x0F;
 
                 //
                 // Is this pixel a transparent one?
                 //
-                if(ui8Pixel != (uint8_t)ui32Transparent)
-                {
+                if(ui8Pixel != (uint8_t)ui32Transparent) {
                     //
                     // It's not transparent.  Have we just ended a run of
                     // transparent pixels?
                     //
-                    if(bSkip)
-                    {
+                    if(bSkip) {
                         //
                         // We are currently skipping pixels so this starts a
                         // new run.
@@ -295,31 +277,26 @@ PixelTransparentDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
                         i32StartX0 = i32X0;
                         i32Len = 1;
                         bSkip = false;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // We were already in the middle of a run of non-
                         // transparent pixels so increment the run length.
                         //
                         i32Len++;
                     }
-                }
-                else
-                {
+                } else {
                     //
                     // Pixel is transparent.  Do we have a run to draw?
                     //
-                    if(!bSkip)
-                    {
+                    if(!bSkip) {
                         //
                         // Yes - draw what we have.
                         //
                         DpyPixelDrawMultiple(pContext->psDisplay,
-                                            i32X + i32Start, i32Y,
-                                            i32StartX0, i32Len, i32BPP,
-                                            &pui8Data[(i32Start + i32Bit) / 2],
-                                            pui8Palette);
+                                             i32X + i32Start, i32Y,
+                                             i32StartX0, i32Len, i32BPP,
+                                             &pui8Data[(i32Start + i32Bit) / 2],
+                                             pui8Palette);
 
                         //
                         // Reset for the transparent run.
@@ -339,8 +316,7 @@ PixelTransparentDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
             // If we drop out of the pixel loop with a run not drawn, draw it
             // here.
             //
-            if(!bSkip && i32Len)
-            {
+            if(!bSkip && i32Len) {
                 DpyPixelDrawMultiple(pContext->psDisplay, i32X + i32Start,
                                      i32Y, i32StartX0, i32Len, i32BPP,
                                      &pui8Data[(i32Start + i32Bit) / 2],
@@ -357,8 +333,7 @@ PixelTransparentDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
         //
         // 8 bit per pixel (256 color) bitmap.
         //
-        case 8:
-        {
+        case 8: {
             //
             // Are we starting by drawing or skipping pixels?
             //
@@ -369,19 +344,16 @@ PixelTransparentDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
             //
             // Scan all pixels in the line of data provided.
             //
-            for(i32Index = 1; i32Index < i32Count; i32Index++)
-            {
+            for(i32Index = 1; i32Index < i32Count; i32Index++) {
                 //
                 // Is this pixel a transparent one?
                 //
-                if(pui8Data[i32Index] != (uint8_t)ui32Transparent)
-                {
+                if(pui8Data[i32Index] != (uint8_t)ui32Transparent) {
                     //
                     // It's not transparent.  Have we just ended a run of
                     // transparent pixels?
                     //
-                    if(bSkip)
-                    {
+                    if(bSkip) {
                         //
                         // We are currently skipping pixels so this starts a
                         // new run.
@@ -389,31 +361,26 @@ PixelTransparentDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
                         i32Start = i32Index;
                         i32Len = 1;
                         bSkip = false;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // We were already in the middle of a run of non-
                         // transparent pixels so increment the run length.
                         //
                         i32Len++;
                     }
-                }
-                else
-                {
+                } else {
                     //
                     // Pixel is transparent.  Do we have a run to draw?
                     //
-                    if(!bSkip)
-                    {
+                    if(!bSkip) {
                         //
                         // Yes - draw what we have.
                         //
                         DpyPixelDrawMultiple(pContext->psDisplay,
-                                               i32X + i32Start, i32Y, 0,
-                                               i32Len, i32BPP,
-                                               &pui8Data[i32Start],
-                                               pui8Palette);
+                                             i32X + i32Start, i32Y, 0,
+                                             i32Len, i32BPP,
+                                             &pui8Data[i32Start],
+                                             pui8Palette);
 
                         //
                         // Reset for the transparent run.
@@ -433,8 +400,7 @@ PixelTransparentDraw(const tContext *pContext, int32_t i32X, int32_t i32Y,
             // If we drop out of the pixel loop with a run not drawn, draw it
             // here.
             //
-            if(!bSkip && i32Len)
-            {
+            if(!bSkip && i32Len) {
                 DpyPixelDrawMultiple(pContext->psDisplay, i32X + i32Start,
                                      i32Y, i32X0, i32Len, i32BPP,
                                      &pui8Data[i32Start], pui8Palette);
@@ -499,10 +465,9 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
     // current clipping region.
     //
     if((i32X > pContext->sClipRegion.i16XMax) ||
-       ((i32X + i32Width - 1) < pContext->sClipRegion.i16XMin) ||
-       (i32Y > pContext->sClipRegion.i16YMax) ||
-       ((i32Y + i32Height - 1) < pContext->sClipRegion.i16YMin))
-    {
+            ((i32X + i32Width - 1) < pContext->sClipRegion.i16XMin) ||
+            (i32Y > pContext->sClipRegion.i16YMax) ||
+            ((i32Y + i32Height - 1) < pContext->sClipRegion.i16YMin)) {
         return;
     }
 
@@ -516,12 +481,9 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
     // Get the starting X offset within the image based on the current clipping
     // region.
     //
-    if(i32X < pContext->sClipRegion.i16XMin)
-    {
+    if(i32X < pContext->sClipRegion.i16XMin) {
         i32X0 = pContext->sClipRegion.i16XMin - i32X;
-    }
-    else
-    {
+    } else {
         i32X0 = 0;
     }
 
@@ -529,12 +491,9 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
     // Get the ending X offset within the image based on the current clipping
     // region.
     //
-    if((i32X + i32Width - 1) > pContext->sClipRegion.i16XMax)
-    {
+    if((i32X + i32Width - 1) > pContext->sClipRegion.i16XMax) {
         i32X2 = pContext->sClipRegion.i16XMax - i32X;
-    }
-    else
-    {
+    } else {
         i32X2 = i32Width - 1;
     }
 
@@ -542,16 +501,14 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
     // Reduce the height of the image, if required, based on the current
     // clipping region.
     //
-    if((i32Y + i32Height - 1) > pContext->sClipRegion.i16YMax)
-    {
+    if((i32Y + i32Height - 1) > pContext->sClipRegion.i16YMax) {
         i32Height = pContext->sClipRegion.i16YMax - i32Y + 1;
     }
 
     //
     // Determine the color palette for the image based on the image format.
     //
-    if((i32BPP & 0x7f) == IMAGE_FMT_1BPP_UNCOMP)
-    {
+    if((i32BPP & 0x7f) == IMAGE_FMT_1BPP_UNCOMP) {
         //
         // Construct a local "black & white" palette based on the foreground
         // and background colors of the drawing context.
@@ -563,9 +520,7 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
         // Set the palette pointer to the local "black & white" palette.
         //
         pui8Palette = (uint8_t *)pui32BWPalette;
-    }
-    else
-    {
+    } else {
         //
         // For 4 and 8 BPP images, the palette is contained at the start of the
         // image data.
@@ -577,14 +532,12 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
     //
     // See if the image is compressed.
     //
-    if(!(i32BPP & 0x80))
-    {
+    if(!(i32BPP & 0x80)) {
         //
         // The image is not compressed.  See if the top portion of the image
         // lies above the clipping region.
         //
-        if(i32Y < pContext->sClipRegion.i16YMin)
-        {
+        if(i32Y < pContext->sClipRegion.i16YMin) {
             //
             // Determine the number of rows that lie above the clipping region.
             //
@@ -612,22 +565,18 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
         // Determine the starting offset for the first source pixel within
         // the byte.
         //
-        switch(i32BPP)
-        {
-            case 1:
-            {
+        switch(i32BPP) {
+            case 1: {
                 i32XMask = i32X0 & 7;
                 break;
             }
 
-            case 4:
-            {
+            case 4: {
                 i32XMask = i32X0 & 1;
                 break;
             }
 
-            default:
-            {
+            default: {
                 i32XMask = 0;
                 break;
             }
@@ -636,13 +585,11 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
         //
         // Loop while there are more rows to draw.
         //
-        while(i32Height--)
-        {
+        while(i32Height--) {
             //
             // Draw this row of image pixels.
             //
-            if(bTransparent)
-            {
+            if(bTransparent) {
                 bool bRet;
 
                 //
@@ -658,8 +605,7 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
                 //
                 // Did we actually draw anything in this run?
                 //
-                if(bRet)
-                {
+                if(bRet) {
                     //
                     // Yes. Clear the flag that tells the driver that this is
                     // the first run of a new image.  If we clear this when
@@ -668,9 +614,7 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
                     //
                     i32Flag = 0;
                 }
-            }
-            else
-            {
+            } else {
                 DpyPixelDrawMultiple(pContext->psDisplay, i32X + i32X0,
                                      i32Y, i32XMask, i32X2 - i32X0 + 1,
                                      i32BPP | i32Flag, pui8Image +
@@ -692,9 +636,7 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
             //
             i32Y++;
         }
-    }
-    else
-    {
+    } else {
         //
         // The image is compressed.  Clear the compressed flag in the format
         // specifier so that the bits per pixel remains.
@@ -704,8 +646,7 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
         //
         // Reset the dictionary used to uncompress the image.
         //
-        for(ui32Bits = 0; ui32Bits < sizeof(g_pui8Dictionary); ui32Bits += 4)
-        {
+        for(ui32Bits = 0; ui32Bits < sizeof(g_pui8Dictionary); ui32Bits += 4) {
             *(uint32_t *)(g_pui8Dictionary + ui32Bits) = 0;
         }
 
@@ -733,13 +674,11 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
         //
         // Loop while there are more rows or more data in the image.
         //
-        while(i32Height && ui32Count)
-        {
+        while(i32Height && ui32Count) {
             //
             // See if an encoding byte needs to be read.
             //
-            if(ui32Bits == 0)
-            {
+            if(ui32Bits == 0) {
                 //
                 // Read the encoding byte, which indicates if each of the
                 // following eight bytes are encoded or literal.
@@ -751,8 +690,7 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
             //
             // See if the next byte is encoded or literal.
             //
-            if(ui32Byte & (1 << (ui32Bits - 1)))
-            {
+            if(ui32Byte & (1 << (ui32Bits - 1))) {
                 //
                 // This byte is encoded, so extract the location and size of
                 // the encoded data within the dictionary.
@@ -765,9 +703,7 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
                 // copied bytes.
                 //
                 ui32Count -= ui32Size;
-            }
-            else
-            {
+            } else {
                 //
                 // This byte is a literal, so copy it into the dictionary.
                 //
@@ -789,8 +725,7 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
             // Loop while there are bytes to copy for the encoded data, or
             // once for literal data.
             //
-            while(ui32Size || !(ui32Byte & (1 << (ui32Bits - 1))))
-            {
+            while(ui32Size || !(ui32Byte & (1 << (ui32Bits - 1)))) {
                 //
                 // Set the encoded data bit for this data so that this loop
                 // will only be executed once for literal data.
@@ -802,14 +737,13 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
                 // additional space in the dictionary (before the buffer
                 // wraps).
                 //
-                while(ui32Size && (ui32Idx != sizeof(g_pui8Dictionary)))
-                {
+                while(ui32Size && (ui32Idx != sizeof(g_pui8Dictionary))) {
                     //
                     // Copy this byte.
                     //
                     g_pui8Dictionary[ui32Idx] =
                         g_pui8Dictionary[(ui32Idx + ui32Match) %
-                                        sizeof(g_pui8Dictionary)];
+                                         sizeof(g_pui8Dictionary)];
 
                     //
                     // Increment the dictionary pointer.
@@ -826,14 +760,12 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
                 // See if the dictionary pointer is about to wrap, or if there
                 // is no more data to decompress.
                 //
-                if((ui32Idx == sizeof(g_pui8Dictionary)) || !ui32Count)
-                {
+                if((ui32Idx == sizeof(g_pui8Dictionary)) || !ui32Count) {
                     //
                     // Loop through the data in the dictionary buffer.
                     //
                     for(ui32Idx = 0;
-                        (ui32Idx < sizeof(g_pui8Dictionary)) && i32Height; )
-                    {
+                            (ui32Idx < sizeof(g_pui8Dictionary)) && i32Height; ) {
                         //
                         // Compute the number of pixels that remain in the
                         // dictionary buffer.
@@ -846,14 +778,12 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
                         // are within the clipping region.
                         //
                         if((i32Y >= pContext->sClipRegion.i16YMin) &&
-                           ((i32X1 + ui32Num) >= i32X0) && (i32X1 <= i32X2))
-                        {
+                                ((i32X1 + ui32Num) >= i32X0) && (i32X1 <= i32X2)) {
                             //
                             // Skip some pixels at the start of the scan line
                             // if required to stay within the clipping region.
                             //
-                            if(i32X1 < i32X0)
-                            {
+                            if(i32X1 < i32X0) {
                                 ui32Idx += ((i32X0 - i32X1) * i32BPP) / 8;
                                 i32X1 = i32X0;
                             }
@@ -862,8 +792,7 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
                             // Shorten the scan line if required to stay within
                             // the clipping region.
                             //
-                            if(ui32Num > (i32X2 - i32X1 + 1))
-                            {
+                            if(ui32Num > (i32X2 - i32X1 + 1)) {
                                 ui32Num = i32X2 - i32X1 + 1;
                             }
 
@@ -871,23 +800,19 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
                             // Determine the starting offset for the first
                             // source pixel within the byte.
                             //
-                            switch(i32BPP)
-                            {
+                            switch(i32BPP) {
 
-                                case 1:
-                                {
+                                case 1: {
                                     i32XMask = i32X1 & 7;
                                     break;
                                 }
 
-                                case 4:
-                                {
+                                case 4: {
                                     i32XMask = i32X1 & 1;
                                     break;
                                 }
 
-                                default:
-                                {
+                                default: {
                                     i32XMask = 0;
                                     break;
                                 }
@@ -896,8 +821,7 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
                             //
                             // Draw this row of image pixels.
                             //
-                            if(bTransparent)
-                            {
+                            if(bTransparent) {
                                 bool bRet;
 
                                 bRet = PixelTransparentDraw(pContext,
@@ -914,17 +838,14 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
                                 // Clear the flag only if we actually drew
                                 // something.
                                 //
-                                if(bRet)
-                                {
+                                if(bRet) {
                                     //
                                     // We drew something so that NEW_IMAGE
                                     // flag is no longer needed.
                                     //
                                     i32Flag = 0;
                                 }
-                            }
-                            else
-                            {
+                            } else {
                                 DpyPixelDrawMultiple(pContext->psDisplay,
                                                      i32X + i32X1, i32Y,
                                                      i32XMask, ui32Num,
@@ -950,8 +871,7 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
                         // within the dictionary buffer.
                         //
                         if(((((i32Width - i32X1) * i32BPP) + 7) / 8) >
-                           (sizeof(g_pui8Dictionary) - ui32Idx))
-                        {
+                                (sizeof(g_pui8Dictionary) - ui32Idx)) {
                             //
                             // There is more to this scan line than is in the
                             // dictionary buffer at this point, so move the
@@ -965,9 +885,7 @@ InternalImageDraw(const tContext *pContext, const uint8_t *pui8Image,
                             // The entire dictionary buffer has been scanned.
                             //
                             ui32Idx = sizeof(g_pui8Dictionary);
-                        }
-                        else
-                        {
+                        } else {
                             //
                             // The remainder of this scan line resides in the
                             // dictionary buffer, so skip past it.
@@ -1034,7 +952,7 @@ GrTransparentImageDraw(const tContext *pContext, const uint8_t *pui8Image,
                        int32_t i32X, int32_t i32Y, uint32_t ui32Transparent)
 {
     InternalImageDraw(pContext, pui8Image, i32X, i32Y, ui32Transparent,
-                        true);
+                      true);
 }
 
 //*****************************************************************************

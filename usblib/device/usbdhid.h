@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -636,8 +636,7 @@ extern "C"
 // normal operation.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     //
     // Unconfigured.
     //
@@ -665,8 +664,7 @@ tHIDState;
 // USBDHIDInit() function.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // Base address for the USB controller.
     //
@@ -758,8 +756,7 @@ tHIDInstance;
 //! the host).
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The idle duration for the report expressed in units of 4mS.  0
     //! indicates infinite and informs the class driver not to send the report
@@ -799,8 +796,7 @@ tHIDReportIdle;
 //! the HID device.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The vendor ID that this device is to present in the device descriptor.
     //

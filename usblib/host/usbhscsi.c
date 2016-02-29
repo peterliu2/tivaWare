@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -104,28 +104,23 @@ USBHSCSISendCommand(uint32_t ui32InPipe, uint32_t ui32OutPipe,
     //
     // If no bytes went out then the command failed.
     //
-    if(ui32Bytes == 0)
-    {
+    if(ui32Bytes == 0) {
         return(SCSI_CMD_STATUS_FAIL);
     }
 
     //
     // Only request data if there is data to request.
     //
-    if(psSCSICmd->dCBWDataTransferLength != 0)
-    {
+    if(psSCSICmd->dCBWDataTransferLength != 0) {
         //
         // See if this is a read or a write.
         //
-        if(psSCSICmd->bmCBWFlags & CBWFLAGS_DIR_IN)
-        {
+        if(psSCSICmd->bmCBWFlags & CBWFLAGS_DIR_IN) {
             //
             // Read the data back.
             //
             *pui32Size = USBHCDPipeRead(ui32InPipe, pui8Data, *pui32Size);
-        }
-        else
-        {
+        } else {
             //
             // Write the data out.
             //
@@ -145,8 +140,7 @@ USBHSCSISendCommand(uint32_t ui32InPipe, uint32_t ui32OutPipe,
     // indicate a failure.
     //
     if((ui32Bytes == 0) || (sCmdStatus.dCSWSignature != CSW_SIGNATURE) ||
-       (sCmdStatus.dCSWTag != CBW_TAG_VALUE))
-    {
+            (sCmdStatus.dCSWTag != CBW_TAG_VALUE)) {
         return(SCSI_CMD_STATUS_FAIL);
     }
 
@@ -626,8 +620,7 @@ USBHSCSIRead10(uint32_t ui32InPipe, uint32_t ui32OutPipe,
     //
     // Zero out the response data.
     //
-    for(i32Idx = 0; i32Idx < sizeof(sSCSICmd.CBWCB); i32Idx++)
-    {
+    for(i32Idx = 0; i32Idx < sizeof(sSCSICmd.CBWCB); i32Idx++) {
         sSCSICmd.CBWCB[i32Idx] = 0;
     }
 

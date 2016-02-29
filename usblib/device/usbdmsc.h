@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2009-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -48,8 +48,7 @@ extern "C"
 //! Media Access functions.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! This function is used to initialize and open the physical drive number
     //! associated with the parameter \e ui32Drive.  The function returns
@@ -87,7 +86,7 @@ typedef struct
     //
     //*************************************************************************
     uint32_t (*pfnBlockRead)(void *pvDrive, uint8_t *pui8Data,
-                                uint32_t ui32Sector, uint32_t ui32NumBlocks);
+                             uint32_t ui32Sector, uint32_t ui32NumBlocks);
 
     //*************************************************************************
     //
@@ -140,8 +139,7 @@ tMSCDMedia;
 // USBDMSCMediaChange() tUSBDMSCMediaStatus values.
 //
 //*****************************************************************************
-typedef enum
-{
+typedef enum {
     eUSBDMSCMediaPresent,
     eUSBDMSCMediaNotPresent,
     eUSBDMSCMediaStopped,
@@ -160,8 +158,7 @@ tUSBDMSCMediaStatus;
 // storage device code.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // Base address for the USB controller.
     //
@@ -276,8 +273,7 @@ tMSCInstance;
 //! the mass storage device.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The vendor ID that this device is to present in the device descriptor.
     //

@@ -1,10 +1,10 @@
 /**
  * @file   ptpd_dep.h
  * @date   Tue Jul 20 16:18:39 2010
- * 
+ *
  * @brief  External definitions for inclusion elsewhere.
- * 
- * 
+ *
+ *
  */
 
 #ifndef PTPD_DEP_H
@@ -44,7 +44,7 @@
 #endif
 
 #ifdef PTPD_DBG
-#define DBG(x, ...) message(LOG_DEBUG, x, ##__VA_ARGS__) 
+#define DBG(x, ...) message(LOG_DEBUG, x, ##__VA_ARGS__)
 #else
 #define DBG(x, ...)
 #endif
@@ -117,12 +117,12 @@ ssize_t	netSendGeneral(Octet *, UInteger16, NetPath *);
 
 /* servo.c */
 void	initClock(RunTimeOpts *, PtpClock *);
-void 
+void
 updateDelay(TimeInternal *, TimeInternal *,
-    one_way_delay_filter *, RunTimeOpts *, PtpClock *);
-void 
+            one_way_delay_filter *, RunTimeOpts *, PtpClock *);
+void
 updateOffset(TimeInternal *, TimeInternal *,
-    offset_from_master_filter *, RunTimeOpts *, PtpClock *);
+             offset_from_master_filter *, RunTimeOpts *, PtpClock *);
 void	updateClock(RunTimeOpts *, PtpClock *);
 
 /* startup.c */

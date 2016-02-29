@@ -46,74 +46,70 @@ USA.  */
 
 int
 fl_scandir(const char *dir, struct dirent ***namelist,
-	   int (*select)(struct dirent *),
-	   int (*compar)(struct dirent **, struct dirent **))
+           int (*select)(struct dirent *),
+           int (*compar)(struct dirent **, struct dirent **))
 {
-  DIR *dp = opendir (dir);
-  struct dirent **v = NULL;
-  size_t vsize = 0, i;
-  struct dirent *d;
-  int save;
+    DIR *dp = opendir (dir);
+    struct dirent **v = NULL;
+    size_t vsize = 0, i;
+    struct dirent *d;
+    int save;
 
-  if (dp == NULL)
-    return -1;
+    if (dp == NULL)
+        return -1;
 
-  save = errno;
-  errno = 0;
+    save = errno;
+    errno = 0;
 
-  i = 0;
-  while ((d = readdir (dp)) != NULL)
-    if (select == NULL || (*select) (d))
-      {
-      size_t dsize;
+    i = 0;
+    while ((d = readdir (dp)) != NULL)
+        if (select == NULL || (*select) (d)) {
+            size_t dsize;
 
-      if (i == vsize)
-        {
-          struct dirent **newv;
-          if (vsize == 0)
-            vsize = 10;
-          else
-            vsize *= 2;
-          newv = (struct dirent **) realloc (v, vsize * sizeof (*v));
-          if (newv == NULL)
-            {
-            lose:
-              errno = ENOMEM;
-              break;
+            if (i == vsize) {
+                struct dirent **newv;
+                if (vsize == 0)
+                    vsize = 10;
+                else
+                    vsize *= 2;
+                newv = (struct dirent **) realloc (v, vsize * sizeof (*v));
+                if (newv == NULL) {
+lose:
+                    errno = ENOMEM;
+                    break;
+                }
+                v = newv;
             }
-          v = newv;
-        }
 
 #    define _D_EXACT_NAMLEN(d) (strlen ((d)->d_name))
 #    define _D_ALLOC_NAMLEN(d) (sizeof (d)->d_name > 1 ? sizeof (d)->d_name : \
                               _D_EXACT_NAMLEN (d) + 1)
 
-      dsize = &d->d_name[_D_ALLOC_NAMLEN (d)] - (char *) d;
-      v[i] = (struct dirent *) malloc (dsize);
-      if (v[i] == NULL)
-        goto lose;
+            dsize = &d->d_name[_D_ALLOC_NAMLEN (d)] - (char *) d;
+            v[i] = (struct dirent *) malloc (dsize);
+            if (v[i] == NULL)
+                goto lose;
 
-      memcpy (v[i++], d, dsize);
-      }
+            memcpy (v[i++], d, dsize);
+        }
 
-  if (errno != 0)
-    {
-      save = errno;
-      (void) closedir (dp);
-      while (i > 0)
-      free (v[--i]);
-      free (v);
-      errno = save;
-      return -1;
+    if (errno != 0) {
+        save = errno;
+        (void) closedir (dp);
+        while (i > 0)
+            free (v[--i]);
+        free (v);
+        errno = save;
+        return -1;
     }
 
-  (void) closedir (dp);
-  errno = save;
+    (void) closedir (dp);
+    errno = save;
 
-  /* Sort the list if we have a comparison function to sort with.  */
-  if (compar) qsort (v, i, sizeof (*v), (int (*)(const void *, const void *))compar);
-  *namelist = v;
-  return i;
+    /* Sort the list if we have a comparison function to sort with.  */
+    if (compar) qsort (v, i, sizeof (*v), (int (*)(const void *, const void *))compar);
+    *namelist = v;
+    return i;
 }
 
 #  endif

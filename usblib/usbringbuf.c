@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -83,16 +83,14 @@ UpdateIndexAtomic(volatile uint32_t *pui32Val, uint32_t ui32Delta,
     // case ui32Delta is greater than ui32Size (which is extremely unlikely
     // but...)
     //
-    while(*pui32Val >= ui32Size)
-    {
+    while(*pui32Val >= ui32Size) {
         *pui32Val -= ui32Size;
     }
 
     //
     // Restore the interrupt state
     //
-    if(!bIntsOff)
-    {
+    if(!bIntsOff) {
         IntMasterEnable();
     }
 }
@@ -132,7 +130,7 @@ USBRingBufFull(tUSBRingBufObject *psUSBRingBuf)
     // Return the full status of the buffer.
     //
     return((((ui32Write + 1) % psUSBRingBuf->ui32Size) == ui32Read) ? true :
-                                                                      false);
+           false);
 }
 
 //*****************************************************************************
@@ -199,8 +197,7 @@ USBRingBufFlush(tUSBRingBufObject *psUSBRingBuf)
     //
     bIntsOff = IntMasterDisable();
     psUSBRingBuf->ui32ReadIndex = psUSBRingBuf->ui32WriteIndex;
-    if(!bIntsOff)
-    {
+    if(!bIntsOff) {
         IntMasterEnable();
     }
 }
@@ -336,17 +333,14 @@ USBRingBufContigFree(tUSBRingBufObject *psUSBRingBuf)
     //
     // Return the number of contiguous bytes available.
     //
-    if(ui32Read > ui32Write)
-    {
+    if(ui32Read > ui32Write) {
         //
         // The read pointer is above the write pointer so the amount of free
         // space is the difference between the two indices minus 1 to account
         // for the buffer full condition (write index one behind read index).
         //
         return((ui32Read - ui32Write) - 1);
-    }
-    else
-    {
+    } else {
         //
         // If the write pointer is above the read pointer, the amount of free
         // space is the size of the buffer minus the write index.  We need to
@@ -459,8 +453,7 @@ USBRingBufRead(tUSBRingBufObject *psUSBRingBuf, uint8_t *pui8Data,
     //
     // Read the data from the ring buffer.
     //
-    for(ui32Temp = 0; ui32Temp < ui32Length; ui32Temp++)
-    {
+    for(ui32Temp = 0; ui32Temp < ui32Length; ui32Temp++) {
         pui8Data[ui32Temp] = USBRingBufReadOne(psUSBRingBuf);
     }
 }
@@ -566,8 +559,7 @@ USBRingBufAdvanceWrite(tUSBRingBufObject *psUSBRingBuf, uint32_t ui32NumBytes)
     //
     // Check and correct for wrap.
     //
-    if(psUSBRingBuf->ui32WriteIndex >= psUSBRingBuf->ui32Size)
-    {
+    if(psUSBRingBuf->ui32WriteIndex >= psUSBRingBuf->ui32Size) {
         psUSBRingBuf->ui32WriteIndex -= psUSBRingBuf->ui32Size;
     }
 
@@ -579,8 +571,7 @@ USBRingBufAdvanceWrite(tUSBRingBufObject *psUSBRingBuf, uint32_t ui32NumBytes)
     // ASSERT above catches this in debug builds but, in release builds, we
     // go ahead and try to fix up the read pointer appropriately.
     //
-    if(ui32Count < ui32NumBytes)
-    {
+    if(ui32Count < ui32NumBytes) {
         //
         // Yes - we need to advance the read pointer to ahead of the write
         // pointer to discard some of the oldest data.
@@ -590,8 +581,7 @@ USBRingBufAdvanceWrite(tUSBRingBufObject *psUSBRingBuf, uint32_t ui32NumBytes)
         //
         // Correct for buffer wrap if necessary.
         //
-        if(psUSBRingBuf->ui32ReadIndex >= psUSBRingBuf->ui32Size)
-        {
+        if(psUSBRingBuf->ui32ReadIndex >= psUSBRingBuf->ui32Size) {
             psUSBRingBuf->ui32ReadIndex -= psUSBRingBuf->ui32Size;
         }
     }
@@ -669,8 +659,7 @@ USBRingBufWrite(tUSBRingBufObject *psUSBRingBuf, const uint8_t *pui8Data,
     //
     // Write the data into the ring buffer.
     //
-    for(ui32Temp = 0; ui32Temp < ui32Length; ui32Temp++)
-    {
+    for(ui32Temp = 0; ui32Temp < ui32Length; ui32Temp++) {
         USBRingBufWriteOne(psUSBRingBuf, pui8Data[ui32Temp]);
     }
 }

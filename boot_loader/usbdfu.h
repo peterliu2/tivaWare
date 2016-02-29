@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -42,19 +42,18 @@
 // the host in response to a USBD_DFU_REQUEST_GETSTATE request.
 //
 //*****************************************************************************
-typedef enum
-{
-   STATE_APP_IDLE = 0,
-   STATE_APP_DETACH,
-   STATE_IDLE,
-   STATE_DNLOAD_SYNC,
-   STATE_DNBUSY,
-   STATE_DNLOAD_IDLE,
-   STATE_MANIFEST_SYNC,
-   STATE_MANIFEST,
-   STATE_MANIFEST_WAIT_RESET,
-   STATE_UPLOAD_IDLE,
-   STATE_ERROR
+typedef enum {
+    STATE_APP_IDLE = 0,
+    STATE_APP_DETACH,
+    STATE_IDLE,
+    STATE_DNLOAD_SYNC,
+    STATE_DNBUSY,
+    STATE_DNLOAD_IDLE,
+    STATE_MANIFEST_SYNC,
+    STATE_MANIFEST,
+    STATE_MANIFEST_WAIT_RESET,
+    STATE_UPLOAD_IDLE,
+    STATE_ERROR
 }
 tDFUState;
 
@@ -64,24 +63,23 @@ tDFUState;
 // the host in response to a USBD_DFU_REQUEST_GETSTATUS request.
 //
 //*****************************************************************************
-typedef enum
-{
-   STATUS_OK = 0,
-   STATUS_ERR_TARGET,
-   STATUS_ERR_FILE,
-   STATUS_ERR_WRITE,
-   STATUS_ERR_ERASE,
-   STATUS_ERR_CHECK_ERASED,
-   STATUS_ERR_PROG,
-   STATUS_ERR_VERIFY,
-   STATUS_ERR_ADDRESS,
-   STATUS_ERR_NOTDONE,
-   STATUS_ERR_FIRMWARE,
-   STATUS_ERR_VENDOR,
-   STATUS_ERR_USBR,
-   STATUS_ERR_POR,
-   STATUS_ERR_UNKNOWN,
-   STATUS_ERR_STALLEDPKT
+typedef enum {
+    STATUS_OK = 0,
+    STATUS_ERR_TARGET,
+    STATUS_ERR_FILE,
+    STATUS_ERR_WRITE,
+    STATUS_ERR_ERASE,
+    STATUS_ERR_CHECK_ERASED,
+    STATUS_ERR_PROG,
+    STATUS_ERR_VERIFY,
+    STATUS_ERR_ADDRESS,
+    STATUS_ERR_NOTDONE,
+    STATUS_ERR_FIRMWARE,
+    STATUS_ERR_VENDOR,
+    STATUS_ERR_USBR,
+    STATUS_ERR_POR,
+    STATUS_ERR_UNKNOWN,
+    STATUS_ERR_STALLEDPKT
 }
 tDFUStatus;
 
@@ -167,8 +165,7 @@ tDFUStatus;
 // received while the DFU device is in idle state.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint16_t ui16Marker;        // DFU_PROTOCOL_USBLIB_MARKER
     uint16_t ui16Version;       // DFU_PROTOCOL_USBLIB_VERSION_1
 }
@@ -179,8 +176,7 @@ PACKED tDFUQueryTIVAProtocol;
 // Structure sent to the host in response to USBD_DFU_REQUEST_GETSTATUS.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint8_t bStatus;
     uint8_t bwPollTimeout[3];
     uint8_t bState;
@@ -217,8 +213,7 @@ PACKED tDFUGetStatusResponse;
 // Generic download command header.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint8_t ui8Command;         // Command identifier.
     uint8_t pui8Data[7];        // Command-specific data elements.
 }
@@ -250,13 +245,12 @@ PACKED tDFUDownloadHeader;
 // change in the future.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint8_t ui8Command;         // DFU_CMD_PROG
     uint8_t ui8Reserved;        // Reserved - set to 0x00.
     uint16_t ui16StartAddr;     // Block start address / 1024
     uint32_t ui32Length;        // Total length, in bytes, of following data
-                                // for the complete download operation.
+    // for the complete download operation.
 }
 PACKED tDFUDownloadProgHeader;
 
@@ -285,13 +279,12 @@ PACKED tDFUDownloadProgHeader;
 // truncated before the check is performed.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint8_t ui8Command;         // DFU_CMD_READ or DFU_CMD_CHECK
     uint8_t ui8Reserved;        // Reserved - write to 0
     uint16_t ui16StartAddr;     // Block start address / 1024
     uint32_t ui32Length;        // The number of bytes of data to read back or
-                                // check.
+    // check.
 }
 PACKED tDFUDownloadReadCheckHeader;
 
@@ -305,8 +298,7 @@ PACKED tDFUDownloadReadCheckHeader;
 // size of the device may be determined using the DFU_CMD_INFO command.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint8_t ui8Command;         // DFU_CMD_ERASE
     uint8_t ui8Reserved;        // Reserved - set to 0
     uint16_t ui16StartAddr;     // Block start address / 1024
@@ -324,8 +316,7 @@ PACKED tDFUDownloadEraseHeader;
 // USBD_DFU_REQUEST_UPLOAD request.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint8_t ui8Command;         // DFU_CMD_INFO
     uint8_t pui8Reserved[7];    // Reserved - set to 0
 }
@@ -352,11 +343,10 @@ PACKED tDFUDownloadInfoHeader;
 // as DFU_CMD_INFO.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint8_t ui8Command;         // DFU_CMD_BIN
     uint8_t bBinary;            // Set to true to omit image header or false
-                                // to include it (the default)
+    // to include it (the default)
     uint8_t pui8Reserved[6];    // Reserved - set to 0
 }
 PACKED tDFUDownloadBinHeader;
@@ -377,8 +367,7 @@ PACKED tDFUDownloadBinHeader;
 //! USBD_DFU_REQUEST_UPLOAD request following a DFU_CMD_INFO command.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     //! The size of a flash block in bytes.
     //

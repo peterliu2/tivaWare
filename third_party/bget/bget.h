@@ -15,7 +15,7 @@
 #endif
 
 #if !defined NULL
-    #define NULL    ((void *) 0)
+#define NULL    ((void *) 0)
 #endif
 
 typedef long bufsize;
@@ -25,12 +25,12 @@ void   *bgetz	    _((bufsize size));
 void   *bgetr	    _((void *buffer, bufsize newsize));
 void	brel	    _((void *buf));
 void	bectl	    _((int (*compact)(bufsize sizereq, int sequence),
-		       void *(*acquire)(bufsize size),
-		       void (*release)(void *buf), bufsize pool_incr));
+                       void *(*acquire)(bufsize size),
+                       void (*release)(void *buf), bufsize pool_incr));
 void	bstats	    _((bufsize *curalloc, bufsize *totfree, bufsize *maxfree,
-		       long *nget, long *nrel));
+                       long *nget, long *nrel));
 void	bstatse     _((bufsize *pool_incr, long *npool, long *npget,
-		       long *nprel, long *ndget, long *ndrel));
+                       long *nprel, long *ndget, long *ndrel));
 void	bufdump     _((void *buf));
 void	bpoold	    _((void *pool, int dumpalloc, int dumpfree));
 int	bpoolv	    _((void *pool));

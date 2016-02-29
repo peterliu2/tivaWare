@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2007-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Graphics Library.
 //
 //*****************************************************************************
@@ -68,16 +68,14 @@ GrLineDrawH(const tContext *pContext, int32_t i32X1, int32_t i32X2,
     // there is nothing to be done.
     //
     if((i32Y < pContext->sClipRegion.i16YMin) ||
-       (i32Y > pContext->sClipRegion.i16YMax))
-    {
+            (i32Y > pContext->sClipRegion.i16YMax)) {
         return;
     }
 
     //
     // Swap the X coordinates if the first is larger than the second.
     //
-    if(i32X1 > i32X2)
-    {
+    if(i32X1 > i32X2) {
         i32Temp = i32X1;
         i32X1 = i32X2;
         i32X2 = i32Temp;
@@ -88,8 +86,7 @@ GrLineDrawH(const tContext *pContext, int32_t i32X1, int32_t i32X2,
     // to be done.
     //
     if((i32X1 > pContext->sClipRegion.i16XMax) ||
-       (i32X2 < pContext->sClipRegion.i16XMin))
-    {
+            (i32X2 < pContext->sClipRegion.i16XMin)) {
         return;
     }
 
@@ -97,8 +94,7 @@ GrLineDrawH(const tContext *pContext, int32_t i32X1, int32_t i32X2,
     // Clip the starting coordinate to the left side of the clipping region if
     // required.
     //
-    if(i32X1 < pContext->sClipRegion.i16XMin)
-    {
+    if(i32X1 < pContext->sClipRegion.i16XMin) {
         i32X1 = pContext->sClipRegion.i16XMin;
     }
 
@@ -106,8 +102,7 @@ GrLineDrawH(const tContext *pContext, int32_t i32X1, int32_t i32X2,
     // Clip the ending coordinate to the right side of the clipping region if
     // required.
     //
-    if(i32X2 > pContext->sClipRegion.i16XMax)
-    {
+    if(i32X2 > pContext->sClipRegion.i16XMax) {
         i32X2 = pContext->sClipRegion.i16XMax;
     }
 
@@ -152,16 +147,14 @@ GrLineDrawV(const tContext *pContext, int32_t i32X, int32_t i32Y1,
     // there is nothing to be done.
     //
     if((i32X < pContext->sClipRegion.i16XMin) ||
-       (i32X > pContext->sClipRegion.i16XMax))
-    {
+            (i32X > pContext->sClipRegion.i16XMax)) {
         return;
     }
 
     //
     // Swap the Y coordinates if the first is larger than the second.
     //
-    if(i32Y1 > i32Y2)
-    {
+    if(i32Y1 > i32Y2) {
         i32Temp = i32Y1;
         i32Y1 = i32Y2;
         i32Y2 = i32Temp;
@@ -172,8 +165,7 @@ GrLineDrawV(const tContext *pContext, int32_t i32X, int32_t i32Y1,
     // to be done.
     //
     if((i32Y1 > pContext->sClipRegion.i16YMax) ||
-       (i32Y2 < pContext->sClipRegion.i16YMin))
-    {
+            (i32Y2 < pContext->sClipRegion.i16YMin)) {
         return;
     }
 
@@ -181,8 +173,7 @@ GrLineDrawV(const tContext *pContext, int32_t i32X, int32_t i32Y1,
     // Clip the starting coordinate to the top side of the clipping region if
     // required.
     //
-    if(i32Y1 < pContext->sClipRegion.i16YMin)
-    {
+    if(i32Y1 < pContext->sClipRegion.i16YMin) {
         i32Y1 = pContext->sClipRegion.i16YMin;
     }
 
@@ -190,8 +181,7 @@ GrLineDrawV(const tContext *pContext, int32_t i32X, int32_t i32Y1,
     // Clip the ending coordinate to the bottom side of the clipping region if
     // required.
     //
-    if(i32Y2 > pContext->sClipRegion.i16YMax)
-    {
+    if(i32Y2 > pContext->sClipRegion.i16YMax) {
         i32Y2 = pContext->sClipRegion.i16YMax;
     }
 
@@ -232,8 +222,7 @@ GrClipCodeGet(const tContext *pContext, int32_t i32X, int32_t i32Y)
     // Set bit zero of the clipping code if the Y coordinate is above the
     // clipping region.
     //
-    if(i32Y < pContext->sClipRegion.i16YMin)
-    {
+    if(i32Y < pContext->sClipRegion.i16YMin) {
         i32Code |= 1;
     }
 
@@ -241,8 +230,7 @@ GrClipCodeGet(const tContext *pContext, int32_t i32X, int32_t i32Y)
     // Set bit one of the clipping code if the Y coordinate is below the
     // clipping region.
     //
-    if(i32Y > pContext->sClipRegion.i16YMax)
-    {
+    if(i32Y > pContext->sClipRegion.i16YMax) {
         i32Code |= 2;
     }
 
@@ -250,8 +238,7 @@ GrClipCodeGet(const tContext *pContext, int32_t i32X, int32_t i32Y)
     // Set bit two of the clipping code if the X coordinate is to the left of
     // the clipping region.
     //
-    if(i32X < pContext->sClipRegion.i16XMin)
-    {
+    if(i32X < pContext->sClipRegion.i16XMin) {
         i32Code |= 4;
     }
 
@@ -259,8 +246,7 @@ GrClipCodeGet(const tContext *pContext, int32_t i32X, int32_t i32Y)
     // Set bit three of the clipping code if the X coordinate is to the right
     // of the clipping region.
     //
-    if(i32X > pContext->sClipRegion.i16XMax)
-    {
+    if(i32X > pContext->sClipRegion.i16XMax) {
         i32Code |= 8;
     }
 
@@ -314,14 +300,12 @@ GrLineClip(const tContext *pContext, int32_t *pi32X1, int32_t *pi32Y1,
     // Loop forever.  This loop will be explicitly broken out of when the line
     // is either trivially accepted or trivially rejected.
     //
-    while(1)
-    {
+    while(1) {
         //
         // If both codes are zero, then both points lie within the extent of
         // the clipping region.  In this case, trivally accept the line.
         //
-        if((i32Code1 == 0) && (i32Code2 == 0))
-        {
+        if((i32Code1 == 0) && (i32Code2 == 0)) {
             return(1);
         }
 
@@ -330,8 +314,7 @@ GrLineClip(const tContext *pContext, int32_t *pi32X1, int32_t *pi32Y1,
         // entirely off one edge of the clipping region.  In this case,
         // trivally reject the line.
         //
-        if((i32Code1 & i32Code2) != 0)
-        {
+        if((i32Code1 & i32Code2) != 0) {
             return(0);
         }
 
@@ -341,27 +324,23 @@ GrLineClip(const tContext *pContext, int32_t *pi32X1, int32_t *pi32Y1,
         // end of the line is moved until it is also within the clipping
         // region.
         //
-        if(i32Code1)
-        {
+        if(i32Code1) {
             i32Code = i32Code1;
-        }
-        else
-        {
+        } else {
             i32Code = i32Code2;
         }
 
         //
         // See if this end of the line lies above the clipping region.
         //
-        if(i32Code & 1)
-        {
+        if(i32Code & 1) {
             //
             // Move this end of the line to the intersection of the line and
             // the top of the clipping region.
             //
             i32X = (*pi32X1 + (((*pi32X2 - *pi32X1) *
-                            (pContext->sClipRegion.i16YMin - *pi32Y1)) /
-                           (*pi32Y2 - *pi32Y1)));
+                                (pContext->sClipRegion.i16YMin - *pi32Y1)) /
+                               (*pi32Y2 - *pi32Y1)));
             i32Y = pContext->sClipRegion.i16YMin;
         }
 
@@ -369,15 +348,14 @@ GrLineClip(const tContext *pContext, int32_t *pi32X1, int32_t *pi32Y1,
         // Otherwise, see if this end of the line lies below the clipping
         // region.
         //
-        else if(i32Code & 2)
-        {
+        else if(i32Code & 2) {
             //
             // Move this end of the line to the intersection of the line and
             // the bottom of the clipping region.
             //
             i32X = (*pi32X1 + (((*pi32X2 - *pi32X1) *
-                            (pContext->sClipRegion.i16YMax - *pi32Y1)) /
-                           (*pi32Y2 - *pi32Y1)));
+                                (pContext->sClipRegion.i16YMax - *pi32Y1)) /
+                               (*pi32Y2 - *pi32Y1)));
             i32Y = pContext->sClipRegion.i16YMax;
         }
 
@@ -385,39 +363,36 @@ GrLineClip(const tContext *pContext, int32_t *pi32X1, int32_t *pi32Y1,
         // Otherwise, see if this end of the line lies to the left of the
         // clipping region.
         //
-        else if(i32Code & 4)
-        {
+        else if(i32Code & 4) {
             //
             // Move this end of the line to the intersection of the line and
             // the left side of the clipping region.
             //
             i32X = pContext->sClipRegion.i16XMin;
             i32Y = (*pi32Y1 + (((*pi32Y2 - *pi32Y1) *
-                            (pContext->sClipRegion.i16XMin - *pi32X1)) /
-                           (*pi32X2 - *pi32X1)));
+                                (pContext->sClipRegion.i16XMin - *pi32X1)) /
+                               (*pi32X2 - *pi32X1)));
         }
 
         //
         // Otherwise, this end of the line lies to the right of the clipping
         // region.
         //
-        else
-        {
+        else {
             //
             // Move this end of the line to the intersection of the line and
             // the right side of the clipping region.
             //
             i32X = pContext->sClipRegion.i16XMax;
             i32Y = (*pi32Y1 + (((*pi32Y2 - *pi32Y1) *
-                            (pContext->sClipRegion.i16XMax - *pi32X1)) /
-                           (*pi32X2 - *pi32X1)));
+                                (pContext->sClipRegion.i16XMax - *pi32X1)) /
+                               (*pi32X2 - *pi32X1)));
         }
 
         //
         // See which end of the line just moved.
         //
-        if(i32Code1)
-        {
+        if(i32Code1) {
             //
             // Save the new coordinates for the start of the line.
             //
@@ -428,9 +403,7 @@ GrLineClip(const tContext *pContext, int32_t *pi32X1, int32_t *pi32Y1,
             // Recompute the clipping code for the start of the line.
             //
             i32Code1 = GrClipCodeGet(pContext, i32X, i32Y);
-        }
-        else
-        {
+        } else {
             //
             // Save the new coordinates for the end of the line.
             //
@@ -477,8 +450,7 @@ GrLineDraw(const tContext *pContext, int32_t i32X1, int32_t i32Y1,
     //
     // See if this is a vertical line.
     //
-    if(i32X1 == i32X2)
-    {
+    if(i32X1 == i32X2) {
         //
         // It is more efficient to avoid Bresenham's algorithm when drawing a
         // vertical line, so use the vertical line routine to draw this line.
@@ -494,8 +466,7 @@ GrLineDraw(const tContext *pContext, int32_t i32X1, int32_t i32Y1,
     //
     // See if this is a horizontal line.
     //
-    if(i32Y1 == i32Y2)
-    {
+    if(i32Y1 == i32Y2) {
         //
         // It is more efficient to avoid Bresenham's algorithm when drawing a
         // horizontal line, so use the horizontal line routien to draw this
@@ -513,8 +484,7 @@ GrLineDraw(const tContext *pContext, int32_t i32X1, int32_t i32Y1,
     // Clip this line if necessary, and return without drawing anything if the
     // line does not cross the clipping region.
     //
-    if(GrLineClip(pContext, &i32X1, &i32Y1, &i32X2, &i32Y2) == 0)
-    {
+    if(GrLineClip(pContext, &i32X1, &i32Y1, &i32X2, &i32Y2) == 0) {
         return;
     }
 
@@ -523,20 +493,16 @@ GrLineDraw(const tContext *pContext, int32_t i32X1, int32_t i32Y1,
     // direction than the X direction.
     //
     if(((i32Y2 > i32Y1) ? (i32Y2 - i32Y1) : (i32Y1 - i32Y2)) >
-       ((i32X2 > i32X1) ? (i32X2 - i32X1) : (i32X1 - i32X2)))
-    {
+            ((i32X2 > i32X1) ? (i32X2 - i32X1) : (i32X1 - i32X2))) {
         bSteep = 1;
-    }
-    else
-    {
+    } else {
         bSteep = 0;
     }
 
     //
     // If the line is steep, then swap the X and Y coordinates.
     //
-    if(bSteep)
-    {
+    if(bSteep) {
         i32Error = i32X1;
         i32X1 = i32Y1;
         i32Y1 = i32Error;
@@ -549,8 +515,7 @@ GrLineDraw(const tContext *pContext, int32_t i32X1, int32_t i32Y1,
     // If the starting X coordinate is larger than the ending X coordinate,
     // then swap the start and end coordinates.
     //
-    if(i32X1 > i32X2)
-    {
+    if(i32X1 > i32X2) {
         i32Error = i32X1;
         i32X1 = i32X2;
         i32X2 = i32Error;
@@ -574,33 +539,26 @@ GrLineDraw(const tContext *pContext, int32_t i32X1, int32_t i32Y1,
     //
     // Determine the direction to step in the Y axis when required.
     //
-    if(i32Y1 < i32Y2)
-    {
+    if(i32Y1 < i32Y2) {
         i32YStep = 1;
-    }
-    else
-    {
+    } else {
         i32YStep = -1;
     }
 
     //
     // Loop through all the points along the X axis of the line.
     //
-    for(; i32X1 <= i32X2; i32X1++)
-    {
+    for(; i32X1 <= i32X2; i32X1++) {
         //
         // See if this is a steep line.
         //
-        if(bSteep)
-        {
+        if(bSteep) {
             //
             // Plot this point of the line, swapping the X and Y coordinates.
             //
             DpyPixelDraw(pContext->psDisplay, i32Y1, i32X1,
-                           pContext->ui32Foreground);
-        }
-        else
-        {
+                         pContext->ui32Foreground);
+        } else {
             //
             // Plot this point of the line, using the coordinates as is.
             //
@@ -616,8 +574,7 @@ GrLineDraw(const tContext *pContext, int32_t i32X1, int32_t i32Y1,
         //
         // See if the error term is now greater than zero.
         //
-        if(i32Error > 0)
-        {
+        if(i32Error > 0) {
             //
             // Take a step in the Y axis.
             //

@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C123GXL Firmware Package.
 //
 //*****************************************************************************
@@ -38,8 +38,7 @@
 // is used by the cmdline module.
 //
 //*****************************************************************************
-tCmdLineEntry g_psCmdTable[] =
-{
+tCmdLineEntry g_psCmdTable[] = {
     {"help",     CMD_help,      " : Display list of commands" },
     {"hib",      CMD_hib,       " : Place system into hibernate mode"},
     {"rand",     CMD_rand,      " : Start automatic color sequencing"},
@@ -76,11 +75,10 @@ CMD_help(int argc, char **argv)
     //
     // Display strings until we run out of them.
     //
-    while(g_psCmdTable[i32Index].pcCmd)
-    {
-      UARTprintf("%17s %s\n", g_psCmdTable[i32Index].pcCmd,
-                 g_psCmdTable[i32Index].pcHelp);
-      i32Index++;
+    while(g_psCmdTable[i32Index].pcCmd) {
+        UARTprintf("%17s %s\n", g_psCmdTable[i32Index].pcCmd,
+                   g_psCmdTable[i32Index].pcHelp);
+        i32Index++;
     }
 
     //
@@ -156,8 +154,7 @@ CMD_intensity(int argc, char **argv)
     //
     // This command requires one parameter.
     //
-    if(argc == 2)
-    {
+    if(argc == 2) {
         //
         // Extract the intensity from the command line parameter.
         //
@@ -196,8 +193,7 @@ CMD_rgb(int argc, char **argv)
     //
     // This command requires one parameter.
     //
-    if(argc == 2)
-    {
+    if(argc == 2) {
         //
         // Extract the required color from the command line parameter.
         //

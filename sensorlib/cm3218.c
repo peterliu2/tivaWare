@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -57,8 +57,7 @@
 // Sensitivity setting to floating point range value lookup table.
 //
 //*****************************************************************************
-const float g_pfSensitivityLookup[4] =
-{
+const float g_pfSensitivityLookup[4] = {
     0.02857,
     0.01328,
     0.00714,
@@ -86,24 +85,21 @@ CM3218Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     // to the idle state (which will also result in a callback to propagate the
     // error).
     //
-    if(ui8Status != I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status != I2CM_STATUS_SUCCESS) {
         psInst->ui8State = CM3218_STATE_IDLE;
     }
 
     //
     // Determine the current state of the CM3218 state machine.
     //
-    switch(psInst->ui8State)
-    {
+    switch(psInst->ui8State) {
         //
         // All states that trivially transition to IDLE, and all unknown
         // states.
         //
         case CM3218_STATE_INIT:
         case CM3218_STATE_READ:
-        default:
-        {
+        default: {
             //
             // The state machine is now idle.
             //
@@ -114,8 +110,7 @@ CM3218Callback(void *pvCallbackData, uint_fast8_t ui8Status)
         //
         // A write has just completed.
         //
-        case CM3218_STATE_WRITE:
-        {
+        case CM3218_STATE_WRITE: {
             //
             // Set the integration time to the new integration time.  If the
             // register was not modified, the values will be the same so this
@@ -138,8 +133,7 @@ CM3218Callback(void *pvCallbackData, uint_fast8_t ui8Status)
     //
     // See if the state machine is now idle and there is a callback function.
     //
-    if((psInst->ui8State == CM3218_STATE_IDLE) && psInst->pfnCallback)
-    {
+    if((psInst->ui8State == CM3218_STATE_IDLE) && psInst->pfnCallback) {
         //
         // Call the application-supplied callback function.
         //
@@ -180,8 +174,7 @@ CM3218Init(tCM3218 *psInst, tI2CMInstance *psI2CInst, uint_fast8_t ui8I2CAddr,
     //
     // The default settings are ok.  Call the callback function if provided.
     //
-    if(pfnCallback)
-    {
+    if(pfnCallback) {
         pfnCallback(pvCallbackData, 0);
     }
 
@@ -223,8 +216,7 @@ CM3218Read(tCM3218 *psInst, uint_fast8_t ui8Reg, uint16_t *pui16Data,
     // Return a failure if the CM3218 driver is not idle (in other words, there
     // is already an outstanding request to the CM3218).
     //
-    if(psInst->ui8State != CM3218_STATE_IDLE)
-    {
+    if(psInst->ui8State != CM3218_STATE_IDLE) {
         return(0);
     }
 
@@ -244,8 +236,7 @@ CM3218Read(tCM3218 *psInst, uint_fast8_t ui8Reg, uint16_t *pui16Data,
     //
     if(I2CMRead16BE(&(psInst->uCommand.sReadState), psInst->psI2CInst,
                     psInst->ui8Addr, ui8Reg, pui16Data, ui16Count,
-                    CM3218Callback, psInst) == 0)
-    {
+                    CM3218Callback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -293,8 +284,7 @@ CM3218Write(tCM3218 *psInst, uint_fast8_t ui8Reg, const uint16_t *pui16Data,
     // Return a failure if the CM3218 driver is not idle (in other words, there
     // is already an outstanding request to the CM3218).
     //
-    if(psInst->ui8State != CM3218_STATE_IDLE)
-    {
+    if(psInst->ui8State != CM3218_STATE_IDLE) {
         return(0);
     }
 
@@ -308,8 +298,7 @@ CM3218Write(tCM3218 *psInst, uint_fast8_t ui8Reg, const uint16_t *pui16Data,
     // See if the CMD_CONFIG register is being written.
     //
     if((ui8Reg <= CM3218_CMD_CONFIG) &&
-       ((ui8Reg + ui16Count) > CM3218_CMD_CONFIG))
-    {
+            ((ui8Reg + ui16Count) > CM3218_CMD_CONFIG)) {
         //
         // Extract the integration time from the CMD_CONFIG register value.
         //
@@ -328,8 +317,7 @@ CM3218Write(tCM3218 *psInst, uint_fast8_t ui8Reg, const uint16_t *pui16Data,
     //
     if(I2CMWrite16BE(&(psInst->uCommand.sWriteState), psInst->psI2CInst,
                      psInst->ui8Addr, ui8Reg, pui16Data, ui16Count,
-                     CM3218Callback, psInst) == 0)
-    {
+                     CM3218Callback, psInst) == 0) {
         //
         // The I2C write failed, so move to the idle state and return a
         // failure.
@@ -364,7 +352,7 @@ CM3218Write(tCM3218 *psInst, uint_fast8_t ui8Reg, const uint16_t *pui16Data,
 //*****************************************************************************
 uint_fast8_t
 CM3218InterruptAcknowledge(tCM3218 *psInst, tSensorCallback *pfnCallback,
-               void *pvCallbackData)
+                           void *pvCallbackData)
 {
     static uint8_t ui8ReadBuf;
 
@@ -403,8 +391,7 @@ CM3218DataRead(tCM3218 *psInst, tSensorCallback *pfnCallback,
     // Return a failure if the CM3218 driver is not idle (in other words, there
     // is already an outstanding request to the CM3218).
     //
-    if(psInst->ui8State != CM3218_STATE_IDLE)
-    {
+    if(psInst->ui8State != CM3218_STATE_IDLE) {
         return(0);
     }
 
@@ -425,8 +412,7 @@ CM3218DataRead(tCM3218 *psInst, tSensorCallback *pfnCallback,
     psInst->uCommand.pui8Buffer[0] = CM3218_CMD_ALS_DATA;
     if(I2CMRead(psInst->psI2CInst, psInst->ui8Addr,
                 psInst->uCommand.pui8Buffer, 1, psInst->pui8Data, 2,
-                CM3218Callback, psInst) == 0)
-    {
+                CM3218Callback, psInst) == 0) {
         //
         // The I2C read failed, so move to the idle state and return a failure.
         //

@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2007-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -65,8 +65,7 @@
 // Parameters used in the conversion of the font.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     char *pcAppName;
     char *pcFilename;
     char *pcCharFile;
@@ -102,8 +101,7 @@ tConversionParameters;
 // Properties of the font that are calculated during conversion.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     int iWidth;
     int iYMin;
     int iYMax;
@@ -118,8 +116,7 @@ tFontInfo;
 // A structure describing a block of characters to encode.
 //
 //*****************************************************************************
-typedef struct _tCodepointBlock
-{
+typedef struct _tCodepointBlock {
     struct _tCodepointBlock *pNext;
     unsigned long ulStart;
     unsigned long ulEnd;
@@ -132,8 +129,7 @@ tCodepointBlock;
 // FreeType.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     unsigned long ulValue;
     const char *pcName;
 }
@@ -141,8 +137,7 @@ tKeyString;
 
 #define SELF_DESC(x) {(unsigned long)(x), #x}
 
-const tKeyString g_pEncodingDescs[] =
-{
+const tKeyString g_pEncodingDescs[] = {
     SELF_DESC(FT_ENCODING_NONE),
     SELF_DESC(FT_ENCODING_MS_SYMBOL),
     SELF_DESC(FT_ENCODING_UNICODE),
@@ -161,8 +156,7 @@ const tKeyString g_pEncodingDescs[] =
 
 #define NUM_ENCODING_DESCS (sizeof(g_pEncodingDescs) / sizeof(tKeyString))
 
-const tKeyString g_pPlatformDescs[] =
-{
+const tKeyString g_pPlatformDescs[] = {
     { 0, "Apple Unicode" },
     { 1, "Apple Script Manager" },
     { 2, "ISO" },
@@ -176,8 +170,7 @@ const tKeyString g_pPlatformDescs[] =
 // Descriptions of font and string codepages.
 //
 //*****************************************************************************
-const tKeyString g_pCodepageDescs[] =
-{
+const tKeyString g_pCodepageDescs[] = {
     SELF_DESC(CODEPAGE_ISO8859_1),
     SELF_DESC(CODEPAGE_ISO8859_2),
     SELF_DESC(CODEPAGE_ISO8859_3),
@@ -209,8 +202,7 @@ const tKeyString g_pCodepageDescs[] =
 // the appropriate codepage as required in the GrLib tFontWide header.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     unsigned long ulFTEncoding;
     unsigned short usCodepage;
 }
@@ -218,8 +210,7 @@ tCodePageMapping;
 
 #define CODEPAGE_MAPPING(x, y) {(x), (y)}
 
-const tCodePageMapping g_psCodePageMapping[] =
-{
+const tCodePageMapping g_psCodePageMapping[] = {
     CODEPAGE_MAPPING(FT_ENCODING_UNICODE, CODEPAGE_UNICODE),
     CODEPAGE_MAPPING(FT_ENCODING_ADOBE_LATIN_1, CODEPAGE_ISO8859_1),
     CODEPAGE_MAPPING(FT_ENCODING_OLD_LATIN_2, CODEPAGE_ISO8859_2),
@@ -236,8 +227,7 @@ const tCodePageMapping g_psCodePageMapping[] =
 // The structure that describes each character glyph.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // The codepoint (character code) that this glyph represents.
     //
@@ -299,8 +289,7 @@ tGlyph g_pGlyphs[256];
 // Command line options.
 //
 //*****************************************************************************
-struct option g_pCmdLineOptions[] =
-{
+struct option g_pCmdLineOptions[] = {
     { "charmap", required_argument, 0, 'a' },
     { "bold", no_argument, 0, 'b' },
     { "charfile", required_argument, 0, 'c' },
@@ -348,47 +337,47 @@ Usage(char *argv, int bError)
 
     fprintf(fhOut, "Usage: %s [options] <font> [<font>]\n", basename(argv));
     fprintf(
-            fhOut,
-            "Converts any font that FreeType recognizes into a compressed font for use by\n");
+        fhOut,
+        "Converts any font that FreeType recognizes into a compressed font for use by\n");
     fprintf(
-            fhOut,
-            "the TivaWare Graphics Library.  The font generated may support either 8 bit\n");
+        fhOut,
+        "the TivaWare Graphics Library.  The font generated may support either 8 bit\n");
     fprintf(fhOut,
             "indexing allowing support of various ISO8859 variants or 32 bit indexing\n");
     fprintf(fhOut,
             "allowing support for wide character sets such as Unicode.\n");
     fprintf(fhOut, "\n");
     fprintf(
-            fhOut,
-            "If the -r option is not supplied, the tool will generate a font containing a\n");
+        fhOut,
+        "If the -r option is not supplied, the tool will generate a font containing a\n");
     fprintf(
-            fhOut,
-            "contiguous block of glyphs identified by the first and last character numbers\n");
+        fhOut,
+        "contiguous block of glyphs identified by the first and last character numbers\n");
     fprintf(fhOut,
             "provided.  To allow encoding of some ISO8859 character sets from Unicode\n");
     fprintf(fhOut,
             "fonts where these characters appear at higher codepoints (for example\n");
     fprintf(
-            fhOut,
-            "Latin/Cyrillic where the ISO8859-5 mapping appears at offset 0x400 in Unicode\n");
+        fhOut,
+        "Latin/Cyrillic where the ISO8859-5 mapping appears at offset 0x400 in Unicode\n");
     fprintf(
-            fhOut,
-            "space), additional parameters may be supplied to translate a block of source\n");
+        fhOut,
+        "space), additional parameters may be supplied to translate a block of source\n");
     fprintf(
-            fhOut,
-            "font codepoint numbers downwards into the 0-255 ISO8859 range during conversion.\n");
+        fhOut,
+        "font codepoint numbers downwards into the 0-255 ISO8859 range during conversion.\n");
     fprintf(fhOut, "\n");
     fprintf(fhOut,
             "If the -r option is supplied, the output font is relocatable (and hence\n");
     fprintf(
-            fhOut,
-            "suitable for use from non-random-access memory such as an SSI EEPROM or SDCard)\n");
+        fhOut,
+        "suitable for use from non-random-access memory such as an SSI EEPROM or SDCard)\n");
     fprintf(
-            fhOut,
-            "and supports multiple blocks of characters from wide character codepages.  When\n");
+        fhOut,
+        "and supports multiple blocks of characters from wide character codepages.  When\n");
     fprintf(
-            fhOut,
-            "generating this type of font, the -c parameter may be used to provide a list\n");
+        fhOut,
+        "generating this type of font, the -c parameter may be used to provide a list\n");
     fprintf(fhOut,
             "of the Unicode characters that are to be included in the output font.\n");
     fprintf(fhOut,
@@ -399,48 +388,48 @@ Usage(char *argv, int bError)
     fprintf(fhOut, "Supported options are:\n");
     fprintf(fhOut, "  -b            Specifies that this is a bold font.\n");
     fprintf(fhOut, "  -f <filename> Specifies the base name for this font "
-        "[default=\"font\"].\n");
+            "[default=\"font\"].\n");
     fprintf(fhOut, "  -i            Specifies that this is an italic font.\n");
     fprintf(fhOut,
             "  -m            Specifies that this is a monospaced font.\n");
     fprintf(fhOut,
             "  -s <size>     Specifies the point size of this font unless the parameter\n");
     fprintf(
-            fhOut,
-            "                starts with \"F\" in which case the supplied number is assumed\n");
+        fhOut,
+        "                starts with \"F\" in which case the supplied number is assumed\n");
     fprintf(
-            fhOut,
-            "                to be an index into the font's fixed size table. [default=20]\n");
+        fhOut,
+        "                to be an index into the font's fixed size table. [default=20]\n");
     fprintf(fhOut, "  -w <num>      Forces a character to be whitespace "
             "[default=32]\n");
     fprintf(fhOut, "  -n            Do not force whitespace (-w ignored). Ignored if -r is\n"
-                   "                also specified.\n");
+            "                also specified.\n");
     fprintf(fhOut, "  -p <num>      Specifies the first character to encode "
             "[default=32]\n");
     fprintf(fhOut, "  -e <num>      Specifies the last character to encode "
             "[default=126]\n");
     fprintf(
-            fhOut,
-            "  -t <num>      Specifies the codepoint of the first output font character\n"
-            "                to translate downwards [default=0].  Ignored if used with -r.\n");
+        fhOut,
+        "  -t <num>      Specifies the codepoint of the first output font character\n"
+        "                to translate downwards [default=0].  Ignored if used with -r.\n");
     fprintf(
-            fhOut,
-            "  -o <num>      Specifies the source font codepoint for the first character in\n"
-            "                the translated block [default=0].  Ignored if used with -r.\n");
+        fhOut,
+        "  -o <num>      Specifies the source font codepoint for the first character in\n"
+        "                the translated block [default=0].  Ignored if used with -r.\n");
     fprintf(fhOut,
             "  -u            Use Unicode character mapping in the source font.\n");
     fprintf(fhOut,
             "  -r            Generate a relocatable, wide character set font.\n");
     fprintf(
-            fhOut,
-            "  -y            Write the output in binary format suitable for storage in a\n"
-            "                file system.  If absent, a C format source file is generated.\n"
-            "                Ignored unless -r is specified.\n");
+        fhOut,
+        "  -y            Write the output in binary format suitable for storage in a\n"
+        "                file system.  If absent, a C format source file is generated.\n"
+        "                Ignored unless -r is specified.\n");
     fprintf(fhOut,
             "  -c <filename> Encode characters whose codepoints are provided in the\n");
     fprintf(
-            fhOut,
-            "                given text file.  Each line of the file contains either a\n");
+        fhOut,
+        "                given text file.  Each line of the file contains either a\n");
     fprintf(fhOut,
             "                single hex Unicode character number or two hex Unicode\n");
     fprintf(fhOut,
@@ -479,8 +468,7 @@ Usage(char *argv, int bError)
             "  -h            Shows this help.\n");
     fprintf(fhOut, "\nLong command aliases are:\n\n");
     iLoop = 0;
-    while(g_pCmdLineOptions[iLoop].name != (const char *) 0)
-    {
+    while(g_pCmdLineOptions[iLoop].name != (const char *) 0) {
         fprintf(fhOut, "  -%c           --%s\n", g_pCmdLineOptions[iLoop].val,
                 g_pCmdLineOptions[iLoop].name);
         iLoop++;
@@ -489,16 +477,16 @@ Usage(char *argv, int bError)
     fprintf(fhOut, "Examples:\n\n");
     fprintf(fhOut, "  %s -f foobar -s 24 foobar.ttf\n\n", basename(argv));
     fprintf(fhOut, "Produces fontfoobar24.c with a 24 point version of the "
-        "font in foobar.ttf.\n\n");
+            "font in foobar.ttf.\n\n");
     fprintf(
-            fhOut,
-            "  %s -f cyrillic -s 12 -u -p 32 -e 255 -t 160 -o 1024 unicode.ttf\n\n",
-            basename(argv));
+        fhOut,
+        "  %s -f cyrillic -s 12 -u -p 32 -e 255 -t 160 -o 1024 unicode.ttf\n\n",
+        basename(argv));
     fprintf(fhOut, "Produces fontcyrillic12.c with a 12 point version of the "
-        "font in unicode.ttf\n"
-        "with characters numbered 160-255 in the output (ISO8859-5 "
-        "Cyrillic glyphs)\n"
-        "taken from the codepoints starting at 1024 in the source Unicode font.\n");
+            "font in unicode.ttf\n"
+            "with characters numbered 160-255 in the output (ISO8859-5 "
+            "Cyrillic glyphs)\n"
+            "taken from the codepoints starting at 1024 in the source Unicode font.\n");
     fprintf(fhOut, "\n");
     fprintf(fhOut, "Report bugs to via the Tiva microcontroller forum at http://e2e.ti.com.\n");
 }
@@ -511,20 +499,18 @@ Usage(char *argv, int bError)
 //*****************************************************************************
 const char *
 GetStringFromValue(unsigned long ulValue, const tKeyString *pTable,
-        int iNumEntries)
+                   int iNumEntries)
 {
     int iLoop;
 
     //
     // Loop through all the encodings we know about.
     //
-    for(iLoop = 0; iLoop < iNumEntries; iLoop++)
-    {
+    for(iLoop = 0; iLoop < iNumEntries; iLoop++) {
         //
         // Does the character map passed match this encoding?
         //
-        if(pTable[iLoop].ulValue == ulValue)
-        {
+        if(pTable[iLoop].ulValue == ulValue) {
             //
             // Yes - return the encoding's name.
             //
@@ -573,15 +559,12 @@ GetCodepageName(unsigned short usCodepage)
     //
     // Is this a custom codepage identifier?
     //
-    if(usCodepage >= CODEPAGE_CUSTOM_BASE)
-    {
+    if(usCodepage >= CODEPAGE_CUSTOM_BASE) {
         //
         // Yes - return a generic string.
         //
         return("CUSTOM");
-    }
-    else
-    {
+    } else {
         //
         // No - look the codepage up in our string/value array.
         //
@@ -609,20 +592,18 @@ DisplayFontInfo(tConversionParameters *pParams)
     //
     // Initialize the FreeType library.
     //
-    if(FT_Init_FreeType(&pLibrary) != 0)
-    {
+    if(FT_Init_FreeType(&pLibrary) != 0) {
         printf("%s: Unable to initialize the FreeType library.\n",
-                pParams->pcAppName);
+               pParams->pcAppName);
         return(1);
     }
 
     //
     // Load the specified font file into the FreeType library.
     //
-    if(FT_New_Face(pLibrary, pParams->pcFontInputName[0], 0, &pFace) != 0)
-    {
+    if(FT_New_Face(pLibrary, pParams->pcFontInputName[0], 0, &pFace) != 0) {
         printf("%s: Unable to open font file '%s'\n", pParams->pcAppName,
-                pParams->pcFontInputName[0]);
+               pParams->pcFontInputName[0]);
         return(1);
     }
 
@@ -635,88 +616,70 @@ DisplayFontInfo(tConversionParameters *pParams)
     printf("Style:        %s\n", pFace->style_name);
     printf("Num glyphs:   %ld\n", pFace->num_glyphs);
     printf("Style:        0x%lx\n", pFace->style_flags);
-    if(pFace->style_flags & FT_STYLE_FLAG_ITALIC)
-    {
+    if(pFace->style_flags & FT_STYLE_FLAG_ITALIC) {
         printf("    ITALIC\n");
     }
-    if(pFace->style_flags & FT_STYLE_FLAG_BOLD)
-    {
+    if(pFace->style_flags & FT_STYLE_FLAG_BOLD) {
         printf("    BOLD\n");
     }
 
     printf("Flags:        0x%lx\n", pFace->face_flags);
 
-    if(pFace->face_flags & FT_FACE_FLAG_SCALABLE)
-    {
+    if(pFace->face_flags & FT_FACE_FLAG_SCALABLE) {
         printf("    FT_FACE_FLAG_SCALABLE\n");
     }
-    if(pFace->face_flags & FT_FACE_FLAG_FIXED_SIZES)
-    {
+    if(pFace->face_flags & FT_FACE_FLAG_FIXED_SIZES) {
         printf("    FT_FACE_FLAG_FIXED_SIZES\n");
     }
-    if(pFace->face_flags & FT_FACE_FLAG_FIXED_WIDTH)
-    {
+    if(pFace->face_flags & FT_FACE_FLAG_FIXED_WIDTH) {
         printf("    FT_FACE_FLAG_FIXED_WIDTH\n");
     }
-    if(pFace->face_flags & FT_FACE_FLAG_SFNT)
-    {
+    if(pFace->face_flags & FT_FACE_FLAG_SFNT) {
         printf("    FT_FACE_FLAG_SFNT\n");
     }
-    if(pFace->face_flags & FT_FACE_FLAG_HORIZONTAL)
-    {
+    if(pFace->face_flags & FT_FACE_FLAG_HORIZONTAL) {
         printf("    FT_FACE_FLAG_HORIZONTAL\n");
     }
-    if(pFace->face_flags & FT_FACE_FLAG_VERTICAL)
-    {
+    if(pFace->face_flags & FT_FACE_FLAG_VERTICAL) {
         printf("    FT_FACE_FLAG_VERTICAL\n");
     }
-    if(pFace->face_flags & FT_FACE_FLAG_KERNING)
-    {
+    if(pFace->face_flags & FT_FACE_FLAG_KERNING) {
         printf("    FT_FACE_FLAG_KERNING\n");
     }
-    if(pFace->face_flags & FT_FACE_FLAG_FAST_GLYPHS)
-    {
+    if(pFace->face_flags & FT_FACE_FLAG_FAST_GLYPHS) {
         printf("    FT_FACE_FLAG_FAST_GLYPHS\n");
     }
-    if(pFace->face_flags & FT_FACE_FLAG_MULTIPLE_MASTERS)
-    {
+    if(pFace->face_flags & FT_FACE_FLAG_MULTIPLE_MASTERS) {
         printf("    FT_FACE_FLAG_MULTIPLE_MASTERS\n");
     }
-    if(pFace->face_flags & FT_FACE_FLAG_GLYPH_NAMES)
-    {
+    if(pFace->face_flags & FT_FACE_FLAG_GLYPH_NAMES) {
         printf("    FT_FACE_FLAG_GLYPH_NAMES\n");
     }
-    if(pFace->face_flags & FT_FACE_FLAG_EXTERNAL_STREAM)
-    {
+    if(pFace->face_flags & FT_FACE_FLAG_EXTERNAL_STREAM) {
         printf("    FT_FACE_FLAG_EXTERNAL_STREAM\n");
     }
-    if(pFace->face_flags & FT_FACE_FLAG_HINTER)
-    {
+    if(pFace->face_flags & FT_FACE_FLAG_HINTER) {
         printf("    FT_FACE_FLAG_HINTER\n");
     }
 
-    if(FT_HAS_FIXED_SIZES(pFace))
-    {
+    if(FT_HAS_FIXED_SIZES(pFace)) {
         printf("Fixed sizes:  %d\n", pFace->num_fixed_sizes);
 
-        if(pFace->available_sizes)
-        {
-            for(iLoop = 0; iLoop < pFace->num_fixed_sizes; iLoop++)
-            {
+        if(pFace->available_sizes) {
+            for(iLoop = 0; iLoop < pFace->num_fixed_sizes; iLoop++) {
                 printf("    %2d: %2d x %2d\n", iLoop,
-                        pFace->available_sizes[iLoop].width,
-                        pFace->available_sizes[iLoop].height);
+                       pFace->available_sizes[iLoop].width,
+                       pFace->available_sizes[iLoop].height);
             }
         }
     }
     printf("Num charmaps: %d\n", pFace->num_charmaps);
-    for(iLoop = 0; iLoop < pFace->num_charmaps; iLoop++)
-    {
+    for(iLoop = 0; iLoop < pFace->num_charmaps; iLoop++) {
         printf("    %d. %-26s (%08x), %-20s (%d), %d\n", iLoop, GetCharmapName(
-                pFace->charmaps[iLoop]), pFace->charmaps[iLoop]->encoding,
-                GetPlatformName(pFace->charmaps[iLoop]->platform_id),
-                pFace->charmaps[iLoop]->platform_id,
-                pFace->charmaps[iLoop]->encoding_id);
+                   pFace->charmaps[iLoop]), pFace->charmaps[iLoop]->encoding,
+               GetPlatformName(pFace->charmaps[iLoop]->platform_id),
+               pFace->charmaps[iLoop]->platform_id,
+               pFace->charmaps[iLoop]->encoding_id);
     }
 
     printf("\nUnicode characters encoded:\n");
@@ -730,8 +693,7 @@ DisplayFontInfo(tConversionParameters *pParams)
     iBlock = 0;
     ulStart = ulLastCharCode;
 
-    while(uiGlyphIndex != 0)
-    {
+    while(uiGlyphIndex != 0) {
         iGlyph++;
 
         //
@@ -742,15 +704,12 @@ DisplayFontInfo(tConversionParameters *pParams)
         //
         // Does this character code immediately follow the last one we read?
         //
-        if(ulCharCode == (ulLastCharCode + 1))
-        {
+        if(ulCharCode == (ulLastCharCode + 1)) {
             //
             // Yes - continue the same run.
             //
             iRunning = 1;
-        }
-        else
-        {
+        } else {
             //
             // This is the end of a run or the last character we read was
             // a single on its own.
@@ -761,26 +720,21 @@ DisplayFontInfo(tConversionParameters *pParams)
             //
             // Is this the end of a run or just a single character?
             //
-            if(pParams->bVerbose)
-            {
-                if(iRunning)
-                {
+            if(pParams->bVerbose) {
+                if(iRunning) {
                     //
                     // We are at the end of a run of characters so display the
                     // range found.
                     //
                     printf("0x%06lx-0x%06lx ", ulStart, ulLastCharCode);
-                }
-                else
-                {
+                } else {
                     //
                     // We found a character on its own so display its code.
                     //
                     printf("0x%06lx          ", ulStart);
                 }
 
-                if(!(iBlock % 4))
-                {
+                if(!(iBlock % 4)) {
                     printf("\n");
                 }
             }
@@ -826,8 +780,7 @@ FreeCharMapList(tCodepointBlock *pHead)
     //
     // Walk the list, freeing all the blocks it contains.
     //
-    while(pBlock)
-    {
+    while(pBlock) {
         pNext = pBlock->pNext;
         free(pBlock);
         pBlock = pNext;
@@ -863,10 +816,9 @@ ParseCharMapFile(tConversionParameters *pParams, tCodepointBlock *pHead)
     //
     // Did we open the file successfully?
     //
-    if(!pFile)
-    {
+    if(!pFile) {
         fprintf(stderr, "%s: Character map file %s doesn't exist or cannot be "
-            "opened!\n", pParams->pcAppName, pParams->pcCharFile);
+                "opened!\n", pParams->pcAppName, pParams->pcCharFile);
         return(0);
     }
 
@@ -884,8 +836,7 @@ ParseCharMapFile(tConversionParameters *pParams, tCodepointBlock *pHead)
     //
     // Continue reading from the file until we are finished.
     //
-    while(fgets(pcBuffer, 80, pFile))
-    {
+    while(fgets(pcBuffer, 80, pFile)) {
         //
         // Increment our line counter.
         //
@@ -894,16 +845,14 @@ ParseCharMapFile(tConversionParameters *pParams, tCodepointBlock *pHead)
         //
         // Skip this line if it's a comment or a blank.
         //
-        if((pcBuffer[0] == '#') || (pcBuffer[0] == '\n'))
-        {
+        if((pcBuffer[0] == '#') || (pcBuffer[0] == '\n')) {
             continue;
         }
 
         //
         // Check to see if this is a line telling us to remap codepoints.
         //
-        if(!strncmp(pcBuffer, "REMAP", 5))
-        {
+        if(!strncmp(pcBuffer, "REMAP", 5)) {
             //
             // Yes - set a flag that we will use later when writing the font
             // file.
@@ -915,8 +864,7 @@ ParseCharMapFile(tConversionParameters *pParams, tCodepointBlock *pHead)
         //
         // Tell the user which block we are reading.
         //
-        if(pParams->bVerbose)
-        {
+        if(pParams->bVerbose) {
             printf("Block %s", pcBuffer);
         }
 
@@ -928,24 +876,21 @@ ParseCharMapFile(tConversionParameters *pParams, tCodepointBlock *pHead)
         //
         // Did we read any values?
         //
-        if(iNumVals)
-        {
+        if(iNumVals) {
             //
             // If the line contained a single value, set the end to be the same
             // as the start.
             //
-            if(iNumVals == 1)
-            {
+            if(iNumVals == 1) {
                 ulEnd = ulStart;
             }
 
             //
             // Make sure the start and end values appear valid.
             //
-            if(ulStart > ulEnd)
-            {
+            if(ulStart > ulEnd) {
                 fprintf(stderr, "%s: Error - start value greater than end in "
-                    "charmap file at line %d.\n", pParams->pcAppName, iLineNum);
+                        "charmap file at line %d.\n", pParams->pcAppName, iLineNum);
                 bError = true;
                 break;
             }
@@ -953,14 +898,12 @@ ParseCharMapFile(tConversionParameters *pParams, tCodepointBlock *pHead)
             //
             // If necessary, allocate a new block.
             //
-            if((pBlock->ulStart != 0xFFFFFFFF) && (pBlock->ulEnd != 0xFFFFFFFF))
-            {
+            if((pBlock->ulStart != 0xFFFFFFFF) && (pBlock->ulEnd != 0xFFFFFFFF)) {
                 //
                 // Allocate the next block and link it to the list.
                 //
                 pNext = malloc(sizeof(tCodepointBlock));
-                if(pNext)
-                {
+                if(pNext) {
                     //
                     // Clean out the next block and link it to the end of the list.
                     // We do this (rather than linking it to the head) since we
@@ -970,15 +913,13 @@ ParseCharMapFile(tConversionParameters *pParams, tCodepointBlock *pHead)
                     pBlock->pNext = pNext;
                     pBlock = pNext;
                     pNext->pNext = NULL;
-                }
-                else
-                {
+                } else {
                     //
                     // We can't allocate memory for our new block!
                     //
                     fprintf(stderr,
                             "%s: Error - can't allocate memory for charmap "
-                                "block!\n", pParams->pcAppName);
+                            "block!\n", pParams->pcAppName);
                     bError = true;
                     break;
                 }
@@ -991,22 +932,19 @@ ParseCharMapFile(tConversionParameters *pParams, tCodepointBlock *pHead)
             pBlock->ulStart = ulStart;
             pBlock->ulEnd = ulEnd;
             iNumBlocks++;
-        }
-        else
-        {
+        } else {
             //
             // The line didn't parse correctly. Print a warning but continue.
             //
             fprintf(stderr, "Syntax error in charmap file at line %d. "
-                "Ignoring.\n", iLineNum);
+                    "Ignoring.\n", iLineNum);
         }
     }
 
     //
     // Did we experience any error when reading the file?
     //
-    if(bError)
-    {
+    if(bError) {
         //
         // Yes - tidy up before we leave.
         //
@@ -1019,8 +957,7 @@ ParseCharMapFile(tConversionParameters *pParams, tCodepointBlock *pHead)
     //
     fclose(pFile);
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Character map file parsed. %d blocks found.\n", iNumBlocks);
     }
 
@@ -1042,13 +979,11 @@ SetFontCharSize(FT_Face pFace, tConversionParameters *pParams)
     //
     // Have we been asked to choose one of the font's fixed sizes?
     //
-    if(pParams->bFixedSize)
-    {
+    if(pParams->bFixedSize) {
         //
         // Yes - make sure the font support fixed sizes.
         //
-        if(!FT_HAS_FIXED_SIZES(pFace))
-        {
+        if(!FT_HAS_FIXED_SIZES(pFace)) {
             fprintf(stderr, "%s: This font does not contain fixed sizes!\n",
                     pParams->pcAppName);
             return(false);
@@ -1057,10 +992,9 @@ SetFontCharSize(FT_Face pFace, tConversionParameters *pParams)
         //
         // Make sure that the fixed size index passed is valid.
         //
-        if(pParams->iSize >= pFace->num_fixed_sizes)
-        {
+        if(pParams->iSize >= pFace->num_fixed_sizes) {
             fprintf(stderr, "%s: Invalid size index (%d) passed. Valid values "
-                "are < %d!\n", pParams->pcAppName, pParams->iSize,
+                    "are < %d!\n", pParams->pcAppName, pParams->iSize,
                     pFace->num_fixed_sizes);
             return(false);
         }
@@ -1079,22 +1013,18 @@ SetFontCharSize(FT_Face pFace, tConversionParameters *pParams)
         //
         // Tell the user what we've done if they want verbose output.
         //
-        if(pParams->bVerbose)
-        {
+        if(pParams->bVerbose) {
             printf("Selected size index %d (%d x %d).\n", pParams->iSize,
-                    pFace->available_sizes[pParams->iSize].width,
-                    pFace->available_sizes[pParams->iSize].height);
+                   pFace->available_sizes[pParams->iSize].width,
+                   pFace->available_sizes[pParams->iSize].height);
         }
-    }
-    else
-    {
+    } else {
         //
         // Not a fixed size so check to see if the size is reasonable.
         //
-        if((pParams->iSize <= 0) || (pParams->iSize > 100))
-        {
+        if((pParams->iSize <= 0) || (pParams->iSize > 100)) {
             fprintf(stderr, "%s: The font size must be from 1 to 100, "
-                "inclusive.\n", pParams->pcAppName);
+                    "inclusive.\n", pParams->pcAppName);
             return(false);
         }
 
@@ -1102,10 +1032,8 @@ SetFontCharSize(FT_Face pFace, tConversionParameters *pParams)
         // Set the size based on the point size provided.  Are we
         // generating a monospaced font?
         //
-        if(pParams->bMono)
-        {
-            if(pParams->bVerbose)
-            {
+        if(pParams->bMono) {
+            if(pParams->bVerbose) {
                 printf("Selected monospaced %dpt size.\n", pParams->iSize);
             }
 
@@ -1114,12 +1042,9 @@ SetFontCharSize(FT_Face pFace, tConversionParameters *pParams)
             // nicely proportioned character cell.
             //
             FT_Set_Char_Size(pFace, pParams->iSize * 56, pParams->iSize * 64,
-                    0, 72);
-        }
-        else
-        {
-            if(pParams->bVerbose)
-            {
+                             0, 72);
+        } else {
+            if(pParams->bVerbose) {
                 printf("Selected variable width %dpt size.\n", pParams->iSize);
             }
 
@@ -1158,13 +1083,11 @@ CodePageFromEncoding(FT_Encoding eEncoding)
     //
     // Loop through all the known encoding/codepage mappings.
     //
-    for(iLoop = 0; iLoop < NUM_CODEPAGE_MAPPINGS; iLoop++)
-    {
+    for(iLoop = 0; iLoop < NUM_CODEPAGE_MAPPINGS; iLoop++) {
         //
         // Does this table entry refer to the passed encoding?
         //
-        if((unsigned long)eEncoding == g_psCodePageMapping[iLoop].ulFTEncoding)
-        {
+        if((unsigned long)eEncoding == g_psCodePageMapping[iLoop].ulFTEncoding) {
             //
             // Yes - return the matching codepage identifier.
             //
@@ -1218,23 +1141,19 @@ RenderGlyph(tConversionParameters *pParams, FT_Face pFace,
     //
     // Does the font contain this character?
     //
-    if(uiIndex)
-    {
+    if(uiIndex) {
         //
         // The font contains the character so load the glyph.
         //
         iError = FT_Load_Glyph(pFace, uiIndex, FT_LOAD_DEFAULT
-                | FT_LOAD_TARGET_MONO);
-        if(!iError)
-        {
+                               | FT_LOAD_TARGET_MONO);
+        if(!iError) {
             //
             // If this is an outline glyph, then render it.
             //
-            if(pSlot->format == FT_GLYPH_FORMAT_OUTLINE)
-            {
+            if(pSlot->format == FT_GLYPH_FORMAT_OUTLINE) {
                 iError = FT_Render_Glyph(pSlot, FT_RENDER_MODE_MONO);
-                if(iError & !bQuiet)
-                {
+                if(iError & !bQuiet) {
                     fprintf(stderr,
                             "%s: Error %d: Can't render glyph for 0x%lx!\n",
                             pParams->pcAppName, iError, ulCodePoint);
@@ -1244,20 +1163,17 @@ RenderGlyph(tConversionParameters *pParams, FT_Face pFace,
             //
             // Save the relevant information about this glyph.
             //
-            if(ppMap->width == 0)
-            {
+            if(ppMap->width == 0) {
                 //
                 // This glyph is zero width so it's likely a space.  Dump a
                 // warning.
                 //
-                if(!bQuiet)
-                {
+                if(!bQuiet) {
                     fprintf(stderr, "%s: Warning: Zero width glyph for "
                             "0x%lx.\n", pParams->pcAppName, ulCodePoint);
                 }
 
-                if(pParams->bVerbose)
-                {
+                if(pParams->bVerbose) {
                     printf("Zero width character 0x%lx:\n", ulCodePoint);
                     printf("  width    %ld\n", pSlot->metrics.width);
                     printf("  height   %ld\n", pSlot->metrics.height);
@@ -1285,8 +1201,7 @@ RenderGlyph(tConversionParameters *pParams, FT_Face pFace,
                 //
                 // Are we encoding a monospaced font?
                 //
-                if(pParams->bMono)
-                {
+                if(pParams->bMono) {
                     //
                     // Yes - ignore this character.  We don't want it's
                     // nominal width to affect the cell size for the output
@@ -1294,9 +1209,7 @@ RenderGlyph(tConversionParameters *pParams, FT_Face pFace,
                     //
                     pGlyph->iMaxX = 0;
                     bRendered = false;
-                }
-                else
-                {
+                } else {
                     //
                     // No - pretend we rendered this character.  It will end
                     // up represented as a space with the width of the
@@ -1305,9 +1218,7 @@ RenderGlyph(tConversionParameters *pParams, FT_Face pFace,
                     pGlyph->iMaxX = pSlot->metrics.horiAdvance >> 6;
                     bRendered = true;
                 }
-            }
-            else
-            {
+            } else {
                 //
                 // We rendered the glyph so now save all the relevant
                 // information.
@@ -1319,58 +1230,46 @@ RenderGlyph(tConversionParameters *pParams, FT_Face pFace,
                 pGlyph->iBitmapTop = pSlot->bitmap_top;
                 pGlyph->pucData = malloc(ppMap->rows * ppMap->pitch);
 
-                if(pParams->bVerbose)
-                {
+                if(pParams->bVerbose) {
                     printf("Character 0x%lx: %d x %d, pitch %d, top %d\n",
-                            ulCodePoint, pGlyph->iWidth, pGlyph->iRows,
-                            pGlyph->iPitch, pGlyph->iBitmapTop);
+                           ulCodePoint, pGlyph->iWidth, pGlyph->iRows,
+                           pGlyph->iPitch, pGlyph->iBitmapTop);
                 }
 
                 //
                 // Did we manage to allocate a buffer for the glyph bitmap?
                 //
-                if(pGlyph->pucData)
-                {
+                if(pGlyph->pucData) {
                     //
                     // We allocated memory to store the rendered glyph so now
                     // copy the data into our new buffer.
                     //
                     memcpy(pGlyph->pucData, ppMap->buffer, ppMap->rows
-                            * ppMap->pitch);
+                           * ppMap->pitch);
                     bRendered = true;
-                }
-                else
-                {
-                    if(!bQuiet || pParams->bVerbose)
-                    {
+                } else {
+                    if(!bQuiet || pParams->bVerbose) {
                         fprintf(stderr, "%s: Error! Can't allocate buffer for "
                                 "glyph %lx bitmap!\n", pParams->pcAppName,
                                 ulCodePoint);
                     }
                 }
             }
-        }
-        else
-        {
-            if(!bQuiet || pParams->bVerbose)
-            {
+        } else {
+            if(!bQuiet || pParams->bVerbose) {
                 fprintf(stderr,
-                    "%s: Warning %d: Could not load glyph for '%c' (%ld)\n",
+                        "%s: Warning %d: Could not load glyph for '%c' (%ld)\n",
                         pParams->pcAppName, iError, (int)ulCodePoint,
                         ulCodePoint);
             }
         }
-    }
-    else
-    {
-        if(pParams->bVerbose)
-        {
+    } else {
+        if(pParams->bVerbose) {
             printf("No glyph found for character 0x%lx.\n", ulCodePoint);
         }
     }
 
-    if(!bRendered)
-    {
+    if(!bRendered) {
         //
         // The font does not contain a glyph for this character so mark the
         // output structure to indicate that this is an undefined character.
@@ -1384,9 +1283,7 @@ RenderGlyph(tConversionParameters *pParams, FT_Face pFace,
         pGlyph->iMinX = 0;
         pGlyph->pucData = NULL;
         pGlyph->pucChar = NULL;
-    }
-    else
-    {
+    } else {
         //
         // Now determine the minimum and maximum X pixel value in the
         // rendered glyph.
@@ -1395,18 +1292,14 @@ RenderGlyph(tConversionParameters *pParams, FT_Face pFace,
         //
         // Loop through the rows of the bitmap for this glyph.
         //
-        for(iY = 0, iXMin = 1000000, iXMax = 0; iY < pGlyph->iRows; iY++)
-        {
+        for(iY = 0, iXMin = 1000000, iXMax = 0; iY < pGlyph->iRows; iY++) {
             //
             // Find the minimum X for this row of the glyph.
             //
-            for(iX = 0; iX < pGlyph->iWidth; iX++)
-            {
+            for(iX = 0; iX < pGlyph->iWidth; iX++) {
                 if(pGlyph->pucData[(iY * pGlyph->iPitch) + (iX / 8)] & (1 << (7
-                        - (iX & 7))))
-                {
-                    if(iX < iXMin)
-                    {
+                        - (iX & 7)))) {
+                    if(iX < iXMin) {
                         iXMin = iX;
                     }
                     break;
@@ -1416,13 +1309,10 @@ RenderGlyph(tConversionParameters *pParams, FT_Face pFace,
             //
             // Find the maximum X for this row of the glyph.
             //
-            for(iX = pGlyph->iWidth - 1; iX >= 0; iX--)
-            {
+            for(iX = pGlyph->iWidth - 1; iX >= 0; iX--) {
                 if(pGlyph->pucData[(iY * pGlyph->iPitch) + (iX / 8)] & (1 << (7
-                        - (iX & 7))))
-                {
-                    if(iX > iXMax)
-                    {
+                        - (iX & 7)))) {
+                    if(iX > iXMax) {
                         iXMax = iX;
                     }
                     break;
@@ -1430,39 +1320,30 @@ RenderGlyph(tConversionParameters *pParams, FT_Face pFace,
             }
         }
 
-        if(pParams->bVerbose)
-        {
+        if(pParams->bVerbose) {
             printf("Character 0x%lx: xMin %d, xMax %d\n", ulCodePoint, iXMin,
-                    iXMax);
+                   iXMax);
         }
 
         //
         // If this glyph has no bitmap data (typically just the space
         // character), then provide a default minimum and maximum X value.
         //
-        if(iXMin == 1000000)
-        {
+        if(iXMin == 1000000) {
             iXMin = 0;
-            if(pParams->bFixedSize)
-            {
+            if(pParams->bFixedSize) {
                 iXMax = pFace->available_sizes[pParams->iSize].width;
-            }
-            else
-            {
-                if(pGlyph->iMaxX)
-                {
+            } else {
+                if(pGlyph->iMaxX) {
                     iXMax = pGlyph->iMaxX;
-                }
-                else
-                {
+                } else {
                     iXMax = (3 * pParams->iSize) / 10;
                 }
             }
 
-            if(pParams->bVerbose)
-            {
+            if(pParams->bVerbose) {
                 printf("Set char 0x%lx width to %d pixels.\n", ulCodePoint,
-                        iXMax);
+                       iXMax);
             }
         }
 
@@ -1490,15 +1371,14 @@ DisplayGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
     unsigned char *pucRow;
 
     printf("Character 0x%lx, %dx%d, pitch %d bytes:\n", pGlyph->ulCodePoint,
-            pGlyph->iWidth, pGlyph->iRows, pGlyph->iPitch);
+           pGlyph->iWidth, pGlyph->iRows, pGlyph->iPitch);
 
     //
     // If this glyph has no bitmap attached to it and no width defined, bomb
     // out now since it's obviously an undefined character that we can skip.
     // If it has a width but no data, it's a space so continue.
     //
-    if(!pGlyph->pucData && !pGlyph->iMaxX)
-    {
+    if(!pGlyph->pucData && !pGlyph->iMaxX) {
         printf("No data - glyph absent.\n");
         return(false);
     }
@@ -1507,8 +1387,7 @@ DisplayGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
     // Run through the rows and columns of the glyph bitmap outputing pixels
     // one by one.
     //
-    for(iY = 0; iY < pGlyph->iRows; iY++)
-    {
+    for(iY = 0; iY < pGlyph->iRows; iY++) {
         //
         // Print the row number.
         //
@@ -1522,8 +1401,7 @@ DisplayGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
         //
         // Loop through each byte in this row.
         //
-        for(iX = 0; iX < pGlyph->iPitch; iX++)
-        {
+        for(iX = 0; iX < pGlyph->iPitch; iX++) {
             //
             // Get this group of 8 pixels.
             //
@@ -1533,16 +1411,14 @@ DisplayGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
             // How many pixels do we still have to draw?
             //
             iMaxPix = pGlyph->iWidth - (iX * 8);
-            if(iMaxPix >= 8)
-            {
+            if(iMaxPix >= 8) {
                 iMaxPix = 8;
             }
 
             //
             // Dump each pixel as an ASCII character.
             //
-            for(iPixel = 0; iPixel < iMaxPix; iPixel++)
-            {
+            for(iPixel = 0; iPixel < iMaxPix; iPixel++) {
                 printf("%c", ucPixel & (1 << (7 - iPixel)) ? 'X' : '.');
             }
         }
@@ -1574,12 +1450,10 @@ CompressGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
     // out now since it's obviously an undefined character that we can skip.
     // If it has a width but no data, it's a space so continue.
     //
-    if(!pGlyph->pucData && !pGlyph->iMaxX)
-    {
-        if(pParams->bVerbose)
-        {
+    if(!pGlyph->pucData && !pGlyph->iMaxX) {
+        if(pParams->bVerbose) {
             printf("Error compressing glyph. pucData 0x%p, iMaxX %d\n",
-                    pGlyph->pucData, pGlyph->iMaxX);
+                   pGlyph->pucData, pGlyph->iMaxX);
         }
         return(false);
     }
@@ -1588,8 +1462,7 @@ CompressGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
     // Determine the width and starting position for this glyph based on
     // if this is a monospaced or proportional font.
     //
-    if(pParams->bMono)
-    {
+    if(pParams->bMono) {
         //
         // For monospaced fonts, horizontally center the glyph in the
         // character cell, providing uniform padding on either side of the
@@ -1598,9 +1471,7 @@ CompressGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
         iXMin = (pGlyph->iMinX - ((iWidth + 1 + (pParams->iSize / 10) -
                                    pGlyph->iMaxX + pGlyph->iMinX) / 2));
         iXMax = iXMin + iWidth + 1 + (pParams->iSize / 10);
-    }
-    else
-    {
+    } else {
         //
         // For proportionally-spaced fonts, left-align the glyph in the
         // character cell and provide uniform inter-character padding on
@@ -1615,14 +1486,12 @@ CompressGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
     // to be the size of the maximal bounding box for this font.
     //
     for(iY = 0, iZero = 0, iOne = 0, iBit = 0, iOpt = 0;
-        iY < (iYMin - iYMax + 1); iY++)
-    {
+            iY < (iYMin - iYMax + 1); iY++) {
         //
         // Loop through the columns of this row, extending the glyph as
         // necessary.
         //
-        for(iX = iXMin; iX < iXMax; iX++)
-        {
+        for(iX = iXMin; iX < iXMax; iX++) {
             //
             // Save the value of the previous bit.
             //
@@ -1633,18 +1502,14 @@ CompressGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
             //
             if((iY >= (iYMin - pGlyph->iBitmapTop)) && (iY < (iYMin
                     - pGlyph->iBitmapTop + pGlyph->iRows)) && (iX
-                    >= pGlyph->iMinX) && (iX <= pGlyph->iMaxX))
-            {
+                            >= pGlyph->iMinX) && (iX <= pGlyph->iMaxX)) {
                 //
                 // Extract this bit from the bitmap data for this glyph.
                 //
                 if(pGlyph->pucData[((iY - iYMin + pGlyph->iBitmapTop)
-                        * pGlyph->iPitch) + (iX / 8)] & (1 << (7 - (iX & 7))))
-                {
+                                    * pGlyph->iPitch) + (iX / 8)] & (1 << (7 - (iX & 7)))) {
                     iBit = 1;
-                }
-                else
-                {
+                } else {
                     iBit = 0;
                 }
             }
@@ -1653,16 +1518,14 @@ CompressGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
             // Otherwise, bits not within the bitmap data for the glyph are
             // filled with zero.
             //
-            else
-            {
+            else {
                 iBit = 0;
             }
 
             //
             // See if this is the very first bit in the glyph.
             //
-            if((iX == iXMin) && (iY == 0))
-            {
+            if((iX == iXMin) && (iY == 0)) {
                 //
                 // Set the number of zero and one bits based on the value
                 // of the first bit.
@@ -1679,17 +1542,13 @@ CompressGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
             //
             // See if this pixel value matches the previous pixel value.
             //
-            if(iBit == iPrevBit)
-            {
+            if(iBit == iPrevBit) {
                 //
                 // Increment the appropriate pixel count.
                 //
-                if(iBit == 0)
-                {
+                if(iBit == 0) {
                     iZero++;
-                }
-                else
-                {
+                } else {
                     iOne++;
                 }
 
@@ -1697,8 +1556,7 @@ CompressGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
                 // Keep counting if the end of the pixel array has not been
                 // reached.
                 //
-                if((iY != (iYMin - iYMax)) || (iX != (iXMax - 1)))
-                {
+                if((iY != (iYMin - iYMax)) || (iX != (iXMax - 1))) {
                     continue;
                 }
             }
@@ -1707,8 +1565,7 @@ CompressGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
             // See if the pixel value is one (which means that the previous
             // pixel value would be zero).
             //
-            else if(iBit == 1)
-            {
+            else if(iBit == 1) {
                 //
                 // Increment the count of one pixels.
                 //
@@ -1718,8 +1575,7 @@ CompressGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
                 // Keep counting if the end of the pixel array has not been
                 // reached.
                 //
-                if((iY != (iYMin - iYMax)) || (iX != (iXMax - 1)))
-                {
+                if((iY != (iYMin - iYMax)) || (iX != (iXMax - 1))) {
                     continue;
                 }
             }
@@ -1728,8 +1584,7 @@ CompressGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
             // See if there are more than 45 zero pixels, which will be
             // encoded as a repeated byte.
             //
-            while(iZero > 45)
-            {
+            while(iZero > 45) {
                 //
                 // Encode the zero bits as a repeated zero byte.
                 //
@@ -1745,8 +1600,7 @@ CompressGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
             //
             // Loop while there are more than 15 zero pixels.
             //
-            while(iZero > 15)
-            {
+            while(iZero > 15) {
                 //
                 // Output a byte that produces 15 zero pixels and no one
                 // pixels.
@@ -1763,8 +1617,7 @@ CompressGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
             //
             // See if there are more than 15 one pixels.
             //
-            if(iOne > 15)
-            {
+            if(iOne > 15) {
                 //
                 // Output a byte that produces the remaining zero pixels
                 // and 15 one pixels.
@@ -1781,14 +1634,13 @@ CompressGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
                 // See if there are more than 45 one pixels, which will be
                 // encoded as a repeated byte.
                 //
-                while(iOne > 45)
-                {
+                while(iOne > 45) {
                     //
                     // Encode the one bits as a repeated one byte.
                     //
                     pucChar[iOpt++] = 0x00;
                     pucChar[iOpt++] = (0x80
-                            | ((iOne > 1016) ? 127 : (iOne / 8)));
+                                       | ((iOne > 1016) ? 127 : (iOne / 8)));
 
                     //
                     // Remove the one bits that were just output.
@@ -1799,13 +1651,11 @@ CompressGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
                 //
                 // Loop while there are more one pixels.
                 //
-                while(iOne)
-                {
+                while(iOne) {
                     //
                     // See if ther are than 15 one pixels left.
                     //
-                    if(iOne > 15)
-                    {
+                    if(iOne > 15) {
                         //
                         // Output a byte that produces no zero pixels and
                         // 15 one pixels.
@@ -1817,9 +1667,7 @@ CompressGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
                         // just copied.
                         //
                         iOne -= 15;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Output a byte that produces the remaining one
                         // pixels.
@@ -1838,8 +1686,7 @@ CompressGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
             // Otherwise, see if there are any zero or one pixels that need
             // to be output.
             //
-            else if(iZero || iOne)
-            {
+            else if(iZero || iOne) {
                 //
                 // Output a byte that produces the remaining zero and one
                 // pixels.  There is guaranteed to be less than 16 of each
@@ -1862,8 +1709,7 @@ CompressGlyph(tConversionParameters *pParams, tGlyph *pGlyph, int iWidth,
             // Print an error and return if the size of the compressed
             // character is too large.
             //
-            if(iOpt > 254)
-            {
+            if(iOpt > 254) {
                 fprintf(stderr, "%s: Character '%c' was larger than 256 "
                         "bytes!\n", pParams->pcAppName,
                         (int)pGlyph->ulCodePoint);
@@ -1895,13 +1741,11 @@ FreeGlyphs(tGlyph *pGlyph, int iCount)
     //
     // Loop through the whole array we have been passed.
     //
-    while(iCount)
-    {
+    while(iCount) {
         //
         // Does this glyph had a bitmap attached to it?
         //
-        if(pGlyph->pucData)
-        {
+        if(pGlyph->pucData) {
             //
             // Yes - free the bitmap memory.
             //
@@ -1912,8 +1756,7 @@ FreeGlyphs(tGlyph *pGlyph, int iCount)
         //
         // Does this glyph have a compressed character attached to it?
         //
-        if(pGlyph->pucChar)
-        {
+        if(pGlyph->pucChar) {
             //
             // Yes - free the compressed image.
             //
@@ -1955,8 +1798,7 @@ WriteBinaryBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
     // Loop through each of the blocks.
     //
     for(iX = 0, pBlock = pBlockList, pGlyph = pGlyphStart;
-        iX < pFont->usNumBlocks; iX++)
-    {
+            iX < pFont->usNumBlocks; iX++) {
         //
         // Generate the block table entry for this block.
         //
@@ -1976,14 +1818,12 @@ WriteBinaryBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
         // compressed size of each.
         //
         for(iGlyph = 0; iGlyph < ((pBlock->ulEnd - pBlock->ulStart) + 1);
-            iGlyph++)
-        {
+                iGlyph++) {
             //
             // Check that the glyph has the expected codepoint number.  If this
             // fails, this indicates a bug in this application.
             //
-            if(pGlyph->ulCodePoint != pBlock->ulStart + iGlyph)
-            {
+            if(pGlyph->ulCodePoint != pBlock->ulStart + iGlyph) {
                 fprintf(stderr, "Error: Expected codepoint 0x%lx but glyph is "
                         "for 0x%lx!\n", pBlock->ulStart + iGlyph,
                         pGlyph->ulCodePoint);
@@ -1992,8 +1832,7 @@ WriteBinaryBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
             //
             // If this glyph has data, add its size to the tally.
             //
-            if(pGlyph->pucChar)
-            {
+            if(pGlyph->pucChar) {
                 ulOffset += pGlyph->pucChar[0];
             }
 
@@ -2028,8 +1867,7 @@ WriteBinaryBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
     // Loop through each of the blocks again.
     //
     for(iX = 0, pBlock = pBlockList, pGlyph = pGlyphStart;
-        iX < pFont->usNumBlocks; iX++)
-    {
+            iX < pFont->usNumBlocks; iX++) {
         //
         // Remember the pointer to the first glyph for this block.
         //
@@ -2050,14 +1888,12 @@ WriteBinaryBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
         // table.
         //
         for(iGlyph = 0; iGlyph < ((pBlock->ulEnd - pBlock->ulStart) + 1);
-            iGlyph++)
-        {
+                iGlyph++) {
             //
             // Check that the glyph has the expected codepoint number.  If this
             // fails, this indicates a bug in this application.
             //
-            if(pGlyph->ulCodePoint != pBlock->ulStart + iGlyph)
-            {
+            if(pGlyph->ulCodePoint != pBlock->ulStart + iGlyph) {
                 fprintf(stderr, "Error: Exected codepoint 0x%lx but glyph is "
                         "for 0x%lx!\n", pBlock->ulStart + iGlyph,
                         pGlyph->ulCodePoint);
@@ -2066,8 +1902,7 @@ WriteBinaryBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
             //
             // Does this glyph have data?
             //
-            if(pGlyph->pucChar)
-            {
+            if(pGlyph->pucChar) {
                 //
                 // This glyph has data so write the offset to the output.
                 //
@@ -2077,9 +1912,7 @@ WriteBinaryBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
                 // Update the offset to leave space for this glyph's data.
                 //
                 ulOffset += pGlyph->pucChar[0];
-            }
-            else
-            {
+            } else {
                 //
                 // This glyph has no data so write a marker 0 indicating that
                 // the glyph is absent from the font.
@@ -2105,13 +1938,11 @@ WriteBinaryBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
         //
         iCount = 0;
         for(iGlyph = 0, pGlyph = pGlyphBlockStart, ulOffset = 0;
-            iGlyph < ((pBlock->ulEnd - pBlock->ulStart) + 1); iGlyph++)
-        {
+                iGlyph < ((pBlock->ulEnd - pBlock->ulStart) + 1); iGlyph++) {
             //
             // Does this glyph have any data?
             //
-            if(pGlyph->pucChar)
-            {
+            if(pGlyph->pucChar) {
                 //
                 // Yes- write the glyph data and update the offset.
                 //
@@ -2129,8 +1960,7 @@ WriteBinaryBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
         // At this point, the block is complete but we may need to add some
         // padding bytes to get us to the next 4 byte boundary in the file.
         //
-        if(ulOffset % 4)
-        {
+        if(ulOffset % 4) {
             ulTemp = 0;
             fwrite(&ulTemp, 4 - (ulOffset % 4), 1, pFile);
         }
@@ -2184,13 +2014,11 @@ WriteRemappedBinaryBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
     // Loop through each glyph in the block and write the glyph offset
     // table.
     //
-    for(iGlyph = 0; iGlyph < pFont->ulNumGlyphs; iGlyph++)
-    {
+    for(iGlyph = 0; iGlyph < pFont->ulNumGlyphs; iGlyph++) {
         //
         // Does this glyph have data?
         //
-        if(pGlyphStart[iGlyph].pucChar)
-        {
+        if(pGlyphStart[iGlyph].pucChar) {
             //
             // Yes - write the offset to the table.
             //
@@ -2200,9 +2028,7 @@ WriteRemappedBinaryBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
             // Update the offset to leave space for this glyph's data.
             //
             ulOffset += pGlyphStart[iGlyph].pucChar[0];
-        }
-        else
-        {
+        } else {
             //
             // The glyph has no data so write a 0 to indicate this.
             //
@@ -2216,13 +2042,11 @@ WriteRemappedBinaryBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
     // itself.  Loop through each glyph and write the glyph data.
     //
     iCount = 0;
-    for(iGlyph = 0, ulOffset = 0; iGlyph < pFont->ulNumGlyphs; iGlyph++)
-    {
+    for(iGlyph = 0, ulOffset = 0; iGlyph < pFont->ulNumGlyphs; iGlyph++) {
         //
         // Does this glyph have any data?
         //
-        if(pGlyphStart[iGlyph].pucChar)
-        {
+        if(pGlyphStart[iGlyph].pucChar) {
             //
             // Yes - write it to the file.
             //
@@ -2262,18 +2086,15 @@ WriteBinaryWideFont(tConversionParameters *pParams, tFontInfo *pFont,
     tFontWide sFont;
     tFontBlock sBlock;
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Writing binary format output file.\n");
     }
 
     //
     // Convert the filename to all lower case letters.
     //
-    for(iX = 0; iX < strlen(pParams->pcFilename); iX++)
-    {
-        if((pParams->pcFilename[iX] >= 'A') && (pParams->pcFilename[iX] <= 'Z'))
-        {
+    for(iX = 0; iX < strlen(pParams->pcFilename); iX++) {
+        if((pParams->pcFilename[iX] >= 'A') && (pParams->pcFilename[iX] <= 'Z')) {
             pParams->pcFilename[iX] += 0x20;
         }
     }
@@ -2288,15 +2109,12 @@ WriteBinaryWideFont(tConversionParameters *pParams, tFontInfo *pFont,
     //
     // Format the size string.
     //
-    if(pParams->bFixedSize)
-    {
+    if(pParams->bFixedSize) {
         //
         // This font is defined by a fixed pixel size.
         //
         sprintf(pucSize, "%dx%d", pParams->iFixedX, pParams->iFixedY);
-    }
-    else
-    {
+    } else {
         //
         // This font is defined by point size.
         //
@@ -2309,8 +2127,7 @@ WriteBinaryWideFont(tConversionParameters *pParams, tFontInfo *pFont,
     sprintf(pucChar, "font%s%s%s%s.bin", pParams->pcFilename, pucSize,
             pParams->bBold ? "b" : "", pParams->bItalic ? "i" : "");
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Output file name is %s\n", pucChar);
     }
 
@@ -2322,13 +2139,11 @@ WriteBinaryWideFont(tConversionParameters *pParams, tFontInfo *pFont,
     //
     // Get the total size of the compressed font data.
     //
-    for(iX = 0, iOpt = 0; iX < pFont->ulNumGlyphs; iX++)
-    {
+    for(iX = 0, iOpt = 0; iX < pFont->ulNumGlyphs; iX++) {
         //
         // Does this glyph have any encoded data?
         //
-        if(pGlyphStart[iX].pucChar)
-        {
+        if(pGlyphStart[iX].pucChar) {
             //
             // Yes - update our size.
             //
@@ -2341,15 +2156,14 @@ WriteBinaryWideFont(tConversionParameters *pParams, tFontInfo *pFont,
     // glyph offset tables.
     //
     iFontSize = iOpt + sizeof(tFontWide) + (sizeof(tFontBlock)
-            * pFont->usNumBlocks) + (sizeof(tFontOffsetTable)
-            * pFont->ulNumGlyphs);
+                                            * pFont->usNumBlocks) + (sizeof(tFontOffsetTable)
+                                                    * pFont->ulNumGlyphs);
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Font contains %d blocks and %ld glyphs.\n", pFont->usNumBlocks,
-                pFont->ulNumGlyphs);
+               pFont->ulNumGlyphs);
         printf("%d bytes of glyph data, %d bytes total size.\n", iOpt,
-                iFontSize);
+               iFontSize);
     }
 
     //
@@ -2366,16 +2180,13 @@ WriteBinaryWideFont(tConversionParameters *pParams, tFontInfo *pFont,
     //
     // Write the font block table next.  Are we remapping the font glyphs?
     //
-    if(pParams->bRemap)
-    {
+    if(pParams->bRemap) {
         //
         // We are remapping so write the appropriate header for a single
         // block of characters.
         //
         WriteRemappedBinaryBlocks(pFile, pFont, pGlyphStart, pBlockList);
-    }
-    else
-    {
+    } else {
         //
         // We are not remapping so write the normal header containing all the
         // blocks described in the block list.
@@ -2414,22 +2225,19 @@ WriteCopyrightBlock(tConversionParameters *pParams, char *pcSize,
     //
     // Has a copyright file been provided?
     //
-    if(!pParams->pcCopyrightFile)
-    {
+    if(!pParams->pcCopyrightFile) {
         //
         // No - just write the default TI copyright block.
         //
         fprintf(pFile, "//********************************************************"
-            "*********************\n");
+                "*********************\n");
         fprintf(pFile, "//\n");
         fprintf(pFile, "// This file is generated by ftrasterize; DO NOT EDIT BY "
-            "HAND!\n");
+                "HAND!\n");
         fprintf(pFile, "//\n");
         fprintf(pFile, "//********************************************************"
-            "*********************\n");
-    }
-    else
-    {
+                "*********************\n");
+    } else {
         //
         // Yes - copy the text from the copyright file into the output file as
         // a C comment block.
@@ -2439,8 +2247,7 @@ WriteCopyrightBlock(tConversionParameters *pParams, char *pcSize,
         // Open the copyright file.
         //
         pCopyright = fopen(pParams->pcCopyrightFile, "r");
-        if(!pCopyright)
-        {
+        if(!pCopyright) {
             printf("ERROR: Can't open copyright header %s!\n",
                    pParams->pcCopyrightFile);
             return(false);
@@ -2450,28 +2257,27 @@ WriteCopyrightBlock(tConversionParameters *pParams, char *pcSize,
         // Output the basic header.
         //
         fprintf(pFile, "//********************************************************"
-            "*********************\n");
+                "*********************\n");
         fprintf(pFile, "//\n");
 
         //
         // Output the copyright information from the file.
         //
-        while(fgets(pcBuffer, 256, pCopyright))
-        {
+        while(fgets(pcBuffer, 256, pCopyright)) {
             fprintf(pFile, "// %s", pcBuffer);
         }
 
         fprintf(pFile, "//********************************************************"
-            "*********************\n\n");
+                "*********************\n\n");
 
         fprintf(pFile, "//********************************************************"
-            "*********************\n");
+                "*********************\n");
         fprintf(pFile, "//\n");
         fprintf(pFile, "// This file is generated by ftrasterize; DO NOT EDIT BY "
-            "HAND!\n");
+                "HAND!\n");
         fprintf(pFile, "//\n");
         fprintf(pFile, "//********************************************************"
-            "*********************\n");
+                "*********************\n");
     }
 
     return(true);
@@ -2528,26 +2334,22 @@ WriteRemappedASCIIBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
     // Loop through each glyph in the block and write the glyph offset
     // table.
     //
-    for(iGlyph = 0; iGlyph < pFont->ulNumGlyphs; iGlyph++)
-    {
+    for(iGlyph = 0; iGlyph < pFont->ulNumGlyphs; iGlyph++) {
         //
         // If this glyph has data, write the offset to the table.
         //
-        if(pGlyphStart[iGlyph].pucChar)
-        {
+        if(pGlyphStart[iGlyph].pucChar) {
             fprintf(pFile, "    0x%02lx, 0x%02lx, 0x%02lx, 0x%02lx,   "
-                "// Offset %ld (0x%lx)\n", LONG_PARAMS(ulOffset), ulOffset,
+                    "// Offset %ld (0x%lx)\n", LONG_PARAMS(ulOffset), ulOffset,
                     ulOffset) ;
 
             //
             // Update the offset to leave space for this glyph's data.
             //
             ulOffset += pGlyphStart[iGlyph].pucChar[0];
-        }
-        else
-        {
+        } else {
             fprintf(pFile, "    0x%02x, 0x%02x, 0x%02x, 0x%02x,   "
-                "// Glyph Absent\n", LONG_PARAMS(0));
+                    "// Glyph Absent\n", LONG_PARAMS(0));
         }
     }
 
@@ -2565,18 +2367,14 @@ WriteRemappedASCIIBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
     // Loop through each glyph and write the glyph data.
     //
     iCount = 0;
-    for(iGlyph = 0, ulOffset = 0; iGlyph < pFont->ulNumGlyphs; iGlyph++)
-    {
+    for(iGlyph = 0, ulOffset = 0; iGlyph < pFont->ulNumGlyphs; iGlyph++) {
         //
         // Does this glyph have any data?
         //
-        if(pGlyphStart[iGlyph].pucChar)
-        {
+        if(pGlyphStart[iGlyph].pucChar) {
             ulOffset += pGlyphStart[iGlyph].pucChar[0];
-            for(iLoop = 0; iLoop < pGlyphStart[iGlyph].pucChar[0]; iLoop++)
-            {
-                if(!(iCount % 12))
-                {
+            for(iLoop = 0; iLoop < pGlyphStart[iGlyph].pucChar[0]; iLoop++) {
+                if(!(iCount % 12)) {
                     fprintf(pFile, "\n    ");
                 }
                 fprintf(pFile, "%3d, ", pGlyphStart[iGlyph].pucChar[iLoop]);
@@ -2616,8 +2414,7 @@ WriteASCIIBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
     // Loop through each of the blocks.
     //
     for(iX = 0, pBlock = pBlockList, pGlyph = pGlyphStart;
-        iX < pFont->usNumBlocks; iX++)
-    {
+            iX < pFont->usNumBlocks; iX++) {
         //
         // Generate the block table entry for this block.
         //
@@ -2644,14 +2441,12 @@ WriteASCIIBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
         // compressed size of each.
         //
         for(iGlyph = 0; iGlyph < ((pBlock->ulEnd - pBlock->ulStart) + 1);
-            iGlyph++)
-        {
+                iGlyph++) {
             //
             // Check that the glyph has the expected codepoint number.  If this
             // fails, this indicates a bug in this application.
             //
-            if(pGlyph->ulCodePoint != pBlock->ulStart + iGlyph)
-            {
+            if(pGlyph->ulCodePoint != pBlock->ulStart + iGlyph) {
                 fprintf(stderr, "Error: Expected codepoint 0x%lx but glyph is "
                         "for 0x%lx!\n", pBlock->ulStart + iGlyph,
                         pGlyph->ulCodePoint);
@@ -2660,8 +2455,7 @@ WriteASCIIBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
             //
             // If this glyph has data, add its size to the tally.
             //
-            if(pGlyph->pucChar)
-            {
+            if(pGlyph->pucChar) {
                 ulOffset += pGlyph->pucChar[0];
             }
 
@@ -2696,8 +2490,7 @@ WriteASCIIBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
     // Loop through each of the blocks again.
     //
     for(iX = 0, pBlock = pBlockList, pGlyph = pGlyphStart;
-        iX < pFont->usNumBlocks; iX++)
-    {
+            iX < pFont->usNumBlocks; iX++) {
         //
         // Remember the pointer to the first glyph for this block.
         //
@@ -2722,14 +2515,12 @@ WriteASCIIBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
         // table.
         //
         for(iGlyph = 0; iGlyph < ((pBlock->ulEnd - pBlock->ulStart) + 1);
-            iGlyph++)
-        {
+                iGlyph++) {
             //
             // Check that the glyph has the expected codepoint number.  If this
             // fails, this indicates a bug in this application.
             //
-            if(pGlyph->ulCodePoint != pBlock->ulStart + iGlyph)
-            {
+            if(pGlyph->ulCodePoint != pBlock->ulStart + iGlyph) {
                 fprintf(stderr, "Error: Exected codepoint 0x%lx but glyph is "
                         "for 0x%lx!\n", pBlock->ulStart + iGlyph,
                         pGlyph->ulCodePoint);
@@ -2738,8 +2529,7 @@ WriteASCIIBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
             //
             // If this glyph has data, write the offset to the table.
             //
-            if(pGlyph->pucChar)
-            {
+            if(pGlyph->pucChar) {
                 fprintf(pFile, "    0x%02lx, 0x%02lx, 0x%02lx, 0x%02lx,   "
                         "// Offset %ld (0x%lx)\n", LONG_PARAMS(ulOffset),
                         ulOffset, ulOffset);
@@ -2748,9 +2538,7 @@ WriteASCIIBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
                 // Update the offset to leave space for this glyph's data.
                 //
                 ulOffset += pGlyph->pucChar[0];
-            }
-            else
-            {
+            } else {
                 fprintf(pFile, "    0x%02x, 0x%02x, 0x%02x, 0x%02x,   "
                         "// Glyph Absent\n", LONG_PARAMS(0));
             }
@@ -2777,18 +2565,14 @@ WriteASCIIBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
         //
         iCount = 0;
         for(iGlyph = 0, pGlyph = pGlyphBlockStart, ulOffset = 0;
-            iGlyph < ((pBlock->ulEnd - pBlock->ulStart) + 1); iGlyph++)
-        {
+                iGlyph < ((pBlock->ulEnd - pBlock->ulStart) + 1); iGlyph++) {
             //
             // Does this glyph have any data?
             //
-            if(pGlyph->pucChar)
-            {
+            if(pGlyph->pucChar) {
                 ulOffset += pGlyph->pucChar[0];
-                for(iLoop = 0; iLoop < pGlyph->pucChar[0]; iLoop++)
-                {
-                    if(!(iCount % 12))
-                    {
+                for(iLoop = 0; iLoop < pGlyph->pucChar[0]; iLoop++) {
+                    if(!(iCount % 12)) {
                         fprintf(pFile, "\n    ");
                     }
                     fprintf(pFile, "%3d, ", pGlyph->pucChar[iLoop]);
@@ -2806,18 +2590,14 @@ WriteASCIIBlocks(FILE *pFile, tFontInfo *pFont, tGlyph *pGlyphStart,
         // At this point, the block is complete but we may need to add some
         // padding bytes to get us to the next 4 byte boundary in the file.
         //
-        if(ulOffset % 4)
-        {
+        if(ulOffset % 4) {
             fprintf(pFile, "\n    ");
-            while(ulOffset % 4)
-            {
+            while(ulOffset % 4) {
                 fprintf(pFile, "  0, ");
                 ulOffset++;
             }
             fprintf(pFile, "  // Padding\n\n");
-        }
-        else
-        {
+        } else {
             fprintf(pFile, "\n");
         }
 
@@ -2847,18 +2627,15 @@ WriteASCIIWideFont(tConversionParameters *pParams, tFontInfo *pFont,
     FILE *pFile;
     bool bRetcode;
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Writing ASCII format output file.\n");
     }
 
     //
     // Convert the filename to all lower case letters.
     //
-    for(iX = 0; iX < strlen(pParams->pcFilename); iX++)
-    {
-        if((pParams->pcFilename[iX] >= 'A') && (pParams->pcFilename[iX] <= 'Z'))
-        {
+    for(iX = 0; iX < strlen(pParams->pcFilename); iX++) {
+        if((pParams->pcFilename[iX] >= 'A') && (pParams->pcFilename[iX] <= 'Z')) {
             pParams->pcFilename[iX] += 0x20;
         }
     }
@@ -2873,15 +2650,12 @@ WriteASCIIWideFont(tConversionParameters *pParams, tFontInfo *pFont,
     //
     // Format the size string.
     //
-    if(pParams->bFixedSize)
-    {
+    if(pParams->bFixedSize) {
         //
         // This font is defined by a fixed pixel size.
         //
         sprintf(pucSize, "%dx%d", pParams->iFixedX, pParams->iFixedY);
-    }
-    else
-    {
+    } else {
         //
         // This font is defined by point size.
         //
@@ -2894,14 +2668,12 @@ WriteASCIIWideFont(tConversionParameters *pParams, tFontInfo *pFont,
     sprintf(pucChar, "font%s%s%s%s.c", pParams->pcFilename, pucSize,
             pParams->bBold ? "b" : "", pParams->bItalic ? "i" : "");
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Output file name is %s\n", pucChar);
     }
 
     pFile = fopen(pucChar, "w");
-    if(!pFile)
-    {
+    if(!pFile) {
         printf("Unable to open output file %s!\n", pucChar);
         return(false);
     }
@@ -2910,8 +2682,7 @@ WriteASCIIWideFont(tConversionParameters *pParams, tFontInfo *pFont,
     // Write the header to the output file.
     //
     bRetcode = WriteCopyrightBlock(pParams, pucSize, pcCapFilename, pFile);
-    if(!bRetcode)
-    {
+    if(!bRetcode) {
         printf("Unable to write file header information to %s!\n", pucChar);
         return(false);
     }
@@ -2924,13 +2695,11 @@ WriteASCIIWideFont(tConversionParameters *pParams, tFontInfo *pFont,
     //
     // Get the total size of the compressed font data.
     //
-    for(iX = 0, iOpt = 0; iX < pFont->ulNumGlyphs; iX++)
-    {
+    for(iX = 0, iOpt = 0; iX < pFont->ulNumGlyphs; iX++) {
         //
         // Does this glyph have any encoded data?
         //
-        if(pGlyphStart[iX].pucChar)
-        {
+        if(pGlyphStart[iX].pucChar) {
             //
             // Yes - update our size.
             //
@@ -2942,8 +2711,7 @@ WriteASCIIWideFont(tConversionParameters *pParams, tFontInfo *pFont,
     // The total size of the font includes the headers, block table and
     // glyph offset tables.
     //
-    if(!pParams->bRemap)
-    {
+    if(!pParams->bRemap) {
         //
         // We are not remapping the font codepage so calculate the size taking
         // into account the number of blocks of glyphs from the source font that
@@ -2952,9 +2720,7 @@ WriteASCIIWideFont(tConversionParameters *pParams, tFontInfo *pFont,
         iFontSize = iOpt + sizeof(tFontWide) +
                     (sizeof(tFontBlock) * pFont->usNumBlocks) +
                     (sizeof(tFontOffsetTable) * pFont->ulNumGlyphs);
-    }
-    else
-    {
+    } else {
         //
         // We are remapping the source font glyphs to a new codepage in a
         // single block so calculate the size accordingly.
@@ -2963,16 +2729,14 @@ WriteASCIIWideFont(tConversionParameters *pParams, tFontInfo *pFont,
                     (sizeof(tFontOffsetTable) * pFont->ulNumGlyphs);
     }
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Font contains %d blocks and %ld glyphs.\n", pFont->usNumBlocks,
-                pFont->ulNumGlyphs);
+               pFont->ulNumGlyphs);
         printf("%d bytes of glyph data, %d bytes total size.\n", iOpt,
-                iFontSize);
-        if(pParams->bRemap)
-        {
+               iFontSize);
+        if(pParams->bRemap) {
             printf("Remapping font to a single block with codepage 0x%04x.\n",
-                    pFont->usCodePage);
+                   pFont->usCodePage);
         }
     }
 
@@ -2982,7 +2746,7 @@ WriteASCIIWideFont(tConversionParameters *pParams, tFontInfo *pFont,
     // the compiler options.
     //
     fprintf(pFile, "//********************************************************"
-        "*********************\n");
+            "*********************\n");
     fprintf(pFile, "//\n");
     fprintf(pFile, "// Details of this font:\n");
     fprintf(pFile, "//     Characters: %ld in %d blocks\n", pFont->ulNumGlyphs,
@@ -2992,14 +2756,13 @@ WriteASCIIWideFont(tConversionParameters *pParams, tFontInfo *pFont,
     fprintf(pFile, "//     Bold: %s\n", pParams->bBold ? "yes" : "no");
     fprintf(pFile, "//     Italic: %s\n", pParams->bItalic ? "yes" : "no");
     fprintf(pFile, "//     Memory usage: %d bytes\n", iFontSize);
-    if(pParams->bRemap)
-    {
+    if(pParams->bRemap) {
         fprintf(pFile, "//     Glyphs remapped. Custom codepage 0x%04x.\n",
                 pFont->usCodePage);
     }
     fprintf(pFile, "//\n");
     fprintf(pFile, "//********************************************************"
-        "*********************\n");
+            "*********************\n");
     fprintf(pFile, "\n");
 
     //
@@ -3037,7 +2800,7 @@ WriteASCIIWideFont(tConversionParameters *pParams, tFontInfo *pFont,
     fprintf(pFile, "\n");
     fprintf(pFile, "    //\n");
     fprintf(pFile, "    // The font codepage (%s).\n", GetCodepageName(
-            pFont->usCodePage));
+                pFont->usCodePage));
     fprintf(pFile, "    //\n");
     fprintf(pFile, "    %d, %d,\n", SHORT_PARAMS(pFont->usCodePage));
     fprintf(pFile, "\n");
@@ -3052,16 +2815,13 @@ WriteASCIIWideFont(tConversionParameters *pParams, tFontInfo *pFont,
     //
     // Write the font block table next.  Are we remapping the font glyphs?
     //
-    if(pParams->bRemap)
-    {
+    if(pParams->bRemap) {
         //
         // We are remapping so write the appropriate header for a single
         // block of characters.
         //
         WriteRemappedASCIIBlocks(pFile, pFont, pGlyphStart, pBlockList);
-    }
-    else
-    {
+    } else {
         //
         // We are not remapping so write the normal header containing all the
         // blocks described in the block list.
@@ -3104,7 +2864,7 @@ WriteASCIIWideFont(tConversionParameters *pParams, tFontInfo *pFont,
 //*****************************************************************************
 FT_Face
 InitializeFont(tConversionParameters *pParams, const char *pcFontName,
-        FT_Library pLibrary, unsigned short *pusCodepage)
+               FT_Library pLibrary, unsigned short *pusCodepage)
 {
     FT_Face pFace;
     int iRetcode;
@@ -3112,16 +2872,14 @@ InitializeFont(tConversionParameters *pParams, const char *pcFontName,
     //
     // Tell the user what we're doing.
     //
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         fprintf(stdout, "Opening font %s...\n", pcFontName);
     }
 
     //
     // Load the font file into the FreeType library.
     //
-    if(FT_New_Face(pLibrary, pcFontName, 0, &pFace) != 0)
-    {
+    if(FT_New_Face(pLibrary, pcFontName, 0, &pFace) != 0) {
         fprintf(stderr, "%s: Unable to open font file '%s'\n",
                 pParams->pcAppName, pcFontName);
         return(0);
@@ -3132,8 +2890,7 @@ InitializeFont(tConversionParameters *pParams, const char *pcFontName,
     // point size or as an index into the font's fixed size list.
     //
     iRetcode = SetFontCharSize(pFace, pParams);
-    if(!iRetcode)
-    {
+    if(!iRetcode) {
         //
         // An error was reported so clean up and return.
         //
@@ -3144,18 +2901,15 @@ InitializeFont(tConversionParameters *pParams, const char *pcFontName,
     //
     // Did the user specify a specific character map on the command line?
     //
-    if(pParams->iCharMap != -1)
-    {
-        if(pParams->bVerbose)
-        {
+    if(pParams->iCharMap != -1) {
+        if(pParams->bVerbose) {
             fprintf(stdout, "User-provided character map.\n");
         }
 
         //
         // Yes - check that we've been passed a valid charmap index.
         //
-        if(pParams->iCharMap >= pFace->num_charmaps)
-        {
+        if(pParams->iCharMap >= pFace->num_charmaps) {
             //
             // The character map index is invalid.
             //
@@ -3168,9 +2922,7 @@ InitializeFont(tConversionParameters *pParams, const char *pcFontName,
             //
             FT_Done_Face(pFace);
             return(0);
-        }
-        else
-        {
+        } else {
             //
             // The character map index is valid so select it.
             //
@@ -3181,18 +2933,14 @@ InitializeFont(tConversionParameters *pParams, const char *pcFontName,
             // that this will be overridden later if we've been asked to remap
             // the codepoints in the generated font.
             //
-            if(pusCodepage)
-            {
+            if(pusCodepage) {
                 *pusCodepage =
                     CodePageFromEncoding(pFace->charmaps[pParams->iCharMap]->
                                          encoding);
             }
         }
-    }
-    else
-    {
-        if(pParams->bVerbose && !pParams->bUnicode)
-        {
+    } else {
+        if(pParams->bVerbose && !pParams->bUnicode) {
             printf("No character map specified.  Defaulting to Unicode.\n");
         }
 
@@ -3200,8 +2948,7 @@ InitializeFont(tConversionParameters *pParams, const char *pcFontName,
         // The user didn't specify a specific character map so pick Unicode if
         // it's available.
         //
-        if(FT_Select_Charmap(pFace, FT_ENCODING_UNICODE) != 0)
-        {
+        if(FT_Select_Charmap(pFace, FT_ENCODING_UNICODE) != 0) {
             //
             // Unicode isn't available so pick the first encoding that the
             // font offers.
@@ -3210,19 +2957,15 @@ InitializeFont(tConversionParameters *pParams, const char *pcFontName,
             fprintf(stderr, "%s: Warning - Font has no Unicode charmap! "
                     "Using first mapping (%s) instead.\n", pParams->pcAppName,
                     GetCharmapName(pFace->charmaps[0]));
-            if(pusCodepage)
-            {
+            if(pusCodepage) {
                 *pusCodepage = CodePageFromEncoding(
-                            pFace->charmaps[0]->encoding);
+                                   pFace->charmaps[0]->encoding);
             }
-        }
-        else
-        {
+        } else {
             //
             // Get the output font codepage identifier for Unicode.
             //
-            if(pusCodepage)
-            {
+            if(pusCodepage) {
                 *pusCodepage = CodePageFromEncoding(FT_ENCODING_UNICODE);
             }
         }
@@ -3256,8 +2999,7 @@ ConvertWideFont(tConversionParameters *pParams)
     FT_Face ppFace[MAX_FONTS];
     tFontInfo sFontInfo;
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Generating wide format output.\n");
     }
 
@@ -3272,34 +3014,28 @@ ConvertWideFont(tConversionParameters *pParams)
     // If we were passed a character map file, parse it and set up the
     // block list.
     //
-    if(pParams->pcCharFile)
-    {
+    if(pParams->pcCharFile) {
         //
         // Build the linked list of blocks and determine the number of
         // codepoint blocks that we will need to read and encode.
         //
-        if(pParams->bVerbose)
-        {
+        if(pParams->bVerbose) {
             printf("Parsing character map from %s\n", pParams->pcCharFile);
         }
 
         sFontInfo.usNumBlocks = ParseCharMapFile(pParams, &sBlockListHead);
 
-        if(pParams->bVerbose)
-        {
+        if(pParams->bVerbose) {
             tCodepointBlock *pBlock;
 
             pBlock = &sBlockListHead;
-            while(pBlock)
-            {
+            while(pBlock) {
                 printf("    0x%06lx - 0x%06lx\n", pBlock->ulStart,
                        pBlock->ulEnd);
                 pBlock = pBlock->pNext;
             }
         }
-    }
-    else
-    {
+    } else {
         //
         // We've not been passed a character map file so initialize the
         // codepoint list with the first and last codepoints as provided on
@@ -3312,17 +3048,14 @@ ConvertWideFont(tConversionParameters *pParams)
         //
         // Make sure we've been passed sensible values.
         //
-        if((pParams->iFirst < 0) || (pParams->iFirst > pParams->iLast))
-        {
+        if((pParams->iFirst < 0) || (pParams->iFirst > pParams->iLast)) {
             //
             // Someone passed a bogus start or end codepoint number.
             //
             fprintf(stderr, "%s: Start and end character numbers are invalid!",
                     pParams->pcAppName);
             sFontInfo.usNumBlocks = 0;
-        }
-        else
-        {
+        } else {
             //
             // All is well.
             //
@@ -3334,18 +3067,16 @@ ConvertWideFont(tConversionParameters *pParams)
     // If something was wrong with the character map we were asked to encode,
     // return at this point.
     //
-    if(!sFontInfo.usNumBlocks)
-    {
+    if(!sFontInfo.usNumBlocks) {
         return(1);
     }
 
     //
     // Provide some information if we've been asked for verbose output.
     //
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Processing %d blocks of characters from font.\n",
-                sFontInfo.usNumBlocks);
+               sFontInfo.usNumBlocks);
     }
 
     //
@@ -3353,8 +3084,7 @@ ConvertWideFont(tConversionParameters *pParams)
     // need to read.
     //
     pBlock = &sBlockListHead;
-    while(pBlock)
-    {
+    while(pBlock) {
         //
         // Add the number of glyphs in this block to our running total.
         //
@@ -3362,16 +3092,14 @@ ConvertWideFont(tConversionParameters *pParams)
         pBlock = pBlock->pNext;
     }
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         fprintf(stdout, "Encoding %ld characters.\n", sFontInfo.ulNumGlyphs);
     }
 
     //
     // Initialize the FreeType library.
     //
-    if(FT_Init_FreeType(&pLibrary) != 0)
-    {
+    if(FT_Init_FreeType(&pLibrary) != 0) {
         fprintf(stderr, "%s: Unable to initialize the FreeType library.\n",
                 pParams->pcAppName);
         return(1);
@@ -3380,8 +3108,7 @@ ConvertWideFont(tConversionParameters *pParams)
     //
     // Load the font files we've been asked use into the FreeType library.
     //
-    for(iLoop = 0; iLoop < pParams->iNumFonts; iLoop++)
-    {
+    for(iLoop = 0; iLoop < pParams->iNumFonts; iLoop++) {
         //
         // Load the font, set the character size and codepage.  Note that we
         // record the codepage only if this is the first font opened (the main
@@ -3397,8 +3124,7 @@ ConvertWideFont(tConversionParameters *pParams)
     // Make sure the main font opened.  If any of the fallback fonts didn't
     // open for some reason, just dump a warning.
     //
-    if(!ppFace[0])
-    {
+    if(!ppFace[0]) {
         fprintf(stderr, "%s: Unable to open main font file '%s'\n",
                 pParams->pcAppName, pParams->pcFontInputName[0]);
         FT_Done_FreeType(pLibrary);
@@ -3409,10 +3135,8 @@ ConvertWideFont(tConversionParameters *pParams)
     //
     // Check and warn if any of the fallback fonts couldn't be opened.
     //
-    for(iLoop = 1; iLoop < pParams->iNumFonts; iLoop++)
-    {
-        if(!ppFace[iLoop])
-        {
+    for(iLoop = 1; iLoop < pParams->iNumFonts; iLoop++) {
+        if(!ppFace[iLoop]) {
             fprintf(stderr, "%s: Warning - fallback font '%s' could not be "
                     "initialized.!\n", pParams->pcAppName,
                     pParams->pcFontInputName[iLoop]);
@@ -3423,23 +3147,21 @@ ConvertWideFont(tConversionParameters *pParams)
     // If the user has provided a custom output codepage identifier, set it
     // here.
     //
-    if(pParams->iOutputCodePage != -1)
-    {
+    if(pParams->iOutputCodePage != -1) {
         sFontInfo.usCodePage = (unsigned short)pParams->iOutputCodePage;
     }
 
     //
     // Did we find a supported codepage for the font?
     //
-    if(sFontInfo.usCodePage == 0xFFFF)
-    {
+    if(sFontInfo.usCodePage == 0xFFFF) {
         //
         // We couldn't find a matching output codepage for the character map
         // chosen.  This is considered a fatal error since we have no way to
         // tie up the
         //
         fprintf(stderr, "%s: Error - the chosen font character map doesn't "
-            "match any supported\nGrLib font codepage!\n", pParams->pcAppName);
+                "match any supported\nGrLib font codepage!\n", pParams->pcAppName);
 
         //
         // Clean up and return.
@@ -3450,8 +3172,7 @@ ConvertWideFont(tConversionParameters *pParams)
         return(1);
     }
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Rendering individual character glyphs...\n");
     }
 
@@ -3465,13 +3186,10 @@ ConvertWideFont(tConversionParameters *pParams)
     // Allocate storage for all the glyphs we need to render.
     //
     pGlyph = malloc(sizeof(tGlyph) * sFontInfo.ulNumGlyphs);
-    if(!pGlyph)
-    {
+    if(!pGlyph) {
         fprintf(stderr, "%s: Error - can't allocate storage for %ld glyphs!\n",
                 pParams->pcAppName, sFontInfo.ulNumGlyphs);
-    }
-    else
-    {
+    } else {
         //
         // We allocated storage for all the glyphs we need to render so start
         // rendering them.
@@ -3482,26 +3200,22 @@ ConvertWideFont(tConversionParameters *pParams)
         //
         // Loop through each block of contiguous characters.
         //
-        while(pBlock)
-        {
+        while(pBlock) {
             //
             // Loop through each character in the block.
             //
             for(ulCodePoint = pBlock->ulStart; ulCodePoint <= pBlock->ulEnd;
-                ulCodePoint++)
-            {
+                    ulCodePoint++) {
                 //
                 // Were we asked to force this character to be a space?
                 //
                 if((ulCodePoint == pParams->iSpaceChar) &&
-                   !pParams->bNoForceSpace)
-                {
+                        !pParams->bNoForceSpace) {
                     //
                     // Yes. Substitute a "blank" glyph structure to tell the
                     // later code that this is a space.
                     //
-                    if(pParams->bVerbose)
-                    {
+                    if(pParams->bVerbose) {
                         printf("Forcing character 0x%x to be a space.\n",
                                ulCodePoint);
                     }
@@ -3514,21 +3228,17 @@ ConvertWideFont(tConversionParameters *pParams)
                     pGlyph[ulGlyphIndex].pucData = 0;
                     pGlyph[ulGlyphIndex].iMinX = 0;
                     pGlyph[ulGlyphIndex].iMaxX = (3 * pParams->iSize) / 10;
-                }
-                else
-                {
+                } else {
                     //
                     // Render the glyph.  We start by looking in the main font
                     // then fall back on the other fonts until we find one
                     // which contains the character (assuming any do).
                     //
-                    for(iLoop = 0; iLoop < pParams->iNumFonts; iLoop++)
-                    {
+                    for(iLoop = 0; iLoop < pParams->iNumFonts; iLoop++) {
                         //
                         // If we opened this font successfully...
                         //
-                        if(ppFace[iLoop])
-                        {
+                        if(ppFace[iLoop]) {
                             //
                             // Try to render the character.
                             //
@@ -3540,8 +3250,7 @@ ConvertWideFont(tConversionParameters *pParams)
                             //
                             // If we found and rendered the character...
                             //
-                            if(bRendered)
-                            {
+                            if(bRendered) {
                                 //
                                 // Exit the loop.
                                 //
@@ -3554,8 +3263,7 @@ ConvertWideFont(tConversionParameters *pParams)
                 //
                 // Did we manage to find and render the glyph?
                 //
-                if(!bRendered)
-                {
+                if(!bRendered) {
                     //
                     // No. Tell the user we failed to find the glyph.
                     //
@@ -3570,10 +3278,9 @@ ConvertWideFont(tConversionParameters *pParams)
                 // this font.
                 //
                 if((pGlyph[ulGlyphIndex].iMaxX - pGlyph[ulGlyphIndex].iMinX)
-                        > sFontInfo.iWidth)
-                {
+                        > sFontInfo.iWidth) {
                     sFontInfo.iWidth = (pGlyph[ulGlyphIndex].iMaxX
-                            - pGlyph[ulGlyphIndex].iMinX);
+                                        - pGlyph[ulGlyphIndex].iMinX);
                 }
 
                 //
@@ -3583,8 +3290,7 @@ ConvertWideFont(tConversionParameters *pParams)
                 //
                 // Adjust the minimum Y value if necessary.
                 //
-                if(pGlyph[ulGlyphIndex].iBitmapTop > sFontInfo.iYMin)
-                {
+                if(pGlyph[ulGlyphIndex].iBitmapTop > sFontInfo.iYMin) {
                     sFontInfo.iYMin = pGlyph[ulGlyphIndex].iBitmapTop;
                 }
 
@@ -3592,10 +3298,9 @@ ConvertWideFont(tConversionParameters *pParams)
                 // Adjust the maximum Y value if necessary.
                 //
                 if((pGlyph[ulGlyphIndex].iBitmapTop
-                        - pGlyph[ulGlyphIndex].iRows + 1) < sFontInfo.iYMax)
-                {
+                        - pGlyph[ulGlyphIndex].iRows + 1) < sFontInfo.iYMax) {
                     sFontInfo.iYMax = pGlyph[ulGlyphIndex].iBitmapTop
-                            - pGlyph[ulGlyphIndex].iRows + 1;
+                                      - pGlyph[ulGlyphIndex].iRows + 1;
                 }
 
                 //
@@ -3614,13 +3319,11 @@ ConvertWideFont(tConversionParameters *pParams)
     //
     // We're finished with our fonts and FreeType now so clean up.
     //
-    for(iLoop = 0; iLoop < pParams->iNumFonts; iLoop++)
-    {
+    for(iLoop = 0; iLoop < pParams->iNumFonts; iLoop++) {
         //
         // If this font slot is occupied...
         //
-        if(ppFace[iLoop])
-        {
+        if(ppFace[iLoop]) {
             //
             // Free the font.
             //
@@ -3629,10 +3332,9 @@ ConvertWideFont(tConversionParameters *pParams)
     }
     FT_Done_FreeType(pLibrary);
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Maximum values - Width %d, YMax %d, YMin %d\n",
-                sFontInfo.iWidth, sFontInfo.iYMax, sFontInfo.iYMin);
+               sFontInfo.iWidth, sFontInfo.iYMax, sFontInfo.iYMin);
         printf("Compressing glyphs...\n");
     }
 
@@ -3641,18 +3343,14 @@ ConvertWideFont(tConversionParameters *pParams)
     // attached to the glyph whose pointer we pass to this function.
     //
     iMaxWidth = sFontInfo.iWidth;
-    for(ulCodePoint = 0; ulCodePoint < sFontInfo.ulNumGlyphs; ulCodePoint++)
-    {
+    for(ulCodePoint = 0; ulCodePoint < sFontInfo.ulNumGlyphs; ulCodePoint++) {
         bRetcode = CompressGlyph(pParams, &pGlyph[ulCodePoint],
                                  sFontInfo.iWidth, sFontInfo.iYMin,
                                  sFontInfo.iYMax);
 
-        if(pParams->bVerbose)
-        {
-            if(bRetcode)
-            {
-                if(pGlyph[ulCodePoint].pucChar)
-                {
+        if(pParams->bVerbose) {
+            if(bRetcode) {
+                if(pGlyph[ulCodePoint].pucChar) {
                     printf("Compressed glyph 0x%lx.  Width %d, %d bytes of "
                            "data.\n", pGlyph[ulCodePoint].ulCodePoint,
                            pGlyph[ulCodePoint].pucChar[1],
@@ -3665,27 +3363,21 @@ ConvertWideFont(tConversionParameters *pParams)
                     // CompressGlyph will increase the width of the character
                     // to add appropriate inter-character padding.
                     //
-                    if((int)pGlyph[ulCodePoint].pucChar[1] > iMaxWidth)
-                    {
+                    if((int)pGlyph[ulCodePoint].pucChar[1] > iMaxWidth) {
                         iMaxWidth = (int)pGlyph[ulCodePoint].pucChar[1];
                     }
-                }
-                else
-                {
+                } else {
                     printf("NULL returned on compressing glyph %lx!\n",
                            pGlyph[ulCodePoint].ulCodePoint);
                 }
-            }
-            else
-            {
+            } else {
                 printf("Error on compressing glyph %lx!\n",
                        pGlyph[ulCodePoint].ulCodePoint);
             }
         }
     }
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Finished compressing glyphs.\n");
     }
 
@@ -3693,8 +3385,7 @@ ConvertWideFont(tConversionParameters *pParams)
     // Have we been told to retain the bug which could cause the font header
     // width reported to be narrower than the widest encoded character?
     //
-    if(!pParams->bUseOldWidthBehavior)
-    {
+    if(!pParams->bUseOldWidthBehavior) {
         //
         // No - replace the maximum width calculated while rendering the
         // glyphs with the maximum recalculated during compression.
@@ -3706,43 +3397,36 @@ ConvertWideFont(tConversionParameters *pParams)
     // At this point, we have all the character data ready to go so let's write
     // our output file.  Are we to write a binary or ASCII file?
     //
-    if(pParams->bBinary)
-    {
+    if(pParams->bBinary) {
         //
         // Write a binary font file suitable for storing in a file system.
         //
         bRetcode = WriteBinaryWideFont(pParams, &sFontInfo, pGlyph,
-                &sBlockListHead);
-    }
-    else
-    {
+                                       &sBlockListHead);
+    } else {
         //
         // Write an ASCII (C) font file suitable for building into an
         // application.
         //
         bRetcode = WriteASCIIWideFont(pParams, &sFontInfo, pGlyph,
-                &sBlockListHead);
+                                      &sBlockListHead);
     }
 
     //
     // Did we write the file successfully?
     //
-    if(!bRetcode)
-    {
+    if(!bRetcode) {
         //
         // No - report the error.
         //
         fprintf(stderr, "%s: Error - failed to write output file!\n",
                 pParams->pcAppName);
-    }
-    else
-    {
+    } else {
         //
         // The file was written successfully so, if we're showing verbose
         // output, let the user know.
         //
-        if(pParams->bVerbose)
-        {
+        if(pParams->bVerbose) {
             printf("Output file written successfully.\n");
         }
     }
@@ -3787,8 +3471,7 @@ ShowFontCharacters(tConversionParameters *pParams)
     FT_Face ppFace[MAX_FONTS];
     tFontInfo sFontInfo;
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Generating wide format output.\n");
     }
 
@@ -3803,34 +3486,28 @@ ShowFontCharacters(tConversionParameters *pParams)
     // If we were passed a character map file, parse it and set up the
     // block list.
     //
-    if(pParams->pcCharFile)
-    {
+    if(pParams->pcCharFile) {
         //
         // Build the linked list of blocks and determine the number of
         // codepoint blocks that we will need to read and encode.
         //
-        if(pParams->bVerbose)
-        {
+        if(pParams->bVerbose) {
             printf("Parsing character map from %s\n", pParams->pcCharFile);
         }
 
         sFontInfo.usNumBlocks = ParseCharMapFile(pParams, &sBlockListHead);
 
-        if(pParams->bVerbose)
-        {
+        if(pParams->bVerbose) {
             tCodepointBlock *pBlock;
 
             pBlock = &sBlockListHead;
-            while(pBlock)
-            {
+            while(pBlock) {
                 printf("    0x%06lx - 0x%06lx\n", pBlock->ulStart,
                        pBlock->ulEnd);
                 pBlock = pBlock->pNext;
             }
         }
-    }
-    else
-    {
+    } else {
         //
         // We've not been passed a character map file so initialize the
         // codepoint list with the first and last codepoints as provided on
@@ -3843,17 +3520,14 @@ ShowFontCharacters(tConversionParameters *pParams)
         //
         // Make sure we've been passed sensible values.
         //
-        if((pParams->iFirst < 0) || (pParams->iFirst > pParams->iLast))
-        {
+        if((pParams->iFirst < 0) || (pParams->iFirst > pParams->iLast)) {
             //
             // Someone passed a bogus start or end codepoint number.
             //
             fprintf(stderr, "%s: Start and end character numbers are invalid!",
                     pParams->pcAppName);
             sFontInfo.usNumBlocks = 0;
-        }
-        else
-        {
+        } else {
             //
             // All is well.
             //
@@ -3865,18 +3539,16 @@ ShowFontCharacters(tConversionParameters *pParams)
     // If something was wrong with the character map we were asked to encode,
     // return at this point.
     //
-    if(!sFontInfo.usNumBlocks)
-    {
+    if(!sFontInfo.usNumBlocks) {
         return(1);
     }
 
     //
     // Provide some information if we've been asked for verbose output.
     //
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Processing %d blocks of characters from font.\n",
-                sFontInfo.usNumBlocks);
+               sFontInfo.usNumBlocks);
     }
 
     //
@@ -3884,8 +3556,7 @@ ShowFontCharacters(tConversionParameters *pParams)
     // need to read.
     //
     pBlock = &sBlockListHead;
-    while(pBlock)
-    {
+    while(pBlock) {
         //
         // Add the number of glyphs in this block to our running total.
         //
@@ -3893,16 +3564,14 @@ ShowFontCharacters(tConversionParameters *pParams)
         pBlock = pBlock->pNext;
     }
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         fprintf(stdout, "Encoding %ld characters.\n", sFontInfo.ulNumGlyphs);
     }
 
     //
     // Initialize the FreeType library.
     //
-    if(FT_Init_FreeType(&pLibrary) != 0)
-    {
+    if(FT_Init_FreeType(&pLibrary) != 0) {
         fprintf(stderr, "%s: Unable to initialize the FreeType library.\n",
                 pParams->pcAppName);
         return(1);
@@ -3911,8 +3580,7 @@ ShowFontCharacters(tConversionParameters *pParams)
     //
     // Load the font files we've been asked use into the FreeType library.
     //
-    for(iLoop = 0; iLoop < pParams->iNumFonts; iLoop++)
-    {
+    for(iLoop = 0; iLoop < pParams->iNumFonts; iLoop++) {
         //
         // Load the font, set the character size and codepage.  Note that we
         // record the codepage only if this is the first font opened (the main
@@ -3928,8 +3596,7 @@ ShowFontCharacters(tConversionParameters *pParams)
     // Make sure the main font opened.  If any of the fallback fonts didn't
     // open for some reason, just dump a warning.
     //
-    if(!ppFace[0])
-    {
+    if(!ppFace[0]) {
         fprintf(stderr, "%s: Unable to open main font file '%s'\n",
                 pParams->pcAppName, pParams->pcFontInputName[0]);
         FT_Done_FreeType(pLibrary);
@@ -3940,10 +3607,8 @@ ShowFontCharacters(tConversionParameters *pParams)
     //
     // Check and warn if any of the fallback fonts couldn't be opened.
     //
-    for(iLoop = 1; iLoop < pParams->iNumFonts; iLoop++)
-    {
-        if(!ppFace[iLoop])
-        {
+    for(iLoop = 1; iLoop < pParams->iNumFonts; iLoop++) {
+        if(!ppFace[iLoop]) {
             fprintf(stderr, "%s: Warning - fallback font '%s' could not be "
                     "initialized.!\n", pParams->pcAppName,
                     pParams->pcFontInputName[iLoop]);
@@ -3954,23 +3619,21 @@ ShowFontCharacters(tConversionParameters *pParams)
     // If the user has provided a custom output codepage identifier, set it
     // here.
     //
-    if(pParams->iOutputCodePage != -1)
-    {
+    if(pParams->iOutputCodePage != -1) {
         sFontInfo.usCodePage = (unsigned short)pParams->iOutputCodePage;
     }
 
     //
     // Did we find a supported codepage for the font?
     //
-    if(sFontInfo.usCodePage == 0xFFFF)
-    {
+    if(sFontInfo.usCodePage == 0xFFFF) {
         //
         // We couldn't find a matching output codepage for the character map
         // chosen.  This is considered a fatal error since we have no way to
         // tie up the
         //
         fprintf(stderr, "%s: Error - the chosen font character map doesn't "
-            "match any supported\nGrLib font codepage!\n", pParams->pcAppName);
+                "match any supported\nGrLib font codepage!\n", pParams->pcAppName);
 
         //
         // Clean up and return.
@@ -3981,8 +3644,7 @@ ShowFontCharacters(tConversionParameters *pParams)
         return(1);
     }
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Rendering individual character glyphs...\n");
     }
 
@@ -3996,13 +3658,10 @@ ShowFontCharacters(tConversionParameters *pParams)
     // Allocate storage for all the glyphs we need to render.
     //
     pGlyph = malloc(sizeof(tGlyph) * sFontInfo.ulNumGlyphs);
-    if(!pGlyph)
-    {
+    if(!pGlyph) {
         fprintf(stderr, "%s: Error - can't allocate storage for %ld glyphs!\n",
                 pParams->pcAppName, sFontInfo.ulNumGlyphs);
-    }
-    else
-    {
+    } else {
         //
         // We allocated storage for all the glyphs we need to render so start
         // rendering them.
@@ -4013,26 +3672,22 @@ ShowFontCharacters(tConversionParameters *pParams)
         //
         // Loop through each block of contiguous characters.
         //
-        while(pBlock)
-        {
+        while(pBlock) {
             //
             // Loop through each character in the block.
             //
             for(ulCodePoint = pBlock->ulStart; ulCodePoint <= pBlock->ulEnd;
-                ulCodePoint++)
-            {
+                    ulCodePoint++) {
                 //
                 // Render the glyph.  We start by looking in the main font
                 // then fall back on the other fonts until we find one which
                 // contains the character (assuming any do).
                 //
-                for(iLoop = 0; iLoop < pParams->iNumFonts; iLoop++)
-                {
+                for(iLoop = 0; iLoop < pParams->iNumFonts; iLoop++) {
                     //
                     // If we opened this font successfully...
                     //
-                    if(ppFace[iLoop])
-                    {
+                    if(ppFace[iLoop]) {
                         //
                         // Try to render the character.
                         //
@@ -4043,8 +3698,7 @@ ShowFontCharacters(tConversionParameters *pParams)
                         //
                         // If we found and rendered the character...
                         //
-                        if(bRendered)
-                        {
+                        if(bRendered) {
                             //
                             // Exit the loop.
                             //
@@ -4056,8 +3710,7 @@ ShowFontCharacters(tConversionParameters *pParams)
                 //
                 // Did we manage to find and render the glyph?
                 //
-                if(!bRendered)
-                {
+                if(!bRendered) {
                     //
                     // No. Tell the user we failed to find the glyph.
                     //
@@ -4072,10 +3725,9 @@ ShowFontCharacters(tConversionParameters *pParams)
                 // this font.
                 //
                 if((pGlyph[ulGlyphIndex].iMaxX - pGlyph[ulGlyphIndex].iMinX)
-                        > sFontInfo.iWidth)
-                {
+                        > sFontInfo.iWidth) {
                     sFontInfo.iWidth = (pGlyph[ulGlyphIndex].iMaxX
-                            - pGlyph[ulGlyphIndex].iMinX);
+                                        - pGlyph[ulGlyphIndex].iMinX);
                 }
 
                 //
@@ -4085,8 +3737,7 @@ ShowFontCharacters(tConversionParameters *pParams)
                 //
                 // Adjust the minimum Y value if necessary.
                 //
-                if(pGlyph[ulGlyphIndex].iBitmapTop > sFontInfo.iYMin)
-                {
+                if(pGlyph[ulGlyphIndex].iBitmapTop > sFontInfo.iYMin) {
                     sFontInfo.iYMin = pGlyph[ulGlyphIndex].iBitmapTop;
                 }
 
@@ -4094,10 +3745,9 @@ ShowFontCharacters(tConversionParameters *pParams)
                 // Adjust the maximum Y value if necessary.
                 //
                 if((pGlyph[ulGlyphIndex].iBitmapTop
-                        - pGlyph[ulGlyphIndex].iRows + 1) < sFontInfo.iYMax)
-                {
+                        - pGlyph[ulGlyphIndex].iRows + 1) < sFontInfo.iYMax) {
                     sFontInfo.iYMax = pGlyph[ulGlyphIndex].iBitmapTop
-                            - pGlyph[ulGlyphIndex].iRows + 1;
+                                      - pGlyph[ulGlyphIndex].iRows + 1;
                 }
 
                 //
@@ -4116,13 +3766,11 @@ ShowFontCharacters(tConversionParameters *pParams)
     //
     // We're finished with our fonts and FreeType now so clean up.
     //
-    for(iLoop = 0; iLoop < pParams->iNumFonts; iLoop++)
-    {
+    for(iLoop = 0; iLoop < pParams->iNumFonts; iLoop++) {
         //
         // If this font slot is occupied...
         //
-        if(ppFace[iLoop])
-        {
+        if(ppFace[iLoop]) {
             //
             // Free the font.
             //
@@ -4131,22 +3779,19 @@ ShowFontCharacters(tConversionParameters *pParams)
     }
     FT_Done_FreeType(pLibrary);
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Displaying glyphs...\n");
     }
 
     //
     // Loop through each glyph and display it.
     //
-    for(ulCodePoint = 0; ulCodePoint < sFontInfo.ulNumGlyphs; ulCodePoint++)
-    {
+    for(ulCodePoint = 0; ulCodePoint < sFontInfo.ulNumGlyphs; ulCodePoint++) {
         DisplayGlyph(pParams, &pGlyph[ulCodePoint], sFontInfo.iWidth,
-                sFontInfo.iYMin, sFontInfo.iYMax);
+                     sFontInfo.iYMin, sFontInfo.iYMax);
     }
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Finished displaying glyphs.\n");
     }
 
@@ -4192,8 +3837,7 @@ ConvertNarrowFont(tConversionParameters *pParams)
     FILE *pFile;
     bool bRetcode;
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Generating a narrow format font.\n");
     }
 
@@ -4201,10 +3845,9 @@ ConvertNarrowFont(tConversionParameters *pParams)
     // Check to see that the indices passed are sensible.
     //
     if((pParams->iFirst < 0) || (pParams->iFirst > 254) || (pParams->iLast
-            < pParams->iFirst) || (pParams->iLast > 255))
-    {
+            < pParams->iFirst) || (pParams->iLast > 255)) {
         fprintf(stderr, "%s: First and last characters passed (%d, %d) are "
-            "invalid. Must be [0,255]\n", pParams->pcAppName, pParams->iFirst,
+                "invalid. Must be [0,255]\n", pParams->pcAppName, pParams->iFirst,
                 pParams->iLast);
         return(1);
     }
@@ -4213,10 +3856,9 @@ ConvertNarrowFont(tConversionParameters *pParams)
     // Check that the whitespace character passed is valid.
     //
     if(!pParams->bNoForceSpace && ((pParams->iSpaceChar > pParams->iLast)
-            || (pParams->iSpaceChar < pParams->iFirst)))
-    {
+                                   || (pParams->iSpaceChar < pParams->iFirst))) {
         fprintf(stderr, "%s: Forced whitespace character %d is outside the "
-            "encoded range.\n", pParams->pcAppName, pParams->iSpaceChar);
+                "encoded range.\n", pParams->pcAppName, pParams->iSpaceChar);
         return(1);
     }
 
@@ -4225,18 +3867,16 @@ ConvertNarrowFont(tConversionParameters *pParams)
     //
     iNewStruct = ((pParams->iFirst == 32) && (pParams->iLast == 126)) ? 0 : 1;
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Encoding characters %d to %d. Using %s format.\n",
-                pParams->iFirst, pParams->iLast, iNewStruct ? "tFontEx"
-                        : "tFont");
+               pParams->iFirst, pParams->iLast, iNewStruct ? "tFontEx"
+               : "tFont");
     }
 
     //
     // Initialize the FreeType library.
     //
-    if(FT_Init_FreeType(&pLibrary) != 0)
-    {
+    if(FT_Init_FreeType(&pLibrary) != 0) {
         fprintf(stderr, "%s: Unable to initialize the FreeType library.\n",
                 pParams->pcAppName);
         return(1);
@@ -4245,8 +3885,7 @@ ConvertNarrowFont(tConversionParameters *pParams)
     //
     // Load the specified font file into the FreeType library.
     //
-    if(FT_New_Face(pLibrary, pParams->pcFontInputName[0], 0, &pFace) != 0)
-    {
+    if(FT_New_Face(pLibrary, pParams->pcFontInputName[0], 0, &pFace) != 0) {
         fprintf(stderr, "%s: Unable to open font file '%s'\n",
                 pParams->pcAppName, pParams->pcFontInputName[0]);
         return(1);
@@ -4259,24 +3898,21 @@ ConvertNarrowFont(tConversionParameters *pParams)
     // Unicode character map.
     //
     if(pParams->bUnicode || (FT_Select_Charmap(pFace, FT_ENCODING_ADOBE_CUSTOM)
-            != 0))
-    {
+                             != 0)) {
         FT_Select_Charmap(pFace, FT_ENCODING_UNICODE);
     }
 
     //
     // Set the size of the character based on the specified size.
     //
-    if(!SetFontCharSize(pFace, pParams))
-    {
+    if(!SetFontCharSize(pFace, pParams)) {
         fprintf(stderr, "Exiting on error. Can't set required font size.\n");
         FT_Done_Face(pFace);
         FT_Done_FreeType(pLibrary);
         return(1);
     }
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Rendering individual character glyphs...\n");
     }
 
@@ -4290,19 +3926,16 @@ ConvertNarrowFont(tConversionParameters *pParams)
     // Loop through the ASCII characters.
     //
     iWidth = 0;
-    for(uiChar = pParams->iFirst; uiChar <= pParams->iLast; uiChar++)
-    {
+    for(uiChar = pParams->iFirst; uiChar <= pParams->iLast; uiChar++) {
         //
         // Were we asked to force this character to be a space?
         //
-        if((uiChar == pParams->iSpaceChar) && !pParams->bNoForceSpace)
-        {
+        if((uiChar == pParams->iSpaceChar) && !pParams->bNoForceSpace) {
             //
             // Yes. Substitute a "blank" glyph structure to tell the later
             // code that this is a space.
             //
-            if(pParams->bVerbose)
-            {
+            if(pParams->bVerbose) {
                 printf("Forcing character 0x%x to be a space.\n", uiChar);
             }
 
@@ -4314,16 +3947,14 @@ ConvertNarrowFont(tConversionParameters *pParams)
             g_pGlyphs[uiChar].pucData = 0;
             g_pGlyphs[uiChar].iMinX = 0;
             g_pGlyphs[uiChar].iMaxX = (3 * pParams->iSize) / 10;
-        }
-        else
-        {
+        } else {
             //
             // Determine the source character we are interested in.  This will
             // depend upon whether we are currently encoding the translated
             // block or the original block.
             //
             uiSrcChar = (uiChar < pParams->iTranslateStart) ? uiChar : ((uiChar
-                    - pParams->iTranslateStart) + pParams->iTranslateSource);
+                        - pParams->iTranslateStart) + pParams->iTranslateSource);
 
             //
             // Get the bitmap image for the required glyph.
@@ -4335,8 +3966,7 @@ ConvertNarrowFont(tConversionParameters *pParams)
             // glyph, then remember its width as the maximum width in
             // this font.
             //
-            if((g_pGlyphs[uiChar].iMaxX - g_pGlyphs[uiChar].iMinX) > iWidth)
-            {
+            if((g_pGlyphs[uiChar].iMaxX - g_pGlyphs[uiChar].iMinX) > iWidth) {
                 iWidth = (g_pGlyphs[uiChar].iMaxX - g_pGlyphs[uiChar].iMinX);
             }
         }
@@ -4352,8 +3982,7 @@ ConvertNarrowFont(tConversionParameters *pParams)
     //
     FT_Done_FreeType(pLibrary);
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Finding maximum character dimensions...\n");
     }
 
@@ -4362,29 +3991,25 @@ ConvertNarrowFont(tConversionParameters *pParams)
     // for the glyphs.
     //
     for(pGlyph = &g_pGlyphs[pParams->iFirst], iYMin = 0, iYMax = 0;
-        pGlyph <= &g_pGlyphs[pParams->iLast]; pGlyph++)
-    {
+            pGlyph <= &g_pGlyphs[pParams->iLast]; pGlyph++) {
         //
         // Adjust the minimum Y value if necessary.
         //
-        if(pGlyph->iBitmapTop > iYMin)
-        {
+        if(pGlyph->iBitmapTop > iYMin) {
             iYMin = pGlyph->iBitmapTop;
         }
 
         //
         // Adjust the maximum Y value if necessary.
         //
-        if((pGlyph->iBitmapTop - pGlyph->iRows + 1) < iYMax)
-        {
+        if((pGlyph->iBitmapTop - pGlyph->iRows + 1) < iYMax) {
             iYMax = pGlyph->iBitmapTop - pGlyph->iRows + 1;
         }
     }
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Maximum values - Width %d, YMax %d, YMin %d\n",
-                iWidth, iYMax, iYMin);
+               iWidth, iYMax, iYMin);
         printf("Compressing glyphs...\n");
     }
 
@@ -4393,19 +4018,15 @@ ConvertNarrowFont(tConversionParameters *pParams)
     //
     iMaxWidth = iWidth;
     for(pGlyph = &g_pGlyphs[pParams->iFirst], uiChar = pParams->iFirst;
-        pGlyph <= &g_pGlyphs[pParams->iLast]; pGlyph++, uiChar++)
-    {
+            pGlyph <= &g_pGlyphs[pParams->iLast]; pGlyph++, uiChar++) {
         //
         // Compress a single glyph.
         //
         bRetcode = CompressGlyph(pParams, pGlyph, iWidth, iYMin, iYMax);
 
-        if(pParams->bVerbose)
-        {
-            if(bRetcode)
-            {
-                if(pGlyph->pucChar)
-                {
+        if(pParams->bVerbose) {
+            if(bRetcode) {
+                if(pGlyph->pucChar) {
                     printf("Compressed glyph 0x%lx.  Width %d, %d bytes of "
                            "data.\n", pGlyph->ulCodePoint, pGlyph->pucChar[1],
                            pGlyph->pucChar[0]);
@@ -4417,19 +4038,14 @@ ConvertNarrowFont(tConversionParameters *pParams)
                     // CompressGlyph will increase the width of the character
                     // to add appropriate inter-character padding.
                     //
-                    if((int)pGlyph->pucChar[1] > iMaxWidth)
-                    {
+                    if((int)pGlyph->pucChar[1] > iMaxWidth) {
                         iMaxWidth = (int)pGlyph->pucChar[1];
                     }
-                }
-                else
-                {
+                } else {
                     printf("NULL returned on compressing glyph %lx!\n",
-                            pGlyph->ulCodePoint);
+                           pGlyph->ulCodePoint);
                 }
-            }
-            else
-            {
+            } else {
                 printf("Error on compressing glyph %lx!\n",
                        pGlyph->ulCodePoint);
             }
@@ -4440,8 +4056,7 @@ ConvertNarrowFont(tConversionParameters *pParams)
     // Have we been told to retain the bug which could cause the font header
     // width reported to be narrower than the widest encoded character?
     //
-    if(!pParams->bUseOldWidthBehavior)
-    {
+    if(!pParams->bUseOldWidthBehavior) {
         //
         // No - replace the maximum width calculated while rendering the
         // glyphs with the maximum recalculated during compression.
@@ -4449,18 +4064,15 @@ ConvertNarrowFont(tConversionParameters *pParams)
         iWidth = iMaxWidth;
     }
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Writing output file...\n");
     }
 
     //
     // Convert the filename to all lower case letters.
     //
-    for(iX = 0; iX < strlen(pParams->pcFilename); iX++)
-    {
-        if((pParams->pcFilename[iX] >= 'A') && (pParams->pcFilename[iX] <= 'Z'))
-        {
+    for(iX = 0; iX < strlen(pParams->pcFilename); iX++) {
+        if((pParams->pcFilename[iX] >= 'A') && (pParams->pcFilename[iX] <= 'Z')) {
             pParams->pcFilename[iX] += 0x20;
         }
     }
@@ -4475,15 +4087,12 @@ ConvertNarrowFont(tConversionParameters *pParams)
     //
     // Format the size string.
     //
-    if(pParams->bFixedSize)
-    {
+    if(pParams->bFixedSize) {
         //
         // This font is defined by a fixed pixel size.
         //
         sprintf(pucSize, "%dx%d", pParams->iFixedX, pParams->iFixedY);
-    }
-    else
-    {
+    } else {
         //
         // This font is defined by point size.
         //
@@ -4496,8 +4105,7 @@ ConvertNarrowFont(tConversionParameters *pParams)
     sprintf(pucChar, "font%s%d%s%s.c", pParams->pcFilename, pParams->iSize,
             pParams->bBold ? "b" : "", pParams->bItalic ? "i" : "");
     pFile = fopen(pucChar, "w");
-    if(!pFile)
-    {
+    if(!pFile) {
         printf("ERROR: Can't open output file %s!\n", pParams->pcFilename);
         return(1);
     }
@@ -4506,8 +4114,7 @@ ConvertNarrowFont(tConversionParameters *pParams)
     // Write the header to the output file.
     //
     bRetcode = WriteCopyrightBlock(pParams, pucSize, pcCapFilename, pFile);
-    if(!bRetcode)
-    {
+    if(!bRetcode) {
         printf("ERROR: Failed to write copyright block to output file!\n");
         fclose(pFile);
         return(1);
@@ -4523,10 +4130,8 @@ ConvertNarrowFont(tConversionParameters *pParams)
     // Get the total size of the compressed font.
     //
     for(pGlyph = &g_pGlyphs[pParams->iFirst], iOpt = 0;
-        pGlyph <= &g_pGlyphs[pParams->iLast]; pGlyph++)
-    {
-        if(pGlyph->pucChar)
-        {
+            pGlyph <= &g_pGlyphs[pParams->iLast]; pGlyph++) {
+        if(pGlyph->pucChar) {
             iOpt += pGlyph->pucChar[0];
         }
     }
@@ -4537,7 +4142,7 @@ ConvertNarrowFont(tConversionParameters *pParams)
     // the compiler options.
     //
     fprintf(pFile, "//********************************************************"
-        "*********************\n");
+            "*********************\n");
     fprintf(pFile, "//\n");
     fprintf(pFile, "// Details of this font:\n");
     fprintf(pFile, "//     Characters: %d to %d inclusive\n", pParams->iFirst,
@@ -4549,14 +4154,14 @@ ConvertNarrowFont(tConversionParameters *pParams)
     fprintf(pFile, "//     Memory usage: %d bytes\n", ((iOpt + 3) & ~3) + 200);
     fprintf(pFile, "//\n");
     fprintf(pFile, "//********************************************************"
-        "*********************\n");
+            "*********************\n");
     fprintf(pFile, "\n");
 
     //
     // Write the compressed font data array header to the output file.
     //
     fprintf(pFile, "//********************************************************"
-        "*********************\n");
+            "*********************\n");
     fprintf(pFile, "//\n");
     fprintf(pFile, "// The compressed data for the %d point %s%s%s font.\n",
             pParams->iSize, pcCapFilename, pParams->bBold ? " bold" : "",
@@ -4565,7 +4170,7 @@ ConvertNarrowFont(tConversionParameters *pParams)
             pParams->iFirst, pParams->iLast);
     fprintf(pFile, "//\n");
     fprintf(pFile, "//********************************************************"
-        "*********************\n");
+            "*********************\n");
     fprintf(pFile, "static const uint8_t g_pui8%s%d%s%sData[%d] =\n",
             pcCapFilename, pParams->iSize, pParams->bBold ? "b" : "",
             pParams->bItalic ? "i" : "", iOpt);
@@ -4575,26 +4180,20 @@ ConvertNarrowFont(tConversionParameters *pParams)
     // Loop through the glyphs.
     //
     for(pGlyph = &g_pGlyphs[pParams->iFirst], iOpt = 0;
-        pGlyph <= &g_pGlyphs[pParams->iLast]; pGlyph++)
-    {
+            pGlyph <= &g_pGlyphs[pParams->iLast]; pGlyph++) {
         //
         // Loop through the bytes of the compressed data for this glyph.
         //
-        if(pGlyph->pucChar)
-        {
-            for(iX = 0; iX < pGlyph->pucChar[0]; iX++)
-            {
+        if(pGlyph->pucChar) {
+            for(iX = 0; iX < pGlyph->pucChar[0]; iX++) {
                 //
                 // Output this byte of the compressed glyph data, along with any
                 // special formatting required to make the output file look
                 // readable.
                 //
-                if(iOpt == 0)
-                {
+                if(iOpt == 0) {
                     fprintf(pFile, "   ");
-                }
-                else if((iOpt % 12) == 0)
-                {
+                } else if((iOpt % 12) == 0) {
                     fprintf(pFile, "\n   ");
                 }
                 fprintf(pFile, " %3d,", pGlyph->pucChar[iX]);
@@ -4606,8 +4205,7 @@ ConvertNarrowFont(tConversionParameters *pParams)
     //
     // Close the compressed data array.
     //
-    if((iOpt % 12) != 0)
-    {
+    if((iOpt % 12) != 0) {
         fprintf(pFile, "\n");
     }
     fprintf(pFile, "};\n");
@@ -4617,10 +4215,9 @@ ConvertNarrowFont(tConversionParameters *pParams)
     // If we are using the new structure format, write the offset table as a
     // separate array.
     //
-    if(iNewStruct)
-    {
+    if(iNewStruct) {
         fprintf(pFile, "//****************************************************"
-            "*************************\n");
+                "*************************\n");
         fprintf(pFile, "//\n");
         fprintf(pFile,
                 "// The glyph offset table for the %d point %s%s%s font.\n",
@@ -4628,7 +4225,7 @@ ConvertNarrowFont(tConversionParameters *pParams)
                 pParams->bItalic ? " italic" : "");
         fprintf(pFile, "//\n");
         fprintf(pFile, "//****************************************************"
-            "*************************\n\n");
+                "*************************\n\n");
 
         fprintf(pFile, "const uint16_t g_pui16FontOffset%s%d%s%s[] =\n",
                 pcCapFilename, pParams->iSize, pParams->bBold ? "b" : "",
@@ -4636,19 +4233,14 @@ ConvertNarrowFont(tConversionParameters *pParams)
 
         fprintf(pFile, "{");
         for(iY = 0, iOpt = 0; iY < ((pParams->iLast - pParams->iFirst) + 1);
-            iY++)
-        {
-            if(!(iY % 8))
-            {
+                iY++) {
+            if(!(iY % 8)) {
                 fprintf(pFile, "\n       ");
             }
-            if(g_pGlyphs[iY + pParams->iFirst].pucChar)
-            {
+            if(g_pGlyphs[iY + pParams->iFirst].pucChar) {
                 fprintf(pFile, " %4d,", iOpt);
                 iOpt += g_pGlyphs[iY + pParams->iFirst].pucChar[0];
-            }
-            else
-            {
+            } else {
                 fprintf(pFile, " %4d,", 0);
             }
         }
@@ -4659,7 +4251,7 @@ ConvertNarrowFont(tConversionParameters *pParams)
         // structure).
         //
         fprintf(pFile, "//****************************************************"
-            "*************************\n");
+                "*************************\n");
         fprintf(pFile, "//\n");
         fprintf(pFile,
                 "// The font definition for the %d point %s%s%s font.\n",
@@ -4667,7 +4259,7 @@ ConvertNarrowFont(tConversionParameters *pParams)
                 pParams->bItalic ? " italic" : "");
         fprintf(pFile, "//\n");
         fprintf(pFile, "//****************************************************"
-            "*************************\n");
+                "*************************\n");
 
         //
         // Write the font definition to the output file (using the new tFontEx
@@ -4721,15 +4313,13 @@ ConvertNarrowFont(tConversionParameters *pParams)
                 pParams->iSize, pParams->bBold ? "b" : "",
                 pParams->bItalic ? "i" : "");
         fprintf(pFile, "};\n");
-    }
-    else
-    {
+    } else {
         //
         // Write the font definition header to the output file (original tFont
         // structure).
         //
         fprintf(pFile, "//****************************************************"
-            "*************************\n");
+                "*************************\n");
         fprintf(pFile, "//\n");
         fprintf(pFile,
                 "// The font definition for the %d point %s%s%s font.\n",
@@ -4737,7 +4327,7 @@ ConvertNarrowFont(tConversionParameters *pParams)
                 pParams->bItalic ? " italic" : "");
         fprintf(pFile, "//\n");
         fprintf(pFile, "//****************************************************"
-            "*************************\n");
+                "*************************\n");
 
         //
         // Write the font definition to the output file.
@@ -4770,21 +4360,15 @@ ConvertNarrowFont(tConversionParameters *pParams)
         fprintf(pFile, "    // The offset to each character in the font.\n");
         fprintf(pFile, "    //\n");
         fprintf(pFile, "    {\n");
-        for(iY = 0, iOpt = 0; iY < 12; iY++)
-        {
+        for(iY = 0, iOpt = 0; iY < 12; iY++) {
             fprintf(pFile, "       ");
-            for(iX = 0; iX < 8; iX++)
-            {
-                if((iY != 11) || (iX != 7))
-                {
-                    if(g_pGlyphs[(iY * 8) + iX + pParams->iFirst].pucChar)
-                    {
+            for(iX = 0; iX < 8; iX++) {
+                if((iY != 11) || (iX != 7)) {
+                    if(g_pGlyphs[(iY * 8) + iX + pParams->iFirst].pucChar) {
                         fprintf(pFile, " %4d,", iOpt);
                         iOpt
-                                += g_pGlyphs[((iY * 8) + iX + pParams->iFirst)].pucChar[0];
-                    }
-                    else
-                    {
+                        += g_pGlyphs[((iY * 8) + iX + pParams->iFirst)].pucChar[0];
+                    } else {
                         fprintf(pFile, " %4d,", 0);
                     }
                 }
@@ -4807,8 +4391,7 @@ ConvertNarrowFont(tConversionParameters *pParams)
     //
     fclose(pFile);
 
-    if(pParams->bVerbose)
-    {
+    if(pParams->bVerbose) {
         printf("Finished.\n");
     }
 
@@ -4816,7 +4399,7 @@ ConvertNarrowFont(tConversionParameters *pParams)
     // Free up the resources associated with our array of glyphs.
     //
     FreeGlyphs(&g_pGlyphs[pParams->iFirst], (pParams->iLast - pParams->iFirst)
-            + 1);
+               + 1);
 
     //
     // Success.
@@ -4886,18 +4469,15 @@ main(int argc, char *argv[])
     // Process the command line arguments.
     //
     while((iOpt = getopt_long(argc, argv, g_pcCmdLineArgs,
-            g_pCmdLineOptions, &iIndex)) != -1)
-    {
+                              g_pCmdLineOptions, &iIndex)) != -1) {
         //
         // See which argument was found.
         //
-        switch(iOpt)
-        {
+        switch(iOpt) {
             //
             // The "-a" switch was found.
             //
-            case 'a':
-            {
+            case 'a': {
                 //
                 // Save the specified character map index.
                 //
@@ -4912,8 +4492,7 @@ main(int argc, char *argv[])
             //
             // The "-b" switch was found.
             //
-            case 'b':
-            {
+            case 'b': {
                 //
                 // Indicate that this is a bold font.
                 //
@@ -4928,8 +4507,7 @@ main(int argc, char *argv[])
             //
             // The "-c" switch was found.
             //
-            case 'c':
-            {
+            case 'c': {
                 //
                 // Save the specified character map filename.
                 //
@@ -4944,8 +4522,7 @@ main(int argc, char *argv[])
             //
             // The "-d" switch was found.
             //
-            case 'd':
-            {
+            case 'd': {
                 //
                 // Note that we need to show font information only.
                 //
@@ -4960,8 +4537,7 @@ main(int argc, char *argv[])
             //
             // The "-e" switch was found.
             //
-            case 'e':
-            {
+            case 'e': {
                 //
                 // Save the last character index.
                 //
@@ -4976,8 +4552,7 @@ main(int argc, char *argv[])
             //
             // The "-f" switch was found.
             //
-            case 'f':
-            {
+            case 'f': {
                 //
                 // Save the specified filename.
                 //
@@ -4993,8 +4568,7 @@ main(int argc, char *argv[])
             //
             // The "-g" switch was found.
             //
-            case 'g':
-            {
+            case 'g': {
                 //
                 // Save the specified copyright file name.
                 //
@@ -5009,8 +4583,7 @@ main(int argc, char *argv[])
             //
             // The "-h" switch was found.
             //
-            case 'h':
-            {
+            case 'h': {
                 //
                 // Print out the usage for this application.
                 //
@@ -5025,8 +4598,7 @@ main(int argc, char *argv[])
             //
             // The "-i" switch was found.
             //
-            case 'i':
-            {
+            case 'i': {
                 //
                 // Indicate that this is an italic font.
                 //
@@ -5041,8 +4613,7 @@ main(int argc, char *argv[])
             //
             // The "-l" switch was found.
             //
-            case 'l':
-            {
+            case 'l': {
                 //
                 // Remember that we need to show the glyphs.
                 //
@@ -5057,8 +4628,7 @@ main(int argc, char *argv[])
             //
             // The "-m" switch was found.
             //
-            case 'm':
-            {
+            case 'm': {
                 //
                 // Indicate that this is a monospaced font.
                 //
@@ -5070,11 +4640,10 @@ main(int argc, char *argv[])
                 break;
             }
 
-                //
-                // The "-n" switch was found.
-                //
-            case 'n':
-            {
+            //
+            // The "-n" switch was found.
+            //
+            case 'n': {
                 //
                 // Set a flag to tell us not to substitute a space character
                 // when we encode character 32.
@@ -5090,8 +4659,7 @@ main(int argc, char *argv[])
             //
             // The "-o" switch was found.
             //
-            case 'o':
-            {
+            case 'o': {
                 //
                 // Save the offset of the translated block within the source
                 // font.
@@ -5107,8 +4675,7 @@ main(int argc, char *argv[])
             //
             // The "-p" switch was found.
             //
-            case 'p':
-            {
+            case 'p': {
                 //
                 // Save the first character index.
                 //
@@ -5123,8 +4690,7 @@ main(int argc, char *argv[])
             //
             // The "-r" or "--relocatable" switch was found.
             //
-            case 'r':
-            {
+            case 'r': {
                 //
                 // We are being asked to generate a wide (Unicode) font.
                 //
@@ -5139,22 +4705,18 @@ main(int argc, char *argv[])
             //
             // The "-s" switch was found.
             //
-            case 's':
-            {
+            case 's': {
                 //
                 // Were we passed a point size or a fixed size index?
                 //
-                if(optarg[0] == 'F')
-                {
+                if(optarg[0] == 'F') {
                     //
                     // We were passed a fixed size index so save it and remember
                     // that this is not a point size.
                     //
                     sParams.iSize = strtoul(optarg + 1, 0, 0);
                     sParams.bFixedSize = true;
-                }
-                else
-                {
+                } else {
                     //
                     // We've been passed a point size so save it.
                     //
@@ -5171,8 +4733,7 @@ main(int argc, char *argv[])
             //
             // The "-t" switch was found.
             //
-            case 't':
-            {
+            case 't': {
                 //
                 // Save the codepoint number for the start of the translated
                 // block
@@ -5188,8 +4749,7 @@ main(int argc, char *argv[])
             //
             // The "-u" switch was found.
             //
-            case 'u':
-            {
+            case 'u': {
                 //
                 // Indicate that we are to use the Unicode character mapping.
                 //
@@ -5204,8 +4764,7 @@ main(int argc, char *argv[])
             //
             // The "-v" switch was found.
             //
-            case 'v':
-            {
+            case 'v': {
                 //
                 // Indicate that verbose output is enabled.
                 //
@@ -5220,8 +4779,7 @@ main(int argc, char *argv[])
             //
             // The "-w" switch was found.
             //
-            case 'w':
-            {
+            case 'w': {
                 //
                 // Save the character that we need to substitute a space for.
                 //
@@ -5236,8 +4794,7 @@ main(int argc, char *argv[])
             //
             // The "-y" or "--binary" switch was found.
             //
-            case 'y':
-            {
+            case 'y': {
                 //
                 // Remember that we are to write a binary output file.
                 //
@@ -5249,8 +4806,7 @@ main(int argc, char *argv[])
                 break;
             }
 
-            case 'z':
-            {
+            case 'z': {
                 //
                 // Remember the output codepage number to use.
                 //
@@ -5260,8 +4816,7 @@ main(int argc, char *argv[])
                 // Make sure the number is valid but don't exit unless the
                 // value is too big for the field in the output structure.
                 //
-                if(sParams.iOutputCodePage > 0xFFFF)
-                {
+                if(sParams.iOutputCodePage > 0xFFFF) {
                     //
                     // Print out the usage for this application.
                     //
@@ -5269,11 +4824,8 @@ main(int argc, char *argv[])
 
                     fprintf(stderr, "Error: Custom codepage values supplied "
                             "via '-z' must be less than 0x10000!\n");
-                }
-                else
-                {
-                    if(sParams.iOutputCodePage < 0x8000)
-                    {
+                } else {
+                    if(sParams.iOutputCodePage < 0x8000) {
                         fprintf(stderr, "Warning: Custom codepage values "
                                 "supplied via '-z' should be above\n"
                                 "CODEPAGE_CUSTOM_BASE (0x8000).\n");
@@ -5289,8 +4841,7 @@ main(int argc, char *argv[])
             //
             // The "-x" switch was found.
             //
-            case 'x':
-            {
+            case 'x': {
                 //
                 // Remember that we are not to correct the font width
                 // calculation.  We leave the previous bug's behavior intact.
@@ -5306,8 +4857,7 @@ main(int argc, char *argv[])
             //
             // An unknown switch was found.
             //
-            default:
-            {
+            default: {
                 fprintf(stderr, "%s: Unrecognized switch -%c!\n",
                         sParams.pcAppName, iOpt);
 
@@ -5327,8 +4877,7 @@ main(int argc, char *argv[])
     //
     // There must be at least one additional argument on the command line.
     //
-    if(optind >= argc)
-    {
+    if(optind >= argc) {
         //
         // There is not another argument, so print out the usage for this
         // application.
@@ -5344,13 +4893,11 @@ main(int argc, char *argv[])
     //
     // Extract the filename(s) of the source font(s) from the command line.
     //
-    while((optind < argc) && (sParams.iNumFonts < MAX_FONTS))
-    {
+    while((optind < argc) && (sParams.iNumFonts < MAX_FONTS)) {
         sParams.pcFontInputName[sParams.iNumFonts++] = argv[optind++];
     }
 
-    if(sParams.bVerbose)
-    {
+    if(sParams.bVerbose) {
         printf("Command line arguments parsed.\n");
     }
 
@@ -5358,8 +4905,7 @@ main(int argc, char *argv[])
     // Were we asked to show information on the font or actually encode
     // something?
     //
-    if(iDisplayFont)
-    {
+    if(iDisplayFont) {
         //
         // Display information on the font whose name is passed then exit.
         //
@@ -5369,23 +4915,19 @@ main(int argc, char *argv[])
     //
     // Were we asked to show the selected glyphs?
     //
-    if(sParams.bShow)
-    {
+    if(sParams.bShow) {
         return(ShowFontCharacters(&sParams));
     }
 
     //
     // Have we been asked to generate a multi-byte, relocatable font?
     //
-    if(iWideFont)
-    {
+    if(iWideFont) {
         //
         // Yes - call the relevant function.
         //
         iRetcode = ConvertWideFont(&sParams);
-    }
-    else
-    {
+    } else {
         //
         // No - generate an 8 bit font.
         //

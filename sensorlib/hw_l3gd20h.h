@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -38,7 +38,7 @@
 #define L3GD20H_O_CTRL5         0x24        // Control 5
 #define L3GD20H_O_REFERENCE     0x25        // Reference register
 #define L3GD20H_O_OUT_TEMP      0x26        // Temperature data; -1LSB/deg,
-                                            // two's complement
+// two's complement
 #define L3GD20H_O_STATUS        0x27        // Status register
 #define L3GD20H_O_OUT_X_LSB     0x28        // X-axis LSB
 #define L3GD20H_O_OUT_X_MSB     0x29        // X-axis MSB
@@ -50,7 +50,7 @@
 #define L3GD20H_O_FIFO_SRC      0x2F        // FIFO_SRC register
 #define L3GD20H_O_IG_CFG        0x30        // Interrupt generation control
 #define L3GD20H_O_IG_SRC        0x31        // interrupt source register (read
-                                            // only)
+// only)
 #define L3GD20H_O_IG_THS_XH     0x32        // Hi-X threshold
 #define L3GD20H_O_IG_THS_XL     0x33        // Lo-X threshold
 #define L3GD20H_O_IG_THS_TH     0x34        // Hi-Y threshold
@@ -58,7 +58,7 @@
 #define L3GD20H_O_IG_THS_ZH     0x36        // Hi-Z threshold
 #define L3GD20H_O_IG_THS_ZL     0x37        // Lo-X threshold
 #define L3GD20H_O_IG_DURATION   0x38        // Interrupt generation duration
-                                            // register
+// register
 #define L3GD20H_O_LOW_ODR       0x39        // Low-speed output data rate (ODR)
 
 //*****************************************************************************
@@ -73,7 +73,7 @@
 #define L3GD20H_CTRL1_DR_25_HZ  0x40        // 25Hz or 200Hz
 #define L3GD20H_CTRL1_DR_50_HZ  0x80        // 50Hz or 400Hz
 #define L3GD20H_CTRL1_DR_800_HZ 0xC0        // 800Hz of Low_ODR=0, or 50Hz
-                                            // otherwise
+// otherwise
 #define L3GD20H_CTRL1_BW_M      0x30        // Bandwidth select
 #define L3GD20H_CTRL1_POWER_M   0x08        // Power control
 #define L3GD20H_CTRL1_POWER_LOWPOW                                            \
@@ -103,7 +103,7 @@
 #define L3GD20H_CTRL2_LVLEN_EN  0x40
 #define L3GD20H_CTRL2_HPM_M     0x30        // high pass filter mode selection
 #define L3GD20H_CTRL2_HPCF_M    0x0F        // high pass cutoff frequency
-                                            // selection
+// selection
 #define L3GD20H_CTRL2_HPM_S     4
 #define L3GD20H_CTRL2_HPCF_S    0
 
@@ -120,51 +120,51 @@
                                 0x80
 #define L3GD20H_CTRL3_INT1_BOOT_M                                             \
                                 0x40        // Boot status available on INT1
-                                            // pin.
+// pin.
 #define L3GD20H_CTRL3_INT1_BOOT_DIS                                           \
                                 0x00
 #define L3GD20H_CTRL3_INT1_BOOT_EN                                            \
                                 0x40
 #define L3GD20H_CTRL3_H_LACTIVE_M                                             \
                                 0x20        // Interrupt active configuration
-                                            // on INT; default value: 0 (0:
-                                            // high; 1:low)
+// on INT; default value: 0 (0:
+// high; 1:low)
 #define L3GD20H_CTRL3_H_LACTIVE_HI                                            \
                                 0x00
 #define L3GD20H_CTRL3_H_LACTIVE_LOW                                           \
                                 0x20
 #define L3GD20H_CTRL3_DRIVE_TYPE_M                                            \
                                 0x10        // Push- Pull / Open drain; default
-                                            // value: 0 (0: push-pull; 1: open
-                                            // drain)
+// value: 0 (0: push-pull; 1: open
+// drain)
 #define L3GD20H_CTRL3_DRIVE_TYPE_PP                                           \
                                 0x00
 #define L3GD20H_CTRL3_DRIVE_TYPE_OD                                           \
                                 0x10
 #define L3GD20H_CTRL3_INT2_DRDY_M                                             \
                                 0x08        // Date Ready on DRDY/INT2 pin;
-                                            // default value: 0
+// default value: 0
 #define L3GD20H_CTRL3_INT2_DRDY_DIS                                           \
                                 0x00
 #define L3GD20H_CTRL3_INT2_DRDY_EN                                            \
                                 0x08
 #define L3GD20H_CTRL3_INT2_FTH_M                                              \
                                 0x04        // FIFO Threshold interrupt on
-                                            // DRDY/INT2 pin; default value: 0
+// DRDY/INT2 pin; default value: 0
 #define L3GD20H_CTRL3_INT2_FTH_DIS                                            \
                                 0x00
 #define L3GD20H_CTRL3_INT2_FTH_EN                                             \
                                 0x04
 #define L3GD20H_CTRL3_INT2_ORUN_M                                             \
                                 0x02        // FIFO Overrun interrupt on
-                                            // DRDY/INT2 pin; default value: 0
+// DRDY/INT2 pin; default value: 0
 #define L3GD20H_CTRL3_INT2_ORUN_DIS                                           \
                                 0x00
 #define L3GD20H_CTRL3_INT2_ORUN_EN                                            \
                                 0x02
 #define L3GD20H_CTRL3_INT2_EMPTY_M                                            \
                                 0x01        // FIFO Empty interrupt on
-                                            // DRDY/INT2 pin; default value: 0
+// DRDY/INT2 pin; default value: 0
 #define L3GD20H_CTRL3_INT2_EMPTY_DIS                                          \
                                 0x00
 #define L3GD20H_CTRL3_INT2_EMPTY_EN                                           \
@@ -177,9 +177,9 @@
 //
 //*****************************************************************************
 #define L3GD20H_CTRL4_BDU_M     0x80        // Block data update; default
-                                            // value: 0 (0: continuous update;
-                                            // 1: output registers not updated
-                                            // until MSB and LSB reading)
+// value: 0 (0: continuous update;
+// 1: output registers not updated
+// until MSB and LSB reading)
 #define L3GD20H_CTRL4_BDU_CONTINUOUS                                          \
                                 0x00
 #define L3GD20H_CTRL4_BDU_MSBLSB                                              \
@@ -190,13 +190,13 @@
 #define L3GD20H_CTRL4_ENDIAN_BIG                                              \
                                 0x40
 #define L3GD20H_CTRL4_FS_M      0x30        // full scale selection; default
-                                            // value: 0
+// value: 0
 #define L3GD20H_CTRL4_FS_245DPS 0x00        // 245 degrees per second
 #define L3GD20H_CTRL4_FS_500DPS 0x10        // 500 degrees per second
 #define L3GD20H_CTRL4_FS_2000DPS                                              \
                                 0x30        // 2000 degrees per second
 #define L3GD20H_CTRL4_IMPEN_M   0x08        // level sensitive latched enable;
-                                            // default value: 0
+// default value: 0
 #define L3GD20H_CTRL4_IMPEN_LVL_DIS                                           \
                                 0x00
 #define L3GD20H_CTRL4_IMPEN_LVL_EN                                            \
@@ -205,13 +205,13 @@
                                 0x06        // self-test mode
 #define L3GD20H_CTRL4_SELFTEST_NORMAL                                         \
                                 0x00        // Normal mode (not self test,
-                                            // default)
+// default)
 #define L3GD20H_CTRL4_SELFTEST_MODE0                                          \
                                 0x02        // Self-test mode 0 (+)
 #define L3GD20H_CTRL4_SELFTEST_MODE1                                          \
                                 0x06        // Self-test mode 1 (-)
 #define L3GD20H_CTRL4_SIM_M     0x01        // SPI Serial Interface Mode
-                                            // selection (default = 0, 4-wire)
+// selection (default = 0, 4-wire)
 #define L3GD20H_CTRL4_SIM_4WIRE 0x00
 #define L3GD20H_CTRL4_SIM_3WIRE 0x01
 #define L3GD20H_CTRL4_FS_S      4
@@ -237,18 +237,18 @@
                                 0x40
 #define L3GD20H_CTRL5_STOPONFTH_M                                             \
                                 0x20        // Sensing chain FIFO stop values
-                                            // memorization at FIFO Threshold;
-                                            // default value: 0
+// memorization at FIFO Threshold;
+// default value: 0
 #define L3GD20H_CTRL5_STOPONFTH_UNLIMITED                                     \
                                 0x00
 #define L3GD20H_CTRL5_STOPONFTH_THRESH_LIMITED                                \
                                 0x20
 #define L3GD20H_CTRL5_HPEN_M    0x10        // high pass filtern enable
-                                            // (default 0)
+// (default 0)
 #define L3GD20H_CTRL5_HPEN_DIS  0x00
 #define L3GD20H_CTRL5_HPEN_EN   0x10
 #define L3GD20H_CTRL5_IG_SEL_M  0x0C        // interrupt generator section
-                                            // configuration
+// configuration
 #define L3GD20H_CTRL5_OUT_SEL_M 0x03        // out selection configuration
 #define L3GD20H_CTRL5_IG_SEL_S  2
 #define L3GD20H_CTRL5_OUT_SEL_S 0
@@ -294,8 +294,8 @@
 //
 //*****************************************************************************
 #define L3GD20H_FIFO_SRC_FTH_M  0x80        // FIFO threshold is greater than
-                                            // or equal to level or less than
-                                            // level
+// or equal to level or less than
+// level
 #define L3GD20H_FIFO_SRC_FTH_LT 0x00
 #define L3GD20H_FIFO_SRC_FTH_GEQ                                              \
                                 0x80
@@ -308,7 +308,7 @@
                                 0x20
 #define L3GD20H_FIFO_SRC_STORE_SAMPLES_M                                      \
                                 0x1F        // FIFO stored data level of the
-                                            // unread samples
+// unread samples
 #define L3GD20H_FIFO_SRC_STORE_SAMPLES_S                                      \
                                 0
 
@@ -319,31 +319,31 @@
 //
 //*****************************************************************************
 #define L3GD20H_IG_CFG_ANDOR_M  0x80        // AND/OR combination of Interrupt
-                                            // events; default value: 0
+// events; default value: 0
 #define L3GD20H_IG_CFG_ANDOR_OR 0x00
 #define L3GD20H_IG_CFG_ANDOR_AND                                              \
                                 0x80
 #define L3GD20H_IG_CFG_LIR_M    0x40        // Latch Interrupt Request; default
-                                            // value: 0
+// value: 0
 #define L3GD20H_IG_CFG_LIR_LATCHED                                            \
                                 0x40
 #define L3GD20H_IG_CFG_ZHI_M    0x20        // enable interrupt generation on
-                                            // Z-hi event
+// Z-hi event
 #define L3GD20H_IG_CFG_ZHI_EN   0x20
 #define L3GD20H_IG_CFG_ZLI_M    0x10        // enable interrupt generation on
-                                            // Z-low event
+// Z-low event
 #define L3GD20H_IG_CFG_ZLI_EN   0x10
 #define L3GD20H_IG_CFG_YHI_M    0x08        // enable interrupt generation on
-                                            // Y-hi event
+// Y-hi event
 #define L3GD20H_IG_CFG_YHI_EN   0x08
 #define L3GD20H_IG_CFG_YLI_M    0x04        // enable interrupt generation on
-                                            // Y-low event
+// Y-low event
 #define L3GD20H_IG_CFG_YLI_EN   0x04
 #define L3GD20H_IG_CFG_XHI_M    0x02        // enable interrupt generation on
-                                            // X-hi event
+// X-hi event
 #define L3GD20H_IG_CFG_XHI_EN   0x02
 #define L3GD20H_IG_CFG_XLI_M    0x01        // enable interrupt generation on
-                                            // X-low event
+// X-low event
 #define L3GD20H_IG_CFG_XLI_EN   0x01
 
 //*****************************************************************************
@@ -382,7 +382,7 @@
 //*****************************************************************************
 #define L3GD20H_IG_THS_XH_DCRM_M                                              \
                                 0x80        // interrupt generation counter
-                                            // mode
+// mode
 #define L3GD20H_IG_THS_XH_DCRM_RESET                                          \
                                 0x00
 #define L3GD20H_IG_THS_XH_DCRM_DECREMENT                                      \
@@ -422,8 +422,8 @@
 //*****************************************************************************
 #define L3GD20H_IG_DURATION_WAIT_M                                            \
                                 0x80        // If WAIT is enabled then DURATION
-                                            // samples must occur before
-                                            // asserting the interrupt.
+// samples must occur before
+// asserting the interrupt.
 #define L3GD20H_IG_DURATION_WAIT_DIS                                          \
                                 0x00
 #define L3GD20H_IG_DURATION_WAIT_EN                                           \
@@ -459,7 +459,7 @@
                                 0x04
 #define L3GD20H_LOW_ODR_DATARATE_M                                            \
                                 0x01        // Low-speed data rate enable;
-                                            // default value: 0
+// default value: 0
 #define L3GD20H_LOW_ODR_DATARATE_HIGH                                         \
                                 0x00
 #define L3GD20H_LOW_ODR_DATARATE_LOW                                          \

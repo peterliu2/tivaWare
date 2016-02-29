@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Utility Library.
 //
 //*****************************************************************************
@@ -119,8 +119,7 @@ SchedulerRun(void)
     //
     // Loop through each task in the task table.
     //
-    for(ui32Loop = 0; ui32Loop < g_ui32SchedulerNumTasks; ui32Loop++)
-    {
+    for(ui32Loop = 0; ui32Loop < g_ui32SchedulerNumTasks; ui32Loop++) {
         //
         // Get a pointer to the task information.
         //
@@ -130,9 +129,8 @@ SchedulerRun(void)
         // Is this task active and, if so, is it time to call it's function?
         //
         if(pi16Task->bActive &&
-           (SchedulerElapsedTicksGet(pi16Task->ui32LastCall) >=
-            pi16Task->ui32FrequencyTicks))
-        {
+                (SchedulerElapsedTicksGet(pi16Task->ui32LastCall) >=
+                 pi16Task->ui32FrequencyTicks)) {
             //
             // Remember the timestamp at which we make the function call.
             //
@@ -171,8 +169,7 @@ SchedulerTaskEnable(uint32_t ui32Index, bool bRunNow)
     //
     // Is the task index passed valid?
     //
-    if(ui32Index < g_ui32SchedulerNumTasks)
-    {
+    if(ui32Index < g_ui32SchedulerNumTasks) {
         //
         // Yes - mark the task as active.
         //
@@ -183,17 +180,14 @@ SchedulerTaskEnable(uint32_t ui32Index, bool bRunNow)
         // next time the scheduler is run or after the desired number of ticks
         // depending upon the value of the bRunNow parameter.
         //
-        if(bRunNow)
-        {
+        if(bRunNow) {
             //
             // Cause the task to run on the next call to SchedulerRun().
             //
             g_psSchedulerTable[ui32Index].ui32LastCall =
                 (g_ui32SchedulerTickCount -
                  g_psSchedulerTable[ui32Index].ui32FrequencyTicks);
-        }
-        else
-        {
+        } else {
             //
             // Cause the task to run after one full time period.
             //
@@ -223,8 +217,7 @@ SchedulerTaskDisable(uint32_t ui32Index)
     //
     // Is the task index passed valid?
     //
-    if(ui32Index < g_ui32SchedulerNumTasks)
-    {
+    if(ui32Index < g_ui32SchedulerNumTasks) {
         //
         // Yes - mark the task as inactive.
         //

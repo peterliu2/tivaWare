@@ -90,12 +90,9 @@ I2CMasterInit(unsigned long ulBase, tBoolean bFast)
     //
     // Get the desired SCL speed.
     //
-    if(bFast == true)
-    {
+    if(bFast == true) {
         ulSCLFreq = I2C_SCL_FAST;
-    }
-    else
-    {
+    } else {
         ulSCLFreq = I2C_SCL_STANDARD;
     }
 
@@ -484,12 +481,9 @@ I2CMasterIntStatus(unsigned long ulBase, tBoolean bMasked)
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return((HWREG(ulBase + I2C_MASTER_O_MIS)) ? true : false);
-    }
-    else
-    {
+    } else {
         return((HWREG(ulBase + I2C_MASTER_O_RIS)) ? true : false);
     }
 }
@@ -524,12 +518,9 @@ I2CSlaveIntStatus(unsigned long ulBase, tBoolean bMasked)
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return((HWREG(ulBase + I2C_SLAVE_O_MIS)) ? true : false);
-    }
-    else
-    {
+    } else {
         return((HWREG(ulBase + I2C_SLAVE_O_RIS)) ? true : false);
     }
 }
@@ -660,12 +651,9 @@ I2CMasterBusy(unsigned long ulBase)
     //
     // Return the busy status.
     //
-    if(HWREG(ulBase + I2C_MASTER_O_CS) & I2C_MASTER_CS_BUSY)
-    {
+    if(HWREG(ulBase + I2C_MASTER_O_CS) & I2C_MASTER_CS_BUSY) {
         return(true);
-    }
-    else
-    {
+    } else {
         return(false);
     }
 }
@@ -697,12 +685,9 @@ I2CMasterBusBusy(unsigned long ulBase)
     //
     // Return the bus busy status.
     //
-    if(HWREG(ulBase + I2C_MASTER_O_CS) & I2C_MASTER_CS_BUS_BUSY)
-    {
+    if(HWREG(ulBase + I2C_MASTER_O_CS) & I2C_MASTER_CS_BUS_BUSY) {
         return(true);
-    }
-    else
-    {
+    } else {
         return(false);
     }
 }
@@ -796,20 +781,16 @@ I2CMasterErr(unsigned long ulBase)
     // If the I2C master is busy, then all the other bit are invalid, and
     // don't have an error to report.
     //
-    if(ulErr & I2C_MASTER_CS_BUSY)
-    {
+    if(ulErr & I2C_MASTER_CS_BUSY) {
         return(I2C_MASTER_ERR_NONE);
     }
 
     //
     // Check for errors.
     //
-    if(ulErr & I2C_MASTER_CS_ERROR)
-    {
+    if(ulErr & I2C_MASTER_CS_ERROR) {
         return(ulErr & (I2C_MASTER_CS_ERR_MASK));
-    }
-    else
-    {
+    } else {
         return(I2C_MASTER_ERR_NONE);
     }
 }

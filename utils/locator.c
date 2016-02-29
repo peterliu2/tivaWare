@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2009-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Utility Library.
 //
 //*****************************************************************************
@@ -82,9 +82,8 @@ LocatorReceive(void *arg, struct udp_pcb *pcb, struct pbuf *p,
     //
     pui8Data = p->payload;
     if((p->len != 4) || (pui8Data[0] != TAG_CMD) || (pui8Data[1] != 4) ||
-       (pui8Data[2] != CMD_DISCOVER_TARGET) ||
-       (pui8Data[3] != ((0 - TAG_CMD - 4 - CMD_DISCOVER_TARGET) & 0xff)))
-    {
+            (pui8Data[2] != CMD_DISCOVER_TARGET) ||
+            (pui8Data[3] != ((0 - TAG_CMD - 4 - CMD_DISCOVER_TARGET) & 0xff))) {
         pbuf_free(p);
         return;
     }
@@ -98,8 +97,7 @@ LocatorReceive(void *arg, struct udp_pcb *pcb, struct pbuf *p,
     // Allocate a new pbuf for sending the response.
     //
     p = pbuf_alloc(PBUF_TRANSPORT, sizeof(g_pui8LocatorData), PBUF_RAM);
-    if(p == NULL)
-    {
+    if(p == NULL) {
         return;
     }
 
@@ -107,8 +105,7 @@ LocatorReceive(void *arg, struct udp_pcb *pcb, struct pbuf *p,
     // Calculate and fill in the checksum on the response packet.
     //
     for(ui32Idx = 0, g_pui8LocatorData[sizeof(g_pui8LocatorData) - 1] = 0;
-        ui32Idx < (sizeof(g_pui8LocatorData) - 1); ui32Idx++)
-    {
+            ui32Idx < (sizeof(g_pui8LocatorData) - 1); ui32Idx++) {
         g_pui8LocatorData[sizeof(g_pui8LocatorData) - 1] -=
             g_pui8LocatorData[ui32Idx];
     }
@@ -117,8 +114,7 @@ LocatorReceive(void *arg, struct udp_pcb *pcb, struct pbuf *p,
     // Copy the response packet data into the pbuf.
     //
     pui8Data = p->payload;
-    for(ui32Idx = 0; ui32Idx < sizeof(g_pui8LocatorData); ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < sizeof(g_pui8LocatorData); ui32Idx++) {
         pui8Data[ui32Idx] = g_pui8LocatorData[ui32Idx];
     }
 
@@ -153,8 +149,7 @@ LocatorInit(void)
     //
     // Clear out the response data.
     //
-    for(ui32Idx = 0; ui32Idx < 84; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < 84; ui32Idx++) {
         g_pui8LocatorData[ui32Idx] = 0;
     }
 
@@ -320,16 +315,14 @@ LocatorAppTitleSet(const char *pcAppTitle)
     //
     // Copy the application title string into the response data.
     //
-    for(ui32Count = 0; (ui32Count < 64) && *pcAppTitle; ui32Count++)
-    {
+    for(ui32Count = 0; (ui32Count < 64) && *pcAppTitle; ui32Count++) {
         g_pui8LocatorData[ui32Count + 19] = *pcAppTitle++;
     }
 
     //
     // Zero-fill the remainder of the space in the response data (if any).
     //
-    for(; ui32Count < 64; ui32Count++)
-    {
+    for(; ui32Count < 64; ui32Count++) {
         g_pui8LocatorData[ui32Count + 19] = 0;
     }
 }

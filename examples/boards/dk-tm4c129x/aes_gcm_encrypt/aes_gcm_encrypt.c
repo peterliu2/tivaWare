@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -82,8 +82,7 @@ tDMAControlTable g_psDMAControlTable[64] __attribute__((aligned(1024)));
 // Structure for NIST AES GCM tests
 //
 //*****************************************************************************
-typedef struct AESTestVectorStruct
-{
+typedef struct AESTestVectorStruct {
     uint32_t ui32KeySize;
     uint32_t pui32Key[8];
     uint32_t ui32IVLength;
@@ -102,8 +101,7 @@ tAESGCMTestVector;
 // Test Cases from NIST GCM Revised Spec.
 //
 //*****************************************************************************
-tAESGCMTestVector g_psAESGCMTestVectors[] =
-{
+tAESGCMTestVector g_psAESGCMTestVectors[] = {
     //
     // Test Case #1
     // This is a special case that cannot use the GCM mode because the
@@ -149,16 +147,20 @@ tAESGCMTestVector g_psAESGCMTestVectors[] =
         12,
         { 0xbebafeca, 0xaddbcefa, 0x88f8cade, 0x00000000 },
         64,
-        { 0x253231d9, 0xe50684f8, 0xc50959a5, 0x9a26f5af,
-          0x53a9a786, 0xdaf73415, 0x3d304c2e, 0x728a318a,
-          0x950c3c1c, 0x53096895, 0x240ecf2f, 0x25b5a649,
-          0xf5ed6ab1, 0x57e60daa, 0x397b63ba, 0x55d2af1a },
+        {
+            0x253231d9, 0xe50684f8, 0xc50959a5, 0x9a26f5af,
+            0x53a9a786, 0xdaf73415, 0x3d304c2e, 0x728a318a,
+            0x950c3c1c, 0x53096895, 0x240ecf2f, 0x25b5a649,
+            0xf5ed6ab1, 0x57e60daa, 0x397b63ba, 0x55d2af1a
+        },
         0,
         { 0 },
-        { 0xc21e8342, 0x24747721, 0xb721724b, 0x9cd4d084,
-          0x2f21aae3, 0xe0a4022c, 0x237ec135, 0x2ea1ac29,
-          0xb214d521, 0x1c936654, 0x5a6a8f7d, 0x05aa84ac,
-          0x390ba31b, 0x97ac0a6a, 0x91e0583d, 0x85593f47 },
+        {
+            0xc21e8342, 0x24747721, 0xb721724b, 0x9cd4d084,
+            0x2f21aae3, 0xe0a4022c, 0x237ec135, 0x2ea1ac29,
+            0xb214d521, 0x1c936654, 0x5a6a8f7d, 0x05aa84ac,
+            0x390ba31b, 0x97ac0a6a, 0x91e0583d, 0x85593f47
+        },
         { 0xf32a5c4d, 0xa664cd27, 0xbd5af32c, 0xb4faa62b }
     },
 
@@ -174,17 +176,23 @@ tAESGCMTestVector g_psAESGCMTestVectors[] =
         12,
         { 0xbebafeca, 0xaddbcefa, 0x88f8cade, 0x00000000 },
         60,
-        { 0x253231d9, 0xe50684f8, 0xc50959a5, 0x9a26f5af,
-          0x53a9a786, 0xdaf73415, 0x3d304c2e, 0x728a318a,
-          0x950c3c1c, 0x53096895, 0x240ecf2f, 0x25b5a649,
-          0xf5ed6ab1, 0x57e60daa, 0x397b63ba, 0x00000000 },
+        {
+            0x253231d9, 0xe50684f8, 0xc50959a5, 0x9a26f5af,
+            0x53a9a786, 0xdaf73415, 0x3d304c2e, 0x728a318a,
+            0x950c3c1c, 0x53096895, 0x240ecf2f, 0x25b5a649,
+            0xf5ed6ab1, 0x57e60daa, 0x397b63ba, 0x00000000
+        },
         20,
-        { 0xcefaedfe, 0xefbeadde, 0xcefaedfe, 0xefbeadde,
-          0xd2daadab, 0x00000000, 0x00000000, 0x00000000 },
-        { 0xc21e8342, 0x24747721, 0xb721724b, 0x9cd4d084,
-          0x2f21aae3, 0xe0a4022c, 0x237ec135, 0x2ea1ac29,
-          0xb214d521, 0x1c936654, 0x5a6a8f7d, 0x05aa84ac,
-          0x390ba31b, 0x97ac0a6a, 0x91e0583d, 0x00000000 },
+        {
+            0xcefaedfe, 0xefbeadde, 0xcefaedfe, 0xefbeadde,
+            0xd2daadab, 0x00000000, 0x00000000, 0x00000000
+        },
+        {
+            0xc21e8342, 0x24747721, 0xb721724b, 0x9cd4d084,
+            0x2f21aae3, 0xe0a4022c, 0x237ec135, 0x2ea1ac29,
+            0xb214d521, 0x1c936654, 0x5a6a8f7d, 0x05aa84ac,
+            0x390ba31b, 0x97ac0a6a, 0x91e0583d, 0x00000000
+        },
         { 0xbc4fc95b, 0xdba52132, 0x5ae9fa94, 0x471a12e7 }
     },
 
@@ -199,17 +207,23 @@ tAESGCMTestVector g_psAESGCMTestVectors[] =
         8,
         { 0xbebafeca, 0xaddbcefa, 0x00000000, 0x00000000 },
         60,
-        { 0x253231d9, 0xe50684f8, 0xc50959a5, 0x9a26f5af,
-          0x53a9a786, 0xdaf73415, 0x3d304c2e, 0x728a318a,
-          0x950c3c1c, 0x53096895, 0x240ecf2f, 0x25b5a649,
-          0xf5ed6ab1, 0x57e60daa, 0x397b63ba, 0x00000000 },
+        {
+            0x253231d9, 0xe50684f8, 0xc50959a5, 0x9a26f5af,
+            0x53a9a786, 0xdaf73415, 0x3d304c2e, 0x728a318a,
+            0x950c3c1c, 0x53096895, 0x240ecf2f, 0x25b5a649,
+            0xf5ed6ab1, 0x57e60daa, 0x397b63ba, 0x00000000
+        },
         20,
-        { 0xcefaedfe, 0xefbeadde, 0xcefaedfe, 0xefbeadde,
-          0xd2daadab, 0x00000000, 0x00000000, 0x00000000 },
-        { 0x4c3b3561, 0x4a930628, 0x1ff57f77, 0x55472aa2,
-          0x712a9b69, 0xf8c6cd4f, 0xf9e56637, 0x23746c7b,
-          0x00698073, 0xb2249fe4, 0x4475092b, 0x426b89d4,
-          0xe1b58949, 0x070faceb, 0x98453fc2, 0x00000000 },
+        {
+            0xcefaedfe, 0xefbeadde, 0xcefaedfe, 0xefbeadde,
+            0xd2daadab, 0x00000000, 0x00000000, 0x00000000
+        },
+        {
+            0x4c3b3561, 0x4a930628, 0x1ff57f77, 0x55472aa2,
+            0x712a9b69, 0xf8c6cd4f, 0xf9e56637, 0x23746c7b,
+            0x00698073, 0xb2249fe4, 0x4475092b, 0x426b89d4,
+            0xe1b58949, 0x070faceb, 0x98453fc2, 0x00000000
+        },
         { 0xe7d21236, 0x85073b9e, 0x4ae11b56, 0xcbfca2ac }
     },
 
@@ -222,28 +236,36 @@ tAESGCMTestVector g_psAESGCMTestVectors[] =
         AES_CFG_KEY_SIZE_128BIT,
         { 0x92e9fffe, 0x1c736586, 0x948f6a6d, 0x08833067 },
         60,
-        { 0x5d221393, 0xe50684f8, 0x5a9c9055, 0xaa6952ff,
-          0x38957a6a, 0xa17d4f53, 0xd203c3e4, 0x28a718a3,
-          0x51c9c0c3, 0x39958056, 0x42e2f0fc, 0x54526b9a,
-          0xf5dbae16, 0x576adea0, 0x9bb337a6, 0x00000000 },
+        {
+            0x5d221393, 0xe50684f8, 0x5a9c9055, 0xaa6952ff,
+            0x38957a6a, 0xa17d4f53, 0xd203c3e4, 0x28a718a3,
+            0x51c9c0c3, 0x39958056, 0x42e2f0fc, 0x54526b9a,
+            0xf5dbae16, 0x576adea0, 0x9bb337a6, 0x00000000
+        },
         60,
-        { 0x253231d9, 0xe50684f8, 0xc50959a5, 0x9a26f5af,
-          0x53a9a786, 0xdaf73415, 0x3d304c2e, 0x728a318a,
-          0x950c3c1c, 0x53096895, 0x240ecf2f, 0x25b5a649,
-          0xf5ed6ab1, 0x57e60daa, 0x397b63ba, 0x00000000 },
+        {
+            0x253231d9, 0xe50684f8, 0xc50959a5, 0x9a26f5af,
+            0x53a9a786, 0xdaf73415, 0x3d304c2e, 0x728a318a,
+            0x950c3c1c, 0x53096895, 0x240ecf2f, 0x25b5a649,
+            0xf5ed6ab1, 0x57e60daa, 0x397b63ba, 0x00000000
+        },
         20,
-        { 0xcefaedfe, 0xefbeadde, 0xcefaedfe, 0xefbeadde,
-          0xd2daadab },
-        { 0x9849e28c, 0xb6155662, 0xac33a003, 0x94b83fa1,
-          0xa51291be, 0xa811a2c3, 0x3c2a26ba, 0xa72c7eca,
-          0xa4a9e401, 0x903ca4fb, 0x81b2dccc, 0x6f7c8cd4,
-          0xd27528d6, 0x0317a4ac, 0xe5ae344c, 0x00000000 },
+        {
+            0xcefaedfe, 0xefbeadde, 0xcefaedfe, 0xefbeadde,
+            0xd2daadab
+        },
+        {
+            0x9849e28c, 0xb6155662, 0xac33a003, 0x94b83fa1,
+            0xa51291be, 0xa811a2c3, 0x3c2a26ba, 0xa72c7eca,
+            0xa4a9e401, 0x903ca4fb, 0x81b2dccc, 0x6f7c8cd4,
+            0xd27528d6, 0x0317a4ac, 0xe5ae344c, 0x00000000
+        },
         { 0xaec59c61, 0xfa0bfeff, 0x3cf42a46, 0x50d09916 }
     },
 
     //
     // The following test cases use 256bit Keys.
-    // 
+    //
     // Test Case #7 - Test Case 13 from the doc
     // This is a special case that cannot use the GCM mode because the
     // data and AAD lengths are both zero.  The work around is to perform
@@ -251,8 +273,10 @@ tAESGCMTestVector g_psAESGCMTestVectors[] =
     //
     {
         AES_CFG_KEY_SIZE_256BIT,
-        { 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-          0x00000000, 0x00000000, 0x00000000, 0x00000000 },
+        {
+            0x00000000, 0x00000000, 0x00000000, 0x00000000,
+            0x00000000, 0x00000000, 0x00000000, 0x00000000
+        },
         12,
         { 0x00000000, 0x00000000, 0x00000000, 0x00000000 },
         0,
@@ -269,8 +293,10 @@ tAESGCMTestVector g_psAESGCMTestVectors[] =
     //
     {
         AES_CFG_KEY_SIZE_256BIT,
-        { 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-          0x00000000, 0x00000000, 0x00000000, 0x00000000 },
+        {
+            0x00000000, 0x00000000, 0x00000000, 0x00000000,
+            0x00000000, 0x00000000, 0x00000000, 0x00000000
+        },
         12,
         { 0x00000000, 0x00000000, 0x00000000, 0x00000000 },
         16,
@@ -286,21 +312,27 @@ tAESGCMTestVector g_psAESGCMTestVectors[] =
     //
     {
         AES_CFG_KEY_SIZE_256BIT,
-        { 0x92e9fffe, 0x1c736586, 0x948f6a6d, 0x08833067,
-          0x92e9fffe, 0x1c736586, 0x948f6a6d, 0x08833067 },
+        {
+            0x92e9fffe, 0x1c736586, 0x948f6a6d, 0x08833067,
+            0x92e9fffe, 0x1c736586, 0x948f6a6d, 0x08833067
+        },
         12,
         { 0xbebafeca, 0xaddbcefa, 0x88f8cade, 0x00000000 },
         64,
-        { 0x253231d9, 0xe50684f8, 0xc50959a5, 0x9a26f5af,
-          0x53a9a786, 0xdaf73415, 0x3d304c2e, 0x728a318a,
-          0x950c3c1c, 0x53096895, 0x240ecf2f, 0x25b5a649,
-          0xf5ed6ab1, 0x57e60daa, 0x397b63ba, 0x55d2af1a },
+        {
+            0x253231d9, 0xe50684f8, 0xc50959a5, 0x9a26f5af,
+            0x53a9a786, 0xdaf73415, 0x3d304c2e, 0x728a318a,
+            0x950c3c1c, 0x53096895, 0x240ecf2f, 0x25b5a649,
+            0xf5ed6ab1, 0x57e60daa, 0x397b63ba, 0x55d2af1a
+        },
         0,
         { 0 },
-        { 0xf0c12d52, 0x077d5699, 0xa3377ff4, 0x7d42842a,
-          0xdc8c3a64, 0xc9c0e5bf, 0xbda29875, 0xaad15525,
-          0x488eb08c, 0x3dbb0d59, 0x108bb0a7, 0x38888256,
-          0x631ef6c5, 0x0a7aba93, 0x62f6c9bc, 0xad158089 },
+        {
+            0xf0c12d52, 0x077d5699, 0xa3377ff4, 0x7d42842a,
+            0xdc8c3a64, 0xc9c0e5bf, 0xbda29875, 0xaad15525,
+            0x488eb08c, 0x3dbb0d59, 0x108bb0a7, 0x38888256,
+            0x631ef6c5, 0x0a7aba93, 0x62f6c9bc, 0xad158089
+        },
         { 0xc5da94b0, 0xbd7134d9, 0x22501aec, 0x6ccce370 }
     },
 
@@ -312,22 +344,30 @@ tAESGCMTestVector g_psAESGCMTestVectors[] =
     //
     {
         AES_CFG_KEY_SIZE_256BIT,
-        { 0x92e9fffe, 0x1c736586, 0x948f6a6d, 0x08833067,
-          0x92e9fffe, 0x1c736586, 0x948f6a6d, 0x08833067 },
+        {
+            0x92e9fffe, 0x1c736586, 0x948f6a6d, 0x08833067,
+            0x92e9fffe, 0x1c736586, 0x948f6a6d, 0x08833067
+        },
         12,
         { 0xbebafeca, 0xaddbcefa, 0x88f8cade, 0x00000000 },
         60,
-        { 0x253231d9, 0xe50684f8, 0xc50959a5, 0x9a26f5af,
-          0x53a9a786, 0xdaf73415, 0x3d304c2e, 0x728a318a,
-          0x950c3c1c, 0x53096895, 0x240ecf2f, 0x25b5a649,
-          0xf5ed6ab1, 0x57e60daa, 0x397b63ba, 0x00000000 },
+        {
+            0x253231d9, 0xe50684f8, 0xc50959a5, 0x9a26f5af,
+            0x53a9a786, 0xdaf73415, 0x3d304c2e, 0x728a318a,
+            0x950c3c1c, 0x53096895, 0x240ecf2f, 0x25b5a649,
+            0xf5ed6ab1, 0x57e60daa, 0x397b63ba, 0x00000000
+        },
         20,
-        { 0xcefaedfe, 0xefbeadde, 0xcefaedfe, 0xefbeadde,
-          0xd2daadab, 0x00000000, 0x00000000, 0x00000000 },
-        { 0xf0c12d52, 0x077d5699, 0xa3377ff4, 0x7d42842a,
-          0xdc8c3a64, 0xc9c0e5bf, 0xbda29875, 0xaad15525,
-          0x488eb08c, 0x3dbb0d59, 0x108bb0a7, 0x38888256,
-          0x631ef6c5, 0x0a7aba93, 0x62f6c9bc, 0x00000000 },
+        {
+            0xcefaedfe, 0xefbeadde, 0xcefaedfe, 0xefbeadde,
+            0xd2daadab, 0x00000000, 0x00000000, 0x00000000
+        },
+        {
+            0xf0c12d52, 0x077d5699, 0xa3377ff4, 0x7d42842a,
+            0xdc8c3a64, 0xc9c0e5bf, 0xbda29875, 0xaad15525,
+            0x488eb08c, 0x3dbb0d59, 0x108bb0a7, 0x38888256,
+            0x631ef6c5, 0x0a7aba93, 0x62f6c9bc, 0x00000000
+        },
         { 0xce6efc76, 0x68174e0f, 0x5388dfcd, 0x1b552dbb }
     }
 };
@@ -357,12 +397,9 @@ LengthRoundUp(uint32_t ui32Length)
     uint32_t ui32Remainder;
 
     ui32Remainder = ui32Length % 16;
-    if(ui32Remainder == 0)
-    {
+    if(ui32Remainder == 0) {
         return(ui32Length);
-    }
-    else
-    {
+    } else {
         return(ui32Length + (16 - ui32Remainder));
     }
 }
@@ -394,53 +431,45 @@ AESIntHandler(void)
     //
     // Print a different message depending on the interrupt source.
     //
-    if(ui32IntStatus & AES_INT_CONTEXT_IN)
-    {
+    if(ui32IntStatus & AES_INT_CONTEXT_IN) {
         ROM_AESIntDisable(AES_BASE, AES_INT_CONTEXT_IN);
         g_bContextInIntFlag = true;
         UARTprintf("Context input registers are ready.\n");
     }
-    if(ui32IntStatus & AES_INT_DATA_IN)
-    {
+    if(ui32IntStatus & AES_INT_DATA_IN) {
         ROM_AESIntDisable(AES_BASE, AES_INT_DATA_IN);
         g_bDataInIntFlag = true;
         UARTprintf("Data FIFO is ready to receive data.\n");
     }
-    if(ui32IntStatus & AES_INT_CONTEXT_OUT)
-    {
+    if(ui32IntStatus & AES_INT_CONTEXT_OUT) {
         ROM_AESIntDisable(AES_BASE, AES_INT_CONTEXT_OUT);
         g_bContextOutIntFlag = true;
         UARTprintf("Context output registers are ready.\n");
     }
-    if(ui32IntStatus & AES_INT_DATA_OUT)
-    {
+    if(ui32IntStatus & AES_INT_DATA_OUT) {
         ROM_AESIntDisable(AES_BASE, AES_INT_DATA_OUT);
         g_bDataOutIntFlag = true;
         UARTprintf("Data FIFO is ready to provide data.\n");
     }
-    if(ui32IntStatus & AES_INT_DMA_CONTEXT_IN)
-    {
+    if(ui32IntStatus & AES_INT_DMA_CONTEXT_IN) {
         ROM_AESIntClear(AES_BASE, AES_INT_DMA_CONTEXT_IN);
         g_bContextInDMADoneIntFlag = true;
         UARTprintf("DMA completed a context write to the internal\n");
         UARTprintf("registers.\n");
     }
-    if(ui32IntStatus & AES_INT_DMA_DATA_IN)
-    {
+    if(ui32IntStatus & AES_INT_DMA_DATA_IN) {
         ROM_AESIntClear(AES_BASE, AES_INT_DMA_DATA_IN);
         g_bDataInDMADoneIntFlag = true;
         UARTprintf("DMA has written the last word of input data to\n");
         UARTprintf("the internal FIFO of the engine.\n");
     }
-    if(ui32IntStatus & AES_INT_DMA_CONTEXT_OUT)
-    {
+    if(ui32IntStatus & AES_INT_DMA_CONTEXT_OUT) {
         ROM_AESIntClear(AES_BASE, AES_INT_DMA_CONTEXT_OUT);
         g_bContextOutDMADoneIntFlag = true;
         UARTprintf("DMA completed the output context movement from\n");
         UARTprintf("the internal registers.\n");
     }
-    if(ui32IntStatus & AES_INT_DMA_DATA_OUT)
-    {
+    if(ui32IntStatus & AES_INT_DMA_DATA_OUT) {
         ROM_AESIntClear(AES_BASE, AES_INT_DMA_DATA_OUT);
         g_bDataOutDMADoneIntFlag = true;
         UARTprintf("DMA has written the last word of process result.\n");
@@ -503,8 +532,7 @@ AESHashSubkeyGet(uint32_t ui32Keysize, uint32_t *pui32Key,
     //
     // Put zeroes into the next 4 words if the key size is 256bit
     //
-    if(ui32Keysize == AES_CFG_KEY_SIZE_256BIT)
-    {
+    if(ui32Keysize == AES_CFG_KEY_SIZE_256BIT) {
         pui32ZeroArray[4] = 0x0;
         pui32ZeroArray[5] = 0x0;
         pui32ZeroArray[6] = 0x0;
@@ -555,8 +583,7 @@ AESGHASH(uint32_t ui32Keysize, uint32_t *pui32HashSubkey, uint32_t *pui32IV,
     //
     // Write the data.
     //
-    for(ui32Count = 0; ui32Count < ui32IVLength; ui32Count += 16)
-    {
+    for(ui32Count = 0; ui32Count < ui32IVLength; ui32Count += 16) {
         //
         // Write the data registers.
         //
@@ -584,8 +611,7 @@ AESGCMY0Get(uint32_t ui32Keysize, uint32_t *pui32IV, uint32_t ui32IVLength,
     //
     // If the length is 96 bits, then just set the last bit of the IV to 1.
     //
-    if(ui32IVLength == 12)
-    {
+    if(ui32IVLength == 12) {
         pui32Y0[0] = pui32IV[0];
         pui32Y0[1] = pui32IV[1];
         pui32Y0[2] = pui32IV[2];
@@ -595,8 +621,7 @@ AESGCMY0Get(uint32_t ui32Keysize, uint32_t *pui32IV, uint32_t ui32IVLength,
     //
     // If the length is not 96 bits, then peform a basic GHASH on the IV.
     //
-    else
-    {
+    else {
         //
         // First, get the hash subkey or H.
         //
@@ -615,7 +640,7 @@ AESGCMY0Get(uint32_t ui32Keysize, uint32_t *pui32IV, uint32_t ui32IVLength,
 //
 //*****************************************************************************
 bool
-AESGCMEncrypt(uint32_t ui32Keysize, uint32_t *pui32Src, uint32_t *pui32Dst, 
+AESGCMEncrypt(uint32_t ui32Keysize, uint32_t *pui32Src, uint32_t *pui32Dst,
               uint32_t ui32Length, uint32_t *pui32Key, uint32_t *pui32IV,
               uint32_t *pui32AAD, uint32_t ui32AADLength, uint32_t *pui32Tag,
               bool bUseDMA)
@@ -646,8 +671,7 @@ AESGCMEncrypt(uint32_t ui32Keysize, uint32_t *pui32Src, uint32_t *pui32Dst,
     //
     // Wait for the context in flag.
     //
-    while(!g_bContextInIntFlag)
-    {
+    while(!g_bContextInIntFlag) {
     }
 
     //
@@ -670,8 +694,7 @@ AESGCMEncrypt(uint32_t ui32Keysize, uint32_t *pui32Src, uint32_t *pui32Dst,
     // Depending on the argument, perform the encryption
     // with or without uDMA.
     //
-    if(bUseDMA)
-    {
+    if(bUseDMA) {
         //
         // Enable DMA interrupts.
         //
@@ -680,8 +703,7 @@ AESGCMEncrypt(uint32_t ui32Keysize, uint32_t *pui32Src, uint32_t *pui32Dst,
                                     AES_INT_DMA_CONTEXT_OUT |
                                     AES_INT_DMA_DATA_OUT));
 
-        if(ui32AADLength != 0)
-        {
+        if(ui32AADLength != 0) {
             //
             // Setup the DMA module to copy auth data in.
             //
@@ -731,35 +753,31 @@ AESGCMEncrypt(uint32_t ui32Keysize, uint32_t *pui32Src, uint32_t *pui32Dst,
         // Write the auth length registers to start the process.
         //
         ROM_AESAuthLengthSet(AES_BASE, ui32AADLength);
-        
+
         //
         // Enable the DMA channels to start the transfers.  This must be done after
-        // writing the length to prevent data from copying before the context is 
+        // writing the length to prevent data from copying before the context is
         // truly ready.
-        // 
-        if(ui32AADLength != 0)
-        {
+        //
+        if(ui32AADLength != 0) {
             ROM_uDMAChannelEnable(UDMA_CH14_AES0DIN);
         }
         ROM_uDMAChannelEnable(UDMA_CH15_AES0DOUT);
-        
+
         //
         // Enable DMA requests
         //
         ROM_AESDMAEnable(AES_BASE, AES_DMA_DATA_IN | AES_DMA_DATA_OUT);
 
-        if(ui32AADLength != 0)
-        {
+        if(ui32AADLength != 0) {
             //
             // Wait for the data in DMA done interrupt.
             //
-            while(!g_bDataInDMADoneIntFlag)
-            {
+            while(!g_bDataInDMADoneIntFlag) {
             }
         }
 
-        if(ui32Length != 0)
-        {
+        if(ui32Length != 0) {
             //
             // Setup the uDMA to copy the plaintext data.
             //
@@ -783,8 +801,7 @@ AESGCMEncrypt(uint32_t ui32Keysize, uint32_t *pui32Src, uint32_t *pui32Dst,
             //
             // Wait for the data out DMA done interrupt.
             //
-            while(!g_bDataOutDMADoneIntFlag)
-            {
+            while(!g_bDataOutDMADoneIntFlag) {
             }
         }
 
@@ -792,9 +809,7 @@ AESGCMEncrypt(uint32_t ui32Keysize, uint32_t *pui32Src, uint32_t *pui32Dst,
         // Read out the tag.
         //
         AESTagRead(AES_BASE, pui32Tag);
-    }
-    else
-    {
+    } else {
         //
         // Perform the encryption.
         //
@@ -818,8 +833,7 @@ AESInit(void)
     //
     // Check that the CCM peripheral is present.
     //
-    if(!ROM_SysCtlPeripheralPresent(SYSCTL_PERIPH_CCM0))
-    {
+    if(!ROM_SysCtlPeripheralPresent(SYSCTL_PERIPH_CCM0)) {
         UARTprintf("No CCM peripheral found!\n");
 
         //
@@ -837,15 +851,13 @@ AESInit(void)
     // Wait for the peripheral to be ready.
     //
     ui32Loop = 0;
-    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0))
-    {
+    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0)) {
         //
         // Increment our poll counter.
         //
         ui32Loop++;
 
-        if(ui32Loop > CCM_LOOP_TIMEOUT)
-        {
+        if(ui32Loop > CCM_LOOP_TIMEOUT) {
             //
             // Timed out, notify and spin.
             //
@@ -867,15 +879,13 @@ AESInit(void)
     // Wait for the peripheral to be ready again.
     //
     ui32Loop = 0;
-    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0))
-    {
+    while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0)) {
         //
         // Increment our poll counter.
         //
         ui32Loop++;
 
-        if(ui32Loop > CCM_LOOP_TIMEOUT)
-        {
+        if(ui32Loop > CCM_LOOP_TIMEOUT) {
             //
             // Timed out, spin.
             //
@@ -936,7 +946,7 @@ main(void)
     uint32_t ui32KeySize;
     uint32_t ui32SysClock;
     tContext sContext;
-    
+
     //
     // Run from the PLL at 120 MHz.
     //
@@ -964,7 +974,7 @@ main(void)
     // Draw the application frame.
     //
     FrameDraw(&sContext, "aes-gcm-encrypt");
-    
+
     //
     // Show some instructions on the display
     //
@@ -981,12 +991,10 @@ main(void)
     // Initialize local variables.
     //
     ui32Errors = 0;
-    for(ui32Idx = 0; ui32Idx < 16; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < 16; ui32Idx++) {
         pui32CipherText[ui32Idx] = 0;
     }
-    for(ui32Idx = 0; ui32Idx < 4; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < 4; ui32Idx++) {
         pui32Tag[ui32Idx] = 0;
     }
 
@@ -1024,8 +1032,7 @@ main(void)
     //
     // Initialize the CCM and AES modules.
     //
-    if(!AESInit())
-    {
+    if(!AESInit()) {
         UARTprintf("Initialization of the AES module failed.\n");
         ui32Errors |= 0x00000001;
     }
@@ -1034,11 +1041,10 @@ main(void)
     // Loop through all the given vectors.
     //
     for(ui8Vector = 0;
-        (ui8Vector <
-         (sizeof(g_psAESGCMTestVectors) / sizeof(g_psAESGCMTestVectors[0]))) &&
-        (ui32Errors == 0);
-        ui8Vector++)
-    {
+            (ui8Vector <
+             (sizeof(g_psAESGCMTestVectors) / sizeof(g_psAESGCMTestVectors[0]))) &&
+            (ui32Errors == 0);
+            ui8Vector++) {
         UARTprintf("Starting vector #%d\n", ui8Vector);
 
         //
@@ -1059,8 +1065,7 @@ main(void)
         //
         // If both the data lengths are zero, then it's a special case.
         //
-        if((ui32DataLength == 0) && (ui32AuthDataLength == 0))
-        {
+        if((ui32DataLength == 0) && (ui32AuthDataLength == 0)) {
             UARTprintf("Performing encryption without uDMA.\n");
 
             //
@@ -1072,9 +1077,7 @@ main(void)
             // Perform the basic encryption.
             //
             AESECBEncrypt(ui32KeySize, pui32Y0, pui32Tag, pui32Key, 16);
-        }
-        else
-        {
+        } else {
             //
             // Figure out the value of Y0 depending on the IV length.
             //
@@ -1092,20 +1095,16 @@ main(void)
         //
         // Check the results.
         //
-        for(ui32Idx = 0; ui32Idx < (ui32DataLength / 4); ui32Idx++)
-        {
-            if(pui32ExpCipherText[ui32Idx] != pui32CipherText[ui32Idx])
-            {
+        for(ui32Idx = 0; ui32Idx < (ui32DataLength / 4); ui32Idx++) {
+            if(pui32ExpCipherText[ui32Idx] != pui32CipherText[ui32Idx]) {
                 UARTprintf("Ciphertext mismatch on word %d. Exp: 0x%x, Act: "
                            "0x%x\n", ui32Idx, pui32ExpCipherText[ui32Idx],
                            pui32CipherText[ui32Idx]);
                 ui32Errors |= (ui32Idx << 16) | 0x00000002;
             }
         }
-        for(ui32Idx = 0; ui32Idx < 4; ui32Idx++)
-        {
-            if(pui32ExpTag[ui32Idx] != pui32Tag[ui32Idx])
-            {
+        for(ui32Idx = 0; ui32Idx < 4; ui32Idx++) {
+            if(pui32ExpTag[ui32Idx] != pui32Tag[ui32Idx]) {
                 UARTprintf("Tag mismatch on word %d. Exp: 0x%x, Act: 0x%x\n",
                            ui32Idx, pui32ExpTag[ui32Idx], pui32Tag[ui32Idx]);
                 ui32Errors |= (ui32Idx << 16) | 0x00000003;
@@ -1116,20 +1115,17 @@ main(void)
         // Clear the arrays containing the ciphertext and tag to ensure things
         // are working correctly.
         //
-        for(ui32Idx = 0; ui32Idx < 16; ui32Idx++)
-        {
+        for(ui32Idx = 0; ui32Idx < 16; ui32Idx++) {
             pui32CipherText[ui32Idx] = 0;
         }
-        for(ui32Idx = 0; ui32Idx < 4; ui32Idx++)
-        {
+        for(ui32Idx = 0; ui32Idx < 4; ui32Idx++) {
             pui32Tag[ui32Idx] = 0;
         }
 
         //
         // Only use DMA with the vectors that have data.
         //
-        if((ui32DataLength != 0) || (ui32AuthDataLength != 0))
-        {
+        if((ui32DataLength != 0) || (ui32AuthDataLength != 0)) {
             //
             // Perform the encryption with uDMA.
             //
@@ -1141,10 +1137,8 @@ main(void)
             //
             // Check the result.
             //
-            for(ui32Idx = 0; ui32Idx < (ui32DataLength / 4); ui32Idx++)
-            {
-                if(pui32ExpCipherText[ui32Idx] != pui32CipherText[ui32Idx])
-                {
+            for(ui32Idx = 0; ui32Idx < (ui32DataLength / 4); ui32Idx++) {
+                if(pui32ExpCipherText[ui32Idx] != pui32CipherText[ui32Idx]) {
                     UARTprintf("Ciphertext mismatch on word %d. Exp: 0x%x, "
                                "Act: 0x%x\n", ui32Idx,
                                pui32ExpCipherText[ui32Idx],
@@ -1152,10 +1146,8 @@ main(void)
                     ui32Errors |= (ui32Idx << 16) | 0x00000002;
                 }
             }
-            for(ui32Idx = 0; ui32Idx < 4; ui32Idx++)
-            {
-                if(pui32ExpTag[ui32Idx] != pui32Tag[ui32Idx])
-                {
+            for(ui32Idx = 0; ui32Idx < 4; ui32Idx++) {
+                if(pui32ExpTag[ui32Idx] != pui32Tag[ui32Idx]) {
                     UARTprintf("Tag mismatch on word %d. Exp: 0x%x, Act: "
                                "0x%x\n", ui32Idx, pui32ExpTag[ui32Idx],
                                pui32Tag[ui32Idx]);
@@ -1168,14 +1160,11 @@ main(void)
     //
     // Finished.
     //
-    if(ui32Errors)
-    {
+    if(ui32Errors) {
         UARTprintf("Demo failed with error code 0x%x.\n", ui32Errors);
         GrStringDrawCentered(&sContext, "Demo failed.", -1,
                              GrContextDpyWidthGet(&sContext) / 2, 180, false);
-    }
-    else
-    {
+    } else {
         UARTprintf("Demo completed successfully.\n");
         GrStringDrawCentered(&sContext, "Demo passed.", -1,
                              GrContextDpyWidthGet(&sContext) / 2, 180, false);
@@ -1184,7 +1173,6 @@ main(void)
     //
     // Wait forever.
     //
-    while(1)
-    {
+    while(1) {
     }
 }

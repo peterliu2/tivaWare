@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -43,49 +43,49 @@
 #define LSM303D_O_WHO_AM_I      0x0F        // ID register, constant 0x49
 #define LSM303D_O_MAG_INT_CTRL  0x12        // magnetic control register
 #define LSM303D_O_MAG_INT_SRC   0x13        // Interrupt source (status) for
-                                            // magnetometer interrupt
+// magnetometer interrupt
 #define LSM303D_O_MAG_THS_MSB   0x14        // Threshold MSB
 #define LSM303D_O_MAG_THS_LSB   0x15        // Threshold LSB. Even though the
-                                            // threshold is expressed in
-                                            // absolute value, the device
-                                            // detects both positive and
-                                            // negative thresholds.
+// threshold is expressed in
+// absolute value, the device
+// detects both positive and
+// negative thresholds.
 #define LSM303D_O_MAG_OFFSET_X_MSB                                            \
                                 0x16        // MSB of Magnetic offset for
-                                            // X-axis. The value is expressed
-                                            // in 16-bit as 2s complement.
+// X-axis. The value is expressed
+// in 16-bit as 2s complement.
 #define LSM303D_O_MAG_OFFSET_X_LSB                                            \
                                 0x17        // LSB of Magnetic offset for
-                                            // X-axis. The value is expressed
-                                            // in 16-bit as 2s complement.
+// X-axis. The value is expressed
+// in 16-bit as 2s complement.
 #define LSM303D_O_MAG_OFFSET_Y_MSB                                            \
                                 0x18        // MSB of Magnetic offset for
-                                            // Y-axis. The value is expressed
-                                            // in 16-bit as 2s complement.
+// Y-axis. The value is expressed
+// in 16-bit as 2s complement.
 #define LSM303D_O_MAG_OFFSET_Y_LSB                                            \
                                 0x19        // LSB of Magnetic offset for
-                                            // Y-axis. The value is expressed
-                                            // in 16-bit as 2s complement.
+// Y-axis. The value is expressed
+// in 16-bit as 2s complement.
 #define LSM303D_O_MAG_OFFSET_Z_MSB                                            \
                                 0x1A        // MSB of Magnetic offset for
-                                            // Z-axis. The value is expressed
-                                            // in 16-bit as 2s complement.
+// Z-axis. The value is expressed
+// in 16-bit as 2s complement.
 #define LSM303D_O_MAG_OFFSET_Z_LSB                                            \
                                 0x1B        // LSB of Magnetic offset for
-                                            // Z-axis. The value is expressed
-                                            // in 16-bit as 2s complement.
+// Z-axis. The value is expressed
+// in 16-bit as 2s complement.
 #define LSM303D_O_ACCEL_REFERENCE_X                                           \
                                 0x1C        // Reference value for high-pass
-                                            // filter for X-axis acceleration
-                                            // data.
+// filter for X-axis acceleration
+// data.
 #define LSM303D_O_ACCEL_REFERENCE_Y                                           \
                                 0x1D        // Reference value for high-pass
-                                            // filter for Y-axis acceleration
-                                            // data.
+// filter for Y-axis acceleration
+// data.
 #define LSM303D_O_ACCEL_REFERENCE_Z                                           \
                                 0x1E        // Reference value for high-pass
-                                            // filter for Z-axis acceleration
-                                            // data.
+// filter for Z-axis acceleration
+// data.
 #define LSM303D_O_CTRL0         0x1F        // Accel control 0
 #define LSM303D_O_CTRL1         0x20        // Control 1 - power settings
 #define LSM303D_O_CTRL2         0x21        // Control 2
@@ -104,15 +104,15 @@
 #define LSM303D_O_FIFO_CTRL     0x2E        // FIFO control
 #define LSM303D_O_FIFO_SRC      0x2F        // FIFO_SRC register
 #define LSM303D_O_INT1_CFG      0x30        // INT1 interrupt generation; this
-                                            // register only writable after
-                                            // boot
+// register only writable after
+// boot
 #define LSM303D_O_INT1_SRC      0x31        // interrupt source register (read
-                                            // only)
+// only)
 #define LSM303D_O_INT1_THS      0x32        // Interrupt 1 threshold
 #define LSM303D_O_INT1_DURATION 0x33        // INT1 duration register
 #define LSM303D_O_INT2_CFG      0x34        // INT2 interrupt generation; this
-                                            // register only writable after
-                                            // boot
+// register only writable after
+// boot
 #define LSM303D_O_INT2_SRC      0x35        // INT2 source register (read only)
 #define LSM303D_O_INT2_THS      0x36        // INT2 threshold
 #define LSM303D_O_INT2_DURATION 0x37        // INT2 duration register
@@ -121,27 +121,27 @@
 #define LSM303D_O_CLICK_THS     0x3A        // click-click threshold
 #define LSM303D_O_TIME_LIMIT    0x3B        // Time Limit A register
 #define LSM303D_O_TIME_LATENCY  0x3C        // Time Latency A register; 1 LSB =
-                                            // 1/ODR; TLA7 through TLA0 define
-                                            // the time interval that starts
-                                            // after the first click detection
-                                            // where the click detection
-                                            // procedure is disabled, in cases
-                                            // where the device is configured
-                                            // for double click detection
+// 1/ODR; TLA7 through TLA0 define
+// the time interval that starts
+// after the first click detection
+// where the click detection
+// procedure is disabled, in cases
+// where the device is configured
+// for double click detection
 #define LSM303D_O_TIME_WINDOW   0x3D        // Time Window A register; 1 LSB =
-                                            // 1/ODR; TW7 through TW0 define
-                                            // the maximum interval of time
-                                            // that can elapse after the end of
-                                            // the latency interval in which
-                                            // the click detection procedure
-                                            // can start, in cases where the
-                                            // device is configured for double
-                                            // click detection
+// 1/ODR; TW7 through TW0 define
+// the maximum interval of time
+// that can elapse after the end of
+// the latency interval in which
+// the click detection procedure
+// can start, in cases where the
+// device is configured for double
+// click detection
 #define LSM303D_O_ACT_THS       0x3E        // Sleep to Wake, Return to Sleep
-                                            // activation threshold 1LSb = 16mg
+// activation threshold 1LSb = 16mg
 #define LSM303D_O_ACT_DUR       0x3F        // Sleep to Wake, Return to Sleep
-                                            // duration DUR = (Act_DUR +
-                                            // 1)*8/ODR
+// duration DUR = (Act_DUR +
+// 1)*8/ODR
 
 //*****************************************************************************
 //
@@ -189,22 +189,22 @@
                                 0x10
 #define LSM303D_MAG_STATUS_ZYXTMD_M                                           \
                                 0x08        // X,Y,Z axis and temp data
-                                            // available
+// available
 #define LSM303D_MAG_STATUS_ZYXTMD_AVAIL                                       \
                                 0x08
 #define LSM303D_MAG_STATUS_ZMD_M                                              \
                                 0x04        // New mag data available for Z
-                                            // axis
+// axis
 #define LSM303D_MAG_STATUS_ZMD_AVAIL                                          \
                                 0x04
 #define LSM303D_MAG_STATUS_YMD_M                                              \
                                 0x02        // New mag data available for Y
-                                            // axis
+// axis
 #define LSM303D_MAG_STATUS_YMD_AVAIL                                          \
                                 0x02
 #define LSM303D_MAG_STATUS_XMD_M                                              \
                                 0x01        // New mag data available for X
-                                            // axis
+// axis
 #define LSM303D_MAG_STATUS_XMD_AVAIL                                          \
                                 0x01
 
@@ -216,22 +216,22 @@
 //*****************************************************************************
 #define LSM303D_MAG_INT_CTRL_XINT_M                                           \
                                 0x80        // Enable interrupt recognition on
-                                            // X-axis for magnetic data.
+// X-axis for magnetic data.
 #define LSM303D_MAG_INT_CTRL_XINT_ENABLE                                      \
                                 0x80
 #define LSM303D_MAG_INT_CTRL_YINT_M                                           \
                                 0x40        // Enable interrupt recognition on
-                                            // Y-axis for magnetic data.
+// Y-axis for magnetic data.
 #define LSM303D_MAG_INT_CTRL_YINT_ENABLE                                      \
                                 0x40
 #define LSM303D_MAG_INT_CTRL_ZINT_M                                           \
                                 0x20        // Enable interrupt recognition on
-                                            // Z-axis for magnetic data.
+// Z-axis for magnetic data.
 #define LSM303D_MAG_INT_CTRL_ZINT_ENABLE                                      \
                                 0x20
 #define LSM303D_MAG_INT_CTRL_PINCFG_M                                         \
                                 0x10        // interrupt pin drive
-                                            // configuration
+// configuration
 #define LSM303D_MAG_INT_CTRL_PINCFG_PUSHPULL                                  \
                                 0x00
 #define LSM303D_MAG_INT_CTRL_PINCFG_OPENDRAIN                                 \
@@ -248,13 +248,13 @@
                                 0x04
 #define LSM303D_MAG_INT_CTRL_4D_M                                             \
                                 0x02        // 4D detection on acceleration
-                                            // data is enabled when 6D bit in
-                                            // IG_CFG1
+// data is enabled when 6D bit in
+// IG_CFG1
 #define LSM303D_MAG_INT_CTRL_4D_ENABLE                                        \
                                 0x02
 #define LSM303D_MAG_INT_CTRL_MI_M                                             \
                                 0x01        // Interrupt generation for
-                                            // magnetic data
+// magnetic data
 #define LSM303D_MAG_INT_CTRL_MI_ENABLE                                        \
                                 0x01
 
@@ -266,49 +266,49 @@
 //*****************************************************************************
 #define LSM303D_MAG_INT_SRC_M_PTH_X_M                                         \
                                 0x80        // Magnetic value on X-axis exceeds
-                                            // the threshold on the positive
-                                            // side.
+// the threshold on the positive
+// side.
 #define LSM303D_MAG_INT_SRC_M_PTH_X_ACTIVE                                    \
                                 0x80
 #define LSM303D_MAG_INT_SRC_M_PTH_Y_M                                         \
                                 0x40        // Magnetic value on Y-axis exceeds
-                                            // the threshold on the positive
-                                            // side.
+// the threshold on the positive
+// side.
 #define LSM303D_MAG_INT_SRC_M_PTH_Y_ACTIVE                                    \
                                 0x40
 #define LSM303D_MAG_INT_SRC_M_PTH_Z_M                                         \
                                 0x20        // Magnetic value on Z-axis exceeds
-                                            // the threshold on the positive
-                                            // side.
+// the threshold on the positive
+// side.
 #define LSM303D_MAG_INT_SRC_M_PTH_Z_ACTIVE                                    \
                                 0x20
 #define LSM303D_MAG_INT_SRC_M_NTH_X_M                                         \
                                 0x10        // Magnetic value on X-axis exceeds
-                                            // the threshold on the negative
-                                            // side.
+// the threshold on the negative
+// side.
 #define LSM303D_MAG_INT_SRC_M_NTH_X_ACTIVE                                    \
                                 0x10
 #define LSM303D_MAG_INT_SRC_M_NTH_Y_M                                         \
                                 0x08        // Magnetic value on Y-axis exceeds
-                                            // the threshold on the negative
-                                            // side.
+// the threshold on the negative
+// side.
 #define LSM303D_MAG_INT_SRC_M_NTH_Y_ACTIVE                                    \
                                 0x08
 #define LSM303D_MAG_INT_SRC_M_NTH_Z_M                                         \
                                 0x04        // Magnetic value on Z-axis exceeds
-                                            // the threshold on the negative
-                                            // side.
+// the threshold on the negative
+// side.
 #define LSM303D_MAG_INT_SRC_M_NTH_Z_ACTIVE                                    \
                                 0x04
 #define LSM303D_MAG_INT_SRC_MROI_M                                            \
                                 0x02        // Internal measurement range
-                                            // overflow on magnetic value.
+// overflow on magnetic value.
 #define LSM303D_MAG_INT_SRC_MROI_ACTIVE                                       \
                                 0x02
 #define LSM303D_MAG_INT_SRC_MINT_M                                            \
                                 0x01        // Magnetic interrupt event. The
-                                            // magnetic field value exceeds the
-                                            // threshold.
+// magnetic field value exceeds the
+// threshold.
 #define LSM303D_MAG_INT_SRC_MINT_ACTIVE                                       \
                                 0x01
 
@@ -325,19 +325,19 @@
 #define LSM303D_CTRL0_FIFO_ENABLE                                             \
                                 0x40
 #define LSM303D_CTRL0_FTH_M     0x20        // FIFO programmable threshold
-                                            // enable.
+// enable.
 #define LSM303D_CTRL0_FTH_ENABLE                                              \
                                 0x20
 #define LSM303D_CTRL0_HPCLICK_M 0x04        // High-pass filter enabled for
-                                            // click function.
+// click function.
 #define LSM303D_CTRL0_HPCLICK_ENABLE                                          \
                                 0x04
 #define LSM303D_CTRL0_HPIS1_M   0x02        // High-pass filter enabled for
-                                            // interrupt generator 1
+// interrupt generator 1
 #define LSM303D_CTRL0_HPIS1_ENABLE                                            \
                                 0x02
 #define LSM303D_CTRL0_HPIS2_M   0x01        // High-pass filter enabled for
-                                            // interrupt generator 2
+// interrupt generator 2
 #define LSM303D_CTRL0_HPIS2_ENABLE                                            \
                                 0x01
 
@@ -368,11 +368,11 @@
 #define LSM303D_CTRL1_AODR_1600HZ                                             \
                                 0xA0
 #define LSM303D_CTRL1_BDU_M     0x08        // Block data update for
-                                            // acceleration and magnetic data.
-                                            // (0: continuous update; 1: output
-                                            // registers not updated until MSB
-                                            // and LSB have been read), default
-                                            // continuous
+// acceleration and magnetic data.
+// (0: continuous update; 1: output
+// registers not updated until MSB
+// and LSB have been read), default
+// continuous
 #define LSM303D_CTRL1_BDU_CONTINUOUS                                          \
                                 0x00
 #define LSM303D_CTRL1_BDU_BLOCK 0x08
@@ -390,7 +390,7 @@
 //
 //*****************************************************************************
 #define LSM303D_CTRL2_AFS_M     0x38        // Acceleration full-scale
-                                            // selection.
+// selection.
 #define LSM303D_CTRL2_AFS_2G    0x00        // +/- 2G sensitivity
 #define LSM303D_CTRL2_AFS_4G    0x08        // +/- 4G sensitivity
 #define LSM303D_CTRL2_AFS_6G    0x10        // +/- 6G sensitivity
@@ -405,7 +405,7 @@
 #define LSM303D_CTRL2_AST_ENABLE                                              \
                                 0x02
 #define LSM303D_CTRL2_SIM_M     0x01        // SPI Serial Interface mode
-                                            // selection. (default: 4 wire)
+// selection. (default: 4 wire)
 #define LSM303D_CTRL2_SIM_4WIRE 0x00
 #define LSM303D_CTRL2_SIM_3WIRE 0x01
 #define LSM303D_CTRL2_ABW_S     6
@@ -423,32 +423,32 @@
                                 0x80
 #define LSM303D_CTRL3_INT1_CLICK_M                                            \
                                 0x40        // Click generator interrupt on
-                                            // INT1.
+// INT1.
 #define LSM303D_CTRL3_INT1_CLICK_EN                                           \
                                 0x40
 #define LSM303D_CTRL3_INT1_IG1_M                                              \
                                 0x20        // Inertial interrupt generator 1
-                                            // on INT1
+// on INT1
 #define LSM303D_CTRL3_INT1_IG1_EN                                             \
                                 0x20
 #define LSM303D_CTRL3_INT1_IG2_M                                              \
                                 0x10        // Inertial interrupt generator 2
-                                            // on INT1
+// on INT1
 #define LSM303D_CTRL3_INT1_IG2_EN                                             \
                                 0x10
 #define LSM303D_CTRL3_INT1_IGM_M                                              \
                                 0x08        // Magnetic interrupt generator on
-                                            // INT1
+// INT1
 #define LSM303D_CTRL3_INT1_IGM_EN                                             \
                                 0x08
 #define LSM303D_CTRL3_INT1_ACCEL_DRDY_M                                       \
                                 0x04        // Accelerometer data-ready signal
-                                            // on INT1
+// on INT1
 #define LSM303D_CTRL3_INT1_ACCEL_DRDY_EN                                      \
                                 0x04
 #define LSM303D_CTRL3_INT1_MAG_DRDY_M                                         \
                                 0x02        // Magnetometer data-ready signal
-                                            // on INT1.
+// on INT1.
 #define LSM303D_CTRL3_INT1_MAG_DRDY_EN                                        \
                                 0x02
 #define LSM303D_CTRL3_INT1_EMPTY_M                                            \
@@ -464,32 +464,32 @@
 //*****************************************************************************
 #define LSM303D_CTRL4_INT2_CLICK_M                                            \
                                 0x80        // Click generator interrupt on
-                                            // INT2
+// INT2
 #define LSM303D_CTRL4_INT2_CLICK_EN                                           \
                                 0x80
 #define LSM303D_CTRL4_INT2_IG1_M                                              \
                                 0x40        // Inertial interrupt generator 1
-                                            // on INT2
+// on INT2
 #define LSM303D_CTRL4_INT2_IG1_EN                                             \
                                 0x40
 #define LSM303D_CTRL4_INT2_IG2_M                                              \
                                 0x20        // Inertial interrupt generator 2
-                                            // on INT2
+// on INT2
 #define LSM303D_CTRL4_INT2_IG2_EN                                             \
                                 0x20
 #define LSM303D_CTRL4_INT2_IGM_M                                              \
                                 0x10        // Magnetic interrupt generator on
-                                            // INT2
+// INT2
 #define LSM303D_CTRL4_INT2_IGM_EN                                             \
                                 0x10
 #define LSM303D_CTRL4_INT2_ACCEL_DRDY_M                                       \
                                 0x08        // Accelerometer data-ready signal
-                                            // on INT2
+// on INT2
 #define LSM303D_CTRL4_INT2_ACCEL_DRDY_EN                                      \
                                 0x08
 #define LSM303D_CTRL4_INT2_MAG_DRDY_M                                         \
                                 0x04        // Magnetometer data-ready signal
-                                            // on INT2
+// on INT2
 #define LSM303D_CTRL4_INT2_MAG_DRDY_EN                                        \
                                 0x04
 #define LSM303D_CTRL4_INT2_OVR_M                                              \
@@ -550,7 +550,7 @@
 //
 //*****************************************************************************
 #define LSM303D_CTRL7_AHPM_M    0xC0        // High-pass filter mode selection
-                                            // for acceleration data
+// for acceleration data
 #define LSM303D_CTRL7_AHPM_NORMAL                                             \
                                 0x00
 #define LSM303D_CTRL7_AHPM_REFERENCE                                          \
@@ -558,20 +558,20 @@
 #define LSM303D_CTRL7_AHPM_AUTORESET                                          \
                                 0xC0
 #define LSM303D_CTRL7_AFDS_M    0x20        // default: internal filter
-                                            // bypassed
+// bypassed
 #define LSM303D_CTRL7_AFDS_BYPASSED                                           \
                                 0x00
 #define LSM303D_CTRL7_AFDS_FILTERED                                           \
                                 0x20
 #define LSM303D_CTRL7_TEMP_ONLY_M                                             \
                                 0x10        // Temperature sensor only mode,
-                                            // mag off
+// mag off
 #define LSM303D_CTRL7_TEMP_ONLY_EN                                            \
                                 0x10
 #define LSM303D_CTRL7_MLP_M     0x04        // Magnetic data low-power mode. If
-                                            // this bit is 1, the M_ODR [2:0]
-                                            // is set to 3.125 Hz independently
-                                            // from the MODR settings.
+// this bit is 1, the M_ODR [2:0]
+// is set to 3.125 Hz independently
+// from the MODR settings.
 #define LSM303D_CTRL7_MLP_NORMAL                                              \
                                 0x00
 #define LSM303D_CTRL7_MLP_LOWPOWER                                            \
@@ -636,8 +636,8 @@
 //
 //*****************************************************************************
 #define LSM303D_FIFO_SRC_FTH_M  0x80        // FIFO threshold is greater than
-                                            // or equal to level or less than
-                                            // level
+// or equal to level or less than
+// level
 #define LSM303D_FIFO_SRC_FTH_LT 0x00
 #define LSM303D_FIFO_SRC_FTH_GEQ                                              \
                                 0x80
@@ -650,7 +650,7 @@
                                 0x20
 #define LSM303D_FIFO_SRC_STORE_SAMPLES_M                                      \
                                 0x1F        // FIFO stored data level of the
-                                            // unread samples
+// unread samples
 #define LSM303D_FIFO_SRC_STORE_SAMPLES_S                                      \
                                 0
 
@@ -662,7 +662,7 @@
 //*****************************************************************************
 #define LSM303D_INT1_CFG_ANDOR_M                                              \
                                 0x80        // AND/OR combination of Interrupt
-                                            // events; default value: 0
+// events; default value: 0
 #define LSM303D_INT1_CFG_ANDOR_OR                                             \
                                 0x00
 #define LSM303D_INT1_CFG_ANDOR_AND                                            \
@@ -670,49 +670,49 @@
 #define LSM303D_INT1_CFG_6D_M   0x40        // 6-direction function enabled
 #define LSM303D_INT1_CFG_6D_EN  0x40
 #define LSM303D_INT1_CFG_ZHI_M  0x20        // enable interrupt generation on
-                                            // Z-hi event
+// Z-hi event
 #define LSM303D_INT1_CFG_ZHI_EN 0x20
 #define LSM303D_INT1_CFG_ZUPE_M 0x20        // enable interrupt generation on
-                                            // Z-hi event
+// Z-hi event
 #define LSM303D_INT1_CFG_ZUPE_EN                                              \
                                 0x20
 #define LSM303D_INT1_CFG_ZDOWNE_M                                             \
                                 0x10        // enable interrupt generation on
-                                            // Z-low event
+// Z-low event
 #define LSM303D_INT1_CFG_ZDOWNE_EN                                            \
                                 0x10
 #define LSM303D_INT1_CFG_ZLI_M  0x10        // enable interrupt generation on
-                                            // Z-low event
+// Z-low event
 #define LSM303D_INT1_CFG_ZLI_EN 0x10
 #define LSM303D_INT1_CFG_YUPE_M 0x08        // enable interrupt generation on
-                                            // Y-hi event
+// Y-hi event
 #define LSM303D_INT1_CFG_YUPE_EN                                              \
                                 0x08
 #define LSM303D_INT1_CFG_YHI_M  0x08        // enable interrupt generation on
-                                            // Y-hi event
+// Y-hi event
 #define LSM303D_INT1_CFG_YHI_EN 0x08
 #define LSM303D_INT1_CFG_YDOWNE_M                                             \
                                 0x04        // enable interrupt generation on
-                                            // Y-low event
+// Y-low event
 #define LSM303D_INT1_CFG_YDOWNE_EN                                            \
                                 0x04
 #define LSM303D_INT1_CFG_YLI_M  0x04        // enable interrupt generation on
-                                            // Y-low event
+// Y-low event
 #define LSM303D_INT1_CFG_YLI_EN 0x04
 #define LSM303D_INT1_CFG_XUPE_M 0x02        // enable interrupt generation on
-                                            // X-hi event
+// X-hi event
 #define LSM303D_INT1_CFG_XUPE_EN                                              \
                                 0x02
 #define LSM303D_INT1_CFG_XHI_M  0x02        // enable interrupt generation on
-                                            // X-hi event
+// X-hi event
 #define LSM303D_INT1_CFG_XHI_EN 0x02
 #define LSM303D_INT1_CFG_XDOWNE_M                                             \
                                 0x01        // enable interrupt generation on
-                                            // X-low event
+// X-low event
 #define LSM303D_INT1_CFG_XDOWNE_EN                                            \
                                 0x01
 #define LSM303D_INT1_CFG_XLI_M  0x01        // enable interrupt generation on
-                                            // X-low event
+// X-low event
 #define LSM303D_INT1_CFG_XLI_EN 0x01
 
 //*****************************************************************************
@@ -760,7 +760,7 @@
 #define LSM303D_INT1_THS_ZERO_INVALID                                         \
                                 0x80
 #define LSM303D_INT1_THS_THS_M  0x7F        // THS[6-0] Interrupt threshold,
-                                            // default 0x0
+// default 0x0
 #define LSM303D_INT1_THS_THS_S  0
 
 //*****************************************************************************
@@ -788,7 +788,7 @@
 //*****************************************************************************
 #define LSM303D_INT2_CFG_ANDOR_M                                              \
                                 0x80        // AND/OR combination of Interrupt
-                                            // events; default value: 0
+// events; default value: 0
 #define LSM303D_INT2_CFG_ANDOR_OR                                             \
                                 0x00
 #define LSM303D_INT2_CFG_ANDOR_AND                                            \
@@ -796,22 +796,22 @@
 #define LSM303D_INT2_CFG_6D_M   0x40        // 6-direction function enabled
 #define LSM303D_INT2_CFG_6D_EN  0x40
 #define LSM303D_INT2_CFG_ZHI_M  0x20        // enable interrupt generation on
-                                            // Z-hi event
+// Z-hi event
 #define LSM303D_INT2_CFG_ZHI_EN 0x20
 #define LSM303D_INT2_CFG_ZLI_M  0x10        // enable interrupt generation on
-                                            // Z-low event
+// Z-low event
 #define LSM303D_INT2_CFG_ZLI_EN 0x10
 #define LSM303D_INT2_CFG_YHI_M  0x08        // enable interrupt generation on
-                                            // Y-hi event
+// Y-hi event
 #define LSM303D_INT2_CFG_YHI_EN 0x08
 #define LSM303D_INT2_CFG_YLI_M  0x04        // enable interrupt generation on
-                                            // Y-low event
+// Y-low event
 #define LSM303D_INT2_CFG_YLI_EN 0x04
 #define LSM303D_INT2_CFG_XHI_M  0x02        // enable interrupt generation on
-                                            // X-hi event
+// X-hi event
 #define LSM303D_INT2_CFG_XHI_EN 0x02
 #define LSM303D_INT2_CFG_XLI_M  0x01        // enable interrupt generation on
-                                            // X-low event
+// X-low event
 #define LSM303D_INT2_CFG_XLI_EN 0x01
 
 //*****************************************************************************
@@ -859,7 +859,7 @@
 #define LSM303D_INT2_THS_ZERO_INVALID                                         \
                                 0x80
 #define LSM303D_INT2_THS_THS_M  0x7F        // THS[6-0] Interrupt threshold,
-                                            // default 0x0
+// default 0x0
 #define LSM303D_INT2_THS_THS_S  0
 
 //*****************************************************************************
@@ -886,32 +886,32 @@
 //
 //*****************************************************************************
 #define LSM303D_CLICK_CFG_ZD_M  0x20        // Enable interrupt double click on
-                                            // Z axis
+// Z axis
 #define LSM303D_CLICK_CFG_ZD_DIS                                              \
                                 0x00
 #define LSM303D_CLICK_CFG_ZD_EN 0x20
 #define LSM303D_CLICK_CFG_ZS_M  0x10        // Enable interrupt single click on
-                                            // Z axis
+// Z axis
 #define LSM303D_CLICK_CFG_ZS_DIS                                              \
                                 0x00
 #define LSM303D_CLICK_CFG_ZS_EN 0x10
 #define LSM303D_CLICK_CFG_YD_M  0x08        // Enable interrupt double click on
-                                            // Y axis
+// Y axis
 #define LSM303D_CLICK_CFG_YD_DIS                                              \
                                 0x00
 #define LSM303D_CLICK_CFG_YD_EN 0x08
 #define LSM303D_CLICK_CFG_YS_M  0x04        // Enable interrupt single click on
-                                            // Y axis
+// Y axis
 #define LSM303D_CLICK_CFG_YS_DIS                                              \
                                 0x00
 #define LSM303D_CLICK_CFG_YS_EN 0x04
 #define LSM303D_CLICK_CFG_XD_M  0x02        // Enable interrupt double click on
-                                            // X axis
+// X axis
 #define LSM303D_CLICK_CFG_XD_DIS                                              \
                                 0x00
 #define LSM303D_CLICK_CFG_XD_EN 0x02
 #define LSM303D_CLICK_CFG_XS_M  0x01        // Enable interrupt single click on
-                                            // X axis
+// X axis
 #define LSM303D_CLICK_CFG_XS_DIS                                              \
                                 0x00
 #define LSM303D_CLICK_CFG_XS_EN 0x01
@@ -963,13 +963,13 @@
 //
 //*****************************************************************************
 #define LSM303D_CLICK_THS_THS_M 0x7F        // Threshold; 1 LSB = full-scale /
-                                            // 128; THS6 through THS0 define
-                                            // the threshold which is used by
-                                            // the system to start the click
-                                            // detection procedure; the
-                                            // threshold value is expressed
-                                            // over 7 bits as an unsigned
-                                            // number
+// 128; THS6 through THS0 define
+// the threshold which is used by
+// the system to start the click
+// detection procedure; the
+// threshold value is expressed
+// over 7 bits as an unsigned
+// number
 #define LSM303D_CLICK_THS_THS_S 0
 
 //*****************************************************************************
@@ -980,15 +980,15 @@
 //*****************************************************************************
 #define LSM303D_TIME_LIMIT_TLI_M                                              \
                                 0x7F        // Time Limit; 1 LSB = 1/ODR; TLI7
-                                            // through TLI0 define the maximum
-                                            // time interval that can elapse
-                                            // between the start of the click
-                                            // detection procedure (the
-                                            // acceleration on the selected
-                                            // channel exceeds the programmed
-                                            // threshold) and when the
-                                            // acceleration goes back below the
-                                            // threshold
+// through TLI0 define the maximum
+// time interval that can elapse
+// between the start of the click
+// detection procedure (the
+// acceleration on the selected
+// channel exceeds the programmed
+// threshold) and when the
+// acceleration goes back below the
+// threshold
 #define LSM303D_TIME_LIMIT_TLI_S                                              \
                                 0
 

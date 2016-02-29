@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -156,8 +156,7 @@ BMP180AppCallback(void *pvCallbackData, uint_fast8_t ui8Status)
     // If a higher priority task was waiting for a semaphore released by this
     // isr then that high priority task will run when the ISR exits.
     //
-    if(xHigherPriorityTaskWokenTransaction == pdTRUE)
-    {
+    if(xHigherPriorityTaskWokenTransaction == pdTRUE) {
         portYIELD_FROM_ISR(true);
     }
 
@@ -333,7 +332,7 @@ BMP180Task(void *pvParameters)
     // before a command is sent to it.
     //
     SysCtlDelay((g_ui32SysClock / 3000000) * 40);
-    
+
     //
     // Initialize the BMP180 sensor.
     //
@@ -353,8 +352,7 @@ BMP180Task(void *pvParameters)
     //
     // If an error occurred call the error handler immediately.
     //
-    if(g_vui8BMP180I2CErrorStatus)
-    {
+    if(g_vui8BMP180I2CErrorStatus) {
         BMP180AppErrorHandler(__FILE__, __LINE__);
     }
 
@@ -366,25 +364,24 @@ BMP180Task(void *pvParameters)
     //
     // Loop forever.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Wait for the required amount of time to check back.
         //
         vTaskDelayUntil(&xLastWakeTime, BMP180_TASK_PERIOD_MS /
-                                        portTICK_RATE_MS);
+                        portTICK_RATE_MS);
 
         //
         // Take the I2C semaphore.
         //
         xSemaphoreTake(g_xI2CSemaphore, portMAX_DELAY);
-        
+
         //
         // BMP180 appears to need about 30 micro seconds of idle on the I2C bus
         // before a command is sent to it.
         //
         SysCtlDelay((g_ui32SysClock / 3000000) * 40);
-    
+
         //
         // Start a read of data from the pressure sensor. BMP180AppCallback is
         // called when the read is complete.
@@ -404,8 +401,7 @@ BMP180Task(void *pvParameters)
         //
         // If an error occurred call the error handler immediately.
         //
-        if(g_vui8BMP180I2CErrorStatus)
-        {
+        if(g_vui8BMP180I2CErrorStatus) {
             BMP180AppErrorHandler(__FILE__, __LINE__);
         }
 
@@ -455,8 +451,7 @@ BMP180TaskInit(void)
     //
     if(xTaskCreate(BMP180Task, (const portCHAR *)"BMP180",
                    BMP180_TASK_STACK_SIZE, NULL, tskIDLE_PRIORITY +
-                   PRIORITY_BMP180_TASK, g_xBMP180Handle) != pdTRUE)
-    {
+                   PRIORITY_BMP180_TASK, g_xBMP180Handle) != pdTRUE) {
         //
         // Task creation failed.
         //
@@ -466,8 +461,7 @@ BMP180TaskInit(void)
     //
     // Check if Semaphore creation was successful.
     //
-    if(g_xBMP180TransactionCompleteSemaphore == NULL)
-    {
+    if(g_xBMP180TransactionCompleteSemaphore == NULL) {
         //
         // Semaphore was not created successfully.
         //

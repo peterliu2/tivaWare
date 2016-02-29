@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -122,8 +122,7 @@ static FIL g_sFileObject;
 // system driver.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     FRESULT iFResult;
     char *pcResultStr;
 }
@@ -143,8 +142,7 @@ tFResultString;
 // the console.
 //
 //*****************************************************************************
-tFResultString g_psFResultStrings[] =
-{
+tFResultString g_psFResultStrings[] = {
     FRESULT_ENTRY(FR_OK),
     FRESULT_ENTRY(FR_DISK_ERR),
     FRESULT_ENTRY(FR_INT_ERR),
@@ -216,8 +214,7 @@ char g_pcStatus[NUM_STATUS_STRINGS][MAX_STATUS_STRING_LEN];
 // Storage for the status listbox widget string table.
 //
 //*****************************************************************************
-const char *g_ppcStatusStrings[NUM_STATUS_STRINGS] =
-{
+const char *g_ppcStatusStrings[NUM_STATUS_STRINGS] = {
     g_pcStatus[0],
     g_pcStatus[1],
     g_pcStatus[2],
@@ -272,7 +269,7 @@ extern tCanvasWidget g_sCDBackground;
 
 ListBox(g_sStatusList, &g_sBackground, 0, 0, &g_sKentec320x240x16_SSD2119,
         40, 170, 220, 52, (LISTBOX_STYLE_OUTLINE | LISTBOX_STYLE_LOCKED |
-        LISTBOX_STYLE_WRAP), ClrBlack, ClrBlack, ClrSilver, ClrSilver, ClrWhite,
+                           LISTBOX_STYLE_WRAP), ClrBlack, ClrBlack, ClrSilver, ClrSilver, ClrWhite,
         g_psFontFixed6x8, g_ppcStatusStrings,  NUM_STATUS_STRINGS,
         NUM_STATUS_STRINGS, 0);
 
@@ -298,7 +295,7 @@ Canvas(g_sPWDTitle, &g_sBackground, &g_sDirList, 0,
 //*****************************************************************************
 Canvas(g_sPWD, &g_sBackground, &g_sPWDTitle, 0, &g_sKentec320x240x16_SSD2119,
        50, 35, 260, 20, (CANVAS_STYLE_TEXT | CANVAS_STYLE_FILL |
-       CANVAS_STYLE_TEXT_LEFT), ClrBlack, 0, ClrWhite, g_psFontCmss12,
+                         CANVAS_STYLE_TEXT_LEFT), ClrBlack, 0, ClrWhite, g_psFontCmss12,
        g_pcCwdBuf, 0, 0);
 
 //*****************************************************************************
@@ -310,8 +307,8 @@ RectangularButton(g_sCDBtn, &g_sCDBackground, 0, 0,
                   &g_sKentec320x240x16_SSD2119, 170, 75, 90, 30,
                   (PB_STYLE_OUTLINE | PB_STYLE_TEXT_OPAQUE | PB_STYLE_TEXT |
                    PB_STYLE_FILL | PB_STYLE_RELEASE_NOTIFY),
-                   ClrBlack, ClrBlue, ClrWhite, ClrWhite,
-                   g_psFontCm20, "CD", 0, 0, 0, 0, OnBtnCD);
+                  ClrBlack, ClrBlue, ClrWhite, ClrWhite,
+                  g_psFontCm20, "CD", 0, 0, 0, 0, OnBtnCD);
 
 //*****************************************************************************
 //
@@ -331,8 +328,8 @@ RectangularButton(g_sUpBtn, &g_sUpBackground, 0, 0,
                   &g_sKentec320x240x16_SSD2119, 170, 115, 90, 30,
                   (PB_STYLE_OUTLINE | PB_STYLE_TEXT_OPAQUE | PB_STYLE_TEXT |
                    PB_STYLE_FILL | PB_STYLE_RELEASE_NOTIFY),
-                   ClrBlack, ClrBlue, ClrWhite, ClrWhite,
-                   g_psFontCm20, "Up", 0, 0, 0, 0, OnBtnUp);
+                  ClrBlack, ClrBlue, ClrWhite, ClrWhite,
+                  g_psFontCm20, "Up", 0, 0, 0, 0, OnBtnUp);
 
 //*****************************************************************************
 //
@@ -373,24 +370,18 @@ void OnListBoxChange(tWidget *psWidget, int16_t i16Selected)
     //
     // Is there any selection?
     //
-    if(i16Sel == -1)
-    {
+    if(i16Sel == -1) {
         return;
-    }
-    else
-    {
+    } else {
         //
         // Is the selection a directory name?
         //
-        if(g_pcFilenames[i16Sel][1] == 'D')
-        {
+        if(g_pcFilenames[i16Sel][1] == 'D') {
             //
             // Enable the "CD" button.
             //
             WidgetAdd((tWidget *)&g_sCDBackground, (tWidget *)&g_sCDBtn);
-        }
-        else
-        {
+        } else {
             //
             // Hide the "CD" button.
             //
@@ -431,33 +422,26 @@ void OnBtnCD(tWidget *psWidget)
     //
     // Is there any selection?
     //
-    if(i16Selected == -1)
-    {
+    if(i16Selected == -1) {
         return;
-    }
-    else
-    {
+    } else {
         //
         // Is the selection a directory name?
         //
-        if(g_pcFilenames[i16Selected][1] == 'D')
-        {
+        if(g_pcFilenames[i16Selected][1] == 'D') {
             //
             // Yes - change to the new directory.
             //
             iFResult = ChangeToDirectory(&g_pcFilenames[i16Selected][4],
-                                        &ui32Reason);
+                                         &ui32Reason);
 
-            if(iFResult != FR_OK)
-            {
+            if(iFResult != FR_OK) {
                 //
                 // Update the status display to show the error.
                 //
                 PrintfStatus("Error changing directory.");
                 PrintfStatus((char *)StringFromFResult(iFResult));
-            }
-            else
-            {
+            } else {
                 //
                 // Tell the user what happened.
                 //
@@ -502,16 +486,13 @@ void OnBtnUp(tWidget *psWidget)
     //
     iFResult = ChangeToDirectory("..", &ui32Reason);
 
-    if(iFResult != FR_OK)
-    {
+    if(iFResult != FR_OK) {
         //
         // Update the status display to show the error.
         //
         PrintfStatus("Error changing directory.");
         PrintfStatus((char *)StringFromFResult(iFResult));
-    }
-    else
-    {
+    } else {
         //
         // Update the directory name and the list box contents.
         //
@@ -521,12 +502,9 @@ void OnBtnUp(tWidget *psWidget)
         //
         // If we are now in the root directory, hide the "Up" button.
         //
-        if((strlen(g_pcCwdBuf) == 1) && (g_pcCwdBuf[0] == '/'))
-        {
+        if((strlen(g_pcCwdBuf) == 1) && (g_pcCwdBuf[0] == '/')) {
             WidgetRemove((tWidget *)&g_sUpBtn);
-        }
-        else
-        {
+        } else {
             WidgetAdd((tWidget *)&g_sUpBackground, (tWidget *)&g_sUpBtn);
         }
 
@@ -587,8 +565,7 @@ PrintfStatus(char *pcFormat, ...)
     // Update our string index.
     //
     g_ui32StatusStringIndex++;
-    if(g_ui32StatusStringIndex == NUM_STATUS_STRINGS)
-    {
+    if(g_ui32StatusStringIndex == NUM_STATUS_STRINGS) {
         g_ui32StatusStringIndex = 0;
     }
 
@@ -619,13 +596,11 @@ StringFromFResult(FRESULT iFResult)
     //
     // Enter a loop to search the error code table for a matching error code.
     //
-    for(ui32Idx = 0; ui32Idx < NUM_FRESULT_CODES; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < NUM_FRESULT_CODES; ui32Idx++) {
         //
         // If a match is found, then return the string name of the error code.
         //
-        if(g_psFResultStrings[ui32Idx].iFResult == iFResult)
-        {
+        if(g_psFResultStrings[ui32Idx].iFResult == iFResult) {
             return(g_psFResultStrings[ui32Idx].pcResultStr);
         }
     }
@@ -693,8 +668,7 @@ Cmd_ls(int argc, char *argv[])
     //
     // Check for error and return if there is a problem.
     //
-    if(iFResult != FR_OK)
-    {
+    if(iFResult != FR_OK) {
         //
         // Ensure that the error is reported.
         //
@@ -716,8 +690,7 @@ Cmd_ls(int argc, char *argv[])
     //
     // Enter loop to enumerate through all directory entries.
     //
-    for(;;)
-    {
+    for(;;) {
         //
         // Read an entry from the directory.
         //
@@ -726,16 +699,14 @@ Cmd_ls(int argc, char *argv[])
         //
         // Check for error and return if there is a problem.
         //
-        if(iFResult != FR_OK)
-        {
+        if(iFResult != FR_OK) {
             return((int)iFResult);
         }
 
         //
         // If the file name is blank, then this is the end of the listing.
         //
-        if(!g_sFileInfo.fname[0])
-        {
+        if(!g_sFileInfo.fname[0]) {
             break;
         }
 
@@ -750,35 +721,33 @@ Cmd_ls(int argc, char *argv[])
         // the attributes, date, time, size, and name.
         //
         UARTprintf("%c%c%c%c%c %u/%02u/%02u %02u:%02u %9u  %s\n",
-                 (g_sFileInfo.fattrib & AM_DIR) ? 'D' : '-',
-                 (g_sFileInfo.fattrib & AM_RDO) ? 'R' : '-',
-                 (g_sFileInfo.fattrib & AM_HID) ? 'H' : '-',
-                 (g_sFileInfo.fattrib & AM_SYS) ? 'S' : '-',
-                 (g_sFileInfo.fattrib & AM_ARC) ? 'A' : '-',
-                 (g_sFileInfo.fdate >> 9) + 1980,
-                 (g_sFileInfo.fdate >> 5) & 15,
-                 g_sFileInfo.fdate & 31,
-                 (g_sFileInfo.ftime >> 11),
-                 (g_sFileInfo.ftime >> 5) & 63,
-                 g_sFileInfo.fsize,
-                 pcFileName);
+                   (g_sFileInfo.fattrib & AM_DIR) ? 'D' : '-',
+                   (g_sFileInfo.fattrib & AM_RDO) ? 'R' : '-',
+                   (g_sFileInfo.fattrib & AM_HID) ? 'H' : '-',
+                   (g_sFileInfo.fattrib & AM_SYS) ? 'S' : '-',
+                   (g_sFileInfo.fattrib & AM_ARC) ? 'A' : '-',
+                   (g_sFileInfo.fdate >> 9) + 1980,
+                   (g_sFileInfo.fdate >> 5) & 15,
+                   g_sFileInfo.fdate & 31,
+                   (g_sFileInfo.ftime >> 11),
+                   (g_sFileInfo.ftime >> 5) & 63,
+                   g_sFileInfo.fsize,
+                   pcFileName);
 
         //
         // Add the information as a line in the listbox widget.
         //
-        if(ui32ItemCount < NUM_LIST_STRINGS)
-        {
+        if(ui32ItemCount < NUM_LIST_STRINGS) {
             usprintf(g_pcFilenames[ui32ItemCount], "(%c) %12s",
                      (g_sFileInfo.fattrib & AM_DIR) ? 'D' : 'F',
-                      g_sFileInfo.fname);
+                     g_sFileInfo.fname);
             ListBoxTextAdd(&g_sDirList, g_pcFilenames[ui32ItemCount]);
         }
 
         //
         // If the attribute is directory, then increment the directory count.
         //
-        if(g_sFileInfo.fattrib & AM_DIR)
-        {
+        if(g_sFileInfo.fattrib & AM_DIR) {
             ui32DirCount++;
         }
 
@@ -786,8 +755,7 @@ Cmd_ls(int argc, char *argv[])
         // Otherwise, it is a file.  Increment the file count, and
         // add in the file size to the total.
         //
-        else
-        {
+        else {
             ui32FileCount++;
             ui32TotalSize += g_sFileInfo.fsize;
         }
@@ -809,7 +777,7 @@ Cmd_ls(int argc, char *argv[])
     // Print summary lines showing the file, dir, and size totals.
     //
     UARTprintf("\n%4u File(s),%10u bytes total\n%4u Dir(s)",
-                ui32FileCount, ui32TotalSize, ui32DirCount);
+               ui32FileCount, ui32TotalSize, ui32DirCount);
 
     //
     // Get the free space.
@@ -819,8 +787,7 @@ Cmd_ls(int argc, char *argv[])
     //
     // Check for error and return if there is a problem.
     //
-    if(iFResult != FR_OK)
-    {
+    if(iFResult != FR_OK) {
         return((int)iFResult);
     }
 
@@ -862,8 +829,7 @@ PopulateFileListBox(bool bRepaint)
     // Make sure the list box will be redrawn next time the message queue
     // is processed.
     //
-    if(bRepaint)
-    {
+    if(bRepaint) {
         WidgetPaint((tWidget *)&g_sDirList);
     }
 
@@ -875,8 +841,7 @@ PopulateFileListBox(bool bRepaint)
     //
     // Check for error and return if there is a problem.
     //
-    if(iFResult != FR_OK)
-    {
+    if(iFResult != FR_OK) {
         //
         // Ensure that the error is reported.
         //
@@ -890,8 +855,7 @@ PopulateFileListBox(bool bRepaint)
     //
     // Enter loop to enumerate through all directory entries.
     //
-    for(;;)
-    {
+    for(;;) {
         //
         // Read an entry from the directory.
         //
@@ -900,8 +864,7 @@ PopulateFileListBox(bool bRepaint)
         //
         // Check for error and return if there is a problem.
         //
-        if(iFResult != FR_OK)
-        {
+        if(iFResult != FR_OK) {
             PrintfStatus("Error from SD Card:");
             PrintfStatus((char *)StringFromFResult(iFResult));
             return(iFResult);
@@ -911,16 +874,14 @@ PopulateFileListBox(bool bRepaint)
         // If the file name is blank, then this is the end of the
         // listing.
         //
-        if(!g_sFileInfo.fname[0])
-        {
+        if(!g_sFileInfo.fname[0]) {
             break;
         }
 
         //
         // Add the information as a line in the listbox widget.
         //
-        if(ui32ItemCount < NUM_LIST_STRINGS)
-        {
+        if(ui32ItemCount < NUM_LIST_STRINGS) {
             usnprintf(g_pcFilenames[ui32ItemCount], MAX_FILENAME_STRING_LEN,
                       "(%c) %s", (g_sFileInfo.fattrib & AM_DIR) ? 'D' : 'F',
                       g_sFileInfo.fname);
@@ -978,13 +939,11 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
     // If the first character is /, then this is a fully specified path, and it
     // should just be used as-is.
     //
-    if(pcDirectory[0] == '/')
-    {
+    if(pcDirectory[0] == '/') {
         //
         // Make sure the new path is not bigger than the cwd buffer.
         //
-        if(strlen(pcDirectory) + 1 > sizeof(g_pcCwdBuf))
-        {
+        if(strlen(pcDirectory) + 1 > sizeof(g_pcCwdBuf)) {
             *pui32Reason = NAME_TOO_LONG_ERROR;
             return(FR_OK);
         }
@@ -993,8 +952,7 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
         // If the new path name (in argv[1])  is not too long, then
         // copy it into the temporary buffer so it can be checked.
         //
-        else
-        {
+        else {
             strncpy(g_pcTmpBuf, pcDirectory, sizeof(g_pcTmpBuf));
         }
     }
@@ -1003,8 +961,7 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
     // If the argument is .. then attempt to remove the lowest level
     // on the CWD.
     //
-    else if(!strcmp(pcDirectory, ".."))
-    {
+    else if(!strcmp(pcDirectory, "..")) {
         //
         // Get the index to the last character in the current path.
         //
@@ -1014,8 +971,7 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
         // Back up from the end of the path name until a separator (/) is
         // found, or until we bump up to the start of the path.
         //
-        while((g_pcTmpBuf[ui32Idx] != '/') && (ui32Idx > 1))
-        {
+        while((g_pcTmpBuf[ui32Idx] != '/') && (ui32Idx > 1)) {
             //
             // Back up one character.
             //
@@ -1034,15 +990,13 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
     // Otherwise this is just a normal path name from the current directory,
     // and it needs to be appended to the current path.
     //
-    else
-    {
+    else {
         //
         // Test to make sure that when the new additional path is added on to
         // the current path, there is room in the buffer for the full new path.
         // It needs to include a new separator, and a trailing null character.
         //
-        if(strlen(g_pcTmpBuf) + strlen(pcDirectory) + 1 + 1 > sizeof(g_pcCwdBuf))
-        {
+        if(strlen(g_pcTmpBuf) + strlen(pcDirectory) + 1 + 1 > sizeof(g_pcCwdBuf)) {
             *pui32Reason = NAME_TOO_LONG_ERROR;
             return(FR_INVALID_OBJECT);
         }
@@ -1051,13 +1005,11 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
         // The new path is okay, so add the separator and then append the new
         // directory to the path.
         //
-        else
-        {
+        else {
             //
             // If not already at the root level, then append a /
             //
-            if(strcmp(g_pcTmpBuf, "/"))
-            {
+            if(strcmp(g_pcTmpBuf, "/")) {
                 strcat(g_pcTmpBuf, "/");
             }
 
@@ -1078,8 +1030,7 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
     // If it can't be opened, then it is a bad path.  Inform the user and
     // return.
     //
-    if(iFResult != FR_OK)
-    {
+    if(iFResult != FR_OK) {
         *pui32Reason = OPENDIR_ERROR;
         return(iFResult);
     }
@@ -1088,8 +1039,7 @@ ChangeToDirectory(char *pcDirectory, uint32_t *pui32Reason)
     // Otherwise, it is a valid new path, so copy it into the CWD and update
     // the screen.
     //
-    else
-    {
+    else {
         strncpy(g_pcCwdBuf, g_pcTmpBuf, sizeof(g_pcCwdBuf));
     }
 
@@ -1132,10 +1082,8 @@ Cmd_cd(int argc, char *argv[])
     //
     // If an error was reported, try to offer some helpful information.
     //
-    if(iFResult != FR_OK)
-    {
-        switch(ui32Reason)
-        {
+    if(iFResult != FR_OK) {
+        switch(ui32Reason) {
             case OPENDIR_ERROR:
                 UARTprintf("Error opening new directory.\n");
                 PrintfStatus("Error opening new directory.\n");
@@ -1151,9 +1099,7 @@ Cmd_cd(int argc, char *argv[])
                 PrintfStatus("An unrecognized error was reported.\n");
                 break;
         }
-    }
-    else
-    {
+    } else {
         //
         // Tell the user what happened.
         //
@@ -1172,15 +1118,12 @@ Cmd_cd(int argc, char *argv[])
         //
         // Enable the "Up" button if we are no longer in the root directory.
         //
-        if((g_pcCwdBuf[0] == '/') && (g_pcCwdBuf[1] == '\0'))
-        {
+        if((g_pcCwdBuf[0] == '/') && (g_pcCwdBuf[1] == '\0')) {
             //
             // We are in the root directory so disable the "Up" button.
             //
             WidgetRemove((tWidget *)&g_sUpBtn);
-        }
-        else
-        {
+        } else {
             //
             // Enable the "Up" button.
             //
@@ -1244,8 +1187,7 @@ Cmd_cat(int argc, char *argv[])
     // buffer that will be used to hold the file name.  The file name must be
     // fully specified, with path, to FatFs.
     //
-    if(strlen(g_pcCwdBuf) + strlen(argv[1]) + 1 + 1 > sizeof(g_pcTmpBuf))
-    {
+    if(strlen(g_pcCwdBuf) + strlen(argv[1]) + 1 + 1 > sizeof(g_pcTmpBuf)) {
         UARTprintf("Resulting path name is too long\n");
         return(0);
     }
@@ -1258,8 +1200,7 @@ Cmd_cat(int argc, char *argv[])
     //
     // If not already at the root level, then append a separator.
     //
-    if(strcmp("/", g_pcCwdBuf))
-    {
+    if(strcmp("/", g_pcCwdBuf)) {
         strcat(g_pcTmpBuf, "/");
     }
 
@@ -1276,8 +1217,7 @@ Cmd_cat(int argc, char *argv[])
     //
     // If there was some problem opening the file, then return an error.
     //
-    if(iFResult != FR_OK)
-    {
+    if(iFResult != FR_OK) {
         return((int)iFResult);
     }
 
@@ -1285,8 +1225,7 @@ Cmd_cat(int argc, char *argv[])
     // Enter a loop to repeatedly read data from the file and display it, until
     // the end of the file is reached.
     //
-    do
-    {
+    do {
         //
         // Read a block of data from the file.  Read as much as can fit in the
         // temporary buffer, including a space for the trailing null.
@@ -1298,8 +1237,7 @@ Cmd_cat(int argc, char *argv[])
         // If there was an error reading, then print a newline and return the
         // error to the user.
         //
-        if(iFResult != FR_OK)
-        {
+        if(iFResult != FR_OK) {
             UARTprintf("\n");
             return((int)iFResult);
         }
@@ -1320,12 +1258,11 @@ Cmd_cat(int argc, char *argv[])
         //
         UARTFlushTx(false);
 
-    //
-    // Continue reading until less than the full number of bytes are
-    // read.  That means the end of the buffer was reached.
-    //
-    }
-    while(ui32BytesRead == sizeof(g_pcTmpBuf) - 1);
+        //
+        // Continue reading until less than the full number of bytes are
+        // read.  That means the end of the buffer was reached.
+        //
+    } while(ui32BytesRead == sizeof(g_pcTmpBuf) - 1);
 
     //
     // Return success.
@@ -1359,8 +1296,7 @@ Cmd_help(int argc, char *argv[])
     // Enter a loop to read each entry from the command table.  The end of the
     // table has been reached when the command name is NULL.
     //
-    while(psEntry->pcCmd)
-    {
+    while(psEntry->pcCmd) {
         //
         // Print the command name and the brief description.
         //
@@ -1389,8 +1325,7 @@ Cmd_help(int argc, char *argv[])
 // brief description.
 //
 //*****************************************************************************
-tCmdLineEntry g_psCmdTable[] =
-{
+tCmdLineEntry g_psCmdTable[] = {
     { "help",   Cmd_help,   "Display list of commands" },
     { "h",      Cmd_help,   "alias for help" },
     { "?",      Cmd_help,   "alias for help" },
@@ -1430,9 +1365,9 @@ main(void)
     // Run from the PLL at 120 MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN |
-                                             SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN |
+                                            SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Configure the device pins.
@@ -1506,8 +1441,7 @@ main(void)
     // Mount the file system, using logical disk 0.
     //
     iFResult = f_mount(0, &g_sFatFs);
-    if(iFResult != FR_OK)
-    {
+    if(iFResult != FR_OK) {
         UARTprintf("f_mount error: %s\n", StringFromFResult(iFResult));
         return(1);
     }
@@ -1521,8 +1455,7 @@ main(void)
     // Enter an (almost) infinite loop for reading and processing commands from
     // the user.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Print a prompt to the console.  Show the CWD.
         //
@@ -1531,8 +1464,7 @@ main(void)
         //
         // Is there a command waiting to be processed?
         //
-        while(UARTPeek('\r') < 0)
-        {
+        while(UARTPeek('\r') < 0) {
             //
             // Process any messages in the widget message queue.
             //
@@ -1553,16 +1485,14 @@ main(void)
         //
         // Handle the case of bad command.
         //
-        if(nStatus == CMDLINE_BAD_CMD)
-        {
+        if(nStatus == CMDLINE_BAD_CMD) {
             UARTprintf("Bad command!\n");
         }
 
         //
         // Handle the case of too many arguments.
         //
-        else if(nStatus == CMDLINE_TOO_MANY_ARGS)
-        {
+        else if(nStatus == CMDLINE_TOO_MANY_ARGS) {
             UARTprintf("Too many arguments for command processor!\n");
         }
 
@@ -1570,10 +1500,9 @@ main(void)
         // Otherwise the command was executed.  Print the error code if one was
         // returned.
         //
-        else if(nStatus != 0)
-        {
+        else if(nStatus != 0) {
             UARTprintf("Command returned error code %s\n",
-                        StringFromFResult((FRESULT)nStatus));
+                       StringFromFResult((FRESULT)nStatus));
         }
     }
 }

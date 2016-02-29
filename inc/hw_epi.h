@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -51,7 +51,7 @@
 #define EPI_O_BAUD2             0x00000008  // EPI Main Baud Rate
 #define EPI_O_HB16CFG           0x00000010  // EPI Host-Bus 16 Configuration
 #define EPI_O_GPCFG             0x00000010  // EPI General-Purpose
-                                            // Configuration
+// Configuration
 #define EPI_O_SDRAMCFG          0x00000010  // EPI SDRAM Configuration
 #define EPI_O_HB8CFG            0x00000010  // EPI Host-Bus 8 Configuration
 #define EPI_O_HB8CFG2           0x00000014  // EPI Host-Bus 8 Configuration 2
@@ -80,7 +80,7 @@
 #define EPI_O_RIS               0x00000214  // EPI Raw Interrupt Status
 #define EPI_O_MIS               0x00000218  // EPI Masked Interrupt Status
 #define EPI_O_EISC              0x0000021C  // EPI Error and Interrupt Status
-                                            // and Clear
+// and Clear
 #define EPI_O_HB8CFG3           0x00000308  // EPI Host-Bus 8 Configuration 3
 #define EPI_O_HB16CFG3          0x00000308  // EPI Host-Bus 16 Configuration 3
 #define EPI_O_HB16CFG4          0x0000030C  // EPI Host-Bus 16 Configuration 4
@@ -144,9 +144,9 @@
 #define EPI_HB16CFG_RDHIGH      0x00100000  // READ Strobe Polarity
 #define EPI_HB16CFG_ALEHIGH     0x00080000  // ALE Strobe Polarity
 #define EPI_HB16CFG_WRCRE       0x00040000  // PSRAM Configuration Register
-                                            // Write
+// Write
 #define EPI_HB16CFG_RDCRE       0x00020000  // PSRAM Configuration Register
-                                            // Read
+// Read
 #define EPI_HB16CFG_BURST       0x00010000  // Burst Mode
 #define EPI_HB16CFG_MAXWAIT_M   0x0000FF00  // Maximum Wait
 #define EPI_HB16CFG_WRWS_M      0x000000C0  // Write Wait States
@@ -181,10 +181,10 @@
 #define EPI_GPCFG_ASIZE_NONE    0x00000000  // No address
 #define EPI_GPCFG_ASIZE_4BIT    0x00000010  // Up to 4 bits wide
 #define EPI_GPCFG_ASIZE_12BIT   0x00000020  // Up to 12 bits wide. This size
-                                            // cannot be used with 24-bit data
+// cannot be used with 24-bit data
 #define EPI_GPCFG_ASIZE_20BIT   0x00000030  // Up to 20 bits wide. This size
-                                            // cannot be used with data sizes
-                                            // other than 8
+// cannot be used with data sizes
+// other than 8
 #define EPI_GPCFG_DSIZE_M       0x00000003  // Size of Data Bus
 #define EPI_GPCFG_DSIZE_4BIT    0x00000000  // 8 Bits Wide (EPI0S0 to EPI0S7)
 #define EPI_GPCFG_DSIZE_16BIT   0x00000001  // 16 Bits Wide (EPI0S0 to EPI0S15)
@@ -249,10 +249,10 @@
 //
 //*****************************************************************************
 #define EPI_HB8CFG2_CSCFGEXT    0x08000000  // Chip Select Extended
-                                            // Configuration
+// Configuration
 #define EPI_HB8CFG2_CSBAUD      0x04000000  // Chip Select Baud Rate and
-                                            // Multiple Sub-Mode Configuration
-                                            // enable
+// Multiple Sub-Mode Configuration
+// enable
 #define EPI_HB8CFG2_CSCFG_M     0x03000000  // Chip Select Configuration
 #define EPI_HB8CFG2_CSCFG_ALE   0x00000000  // ALE Configuration
 #define EPI_HB8CFG2_CSCFG_CS    0x01000000  // CSn Configuration
@@ -281,10 +281,10 @@
 //
 //*****************************************************************************
 #define EPI_HB16CFG2_CSCFGEXT   0x08000000  // Chip Select Extended
-                                            // Configuration
+// Configuration
 #define EPI_HB16CFG2_CSBAUD     0x04000000  // Chip Select Baud Rate and
-                                            // Multiple Sub-Mode Configuration
-                                            // enable
+// Multiple Sub-Mode Configuration
+// enable
 #define EPI_HB16CFG2_CSCFG_M    0x03000000  // Chip Select Configuration
 #define EPI_HB16CFG2_CSCFG_ALE  0x00000000  // ALE Configuration
 #define EPI_HB16CFG2_CSCFG_CS   0x01000000  // CSn Configuration
@@ -294,9 +294,9 @@
 #define EPI_HB16CFG2_RDHIGH     0x00100000  // CS1n READ Strobe Polarity
 #define EPI_HB16CFG2_ALEHIGH    0x00080000  // CS1n ALE Strobe Polarity
 #define EPI_HB16CFG2_WRCRE      0x00040000  // CS1n PSRAM Configuration
-                                            // Register Write
+// Register Write
 #define EPI_HB16CFG2_RDCRE      0x00020000  // CS1n PSRAM Configuration
-                                            // Register Read
+// Register Read
 #define EPI_HB16CFG2_BURST      0x00010000  // CS1n Burst Mode
 #define EPI_HB16CFG2_WRWS_M     0x000000C0  // CS1n Write Wait States
 #define EPI_HB16CFG2_WRWS_2     0x00000000  // Active WRn is 2 EPI clocks
@@ -319,52 +319,52 @@
 //*****************************************************************************
 #define EPI_ADDRMAP_ECSZ_M      0x00000C00  // External Code Size
 #define EPI_ADDRMAP_ECSZ_256B   0x00000000  // 256 bytes; lower address range:
-                                            // 0x00 to 0xFF
+// 0x00 to 0xFF
 #define EPI_ADDRMAP_ECSZ_64KB   0x00000400  // 64 KB; lower address range:
-                                            // 0x0000 to 0xFFFF
+// 0x0000 to 0xFFFF
 #define EPI_ADDRMAP_ECSZ_16MB   0x00000800  // 16 MB; lower address range:
-                                            // 0x00.0000 to 0xFF.FFFF
+// 0x00.0000 to 0xFF.FFFF
 #define EPI_ADDRMAP_ECSZ_256MB  0x00000C00  // 256MB; lower address range:
-                                            // 0x000.0000 to 0x0FFF.FFFF
+// 0x000.0000 to 0x0FFF.FFFF
 #define EPI_ADDRMAP_ECADR_M     0x00000300  // External Code Address
 #define EPI_ADDRMAP_ECADR_NONE  0x00000000  // Not mapped
 #define EPI_ADDRMAP_ECADR_1000  0x00000100  // At 0x1000.0000
 #define EPI_ADDRMAP_EPSZ_M      0x000000C0  // External Peripheral Size
 #define EPI_ADDRMAP_EPSZ_256B   0x00000000  // 256 bytes; lower address range:
-                                            // 0x00 to 0xFF
+// 0x00 to 0xFF
 #define EPI_ADDRMAP_EPSZ_64KB   0x00000040  // 64 KB; lower address range:
-                                            // 0x0000 to 0xFFFF
+// 0x0000 to 0xFFFF
 #define EPI_ADDRMAP_EPSZ_16MB   0x00000080  // 16 MB; lower address range:
-                                            // 0x00.0000 to 0xFF.FFFF
+// 0x00.0000 to 0xFF.FFFF
 #define EPI_ADDRMAP_EPSZ_256MB  0x000000C0  // 256 MB; lower address range:
-                                            // 0x000.0000 to 0xFFF.FFFF
+// 0x000.0000 to 0xFFF.FFFF
 #define EPI_ADDRMAP_EPADR_M     0x00000030  // External Peripheral Address
 #define EPI_ADDRMAP_EPADR_NONE  0x00000000  // Not mapped
 #define EPI_ADDRMAP_EPADR_A000  0x00000010  // At 0xA000.0000
 #define EPI_ADDRMAP_EPADR_C000  0x00000020  // At 0xC000.0000
 #define EPI_ADDRMAP_EPADR_HBQS  0x00000030  // Only to be used with Host Bus
-                                            // quad chip select. In quad chip
-                                            // select mode, CS2n maps to
-                                            // 0xA000.0000 and CS3n maps to
-                                            // 0xC000.0000
+// quad chip select. In quad chip
+// select mode, CS2n maps to
+// 0xA000.0000 and CS3n maps to
+// 0xC000.0000
 #define EPI_ADDRMAP_ERSZ_M      0x0000000C  // External RAM Size
 #define EPI_ADDRMAP_ERSZ_256B   0x00000000  // 256 bytes; lower address range:
-                                            // 0x00 to 0xFF
+// 0x00 to 0xFF
 #define EPI_ADDRMAP_ERSZ_64KB   0x00000004  // 64 KB; lower address range:
-                                            // 0x0000 to 0xFFFF
+// 0x0000 to 0xFFFF
 #define EPI_ADDRMAP_ERSZ_16MB   0x00000008  // 16 MB; lower address range:
-                                            // 0x00.0000 to 0xFF.FFFF
+// 0x00.0000 to 0xFF.FFFF
 #define EPI_ADDRMAP_ERSZ_256MB  0x0000000C  // 256 MB; lower address range:
-                                            // 0x000.0000 to 0xFFF.FFFF
+// 0x000.0000 to 0xFFF.FFFF
 #define EPI_ADDRMAP_ERADR_M     0x00000003  // External RAM Address
 #define EPI_ADDRMAP_ERADR_NONE  0x00000000  // Not mapped
 #define EPI_ADDRMAP_ERADR_6000  0x00000001  // At 0x6000.0000
 #define EPI_ADDRMAP_ERADR_8000  0x00000002  // At 0x8000.0000
 #define EPI_ADDRMAP_ERADR_HBQS  0x00000003  // Only to be used with Host Bus
-                                            // quad chip select. In quad chip
-                                            // select mode, CS0n maps to
-                                            // 0x6000.0000 and CS1n maps to
-                                            // 0x8000.0000
+// quad chip select. In quad chip
+// select mode, CS0n maps to
+// 0x6000.0000 and CS1n maps to
+// 0x8000.0000
 
 //*****************************************************************************
 //
@@ -519,37 +519,37 @@
 #define EPI_FIFOLVL_RSERR       0x00010000  // Read Stall Error
 #define EPI_FIFOLVL_WRFIFO_M    0x00000070  // Write FIFO
 #define EPI_FIFOLVL_WRFIFO_EMPT 0x00000000  // Interrupt is triggered while
-                                            // WRFIFO is empty.
+// WRFIFO is empty.
 #define EPI_FIFOLVL_WRFIFO_2    0x00000020  // Interrupt is triggered until
-                                            // there are only two slots
-                                            // available. Thus, trigger is
-                                            // deasserted when there are two
-                                            // WRFIFO entries present. This
-                                            // configuration is optimized for
-                                            // bursts of 2
+// there are only two slots
+// available. Thus, trigger is
+// deasserted when there are two
+// WRFIFO entries present. This
+// configuration is optimized for
+// bursts of 2
 #define EPI_FIFOLVL_WRFIFO_1    0x00000030  // Interrupt is triggered until
-                                            // there is one WRFIFO entry
-                                            // available. This configuration
-                                            // expects only single writes
+// there is one WRFIFO entry
+// available. This configuration
+// expects only single writes
 #define EPI_FIFOLVL_WRFIFO_NFULL                                              \
                                 0x00000040  // Trigger interrupt when WRFIFO is
-                                            // not full, meaning trigger will
-                                            // continue to assert until there
-                                            // are four entries in the WRFIFO
+// not full, meaning trigger will
+// continue to assert until there
+// are four entries in the WRFIFO
 #define EPI_FIFOLVL_RDFIFO_M    0x00000007  // Read FIFO
 #define EPI_FIFOLVL_RDFIFO_EMPT 0x00000000  // Empty
 #define EPI_FIFOLVL_RDFIFO_1    0x00000001  // Trigger when there are 1 or more
-                                            // entries in the NBRFIFO
+// entries in the NBRFIFO
 #define EPI_FIFOLVL_RDFIFO_2    0x00000002  // Trigger when there are 2 or more
-                                            // entries in the NBRFIFO
+// entries in the NBRFIFO
 #define EPI_FIFOLVL_RDFIFO_4    0x00000003  // Trigger when there are 4 or more
-                                            // entries in the NBRFIFO
+// entries in the NBRFIFO
 #define EPI_FIFOLVL_RDFIFO_6    0x00000004  // Trigger when there are 6 or more
-                                            // entries in the NBRFIFO
+// entries in the NBRFIFO
 #define EPI_FIFOLVL_RDFIFO_7    0x00000005  // Trigger when there are 7 or more
-                                            // entries in the NBRFIFO
+// entries in the NBRFIFO
 #define EPI_FIFOLVL_RDFIFO_8    0x00000006  // Trigger when there are 8 entries
-                                            // in the NBRFIFO
+// in the NBRFIFO
 
 //*****************************************************************************
 //
@@ -595,9 +595,9 @@
 //
 //*****************************************************************************
 #define EPI_MIS_DMAWRMIS        0x00000010  // Write uDMA Masked Interrupt
-                                            // Status
+// Status
 #define EPI_MIS_DMARDMIS        0x00000008  // Read uDMA Masked Interrupt
-                                            // Status
+// Status
 #define EPI_MIS_WRMIS           0x00000004  // Write Masked Interrupt Status
 #define EPI_MIS_RDMIS           0x00000002  // Read Masked Interrupt Status
 #define EPI_MIS_ERRMIS          0x00000001  // Error Masked Interrupt Status
@@ -644,9 +644,9 @@
 #define EPI_HB16CFG3_RDHIGH     0x00100000  // CS2n READ Strobe Polarity
 #define EPI_HB16CFG3_ALEHIGH    0x00080000  // CS2n ALE Strobe Polarity
 #define EPI_HB16CFG3_WRCRE      0x00040000  // CS2n PSRAM Configuration
-                                            // Register Write
+// Register Write
 #define EPI_HB16CFG3_RDCRE      0x00020000  // CS2n PSRAM Configuration
-                                            // Register Read
+// Register Read
 #define EPI_HB16CFG3_BURST      0x00010000  // CS2n Burst Mode
 #define EPI_HB16CFG3_WRWS_M     0x000000C0  // CS2n Write Wait States
 #define EPI_HB16CFG3_WRWS_2     0x00000000  // Active WRn is 2 EPI clocks
@@ -671,9 +671,9 @@
 #define EPI_HB16CFG4_RDHIGH     0x00100000  // CS3n READ Strobe Polarity
 #define EPI_HB16CFG4_ALEHIGH    0x00080000  // CS3n ALE Strobe Polarity
 #define EPI_HB16CFG4_WRCRE      0x00040000  // CS3n PSRAM Configuration
-                                            // Register Write
+// Register Write
 #define EPI_HB16CFG4_RDCRE      0x00020000  // CS3n PSRAM Configuration
-                                            // Register Read
+// Register Read
 #define EPI_HB16CFG4_BURST      0x00010000  // CS3n Burst Mode
 #define EPI_HB16CFG4_WRWS_M     0x000000C0  // CS3n Write Wait States
 #define EPI_HB16CFG4_WRWS_2     0x00000000  // Active WRn is 2 EPI clocks
@@ -718,7 +718,7 @@
 //*****************************************************************************
 #define EPI_HB8TIME_IRDYDLY_M   0x03000000  // CS0n Input Ready Delay
 #define EPI_HB8TIME_CAPWIDTH_M  0x00003000  // CS0n Inter-transfer Capture
-                                            // Width
+// Width
 #define EPI_HB8TIME_WRWSM       0x00000010  // Write Wait State Minus One
 #define EPI_HB8TIME_RDWSM       0x00000001  // Read Wait State Minus One
 #define EPI_HB8TIME_IRDYDLY_S   24
@@ -747,7 +747,7 @@
 #define EPI_HB16TIME_PSRAMSZ_8KB                                              \
                                 0x00070000  // 8192 B
 #define EPI_HB16TIME_CAPWIDTH_M 0x00003000  // CS0n Inter-transfer Capture
-                                            // Width
+// Width
 #define EPI_HB16TIME_WRWSM      0x00000010  // Write Wait State Minus One
 #define EPI_HB16TIME_RDWSM      0x00000001  // Read Wait State Minus One
 #define EPI_HB16TIME_IRDYDLY_S  24
@@ -760,7 +760,7 @@
 //*****************************************************************************
 #define EPI_HB8TIME2_IRDYDLY_M  0x03000000  // CS1n Input Ready Delay
 #define EPI_HB8TIME2_CAPWIDTH_M 0x00003000  // CS1n Inter-transfer Capture
-                                            // Width
+// Width
 #define EPI_HB8TIME2_WRWSM      0x00000010  // CS1n Write Wait State Minus One
 #define EPI_HB8TIME2_RDWSM      0x00000001  // CS1n Read Wait State Minus One
 #define EPI_HB8TIME2_IRDYDLY_S  24
@@ -791,7 +791,7 @@
                                 0x00070000  // 8192 B
 #define EPI_HB16TIME2_CAPWIDTH_M                                              \
                                 0x00003000  // CS1n Inter-transfer Capture
-                                            // Width
+// Width
 #define EPI_HB16TIME2_WRWSM     0x00000010  // CS1n Write Wait State Minus One
 #define EPI_HB16TIME2_RDWSM     0x00000001  // CS1n Read Wait State Minus One
 #define EPI_HB16TIME2_IRDYDLY_S 24
@@ -823,7 +823,7 @@
                                 0x00070000  // 8192 B
 #define EPI_HB16TIME3_CAPWIDTH_M                                              \
                                 0x00003000  // CS2n Inter-transfer Capture
-                                            // Width
+// Width
 #define EPI_HB16TIME3_WRWSM     0x00000010  // CS2n Write Wait State Minus One
 #define EPI_HB16TIME3_RDWSM     0x00000001  // CS2n Read Wait State Minus One
 #define EPI_HB16TIME3_IRDYDLY_S 24
@@ -837,7 +837,7 @@
 //*****************************************************************************
 #define EPI_HB8TIME3_IRDYDLY_M  0x03000000  // CS2n Input Ready Delay
 #define EPI_HB8TIME3_CAPWIDTH_M 0x00003000  // CS2n Inter-transfer Capture
-                                            // Width
+// Width
 #define EPI_HB8TIME3_WRWSM      0x00000010  // CS2n Write Wait State Minus One
 #define EPI_HB8TIME3_RDWSM      0x00000001  // CS2n Read Wait State Minus One
 #define EPI_HB8TIME3_IRDYDLY_S  24
@@ -850,7 +850,7 @@
 //*****************************************************************************
 #define EPI_HB8TIME4_IRDYDLY_M  0x03000000  // CS3n Input Ready Delay
 #define EPI_HB8TIME4_CAPWIDTH_M 0x00003000  // CS3n Inter-transfer Capture
-                                            // Width
+// Width
 #define EPI_HB8TIME4_WRWSM      0x00000010  // CS3n Write Wait State Minus One
 #define EPI_HB8TIME4_RDWSM      0x00000001  // CS3n Read Wait State Minus One
 #define EPI_HB8TIME4_IRDYDLY_S  24
@@ -881,7 +881,7 @@
                                 0x00070000  // 8192 B
 #define EPI_HB16TIME4_CAPWIDTH_M                                              \
                                 0x00003000  // CS3n Inter-transfer Capture
-                                            // Width
+// Width
 #define EPI_HB16TIME4_WRWSM     0x00000010  // CS3n Write Wait State Minus One
 #define EPI_HB16TIME4_RDWSM     0x00000001  // CS3n Read Wait State Minus One
 #define EPI_HB16TIME4_IRDYDLY_S 24
@@ -910,23 +910,23 @@
 //
 //*****************************************************************************
 #define EPI_FIFOLVL_WRFIFO_1_4  0x00000020  // Trigger when there are up to 3
-                                            // spaces available in the WFIFO
+// spaces available in the WFIFO
 #define EPI_FIFOLVL_WRFIFO_1_2  0x00000030  // Trigger when there are up to 2
-                                            // spaces available in the WFIFO
+// spaces available in the WFIFO
 #define EPI_FIFOLVL_WRFIFO_3_4  0x00000040  // Trigger when there is 1 space
-                                            // available in the WFIFO
+// available in the WFIFO
 #define EPI_FIFOLVL_RDFIFO_1_8  0x00000001  // Trigger when there are 1 or more
-                                            // entries in the NBRFIFO
+// entries in the NBRFIFO
 #define EPI_FIFOLVL_RDFIFO_1_4  0x00000002  // Trigger when there are 2 or more
-                                            // entries in the NBRFIFO
+// entries in the NBRFIFO
 #define EPI_FIFOLVL_RDFIFO_1_2  0x00000003  // Trigger when there are 4 or more
-                                            // entries in the NBRFIFO
+// entries in the NBRFIFO
 #define EPI_FIFOLVL_RDFIFO_3_4  0x00000004  // Trigger when there are 6 or more
-                                            // entries in the NBRFIFO
+// entries in the NBRFIFO
 #define EPI_FIFOLVL_RDFIFO_7_8  0x00000005  // Trigger when there are 7 or more
-                                            // entries in the NBRFIFO
+// entries in the NBRFIFO
 #define EPI_FIFOLVL_RDFIFO_FULL 0x00000006  // Trigger when there are 8 entries
-                                            // in the NBRFIFO
+// in the NBRFIFO
 
 #endif
 

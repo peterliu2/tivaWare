@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -135,8 +135,7 @@ SHT21AppCallback(void *pvCallbackData, uint_fast8_t ui8Status)
     // If the transaction succeeded set the data flag to indicate to
     // application that this transaction is complete and data may be ready.
     //
-    if(ui8Status == I2CM_STATUS_SUCCESS)
-    {
+    if(ui8Status == I2CM_STATUS_SUCCESS) {
         g_vui8DataFlag = 1;
     }
 
@@ -161,8 +160,8 @@ SHT21AppErrorHandler(char *pcFilename, uint_fast32_t ui32Line)
     //
     UARTprintf("\033[31;1m");
     UARTprintf("Error: %d, File: %s, Line: %d\n"
-            "See I2C status definitions in utils\\i2cm_drv.h\n",
-            g_vui8ErrorFlag, pcFilename, ui32Line);
+               "See I2C status definitions in utils\\i2cm_drv.h\n",
+               g_vui8ErrorFlag, pcFilename, ui32Line);
 
     //
     // Return terminal color to normal.
@@ -179,8 +178,7 @@ SHT21AppErrorHandler(char *pcFilename, uint_fast32_t ui32Line)
     // Go to sleep wait for interventions.  A more robust application could
     // attempt corrective actions here.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Toggle LED D1 to indicate the error.
         //
@@ -227,16 +225,14 @@ SHT21AppI2CWait(char *pcFilename, uint_fast32_t ui32Line)
     // Put the processor to sleep while we wait for the I2C driver to
     // indicate that the transaction is complete.
     //
-    while((g_vui8DataFlag == 0) && (g_vui8ErrorFlag == 0))
-    {
+    while((g_vui8DataFlag == 0) && (g_vui8ErrorFlag == 0)) {
         ROM_SysCtlSleep();
     }
 
     //
     // If an error occurred call the error handler immediately.
     //
-    if(g_vui8ErrorFlag)
-    {
+    if(g_vui8ErrorFlag) {
         SHT21AppErrorHandler(pcFilename, ui32Line);
     }
 
@@ -293,8 +289,8 @@ main(void)
     // Configure the system frequency.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Configure the device pins for this board.
@@ -375,7 +371,7 @@ main(void)
     // Initialize the SHT21.
     //
     SHT21Init(&g_sSHT21Inst, &g_sI2CInst, SHT21_I2C_ADDRESS,
-            SHT21AppCallback, &g_sSHT21Inst);
+              SHT21AppCallback, &g_sSHT21Inst);
 
     //
     // Wait for the I2C transactions to complete before moving forward.
@@ -392,8 +388,7 @@ main(void)
     //
     // Loop Forever.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Turn on D2 to show we are starting a transaction with the sensor.
         // This is turned off in the application callback.
@@ -404,7 +399,7 @@ main(void)
         // Write the command to start a humidity measurement.
         //
         SHT21Write(&g_sSHT21Inst, SHT21_CMD_MEAS_RH, g_sSHT21Inst.pui8Data, 0,
-                SHT21AppCallback, &g_sSHT21Inst);
+                   SHT21AppCallback, &g_sSHT21Inst);
 
         //
         // Wait for the I2C transactions to complete before moving forward.
@@ -448,7 +443,7 @@ main(void)
         // Write the command to start a temperature measurement.
         //
         SHT21Write(&g_sSHT21Inst, SHT21_CMD_MEAS_T, g_sSHT21Inst.pui8Data, 0,
-                SHT21AppCallback, &g_sSHT21Inst);
+                   SHT21AppCallback, &g_sSHT21Inst);
 
         //
         // Wait for the I2C transactions to complete before moving forward.
@@ -491,8 +486,7 @@ main(void)
         i32IntegerPart = (int32_t) fHumidity;
         i32FractionPart = (int32_t) (fHumidity * 1000.0f);
         i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-        if(i32FractionPart < 0)
-        {
+        if(i32FractionPart < 0) {
             i32FractionPart *= -1;
         }
 
@@ -507,8 +501,7 @@ main(void)
         i32IntegerPart = (int32_t) fTemperature;
         i32FractionPart = (int32_t) (fTemperature * 1000.0f);
         i32FractionPart = i32FractionPart - (i32IntegerPart * 1000);
-        if(i32FractionPart < 0)
-        {
+        if(i32FractionPart < 0) {
             i32FractionPart *= -1;
         }
 

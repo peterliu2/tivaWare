@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -181,8 +181,7 @@ uint32_t g_ui32Background = ClrBlack;
 // Definitions related to the color bar pattern.
 //
 //*****************************************************************************
-const uint32_t g_pui32BarColors[] =
-{
+const uint32_t g_pui32BarColors[] = {
     ClrBlack,
     ClrWhite,
     ClrYellow,
@@ -201,8 +200,7 @@ const uint32_t g_pui32BarColors[] =
 // arrays must be kept in sync!
 //
 //*****************************************************************************
-const char *g_ppcBarColors[] =
-{
+const char *g_ppcBarColors[] = {
     "Black", "White", "Yellow", "Cyan", "Green", "Magenta", "Red", "Blue"
 };
 
@@ -253,19 +251,17 @@ tContext g_sContext;
 //*****************************************************************************
 static char g_cCmdBuf[CMD_BUF_SIZE];
 
-typedef struct
-{
+typedef struct {
     char *pcDesc;
     const unsigned char *pucImage;
 }
 tTestImage;
 
-tTestImage g_pImages[] =
-{
-   {"TI Logo, 4bpp", g_pucLogo},
-   {"32x32 test image, 1bpp", g_pucTest32x32x1Comp},
-   {"32x32 test image, 4bpp", g_pucTest32x32x4Comp},
-   {"32x32 test image, 8bpp", g_pucTest32x32x8Comp}
+tTestImage g_pImages[] = {
+    {"TI Logo, 4bpp", g_pucLogo},
+    {"32x32 test image, 1bpp", g_pucTest32x32x1Comp},
+    {"32x32 test image, 4bpp", g_pucTest32x32x4Comp},
+    {"32x32 test image, 8bpp", g_pucTest32x32x8Comp}
 };
 
 #define NUM_IMAGES (sizeof(g_pImages) / sizeof (tTestImage))
@@ -316,8 +312,7 @@ int Cmd_DumpBytes(int argc, char *argv[]);
 // and brief description.
 //
 //*****************************************************************************
-tCmdLineEntry g_psCmdTable[] =
-{
+tCmdLineEntry g_psCmdTable[] = {
     { "fg",     Cmd_Foreground,   "[RGB24] Set the foreground color. Default is white." },
     { "bg",     Cmd_Background,   "[RGB24] Set the background color. Default is black." },
     { "fill",   Cmd_Fill,         "[RGB24] Fill the screen with a color." },
@@ -361,8 +356,7 @@ int Test_PixelDrawMultiple(int argc, char *argv[]);
 // parameter passed to the "test" command.
 //
 //*****************************************************************************
-tCmdLineEntry g_psTestTable[] =
-{
+tCmdLineEntry g_psTestTable[] = {
     { "color", Test_ColorTranslate, "" },
     { "pixel", Test_PixelDraw, "" },
     { "hline", Test_LineDrawH, "" },
@@ -376,113 +370,151 @@ tCmdLineEntry g_psTestTable[] =
 // A structure used to hold command-based help information.
 //
 //*****************************************************************************
-typedef struct
-{
-        char *pcCommand;
-        char *pcHelp;
+typedef struct {
+    char *pcCommand;
+    char *pcHelp;
 }
 tCommandHelp;
 
-tCommandHelp g_psCommandHelp[] =
-{
-    { "fg",
-      "Sets the foreground color used in future ""rect"", ""hline"", ""vlins"" \n"
-      """image"" and ""text"" commands.  The color is provided as a 24-bit RGB\n"
-      "value of the form 0xRRGGBB\n" },
-    { "bg",
-      "Sets the background color used in future ""text"" and ""image"" commands.\n"
-      "The color is provided as a 24-bit RGB value of the form 0xRRGGBB\n" },
-    { "fill",
-      "Fill the entire display with the provided RGB color or, if no parameter is\n"
-      "given, the current background color.\n" },
-    { "rect",
-      "Draw a rectangle in the current foreground color at the given position on\n"
-      "the screen.  If no parameters are provided, the rectangle is drawn around the\n"
-      "entire display area.  Note that, unlike many other graphics APIs, rectangle\n"
-      "coordinates are bottom-right inclusive.\n" },
-    { "hline",
-      "Draw a single horizontal line on the display using the current foreground\n"
-      "color.  The command accepts three parameters, the starting and ending x\n"
-      "coordinates and the y coordinate for the line.\n" },
-    { "vline",
-      "Draw a single vertical line on the display using the current foreground\n"
-      "color.  The command accepts three parameters, the starting and ending y\n"
-      "coordinates and the x coordinate for the line.\n" },
-    { "setimg",
-      "Determine which test image will be drawn on future calls to the ""image""\n"
-      "command.  The index passed must be between 0 and 3 (inclusive) and identifies\n"
-      "the following images:\n"
-      "    0 - TI logo, 4bpp, 80 x 75, compressed\n"
-      "    1 - 4 square quadrants, 1bpp, 32 x 32, compressed\n"
-      "    2 - 16 color test pattern, 4bpp, 32 x 32, compressed\n"
-      "    3 - 256 color test pattern, 8bpp, 32 x 32, compressed\n" },
-    { "image",
-      "Draw the image selected by the previous ""setimg"" command at position (x,y)\n"
-      "on the display.  If a 1bpp image is selected, the current foreground and\n"
-      "background colors are used, otherwise the image's own palette determines the\n"
-      "color.  If the ""clipimg"" command has previously been issued, the left edge\n"
-      "of the image will be clipped by the number of pixels indicated in that command.\n"
-      "When clipping is enabled, the (x, y) position is not adjusted to compensate for\n"
-      "the fact that the image is being cropped.  For example, if a 32x32 image is \n"
-      "selected and the clip value has been set to 4, drawing the image at (0, 0) will\n"
-      "result in 28 pixels of each image line being drawn at x=4 on the display with\n"
-      "the first displayed pixel coming from the 5th column of the source image.\n" },
-    { "clipimg",
-      "Sets the number of pixels that will be clipped or cropped off the left edge of\n"
-      "future images drawn using the ""image"" command.  If no parameter is passed,\n"
-      "image clipping is disabled, otherwise the parameter represents the number of\n"
-      "pixels to clip.\n" },
-    { "colbar",
-      "Draw a series of vertical color bars on the display.  From left to right, the\n"
-      "bars are black, white, yellow, cyan, green, magenta, red and blue.\n" },
-    { "text",
-      "Renders text at a given location on the display.  The foreground and background\n"
-      "colors are as set using previous ""fg"" and ""bg"" commands.  If no parameters\n"
-      "are provided, a short string is drawn in the center of the screen.  If\n"
-      "parameters are provided they must be the required string (containing no spaces)\n"
-      "followed by the x coordinate and the y coordinate for the top left corner of\n"
-      "the string.\n" },
-    { "pal",
-      "Sets the given color lookup table location to a particular RGB color.  This\n"
-      "command is only available if the display frame buffer uses a format containing\n"
-      "less than 16 bits per pixel.  The range of valid indices depends upon the frame\n"
-      "buffer format.  For a 1bpp display, indices 0 and 1 are valid.  For 4bpp, the\n"
-      "index must be in the range 0 to 15, and for an 8bpp buffer, values 0 to 255\n"
-      "are valid.\n" },
-    { "pat",
-      "Clears the display and redraws the initial test pattern that was shown when the\n"
-      "tool originally started.\n" },
-    { "perf",
-      "Draws random filled rectangles on the display for a given number of seconds and\n"
-      "then calculates the approximate throughput in megapixels per second and\n"
-      "megabytes per second.\n" },
-    { "r",
-      "Reads a word from a given memory address.  Note that no checking is performed\n"
-      "on the validity of the supplied address.  If an invalid address is supplied, the\n"
-      "command will cause an exception and the test tool will hang.\n" },
-    { "w",
-      "Writes a word to a given memory address.  Note that no checking is performed\n"
-      "on the validity of the supplied address.  If an invalid address is supplied, the\n"
-      "command will cause an exception and the test tool will hang.\n" },
-    { "dump",
-      "Reads a block of words from a given memory address.  Note that no checking\n"
-      "is performed on the validity of the supplied address.  If an invalid address\n"
-      "is supplied, the command will cause an exception and the test tool will hang.\n" },
-    { "db",
-      "Reads a block of bytes from a given memory address and displays them in hex\n"
-      "format.  Note that no checking is performed on the validity of the supplied\n"
-      "address.  If an invalid address is supplied, the command will cause an\n"
-      "exception and the test tool will hang.\n" },
-    { "test",
-      "Run one of a number of tests designed to exercise a specific display driver\n"
-      "function.  Valid tests are as follow:\n"
-      "  ""color""  - tests pfnColorTranslate and color handling.\n"
-      "  ""pixel""  - tests pfnPixelDraw().\n"
-      "  ""hline""  - tests pfnLineDrawH().\n"
-      "  ""vline""  - tests pfnLineDrawV().\n"
-      "  ""mult""   - tests pfnPixelDrawMultiple().\n" },
-    { "help",
-      "Show a list of supported commands or provide additional help on a single command.\n" },
+tCommandHelp g_psCommandHelp[] = {
+    {
+        "fg",
+        "Sets the foreground color used in future ""rect"", ""hline"", ""vlins"" \n"
+        """image"" and ""text"" commands.  The color is provided as a 24-bit RGB\n"
+        "value of the form 0xRRGGBB\n"
+    },
+    {
+        "bg",
+        "Sets the background color used in future ""text"" and ""image"" commands.\n"
+        "The color is provided as a 24-bit RGB value of the form 0xRRGGBB\n"
+    },
+    {
+        "fill",
+        "Fill the entire display with the provided RGB color or, if no parameter is\n"
+        "given, the current background color.\n"
+    },
+    {
+        "rect",
+        "Draw a rectangle in the current foreground color at the given position on\n"
+        "the screen.  If no parameters are provided, the rectangle is drawn around the\n"
+        "entire display area.  Note that, unlike many other graphics APIs, rectangle\n"
+        "coordinates are bottom-right inclusive.\n"
+    },
+    {
+        "hline",
+        "Draw a single horizontal line on the display using the current foreground\n"
+        "color.  The command accepts three parameters, the starting and ending x\n"
+        "coordinates and the y coordinate for the line.\n"
+    },
+    {
+        "vline",
+        "Draw a single vertical line on the display using the current foreground\n"
+        "color.  The command accepts three parameters, the starting and ending y\n"
+        "coordinates and the x coordinate for the line.\n"
+    },
+    {
+        "setimg",
+        "Determine which test image will be drawn on future calls to the ""image""\n"
+        "command.  The index passed must be between 0 and 3 (inclusive) and identifies\n"
+        "the following images:\n"
+        "    0 - TI logo, 4bpp, 80 x 75, compressed\n"
+        "    1 - 4 square quadrants, 1bpp, 32 x 32, compressed\n"
+        "    2 - 16 color test pattern, 4bpp, 32 x 32, compressed\n"
+        "    3 - 256 color test pattern, 8bpp, 32 x 32, compressed\n"
+    },
+    {
+        "image",
+        "Draw the image selected by the previous ""setimg"" command at position (x,y)\n"
+        "on the display.  If a 1bpp image is selected, the current foreground and\n"
+        "background colors are used, otherwise the image's own palette determines the\n"
+        "color.  If the ""clipimg"" command has previously been issued, the left edge\n"
+        "of the image will be clipped by the number of pixels indicated in that command.\n"
+        "When clipping is enabled, the (x, y) position is not adjusted to compensate for\n"
+        "the fact that the image is being cropped.  For example, if a 32x32 image is \n"
+        "selected and the clip value has been set to 4, drawing the image at (0, 0) will\n"
+        "result in 28 pixels of each image line being drawn at x=4 on the display with\n"
+        "the first displayed pixel coming from the 5th column of the source image.\n"
+    },
+    {
+        "clipimg",
+        "Sets the number of pixels that will be clipped or cropped off the left edge of\n"
+        "future images drawn using the ""image"" command.  If no parameter is passed,\n"
+        "image clipping is disabled, otherwise the parameter represents the number of\n"
+        "pixels to clip.\n"
+    },
+    {
+        "colbar",
+        "Draw a series of vertical color bars on the display.  From left to right, the\n"
+        "bars are black, white, yellow, cyan, green, magenta, red and blue.\n"
+    },
+    {
+        "text",
+        "Renders text at a given location on the display.  The foreground and background\n"
+        "colors are as set using previous ""fg"" and ""bg"" commands.  If no parameters\n"
+        "are provided, a short string is drawn in the center of the screen.  If\n"
+        "parameters are provided they must be the required string (containing no spaces)\n"
+        "followed by the x coordinate and the y coordinate for the top left corner of\n"
+        "the string.\n"
+    },
+    {
+        "pal",
+        "Sets the given color lookup table location to a particular RGB color.  This\n"
+        "command is only available if the display frame buffer uses a format containing\n"
+        "less than 16 bits per pixel.  The range of valid indices depends upon the frame\n"
+        "buffer format.  For a 1bpp display, indices 0 and 1 are valid.  For 4bpp, the\n"
+        "index must be in the range 0 to 15, and for an 8bpp buffer, values 0 to 255\n"
+        "are valid.\n"
+    },
+    {
+        "pat",
+        "Clears the display and redraws the initial test pattern that was shown when the\n"
+        "tool originally started.\n"
+    },
+    {
+        "perf",
+        "Draws random filled rectangles on the display for a given number of seconds and\n"
+        "then calculates the approximate throughput in megapixels per second and\n"
+        "megabytes per second.\n"
+    },
+    {
+        "r",
+        "Reads a word from a given memory address.  Note that no checking is performed\n"
+        "on the validity of the supplied address.  If an invalid address is supplied, the\n"
+        "command will cause an exception and the test tool will hang.\n"
+    },
+    {
+        "w",
+        "Writes a word to a given memory address.  Note that no checking is performed\n"
+        "on the validity of the supplied address.  If an invalid address is supplied, the\n"
+        "command will cause an exception and the test tool will hang.\n"
+    },
+    {
+        "dump",
+        "Reads a block of words from a given memory address.  Note that no checking\n"
+        "is performed on the validity of the supplied address.  If an invalid address\n"
+        "is supplied, the command will cause an exception and the test tool will hang.\n"
+    },
+    {
+        "db",
+        "Reads a block of bytes from a given memory address and displays them in hex\n"
+        "format.  Note that no checking is performed on the validity of the supplied\n"
+        "address.  If an invalid address is supplied, the command will cause an\n"
+        "exception and the test tool will hang.\n"
+    },
+    {
+        "test",
+        "Run one of a number of tests designed to exercise a specific display driver\n"
+        "function.  Valid tests are as follow:\n"
+        "  ""color""  - tests pfnColorTranslate and color handling.\n"
+        "  ""pixel""  - tests pfnPixelDraw().\n"
+        "  ""hline""  - tests pfnLineDrawH().\n"
+        "  ""vline""  - tests pfnLineDrawV().\n"
+        "  ""mult""   - tests pfnPixelDrawMultiple().\n"
+    },
+    {
+        "help",
+        "Show a list of supported commands or provide additional help on a single command.\n"
+    },
     { 0, 0 }
 };
 
@@ -497,8 +529,7 @@ __error__(char *pcFilename, unsigned long ulLine)
     //
     // A runtime error was detected so stop here to allow debug.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Hang.
         //
@@ -537,15 +568,12 @@ void DrawImage(tContext *psContext, const uint32_t ui32Clip,
     //
     // Are we performing clipping?
     //
-    if(ui32Clip == 0)
-    {
+    if(ui32Clip == 0) {
         //
         // No - set the clipping rectangle to the whole screen.
         //
         sRect.i16XMin = 0;
-    }
-    else
-    {
+    } else {
         //
         // Yes - set the clipping rectangle to clip off only the leftmost
         // ui32Clip pixels from the image to be drawn.
@@ -606,17 +634,16 @@ DrawTestPattern(tContext *psContext)
     //
     // Draw a pattern of lines.
     //
-    for(i32Loop = 0; i32Loop < 20; i32Loop++)
-    {
+    for(i32Loop = 0; i32Loop < 20; i32Loop++) {
         GrLineDraw(psContext, 0, i32YInc * i32Loop, i32XInc * i32Loop,
-               (GrContextDpyHeightGet(psContext) - 1));
+                   (GrContextDpyHeightGet(psContext) - 1));
         GrLineDraw(psContext,
-               (GrContextDpyWidthGet(psContext) - 1),
-               (GrContextDpyHeightGet(psContext) -
-                (i32YInc * i32Loop + 1)),
-               (GrContextDpyWidthGet(psContext) -
-                (i32XInc * i32Loop + 1)),
-                0);
+                   (GrContextDpyWidthGet(psContext) - 1),
+                   (GrContextDpyHeightGet(psContext) -
+                    (i32YInc * i32Loop + 1)),
+                   (GrContextDpyWidthGet(psContext) -
+                    (i32XInc * i32Loop + 1)),
+                   0);
     }
 
     //
@@ -697,8 +724,7 @@ Test_ColorTranslate(int argc, char *argv[])
     // Loop through pairs of colors that we have configured for the color bar
     // test pattern.
     //
-    for(i32Loop = 0; i32Loop < NUM_COLOR_BARS; i32Loop += 2)
-    {
+    for(i32Loop = 0; i32Loop < NUM_COLOR_BARS; i32Loop += 2) {
         //
         // Does this driver require a color lookup table?
         //
@@ -788,14 +814,12 @@ Test_ColorTranslate(int argc, char *argv[])
     sRect.i16YMin = 0;
     sRect.i16YMax = GrContextDpyHeightGet(&g_sContext) - 1;
 
-    for(i32Loop = 0; i32Loop < 3; i32Loop++)
-    {
+    for(i32Loop = 0; i32Loop < 3; i32Loop++) {
 #if (DRIVER_BPP < 16)
         //
         // For palettized frame buffers, set the desired color palette.
         //
-        for(i32BarLoop = 0; i32BarLoop < (1 << DRIVER_BPP); i32BarLoop++)
-        {
+        for(i32BarLoop = 0; i32BarLoop < (1 << DRIVER_BPP); i32BarLoop++) {
             g_pui32Palette[i32BarLoop] = (i32BarLoop * 256) / (1 << DRIVER_BPP);
             g_pui32Palette[i32BarLoop] <<= (8 * i32Loop);
         }
@@ -805,8 +829,7 @@ Test_ColorTranslate(int argc, char *argv[])
         //
         // Draw each of the vertical bars making up the gradient pattern.
         //
-        for(i32BarLoop = 0; i32BarLoop < i32NumBars; i32BarLoop++)
-        {
+        for(i32BarLoop = 0; i32BarLoop < i32NumBars; i32BarLoop++) {
             //
             // Calculate the position of this bar.
             //
@@ -817,7 +840,7 @@ Test_ColorTranslate(int argc, char *argv[])
             // Set the color of this bar.
             //
             ui32Color = (i32BarLoop == (i32NumBars - 1)) ? 255 :
-                         ((i32BarLoop * 256) / i32NumBars);
+                        ((i32BarLoop * 256) / i32NumBars);
             ui32Color <<= (i32Loop * 8);
             GrContextForegroundSet(&g_sContext, ui32Color);
 
@@ -832,7 +855,7 @@ Test_ColorTranslate(int argc, char *argv[])
         //
         UARTprintf("%s gradient with %d steps. Press ""Enter"" to continue\n",
                    (i32Loop == 0) ? "Blue" :
-                    ((i32Loop == 1) ? "Green" : "Red"),
+                   ((i32Loop == 1) ? "Green" : "Red"),
                    i32NumBars);
 
         //
@@ -897,8 +920,7 @@ Test_PixelDraw(int argc, char *argv[])
     //
     // Draw the arrows one pixel at a time.
     //
-    for(i32Loop = 1; i32Loop < ARROW_SIZE; i32Loop++)
-    {
+    for(i32Loop = 1; i32Loop < ARROW_SIZE; i32Loop++) {
         //
         // Top left arrow.
         //
@@ -920,9 +942,9 @@ Test_PixelDraw(int argc, char *argv[])
         // Bottom right arrow.
         //
         GrPixelDraw(&g_sContext, sRect.i16XMax - (ARROW_SIZE + i32Loop),
-                        sRect.i16YMax - (ARROW_SIZE + i32Loop));
+                    sRect.i16YMax - (ARROW_SIZE + i32Loop));
         GrPixelDraw(&g_sContext, sRect.i16XMax - ARROW_SIZE,
-                        sRect.i16YMax - (ARROW_SIZE + i32Loop));
+                    sRect.i16YMax - (ARROW_SIZE + i32Loop));
         GrPixelDraw(&g_sContext, sRect.i16XMax - (ARROW_SIZE + i32Loop),
                     sRect.i16YMax - ARROW_SIZE);
 
@@ -930,9 +952,9 @@ Test_PixelDraw(int argc, char *argv[])
         // Bottom left arrow.
         //
         GrPixelDraw(&g_sContext, ARROW_SIZE + i32Loop,
-                        sRect.i16YMax - (ARROW_SIZE + i32Loop));
+                    sRect.i16YMax - (ARROW_SIZE + i32Loop));
         GrPixelDraw(&g_sContext, ARROW_SIZE,
-                        sRect.i16YMax - (ARROW_SIZE + i32Loop));
+                    sRect.i16YMax - (ARROW_SIZE + i32Loop));
         GrPixelDraw(&g_sContext, ARROW_SIZE + i32Loop,
                     sRect.i16YMax - ARROW_SIZE);
     }
@@ -990,8 +1012,7 @@ Test_LineDrawH(int argc, char *argv[])
     //
     // Draw the rectangle based on the size and position calculated.
     //
-    for(i32Loop = 1; i32Loop < i32Size; i32Loop++)
-    {
+    for(i32Loop = 1; i32Loop < i32Size; i32Loop++) {
         GrLineDrawH(&g_sContext, i32X, i32X + i32Loop, i32Y + i32Loop);
     }
 
@@ -1048,8 +1069,7 @@ Test_LineDrawV(int argc, char *argv[])
     //
     // Draw the rectangle based on the size and position calculated.
     //
-    for(i32Loop = 1; i32Loop < i32Size; i32Loop++)
-    {
+    for(i32Loop = 1; i32Loop < i32Size; i32Loop++) {
         GrLineDrawV(&g_sContext, i32X + i32Loop, i32Y,
                     i32Y + i32Loop);
     }
@@ -1077,13 +1097,12 @@ Test_PixelDrawMultiple(int argc, char *argv[])
     //
     // Loop through each of the test images.
     //
-    for(i32ImageLoop = 0; i32ImageLoop < NUM_IMAGES; i32ImageLoop++)
-    {
+    for(i32ImageLoop = 0; i32ImageLoop < NUM_IMAGES; i32ImageLoop++) {
         //
         // Tell the user what we're doing.
         //
         UARTprintf("Image %d: %s\n", i32ImageLoop,
-                    g_pImages[i32ImageLoop].pcDesc);
+                   g_pImages[i32ImageLoop].pcDesc);
 
         //
         // Set the drawing color to black and clear the screen.
@@ -1099,19 +1118,17 @@ Test_PixelDrawMultiple(int argc, char *argv[])
         // Determine the size of the current test image.
         //
         i32Width = (int32_t)g_pImages[i32ImageLoop].pucImage[1] +
-                    256 * (int32_t)g_pImages[i32ImageLoop].pucImage[2];
+                   256 * (int32_t)g_pImages[i32ImageLoop].pucImage[2];
         i32Height = (int32_t)g_pImages[i32ImageLoop].pucImage[3] +
                     256 * (int32_t)g_pImages[i32ImageLoop].pucImage[4];
         //
         // Loop through each possible x offset from 0 to 7.
         //
-        for(i32PositionLoop = 0; i32PositionLoop < 8; i32PositionLoop++)
-        {
+        for(i32PositionLoop = 0; i32PositionLoop < 8; i32PositionLoop++) {
             //
             // Loop through all clipping values from 0 to 7
             //
-            for(i32ClipLoop = 0; i32ClipLoop < 8; i32ClipLoop++)
-            {
+            for(i32ClipLoop = 0; i32ClipLoop < 8; i32ClipLoop++) {
                 //
                 // Determine the (x, y) position for this image.
                 //
@@ -1182,8 +1199,7 @@ Cmd_Test(int argc, char *argv[])
     //
     // Make sure we have at least one additional parameter.
     //
-    if(argc < 2)
-    {
+    if(argc < 2) {
         UARTprintf("ERROR: This command requires one parameter <test name>.\n");
         return(0);
     }
@@ -1194,13 +1210,11 @@ Cmd_Test(int argc, char *argv[])
     //
     pTests = g_psTestTable;
 
-    while(pTests->pcCmd)
-    {
+    while(pTests->pcCmd) {
         //
         // Does this test match the string passed?
         //
-        if(ustrcmp(pTests->pcCmd, argv[1]) == 0)
-        {
+        if(ustrcmp(pTests->pcCmd, argv[1]) == 0) {
             //
             // Yes - call the test function.
             //
@@ -1244,8 +1258,7 @@ Cmd_Help(int argc, char *argv[])
     //
     // Are we being asked to list all the commands?
     //
-    if(argc == 1)
-    {
+    if(argc == 1) {
         //
         // Print some header text.
         //
@@ -1256,8 +1269,7 @@ Cmd_Help(int argc, char *argv[])
         // Enter a loop to read each entry from the command table.  The
         // end of the table has been reached when the command name is NULL.
         //
-        while(psEntry->pcCmd)
-        {
+        while(psEntry->pcCmd) {
             //
             // Print the command name and the brief description.
             //
@@ -1268,9 +1280,7 @@ Cmd_Help(int argc, char *argv[])
             //
             psEntry++;
         }
-    }
-    else
-    {
+    } else {
         //
         // We are being asked for help on a specific command.
         //
@@ -1279,13 +1289,11 @@ Cmd_Help(int argc, char *argv[])
         // Enter a loop find the requested command in the basic command table
         // and print the summary help for that command.
         //
-        while(psEntry->pcCmd)
-        {
+        while(psEntry->pcCmd) {
             //
             // Does the provided command match the current table entry?
             //
-            if(ustrcmp(argv[1], psEntry->pcCmd) == 0)
-            {
+            if(ustrcmp(argv[1], psEntry->pcCmd) == 0) {
                 //
                 // Yes - print the command name and the brief description.
                 //
@@ -1309,8 +1317,7 @@ Cmd_Help(int argc, char *argv[])
         // If we get here without finding the command, then it's not a valid
         // command.
         //
-        if(!bFound)
-        {
+        if(!bFound) {
             UARTprintf("Command ""%s"" is not supported.\n", argv[1]);
             return(0);
         }
@@ -1324,14 +1331,12 @@ Cmd_Help(int argc, char *argv[])
         // Walk through the table of detailed help entries until we see a NULL
         // for the command string pointer.
         //
-        while(psHelp->pcCommand)
-        {
+        while(psHelp->pcCommand) {
             //
             // Does the command passed match this entry in the detailed help
             // table?
             //
-            if(ustrcmp(argv[1], psHelp->pcCommand) == 0)
-            {
+            if(ustrcmp(argv[1], psHelp->pcCommand) == 0) {
                 UARTprintf("\n%s\n", psHelp->pcHelp);
                 bFound = true;
                 break;
@@ -1343,8 +1348,7 @@ Cmd_Help(int argc, char *argv[])
             psHelp++;
         }
 
-        if(!bFound)
-        {
+        if(!bFound) {
             UARTprintf("No extended help is available for ""%s"".\n", argv[1]);
         }
     }
@@ -1369,8 +1373,7 @@ Cmd_Read(int argc, char *argv[])
     //
     // Parameter check.
     //
-    if(argc != 2)
-    {
+    if(argc != 2) {
         UARTprintf("ERROR: This command requires one parameter <addr>.\n");
         return(0);
     }
@@ -1399,8 +1402,7 @@ Cmd_Write(int argc, char *argv[])
     //
     // Parameter check.
     //
-    if(argc != 3)
-    {
+    if(argc != 3) {
         UARTprintf("ERROR: This command requires 2 parameters <addr> <val>.\n");
         return(0);
     }
@@ -1431,8 +1433,7 @@ Cmd_Dump(int argc, char *argv[])
     //
     // Parameter check.
     //
-    if(argc != 3)
-    {
+    if(argc != 3) {
         UARTprintf("ERROR: This command requires 2 parameters <addr> <wcount>.\n");
         return(0);
     }
@@ -1447,13 +1448,11 @@ Cmd_Dump(int argc, char *argv[])
     // Walk through the memory range making sure that we align the addresses
     // on 16 byte boundaries (to make the output look good).
     //
-    for(ulLoop = ulAddr & ~0x0F; ulLoop < ulAddr + (ui32Count * 4); ulLoop += 4)
-    {
+    for(ulLoop = ulAddr & ~0x0F; ulLoop < ulAddr + (ui32Count * 4); ulLoop += 4) {
         //
         // Take a new line and print the address every 16 bytes.
         //
-        if(!(ulLoop % 16))
-        {
+        if(!(ulLoop % 16)) {
             UARTprintf("\n0x%08x: ", ulLoop);
         }
 
@@ -1461,12 +1460,9 @@ Cmd_Dump(int argc, char *argv[])
         // Display the value of a particular word or pad with spaces if we are
         // still below the requested address.
         //
-        if(ulLoop >= ulAddr)
-        {
+        if(ulLoop >= ulAddr) {
             UARTprintf("%08x ", HWREG(ulLoop));
-        }
-        else
-        {
+        } else {
             UARTprintf("         ");
         }
     }
@@ -1490,13 +1486,11 @@ DumpBytes(uint32_t ulAddr, uint32_t ui32Count)
     // Walk through the memory range making sure that we align the addresses
     // on 16 byte boundaries (to make the output look good).
     //
-    for(ulLoop = ulAddr & ~0x0F; ulLoop < ulAddr + ui32Count; ulLoop++)
-    {
+    for(ulLoop = ulAddr & ~0x0F; ulLoop < ulAddr + ui32Count; ulLoop++) {
         //
         // Take a new line and print the address every 16 bytes.
         //
-        if(!(ulLoop % 16))
-        {
+        if(!(ulLoop % 16)) {
             UARTprintf("\n0x%08x: ", ulLoop);
         }
 
@@ -1504,12 +1498,9 @@ DumpBytes(uint32_t ulAddr, uint32_t ui32Count)
         // Display the value of a particular byte or pad with spaces if we are
         // still below the requested address.
         //
-        if(ulLoop >= ulAddr)
-        {
+        if(ulLoop >= ulAddr) {
             UARTprintf("%02x ", HWREGB(ulLoop));
-        }
-        else
-        {
+        } else {
             UARTprintf("   ");
         }
     }
@@ -1531,8 +1522,7 @@ Cmd_DumpBytes(int argc, char *argv[])
     //
     // Parameter check.
     //
-    if(argc != 3)
-    {
+    if(argc != 3) {
         UARTprintf("ERROR: This command requires 2 parameters <addr> <bcount>.\n");
         return(0);
     }
@@ -1564,12 +1554,9 @@ Cmd_Fill(int argc, char *argv[])
     // Get the color value to use if one was provided.  Default to
     // the current background if none was specified.
     //
-    if(argc > 1)
-    {
+    if(argc > 1) {
         ui32Color  = ustrtoul(argv[1], 0, 0);
-    }
-    else
-    {
+    } else {
         ui32Color = g_ui32Background;
     }
 
@@ -1601,22 +1588,16 @@ Cmd_Rect(int argc, char *argv[])
 {
     tRectangle sRect;
 
-    if(argc == 1)
-    {
+    if(argc == 1) {
         sRect.i16XMin = 0;
         sRect.i16XMax = GrContextDpyWidthGet(&g_sContext) - 1;
         sRect.i16YMin = 0;
         sRect.i16YMax = GrContextDpyHeightGet(&g_sContext) - 1;
-    }
-    else
-    {
-        if(argc != 5)
-        {
+    } else {
+        if(argc != 5) {
             UARTprintf("This command reguires either 0 or 4 arguments!\n");
             return(0);
-        }
-        else
-        {
+        } else {
             sRect.i16XMin = ustrtoul(argv[1], 0, 0);
             sRect.i16XMax = ustrtoul(argv[3], 0, 0);
             sRect.i16YMin = ustrtoul(argv[2], 0, 0);
@@ -1658,35 +1639,30 @@ Cmd_Line(int argc, char *argv[])
     //
     // Are we drawing the pattern or just a single line?
     //
-    if(argc == 1)
-    {
+    if(argc == 1) {
         i32XInc = GrContextDpyWidthGet(&g_sContext) / 20;
         i32YInc = GrContextDpyHeightGet(&g_sContext) / 20;
 
         //
         // Draw a pattern of lines.
         //
-        for(i32Loop = 0; i32Loop < 20; i32Loop++)
-        {
+        for(i32Loop = 0; i32Loop < 20; i32Loop++) {
             GrLineDraw(&g_sContext, 0, i32YInc * i32Loop, i32XInc * i32Loop,
-                   (GrContextDpyHeightGet(&g_sContext) - 1));
+                       (GrContextDpyHeightGet(&g_sContext) - 1));
             GrLineDraw(&g_sContext,
-                   (GrContextDpyWidthGet(&g_sContext) - 1),
-                   (GrContextDpyHeightGet(&g_sContext) -
-                           (i32YInc * i32Loop + 1)),
-                   (GrContextDpyWidthGet(&g_sContext) -
-                           (i32XInc * i32Loop + 1)),
-                    0);
+                       (GrContextDpyWidthGet(&g_sContext) - 1),
+                       (GrContextDpyHeightGet(&g_sContext) -
+                        (i32YInc * i32Loop + 1)),
+                       (GrContextDpyWidthGet(&g_sContext) -
+                        (i32XInc * i32Loop + 1)),
+                       0);
         }
-    }
-    else
-    {
+    } else {
         //
         // We're drawing a single line.  Do we have the correct number of
         // parameters?
         //
-        if(argc != 5)
-        {
+        if(argc != 5) {
             UARTprintf("This command reguires either 0 or 4 arguments!\n");
             return(0);
         }
@@ -1722,12 +1698,9 @@ Cmd_Foreground(int argc, char *argv[])
     // Get the color value to use if one was provided.  Default to white if
     // no color was specified.
     //
-    if(argc > 1)
-    {
+    if(argc > 1) {
         g_ui32Foreground  = ustrtoul(argv[1], 0, 0);
-    }
-    else
-    {
+    } else {
         g_ui32Foreground = ClrWhite;
     }
 
@@ -1750,12 +1723,9 @@ Cmd_Background(int argc, char *argv[])
     // Get the color value to use if one was provided.  Default to black if
     // no color was specified.
     //
-    if(argc > 1)
-    {
+    if(argc > 1) {
         g_ui32Background  = ustrtoul(argv[1], 0, 0);
-    }
-    else
-    {
+    } else {
         g_ui32Background = ClrBlack;
     }
 
@@ -1778,8 +1748,7 @@ Cmd_HLine(int argc, char *argv[])
     //
     // Ensure that we were passed the correct number of parameters.
     //
-    if(argc != 4)
-    {
+    if(argc != 4) {
         UARTprintf("This command requires 3 parameters, x1, x2, y.\n");
         return(0);
     }
@@ -1792,7 +1761,7 @@ Cmd_HLine(int argc, char *argv[])
     i32Y = ustrtoul(argv[3], 0, 0);
 
     UARTprintf("Drawing a horizontal line on the display in color 0x%06x.\n",
-                g_ui32Foreground);
+               g_ui32Foreground);
     UARTprintf("Line (%d, %d) to (%d, %d).\n", i32X1, i32Y, i32X2, i32Y);
 
     //
@@ -1822,8 +1791,7 @@ Cmd_VLine(int argc, char *argv[])
     //
     // Ensure that we were passed the correct number of parameters.
     //
-    if(argc != 4)
-    {
+    if(argc != 4) {
         UARTprintf("This command requires 3 parameters, x, y1, y2.\n");
         return(0);
     }
@@ -1836,7 +1804,7 @@ Cmd_VLine(int argc, char *argv[])
     i32Y2 = ustrtoul(argv[3], 0, 0);
 
     UARTprintf("Drawing a vertical line on the display in color 0x%06x.\n",
-                g_ui32Foreground);
+               g_ui32Foreground);
     UARTprintf("Line (%d, %d) to (%d, %d).\n", i32X, i32Y1, i32X, i32Y2);
 
     //
@@ -1869,26 +1837,22 @@ Cmd_Pal(int argc, char *argv[])
     //
     // Get the palette index and color value to use.
     //
-    if(argc > 2)
-    {
+    if(argc > 2) {
         ui32Index  = ustrtoul(argv[1], 0, 0);
         ui32Color  = ustrtoul(argv[2], 0, 0);
-    }
-    else
-    {
+    } else {
         UARTprintf("This command requires 2 parameters - index, color.\n");
         return(0);
     }
 
-    if(ui32Index > ((DRIVER_BPP == 8) ? 255 : 15))
-    {
+    if(ui32Index > ((DRIVER_BPP == 8) ? 255 : 15)) {
         UARTprintf("Invalid palette index! Must be less than %d.\n",
                    ((DRIVER_BPP == 8) ? 256 : 16));
         return(0);
     }
 
     UARTprintf("Setting palette entry %d to color 0x%06x.\n", ui32Index,
-                ui32Color);
+               ui32Color);
 
     //
     // Set the desired color.
@@ -1920,15 +1884,14 @@ Cmd_Image(int argc, char *argv[])
     //
     // Get the palette index and color value to use.
     //
-    if(argc == 1)
-    {
+    if(argc == 1) {
         UARTprintf("Tiling image across the whole display.\n");
 
         //
         // Get the image dimensions.
         //
         i32Width = (int32_t)g_pucCurrentImage[1] +
-                    256 * (int32_t)g_pucCurrentImage[2];
+                   256 * (int32_t)g_pucCurrentImage[2];
         i32Height = (int32_t)g_pucCurrentImage[3] +
                     256 * (int32_t)g_pucCurrentImage[4];
 
@@ -1936,14 +1899,12 @@ Cmd_Image(int argc, char *argv[])
         // Step through each row of images.
         //
         for(i32Y = 0; i32Y < GrContextDpyHeightGet(&g_sContext);
-            i32Y += i32Height)
-        {
+                i32Y += i32Height) {
             //
             // Step across each row of images.
             //
             for(i32X = 0; i32X < GrContextDpyWidthGet(&g_sContext);
-                i32X += i32Width)
-            {
+                    i32X += i32Width) {
                 //
                 // Draw the next tile on the display.
                 //
@@ -1951,13 +1912,10 @@ Cmd_Image(int argc, char *argv[])
                           i32X, i32Y);
             }
         }
-    }
-    else
-    {
+    } else {
         //
         // The command has at least 1 parameter.  Make sure there are 2.
-        if(argc != 3)
-        {
+        if(argc != 3) {
             UARTprintf("This command requires 2 parameters - x, y.\n");
             return(0);
         }
@@ -1991,8 +1949,7 @@ Cmd_SetImage(int argc, char *argv[])
     //
     // Get the image index to use.
     //
-    if(argc != 2)
-    {
+    if(argc != 2) {
         UARTprintf("This command requires 1 parameter, the image index.\n");
         return(0);
     }
@@ -2005,15 +1962,12 @@ Cmd_SetImage(int argc, char *argv[])
     //
     // Check that it is valid.
     //
-    if(ui32Index >= NUM_IMAGES)
-    {
+    if(ui32Index >= NUM_IMAGES) {
         UARTprintf("Image index must be less than %d!\n", NUM_IMAGES);
-    }
-    else
-    {
+    } else {
         g_pucCurrentImage = g_pImages[ui32Index].pucImage;
         UARTprintf("Current image is %d - %s.\n", ui32Index,
-                    g_pImages[ui32Index].pcDesc);
+                   g_pImages[ui32Index].pcDesc);
     }
 
     return(0);
@@ -2032,18 +1986,13 @@ Cmd_ClipImage(int argc, char *argv[])
     //
     // Were we passed any parameters?
     //
-    if(argc == 1)
-    {
+    if(argc == 1) {
         UARTprintf("Disabling image clipping.\n");
         g_ui32Clip = 0;
-    }
-    else if(argc == 2)
-    {
+    } else if(argc == 2) {
         g_ui32Clip = (uint32_t)ustrtoul(argv[1], 0, 0);
         UARTprintf("Image clipping set to %d pixels.\n", g_ui32Clip);
-    }
-    else
-    {
+    } else {
         UARTprintf("This function requires either zero or 1 parameter!\n");
     }
 
@@ -2072,8 +2021,7 @@ Cmd_Circle(int argc, char *argv[])
     //
     // Have we been provided with any parameters?
     //
-    if(argc == 1)
-    {
+    if(argc == 1) {
         UARTprintf("Tiling circles across the whole display.\n");
 
         //
@@ -2090,23 +2038,18 @@ Cmd_Circle(int argc, char *argv[])
         // Step through each row of circles.
         //
         for(i32Y = 20; i32Y <= GrContextDpyHeightGet(&g_sContext);
-            i32Y += 40)
-        {
+                i32Y += 40) {
             //
             // Step across each row of circles.
             //
             for(i32X = 20; i32X <= GrContextDpyWidthGet(&g_sContext);
-                i32X += 40)
-            {
+                    i32X += 40) {
                 //
                 // Draw the next circle on the display.
                 //
-                if(bFill)
-                {
+                if(bFill) {
                     GrCircleFill(&g_sContext, i32X, i32Y, 20);
-                }
-                else
-                {
+                } else {
                     GrCircleDraw(&g_sContext, i32X, i32Y, 20);
                 }
 
@@ -2117,13 +2060,10 @@ Cmd_Circle(int argc, char *argv[])
                 bFill = !bFill;
             }
         }
-    }
-    else
-    {
+    } else {
         //
         // The command has at least 1 parameter.  Make sure there are 3.
-        if(argc != 4)
-        {
+        if(argc != 4) {
             UARTprintf("This command requires 3 parameters - x, y, r.\n");
             return(0);
         }
@@ -2181,16 +2121,13 @@ Cmd_Text(int argc, char *argv[])
     //
     // Have we been provided with any parameters?
     //
-    if(argc == 1)
-    {
+    if(argc == 1) {
         //
         // No parameters were provided so just show the default string in
         // the middle of the display.
         //
         pcString = "Some Arbitrary Text";
-    }
-    else
-    {
+    } else {
         //
         // The command has at least 1 parameter.  This is the string so
         // remember it.
@@ -2200,8 +2137,7 @@ Cmd_Text(int argc, char *argv[])
         //
         // Has the X parameter been provided?
         //
-        if(argc > 2)
-        {
+        if(argc > 2) {
             //
             // The X position has been provided.
             //
@@ -2212,8 +2148,7 @@ Cmd_Text(int argc, char *argv[])
         //
         // Has the Y parameter been provided?
         //
-        if(argc > 3)
-        {
+        if(argc > 3) {
             //
             // The Y position has been provided.
             //
@@ -2228,12 +2163,9 @@ Cmd_Text(int argc, char *argv[])
     //
     // Draw the text.Fill the circle at this position.
     //
-    if(bCenter)
-    {
+    if(bCenter) {
         GrStringDrawCentered(&g_sContext, pcString, -1, i32X, i32Y, true);
-    }
-    else
-    {
+    } else {
         GrStringDraw(&g_sContext, pcString, -1, i32X, i32Y, true);
     }
 
@@ -2264,18 +2196,14 @@ Cmd_ColorBars(int argc, char *argv[])
     sRect.i16YMin = 0;
     sRect.i16YMax = (ui32Height - 1);
 
-    for(ui32X = 0; ui32X < NUM_COLOR_BARS; ui32X++)
-    {
+    for(ui32X = 0; ui32X < NUM_COLOR_BARS; ui32X++) {
         sRect.i16XMin = ui32X * ui32Width;
-        if(ui32X < (NUM_COLOR_BARS - 1))
-        {
+        if(ui32X < (NUM_COLOR_BARS - 1)) {
             //
             // For all but the rightmost bar, set the calculated width.
             //
             sRect.i16XMax = sRect.i16XMin + ui32Width - 1;
-        }
-        else
-        {
+        } else {
             //
             // Ensure the bars reach the right edge. This prevents any
             // rounding error from leaving undrawn pixels on the right
@@ -2327,8 +2255,7 @@ Cmd_Perf(int argc, char *argv[])
     //
     // We need 1 parameter. Is it there?
     //
-    if(argc != 2)
-    {
+    if(argc != 2) {
         UARTprintf("This command requires one parameter!\n");
         return(0);
     }
@@ -2357,8 +2284,7 @@ Cmd_Perf(int argc, char *argv[])
     //
     // Loop for the required time.
     //
-    while(g_ui32SysTickCount < ui32EndTime)
-    {
+    while(g_ui32SysTickCount < ui32EndTime) {
         //
         // Get some randomized parameters.
         //
@@ -2376,8 +2302,7 @@ Cmd_Perf(int argc, char *argv[])
         //
         // Clip the rectangle to the screen.
         //
-        if(GrRectIntersectGet(&sRectScreen, &sRect, &sRectDraw))
-        {
+        if(GrRectIntersectGet(&sRectScreen, &sRect, &sRectDraw)) {
             //
             // Set the color and fill this rectangle.
             //
@@ -2393,8 +2318,7 @@ Cmd_Perf(int argc, char *argv[])
     }
 
     UARTprintf("Performance test completed.\n");
-    if(ui32NumSeconds)
-    {
+    if(ui32NumSeconds) {
         //
         // Recycle a couple of variables we're finished with to store the
         // drawing throughput values.
@@ -2507,8 +2431,7 @@ main(void)
     //
     // Loop forever.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Print a prompt to the console.  Show the CWD.
         //
@@ -2528,16 +2451,14 @@ main(void)
         //
         // Handle the case of bad command.
         //
-        if(nStatus == CMDLINE_BAD_CMD)
-        {
+        if(nStatus == CMDLINE_BAD_CMD) {
             UARTprintf("Bad command!\n");
         }
 
         //
         // Handle the case of too many arguments.
         //
-        else if(nStatus == CMDLINE_TOO_MANY_ARGS)
-        {
+        else if(nStatus == CMDLINE_TOO_MANY_ARGS) {
             UARTprintf("Too many arguments for command processor!\n");
         }
     }

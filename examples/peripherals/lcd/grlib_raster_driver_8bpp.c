@@ -6,23 +6,23 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -34,7 +34,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Graphics Library.
 //
 //*****************************************************************************
@@ -164,8 +164,7 @@
 // Driver instance data structure
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     uint8_t  *pui8FrameBuffer;
     uint16_t *pui16Palette;
     uint8_t  pui8Lookup[256];
@@ -237,14 +236,12 @@ FindClosestColorInPalette(tRaster8bppDriverInst *pInst, uint32_t ui32RGB)
     //
     // Step through each palette location.
     //
-    for(ui32Loop = 0; ui32Loop < 256; ui32Loop++)
-    {
+    for(ui32Loop = 0; ui32Loop < 256; ui32Loop++) {
         //
         // First check to see if there is an exact color match and, if so,
         // return immediately.
         //
-        if(ui32RGB == (pInst->pui16Palette[ui32Loop] & ~FB_TYPE_MASK))
-        {
+        if(ui32RGB == (pInst->pui16Palette[ui32Loop] & ~FB_TYPE_MASK)) {
             return(ui32Loop);
         }
 
@@ -279,8 +276,7 @@ FindClosestColorInPalette(tRaster8bppDriverInst *pInst, uint32_t ui32RGB)
         // Is this palette value closer to the requested color than any we
         // have yet looked at?
         //
-        if(ui32Distance < ui32MinDistance)
-        {
+        if(ui32Distance < ui32MinDistance) {
             //
             // Yes - update our closest color.
             //
@@ -318,23 +314,20 @@ PaletteIsEquivalent(tRaster8bppDriverInst *pInst,
     // contain pixels in the 0-15 range) because we have no idea what pixel
     // values are actually used at this point.
     //
-    if(ui32NumCols > 256)
-    {
+    if(ui32NumCols > 256) {
         return(false);
     }
 
     //
     // Loop through as many colors as we need to look at.
     //
-    for(ui32Loop = 0; ui32Loop < ui32NumCols; ui32Loop++)
-    {
+    for(ui32Loop = 0; ui32Loop < ui32NumCols; ui32Loop++) {
         //
         // Does the RGB24 color in the source palette match the color in the
         // same location in the frame buffer palette?
         //
         if(GRLIB_COLOR_TO_PAL_ENTRY(*(uint32_t *)pui8SrcPalette) !=
-           (pInst->pui16Palette[ui32Loop] & ~FB_TYPE_MASK))
-        {
+                (pInst->pui16Palette[ui32Loop] & ~FB_TYPE_MASK)) {
             return(false);
         }
 
@@ -367,30 +360,25 @@ GenerateImagePaletteLookup(tRaster8bppDriverInst *pInst,
     //
     // If the palettes are equivalent, the lookup table is a trivial mapping.
     //
-    if(PaletteIsEquivalent(pInst, pui8SrcPalette, ui32NumCols))
-    {
+    if(PaletteIsEquivalent(pInst, pui8SrcPalette, ui32NumCols)) {
         //
         // The palettes are the same so our lookup table is a 1:1 mapping.
         //
-        for(ui32Loop = 0; ui32Loop < ui32NumCols; ui32Loop++)
-        {
+        for(ui32Loop = 0; ui32Loop < ui32NumCols; ui32Loop++) {
             pInst->pui8Lookup[ui32Loop] = (uint8_t)ui32Loop;
         }
-    }
-    else
-    {
+    } else {
         //
         // The palette is not equivalent so we need to build a lookup table.
         // Loop through each possible source palette entry.
         //
-        for(ui32Loop = 0; ui32Loop < ui32NumCols; ui32Loop++)
-        {
+        for(ui32Loop = 0; ui32Loop < ui32NumCols; ui32Loop++) {
             //
             // Find the hardware palette entry closest to this source palette
             // color.
             //
             pInst->pui8Lookup[ui32Loop] = FindClosestColorInPalette(pInst,
-                                                   *(uint32_t *)pui8SrcPalette);
+                                          *(uint32_t *)pui8SrcPalette);
 
             //
             // Move to the next entry in the source palette.
@@ -445,7 +433,7 @@ GenerateImagePaletteLookup(tRaster8bppDriverInst *pInst,
 void
 GrRaster8BppDriverInit(uint32_t *pui32FrameBuffer)
 {
-  uint16_t ui16Val;
+    uint16_t ui16Val;
 
     //
     // Fill in all the instance data we need from the passed parameters.
@@ -480,7 +468,7 @@ GrRaster8BppDriverInit(uint32_t *pui32FrameBuffer)
 //*****************************************************************************
 static void
 GrRaster8BppDriverPixelDraw(void *pvDisplayData, int32_t lX, int32_t lY,
-                           uint32_t ui32Value)
+                            uint32_t ui32Value)
 {
     int32_t i32XMapped, i32YMapped;
     uint8_t *pui8PixByte;
@@ -578,18 +566,15 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
     // Determine how to interpret the pixel data based on the number of bits
     // per pixel.
     //
-    switch(lBPP & 0xFF)
-    {
+    switch(lBPP & 0xFF) {
         //
         // The pixel data is in 1 bit per pixel format.
         //
-        case 1:
-        {
+        case 1: {
             //
             // Loop while there are more pixels to draw.
             //
-            while(lCount)
-            {
+            while(lCount) {
                 //
                 // Get the next byte of image data.
                 //
@@ -598,13 +583,12 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
                 //
                 // Loop through the pixels in this byte of image data.
                 //
-                for(; (lX0 < 8) && lCount; lX0++, lCount--)
-                {
+                for(; (lX0 < 8) && lCount; lX0++, lCount--) {
                     //
                     // Draw this pixel in the appropriate color.
                     //
                     WRITE_BYTE(pui8Ptr, (((uint32_t *)pui8Palette)[(ui32Byte >>
-                                                             (7 - lX0)) & 1]));
+                                         (7 - lX0)) & 1]));
 
                     pui8Ptr++;
                 }
@@ -624,15 +608,13 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
         //
         // The pixel data is in 4 bit per pixel format.
         //
-        case 4:
-        {
+        case 4: {
             //
             // Create a lookup table that translates from the source palette
             // into the current frame buffer palette if this is the first call
             // for a new image.
             //
-            if(lBPP & GRLIB_DRIVER_FLAG_NEW_IMAGE)
-            {
+            if(lBPP & GRLIB_DRIVER_FLAG_NEW_IMAGE) {
                 GenerateImagePaletteLookup(pInst, pui8Palette, 16);
             }
 
@@ -645,11 +627,9 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
             // http://en.wikipedia.org/wiki/Duff's_device for detailed
             // information about Duff's device.
             //
-            switch(lX0 & 1)
-            {
+            switch(lX0 & 1) {
                 case 0:
-                    while(lCount)
-                    {
+                    while(lCount) {
                         //
                         // Get the upper nibble of the next byte of pixel data
                         // and extract the corresponding entry from the
@@ -673,9 +653,8 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
                         //
                         // See if there is another pixel to draw.
                         //
-                        if(lCount)
-                        {
-                case 1:
+                        if(lCount) {
+                        case 1:
                             //
                             // Get the lower nibble of the next byte of pixel
                             // data and extract the corresponding entry from
@@ -708,8 +687,7 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
         //
         // The pixel data is in 8 bit per pixel format.
         //
-        case 8:
-        {
+        case 8: {
             //
             // Create a lookup table that translates from the source palette
             // into the current frame buffer palette.
@@ -719,16 +697,14 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
             // into the current frame buffer palette if this is the first call
             // for a new image.
             //
-            if(lBPP & GRLIB_DRIVER_FLAG_NEW_IMAGE)
-            {
+            if(lBPP & GRLIB_DRIVER_FLAG_NEW_IMAGE) {
                 GenerateImagePaletteLookup(pInst, pui8Palette, 256);
             }
 
             //
             // Loop while there are more pixels to draw.
             //
-            while(lCount--)
-            {
+            while(lCount--) {
                 //
                 // Get the next byte of pixel data.
                 //
@@ -795,18 +771,15 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
     // Determine how to interpret the pixel data based on the number of bits
     // per pixel.
     //
-    switch(lBPP & 0xFF)
-    {
+    switch(lBPP & 0xFF) {
         //
         // The pixel data is in 1 bit per pixel format.
         //
-        case 1:
-        {
+        case 1: {
             //
             // Loop while there are more pixels to draw.
             //
-            while(lCount)
-            {
+            while(lCount) {
                 //
                 // Get the next byte of image data.
                 //
@@ -815,13 +788,12 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
                 //
                 // Loop through the pixels in this byte of image data.
                 //
-                for(; (lX0 < 8) && lCount; lX0++, lCount--)
-                {
+                for(; (lX0 < 8) && lCount; lX0++, lCount--) {
                     //
                     // Draw this pixel in the appropriate color.
                     //
                     WRITE_BYTE(pui8Ptr, ((uint32_t *)pui8Palette)[
-                                      (ui32Byte >> (7 - lX0)) & 1]);
+                                   (ui32Byte >> (7 - lX0)) & 1]);
 
                     pui8Ptr--;
                 }
@@ -841,15 +813,13 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
         //
         // The pixel data is in 4 bit per pixel format.
         //
-        case 4:
-        {
+        case 4: {
             //
             // Create a lookup table that translates from the source palette
             // into the current frame buffer palette if this is the first call
             // for a new image.
             //
-            if(lBPP & GRLIB_DRIVER_FLAG_NEW_IMAGE)
-            {
+            if(lBPP & GRLIB_DRIVER_FLAG_NEW_IMAGE) {
                 GenerateImagePaletteLookup(pInst, pui8Palette, 16);
             }
 
@@ -862,11 +832,9 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
             // http://en.wikipedia.org/wiki/Duff's_device for detailed
             // information about Duff's device.
             //
-            switch(lX0 & 1)
-            {
+            switch(lX0 & 1) {
                 case 0:
-                    while(lCount)
-                    {
+                    while(lCount) {
                         //
                         // Get the upper nibble of the next byte of pixel data
                         // and extract the corresponding entry from the
@@ -890,9 +858,8 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
                         //
                         // See if there is another pixel to draw.
                         //
-                        if(lCount)
-                        {
-                case 1:
+                        if(lCount) {
+                        case 1:
                             //
                             // Get the lower nibble of the next byte of pixel
                             // data and extract the corresponding entry from
@@ -925,23 +892,20 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
         //
         // The pixel data is in 8 bit per pixel format.
         //
-        case 8:
-        {
+        case 8: {
             //
             // Create a lookup table that translates from the source palette
             // into the current frame buffer palette if this is the first call
             // for a new image.
             //
-            if(lBPP & GRLIB_DRIVER_FLAG_NEW_IMAGE)
-            {
+            if(lBPP & GRLIB_DRIVER_FLAG_NEW_IMAGE) {
                 GenerateImagePaletteLookup(pInst, pui8Palette, 256);
             }
 
             //
             // Loop while there are more pixels to draw.
             //
-            while(lCount--)
-            {
+            while(lCount--) {
                 //
                 // Get the next byte of pixel data.
                 //
@@ -1007,18 +971,15 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
     // Determine how to interpret the pixel data based on the number of bits
     // per pixel.
     //
-    switch(lBPP & 0xFF)
-    {
+    switch(lBPP & 0xFF) {
         //
         // The pixel data is in 1 bit per pixel format.
         //
-        case 1:
-        {
+        case 1: {
             //
             // Loop while there are more pixels to draw.
             //
-            while(lCount)
-            {
+            while(lCount) {
                 //
                 // Get the next byte of image data.
                 //
@@ -1027,13 +988,12 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
                 //
                 // Loop through the pixels in this byte of image data.
                 //
-                for(; (lX0 < 8) && lCount; lX0++, lCount--)
-                {
+                for(; (lX0 < 8) && lCount; lX0++, lCount--) {
                     //
                     // Draw this pixel in the appropriate color.
                     //
-                  WRITE_BYTE(pui8Ptr, (((uint32_t *)pui8Palette)[
-                                         (ui32Byte >> (7 - lX0)) & 1]));
+                    WRITE_BYTE(pui8Ptr, (((uint32_t *)pui8Palette)[
+                                             (ui32Byte >> (7 - lX0)) & 1]));
 
                     pui8Ptr += RASTER_WIDTH;
                 }
@@ -1053,15 +1013,13 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
         //
         // The pixel data is in 4 bit per pixel format.
         //
-        case 4:
-        {
+        case 4: {
             //
             // Create a lookup table that translates from the source palette
             // into the current frame buffer palette if this is the first call
             // for a new image.
             //
-            if(lBPP & GRLIB_DRIVER_FLAG_NEW_IMAGE)
-            {
+            if(lBPP & GRLIB_DRIVER_FLAG_NEW_IMAGE) {
                 GenerateImagePaletteLookup(pInst, pui8Palette, 16);
             }
 
@@ -1074,11 +1032,9 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
             // http://en.wikipedia.org/wiki/Duff's_device for detailed
             // information about Duff's device.
             //
-            switch(lX0 & 1)
-            {
+            switch(lX0 & 1) {
                 case 0:
-                    while(lCount)
-                    {
+                    while(lCount) {
                         //
                         // Get the upper nibble of the next byte of pixel data
                         // and extract the corresponding entry from the
@@ -1102,9 +1058,8 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
                         //
                         // See if there is another pixel to draw.
                         //
-                        if(lCount)
-                        {
-                case 1:
+                        if(lCount) {
+                        case 1:
                             //
                             // Get the lower nibble of the next byte of pixel
                             // data and extract the corresponding entry from
@@ -1137,23 +1092,20 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
         //
         // The pixel data is in 8 bit per pixel format.
         //
-        case 8:
-        {
+        case 8: {
             //
             // Create a lookup table that translates from the source palette
             // into the current frame buffer palette if this is the first call
             // for a new image.
             //
-            if(lBPP & GRLIB_DRIVER_FLAG_NEW_IMAGE)
-            {
+            if(lBPP & GRLIB_DRIVER_FLAG_NEW_IMAGE) {
                 GenerateImagePaletteLookup(pInst, pui8Palette, 256);
             }
 
             //
             // Loop while there are more pixels to draw.
             //
-            while(lCount--)
-            {
+            while(lCount--) {
                 //
                 // Get the next byte of pixel data.
                 //
@@ -1219,18 +1171,15 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
     // Determine how to interpret the pixel data based on the number of bits
     // per pixel.
     //
-    switch(lBPP & 0xFF)
-    {
+    switch(lBPP & 0xFF) {
         //
         // The pixel data is in 1 bit per pixel format.
         //
-        case 1:
-        {
+        case 1: {
             //
             // Loop while there are more pixels to draw.
             //
-            while(lCount)
-            {
+            while(lCount) {
                 //
                 // Get the next byte of image data.
                 //
@@ -1239,13 +1188,12 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
                 //
                 // Loop through the pixels in this byte of image data.
                 //
-                for(; (lX0 < 8) && lCount; lX0++, lCount--)
-                {
+                for(; (lX0 < 8) && lCount; lX0++, lCount--) {
                     //
                     // Draw this pixel in the appropriate color.
                     //
-                  WRITE_BYTE(pui8Ptr, (((uint32_t *)pui8Palette)[
-                                          (ui32Byte >> (7 - lX0)) & 1]));
+                    WRITE_BYTE(pui8Ptr, (((uint32_t *)pui8Palette)[
+                                             (ui32Byte >> (7 - lX0)) & 1]));
 
                     pui8Ptr -= RASTER_WIDTH;
                 }
@@ -1265,15 +1213,13 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
         //
         // The pixel data is in 4 bit per pixel format.
         //
-        case 4:
-        {
+        case 4: {
             //
             // Create a lookup table that translates from the source palette
             // into the current frame buffer palette if this is the first call
             // for a new image.
             //
-            if(lBPP & GRLIB_DRIVER_FLAG_NEW_IMAGE)
-            {
+            if(lBPP & GRLIB_DRIVER_FLAG_NEW_IMAGE) {
                 GenerateImagePaletteLookup(pInst, pui8Palette, 16);
             }
 
@@ -1286,11 +1232,9 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
             // http://en.wikipedia.org/wiki/Duff's_device for detailed
             // information about Duff's device.
             //
-            switch(lX0 & 1)
-            {
+            switch(lX0 & 1) {
                 case 0:
-                    while(lCount)
-                    {
+                    while(lCount) {
                         //
                         // Get the upper nibble of the next byte of pixel data
                         // and extract the corresponding entry from the
@@ -1314,9 +1258,8 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
                         //
                         // See if there is another pixel to draw.
                         //
-                        if(lCount)
-                        {
-                case 1:
+                        if(lCount) {
+                        case 1:
                             //
                             // Get the lower nibble of the next byte of pixel
                             // data and extract the corresponding entry from
@@ -1350,23 +1293,20 @@ GrRaster8BppDriverPixelDrawMultiple(void *pvDisplayData, int32_t lX,
         //
         // The pixel data is in 8 bit per pixel format.
         //
-        case 8:
-        {
+        case 8: {
             //
             // Create a lookup table that translates from the source palette
             // into the current frame buffer palette if this is the first call
             // for a new image.
             //
-            if(lBPP & GRLIB_DRIVER_FLAG_NEW_IMAGE)
-            {
+            if(lBPP & GRLIB_DRIVER_FLAG_NEW_IMAGE) {
                 GenerateImagePaletteLookup(pInst, pui8Palette, 256);
             }
 
             //
             // Loop while there are more pixels to draw.
             //
-            while(lCount--)
-            {
+            while(lCount--) {
                 //
                 // Get the next byte of pixel data.
                 //
@@ -1427,8 +1367,7 @@ LineDrawHInternal(tRaster8bppDriverInst *pInst, int32_t i32X1, int32_t i32X2,
     // See if the buffer pointer is not half-word aligned and there is still a
     // pixel to draw.
     //
-    if(((uint32_t)pui8Data & 1) && (i32X2 != i32X1))
-    {
+    if(((uint32_t)pui8Data & 1) && (i32X2 != i32X1)) {
         //
         // Draw one pixel to half-word align the buffer pointer.
         //
@@ -1441,8 +1380,7 @@ LineDrawHInternal(tRaster8bppDriverInst *pInst, int32_t i32X1, int32_t i32X2,
     // See if the buffer pointer is not word aligned and there are at least
     // two pixels left to draw.
     //
-    if(((uint32_t)pui8Data & 2) && ((i32X2 - i32X1) >= 2))
-    {
+    if(((uint32_t)pui8Data & 2) && ((i32X2 - i32X1) >= 2)) {
         //
         // Draw four pixels to word align the buffer pointer.
         //
@@ -1454,8 +1392,7 @@ LineDrawHInternal(tRaster8bppDriverInst *pInst, int32_t i32X1, int32_t i32X2,
     //
     // Loop while there are at least 4 pixels left to draw.
     //
-    while((i32X1 + 3) <= i32X2)
-    {
+    while((i32X1 + 3) <= i32X2) {
         //
         // Draw 4 pixels.
         //
@@ -1467,8 +1404,7 @@ LineDrawHInternal(tRaster8bppDriverInst *pInst, int32_t i32X1, int32_t i32X2,
     //
     // See if there are at least two pixels left to draw.
     //
-    if((i32X1 + 1) <= i32X2)
-    {
+    if((i32X1 + 1) <= i32X2) {
         //
         // Draw 2 pixels, leaving the buffer pointer half-word aligned.
         //
@@ -1480,8 +1416,7 @@ LineDrawHInternal(tRaster8bppDriverInst *pInst, int32_t i32X1, int32_t i32X2,
     //
     // See if there is a final pixel left to draw.
     //
-    if(i32X1 <= i32X2)
-    {
+    if(i32X1 <= i32X2) {
         //
         // Draw one pixels, leaving the buffer pointer byte aligned.
         //
@@ -1509,13 +1444,12 @@ LineDrawVInternal(tRaster8bppDriverInst *pInst, int32_t i32X, int32_t i32Y1, int
     // Get a pointer to the byte containing the pixel we need to write.
     //
     pui8PixelByte = (uint8_t *)(pInst->pui8FrameBuffer +
-                             (i32Y1 * RASTER_WIDTH) + i32X);
+                                (i32Y1 * RASTER_WIDTH) + i32X);
 
     //
     // Set the required pixels on each row to draw the line.
     //
-    for(lRows = i32Y1; lRows <= i32Y2; lRows++)
-    {
+    for(lRows = i32Y1; lRows <= i32Y2; lRows++) {
         WRITE_BYTE(pui8PixelByte, (uint8_t)ui32Value);
         pui8PixelByte += RASTER_WIDTH;
     }
@@ -1713,8 +1647,7 @@ GrRaster8BppDriverRectFill(void *pvDisplayData, const tRectangle *pRect,
     // Draw horizontal lines to fill the rectangular region.  Note that we've
     // remapped the coordinates passed into raster-origin values already.
     //
-    for(lLine = lTop; lLine <= lBottom; lLine++)
-    {
+    for(lLine = lTop; lLine <= lBottom; lLine++) {
         LineDrawHInternal(pInst, lLeft, lRight, lLine, ui32Value);
     }
 }
@@ -1811,8 +1744,7 @@ GrRaster8BppPaletteSet(tDisplay *psDisplay, uint32_t *pui32Palette,
     //
     // Step through the palette entries we are to set.
     //
-    for(ui32Loop = 0; ui32Loop < ui32Count; ui32Loop++)
-    {
+    for(ui32Loop = 0; ui32Loop < ui32Count; ui32Loop++) {
         //
         // Convert the RGB888 color from GrLib into the hardware's RGB444
         // palette format.
@@ -1833,8 +1765,7 @@ GrRaster8BppPaletteSet(tDisplay *psDisplay, uint32_t *pui32Palette,
 // 8bpp, 256 color frame buffer.
 //
 //*****************************************************************************
-tDisplay g_sGrRaster8BppDriver =
-{
+tDisplay g_sGrRaster8BppDriver = {
     sizeof(tDisplay),
     &g_Raster8bppInst,
 #if (defined NORMAL) || (defined DISPLAY_ROTATE_180)

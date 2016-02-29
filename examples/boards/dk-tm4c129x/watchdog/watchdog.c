@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C129X Firmware Package.
 //
 //*****************************************************************************
@@ -120,15 +120,13 @@ WatchdogIntHandler(void)
     //
     // See if watchdog 0 generated an interrupt.
     //
-    if(ROM_WatchdogIntStatus(WATCHDOG0_BASE, true))
-    {
+    if(ROM_WatchdogIntStatus(WATCHDOG0_BASE, true)) {
         //
         // If we have been told to stop feeding the watchdog, return immediately
         // without clearing the interrupt.  This will cause the system to reset
         // next time the watchdog interrupt fires.
         //
-        if(g_bFeedWatchdog0)
-        {
+        if(g_bFeedWatchdog0) {
             //
             // Clear the watchdog interrupt.
             //
@@ -148,22 +146,20 @@ WatchdogIntHandler(void)
             ROM_GPIOPinWrite(LED_GREEN_GPIO_PORTBASE, LED_GREEN_GPIO_PIN,
                              (ROM_GPIOPinRead(LED_GREEN_GPIO_PORTBASE,
                                               LED_GREEN_GPIO_PIN) ^
-                                              LED_GREEN_GPIO_PIN));
+                              LED_GREEN_GPIO_PIN));
         }
     }
 
     //
     // See if watchdog 1 generated an interrupt.
     //
-    if(ROM_WatchdogIntStatus(WATCHDOG1_BASE, true))
-    {
+    if(ROM_WatchdogIntStatus(WATCHDOG1_BASE, true)) {
         //
         // If we have been told to stop feeding the watchdog, return immediately
         // without clearing the interrupt.  This will cause the system to reset
         // next time the watchdog interrupt fires.
         //
-        if(g_bFeedWatchdog1)
-        {
+        if(g_bFeedWatchdog1) {
             //
             // Clear the watchdog interrupt.
             //
@@ -183,7 +179,7 @@ WatchdogIntHandler(void)
             ROM_GPIOPinWrite(LED_AMBER_GPIO_PORTBASE, LED_AMBER_GPIO_PIN,
                              (ROM_GPIOPinRead(LED_AMBER_GPIO_PORTBASE,
                                               LED_AMBER_GPIO_PIN) ^
-                                              LED_AMBER_GPIO_PIN));
+                              LED_AMBER_GPIO_PIN));
         }
     }
 }
@@ -200,13 +196,11 @@ WatchdogTouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
     // If the screen is tapped, we will receive a PTR_DOWN then a PTR_UP
     // message.  Use PTR_UP as the trigger to stop feeding the watchdog.
     //
-    if(ui32Message == WIDGET_MSG_PTR_UP)
-    {
+    if(ui32Message == WIDGET_MSG_PTR_UP) {
         //
         // See if the left or right side of the screen was touched.
         //
-        if(i32X <= (GrContextDpyWidthGet(&g_sContext) / 2))
-        {
+        if(i32X <= (GrContextDpyWidthGet(&g_sContext) / 2)) {
             //
             // Let the user know that the tap has been registered and that the
             // watchdog0 is being starved.
@@ -225,9 +219,7 @@ WatchdogTouchCallback(uint32_t ui32Message, int32_t i32X, int32_t i32Y)
             // watchdog0 interrupt.
             //
             g_bFeedWatchdog0 = false;
-        }
-        else
-        {
+        } else {
             //
             // Let the user know that the tap has been registered and that the
             // watchdog1 is being starved.
@@ -350,7 +342,6 @@ main(void)
     //
     // Loop forever while the LED winks as watchdog interrupts are handled.
     //
-    while(1)
-    {
+    while(1) {
     }
 }

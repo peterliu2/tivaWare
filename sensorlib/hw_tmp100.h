@@ -5,20 +5,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -51,16 +51,16 @@
 //
 //*****************************************************************************
 #define TMP100_CONFIG_OS_ALERT  0x80        // Starts a one-shot when written,
-                                            // reports alert when read
+// reports alert when read
 #define TMP100_CONFIG_RES_M     0x60        // Converter resolution
 #define TMP100_CONFIG_RES_9BIT  0x00        // 9-bit resolution (40 ms
-                                            // conversion time)
+// conversion time)
 #define TMP100_CONFIG_RES_10BIT 0x20        // 10-bit resolution (80 ms
-                                            // conversion time)
+// conversion time)
 #define TMP100_CONFIG_RES_11BIT 0x40        // 11-bit resolution (160 ms
-                                            // conversion time)
+// conversion time)
 #define TMP100_CONFIG_RES_12BIT 0x60        // 12-bit resolution (320 ms
-                                            // conversion time)
+// conversion time)
 #define TMP100_CONFIG_CR_M      0x18        // Consecutive fault configuration
 #define TMP100_CONFIG_FAULT_1   0x00        // 1 consecutive fault
 #define TMP100_CONFIG_FAULT_2   0x08        // 2 consecutive faults

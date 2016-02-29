@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2013-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C1294XL Firmware Package.
 //
 //*****************************************************************************
@@ -174,9 +174,9 @@ RectangularButton(g_sBlockDecBtn, &g_sHeading, &g_sBlockIncBtn, 0,
                   &g_sKentec320x240x16_SSD2119, 200, 26, 20, 20,
                   (PB_STYLE_OUTLINE | PB_STYLE_TEXT_OPAQUE | PB_STYLE_TEXT |
                    PB_STYLE_FILL),
-                   ClrDarkBlue, ClrRed, ClrWhite, ClrWhite,
-                   g_psFontFixed6x8, "<", 0, 0, 0, 0,
-                   OnBlockButtonPress);
+                  ClrDarkBlue, ClrRed, ClrWhite, ClrWhite,
+                  g_psFontFixed6x8, "<", 0, 0, 0, 0,
+                  OnBlockButtonPress);
 
 //*****************************************************************************
 //
@@ -187,9 +187,9 @@ RectangularButton(g_sBlockIncBtn, &g_sHeading, &g_sCharDecBtn, 0,
                   &g_sKentec320x240x16_SSD2119, 230, 26, 20, 20,
                   (PB_STYLE_OUTLINE | PB_STYLE_TEXT_OPAQUE | PB_STYLE_TEXT |
                    PB_STYLE_FILL),
-                   ClrDarkBlue, ClrRed, ClrWhite, ClrWhite,
-                   g_psFontFixed6x8, ">", 0, 0, 0, 0,
-                   OnBlockButtonPress);
+                  ClrDarkBlue, ClrRed, ClrWhite, ClrWhite,
+                  g_psFontFixed6x8, ">", 0, 0, 0, 0,
+                  OnBlockButtonPress);
 
 //*****************************************************************************
 //
@@ -200,9 +200,9 @@ RectangularButton(g_sCharDecBtn, &g_sHeading, &g_sCharIncBtn, 0,
                   &g_sKentec320x240x16_SSD2119, 260, 26, 20, 20,
                   (PB_STYLE_OUTLINE | PB_STYLE_TEXT_OPAQUE | PB_STYLE_TEXT |
                    PB_STYLE_FILL | PB_STYLE_AUTO_REPEAT),
-                   ClrDarkBlue, ClrRed, ClrWhite, ClrWhite,
-                   g_psFontFixed6x8, "^", 0, 0, 70, 20,
-                   OnCharButtonPress);
+                  ClrDarkBlue, ClrRed, ClrWhite, ClrWhite,
+                  g_psFontFixed6x8, "^", 0, 0, 70, 20,
+                  OnCharButtonPress);
 
 //*****************************************************************************
 //
@@ -213,17 +213,16 @@ RectangularButton(g_sCharIncBtn, &g_sHeading, 0, 0,
                   &g_sKentec320x240x16_SSD2119, 290, 26, 20, 20,
                   (PB_STYLE_OUTLINE | PB_STYLE_TEXT_OPAQUE | PB_STYLE_TEXT |
                    PB_STYLE_FILL | PB_STYLE_AUTO_REPEAT),
-                   ClrDarkBlue, ClrRed, ClrWhite, ClrWhite,
-                   g_psFontFixed6x8, "v", 0, 0, 70, 20,
-                   OnCharButtonPress);
+                  ClrDarkBlue, ClrRed, ClrWhite, ClrWhite,
+                  g_psFontFixed6x8, "v", 0, 0, 70, 20,
+                  OnCharButtonPress);
 
 //*****************************************************************************
 //
 // Text codepage mapping functions.
 //
 //*****************************************************************************
-tCodePointMap g_psCodepointMappings[] =
-{
+tCodePointMap g_psCodepointMappings[] = {
     {CODEPAGE_ISO8859_1, CODEPAGE_UNICODE, GrMapISO8859_1_Unicode},
     {CODEPAGE_UTF_8,     CODEPAGE_UNICODE, GrMapUTF8_Unicode},
     {CODEPAGE_UNICODE,   CODEPAGE_UNICODE, GrMapUnicode_Unicode}
@@ -238,8 +237,7 @@ tCodePointMap g_psCodepointMappings[] =
 // 32 bit Unicode source.
 //
 //*****************************************************************************
-tGrLibDefaults g_psGrLibSettingDefaults =
-{
+tGrLibDefaults g_psGrLibSettingDefaults = {
     GrDefaultStringRenderer,
     g_psCodepointMappings,
     CODEPAGE_UTF_8,
@@ -289,8 +287,7 @@ void
 __error__(char *pcFilename, uint32_t ui32Line)
 {
     UARTprintf("Runtime error at line %d of %s!\n", ui32Line, pcFilename);
-    while(1)
-    {
+    while(1) {
     }
 }
 #endif
@@ -315,27 +312,22 @@ OnBlockButtonPress(tWidget *psWidget)
     //
     // Are we incrementing or decrementing the block number?
     //
-    if(psWidget == (tWidget *)&g_sBlockIncBtn)
-    {
+    if(psWidget == (tWidget *)&g_sBlockIncBtn) {
         //
         // We are incrementing.  Have we already reached the top block?
         //
-        if((g_ui32BlockNum + 1) < g_ui32NumBlocks)
-        {
+        if((g_ui32BlockNum + 1) < g_ui32NumBlocks) {
             //
             // No - increment the block number.
             //
             g_ui32BlockNum++;
             bRedraw = true;
         }
-    }
-    else
-    {
+    } else {
         //
         // We are decrementing.  Are we already showing the first block?
         //
-        if(g_ui32BlockNum)
-        {
+        if(g_ui32BlockNum) {
             //
             // No - move back 1 block.
             //
@@ -347,8 +339,7 @@ OnBlockButtonPress(tWidget *psWidget)
     //
     // If we made a change, set things up to display the new block.
     //
-    if(bRedraw)
-    {
+    if(bRedraw) {
         SetBlockNum(g_ui32BlockNum);
     }
 }
@@ -373,25 +364,20 @@ OnCharButtonPress(tWidget *psWidget)
     //
     // Were we asked to scroll up or down?
     //
-    if(psWidget == (tWidget *)&g_sCharIncBtn)
-    {
+    if(psWidget == (tWidget *)&g_sCharIncBtn) {
         //
         // Scroll down if there are more characters to display.
         //
         if(((g_ui32StartLine + g_ui32LinesPerPage) * g_ui32CharsPerLine) <
-            g_ui32NumBlockChars)
-        {
+                g_ui32NumBlockChars) {
             g_ui32StartLine++;
             bRedraw = true;
         }
-    }
-    else
-    {
+    } else {
         //
         // Scroll up if we're not already showing the first line.
         //
-        if(g_ui32StartLine)
-        {
+        if(g_ui32StartLine) {
             g_ui32StartLine--;
             bRedraw = true;
         }
@@ -400,8 +386,7 @@ OnCharButtonPress(tWidget *psWidget)
     //
     // If we made a change, redraw the character area.
     //
-    if(bRedraw)
-    {
+    if(bRedraw) {
         WidgetPaint((tWidget *)&g_sCharCanvas);
     }
 }
@@ -424,8 +409,7 @@ SetBlockNum(uint32_t ui32BlockNum)
     //
     // If this block exists, update our state.
     //
-    if(ui32Chars)
-    {
+    if(ui32Chars) {
         //
         // Remember details of the new block.
         //
@@ -440,7 +424,7 @@ SetBlockNum(uint32_t ui32BlockNum)
         usnprintf(g_pcBlocks, sizeof(g_pcBlocks), "Block %d of %d  ",
                   g_ui32BlockNum + 1, g_ui32NumBlocks);
         usnprintf(g_pcStartChar, sizeof(g_pcStartChar), "%d chars from 0x%08x",
-                 g_ui32NumBlockChars, g_ui32StartChar);
+                  g_ui32NumBlockChars, g_ui32StartChar);
     }
 
     //
@@ -507,8 +491,8 @@ main(void)
     // Run from the PLL at 120 MHz.
     //
     g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
+                                            SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
+                                            SYSCTL_CFG_VCO_480), 120000000);
 
     //
     // Enable Interrupts
@@ -588,8 +572,7 @@ main(void)
     //
     // Loop forever, processing widget messages.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Process any messages from or for the widgets.
         //
@@ -628,8 +611,7 @@ PaintFontGlyphs(tWidget *psWidget, tContext *psContext)
     GrContextForegroundSet(psContext, ClrYellow);
     GrContextFontSet(psContext, g_psFontFixed6x8);
 
-    for(ui32Y = 0; ui32Y < g_ui32LinesPerPage; ui32Y++ )
-    {
+    for(ui32Y = 0; ui32Y < g_ui32LinesPerPage; ui32Y++ ) {
         usprintf(pcBuffer, "%06x", g_ui32StartChar +
                  ((ui32Y + g_ui32StartLine) * g_ui32CharsPerLine));
         GrStringDraw(psContext, pcBuffer, -1, 0, POSY(ui32Y), 0);
@@ -647,15 +629,13 @@ PaintFontGlyphs(tWidget *psWidget, tContext *psContext)
     GrContextFontSet(psContext, g_psFont);
     GrContextForegroundSet(psContext, ClrWhite);
 
-    for(ui32Y = 0; ui32Y < g_ui32LinesPerPage; ui32Y++)
-    {
-        for(ui32X = 0; ui32X < g_ui32CharsPerLine; ui32X++)
-        {
+    for(ui32Y = 0; ui32Y < g_ui32LinesPerPage; ui32Y++) {
+        for(ui32X = 0; ui32X < g_ui32CharsPerLine; ui32X++) {
             //
             // Which character are we about to show?
             //
             ui32Char = g_ui32StartChar +
-                     ((g_ui32StartLine + ui32Y) * g_ui32CharsPerLine) + ui32X;
+                       ((g_ui32StartLine + ui32Y) * g_ui32CharsPerLine) + ui32X;
 
             //
             // Fill the character cell with the background color.
@@ -671,8 +651,7 @@ PaintFontGlyphs(tWidget *psWidget, tContext *psContext)
             //
             // Have we run off the end of the end of the block?
             //
-            if((ui32Char - g_ui32StartChar) < g_ui32NumBlockChars)
-            {
+            if((ui32Char - g_ui32StartChar) < g_ui32NumBlockChars) {
                 //
                 // No - display the character.
                 //

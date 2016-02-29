@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2010-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Utility Library.
 //
 //*****************************************************************************
@@ -111,34 +111,26 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
     //
     // Determine the current state of the state machine.
     //
-    switch(psI2C->ui8State)
-    {
+    switch(psI2C->ui8State) {
         //
         // The state machine is idle.
         //
-        case SOFTI2C_STATE_IDLE:
-        {
+        case SOFTI2C_STATE_IDLE: {
             //
             // See if the START flag is set, indicating that a start condition
             // should be generated.
             //
-            if(HWREGBITB(&(psI2C->ui8Flags), SOFTI2C_FLAG_START) == 1)
-            {
+            if(HWREGBITB(&(psI2C->ui8Flags), SOFTI2C_FLAG_START) == 1) {
                 //
                 // Based on the current state of the SCL and SDA pins, pick the
                 // appropriate place within the state machine to begin the
                 // start/repeated-start signalling.
                 //
-                if(HWREG(psI2C->ui32SCLGPIO) != 0)
-                {
+                if(HWREG(psI2C->ui32SCLGPIO) != 0) {
                     psI2C->ui8State = SOFTI2C_STATE_START4;
-                }
-                else if(HWREG(psI2C->ui32SDAGPIO) == 0)
-                {
+                } else if(HWREG(psI2C->ui32SDAGPIO) == 0) {
                     psI2C->ui8State = SOFTI2C_STATE_START0;
-                }
-                else
-                {
+                } else {
                     psI2C->ui8State = SOFTI2C_STATE_START2;
                 }
             }
@@ -147,8 +139,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
             // Otherwise, see if the RUN flag is set, indicating that a data
             // byte should be transferred.
             //
-            else if(HWREGBITB(&(psI2C->ui8Flags), SOFTI2C_FLAG_RUN) == 1)
-            {
+            else if(HWREGBITB(&(psI2C->ui8Flags), SOFTI2C_FLAG_RUN) == 1) {
                 //
                 // Start the transfer from the first bit.
                 //
@@ -157,15 +148,12 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
                 //
                 // See if a byte should be sent or received.
                 //
-                if(HWREGBITB(&(psI2C->ui8Flags), SOFTI2C_FLAG_RECEIVE) == 0)
-                {
+                if(HWREGBITB(&(psI2C->ui8Flags), SOFTI2C_FLAG_RECEIVE) == 0) {
                     //
                     // A byte should be sent.
                     //
                     psI2C->ui8State = SOFTI2C_STATE_SEND0;
-                }
-                else
-                {
+                } else {
                     //
                     // A byte should be received.  Clear out the receive data
                     // buffer in preparation for receiving the new byte.
@@ -179,8 +167,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
             // Otherwise, see if the STOP flag is set, indicating that a stop
             // condition should be generated.
             //
-            else if(HWREGBITB(&(psI2C->ui8Flags), SOFTI2C_FLAG_STOP) == 1)
-            {
+            else if(HWREGBITB(&(psI2C->ui8Flags), SOFTI2C_FLAG_STOP) == 1) {
                 //
                 // Generate a stop condition.
                 //
@@ -190,8 +177,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
             //
             // See if the SoftI2C state machine has left the idle state.
             //
-            if(psI2C->ui8State != SOFTI2C_STATE_IDLE)
-            {
+            if(psI2C->ui8State != SOFTI2C_STATE_IDLE) {
                 //
                 // The address and data ACK error flags should be cleared; they
                 // will be set if appropriate while the current command is
@@ -212,8 +198,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
         // low.  SDA must be driven high prior to driving SCL high so that a
         // repeated-start is generated, instead of a stop then start.
         //
-        case SOFTI2C_STATE_START0:
-        {
+        case SOFTI2C_STATE_START0: {
             //
             // Set SDA high.
             //
@@ -239,8 +224,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
         case SOFTI2C_STATE_START3:
         case SOFTI2C_STATE_START5:
         case SOFTI2C_STATE_STOP1:
-        case SOFTI2C_STATE_STOP3:
-        {
+        case SOFTI2C_STATE_STOP3: {
             //
             // Advance to the next state.
             //
@@ -260,8 +244,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
         case SOFTI2C_STATE_ADDR1:
         case SOFTI2C_STATE_SEND1:
         case SOFTI2C_STATE_RECV1:
-        case SOFTI2C_STATE_STOP2:
-        {
+        case SOFTI2C_STATE_STOP2: {
             //
             // Set SCL high.
             //
@@ -283,8 +266,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
         // STATE_Xn and STATE_X(n+1) being consecutively numbered.
         //
         case SOFTI2C_STATE_START4:
-        case SOFTI2C_STATE_STOP0:
-        {
+        case SOFTI2C_STATE_STOP0: {
             //
             // Set SDA low.
             //
@@ -304,8 +286,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
         //
         // In this state, SCL must be driven low.
         //
-        case SOFTI2C_STATE_START6:
-        {
+        case SOFTI2C_STATE_START6: {
             //
             // Set SCL low.
             //
@@ -325,8 +306,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
         //
         // In this state, the start condition has been generated.
         //
-        case SOFTI2C_STATE_START7:
-        {
+        case SOFTI2C_STATE_START7: {
             //
             // Start with the first bit of the address.
             //
@@ -346,13 +326,11 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
         //
         // In this state, the next bit of the slave address must be sent.
         //
-        case SOFTI2C_STATE_ADDR0:
-        {
+        case SOFTI2C_STATE_ADDR0: {
             //
             // See if this is one of the first seven bits of the address phase.
             //
-            if(psI2C->ui8CurrentBit < 7)
-            {
+            if(psI2C->ui8CurrentBit < 7) {
                 //
                 // Write the next bit of the slave address to SDA.
                 //
@@ -365,8 +343,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
             // Otherwise, see if this is the eight bit of the address phase
             // (which is the read/not write bit).
             //
-            else if(psI2C->ui8CurrentBit == 7)
-            {
+            else if(psI2C->ui8CurrentBit == 7) {
                 //
                 // Write the read/not write bit to SDA.
                 //
@@ -379,8 +356,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
             // Otherwise, this is the ninth bit of the address phase (in other
             // words, the ACK bit).
             //
-            else
-            {
+            else {
                 //
                 // Change the SDA GPIO into an input so that the ACK or NAK
                 // provided by the slave can be read.
@@ -409,13 +385,11 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
         //
         case SOFTI2C_STATE_ADDR2:
         case SOFTI2C_STATE_SEND2:
-        case SOFTI2C_STATE_RECV2:
-        {
+        case SOFTI2C_STATE_RECV2: {
             //
             // See if SCL has gone high.
             //
-            if(HWREG(psI2C->ui32SCLGPIO) != 0)
-            {
+            if(HWREG(psI2C->ui32SCLGPIO) != 0) {
                 //
                 // Advance to the next state now that SCL has gone high.
                 //
@@ -432,19 +406,16 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
         // In this state, SCL must be driven low.  If on the ninth bit of the
         // address transfer, the ACK/NAK status is read from the slave.
         //
-        case SOFTI2C_STATE_ADDR3:
-        {
+        case SOFTI2C_STATE_ADDR3: {
             //
             // See if this is the ninth bit of the address phase (in other
             // words, the ACK bit).
             //
-            if(psI2C->ui8CurrentBit == 8)
-            {
+            if(psI2C->ui8CurrentBit == 8) {
                 //
                 // See if the SDA line is high.
                 //
-                if(HWREG(psI2C->ui32SDAGPIO) != 0)
-                {
+                if(HWREG(psI2C->ui32SDAGPIO) != 0) {
                     //
                     // Since the SDA line is high, the address byte has not
                     // been ACKed by any slave.
@@ -469,8 +440,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
                 // See if the RUN flag is set, indicating that a data byte
                 // should be transferred as well.
                 //
-                if(HWREGBITB(&(psI2C->ui8Flags), SOFTI2C_FLAG_RUN) == 1)
-                {
+                if(HWREGBITB(&(psI2C->ui8Flags), SOFTI2C_FLAG_RUN) == 1) {
                     //
                     // Reset the current bit to zero for the start of the data
                     // phase.
@@ -481,16 +451,13 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
                     // See if the data byte is being sent or received.
                     //
                     if(HWREGBITB(&(psI2C->ui8Flags),
-                                 SOFTI2C_FLAG_RECEIVE) == 0)
-                    {
+                                 SOFTI2C_FLAG_RECEIVE) == 0) {
                         //
                         // The data byte is being sent, so advance to the data
                         // send state.
                         //
                         psI2C->ui8State = SOFTI2C_STATE_SEND0;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // The data byte is being received, so clear the data
                         // buffer and advance to the data receive state.
@@ -504,8 +471,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
                 // Otherwise, see if the STOP flag is set, indicating that a
                 // stop condition should be generated.
                 //
-                else if(HWREGBITB(&(psI2C->ui8Flags), SOFTI2C_FLAG_STOP) == 1)
-                {
+                else if(HWREGBITB(&(psI2C->ui8Flags), SOFTI2C_FLAG_STOP) == 1) {
                     //
                     // Advance to the stop state.
                     //
@@ -515,8 +481,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
                 //
                 // Otherwise, go to the idle state.
                 //
-                else
-                {
+                else {
                     //
                     // Since the requested operations have completed, set the
                     // SoftI2C ``interrupt''.
@@ -533,8 +498,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
             //
             // Otherwise, the next bit of the address should be transferred.
             //
-            else
-            {
+            else {
                 //
                 // Increment the bit count.
                 //
@@ -560,13 +524,11 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
         //
         // In this state, the next bit of the data byte must be sent.
         //
-        case SOFTI2C_STATE_SEND0:
-        {
+        case SOFTI2C_STATE_SEND0: {
             //
             // See if this is one of the first eight bits of the data phase.
             //
-            if(psI2C->ui8CurrentBit < 8)
-            {
+            if(psI2C->ui8CurrentBit < 8) {
                 //
                 // Write the next bit of the data byte to SDA.
                 //
@@ -579,8 +541,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
             // Otherwise, this is the ninth bit of the data phase (in other
             // words, the ACK bit).
             //
-            else
-            {
+            else {
                 //
                 // Change the SDA GPIO into an input so that the ACK or NAK
                 // provided by the slave can be read.
@@ -605,19 +566,16 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
         // In this state, SCL must be driven low.  If on the ninth bit of the
         // data transfer, the ACK/NAK status is read from the slave.
         //
-        case SOFTI2C_STATE_SEND3:
-        {
+        case SOFTI2C_STATE_SEND3: {
             //
             // See if this is the ninth bit of the data phase (in other words,
             // the ACK bit).
             //
-            if(psI2C->ui8CurrentBit == 8)
-            {
+            if(psI2C->ui8CurrentBit == 8) {
                 //
                 // See if the SDA line is high.
                 //
-                if(HWREG(psI2C->ui32SDAGPIO) != 0)
-                {
+                if(HWREG(psI2C->ui32SDAGPIO) != 0) {
                     //
                     // Since the SDA line is high, the data byte has not been
                     // ACKed by the slave.
@@ -641,8 +599,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
                 // See if the STOP flag is set, indicating that a stop
                 // condition should be generated.
                 //
-                if(HWREGBITB(&(psI2C->ui8Flags), SOFTI2C_FLAG_STOP) == 1)
-                {
+                if(HWREGBITB(&(psI2C->ui8Flags), SOFTI2C_FLAG_STOP) == 1) {
                     //
                     // Advance to the stop state.
                     //
@@ -652,8 +609,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
                 //
                 // Otherwise, go to the idle state.
                 //
-                else
-                {
+                else {
                     //
                     // Since the requested operations have completed, set the
                     // SoftI2C ``interrupt''.
@@ -670,8 +626,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
             //
             // Otherwise, the next bit of the data should be transferred.
             //
-            else
-            {
+            else {
                 //
                 // Increment the bit count.
                 //
@@ -697,13 +652,11 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
         //
         // In this state, the next bit of the data byte must be received.
         //
-        case SOFTI2C_STATE_RECV0:
-        {
+        case SOFTI2C_STATE_RECV0: {
             //
             // See if this is the first bit of the data phase.
             //
-            if(psI2C->ui8CurrentBit == 0)
-            {
+            if(psI2C->ui8CurrentBit == 0) {
                 //
                 // Change the SDA GPIO into an input so that the data provided
                 // by the slave can be read.
@@ -717,8 +670,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
             // Otherwise, see if this is the ninth bit of the data phase (in
             // other words, the ACK bit).
             //
-            else if(psI2C->ui8CurrentBit == 8)
-            {
+            else if(psI2C->ui8CurrentBit == 8) {
                 //
                 // Change the SDA GPIO into an output so that the ACK bit can
                 // be driven to the slave.
@@ -730,15 +682,12 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
                 //
                 // See if this byte should be ACKed or NAKed.
                 //
-                if(HWREGBITB(&(psI2C->ui8Flags), SOFTI2C_FLAG_ACK) == 1)
-                {
+                if(HWREGBITB(&(psI2C->ui8Flags), SOFTI2C_FLAG_ACK) == 1) {
                     //
                     // Drive SDA low to ACK the data byte.
                     //
                     HWREG(psI2C->ui32SDAGPIO) = 0;
-                }
-                else
-                {
+                } else {
                     //
                     // Allow SDA to get pulled high to NAK the data byte.
                     //
@@ -761,14 +710,12 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
         // In this state, SCL must be driven low.  For the first eight bits of
         // the data transfer, the data bits are read from the slave.
         //
-        case SOFTI2C_STATE_RECV3:
-        {
+        case SOFTI2C_STATE_RECV3: {
             //
             // See if this is the ninth bit of the data phase (in other words,
             // the ACK bit).
             //
-            if(psI2C->ui8CurrentBit == 8)
-            {
+            if(psI2C->ui8CurrentBit == 8) {
                 //
                 // The data phase has completed, so clear the RUN flag.
                 //
@@ -778,8 +725,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
                 // See if the STOP flag is set, indicating that a stop
                 // condition should be generated.
                 //
-                if(HWREGBITB(&(psI2C->ui8Flags), SOFTI2C_FLAG_STOP) == 1)
-                {
+                if(HWREGBITB(&(psI2C->ui8Flags), SOFTI2C_FLAG_STOP) == 1) {
                     //
                     // Advance to the stop state.
                     //
@@ -789,8 +735,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
                 //
                 // Otherwise, go to the idle state.
                 //
-                else
-                {
+                else {
                     //
                     // Since the requested operations have completed, set the
                     // SoftI2C ``interrupt''.
@@ -807,8 +752,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
             //
             // Otherwise, the next bit of the data should be transferred.
             //
-            else
-            {
+            else {
                 //
                 // Read the next bit of data from the SDA line.
                 //
@@ -840,8 +784,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
         //
         // In this state, SDA must be driven high to create the stop condition.
         //
-        case SOFTI2C_STATE_STOP4:
-        {
+        case SOFTI2C_STATE_STOP4: {
             //
             // Set SDA high to create the stop condition.
             //
@@ -877,8 +820,7 @@ SoftI2CTimerTick(tSoftI2C *psI2C)
     // the I2C peripheral.
     //
     while(((psI2C->ui8IntStatus & psI2C->ui8IntMask) != 0) &&
-          (psI2C->pfnIntCallback != 0))
-    {
+            (psI2C->pfnIntCallback != 0)) {
         //
         // Call the callback function.
         //
@@ -1083,12 +1025,9 @@ SoftI2CIntStatus(tSoftI2C *psI2C, bool bMasked)
     // Return either the interrupt status or the raw interrupt status as
     // requested.
     //
-    if(bMasked)
-    {
+    if(bMasked) {
         return((psI2C->ui8IntStatus & psI2C->ui8IntMask) ? true : false);
-    }
-    else
-    {
+    } else {
         return(psI2C->ui8IntStatus ? true : false);
     }
 }
@@ -1149,12 +1088,9 @@ SoftI2CSlaveAddrSet(tSoftI2C *psI2C, uint8_t ui8SlaveAddr,
     //
     // Set a flag to indicate if this is a transmit or receive.
     //
-    if(bReceive)
-    {
+    if(bReceive) {
         HWREGBITB(&(psI2C->ui8Flags), SOFTI2C_FLAG_RECEIVE) = 1;
-    }
-    else
-    {
+    } else {
         HWREGBITB(&(psI2C->ui8Flags), SOFTI2C_FLAG_RECEIVE) = 0;
     }
 }
@@ -1178,12 +1114,9 @@ SoftI2CBusy(tSoftI2C *psI2C)
     //
     // Return the busy status.
     //
-    if(psI2C->ui8State != SOFTI2C_STATE_IDLE)
-    {
+    if(psI2C->ui8State != SOFTI2C_STATE_IDLE) {
         return(true);
-    }
-    else
-    {
+    } else {
         return(false);
     }
 }
@@ -1255,8 +1188,7 @@ SoftI2CErr(tSoftI2C *psI2C)
     //
     // If the SoftI2C is busy, there is no error to report.
     //
-    if(psI2C->ui8State != SOFTI2C_STATE_IDLE)
-    {
+    if(psI2C->ui8State != SOFTI2C_STATE_IDLE) {
         return(SOFTI2C_ERR_NONE);
     }
 

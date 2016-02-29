@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2011-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the DK-TM4C123G Firmware Package.
 //
 //*****************************************************************************
@@ -138,8 +138,7 @@ DECLARE_EVENT_DRIVER(g_sUSBEventDriver, 0, 0, USBHCDEvents);
 // In this case, only the MSC class is loaded.
 //
 //*****************************************************************************
-static tUSBHostClassDriver const * const g_ppHostClassDrivers[] =
-{
+static tUSBHostClassDriver const * const g_ppHostClassDrivers[] = {
     &g_sUSBHostMSCClassDriver,
     &g_sUSBEventDriver
 };
@@ -187,8 +186,7 @@ FileInit(void)
     //
     // Mount the file system, using logical disk 0.
     //
-    if(f_mount(0, &g_sFatFs) != FR_OK)
-    {
+    if(f_mount(0, &g_sFatFs) != FR_OK) {
         return(false);
     }
     return(true);
@@ -218,14 +216,12 @@ MSCCallback(tUSBHMSCInstance *psMSCInstance, uint32_t ui32Event, void *pvData)
     //
     // Determine the event.
     //
-    switch(ui32Event)
-    {
+    switch(ui32Event) {
         //
         // Called when the device driver has successfully enumerated an MSC
         // device.
         //
-        case MSC_EVENT_OPEN:
-        {
+        case MSC_EVENT_OPEN: {
             //
             // Proceed to the enumeration state.
             //
@@ -238,8 +234,7 @@ MSCCallback(tUSBHMSCInstance *psMSCInstance, uint32_t ui32Event, void *pvData)
         // Called when the device driver has been unloaded due to error or
         // the device is no longer present.
         //
-        case MSC_EVENT_CLOSE:
-        {
+        case MSC_EVENT_CLOSE: {
             //
             // Go back to the "no device" state and wait for a new connection.
             //
@@ -253,8 +248,7 @@ MSCCallback(tUSBHMSCInstance *psMSCInstance, uint32_t ui32Event, void *pvData)
             break;
         }
 
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -289,13 +283,11 @@ USBHCDEvents(void *pvData)
     //
     // Process each kind of event
     //
-    switch(psEventInfo->ui32Event)
-    {
+    switch(psEventInfo->ui32Event) {
         //
         // An unknown device has been connected.
         //
-        case USB_EVENT_UNKNOWN_CONNECTED:
-        {
+        case USB_EVENT_UNKNOWN_CONNECTED: {
             //
             // An unknown device was detected.
             //
@@ -306,8 +298,7 @@ USBHCDEvents(void *pvData)
         //
         // The unknown device has been been unplugged.
         //
-        case USB_EVENT_DISCONNECTED:
-        {
+        case USB_EVENT_DISCONNECTED: {
             //
             // Unknown device has been removed.
             //
@@ -318,8 +309,7 @@ USBHCDEvents(void *pvData)
         //
         // A bus power fault was detected.
         //
-        case USB_EVENT_POWER_FAULT:
-        {
+        case USB_EVENT_POWER_FAULT: {
             //
             // No power means no device is present.
             //
@@ -327,8 +317,7 @@ USBHCDEvents(void *pvData)
             break;
         }
 
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -400,19 +389,16 @@ USBStickRun(void)
     //
     // Take action based on the application state.
     //
-    switch(g_iState)
-    {
+    switch(g_iState) {
         //
         // A device has enumerated.
         //
-        case eSTATE_DEVICE_ENUM:
-        {
+        case eSTATE_DEVICE_ENUM: {
             //
             // Check to see if the device is ready.  If not then stay
             // in this state and we will check it again on the next pass.
             //
-            if(USBHMSCDriveReady(g_psMSCInstance) != 0)
-            {
+            if(USBHMSCDriveReady(g_psMSCInstance) != 0) {
                 //
                 // Wait about 500ms before attempting to check if the
                 // device is ready again.
@@ -438,10 +424,8 @@ USBStickRun(void)
         //
         // If there is no device then just wait for one.
         //
-        case eSTATE_NO_DEVICE:
-        {
-            if(g_ui32Flags == FLAGS_DEVICE_PRESENT)
-            {
+        case eSTATE_NO_DEVICE: {
+            if(g_ui32Flags == FLAGS_DEVICE_PRESENT) {
                 //
                 // Clear the Device Present flag.
                 //
@@ -453,13 +437,11 @@ USBStickRun(void)
         //
         // An unknown device was connected.
         //
-        case eSTATE_UNKNOWN_DEVICE:
-        {
+        case eSTATE_UNKNOWN_DEVICE: {
             //
             // If this is a new device then change the status.
             //
-            if((g_ui32Flags & FLAGS_DEVICE_PRESENT) == 0)
-            {
+            if((g_ui32Flags & FLAGS_DEVICE_PRESENT) == 0) {
                 //
                 // Unknown device is present
                 //
@@ -476,24 +458,21 @@ USBStickRun(void)
         //
         // The device is ready and in use.
         //
-        case eSTATE_DEVICE_READY:
-        {
+        case eSTATE_DEVICE_READY: {
             break;
         }
 
         //
         // Something has caused a power fault.
         //
-        case eSTATE_POWER_FAULT:
-        {
+        case eSTATE_POWER_FAULT: {
             break;
         }
 
         //
         // Unexpected USB state.  Set back to default.
         //
-        default:
-        {
+        default: {
             g_iState = eSTATE_NO_DEVICE;
             g_ui32Flags &= ~(FLAGS_DEVICE_PRESENT | FLAGS_FILE_OPENED);
             break;
@@ -537,8 +516,7 @@ CreateFileName(char *pcFilename, uint32_t ui32Len)
     //
     // Enter loop to search for available file name
     //
-    do
-    {
+    do {
         //
         // Prepare a numerical based file name and attempt to open it
         //
@@ -548,8 +526,7 @@ CreateFileName(char *pcFilename, uint32_t ui32Len)
         //
         // If file does not exist, then we have found a useable file name
         //
-        if(iFResult == FR_NO_FILE)
-        {
+        if(iFResult == FR_NO_FILE) {
             //
             // Return to caller, indicating that a file name has been found.
             //
@@ -598,13 +575,11 @@ USBStickOpenLogFile(char *pcFilename8)
     // Check state for ready device
     //
     g_ui32Flags &= ~FLAGS_FILE_OPENED;
-    if(g_iState == eSTATE_DEVICE_READY)
-    {
+    if(g_iState == eSTATE_DEVICE_READY) {
         //
         // If a file name is specified then open that file
         //
-        if(pcFilename8 && pcFilename8[0])
-        {
+        if(pcFilename8 && pcFilename8[0]) {
             //
             // Copy the filename into local storage and cap at 8 characters
             // length.
@@ -627,10 +602,8 @@ USBStickOpenLogFile(char *pcFilename8)
         //
         // Otherwise no file name was specified so create a new one.
         //
-        else
-        {
-            if(CreateFileName(pcFilename, sizeof(pcFilename)))
-            {
+        else {
+            if(CreateFileName(pcFilename, sizeof(pcFilename))) {
                 //
                 // There was a problem creating a file name so return an error
                 //
@@ -643,9 +616,8 @@ USBStickOpenLogFile(char *pcFilename8)
         // it will be opened, and if not it will be created.
         //
         iFResult = f_open(&g_sFileObject, pcFilename, (FA_OPEN_ALWAYS |
-                                                      FA_WRITE));
-        if(iFResult != FR_OK)
-        {
+                          FA_WRITE));
+        if(iFResult != FR_OK) {
             return(0);
         }
 
@@ -655,8 +627,7 @@ USBStickOpenLogFile(char *pcFilename8)
         // is a new file then this will just be the beginning of the file.
         //
         iFResult = f_lseek(&g_sFileObject, g_sFileObject.fsize);
-        if(iFResult != FR_OK)
-        {
+        if(iFResult != FR_OK) {
             return(0);
         }
 
@@ -669,16 +640,14 @@ USBStickOpenLogFile(char *pcFilename8)
         // If no file name was specified, then this is a new file so write a
         // header line with column titles to the CSV file.
         //
-        if(!pcFilename8 || !pcFilename8[0])
-        {
+        if(!pcFilename8 || !pcFilename8[0]) {
             //
             // Write a header line to the CSV file
             //
             iFResult = f_write(&g_sFileObject, g_pcCSVHeaderLine,
-                               sizeof(g_pcCSVHeaderLine), 
+                               sizeof(g_pcCSVHeaderLine),
                                (UINT *)&ui32BytesWritten);
-            if(iFResult != FR_OK)
-            {
+            if(iFResult != FR_OK) {
                 g_ui32Flags &= ~FLAGS_FILE_OPENED;
                 return(0);
             }
@@ -699,14 +668,12 @@ USBStickOpenLogFile(char *pcFilename8)
         // header row.  The caller's file name is unchanged so return the
         // same value back.
         //
-        else
-        {
+        else {
             return(pcFilename8);
         }
     }
 
-    else
-    {
+    else {
         //
         // Device not ready so return NULL.
         //
@@ -732,16 +699,14 @@ USBStickWriteRecord(tLogRecord *psRecord)
     // Check the arguments
     //
     ASSERT(psRecord);
-    if(!psRecord)
-    {
+    if(!psRecord) {
         return(1);
     }
 
     //
     // Check state for ready device and opened file
     //
-    if((g_iState != eSTATE_DEVICE_READY) || !(g_ui32Flags & FLAGS_FILE_OPENED))
-    {
+    if((g_iState != eSTATE_DEVICE_READY) || !(g_ui32Flags & FLAGS_FILE_OPENED)) {
         return(1);
     }
 
@@ -757,20 +722,16 @@ USBStickWriteRecord(tLogRecord *psRecord)
     //
     ui32RecordIdx = 0;
     ui32Selected = psRecord->ui16ItemMask;
-    for(ui32Idx = 0; ui32Idx < NUM_LOG_ITEMS; ui32Idx++)
-    {
+    for(ui32Idx = 0; ui32Idx < NUM_LOG_ITEMS; ui32Idx++) {
         //
         // If this data item is selected, then print a value to the CSV buffer
         //
-        if(ui32Selected & 1)
-        {
+        if(ui32Selected & 1) {
             ui32BufIdx += usnprintf(&pcBuf[ui32BufIdx],
                                     (sizeof(pcBuf) - ui32BufIdx), ",%d",
                                     psRecord->pi16Items[ui32RecordIdx]);
             ui32RecordIdx++;
-        }
-        else
-        {
+        } else {
             //
             // Otherwise, this column of data is not selected so emit just a
             // comma
@@ -794,22 +755,19 @@ USBStickWriteRecord(tLogRecord *psRecord)
     //
     // Now write the entire buffer to the USB stick file
     //
-    iFResult = f_write(&g_sFileObject, pcBuf, ui32BufIdx, 
+    iFResult = f_write(&g_sFileObject, pcBuf, ui32BufIdx,
                        (UINT *)&ui32BytesWritten);
 
     //
     // Check for errors
     //
-    if((iFResult != FR_OK) || (ui32BytesWritten != ui32BufIdx))
-    {
+    if((iFResult != FR_OK) || (ui32BytesWritten != ui32BufIdx)) {
         //
         // Some error occurred
         //
         g_ui32Flags &= ~FLAGS_FILE_OPENED;
         return(1);
-    }
-    else
-    {
+    } else {
         //
         // No errors occurred, return success
         //

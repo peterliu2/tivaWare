@@ -231,17 +231,17 @@
 #define PWM_RV_CTL              0x00000000  // Master control of the PWM module
 #define PWM_RV_SYNC             0x00000000  // Counter synch for PWM generators
 #define PWM_RV_ENABLE           0x00000000  // Master enable for the PWM
-                                            // output pins
+// output pins
 #define PWM_RV_INVERT           0x00000000  // Inversion control for
-                                            // PWM output pins
+// PWM output pins
 #define PWM_RV_FAULT            0x00000000  // Fault handling for the PWM
-                                            // output pins
+// output pins
 #define PWM_RV_INTEN            0x00000000  // Interrupt enable
 #define PWM_RV_RIS              0x00000000  // Raw interrupt status
 #define PWM_RV_ISC              0x00000000  // Interrupt status and clearing
 #define PWM_RV_STATUS           0x00000000  // Status
 #define PWM_RV_X_CTL            0x00000000  // Master control of the PWM
-                                            // generator block
+// generator block
 #define PWM_RV_X_INTEN          0x00000000  // Interrupt and trigger enable
 #define PWM_RV_X_RIS            0x00000000  // Raw interrupt status
 #define PWM_RV_X_ISC            0x00000000  // Interrupt status and clearing
@@ -253,8 +253,8 @@
 #define PWM_RV_X_GENB           0x00000000  // Controls PWM generator B
 #define PWM_RV_X_DBCTL          0x00000000  // Control the dead band generator
 #define PWM_RV_X_DBRISE         0x00000000  // The dead band rising edge delay
-                                            // count
+// count
 #define PWM_RV_X_DBFALL         0x00000000  // The dead band falling edge delay
-                                            // count
+// count
 
 #endif //  __HW_PWM_H__

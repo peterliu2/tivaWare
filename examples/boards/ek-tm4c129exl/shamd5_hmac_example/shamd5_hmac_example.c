@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C129EXL Firmware Package.
 //
 //*****************************************************************************
@@ -126,8 +126,7 @@ Cmd_reset(int argc, char *argv[])
     //
     // Wait for the peipheral to be ready.
     //
-    while(!MAP_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0))
-    {
+    while(!MAP_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0)) {
     }
 
     //
@@ -152,8 +151,7 @@ Cmd_algo(int argc, char *argv[])
     //
     // Check if correct argument is passed.
     //
-    if(argc != 2)
-    {
+    if(argc != 2) {
         //
         // No - Print error message and exit.
         //
@@ -166,28 +164,19 @@ Cmd_algo(int argc, char *argv[])
     // Check if the argument passed has correct value.  If yes, then process
     // the argument.
     //
-    if(ustrcmp("md5",argv[1]) == 0 )
-    {
+    if(ustrcmp("md5",argv[1]) == 0 ) {
         ui32Algo = SHAMD5_ALGO_HMAC_MD5;
         g_ui32HMACSizeInBytes = 16;
-    }
-    else if(ustrcmp("sha1",argv[1]) == 0 )
-    {
+    } else if(ustrcmp("sha1",argv[1]) == 0 ) {
         ui32Algo = SHAMD5_ALGO_HMAC_SHA1;
         g_ui32HMACSizeInBytes = 20;
-    }
-    else if(ustrcmp("sha224",argv[1]) == 0 )
-    {
+    } else if(ustrcmp("sha224",argv[1]) == 0 ) {
         ui32Algo = SHAMD5_ALGO_HMAC_SHA224;
         g_ui32HMACSizeInBytes = 28;
-    }
-    else if(ustrcmp("sha256",argv[1]) == 0 )
-    {
+    } else if(ustrcmp("sha256",argv[1]) == 0 ) {
         ui32Algo = SHAMD5_ALGO_HMAC_SHA256;
         g_ui32HMACSizeInBytes = 32;
-    }
-    else
-    {
+    } else {
         //
         // Argument passed is not supported.  Inform user and exit.
         //
@@ -220,8 +209,7 @@ Cmd_key(int argc, char *argv[])
     //
     // Check if at least one key value is passed.
     //
-    if(argc < 2)
-    {
+    if(argc < 2) {
         //
         // No - Print error message and exit.
         //
@@ -238,8 +226,7 @@ Cmd_key(int argc, char *argv[])
     ui32Index = 1;
     ustrncpy(g_pcHMACKey, argv[ui32Index], sizeof(g_pcHMACKey));
     ui32Index++;
-    while(ui32Index < argc)
-    {
+    while(ui32Index < argc) {
         strcat(g_pcHMACKey, " ");
         strcat(g_pcHMACKey, argv[ui32Index]);
         ui32Index++;
@@ -262,8 +249,7 @@ Cmd_data(int argc, char *argv[])
     //
     // Check if at least one key value is passed.
     //
-    if(argc < 2)
-    {
+    if(argc < 2) {
         //
         // No - Print error message and exit.
         //
@@ -280,8 +266,7 @@ Cmd_data(int argc, char *argv[])
     ui32Index = 1;
     ustrncpy(g_pcHMACData, argv[ui32Index], sizeof(g_pcHMACData));
     ui32Index++;
-    while(ui32Index < argc)
-    {
+    while(ui32Index < argc) {
         strcat(g_pcHMACData," ");
         strcat(g_pcHMACData, argv[ui32Index]);
         ui32Index++;
@@ -306,8 +291,7 @@ Cmd_hmac(int argc, char *argv[])
     //
     // Check if correct parameters were passed.
     //
-    if(argc != 1)
-    {
+    if(argc != 1) {
         //
         // No - Print error message and exit.
         //
@@ -325,7 +309,7 @@ Cmd_hmac(int argc, char *argv[])
     // Copy the data to SHA/MD5 module and begin the HMAC generation.
     //
     MAP_SHAMD5HMACProcess(SHAMD5_BASE, (uint32_t *) g_pcHMACData,
-                      strlen(g_pcHMACData), pui32HashResult);
+                          strlen(g_pcHMACData), pui32HashResult);
 
     //
     // Copy the HMAC output from a 32-bit pointer to an 8-bit pointer, to help
@@ -338,8 +322,7 @@ Cmd_hmac(int argc, char *argv[])
     //
     UARTprintf("\nHASH OUTPUT\n");
     for(ui32Index = 0; ui32Index < g_ui32HMACSizeInBytes;
-        ui32Index++, pui8Ptr++)
-    {
+            ui32Index++, pui8Ptr++) {
         UARTprintf("%02x", *pui8Ptr);
     }
 
@@ -375,8 +358,7 @@ Cmd_help(int argc, char *argv[])
     // Enter a loop to read each entry from the command table.  The end of the
     // table has been reached when the command name is NULL.
     //
-    while(psEntry->pcCmd)
-    {
+    while(psEntry->pcCmd) {
         //
         // Print the command name and the brief description.
         //
@@ -441,23 +423,30 @@ InitConsole(void)
 // brief description.
 //
 //*****************************************************************************
-tCmdLineEntry g_psCmdTable[] =
-{
+tCmdLineEntry g_psCmdTable[] = {
     { "help",   Cmd_help,   " Display list of commands" },
     { "?",      Cmd_help,   " Display list of commands" },
     { "h",      Cmd_help,   " Display list of commands" },
     { "reset",  Cmd_reset,  " Resets the Crypto Modules" },
-    { "algo",   Cmd_algo,   " Selects HMAC algorithm\n\t     Syntax:"
-                            " algo <HMAC>\n\t     <HMAC> takes one of md5,"
-                            " sha1, sha224 or sha256"},
-    { "key",    Cmd_key,    " Enter Key for HMAC operation\n\t     Syntax:"
-                            " key <KEY>\n\t     <KEY> can take spaces" },
-    { "data",   Cmd_data,   " Enter Key for HMAC operation\n\t     Syntax:"
-                            " data <DATA>\n\t     <DATA> can take spaces" },
-    { "hmac",   Cmd_hmac,   " Output HMAC based on:\n\t "
-                            "   * algo - set HMAC algorithm\n\t "
-                            "   * key - enter key\n\t "
-                            "   * data - enter data" },
+    {
+        "algo",   Cmd_algo,   " Selects HMAC algorithm\n\t     Syntax:"
+        " algo <HMAC>\n\t     <HMAC> takes one of md5,"
+        " sha1, sha224 or sha256"
+    },
+    {
+        "key",    Cmd_key,    " Enter Key for HMAC operation\n\t     Syntax:"
+        " key <KEY>\n\t     <KEY> can take spaces"
+    },
+    {
+        "data",   Cmd_data,   " Enter Key for HMAC operation\n\t     Syntax:"
+        " data <DATA>\n\t     <DATA> can take spaces"
+    },
+    {
+        "hmac",   Cmd_hmac,   " Output HMAC based on:\n\t "
+        "   * algo - set HMAC algorithm\n\t "
+        "   * key - enter key\n\t "
+        "   * data - enter data"
+    },
     { 0, 0, 0 }
 };
 
@@ -487,8 +476,7 @@ main(void)
     //
     // Wait for the peripheral to be ready.
     //
-    while(!MAP_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0))
-    {
+    while(!MAP_SysCtlPeripheralReady(SYSCTL_PERIPH_CCM0)) {
     }
 
     //
@@ -506,8 +494,7 @@ main(void)
     // Enter an infinite loop for reading and processing commands from the
     // user.
     //
-    while(1)
-    {
+    while(1) {
         //
         // Begin command prompt.
         //
@@ -527,16 +514,14 @@ main(void)
         //
         // Handle the case of bad command.
         //
-        if(iStatus == CMDLINE_BAD_CMD)
-        {
+        if(iStatus == CMDLINE_BAD_CMD) {
             UARTprintf("Bad command!\n");
         }
 
         //
         // Handle the case of too many arguments.
         //
-        else if(iStatus == CMDLINE_TOO_MANY_ARGS)
-        {
+        else if(iStatus == CMDLINE_TOO_MANY_ARGS) {
             UARTprintf("Too many arguments for command processor!\n");
         }
     }

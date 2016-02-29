@@ -4,23 +4,23 @@
 //
 // Copyright (c) 2012-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 //   Redistribution and use in source and binary forms, with or without
 //   modification, are permitted provided that the following conditions
 //   are met:
-// 
+//
 //   Redistributions of source code must retain the above copyright
 //   notice, this list of conditions and the following disclaimer.
-// 
+//
 //   Redistributions in binary form must reproduce the above copyright
 //   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the  
+//   documentation and/or other materials provided with the
 //   distribution.
-// 
+//
 //   Neither the name of Texas Instruments Incorporated nor the names of
 //   its contributors may be used to endorse or promote products derived
 //   from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +32,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -143,9 +143,9 @@
 #define ONEWIRE_IM_DMA          0x00000010  // DMA Done Interrupt Mask
 #define ONEWIRE_IM_STUCK        0x00000008  // Stuck Status Interrupt Mask
 #define ONEWIRE_IM_NOATR        0x00000004  // No Answer-to-Reset Interrupt
-                                            // Mask
+// Mask
 #define ONEWIRE_IM_OPC          0x00000002  // Operation Complete Interrupt
-                                            // Mask
+// Mask
 #define ONEWIRE_IM_RST          0x00000001  // Reset Interrupt Mask
 
 //*****************************************************************************
@@ -155,11 +155,11 @@
 //*****************************************************************************
 #define ONEWIRE_RIS_DMA         0x00000010  // DMA Done Raw Interrupt Status
 #define ONEWIRE_RIS_STUCK       0x00000008  // Stuck Status Raw Interrupt
-                                            // Status
+// Status
 #define ONEWIRE_RIS_NOATR       0x00000004  // No Answer-to-Reset Raw Interrupt
-                                            // Status
+// Status
 #define ONEWIRE_RIS_OPC         0x00000002  // Operation Complete Raw Interrupt
-                                            // Status
+// Status
 #define ONEWIRE_RIS_RST         0x00000001  // Reset Raw Interrupt Status
 
 //*****************************************************************************
@@ -169,11 +169,11 @@
 //*****************************************************************************
 #define ONEWIRE_MIS_DMA         0x00000010  // DMA Done Masked Interrupt Status
 #define ONEWIRE_MIS_STUCK       0x00000008  // Stuck Status Masked Interrupt
-                                            // Status
+// Status
 #define ONEWIRE_MIS_NOATR       0x00000004  // No Answer-to-Reset Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define ONEWIRE_MIS_OPC         0x00000002  // Operation Complete Masked
-                                            // Interrupt Status
+// Interrupt Status
 #define ONEWIRE_MIS_RST         0x00000001  // Reset Interrupt Mask
 
 //*****************************************************************************
@@ -184,9 +184,9 @@
 #define ONEWIRE_ICR_DMA         0x00000010  // DMA Done Interrupt Clear
 #define ONEWIRE_ICR_STUCK       0x00000008  // Stuck Status Interrupt Clear
 #define ONEWIRE_ICR_NOATR       0x00000004  // No Answer-to-Reset Interrupt
-                                            // Clear
+// Clear
 #define ONEWIRE_ICR_OPC         0x00000002  // Operation Complete Interrupt
-                                            // Clear
+// Clear
 #define ONEWIRE_ICR_RST         0x00000001  // Reset Interrupt Clear
 
 //*****************************************************************************
@@ -198,17 +198,17 @@
 #define ONEWIRE_DMA_DMAOP_M     0x00000006  // uDMA Operation
 #define ONEWIRE_DMA_DMAOP_DIS   0x00000000  // uDMA disabled
 #define ONEWIRE_DMA_DMAOP_RDSNG 0x00000002  // uDMA single read: 1-Wire
-                                            // requests uDMA to read
-                                            // ONEWIREDATR register after each
-                                            // read transaction
+// requests uDMA to read
+// ONEWIREDATR register after each
+// read transaction
 #define ONEWIRE_DMA_DMAOP_WRMUL 0x00000004  // uDMA multiple write: 1-Wire
-                                            // requests uDMA to load whenever
-                                            // the ONEWIREDATW register is
-                                            // empty
+// requests uDMA to load whenever
+// the ONEWIREDATW register is
+// empty
 #define ONEWIRE_DMA_DMAOP_RDMUL 0x00000006  // uDMA multiple read: An initial
-                                            // read occurs and subsequent reads
-                                            // start after uDMA has read the
-                                            // ONEWIREDATR register
+// read occurs and subsequent reads
+// start after uDMA has read the
+// ONEWIREDATR register
 #define ONEWIRE_DMA_RST         0x00000001  // uDMA Reset
 
 //*****************************************************************************

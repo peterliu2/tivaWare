@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2014-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Firmware Development Package.
 //
 //*****************************************************************************
@@ -113,8 +113,8 @@ void SNEP_init(void)
     g_eRxPacketStatus = RECEIVED_NO_FRAGMENT;
     g_ui32SNEPRemainingRxPayloadBytes = 0;
     g_ui8SNEPReceivedBytes = 0;
-	g_ui8MaxPayload = SNEP_MAX_BUFFER;
-	g_ui32TxIndex = 0;
+    g_ui8MaxPayload = SNEP_MAX_BUFFER;
+    g_ui32TxIndex = 0;
 }
 
 //*****************************************************************************
@@ -132,14 +132,12 @@ void SNEP_init(void)
 //*****************************************************************************
 void SNEP_setMaxPayload(uint8_t ui8MaxPayload)
 {
-	if(ui8MaxPayload <= SNEP_MAX_BUFFER)
-	{
-		g_ui8MaxPayload = ui8MaxPayload;
-		if(g_ui8MaxPayload == 0x80)
-		{
-			ui8MaxPayload = 0;
-		}
-	}
+    if(ui8MaxPayload <= SNEP_MAX_BUFFER) {
+        g_ui8MaxPayload = ui8MaxPayload;
+        if(g_ui8MaxPayload == 0x80) {
+            ui8MaxPayload = 0;
+        }
+    }
 }
 
 //*****************************************************************************
@@ -160,17 +158,15 @@ tStatus SNEP_setupPacket(uint8_t * pui8PacketPtr, uint32_t ui32PacketLength)
 {
     tStatus ePacketSetupStatus;
 
-    if(g_eSNEPConnectionStatus == SNEP_CONNECTION_IDLE )
-    {
+    if(g_eSNEPConnectionStatus == SNEP_CONNECTION_IDLE ) {
         g_pui8SNEPTxPacketPtr = pui8PacketPtr;
-		// Reset TX Index
-		g_ui32TxIndex = 0;
+        // Reset TX Index
+        g_ui32TxIndex = 0;
         g_ui32SNEPPacketLength = ui32PacketLength;
         g_eSNEPConnectionStatus = SNEP_CONNECTION_IDLE;
 
         ePacketSetupStatus = STATUS_SUCCESS;
-    }
-    else
+    } else
         ePacketSetupStatus = STATUS_FAIL;
 
     return ePacketSetupStatus;
@@ -205,21 +201,16 @@ uint8_t SNEP_sendRequest(uint8_t * pui8DataPtr, tSNEPCommands eRequestCmd)
     static uint8_t * pui8SNEPPacketPtr;
     volatile uint8_t ui8counter;
 
-    switch(eRequestCmd)
-    {
-        case SNEP_REQUEST_CONTINUE:
-        {
+    switch(eRequestCmd) {
+        case SNEP_REQUEST_CONTINUE: {
             if(g_eSNEPConnectionStatus == SNEP_CONNECTION_IDLE)
+                break;
+        }
+        case SNEP_REQUEST_GET: {
             break;
         }
-        case SNEP_REQUEST_GET:
-        {
-            break;
-        }
-        case SNEP_REQUEST_PUT:
-        {
-            if(g_eSNEPConnectionStatus == SNEP_CONNECTION_IDLE)
-            {
+        case SNEP_REQUEST_PUT: {
+            if(g_eSNEPConnectionStatus == SNEP_CONNECTION_IDLE) {
                 //
                 // Set sneP_packet_ptr to first address
                 //
@@ -239,25 +230,24 @@ uint8_t SNEP_sendRequest(uint8_t * pui8DataPtr, tSNEPCommands eRequestCmd)
                 // Length (4 bytes)
                 //
                 pui8DataPtr[ui8offset++] =
-                        (uint8_t) ((g_ui32SNEPPacketLength & 0xFF000000) >> 24);
+                    (uint8_t) ((g_ui32SNEPPacketLength & 0xFF000000) >> 24);
                 pui8DataPtr[ui8offset++] =
-                        (uint8_t) ((g_ui32SNEPPacketLength & 0x00FF0000) >> 16);
+                    (uint8_t) ((g_ui32SNEPPacketLength & 0x00FF0000) >> 16);
                 pui8DataPtr[ui8offset++] =
-                        (uint8_t) ((g_ui32SNEPPacketLength & 0x0000FF00) >> 8);
+                    (uint8_t) ((g_ui32SNEPPacketLength & 0x0000FF00) >> 8);
                 pui8DataPtr[ui8offset++] =
-                        (uint8_t) (g_ui32SNEPPacketLength & 0x000000FF);
+                    (uint8_t) (g_ui32SNEPPacketLength & 0x000000FF);
 
                 //
                 // The PUT Request has 6 bytes of overhead (Version (1) Request
                 // Field (1) Length (4)).
                 //
-                if( g_ui32SNEPPacketLength > (g_ui8MaxPayload - 6))
-                {
+                if( g_ui32SNEPPacketLength > (g_ui8MaxPayload - 6)) {
                     //
                     // Remaining bytes = Total Length - (SNEP_MAX_BUFFER - 13)
                     //
                     g_ui32SNEPPacketLength  = g_ui32SNEPPacketLength -
-                                                    (g_ui8MaxPayload - 6);
+                                              (g_ui8MaxPayload - 6);
                     ui8PacketLength = (g_ui8MaxPayload - 6);
 
                     //
@@ -265,9 +255,7 @@ uint8_t SNEP_sendRequest(uint8_t * pui8DataPtr, tSNEPCommands eRequestCmd)
                     //
                     g_eSNEPConnectionStatus =
                         SNEP_CONNECTION_WAITING_FOR_CONTINUE;
-                }
-                else
-                {
+                } else {
                     ui8PacketLength = g_ui32SNEPPacketLength;
                     g_ui32SNEPPacketLength = 0;
 
@@ -281,51 +269,42 @@ uint8_t SNEP_sendRequest(uint8_t * pui8DataPtr, tSNEPCommands eRequestCmd)
                 //
                 // Copy the snep_packet buffer into the pui8DataPtr
                 //
-                for(ui8counter = 0; ui8counter < ui8PacketLength; ui8counter++)
-                {
+                for(ui8counter = 0; ui8counter < ui8PacketLength; ui8counter++) {
                     pui8DataPtr[ui8offset++] =  pui8SNEPPacketPtr[g_ui32TxIndex++];
 
                 }
-            }
-            else if(g_eSNEPConnectionStatus ==
-                        SNEP_CONNECTION_SENDING_N_FRAGMENTS)
-            {
-                if( g_ui32SNEPPacketLength > g_ui8MaxPayload)
-                {
+            } else if(g_eSNEPConnectionStatus ==
+                      SNEP_CONNECTION_SENDING_N_FRAGMENTS) {
+                if( g_ui32SNEPPacketLength > g_ui8MaxPayload) {
                     //
                     // Remaining bytes = Total Length - SNEP_MAX_BUFFER
                     //
                     g_ui32SNEPPacketLength  = g_ui32SNEPPacketLength -
-                                                    g_ui8MaxPayload;
+                                              g_ui8MaxPayload;
                     ui8PacketLength = g_ui8MaxPayload;
-                }
-                else
-                {
-                	ui8PacketLength = g_ui32SNEPPacketLength;
+                } else {
+                    ui8PacketLength = g_ui32SNEPPacketLength;
                     //
                     // Remaining bytes = 0
                     //
                     g_ui32SNEPPacketLength = 0;
-                	g_eSNEPConnectionStatus = SNEP_CONNECTION_WAITING_FOR_SUCCESS;
+                    g_eSNEPConnectionStatus = SNEP_CONNECTION_WAITING_FOR_SUCCESS;
                 }
 
                 //
                 // Copy the snep_packet buffer into the pui8DataPtr
                 //
-                for(ui8counter = 0; ui8counter < ui8PacketLength; ui8counter++)
-                {
-					pui8DataPtr[ui8offset++] =  pui8SNEPPacketPtr[g_ui32TxIndex++];
+                for(ui8counter = 0; ui8counter < ui8PacketLength; ui8counter++) {
+                    pui8DataPtr[ui8offset++] =  pui8SNEPPacketPtr[g_ui32TxIndex++];
                 }
 
             }
-        break;
-        }
-        case SNEP_REQUEST_REJECT:
-        {
             break;
         }
-        default:
-        {
+        case SNEP_REQUEST_REJECT: {
+            break;
+        }
+        default: {
             break;
         }
     }
@@ -362,12 +341,9 @@ uint8_t SNEP_sendResponse(uint8_t * pui8DataPtr, tSNEPCommands eResponseCmd)
 {
     uint8_t ui8offset = 0;
 
-    switch(eResponseCmd)
-    {
-        case SNEP_RESPONSE_CONTINUE:
-        {
-            if(g_eSNEPConnectionStatus == SNEP_CONNECTION_RECEIVED_FIRST_PACKET)
-            {
+    switch(eResponseCmd) {
+        case SNEP_RESPONSE_CONTINUE: {
+            if(g_eSNEPConnectionStatus == SNEP_CONNECTION_RECEIVED_FIRST_PACKET) {
                 //
                 // SNEP Protocol Version
                 //
@@ -389,10 +365,8 @@ uint8_t SNEP_sendResponse(uint8_t * pui8DataPtr, tSNEPCommands eResponseCmd)
             }
             break;
         }
-        case SNEP_RESPONSE_SUCCESS:
-        {
-            if(g_eSNEPConnectionStatus ==  SNEP_CONNECTION_RECEIVE_COMPLETE)
-            {
+        case SNEP_RESPONSE_SUCCESS: {
+            if(g_eSNEPConnectionStatus ==  SNEP_CONNECTION_RECEIVE_COMPLETE) {
                 //
                 // SNEP Protocol Version
                 //
@@ -414,30 +388,23 @@ uint8_t SNEP_sendResponse(uint8_t * pui8DataPtr, tSNEPCommands eResponseCmd)
             }
             break;
         }
-        case SNEP_RESPONSE_NOT_FOUND:
-        {
+        case SNEP_RESPONSE_NOT_FOUND: {
             break;
         }
-        case SNEP_RESPONSE_EXCESS_DATA:
-        {
+        case SNEP_RESPONSE_EXCESS_DATA: {
             break;
         }
-        case SNEP_RESPONSE_BAD_REQUEST:
-        {
+        case SNEP_RESPONSE_BAD_REQUEST: {
             break;
         }
-        case SNEP_RESPONSE_NOT_IMPLEMENTED:
-        {
+        case SNEP_RESPONSE_NOT_IMPLEMENTED: {
             break;
         }
-        case SNEP_RESPONSE_UNSUPPORTED_VER:
-        {
+        case SNEP_RESPONSE_UNSUPPORTED_VER: {
             break;
         }
-        case SNEP_RESPONSE_REJECT:
-        {
-            if(g_eSNEPConnectionStatus ==  SNEP_CONNECTION_EXCESS_SIZE)
-            {
+        case SNEP_RESPONSE_REJECT: {
+            if(g_eSNEPConnectionStatus ==  SNEP_CONNECTION_EXCESS_SIZE) {
                 //
                 // SNEP Protocol Version
                 //
@@ -459,8 +426,7 @@ uint8_t SNEP_sendResponse(uint8_t * pui8DataPtr, tSNEPCommands eResponseCmd)
             }
             break;
         }
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -490,140 +456,110 @@ void SNEP_processReceivedData(uint8_t * pui8RxBuffer, uint8_t ui8RxLength)
     eCommandField = (tSNEPCommands) pui8RxBuffer[1];
 
     if((g_eSNEPConnectionStatus == SNEP_CONNECTION_RECEIVED_FIRST_PACKET) ||
-        (g_eSNEPConnectionStatus == SNEP_CONNECTION_RECEIVING_N_FRAGMENTS))
-    {
-        if(g_ui32SNEPRemainingRxPayloadBytes > ui8RxLength)
-        {
+            (g_eSNEPConnectionStatus == SNEP_CONNECTION_RECEIVING_N_FRAGMENTS)) {
+        if(g_ui32SNEPRemainingRxPayloadBytes > ui8RxLength) {
             g_ui8SNEPReceivedBytes = ui8RxLength;
             g_eSNEPConnectionStatus = SNEP_CONNECTION_RECEIVING_N_FRAGMENTS;
             g_eRxPacketStatus = RECEIVED_N_FRAGMENT;
-        }
-        else
-        {
+        } else {
             g_ui8SNEPReceivedBytes = (uint8_t)g_ui32SNEPRemainingRxPayloadBytes;
             g_eSNEPConnectionStatus = SNEP_CONNECTION_RECEIVE_COMPLETE;
             g_eRxPacketStatus = RECEIVED_FRAGMENT_COMPLETED;
         }
         g_ui32SNEPRemainingRxPayloadBytes = g_ui32SNEPRemainingRxPayloadBytes -
-                                                g_ui8SNEPReceivedBytes;
+                                            g_ui8SNEPReceivedBytes;
         g_pui8SNEPRxPacketPtr = &pui8RxBuffer[0];
-    }
-    else if(eCommandField >= 0x80)
-    {
+    } else if(eCommandField >= 0x80) {
         //
         // Process Responses
         //
-        switch(eCommandField)
-        {
-            case SNEP_RESPONSE_CONTINUE:
-            {
+        switch(eCommandField) {
+            case SNEP_RESPONSE_CONTINUE: {
                 if(g_eSNEPConnectionStatus ==
-                                        SNEP_CONNECTION_WAITING_FOR_CONTINUE)
-                {
+                        SNEP_CONNECTION_WAITING_FOR_CONTINUE) {
                     g_eSNEPConnectionStatus =
-                                            SNEP_CONNECTION_SENDING_N_FRAGMENTS;
+                        SNEP_CONNECTION_SENDING_N_FRAGMENTS;
                 }
                 break;
             }
-            case SNEP_RESPONSE_SUCCESS:
-            {
+            case SNEP_RESPONSE_SUCCESS: {
                 if(g_eSNEPConnectionStatus ==
-                    SNEP_CONNECTION_WAITING_FOR_SUCCESS)
-                {
+                        SNEP_CONNECTION_WAITING_FOR_SUCCESS) {
                     g_eSNEPConnectionStatus = SNEP_CONNECTION_SEND_COMPLETE;
                 }
                 break;
             }
-            case SNEP_RESPONSE_NOT_FOUND:
-            {
+            case SNEP_RESPONSE_NOT_FOUND: {
                 break;
             }
-            case SNEP_RESPONSE_EXCESS_DATA:
-            {
+            case SNEP_RESPONSE_EXCESS_DATA: {
                 break;
             }
-            case SNEP_RESPONSE_BAD_REQUEST:
-            {
+            case SNEP_RESPONSE_BAD_REQUEST: {
                 break;
             }
-            case SNEP_RESPONSE_NOT_IMPLEMENTED:
-            {
+            case SNEP_RESPONSE_NOT_IMPLEMENTED: {
                 break;
             }
-            case SNEP_RESPONSE_UNSUPPORTED_VER:
-            {
+            case SNEP_RESPONSE_UNSUPPORTED_VER: {
                 break;
             }
-            case SNEP_RESPONSE_REJECT:
-            {
+            case SNEP_RESPONSE_REJECT: {
                 break;
             }
-            default :
-            {
+            default : {
                 break;
             }
         }
-    }
-    else
-    {
+    } else {
         //
         // Process Requests
         //
-        switch(eCommandField)
-        {
-            case SNEP_REQUEST_CONTINUE:
-            {
+        switch(eCommandField) {
+            case SNEP_REQUEST_CONTINUE: {
                 break;
             }
-            case SNEP_REQUEST_GET:
-            {
+            case SNEP_REQUEST_GET: {
                 break;
             }
-            case SNEP_REQUEST_PUT:
-            {
+            case SNEP_REQUEST_PUT: {
                 ui8SNEPversion = pui8RxBuffer[0];
-                if(ui8SNEPversion == SNEP_VERSION)
-                {
+                if(ui8SNEPversion == SNEP_VERSION) {
                     //
                     // Update remaining payload bytes
                     //
                     g_ui32SNEPRemainingRxPayloadBytes =
-                                    (
-                                    (uint32_t) (pui8RxBuffer[5] & 0xFF)         +
-                                    ((uint32_t) (pui8RxBuffer[4] & 0xFF) << 8)  +
-                                    ((uint32_t) (pui8RxBuffer[3] & 0xFF) << 16) +
-                                    ((uint32_t) (pui8RxBuffer[2] & 0xFF) << 24)
-                                    );
-                    if(g_ui32SNEPRemainingRxPayloadBytes > SNEP_MAX_PAYLOAD)
-                    {
+                        (
+                            (uint32_t) (pui8RxBuffer[5] & 0xFF)         +
+                            ((uint32_t) (pui8RxBuffer[4] & 0xFF) << 8)  +
+                            ((uint32_t) (pui8RxBuffer[3] & 0xFF) << 16) +
+                            ((uint32_t) (pui8RxBuffer[2] & 0xFF) << 24)
+                        );
+                    if(g_ui32SNEPRemainingRxPayloadBytes > SNEP_MAX_PAYLOAD) {
                         g_eSNEPConnectionStatus = SNEP_CONNECTION_EXCESS_SIZE;
-                    }
-                    else
-                    {
+                    } else {
                         if (g_ui32SNEPRemainingRxPayloadBytes
                                 > (ui8RxLength - 6)) {
                             g_ui8SNEPReceivedBytes = (ui8RxLength - 6);
                             g_eSNEPConnectionStatus =
-                                    SNEP_CONNECTION_RECEIVED_FIRST_PACKET;
+                                SNEP_CONNECTION_RECEIVED_FIRST_PACKET;
                             g_eRxPacketStatus = RECEIVED_FIRST_FRAGMENT;
-                        }
-                        else
-                        {
+                        } else {
                             //
                             // Packet Length
                             //
                             g_ui8SNEPReceivedBytes =
-                                    (uint8_t) g_ui32SNEPRemainingRxPayloadBytes;
+                                (uint8_t) g_ui32SNEPRemainingRxPayloadBytes;
                             g_eSNEPConnectionStatus =
-                                    SNEP_CONNECTION_RECEIVE_COMPLETE;
+                                SNEP_CONNECTION_RECEIVE_COMPLETE;
                             g_eRxPacketStatus = RECEIVED_FRAGMENT_COMPLETED;
                         }
                         //
                         // Update remaining payload bytes
                         //
                         g_ui32SNEPRemainingRxPayloadBytes =
-                                g_ui32SNEPRemainingRxPayloadBytes
-                                        - g_ui8SNEPReceivedBytes;
+                            g_ui32SNEPRemainingRxPayloadBytes
+                            - g_ui8SNEPReceivedBytes;
 
                         //
                         // Set the g_pui8SNEPRxPacketPtr to the start of payload
@@ -631,19 +567,15 @@ void SNEP_processReceivedData(uint8_t * pui8RxBuffer, uint8_t ui8RxLength)
                         g_pui8SNEPRxPacketPtr = &pui8RxBuffer[6];
 
                     }
-                }
-                else
-                {
+                } else {
                     g_eSNEPConnectionStatus = SNEP_WRONG_VERSION_RECEIVED;
                 }
                 break;
             }
-            case SNEP_REQUEST_REJECT:
-            {
+            case SNEP_REQUEST_REJECT: {
                 break;
             }
-            default :
-            {
+            default : {
                 break;
             }
         }
@@ -675,7 +607,7 @@ void SNEP_processReceivedData(uint8_t * pui8RxBuffer, uint8_t ui8RxLength)
 //
 //*****************************************************************************
 void SNEP_getReceiveStatus(tPacketStatus * peReceiveFlag, uint8_t * pui8length,
-     uint8_t ** pui8DataPtr)
+                           uint8_t ** pui8DataPtr)
 {
     //
     // Save RX Packet Status Flag

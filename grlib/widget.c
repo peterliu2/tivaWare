@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the Tiva Graphics Library.
 //
 //*****************************************************************************
@@ -82,8 +82,7 @@ uint32_t g_ui32MQMoveOverwrite = 0;
 // This structure describes the message queue used to hold widget messages.
 //
 //*****************************************************************************
-typedef struct
-{
+typedef struct {
     //
     // The flags that describe how this message should be processed; this is
     // defined by the MQ_FLAG_xxx flags.
@@ -121,8 +120,7 @@ tWidgetMessageQueue;
 // used instead.
 //
 //*****************************************************************************
-tWidget g_sRoot =
-{
+tWidget g_sRoot = {
     sizeof(tWidget),
     0,
     0,
@@ -303,19 +301,19 @@ WidgetMutexGet(uint8_t *pi8Mutex)
 // compiler from doing funny things with the optimizer.
 //
 #if defined(ccs)
-    __asm("    .sect \".text:WidgetMutexGet\"\n"
-          "    .clink\n"
-          "    .thumbfunc WidgetMutexGet\n"
-          "    .thumb\n"
-          "    .global WidgetMutexGet\n"
-          "WidgetMutexGet:\n"
-          "    mov         r1, #1\n"
-          "    ldrexb      r2, [r0]\n"
-          "    cmp         r2, #0\n"
-          "    it          EQ\n" // TI assembler requires upper case cond
-          "    strexbeq    r2, r1, [r0]\n"
-          "    mov         r0, r2\n"
-          "    bx          lr\n");
+__asm("    .sect \".text:WidgetMutexGet\"\n"
+      "    .clink\n"
+      "    .thumbfunc WidgetMutexGet\n"
+      "    .thumb\n"
+      "    .global WidgetMutexGet\n"
+      "WidgetMutexGet:\n"
+      "    mov         r1, #1\n"
+      "    ldrexb      r2, [r0]\n"
+      "    cmp         r2, #0\n"
+      "    it          EQ\n" // TI assembler requires upper case cond
+      "    strexbeq    r2, r1, [r0]\n"
+      "    mov         r0, r2\n"
+      "    bx          lr\n");
 #endif
 
 
@@ -368,13 +366,11 @@ WidgetIsInTree(tWidget *psWidget, tWidget *psFind)
     //
     // Loop through the tree under the widget until every widget is searched.
     //
-    for(psTemp = psWidget; psTemp != psWidget->psParent; )
-    {
+    for(psTemp = psWidget; psTemp != psWidget->psParent; ) {
         //
         // See if this widget has a child.
         //
-        if(psTemp->psChild)
-        {
+        if(psTemp->psChild) {
             //
             // Go to this widget's child first.
             //
@@ -387,25 +383,21 @@ WidgetIsInTree(tWidget *psWidget, tWidget *psFind)
         // be performed as well to avoid getting stuck in a loop (since the
         // parent's children have already been searched.
         //
-        else
-        {
+        else {
             //
             // Loop until returning to the parent of the starting widget.  This
             // loop will be explicitly broken out of if an intervening widget
             // is encountered that has not been searched.
             //
-            while(psTemp != psWidget->psParent)
-            {
-                if(psTemp == psFind)
-                {
+            while(psTemp != psWidget->psParent) {
+                if(psTemp == psFind) {
                     return(true);
                 }
 
                 //
                 // See if this widget has a sibling.
                 //
-                if(psTemp->psNext)
-                {
+                if(psTemp->psNext) {
                     //
                     // Visit the sibling of this widget.
                     //
@@ -416,9 +408,7 @@ WidgetIsInTree(tWidget *psWidget, tWidget *psFind)
                     // of the controlling loop.
                     //
                     break;
-                }
-                else
-                {
+                } else {
                     //
                     // This widget has no siblings, so go to its parent.  Since
                     // the parent has already been searched, the same sibling
@@ -512,22 +502,19 @@ WidgetAdd(tWidget *psParent, tWidget *psWidget)
     //
     // See if this parent already has children.
     //
-    if(psParent->psChild)
-    {
+    if(psParent->psChild) {
         //
         // Find the last child of this parent and also check that widget is not
         // already present at this level of the tree.
         //
         for(psParent = psParent->psChild; psParent->psNext;
-            psParent = psParent->psNext)
-        {
+                psParent = psParent->psNext) {
             //
             // If we find this widget here already, just return.  If we don't
             // do this, we allow errant programs to add the same child twice
             // resulting in looping on message processing.
             //
-            if(psParent == psWidget)
-            {
+            if(psParent == psWidget) {
                 return;
             }
         }
@@ -537,8 +524,7 @@ WidgetAdd(tWidget *psParent, tWidget *psWidget)
         // twice.  We need this to catch the case of a single child which
         // causes the previous loop to exit before performing the widget check.
         //
-        if(psParent == psWidget)
-        {
+        if(psParent == psWidget) {
             return;
         }
 
@@ -546,9 +532,7 @@ WidgetAdd(tWidget *psParent, tWidget *psWidget)
         // Add this widget to the end of the list of children of this parent.
         //
         psParent->psNext = psWidget;
-    }
-    else
-    {
+    } else {
         //
         // Make this widget be the first (and only) child of this parent.
         //
@@ -583,30 +567,25 @@ WidgetRemove(tWidget *psWidget)
     // Make sure that the supplied widget is actually in the tree section
     // owned by its parent and, hence, removeable.
     //
-    if(!psWidget->psParent || !WidgetIsInTree(psWidget->psParent, psWidget))
-    {
+    if(!psWidget->psParent || !WidgetIsInTree(psWidget->psParent, psWidget)) {
         return;
     }
 
     //
     // See if this widget is the first child of its parent.
     //
-    if(psWidget->psParent->psChild == psWidget)
-    {
+    if(psWidget->psParent->psChild == psWidget) {
         //
         // Make the first child of this widgets parent be this widget's
         // sibling.
         //
         psWidget->psParent->psChild = psWidget->psNext;
-    }
-    else
-    {
+    } else {
         //
         // Find the sibling directly before this widget.
         //
         for(psTemp = psWidget->psParent->psChild; psTemp->psNext != psWidget;
-            psTemp = psTemp->psNext)
-        {
+                psTemp = psTemp->psNext) {
         }
 
         //
@@ -620,8 +599,7 @@ WidgetRemove(tWidget *psWidget)
     // Check to see if the widget which currently owns the pointer has just
     // been removed and, if so, clear the pointer focus.
     //
-    if(g_psPointerWidget && !WidgetIsInTree(&g_sRoot, g_psPointerWidget))
-    {
+    if(g_psPointerWidget && !WidgetIsInTree(&g_sRoot, g_psPointerWidget)) {
         g_psPointerWidget = 0;
     }
 
@@ -678,32 +656,28 @@ WidgetMessageSendPreOrder(tWidget *psWidget, uint32_t ui32Message,
     //
     ui32Ret = psWidget->pfnMsgProc(psWidget, ui32Message, ui32Param1,
                                    ui32Param2);
-    if((ui32Ret != 0) && bStopOnSuccess)
-    {
+    if((ui32Ret != 0) && bStopOnSuccess) {
         return(ui32Ret);
     }
 
     //
     // Return if the widget does not have any children.
     //
-    if(!psWidget->psChild)
-    {
+    if(!psWidget->psChild) {
         return(0);
     }
 
     //
     // Loop through the tree under the widget until every widget is searched.
     //
-    for(psTemp = psWidget->psChild; psTemp != psWidget; )
-    {
+    for(psTemp = psWidget->psChild; psTemp != psWidget; ) {
         //
         // Send the message to this widget and return if it succeeded and the
         // search should stop on success.
         //
         ui32Ret = psTemp->pfnMsgProc(psTemp, ui32Message, ui32Param1,
-                                    ui32Param2);
-        if((ui32Ret != 0) && bStopOnSuccess)
-        {
+                                     ui32Param2);
+        if((ui32Ret != 0) && bStopOnSuccess) {
             return(ui32Ret);
         }
 
@@ -711,8 +685,7 @@ WidgetMessageSendPreOrder(tWidget *psWidget, uint32_t ui32Message,
         // Find the next widget to examine.  If this widget has a child, then
         // that is the next widget to examine.
         //
-        if(psTemp->psChild)
-        {
+        if(psTemp->psChild) {
             psTemp = psTemp->psChild;
         }
 
@@ -722,20 +695,17 @@ WidgetMessageSendPreOrder(tWidget *psWidget, uint32_t ui32Message,
         // be performed as well to avoid getting stuck in a loop (since the
         // parent's children have already been searched).
         //
-        else
-        {
+        else {
             //
             // Loop until returning to the starting widget.  This loop will be
             // explicitly broken out of if an intervening widget is encountered
             // that has not be searched.
             //
-            while(psTemp != psWidget)
-            {
+            while(psTemp != psWidget) {
                 //
                 // See if this widget has a sibling.
                 //
-                if(psTemp->psNext)
-                {
+                if(psTemp->psNext) {
                     //
                     // Visit the sibling of this widget.
                     //
@@ -746,9 +716,7 @@ WidgetMessageSendPreOrder(tWidget *psWidget, uint32_t ui32Message,
                     // of the controlling loop.
                     //
                     break;
-                }
-                else
-                {
+                } else {
                     //
                     // This widget has no siblings, so go to its parent.  Since
                     // the parent has already been searched, the same sibling
@@ -819,14 +787,12 @@ WidgetMessageSendPostOrder(tWidget *psWidget, uint32_t ui32Message,
     // See if this is a pointer move or up message.
     //
     if((ui32Message == WIDGET_MSG_PTR_MOVE) ||
-       (ui32Message == WIDGET_MSG_PTR_UP))
-    {
+            (ui32Message == WIDGET_MSG_PTR_UP)) {
         //
         // If there is not a widget that has captured pointer messages, then
         // simply drop this message.
         //
-        if(!g_psPointerWidget)
-        {
+        if(!g_psPointerWidget) {
             return(0);
         }
 
@@ -840,8 +806,7 @@ WidgetMessageSendPostOrder(tWidget *psWidget, uint32_t ui32Message,
         //
         // See if this is a pointer up message.
         //
-        if(ui32Message == WIDGET_MSG_PTR_UP)
-        {
+        if(ui32Message == WIDGET_MSG_PTR_UP) {
             //
             // Since this was a pointer up, the widget no longer has pointer
             // messages captured.
@@ -858,13 +823,11 @@ WidgetMessageSendPostOrder(tWidget *psWidget, uint32_t ui32Message,
     //
     // Loop through the tree under the widget until every widget is searched.
     //
-    for(psTemp = psWidget; psTemp != psWidget->psParent; )
-    {
+    for(psTemp = psWidget; psTemp != psWidget->psParent; ) {
         //
         // See if this widget has a child.
         //
-        if(psTemp->psChild)
-        {
+        if(psTemp->psChild) {
             //
             // Go to this widget's child first.
             //
@@ -877,15 +840,13 @@ WidgetMessageSendPostOrder(tWidget *psWidget, uint32_t ui32Message,
         // be performed as well to avoid getting stuck in a loop (since the
         // parent's children have already been searched.
         //
-        else
-        {
+        else {
             //
             // Loop until returning to the parent of the starting widget.  This
             // loop will be explicitly broken out of if an intervening widget
             // is encountered that has not been searched.
             //
-            while(psTemp != psWidget->psParent)
-            {
+            while(psTemp != psWidget->psParent) {
                 //
                 // Send the message to this widget.
                 //
@@ -898,21 +859,17 @@ WidgetMessageSendPostOrder(tWidget *psWidget, uint32_t ui32Message,
                 // this widget is no longer present, then save a pointer to the
                 // widget for subsequent pointer move or pointer up messages.
                 //
-                if((ui32Message == WIDGET_MSG_PTR_DOWN) && (ui32Ret != 0))
-                {
+                if((ui32Message == WIDGET_MSG_PTR_DOWN) && (ui32Ret != 0)) {
                     //
                     // Is the current widget still in the tree?
                     //
-                    if(WidgetIsInTree(&g_sRoot, psTemp))
-                    {
+                    if(WidgetIsInTree(&g_sRoot, psTemp)) {
                         //
                         // The widget is still in the tree so save it for later
                         // use.
                         //
                         g_psPointerWidget = psTemp;
-                    }
-                    else
-                    {
+                    } else {
                         //
                         // Although this widget handled the PTR_DOWN message,
                         // it's message handler rearranged the widget tree and
@@ -927,16 +884,14 @@ WidgetMessageSendPostOrder(tWidget *psWidget, uint32_t ui32Message,
                 // If the widget returned success and the search should stop on
                 // success then return immediately.
                 //
-                if((ui32Ret != 0) && bStopOnSuccess)
-                {
+                if((ui32Ret != 0) && bStopOnSuccess) {
                     return(ui32Ret);
                 }
 
                 //
                 // See if this widget has a sibling.
                 //
-                if(psTemp->psNext)
-                {
+                if(psTemp->psNext) {
                     //
                     // Visit the sibling of this widget.
                     //
@@ -947,9 +902,7 @@ WidgetMessageSendPostOrder(tWidget *psWidget, uint32_t ui32Message,
                     // of the controlling loop.
                     //
                     break;
-                }
-                else
-                {
+                } else {
                     //
                     // This widget has no siblings, so go to its parent.  Since
                     // the parent has already been searched, the same sibling
@@ -1013,8 +966,7 @@ WidgetMessageQueueAdd(tWidget *psWidget, uint32_t ui32Message,
     // Get the mutex we use to protect access to the message queue.
     //
     ui32Owned = WidgetMutexGet(&g_ui8MQMutex);
-    if(ui32Owned)
-    {
+    if(ui32Owned) {
         //
         // The mutex is already being held by some other caller so return a
         // failure.
@@ -1037,24 +989,21 @@ WidgetMessageQueueAdd(tWidget *psWidget, uint32_t ui32Message,
     // if the application is busy doing something while the user keeps pressing
     // the display.
     //
-    if(ui32Message == WIDGET_MSG_PTR_MOVE)
-    {
+    if(ui32Message == WIDGET_MSG_PTR_MOVE) {
         //
         // Is the message queue empty?
         //
-        if(g_ui32MQRead != g_ui32MQWrite)
-        {
+        if(g_ui32MQRead != g_ui32MQWrite) {
             //
             // No - what is the index of the previous message?
             //
             ui32Owned = (g_ui32MQWrite == 0) ? (QUEUE_SIZE - 1) :
-                                               (g_ui32MQWrite - 1);
+                        (g_ui32MQWrite - 1);
 
             //
             // Was this a pointer move message?
             //
-            if(g_psMQ[g_ui32MQWrite].ui32Message == WIDGET_MSG_PTR_MOVE)
-            {
+            if(g_psMQ[g_ui32MQWrite].ui32Message == WIDGET_MSG_PTR_MOVE) {
                 //
                 // Yes - overwrite this message with the new
                 // coordinate information.
@@ -1081,12 +1030,10 @@ WidgetMessageQueueAdd(tWidget *psWidget, uint32_t ui32Message,
     //
     // Return a failure if the message queue is full.
     //
-    if(ui32Next == g_ui32MQRead)
-    {
+    if(ui32Next == g_ui32MQRead) {
 #ifdef DEBUG_MSGQ
         g_ui32MQOverflow++;
-        if(ui32Message != WIDGET_MSG_PTR_MOVE)
-        {
+        if(ui32Message != WIDGET_MSG_PTR_MOVE) {
             g_ui32MQNonMouseOverflow++;
             g_ui32MQLastLostMsg = ui32Message;
         }
@@ -1103,8 +1050,8 @@ WidgetMessageQueueAdd(tWidget *psWidget, uint32_t ui32Message,
     // Write this message into the next location in the message queue.
     //
     g_psMQ[g_ui32MQWrite].ui32Flags = ((bPostOrder ? MQ_FLAG_POST_ORDER : 0) |
-                                  (bStopOnSuccess ? MQ_FLAG_STOP_ON_SUCCESS :
-                                   0));
+                                       (bStopOnSuccess ? MQ_FLAG_STOP_ON_SUCCESS :
+                                        0));
     g_psMQ[g_ui32MQWrite].psWidget = psWidget;
     g_psMQ[g_ui32MQWrite].ui32Message = ui32Message;
     g_psMQ[g_ui32MQWrite].ui32Param1 = ui32Param1;
@@ -1149,8 +1096,7 @@ WidgetMessageQueueProcess(void)
     //
     // Loop while there are more messages in the message queue.
     //
-    while(g_ui32MQRead != g_ui32MQWrite)
-    {
+    while(g_ui32MQRead != g_ui32MQWrite) {
         //
         // Copy the contents of this message into local variables.
         //
@@ -1169,8 +1115,7 @@ WidgetMessageQueueProcess(void)
         // See if this message should be sent via a post-order or pre-order
         // search.
         //
-        if(ui32Flags & MQ_FLAG_POST_ORDER)
-        {
+        if(ui32Flags & MQ_FLAG_POST_ORDER) {
             //
             // Send this message with a post-order search of the widget tree.
             //
@@ -1178,9 +1123,7 @@ WidgetMessageQueueProcess(void)
                                        ui32Param2,
                                        ((ui32Flags & MQ_FLAG_STOP_ON_SUCCESS) ?
                                         true : false));
-        }
-        else
-        {
+        } else {
             //
             // Send this message with a pre-order search of the widget tree.
             //

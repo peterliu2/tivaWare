@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2014-2015 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.2.111 of the EK-TM4C129EXL Firmware Package.
 //
 //*****************************************************************************
@@ -46,8 +46,7 @@ extern void ProxyEnable(void);
 // brief description.
 //
 //*****************************************************************************
-tCmdLineEntry g_psCmdTable[] =
-{
+tCmdLineEntry g_psCmdTable[] = {
     { "help",        Cmd_help,        ": Display list of commands" },
     { "h",           Cmd_help,        ": alias for help" },
     { "?",           Cmd_help,        ": alias for help" },
@@ -82,8 +81,7 @@ Cmd_help(int argc, char *argv[])
     // Enter a loop to read each entry from the command table.  The end of the
     // table has been reached when the command name is NULL.
     //
-    while(pEntry->pcCmd)
-    {
+    while(pEntry->pcCmd) {
         //
         // Print the command name and the brief description.
         //
@@ -112,13 +110,10 @@ Cmd_setproxy(int argc, char *argv[])
     //
     // Check the number of arguments.
     //
-    if((argc == 1) && (ustrcmp("off",argv[1]) == 0 ))
-    {
+    if((argc == 1) && (ustrcmp("off",argv[1]) == 0 )) {
         g_sConfig.bProxyEnabled = false;
         g_sConfig.pcProxy[0] = 0;
-    }
-    else if(argc == 2)
-    {
+    } else if(argc == 2) {
         //
         // Otherwise, copy the user-defined location into the global variable.
         //
@@ -132,23 +127,21 @@ Cmd_setproxy(int argc, char *argv[])
 
         UARTprintf("New Proxy Address: %s\n", g_sConfig.pcProxy);
 
-            //
-            // Enable the proxy.
-            //
-            ProxyEnable();
+        //
+        // Enable the proxy.
+        //
+        ProxyEnable();
 
-    }
-    else
-    {
+    } else {
         UARTprintf("\nProxy configuration help:\n");
         UARTprintf("    The setproxy command changes the proxy behavior of"
-                "this board.\n");
+                   "this board.\n");
         UARTprintf("    To disable the proxy, type:\n\n");
         UARTprintf("    setproxy off\n\n");
         UARTprintf("    To enable the proxy with a specific proxy name, "
-                "type\n");
+                   "type\n");
         UARTprintf("    setproxy <proxyaddress>. For "
-                "example:\n\n");
+                   "example:\n\n");
         UARTprintf("    setproxy your.proxy.address\n\n");
     }
 
@@ -172,30 +165,30 @@ Cmd_cityscroll(int argc, char *argv[])
     // Clear the terminal.  Print the banner and IP place holder.
     //
     UARTprintf("\033[2J\033[H");
-        UARTprintf("Ethernet Weather Example\n\n");
-        UARTprintf("IP: ");
+    UARTprintf("Ethernet Weather Example\n\n");
+    UARTprintf("IP: ");
 
-        //
-        // Print the IP address.
-        //
-        PrintIPAddress(g_pcIPAddr, g_ui32IPaddr);
-        UARTprintf("\n");
-        UARTprintf("Hit 'ENTER' to exit\n\n");
+    //
+    // Print the IP address.
+    //
+    PrintIPAddress(g_pcIPAddr, g_ui32IPaddr);
+    UARTprintf("\n");
+    UARTprintf("Hit 'ENTER' to exit\n\n");
 
-        //
-        // Print the current city information.
-        //
-        UpdateCity(0, true);
+    //
+    // Print the current city information.
+    //
+    UpdateCity(0, true);
 
-        //
-        // 'Updating' banner.
-        //
-        UARTprintf("\n__________________________\n\nUpdating:");
+    //
+    // 'Updating' banner.
+    //
+    UARTprintf("\n__________________________\n\nUpdating:");
 
-        //
-        // Update the variable to begin scrolling through the cities.
-        //
-        g_ui32ShowCities = 1;
+    //
+    // Update the variable to begin scrolling through the cities.
+    //
+    g_ui32ShowCities = 1;
 
     //
     // No longer processing commands.
